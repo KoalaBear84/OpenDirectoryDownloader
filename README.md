@@ -1,4 +1,4 @@
-# OpenDirectoryDownloader
+# Open Directory Downloader
 Indexes open directories
 
 ## Getting the code
