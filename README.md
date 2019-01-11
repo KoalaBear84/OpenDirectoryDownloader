@@ -8,7 +8,7 @@ Indexes open directories
   a. With workload: ".NET Core cross-platform development"
   b. With individual components: Code tools > Git for Windows and Code tools > GitHub extension for Visual Studio
 2. Be sure to install Git: https://git-scm.com/downloads
-3. Clone the repository: https://code.visualstudio.com/docs/editor/versioncontrol#_cloning-a-repository
+3. Clone the repository by clicking "Clone or download" and click "Open in Visual Studio"
 
 ### For Visual Studio Code
 1. Download Visual Studio Code: https://code.visualstudio.com/download
