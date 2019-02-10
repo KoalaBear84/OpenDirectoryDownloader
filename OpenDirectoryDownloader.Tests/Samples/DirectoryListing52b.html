@@ -1,0 +1,75 @@
+﻿
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Media Manager</title>
+	<style type="text/css" media="screen">
+		@import url('/app/css/main.css');
+		@import url('/app/css/unauthenticated.css');
+		@import url('/app/css/directory_listing.css');
+	</style>
+<script type="text/javascript" src="/app/js/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+	
+	$("table[id!='statusbar'] tr:even").addClass("alternate");
+	$("span#current_location").text( $("span#current_location").text().replace(/\/web_root/, '') );
+});
+</script>
+</head>
+
+
+<body>
+
+
+<div id="header">
+
+			<a href="http://www.sas.upenn.edu"><img src="/app/images/sas_logo.gif" alt="School of Arts and Sciences" /></a>
+		
+</div> <!-- /header -->
+
+
+<table id="statusbar">
+
+	<tbody>
+	<tr>
+		<td id="statusbar_left">Media Manager</td>
+
+		<td id="statusbar_right"></td>
+	</tr>
+	</tbody>
+
+</table> <!-- /statusbar -->
+
+<div id="container">
+
+			
+	<div id="main">
+	
+		<h2>Files in directory <span id="current_location">/pennsound/authors/Abel/Bridge Bookshop (12-10-87)/</span></h2>
+
+<table><tr><th><img src="/icons/blank.gif" alt="[ICO]" width="16" height="16"></th><th><a href="?C=N;O=D">Name</a></th><th><a href="?C=M;O=A">Last modified</a></th><th><a href="?C=S;O=A">Size</a></th></tr><tr><td valign="top"><img src="/app/images/file.png" alt="[SND]" width="16" height="16"></td><td><a href="OBrien-Michael_Bridge-Bookshop_12-10-87.wav">OBrien-Michael_Bridge-Bookshop_12-10-87.wav</a></td><td align="right">28-Apr-2014 16:53  </td><td align="right">171M</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/app/images/file.png" alt="[SND]" width="16" height="16"></td><td><a href="OBrien-Michael_Complete-Reading_Bridge-Bookshop_NY_12-10-87.mp3">OBrien-Michael_Complete-Reading_Bridge-Bookshop_NY_12-10-87.mp3</a></td><td align="right">03-Jun-2014 13:42  </td><td align="right"> 22M</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/app/images/file.png" alt="[SND]" width="16" height="16"></td><td><a href="Rattray-David_Bridge-Bookshop_12-10-87.wav">Rattray-David_Bridge-Bookshop_12-10-87.wav</a></td><td align="right">28-Apr-2014 16:55  </td><td align="right">203M</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/app/images/file.png" alt="[SND]" width="16" height="16"></td><td><a href="Rattray-David_Complete-Reading_Bridge-Bookshop_NY_12-10-87.mp3">Rattray-David_Complete-Reading_Bridge-Bookshop_NY_12-10-87.mp3</a></td><td align="right">03-Jun-2014 13:46  </td><td align="right"> 26M</td><td>&nbsp;</td></tr>
+</table>
+
+	</div> <!-- main -->
+</div> <!-- container -->
+
+<div id="footer">
+
+	<a href="http://www.sas.upenn.edu" title="Arts &amp; Sciences">School of Arts &amp; Sciences</a> |
+	<a href="http://www.college.upenn.edu/" title="Undergraduate School">College of Arts &amp; Sciences</a> |
+	<a href="http://www.sas.upenn.edu/GAS/" title="Graduate Studies">Graduate Division</a> |
+	<a href="http://www.sas.upenn.edu/lps/" title="Liberal and Professional Studies">Liberal &amp; Professional Studies</a> |
+	<a href="http://www.upenn.edu/" title="UPenn">University of Pennsylvania</a>
+
+</div> <!-- footer -->
+
+	
+</body>
+</html>

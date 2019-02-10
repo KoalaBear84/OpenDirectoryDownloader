@@ -1,0 +1,41 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title>Index of /</title>
+  <link rel="stylesheet" href="/theme/style.css" type="text/css" />
+<meta name="viewport" content="width=device-width, initial-scale=1" /> </head>
+ <body>
+<div class="wrapper">
+<!-- we open the `wrapper` element here, but close it in the `footer.html` file -->
+<img src="/theme/image/amogene-logo.png" alt="amogene-logo" width="250" height="133">
+  <table id="indexlist">
+   <tr class="indexhead"><th class="indexcolicon"><img src="/theme/icons/blank.png" alt="[ICO]" /></th><th class="indexcolname"><a href="?C=N;O=D">Name</a></th><th class="indexcollastmod"><a href="?C=M;O=A">Last modified</a></th><th class="indexcolsize"><a href="?C=S;O=A">Size</a></th></tr>
+   <tr class="even"><td class="indexcolicon"><a href="00.Guest_data/"><img src="/theme/icons/folder.png" alt="[DIR]" /></a></td><td class="indexcolname"><a href="00.Guest_data/">00.Guest_data/</a></td><td class="indexcollastmod">2018-07-12 11:55  </td><td class="indexcolsize">  - </td></tr>
+   <tr class="odd"><td class="indexcolicon"><a href="01.ChIP-Seq/"><img src="/theme/icons/folder.png" alt="[DIR]" /></a></td><td class="indexcolname"><a href="01.ChIP-Seq/">01.ChIP-Seq/</a></td><td class="indexcollastmod">2018-09-05 09:55  </td><td class="indexcolsize">  - </td></tr>
+   <tr class="even"><td class="indexcolicon"><a href="02.RNA-Seq/"><img src="/theme/icons/folder.png" alt="[DIR]" /></a></td><td class="indexcolname"><a href="02.RNA-Seq/">02.RNA-Seq/</a></td><td class="indexcollastmod">2018-10-29 14:44  </td><td class="indexcolsize">  - </td></tr>
+   <tr class="odd"><td class="indexcolicon"><a href="03.SMART-Seq/"><img src="/theme/icons/folder.png" alt="[DIR]" /></a></td><td class="indexcolname"><a href="03.SMART-Seq/">03.SMART-Seq/</a></td><td class="indexcollastmod">2018-01-10 23:08  </td><td class="indexcolsize">  - </td></tr>
+   <tr class="even"><td class="indexcolicon"><a href="04.Splicing/"><img src="/theme/icons/folder.png" alt="[DIR]" /></a></td><td class="indexcolname"><a href="04.Splicing/">04.Splicing/</a></td><td class="indexcollastmod">2018-02-23 16:51  </td><td class="indexcolsize">  - </td></tr>
+   <tr class="odd"><td class="indexcolicon"><a href="05.ATAC-Seq/"><img src="/theme/icons/folder.png" alt="[DIR]" /></a></td><td class="indexcolname"><a href="05.ATAC-Seq/">05.ATAC-Seq/</a></td><td class="indexcollastmod">2018-10-17 17:10  </td><td class="indexcolsize">  - </td></tr>
+</table>
+<div class="footer">
+	UCSC link <a href="https://genome.ucsc.edu" target="_blank">@genome.ucsc.edu</a>. <br>
+	Deploy by <a href="https://github.com/allen-panxu" target="_blank">@xpan</a>.
+	Apaxy by <a href="https://twitter.com/adamwhitcroft" target="_blank">@adamwhitcroft</a>. <br>
+</div><!--/.footer-->
+<script type="text/javascript">
+// grab the 2nd child and add the parent class. tr:nth-child(2)
+document.getElementsByTagName('tr')[1].className = 'parent';
+// fix links when not adding a / at the end of the URI
+var uri = window.location.pathname.substr(1);
+if (uri.substring(uri.length-1) != '/'){
+	var indexes = document.getElementsByClassName('indexcolname'),
+	i = indexes.length;
+	while (i--){
+	    var a = indexes[i].getElementsByTagName('a')[0];
+	    a.href =  uri + '/' + a.getAttribute('href',2);
+	}
+}
+</script>
+</body></html>

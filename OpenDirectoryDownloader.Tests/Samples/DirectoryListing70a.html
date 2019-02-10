@@ -1,0 +1,632 @@
+﻿
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no" />
+    <title>index of A: - PyOne</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.1/dist/css/mdui.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mdui@0.4.1/dist/js/mdui.min.js"></script>
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <style>
+    img { width: 100%;height: auto;max-width: 60%; display: block; }
+    /* 固定到右下角的 FAB 按钮 */
+    .mdui-fab-fixed_left {
+      position: fixed !important;
+      /* 手机平板上距离屏幕右下角 16px */
+      left: 16px;
+      bottom: 16px;
+    }
+    @media (min-width: 1024px) {
+      .mdui-fab-fixed_left {
+        /* 电脑上距离屏幕右下角 24px */
+        left: 24px;
+        bottom: 24px;
+      }
+    }
+    </style>
+</head>
+
+<body class="mdui-theme-primary-blue-grey mdui-theme-accent-blue">
+    <div class="mdui-container">
+    <div class="mdui-container-fluid">
+    <div class="mdui-appbar mdui-appbar-scroll-hide">
+        <div class="mdui-tab mdui-color-theme" mdui-tab>
+            
+            
+                <a href="/A:" class="mdui-ripple mdui-ripple-white mdui-tab-active" id="A">
+                    <i class="mdui-icon material-icons">&#xe2bf;</i>
+                    <label>网盘1区</label>
+                </a>
+            
+            
+            
+                <a href="/B:" class="mdui-ripple mdui-ripple-white" id="B">
+                    <i class="mdui-icon material-icons">&#xe2bf;</i>
+                    <label>网盘2区</label>
+                </a>
+            
+            
+            
+            
+         </div>
+        <div class="mdui-toolbar nexmoe-item">
+            <a href="/A:/">A</a>
+            
+                
+                    <i class="mdui-icon material-icons mdui-icon-dark" style="margin:0;">chevron_right</i>
+                    
+                        <a href="#"></a>
+                    
+                
+            
+        </div>
+    </div>
+</div>
+    
+<div class="mdui-container-fluid">
+    <div class="mdui-typo">
+          <label class="mdui-switch">
+            看图模式
+            <input type="checkbox" id="image_view" />
+            <i class="mdui-switch-icon"></i>
+          </label>
+    </div>
+    
+    <div class="nexmoe-item">
+        <div class="mdui-row">
+            <ul class="mdui-list">
+                <li class="mdui-list-item th">
+                    <div class="mdui-col-xs-8 mdui-col-sm-5">
+    <a href="/A:?order=asc&sortby=name">
+    文件
+    
+    </a>
+</div>
+                    <div class="mdui-col-xs-4 mdui-col-sm-2">
+    <a href="/A:?order=asc&sortby=lastModtime">
+    修改时间
+    
+        
+            <i class="mdui-icon material-icons">arrow_downward</i>
+        
+    
+    </a>
+</div>
+                    <div class="mdui-col-sm-2 mdui-text-right">
+    <a href="/A:?order=asc&sortby=type">
+    文件类型
+    
+    </a>
+</div>
+                    <div class="mdui-col-sm-2 mdui-text-right">
+    <a href="/A:?order=asc&sortby=size">
+    大小
+    
+    </a>
+</div>
+                </li>
+                
+
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload10">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload10
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">74.9G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload11">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload11
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">92.2G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload12">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload12
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">90.0G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload13">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload13
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">82.2G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload14">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload14
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">118.1G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload15">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload15
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">74.9G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload16">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload16
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">87.4G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload17">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload17
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">89.3G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload18">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload18
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">96.4G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload19">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload19
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">87.1G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload20">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload20
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">66.8G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload21">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload21
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">63.0G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload22">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload22
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">72.3G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload23">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload23
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">89.8G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload24">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload24
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">63.1G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload25">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload25
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">76.8G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload26">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload26
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">75.0G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload27">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload27
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">98.3G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload28">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload28
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">36.7G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload3">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload3
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">85.7G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload4">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload4
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">79.4G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload5">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload5
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">73.4G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload6">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload6
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">73.2G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload7">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload7
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">84.7G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload8">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload8
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">73.8G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload9">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload9
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/18</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">80.7G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload1">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload1
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/17</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">62.7G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload2">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload2
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/17</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">71.6G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="mdui-list-item mdui-ripple">
+                        <a href="/A:/upload">
+                            <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                <i class="mdui-icon material-icons">folder_open</i> upload
+                            </div>
+                            <div class="mdui-col-xs-4 mdui-col-sm-2">2018/07/10</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">folder</div>
+                            <div class="mdui-col-sm-2 mdui-text-right">29.8G</div>
+                        </a>
+                    </li>
+                    
+                
+                    
+                        <li class="mdui-list-item file mdui-ripple">
+                            <a href="/A:/index.html" target="_blank">
+                                
+                                    <div class="mdui-col-xs-8 mdui-col-sm-5 mdui-text-truncate">
+                                        <i class="mdui-icon material-icons">insert_drive_file</i> index.html
+                                    </div>
+                                    <div class="mdui-col-xs-4 mdui-col-sm-2">2018/09/19</div>
+                                    <div class="mdui-col-sm-2 mdui-text-right">html</div>
+                                    <div class="mdui-col-sm-2 mdui-text-right">24B</div>
+                                
+                            </a>
+                        </li>
+                    
+                
+
+            </ul>
+        
+        </div>
+    </div>
+</div>
+
+<div class="mdui-center">
+
+    
+<br>
+<style type="text/css">
+    #page a {
+        text-align: center;
+        position: relative;
+        display: inline-block;
+        color: inherit;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: .04em;
+        white-space: nowrap;
+        vertical-align: middle;
+        padding: 0!important;
+        margin: auto;
+        overflow: hidden;
+        font-size: 24px;
+        line-height: normal!important;
+        border-radius: 50%;
+        margin-right: 5px;
+        box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
+        width: 20px;
+        min-width:30px;
+        height: 30px;
+        outline: 0;
+        user-select: none;
+        background: 0 0;
+        border: none;
+        cursor: pointer;
+        zoom: 1;
+        webkit-transition: all .2s cubic-bezier(.4, 0, .2, 1), box-shadow .2s cubic-bezier(.4, 0, 1, 1), -webkit-transform .2s;
+        transition: all .2s cubic-bezier(.4, 0, .2, 1), box-shadow .2s cubic-bezier(.4, 0, 1, 1), -webkit-transform .2s;
+        transition: all .2s cubic-bezier(.4, 0, .2, 1), box-shadow .2s cubic-bezier(.4, 0, 1, 1), transform .2s;
+        transition: all .2s cubic-bezier(.4, 0, .2, 1), box-shadow .2s cubic-bezier(.4, 0, 1, 1), transform .2s, -webkit-transform .2s;
+        -webkit-transform: scale(1) translateZ(0);
+        transform: scale(1) translateZ(0);
+        will-change: transform;
+    }
+    .moe-page-div {
+       max-width: 600px;
+       margin-left: auto;
+       margin-right: auto;
+    }
+
+    @media (max-width: 599px){
+     .moe-page-div {
+       max-width: 85%;
+     }
+    }
+</style>
+<center>
+    <div id="page">
+        
+
+        
+          
+            
+              <a href="/A:?sortby=lastModtime&amp;order=desc&amp;page=1" class="mdui-color-blue mdui-shadow-13">1</a>
+            
+          
+        
+          
+            
+              <a href="/A:?sortby=lastModtime&amp;order=desc&amp;page=2">2</a>
+            
+          
+        
+
+        
+        <a href="/A:?sortby=lastModtime&order=desc&page=2">&gt;</a>
+        
+    </div>
+</center>
+
+
+</div>
+
+<script>
+var $$ = mdui.JQ;
+$$(function() {
+    $$('.file a').each(function() {
+        $$(this).on('click', function() {
+            var form = $$('<form target=_blank method=post></form>').attr('action', $$(this).attr('href')).get(0);
+            $$(document.body).append(form);
+            form.submit();
+            $$(form).remove();
+            return false;
+        });
+    });
+});
+
+function setCookie(c_name, value, exdays) {
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    var c_value = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString());
+    document.cookie = c_name + "=" + c_value;
+}
+
+var ckname='image_mode'
+$('#image_view').change(function(){
+   if($(this).attr('checked')){
+        setCookie(ckname,1,1);
+        window.location.href="/A:?image_mode=0";
+   }else{
+        setCookie(ckname,0,1);
+        window.location.href="/A:?image_mode=1";
+   }
+});
+</script>
+
+    </div>
+    <div style="display: none;">
+
+</div>
+</body>
+
+</html>

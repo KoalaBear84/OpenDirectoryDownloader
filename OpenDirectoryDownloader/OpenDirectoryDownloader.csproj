@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ApplicationIcon>Resources\Application.ico</ApplicationIcon>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="0.10.1" />
+    <PackageReference Include="CommandLineParser" Version="2.4.3" />
+    <PackageReference Include="FluentFTP" Version="21.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="NLog.config" Version="4.6.0-rc1" />
+    <PackageReference Include="Polly" Version="7.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenDirectoryDownloader.GoogleDrive\OpenDirectoryDownloader.GoogleDrive.csproj" />
+    <ProjectReference Include="..\OpenDirectoryDownloader.Shared\OpenDirectoryDownloader.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
