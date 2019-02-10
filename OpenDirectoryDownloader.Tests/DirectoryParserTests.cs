@@ -1,5 +1,7 @@
 ﻿using OpenDirectoryDownloader.Shared.Models;
+using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -7,9 +9,19 @@ namespace OpenDirectoryDownloader.Tests
 {
     public class DirectoryParserTests
     {
-        private static string GetSample(string name)
+        private static readonly Regex TestMethodRegex = new Regex(@"<Test(\w+)Async>");
+
+        private static string GetSample()
         {
-            return File.ReadAllText($"Samples\\{name}.html.dat");
+            // Ugly, but it works
+            string fileName = TestMethodRegex.Match(new StackTrace().GetFrame(1).GetMethod().DeclaringType.Name).Groups[1].Value;
+
+            return File.ReadAllText($"Samples\\{fileName}.html.dat");
+        }
+
+        private static async Task<WebDirectory> ParseHtml(string html, string url = "http://localhost/")
+        {
+            return await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = url }, html);
         }
 
         /// <summary>
@@ -18,9 +30,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing01aAsync()
         {
-            string html = GetSample("DirectoryListing01a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Single(webDirectory.Subdirectories);
@@ -36,9 +46,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing02aAsync()
         {
-            string html = GetSample("DirectoryListing02a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(16, webDirectory.Subdirectories.Count);
@@ -55,9 +63,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing02bAsync()
         {
-            string html = GetSample("DirectoryListing02b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(13, webDirectory.Subdirectories.Count);
@@ -74,9 +80,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing03aAsync()
         {
-            string html = GetSample("DirectoryListing03a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(5, webDirectory.Subdirectories.Count);
@@ -92,9 +96,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing03bAsync()
         {
-            string html = GetSample("DirectoryListing03b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -109,9 +111,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing04aAsync()
         {
-            string html = GetSample("DirectoryListing04a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(7, webDirectory.Subdirectories.Count);
@@ -127,9 +127,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing04bAsync()
         {
-            string html = GetSample("DirectoryListing04b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(4, webDirectory.Subdirectories.Count);
@@ -145,9 +143,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing05aAsync()
         {
-            string html = GetSample("DirectoryListing05a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(6, webDirectory.Subdirectories.Count);
@@ -163,9 +159,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing05bAsync()
         {
-            string html = GetSample("DirectoryListing05b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(4, webDirectory.Subdirectories.Count);
@@ -181,9 +175,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing06aAsync()
         {
-            string html = GetSample("DirectoryListing06a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(17, webDirectory.Subdirectories.Count);
@@ -199,9 +191,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing06bAsync()
         {
-            string html = GetSample("DirectoryListing06b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -216,9 +206,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing07aAsync()
         {
-            string html = GetSample("DirectoryListing07a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(144, webDirectory.Subdirectories.Count);
@@ -234,9 +222,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing07bAsync()
         {
-            string html = GetSample("DirectoryListing07b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(17, webDirectory.Subdirectories.Count);
@@ -250,9 +236,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing08aAsync()
         {
-            string html = GetSample("DirectoryListing08a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(30, webDirectory.Subdirectories.Count);
@@ -266,9 +250,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing08bAsync()
         {
-            string html = GetSample("DirectoryListing08b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -283,9 +265,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing09aAsync()
         {
-            string html = GetSample("DirectoryListing09a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(5, webDirectory.Subdirectories.Count);
@@ -301,9 +281,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing09bAsync()
         {
-            string html = GetSample("DirectoryListing09b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -318,9 +296,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing10aAsync()
         {
-            string html = GetSample("DirectoryListing10a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(183, webDirectory.Subdirectories.Count);
@@ -334,9 +310,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing10bAsync()
         {
-            string html = GetSample("DirectoryListing10b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -351,9 +325,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing11aAsync()
         {
-            string html = GetSample("DirectoryListing11a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(6, webDirectory.Subdirectories.Count);
@@ -369,9 +341,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing11bAsync()
         {
-            string html = GetSample("DirectoryListing11b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(19, webDirectory.Subdirectories.Count);
@@ -385,9 +355,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing12aAsync()
         {
-            string html = GetSample("DirectoryListing12a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(63, webDirectory.Subdirectories.Count);
@@ -403,9 +371,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing12bAsync()
         {
-            string html = GetSample("DirectoryListing12b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Single(webDirectory.Subdirectories);
@@ -422,9 +388,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing13aAsync()
         {
-            string html = GetSample("DirectoryListing13a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "https://thetrove.net/Tools/index.html" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample(), "https://thetrove.net/Tools/index.html");
 
             Assert.Equal(string.Empty, webDirectory.Name);
             Assert.Equal(7, webDirectory.Subdirectories.Count);
@@ -441,10 +405,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing13bAsync()
         {
-            string html = GetSample("DirectoryListing13b");
-
-            // Yes, URL with real space
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "https://thetrove.net/Assets/D&D Homebrew/index.html" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample(), "https://thetrove.net/Assets/D&D Homebrew/index.html");
 
             Assert.Equal(string.Empty, webDirectory.Name);
             Assert.Equal(9, webDirectory.Subdirectories.Count);
@@ -461,10 +422,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing13cAsync()
         {
-            string html = GetSample("DirectoryListing13c");
-
-            // Yes, URL with real space
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "https://thetrove.net/Assets/Map Assets/2010-Fantasy/Fantasy/BearSkin Rug + Probonos hanging antelope/index.html" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample(), "https://thetrove.net/Assets/Map Assets/2010-Fantasy/Fantasy/BearSkin Rug + Probonos hanging antelope/index.html");
 
             Assert.Equal(string.Empty, webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -479,9 +437,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing14aAsync()
         {
-            string html = GetSample("DirectoryListing14a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(20, webDirectory.Subdirectories.Count);
@@ -497,9 +453,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing14bAsync()
         {
-            string html = GetSample("DirectoryListing14b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Single(webDirectory.Subdirectories);
@@ -515,9 +469,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing15aAsync()
         {
-            string html = GetSample("DirectoryListing15a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(3, webDirectory.Subdirectories.Count);
@@ -533,9 +485,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing15bAsync()
         {
-            string html = GetSample("DirectoryListing15b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -550,9 +500,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing16aAsync()
         {
-            string html = GetSample("DirectoryListing16a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(7, webDirectory.Subdirectories.Count);
@@ -566,9 +514,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing16bAsync()
         {
-            string html = GetSample("DirectoryListing16b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -583,9 +529,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing17aAsync()
         {
-            string html = GetSample("DirectoryListing17a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Single(webDirectory.Subdirectories);
@@ -601,9 +545,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing17bAsync()
         {
-            string html = GetSample("DirectoryListing17b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -618,9 +560,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing18aAsync()
         {
-            string html = GetSample("DirectoryListing18a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(7, webDirectory.Subdirectories.Count);
@@ -636,9 +576,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing18bAsync()
         {
-            string html = GetSample("DirectoryListing18b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -653,9 +591,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing19aAsync()
         {
-            string html = GetSample("DirectoryListing19a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(6, webDirectory.Subdirectories.Count);
@@ -669,9 +605,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing19bAsync()
         {
-            string html = GetSample("DirectoryListing19b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -686,9 +620,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing20aAsync()
         {
-            string html = GetSample("DirectoryListing20a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(99, webDirectory.Subdirectories.Count);
@@ -704,9 +636,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing20bAsync()
         {
-            string html = GetSample("DirectoryListing20b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Single(webDirectory.Subdirectories);
@@ -722,9 +652,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing21aAsync()
         {
-            string html = GetSample("DirectoryListing21a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(10, webDirectory.Subdirectories.Count);
@@ -741,9 +669,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing21bAsync()
         {
-            string html = GetSample("DirectoryListing21b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(114, webDirectory.Subdirectories.Count);
@@ -760,9 +686,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing22aAsync()
         {
-            string html = GetSample("DirectoryListing22a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(51, webDirectory.Subdirectories.Count);
@@ -778,9 +702,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing22bAsync()
         {
-            string html = GetSample("DirectoryListing22b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(8, webDirectory.Subdirectories.Count);
@@ -796,9 +718,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing23aAsync()
         {
-            string html = GetSample("DirectoryListing23a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(12, webDirectory.Subdirectories.Count);
@@ -814,9 +734,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing23bAsync()
         {
-            string html = GetSample("DirectoryListing23b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(5, webDirectory.Subdirectories.Count);
@@ -832,9 +750,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing24aAsync()
         {
-            string html = GetSample("DirectoryListing24a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(8, webDirectory.Subdirectories.Count);
@@ -848,9 +764,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing24bAsync()
         {
-            string html = GetSample("DirectoryListing24b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(3, webDirectory.Subdirectories.Count);
@@ -866,9 +780,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing25aAsync()
         {
-            string html = GetSample("DirectoryListing25a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(59, webDirectory.Subdirectories.Count);
@@ -884,9 +796,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing25bAsync()
         {
-            string html = GetSample("DirectoryListing25b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -901,9 +811,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing26aAsync()
         {
-            string html = GetSample("DirectoryListing26a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(4, webDirectory.Subdirectories.Count);
@@ -917,9 +825,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing26bAsync()
         {
-            string html = GetSample("DirectoryListing26b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -934,9 +840,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing27aAsync()
         {
-            string html = GetSample("DirectoryListing27a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(8, webDirectory.Subdirectories.Count);
@@ -952,9 +856,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing27bAsync()
         {
-            string html = GetSample("DirectoryListing27b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(25, webDirectory.Subdirectories.Count);
@@ -970,9 +872,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing28aAsync()
         {
-            string html = GetSample("DirectoryListing28a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(33, webDirectory.Subdirectories.Count);
@@ -986,9 +886,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing28bAsync()
         {
-            string html = GetSample("DirectoryListing28b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Single(webDirectory.Subdirectories);
@@ -1004,9 +902,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing29aAsync()
         {
-            string html = GetSample("DirectoryListing29a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(468, webDirectory.Subdirectories.Count);
@@ -1020,9 +916,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing29bAsync()
         {
-            string html = GetSample("DirectoryListing29b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1037,9 +931,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing30aAsync()
         {
-            string html = GetSample("DirectoryListing30a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(5, webDirectory.Subdirectories.Count);
@@ -1053,9 +945,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing30bAsync()
         {
-            string html = GetSample("DirectoryListing30b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1070,9 +960,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing31aAsync()
         {
-            string html = GetSample("DirectoryListing31a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(38, webDirectory.Subdirectories.Count);
@@ -1086,9 +974,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing31bAsync()
         {
-            string html = GetSample("DirectoryListing31b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(11, webDirectory.Subdirectories.Count);
@@ -1104,9 +990,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing31cAsync()
         {
-            string html = GetSample("DirectoryListing31c");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1120,9 +1004,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing32aAsync()
         {
-            string html = GetSample("DirectoryListing32a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1135,9 +1017,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing33aAsync()
         {
-            string html = GetSample("DirectoryListing33a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://ipfs.io/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample(), "http://ipfs.io/");
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1152,9 +1032,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing34aAsync()
         {
-            string html = GetSample("DirectoryListing34a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(5, webDirectory.Subdirectories.Count);
@@ -1168,9 +1046,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing34bAsync()
         {
-            string html = GetSample("DirectoryListing34b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Single(webDirectory.Subdirectories);
@@ -1186,9 +1062,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing35aAsync()
         {
-            string html = GetSample("DirectoryListing35a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(35, webDirectory.Subdirectories.Count);
@@ -1204,9 +1078,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing35bAsync()
         {
-            string html = GetSample("DirectoryListing35b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1221,9 +1093,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing36aAsync()
         {
-            string html = GetSample("DirectoryListing36a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(3, webDirectory.Subdirectories.Count);
@@ -1239,9 +1109,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing36bAsync()
         {
-            string html = GetSample("DirectoryListing36b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(26, webDirectory.Subdirectories.Count);
@@ -1257,9 +1125,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing37aAsync()
         {
-            string html = GetSample("DirectoryListing37a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(97, webDirectory.Subdirectories.Count);
@@ -1275,9 +1141,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing37bAsync()
         {
-            string html = GetSample("DirectoryListing37b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1293,9 +1157,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing38aAsync()
         {
-            string html = GetSample("DirectoryListing38a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(9, webDirectory.Subdirectories.Count);
@@ -1313,9 +1175,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing38bAsync()
         {
-            string html = GetSample("DirectoryListing38b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1330,9 +1190,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing39aAsync()
         {
-            string html = GetSample("DirectoryListing39a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Single(webDirectory.Subdirectories);
@@ -1348,9 +1206,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing39bAsync()
         {
-            string html = GetSample("DirectoryListing39b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1365,9 +1221,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing40aAsync()
         {
-            string html = GetSample("DirectoryListing40a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(6, webDirectory.Subdirectories.Count);
@@ -1383,9 +1237,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing40bAsync()
         {
-            string html = GetSample("DirectoryListing40b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1398,9 +1250,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing41aAsync()
         {
-            string html = GetSample("DirectoryListing41a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(19, webDirectory.Subdirectories.Count);
@@ -1416,9 +1266,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing41bAsync()
         {
-            string html = GetSample("DirectoryListing41b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1433,9 +1281,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing42aAsync()
         {
-            string html = GetSample("DirectoryListing42a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(3, webDirectory.Subdirectories.Count);
@@ -1451,9 +1297,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing42bAsync()
         {
-            string html = GetSample("DirectoryListing42b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1468,9 +1312,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing43aAsync()
         {
-            string html = GetSample("DirectoryListing43a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(26, webDirectory.Subdirectories.Count);
@@ -1486,9 +1328,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing43bAsync()
         {
-            string html = GetSample("DirectoryListing43b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1503,9 +1343,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing44aAsync()
         {
-            string html = GetSample("DirectoryListing44a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(12, webDirectory.Subdirectories.Count);
@@ -1521,9 +1359,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing44bAsync()
         {
-            string html = GetSample("DirectoryListing44b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1538,9 +1374,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing45aAsync()
         {
-            string html = GetSample("DirectoryListing45a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(3, webDirectory.Subdirectories.Count);
@@ -1556,9 +1390,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing45bAsync()
         {
-            string html = GetSample("DirectoryListing45b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1573,9 +1405,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing46aAsync()
         {
-            string html = GetSample("DirectoryListing46a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(15, webDirectory.Subdirectories.Count);
@@ -1591,9 +1421,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing46bAsync()
         {
-            string html = GetSample("DirectoryListing46b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1608,9 +1436,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing46cAsync()
         {
-            string html = GetSample("DirectoryListing46c");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1623,9 +1449,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing47aAsync()
         {
-            string html = GetSample("DirectoryListing47a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(5, webDirectory.Subdirectories.Count);
@@ -1641,9 +1465,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing47bAsync()
         {
-            string html = GetSample("DirectoryListing47b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1658,9 +1480,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing48aAsync()
         {
-            string html = GetSample("DirectoryListing48a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Single(webDirectory.Subdirectories);
@@ -1676,9 +1496,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing48bAsync()
         {
-            string html = GetSample("DirectoryListing48b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1693,9 +1511,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing49aAsync()
         {
-            string html = GetSample("DirectoryListing49a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(4, webDirectory.Subdirectories.Count);
@@ -1709,9 +1525,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing49bAsync()
         {
-            string html = GetSample("DirectoryListing49b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1726,9 +1540,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing49cAsync()
         {
-            string html = GetSample("DirectoryListing49c");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(22, webDirectory.Subdirectories.Count);
@@ -1744,9 +1556,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing50aAsync()
         {
-            string html = GetSample("DirectoryListing50a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(22, webDirectory.Subdirectories.Count);
@@ -1762,9 +1572,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing50bAsync()
         {
-            string html = GetSample("DirectoryListing50b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Single(webDirectory.Subdirectories);
@@ -1780,9 +1588,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing51aAsync()
         {
-            string html = GetSample("DirectoryListing51a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Single(webDirectory.Subdirectories);
@@ -1798,9 +1604,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing51bAsync()
         {
-            string html = GetSample("DirectoryListing51b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1815,9 +1619,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing52aAsync()
         {
-            string html = GetSample("DirectoryListing52a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(25, webDirectory.Subdirectories.Count);
@@ -1833,9 +1635,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing52bAsync()
         {
-            string html = GetSample("DirectoryListing52b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1850,9 +1650,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing53aAsync()
         {
-            string html = GetSample("DirectoryListing53a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1867,9 +1665,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing53bAsync()
         {
-            string html = GetSample("DirectoryListing53b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1884,9 +1680,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing54aAsync()
         {
-            string html = GetSample("DirectoryListing54a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(21, webDirectory.Subdirectories.Count);
@@ -1902,9 +1696,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing54bAsync()
         {
-            string html = GetSample("DirectoryListing54b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1919,9 +1711,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing55aAsync()
         {
-            string html = GetSample("DirectoryListing55a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(3, webDirectory.Subdirectories.Count);
@@ -1937,9 +1727,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing55bAsync()
         {
-            string html = GetSample("DirectoryListing55b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -1954,9 +1742,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing56aAsync()
         {
-            string html = GetSample("DirectoryListing56a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(3, webDirectory.Subdirectories.Count);
@@ -1972,9 +1758,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing56bAsync()
         {
-            string html = GetSample("DirectoryListing56b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(33, webDirectory.Subdirectories.Count);
@@ -1990,9 +1774,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing57aAsync()
         {
-            string html = GetSample("DirectoryListing57a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(69, webDirectory.Subdirectories.Count);
@@ -2006,9 +1788,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing57bAsync()
         {
-            string html = GetSample("DirectoryListing57b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -2023,9 +1803,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing58aAsync()
         {
-            string html = GetSample("DirectoryListing58a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(3, webDirectory.Subdirectories.Count);
@@ -2041,9 +1819,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing58bAsync()
         {
-            string html = GetSample("DirectoryListing58b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -2058,9 +1834,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing59aAsync()
         {
-            string html = GetSample("DirectoryListing59a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(66, webDirectory.Subdirectories.Count);
@@ -2074,9 +1848,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing59bAsync()
         {
-            string html = GetSample("DirectoryListing59b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -2091,9 +1863,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing60aAsync()
         {
-            string html = GetSample("DirectoryListing60a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(19, webDirectory.Subdirectories.Count);
@@ -2109,9 +1879,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing60bAsync()
         {
-            string html = GetSample("DirectoryListing60b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -2126,9 +1894,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing61aAsync()
         {
-            string html = GetSample("DirectoryListing61a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(328, webDirectory.Files.Count);
@@ -2142,9 +1908,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing62aAsync()
         {
-            string html = GetSample("DirectoryListing62a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(38, webDirectory.Subdirectories.Count);
@@ -2160,9 +1924,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing62bAsync()
         {
-            string html = GetSample("DirectoryListing62b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(22, webDirectory.Subdirectories.Count);
@@ -2178,9 +1940,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing63aAsync()
         {
-            string html = GetSample("DirectoryListing63a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(170, webDirectory.Subdirectories.Count);
@@ -2194,9 +1954,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing63bAsync()
         {
-            string html = GetSample("DirectoryListing63b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -2211,9 +1969,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing64aAsync()
         {
-            string html = GetSample("DirectoryListing64a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(3, webDirectory.Subdirectories.Count);
@@ -2229,9 +1985,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing64bAsync()
         {
-            string html = GetSample("DirectoryListing64b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -2246,9 +2000,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing65aAsync()
         {
-            string html = GetSample("DirectoryListing65a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(2, webDirectory.Subdirectories.Count);
@@ -2262,9 +2014,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing65bAsync()
         {
-            string html = GetSample("DirectoryListing65b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -2279,9 +2029,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing66aAsync()
         {
-            string html = GetSample("DirectoryListing66a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(12, webDirectory.Subdirectories.Count);
@@ -2297,9 +2045,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing66bAsync()
         {
-            string html = GetSample("DirectoryListing66b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -2316,9 +2062,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing67aAsync()
         {
-            string html = GetSample("DirectoryListing67a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(11, webDirectory.Subdirectories.Count);
@@ -2334,9 +2078,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing67bAsync()
         {
-            string html = GetSample("DirectoryListing67b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -2351,9 +2093,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing68aAsync()
         {
-            string html = GetSample("DirectoryListing68a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(110, webDirectory.Subdirectories.Count);
@@ -2369,9 +2109,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing68bAsync()
         {
-            string html = GetSample("DirectoryListing68b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://dl.mojoo.ir/upload/film/tv-shows/?dir=12Monkeys" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample(), "http://dl.mojoo.ir/upload/film/tv-shows/?dir=12Monkeys");
 
             Assert.Equal("tv-shows", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -2386,9 +2124,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing69aAsync()
         {
-            string html = GetSample("DirectoryListing69a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(6, webDirectory.Subdirectories.Count);
@@ -2402,9 +2138,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing69bAsync()
         {
-            string html = GetSample("DirectoryListing69b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(3, webDirectory.Subdirectories.Count);
@@ -2420,9 +2154,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing70aAsync()
         {
-            string html = GetSample("DirectoryListing70a");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(29, webDirectory.Subdirectories.Count);
@@ -2438,9 +2170,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing70bAsync()
         {
-            string html = GetSample("DirectoryListing70b");
-
-            WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
+            WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
