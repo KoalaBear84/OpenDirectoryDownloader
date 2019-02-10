@@ -7,13 +7,18 @@ namespace OpenDirectoryDownloader.Tests
 {
     public class DirectoryParserTests
     {
+        private static string GetSample(string name)
+        {
+            return File.ReadAllText($"Samples\\{name}.html.dat");
+        }
+
         /// <summary>
         /// Url: http://178.216.250.167/
         /// </summary>
         [Fact]
         public async Task TestDirectoryListing01aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing01a.html");
+            string html = GetSample("DirectoryListing01a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -31,7 +36,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing02aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing02a.html");
+            string html = GetSample("DirectoryListing02a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -50,7 +55,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing02bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing02b.html");
+            string html = GetSample("DirectoryListing02b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -69,7 +74,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing03aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing03a.html");
+            string html = GetSample("DirectoryListing03a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -87,7 +92,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing03bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing03b.html");
+            string html = GetSample("DirectoryListing03b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -104,7 +109,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing04aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing04a.html");
+            string html = GetSample("DirectoryListing04a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -122,7 +127,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing04bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing04b.html");
+            string html = GetSample("DirectoryListing04b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -140,7 +145,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing05aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing05a.html");
+            string html = GetSample("DirectoryListing05a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -158,7 +163,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing05bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing05b.html");
+            string html = GetSample("DirectoryListing05b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -176,7 +181,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing06aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing06a.html");
+            string html = GetSample("DirectoryListing06a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -194,7 +199,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing06bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing06b.html");
+            string html = GetSample("DirectoryListing06b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -211,7 +216,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing07aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing07a.html");
+            string html = GetSample("DirectoryListing07a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -229,7 +234,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing07bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing07b.html");
+            string html = GetSample("DirectoryListing07b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -245,7 +250,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing08aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing08a.html");
+            string html = GetSample("DirectoryListing08a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -261,7 +266,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing08bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing08b.html");
+            string html = GetSample("DirectoryListing08b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -278,7 +283,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing09aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing09a.html");
+            string html = GetSample("DirectoryListing09a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -296,7 +301,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing09bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing09b.html");
+            string html = GetSample("DirectoryListing09b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -313,7 +318,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing10aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing10a.html");
+            string html = GetSample("DirectoryListing10a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -329,7 +334,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing10bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing10b.html");
+            string html = GetSample("DirectoryListing10b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -346,7 +351,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing11aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing11a.html");
+            string html = GetSample("DirectoryListing11a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -364,7 +369,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing11bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing11b.html");
+            string html = GetSample("DirectoryListing11b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -380,7 +385,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing12aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing12a.html");
+            string html = GetSample("DirectoryListing12a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -398,7 +403,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing12bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing12b.html");
+            string html = GetSample("DirectoryListing12b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -417,7 +422,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing13aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing13a.html");
+            string html = GetSample("DirectoryListing13a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "https://thetrove.net/Tools/index.html" }, html);
 
@@ -436,7 +441,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing13bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing13b.html");
+            string html = GetSample("DirectoryListing13b");
 
             // Yes, URL with real space
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "https://thetrove.net/Assets/D&D Homebrew/index.html" }, html);
@@ -456,7 +461,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing13cAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing13c.html");
+            string html = GetSample("DirectoryListing13c");
 
             // Yes, URL with real space
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "https://thetrove.net/Assets/Map Assets/2010-Fantasy/Fantasy/BearSkin Rug + Probonos hanging antelope/index.html" }, html);
@@ -474,7 +479,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing14aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing14a.html");
+            string html = GetSample("DirectoryListing14a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -492,7 +497,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing14bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing14b.html");
+            string html = GetSample("DirectoryListing14b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -510,7 +515,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing15aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing15a.html");
+            string html = GetSample("DirectoryListing15a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -528,7 +533,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing15bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing15b.html");
+            string html = GetSample("DirectoryListing15b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -545,7 +550,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing16aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing16a.html");
+            string html = GetSample("DirectoryListing16a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -561,7 +566,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing16bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing16b.html");
+            string html = GetSample("DirectoryListing16b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -578,7 +583,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing17aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing17a.html");
+            string html = GetSample("DirectoryListing17a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -596,7 +601,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing17bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing17b.html");
+            string html = GetSample("DirectoryListing17b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -613,7 +618,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing18aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing18a.html");
+            string html = GetSample("DirectoryListing18a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -631,7 +636,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing18bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing18b.html");
+            string html = GetSample("DirectoryListing18b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -648,7 +653,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing19aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing19a.html");
+            string html = GetSample("DirectoryListing19a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -664,7 +669,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing19bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing19b.html");
+            string html = GetSample("DirectoryListing19b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -681,7 +686,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing20aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing20a.html");
+            string html = GetSample("DirectoryListing20a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -699,7 +704,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing20bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing20b.html");
+            string html = GetSample("DirectoryListing20b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -717,7 +722,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing21aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing21a.html");
+            string html = GetSample("DirectoryListing21a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -736,7 +741,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing21bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing21b.html");
+            string html = GetSample("DirectoryListing21b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -755,7 +760,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing22aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing22a.html");
+            string html = GetSample("DirectoryListing22a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -773,7 +778,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing22bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing22b.html");
+            string html = GetSample("DirectoryListing22b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -791,7 +796,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing23aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing23a.html");
+            string html = GetSample("DirectoryListing23a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -809,7 +814,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing23bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing23b.html");
+            string html = GetSample("DirectoryListing23b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -827,7 +832,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing24aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing24a.html");
+            string html = GetSample("DirectoryListing24a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -843,7 +848,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing24bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing24b.html");
+            string html = GetSample("DirectoryListing24b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -861,7 +866,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing25aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing25a.html");
+            string html = GetSample("DirectoryListing25a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -879,7 +884,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing25bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing25b.html");
+            string html = GetSample("DirectoryListing25b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -896,7 +901,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing26aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing26a.html");
+            string html = GetSample("DirectoryListing26a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -912,7 +917,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing26bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing26b.html");
+            string html = GetSample("DirectoryListing26b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -929,7 +934,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing27aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing27a.html");
+            string html = GetSample("DirectoryListing27a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -947,7 +952,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing27bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing27b.html");
+            string html = GetSample("DirectoryListing27b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -965,7 +970,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing28aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing28a.html");
+            string html = GetSample("DirectoryListing28a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -981,7 +986,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing28bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing28b.html");
+            string html = GetSample("DirectoryListing28b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -999,7 +1004,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing29aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing29a.html");
+            string html = GetSample("DirectoryListing29a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1015,7 +1020,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing29bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing29b.html");
+            string html = GetSample("DirectoryListing29b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1032,7 +1037,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing30aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing30a.html");
+            string html = GetSample("DirectoryListing30a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1048,7 +1053,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing30bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing30b.html");
+            string html = GetSample("DirectoryListing30b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1065,7 +1070,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing31aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing31a.html");
+            string html = GetSample("DirectoryListing31a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1081,7 +1086,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing31bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing31b.html");
+            string html = GetSample("DirectoryListing31b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1099,7 +1104,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing31cAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing31c.html");
+            string html = GetSample("DirectoryListing31c");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1115,7 +1120,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing32aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing32a.html");
+            string html = GetSample("DirectoryListing32a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1130,7 +1135,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing33aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing33a.html");
+            string html = GetSample("DirectoryListing33a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://ipfs.io/" }, html);
 
@@ -1147,7 +1152,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing34aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing34a.html");
+            string html = GetSample("DirectoryListing34a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1163,7 +1168,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing34bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing34b.html");
+            string html = GetSample("DirectoryListing34b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1181,7 +1186,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing35aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing35a.html");
+            string html = GetSample("DirectoryListing35a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1199,7 +1204,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing35bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing35b.html");
+            string html = GetSample("DirectoryListing35b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1216,7 +1221,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing36aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing36a.html");
+            string html = GetSample("DirectoryListing36a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1234,7 +1239,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing36bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing36b.html");
+            string html = GetSample("DirectoryListing36b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1252,7 +1257,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing37aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing37a.html");
+            string html = GetSample("DirectoryListing37a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1270,7 +1275,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing37bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing37b.html");
+            string html = GetSample("DirectoryListing37b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1288,7 +1293,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing38aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing38a.html");
+            string html = GetSample("DirectoryListing38a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1308,7 +1313,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing38bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing38b.html");
+            string html = GetSample("DirectoryListing38b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1325,7 +1330,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing39aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing39a.html");
+            string html = GetSample("DirectoryListing39a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1343,7 +1348,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing39bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing39b.html");
+            string html = GetSample("DirectoryListing39b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1360,7 +1365,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing40aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing40a.html");
+            string html = GetSample("DirectoryListing40a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1378,7 +1383,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing40bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing40b.html");
+            string html = GetSample("DirectoryListing40b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1393,7 +1398,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing41aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing41a.html");
+            string html = GetSample("DirectoryListing41a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1411,7 +1416,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing41bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing41b.html");
+            string html = GetSample("DirectoryListing41b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1428,7 +1433,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing42aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing42a.html");
+            string html = GetSample("DirectoryListing42a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1446,7 +1451,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing42bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing42b.html");
+            string html = GetSample("DirectoryListing42b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1463,7 +1468,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing43aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing43a.html");
+            string html = GetSample("DirectoryListing43a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1481,7 +1486,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing43bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing43b.html");
+            string html = GetSample("DirectoryListing43b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1498,7 +1503,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing44aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing44a.html");
+            string html = GetSample("DirectoryListing44a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1516,7 +1521,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing44bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing44b.html");
+            string html = GetSample("DirectoryListing44b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1533,7 +1538,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing45aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing45a.html");
+            string html = GetSample("DirectoryListing45a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1551,7 +1556,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing45bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing45b.html");
+            string html = GetSample("DirectoryListing45b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1568,7 +1573,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing46aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing46a.html");
+            string html = GetSample("DirectoryListing46a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1586,7 +1591,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing46bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing46b.html");
+            string html = GetSample("DirectoryListing46b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1603,7 +1608,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing46cAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing46c.html");
+            string html = GetSample("DirectoryListing46c");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1618,7 +1623,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing47aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing47a.html");
+            string html = GetSample("DirectoryListing47a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1636,7 +1641,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing47bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing47b.html");
+            string html = GetSample("DirectoryListing47b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1653,7 +1658,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing48aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing48a.html");
+            string html = GetSample("DirectoryListing48a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1671,7 +1676,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing48bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing48b.html");
+            string html = GetSample("DirectoryListing48b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1688,7 +1693,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing49aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing49a.html");
+            string html = GetSample("DirectoryListing49a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1704,7 +1709,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing49bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing49b.html");
+            string html = GetSample("DirectoryListing49b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1721,7 +1726,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing49cAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing49c.html");
+            string html = GetSample("DirectoryListing49c");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1739,7 +1744,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing50aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing50a.html");
+            string html = GetSample("DirectoryListing50a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1757,7 +1762,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing50bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing50b.html");
+            string html = GetSample("DirectoryListing50b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1775,7 +1780,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing51aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing51a.html");
+            string html = GetSample("DirectoryListing51a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1793,7 +1798,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing51bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing51b.html");
+            string html = GetSample("DirectoryListing51b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1810,7 +1815,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing52aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing52a.html");
+            string html = GetSample("DirectoryListing52a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1828,7 +1833,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing52bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing52b.html");
+            string html = GetSample("DirectoryListing52b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1845,7 +1850,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing53aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing53a.html");
+            string html = GetSample("DirectoryListing53a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1862,7 +1867,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing53bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing53b.html");
+            string html = GetSample("DirectoryListing53b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1879,7 +1884,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing54aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing54a.html");
+            string html = GetSample("DirectoryListing54a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1897,7 +1902,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing54bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing54b.html");
+            string html = GetSample("DirectoryListing54b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1914,7 +1919,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing55aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing55a.html");
+            string html = GetSample("DirectoryListing55a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1932,7 +1937,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing55bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing55b.html");
+            string html = GetSample("DirectoryListing55b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1949,7 +1954,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing56aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing56a.html");
+            string html = GetSample("DirectoryListing56a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1967,7 +1972,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing56bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing56b.html");
+            string html = GetSample("DirectoryListing56b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -1985,7 +1990,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing57aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing57a.html");
+            string html = GetSample("DirectoryListing57a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2001,7 +2006,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing57bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing57b.html");
+            string html = GetSample("DirectoryListing57b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2018,7 +2023,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing58aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing58a.html");
+            string html = GetSample("DirectoryListing58a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2036,7 +2041,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing58bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing58b.html");
+            string html = GetSample("DirectoryListing58b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2053,7 +2058,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing59aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing59a.html");
+            string html = GetSample("DirectoryListing59a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2069,7 +2074,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing59bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing59b.html");
+            string html = GetSample("DirectoryListing59b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2086,7 +2091,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing60aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing60a.html");
+            string html = GetSample("DirectoryListing60a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2104,7 +2109,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing60bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing60b.html");
+            string html = GetSample("DirectoryListing60b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2121,7 +2126,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing61aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing61a.html");
+            string html = GetSample("DirectoryListing61a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2137,7 +2142,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing62aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing62a.html");
+            string html = GetSample("DirectoryListing62a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2155,7 +2160,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing62bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing62b.html");
+            string html = GetSample("DirectoryListing62b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2173,7 +2178,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing63aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing63a.html");
+            string html = GetSample("DirectoryListing63a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2189,7 +2194,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing63bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing63b.html");
+            string html = GetSample("DirectoryListing63b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2206,7 +2211,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing64aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing64a.html");
+            string html = GetSample("DirectoryListing64a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2224,7 +2229,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing64bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing64b.html");
+            string html = GetSample("DirectoryListing64b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2241,7 +2246,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing65aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing65a.html");
+            string html = GetSample("DirectoryListing65a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2257,7 +2262,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing65bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing65b.html");
+            string html = GetSample("DirectoryListing65b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2274,7 +2279,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing66aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing66a.html");
+            string html = GetSample("DirectoryListing66a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2292,7 +2297,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing66bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing66b.html");
+            string html = GetSample("DirectoryListing66b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2311,7 +2316,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing67aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing67a.html");
+            string html = GetSample("DirectoryListing67a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2329,7 +2334,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing67bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing67b.html");
+            string html = GetSample("DirectoryListing67b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2346,7 +2351,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing68aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing68a.html");
+            string html = GetSample("DirectoryListing68a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2364,7 +2369,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing68bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing68b.html");
+            string html = GetSample("DirectoryListing68b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://dl.mojoo.ir/upload/film/tv-shows/?dir=12Monkeys" }, html);
 
@@ -2381,7 +2386,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing69aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing69a.html");
+            string html = GetSample("DirectoryListing69a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2397,7 +2402,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing69bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing69b.html");
+            string html = GetSample("DirectoryListing69b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2415,7 +2420,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing70aAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing70a.html");
+            string html = GetSample("DirectoryListing70a");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 
@@ -2433,7 +2438,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing70bAsync()
         {
-            string html = File.ReadAllText("Samples\\DirectoryListing70b.html");
+            string html = GetSample("DirectoryListing70b");
 
             WebDirectory webDirectory = await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html);
 

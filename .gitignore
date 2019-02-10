@@ -341,9 +341,6 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
-# Skip html samples
-/OpenDirectoryDownloader.Tests/Samples/* linguist-vendored
-
 # Google Drive API Credentials
 /OpenDirectoryDownloader.GoogleDrive/credentials.json
 
