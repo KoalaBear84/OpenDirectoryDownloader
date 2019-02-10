@@ -1,7 +1,11 @@
 # Open Directory Downloader
-Indexes open directories. Downloading is not (yet) implemented, but is possible when you use the resulting file into another tool.
+Indexes open directories listings in 70 supported formats, including FTP, Google Drive.
 
-If you have improvements supply me with a pull request! If you have a format not yet supported, please let me know.
+Written in C# with .NET Core, which means it is **cross platform**!
+
+Downloading is not (yet) implemented, but is possible when you use the resulting file into another tool.
+
+If you have improvements, supply me with a pull request! If you have a format not yet supported, please let me know.
 
 ## Usage
 
@@ -17,8 +21,8 @@ Short | Long | Description
  `-e` | `--exact-file-sizes` | Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server)
  `-s` | `--speed-test` | Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server)
 
- Example:
- `OpenDirectoryIndexer.exe --url "https://myopendirectory.com"`
+Example:
+`OpenDirectoryIndexer.exe --url "https://myopendirectory.com"`
 
 ## Getting the code
 
@@ -33,3 +37,34 @@ Short | Long | Description
 1. Download Visual Studio Code: https://code.visualstudio.com/download
 2. Be sure to install Git: https://git-scm.com/downloads
 3. Clone the repository: https://code.visualstudio.com/docs/editor/versioncontrol#_cloning-a-repository
+
+## Google Drive
+For Google Drive scanning you need to get a Google Drive API credentials file, it's free!
+
+1. Go to https://console.cloud.google.com/projectcreate
+2. Fill in Project Name
+3. Change Project ID (optional)
+4. Wait a couple of seconds until the project is created and open it
+5. Click "Go to APIs overview" in the APIs panel
+6. Click "ENABLE APIS AND SERVICES"
+7. Enter "Drive", select "Google Drive API"
+8. Click "ENABLE"
+9. Click "CREATE CREDENTIALS" in the tooltip
+10. First box pick "Google Drive API"
+11. Second box pick "Other UI (e.g. Windows, CLI tool)"
+12. Select "Application data"
+13. Click "What credentials do I need?"
+14. Enter a "Service account name" (for example "serviceaccount")
+15. JSON option is good
+16. Click "Continue"
+17. A dialog pops up, choose "CREATE WITHOUT A ROLE"
+17. The needed Json file is downloaded
+18. Rename this file to "OpenDirectoryDownloader.GoogleDrive.json" and place it in the OpenDirectoryDownloader.Google project, or place it in the same directory as the executable
+
+## TODO (for readme)
+
+* Building on linux
+
+## Contact me
+
+Reddit https://www.reddit.com/user/KoalaBear84
