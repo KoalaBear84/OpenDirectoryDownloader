@@ -276,7 +276,7 @@ namespace OpenDirectoryDownloader
                         }
                     }
 
-                    if (!OpenDirectoryIndexerSettings.CommandLineOptions.NoJson)
+                    if (OpenDirectoryIndexerSettings.CommandLineOptions.Json)
                     {
                         Logger.Info("Save session to JSON");
                         Console.WriteLine("Save session to JSON");

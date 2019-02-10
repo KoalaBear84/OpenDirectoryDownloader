@@ -1,5 +1,24 @@
 # Open Directory Downloader
-Indexes open directories
+Indexes open directories. Downloading is not (yet) implemented, but is possible when you use the resulting file into another tool.
+
+If you have improvements supply me with a pull request! If you have a format not yet supported, please let me know.
+
+## Usage
+
+Command line paremters:
+
+Short | Long | Description
+---------|----------|---------
+ `-u` | `--url` | Url to scan
+ `-q` | `--quit` | Do not wait after scanning
+ `-j` | `--json` | Save JSON file
+ `-f` | `--no-urls` | Do not save URLs file
+ `-r` | `--no-reddit` | Do not show Reddit stats markdown
+ `-e` | `--exact-file-sizes` | Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server)
+ `-s` | `--speed-test` | Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server)
+
+ Example:
+ `OpenDirectoryIndexer.exe --url "https://myopendirectory.com"`
 
 ## Getting the code
 
