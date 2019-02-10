@@ -342,6 +342,6 @@ ASALocalRun/
 healthchecksdb
 
 # Google Drive API Credentials
-/OpenDirectoryDownloader.GoogleDrive/credentials.json
+/OpenDirectoryDownloader.GoogleDrive/OpenDirectoryDownloader.GoogleDrive.json
 
 /TODO.txt

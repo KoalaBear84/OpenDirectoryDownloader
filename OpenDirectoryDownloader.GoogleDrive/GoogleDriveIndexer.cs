@@ -29,7 +29,7 @@ namespace OpenDirectoryDownloader.GoogleDrive
         {
             UserCredential credential;
 
-            using (FileStream fileStream = new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+            using (FileStream fileStream = new FileStream("OpenDirectoryDownloader.GoogleDrive.json", FileMode.Open, FileAccess.Read))
             {
                 // The file token.json stores the user's access and refresh tokens, and is created
                 // automatically when the authorization flow completes for the first time.
