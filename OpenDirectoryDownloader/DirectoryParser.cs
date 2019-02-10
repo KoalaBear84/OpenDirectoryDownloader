@@ -615,7 +615,7 @@ namespace OpenDirectoryDownloader
 
         private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser1 = async (webDirectory, baseUrl, line) =>
         {
-            Match match = Regex.Match(line, @"(?:<img.*>\s*)+<a.*<\/a>\S*\s*(?<Modified>\d*-(?:[a-zA-Z]*|\d*)-\d*\s*\d*:\d*(:\d*)?)?\s*(?<FileSize>\S+)(\s*(?<Description>.*))?");
+            Match match = Regex.Match(line, @"(?:<img.*>\s*)+<a.*?>.*?<\/a>\S*\s*(?<Modified>\d*-(?:[a-zA-Z]*|\d*)-\d*\s*\d*:\d*(:\d*)?)?\s*(?<FileSize>\S+)(\s*(?<Description>.*))?");
 
             if (match.Success)
             {

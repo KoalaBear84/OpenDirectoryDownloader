@@ -2178,5 +2178,35 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("1-lafbd-63-misaki-tsubasa-laforet-girl-63_sh.mp4", webDirectory.Files[0].FileName);
             Assert.Equal(1610612736, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: https://ftp.sunet.se/mirror/ubuntu-releases/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing71aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(17, webDirectory.Subdirectories.Count);
+            Assert.Equal("12.04.5", webDirectory.Subdirectories[0].Name);
+            Assert.Equal("Ubuntu 12.04.5 LTS (Precise Pangolin)", webDirectory.Subdirectories[0].Description);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: https://ftp.sunet.se/mirror/ubuntu-releases/14.04.5/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing71bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(35, webDirectory.Files.Count);
+            Assert.Equal("MD5SUMS", webDirectory.Files[0].FileName);
+            Assert.Equal(307, webDirectory.Files[0].FileSize);
+        }
     }
 }

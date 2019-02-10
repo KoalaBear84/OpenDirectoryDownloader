@@ -1,0 +1,87 @@
+﻿
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+ "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+ <head>
+  <title>Ubuntu Releases</title>
+  <!-- Main style sheets for CSS2 capable browsers -->
+  <style type="text/css" media="screen">
+  @import url(/include/plone.css);
+  @import url(/include/ubuntu.css);
+  pre { background: none; }
+  body { margin: 2em; }
+  </style>
+ </head>
+ <body><div id="pageWrapper">
+
+<h1>Ubuntu Releases</h1>
+
+<p>The following releases of Ubuntu are available:</p>
+
+<ul>
+<li><a href="cosmic/">Ubuntu 18.10 (Cosmic Cuttlefish)</a>
+<li><a href="bionic/">Ubuntu 18.04.1 LTS (Bionic Beaver)</a>
+<li><a href="xenial/">Ubuntu 16.04.5 LTS (Xenial Xerus)</a>
+<li><a href="trusty/">Ubuntu 14.04.5 LTS (Trusty Tahr)</a>
+<li><a href="precise/">Ubuntu 12.04.5 LTS (Precise Pangolin)</a>
+</ul>
+
+<!--
+<p>There is also an unsupported beta release available:</p>
+
+<ul>
+<li><a href="cosmic/">Ubuntu 18.10 Beta (Cosmic Cuttlefish)</a>
+</ul>
+-->
+
+<p>We are happy to provide hosting for the following projects via the
+<a href="http://cdimage.ubuntu.com/">cdimage server</a>. While they are not
+commercially supported by Canonical, they receive full support from their
+communities.</p>
+
+<ul>
+<li><a href="http://cdimage.ubuntu.com/edubuntu/releases/">Edubuntu</a>
+<li><a href="http://cdimage.ubuntu.com/kubuntu/releases/">Kubuntu</a>
+<li><a href="http://cdimage.ubuntu.com/lubuntu/releases/">Lubuntu</a>
+<li><a href="http://cdimage.ubuntu.com/mythbuntu/releases/">Mythbuntu</a>
+<li><a href="http://cdimage.ubuntu.com/ubuntu-budgie/">Ubuntu Budgie</a>
+<li><a href="http://cdimage.ubuntu.com/ubuntu-gnome/releases/">Ubuntu GNOME</a>
+<li><a href="http://cdimage.ubuntu.com/ubuntukylin/releases/">UbuntuKylin</a>
+<li><a href="http://cdimage.ubuntu.com/ubuntu-mate/releases/">Ubuntu MATE</a>
+<li><a href="http://cdimage.ubuntu.com/ubuntustudio/releases/">UbuntuStudio</a>
+<li><a href="http://cdimage.ubuntu.com/xubuntu/releases/">Xubuntu</a>
+</ul>
+
+<p>The cdimage server also hosts releases of other Ubuntu images not found on
+this server, such as builds for less popular architectures and other non-standard
+and unsupported images.  For Ubuntu Desktop and Server on popular architectures,
+please see the links above instead.</p>
+
+<ul>
+<li><a href="http://cdimage.ubuntu.com/releases/">Unsupported Ubuntu Images</a>
+</ul>
+
+<p>For old releases, see
+<a href="http://old-releases.ubuntu.com/releases/">old-releases.ubuntu.com</a>.</p>
+
+<pre><img src="/icons2/blank.png" alt="Icon "> <a href="?C=N;O=D">Name</a>                    <a href="?C=M;O=A">Last modified</a>      <a href="?C=S;O=A">Size</a>  <a href="?C=D;O=A">Description</a><hr><img src="/icons2/go-previous.png" alt="[PARENTDIR]"> <a href="/mirror/">Parent Directory</a>                             -   
+<img src="/icons2/folder.png" alt="[DIR]"> <a href="12.04.5/">12.04.5/</a>                2018-10-02 19:26    -   Ubuntu 12.04.5 LTS (Precise Pangolin)
+<img src="/icons2/folder.png" alt="[DIR]"> <a href="12.04/">12.04/</a>                  2018-10-02 19:26    -   Ubuntu 12.04.5 LTS (Precise Pangolin)
+<img src="/icons2/folder.png" alt="[DIR]"> <a href="14.04.5/">14.04.5/</a>                2018-10-02 19:26    -   Ubuntu 14.04.5 LTS (Trusty Tahr)
+<img src="/icons2/folder.png" alt="[DIR]"> <a href="14.04/">14.04/</a>                  2018-10-02 19:26    -   Ubuntu 14.04.5 LTS (Trusty Tahr)
+<img src="/icons2/folder.png" alt="[DIR]"> <a href="16.04.5/">16.04.5/</a>                2018-10-02 19:26    -   Ubuntu 16.04.5 LTS (Xenial Xerus)
+<img src="/icons2/folder.png" alt="[DIR]"> <a href="16.04/">16.04/</a>                  2018-10-02 19:26    -   Ubuntu 16.04.5 LTS (Xenial Xerus)
+<img src="/icons2/folder.png" alt="[DIR]"> <a href="18.04.1.0/">18.04.1.0/</a>              2018-11-30 01:03    -   Ubuntu 18.04.1 LTS (Bionic Beaver)
+<img src="/icons2/folder.png" alt="[DIR]"> <a href="18.04.1/">18.04.1/</a>                2018-11-30 01:03    -   Ubuntu 18.04.1 LTS (Bionic Beaver)
+<img src="/icons2/folder.png" alt="[DIR]"> <a href="18.04/">18.04/</a>                  2018-11-30 01:03    -   Ubuntu 18.04.1 LTS (Bionic Beaver)
+<img src="/icons2/folder.png" alt="[DIR]"> <a href="18.10/">18.10/</a>                  2018-10-18 14:16    -   Ubuntu 18.10 (Cosmic Cuttlefish)
+<img src="/icons2/folder.png" alt="[DIR]"> <a href="bionic/">bionic/</a>                 2018-11-30 01:03    -   Ubuntu 18.04.1 LTS (Bionic Beaver)
+<img src="/icons2/folder.png" alt="[DIR]"> <a href="cosmic/">cosmic/</a>                 2018-10-18 14:16    -   Ubuntu 18.10 (Cosmic Cuttlefish)
+<img src="/icons2/folder.png" alt="[DIR]"> <a href="precise/">precise/</a>                2018-10-02 19:26    -   Ubuntu 12.04.5 LTS (Precise Pangolin)
+<img src="/icons2/folder.png" alt="[DIR]"> <a href="project/">project/</a>                2016-05-25 18:11    -   
+<img src="/icons2/folder.png" alt="[DIR]"> <a href="trusty/">trusty/</a>                 2018-10-02 19:26    -   Ubuntu 14.04.5 LTS (Trusty Tahr)
+<img src="/icons2/folder.png" alt="[DIR]"> <a href="ubuntu-core/">ubuntu-core/</a>            2018-10-02 19:26    -   
+<img src="/icons2/folder.png" alt="[DIR]"> <a href="xenial/">xenial/</a>                 2018-10-02 19:26    -   Ubuntu 16.04.5 LTS (Xenial Xerus)
+<hr></pre>
+
+</div></body></html>

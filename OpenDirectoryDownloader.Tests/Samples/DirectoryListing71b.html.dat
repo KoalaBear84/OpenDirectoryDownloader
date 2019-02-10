@@ -1,0 +1,101 @@
+﻿
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+ "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Ubuntu 14.04.5 LTS (Trusty Tahr)</title>
+<!-- Main style sheets for CSS2 capable browsers -->
+<style type="text/css" media="screen">
+  @import url(//releases.ubuntu.com/include/style.css);
+body { margin: 2em; }
+</style>
+
+</head>
+<body><div id="pageWrapper">
+
+<div id="header"><a href="http://www.ubuntu.com/"></a></div>
+
+<h1>Ubuntu 14.04.5 LTS (Trusty Tahr)</h1>
+
+<div id="main">
+
+<h2>Select an image</h2>
+
+<p>Ubuntu is distributed on two types of images described below.
+
+<h3>Desktop image</h3>
+
+<p>The desktop image allows you to try Ubuntu without changing your computer at all, and at your option to install it permanently later.  This type of image is what most people will want to use.  You will need at least 384MiB of RAM to install from this image.</p>
+
+<p>There are two images available, each for a different type of computer:</p>
+
+<dl>
+<dt><a href="ubuntu-14.04.5-desktop-amd64.iso">64-bit PC (AMD64) desktop image</a>
+
+<dd>Choose this to take full advantage of computers based on the AMD64 or EM64T architecture (e.g., Athlon64, Opteron, EM64T Xeon, Core 2).  If you have a non-64-bit processor made by AMD, or if you need full support for 32-bit code, use the i386 images instead.  Choose this if you are at all unsure.</dd>
+
+<dt><a href="ubuntu-14.04.5-desktop-i386.iso">32-bit PC (i386) desktop image</a>
+
+<dd>For almost all PCs.  This includes most machines with Intel/AMD/etc type processors and almost all computers that run Microsoft Windows, as well as newer Apple Macintosh systems based on Intel processors.</dd>
+
+</dl>
+
+<h3>Server install image</h3>
+
+<p>The server install image allows you to install Ubuntu permanently on a computer for use as a server.  It will not install a graphical user interface.</p>
+
+<p>There are two images available, each for a different type of computer:</p>
+
+<dl>
+<dt><a href="ubuntu-14.04.5-server-amd64.iso">64-bit PC (AMD64) server install image</a>
+
+<dd>Choose this to take full advantage of computers based on the AMD64 or EM64T architecture (e.g., Athlon64, Opteron, EM64T Xeon, Core 2).  If you have a non-64-bit processor made by AMD, or if you need full support for 32-bit code, use the i386 images instead.  Choose this if you are at all unsure.</dd>
+
+<dt><a href="ubuntu-14.04.5-server-i386.iso">32-bit PC (i386) server install image</a>
+
+<dd>For almost all PCs.  This includes most machines with Intel/AMD/etc type processors and almost all computers that run Microsoft Windows, as well as newer Apple Macintosh systems based on Intel processors.</dd>
+
+</dl>
+
+<p>A full list of available files, including <a href="https://help.ubuntu.com/community/BitTorrent">BitTorrent</a> files, can be found below.</p>
+
+<p>If you need help burning these images to disk, see the <a href="https://help.ubuntu.com/community/BurningIsoHowto">Image Burning Guide</a>.</p>
+
+<pre><img src="/icons2/blank.png" alt="Icon " width="22" height="22"> <a href="?C=N;O=D">Name</a>                                     <a href="?C=M;O=A">Last modified</a>      <a href="?C=S;O=A">Size</a>  <a href="?C=D;O=A">Description</a><hr><img src="/icons2/go-previous.png" alt="[PARENTDIR]" width="22" height="22"> <a href="/mirror/ubuntu-releases/">Parent Directory</a>                                              -   
+<img src="../cdicons/list.png" alt="[SUM]" width="22" height="22"> <a href="MD5SUMS">MD5SUMS</a>                                  2017-02-16 23:30  307   
+<img src="../cdicons/list.png" alt="[   ]" width="22" height="22"> <a href="MD5SUMS-metalink">MD5SUMS-metalink</a>                         2016-08-04 22:46  568   
+<img src="../cdicons/list.png" alt="[PGP]" width="22" height="22"> <a href="MD5SUMS-metalink.gpg">MD5SUMS-metalink.gpg</a>                     2016-08-04 22:46  933   
+<img src="../cdicons/list.png" alt="[PGP]" width="22" height="22"> <a href="MD5SUMS.gpg">MD5SUMS.gpg</a>                              2017-02-16 23:30  933   
+<img src="../cdicons/list.png" alt="[SUM]" width="22" height="22"> <a href="SHA1SUMS">SHA1SUMS</a>                                 2017-02-16 23:30  347   
+<img src="../cdicons/list.png" alt="[PGP]" width="22" height="22"> <a href="SHA1SUMS.gpg">SHA1SUMS.gpg</a>                             2017-02-16 23:30  933   
+<img src="../cdicons/list.png" alt="[SUM]" width="22" height="22"> <a href="SHA256SUMS">SHA256SUMS</a>                               2017-02-16 23:30  467   
+<img src="../cdicons/list.png" alt="[PGP]" width="22" height="22"> <a href="SHA256SUMS.gpg">SHA256SUMS.gpg</a>                           2017-02-16 23:30  933   
+<img src="../cdicons/iso.png" alt="[ISO]" width="22" height="22"> <a href="ubuntu-14.04.5-desktop-amd64.iso">ubuntu-14.04.5-desktop-amd64.iso</a>         2016-08-03 19:49  1.0G  Desktop image for 64-bit PC (AMD64) computers (standard download)
+<img src="../cdicons/torrent.png" alt="[P2P]" width="22" height="22"> <a href="ubuntu-14.04.5-desktop-amd64.iso.torrent">ubuntu-14.04.5-desktop-amd64.iso.torrent</a> 2016-08-04 22:43   41K  Desktop image for 64-bit PC (AMD64) computers (<a href="https://help.ubuntu.com/community/BitTorrent">BitTorrent</a> download)
+<img src="../cdicons/list.png" alt="[P2P]" width="22" height="22"> <a href="ubuntu-14.04.5-desktop-amd64.iso.zsync">ubuntu-14.04.5-desktop-amd64.iso.zsync</a>   2016-08-04 22:43  2.1M  Desktop image for 64-bit PC (AMD64) computers (<a href="http://zsync.moria.org.uk/">zsync</a> metafile)
+<img src="../cdicons/list.png" alt="[TXT]" width="22" height="22"> <a href="ubuntu-14.04.5-desktop-amd64.list">ubuntu-14.04.5-desktop-amd64.list</a>        2016-08-03 19:49  4.5K  Desktop image for 64-bit PC (AMD64) computers (file listing)
+<img src="../cdicons/list.png" alt="[TXT]" width="22" height="22"> <a href="ubuntu-14.04.5-desktop-amd64.manifest">ubuntu-14.04.5-desktop-amd64.manifest</a>    2016-08-03 19:41   60K  Desktop image for 64-bit PC (AMD64) computers (contents of live filesystem)
+<img src="../cdicons/torrent.png" alt="[P2P]" width="22" height="22"> <a href="ubuntu-14.04.5-desktop-amd64.metalink">ubuntu-14.04.5-desktop-amd64.metalink</a>    2016-08-04 22:46   44K  Ubuntu 14.04.5 LTS (Trusty Tahr)
+<img src="../cdicons/iso.png" alt="[ISO]" width="22" height="22"> <a href="ubuntu-14.04.5-desktop-i386.iso">ubuntu-14.04.5-desktop-i386.iso</a>          2016-08-03 19:52  1.0G  Desktop image for 32-bit PC (i386) computers (standard download)
+<img src="../cdicons/torrent.png" alt="[P2P]" width="22" height="22"> <a href="ubuntu-14.04.5-desktop-i386.iso.torrent">ubuntu-14.04.5-desktop-i386.iso.torrent</a>  2016-08-04 22:43   42K  Desktop image for 32-bit PC (i386) computers (<a href="https://help.ubuntu.com/community/BitTorrent">BitTorrent</a> download)
+<img src="../cdicons/list.png" alt="[P2P]" width="22" height="22"> <a href="ubuntu-14.04.5-desktop-i386.iso.zsync">ubuntu-14.04.5-desktop-i386.iso.zsync</a>    2016-08-04 22:43  2.1M  Desktop image for 32-bit PC (i386) computers (<a href="http://zsync.moria.org.uk/">zsync</a> metafile)
+<img src="../cdicons/list.png" alt="[TXT]" width="22" height="22"> <a href="ubuntu-14.04.5-desktop-i386.list">ubuntu-14.04.5-desktop-i386.list</a>         2016-08-03 19:52  3.8K  Desktop image for 32-bit PC (i386) computers (file listing)
+<img src="../cdicons/list.png" alt="[TXT]" width="22" height="22"> <a href="ubuntu-14.04.5-desktop-i386.manifest">ubuntu-14.04.5-desktop-i386.manifest</a>     2016-08-03 17:57   59K  Desktop image for 32-bit PC (i386) computers (contents of live filesystem)
+<img src="../cdicons/torrent.png" alt="[P2P]" width="22" height="22"> <a href="ubuntu-14.04.5-desktop-i386.metalink">ubuntu-14.04.5-desktop-i386.metalink</a>     2016-08-04 22:46   44K  Ubuntu 14.04.5 LTS (Trusty Tahr)
+<img src="../cdicons/iso.png" alt="[ISO]" width="22" height="22"> <a href="ubuntu-14.04.5-server-amd64.iso">ubuntu-14.04.5-server-amd64.iso</a>          2016-08-03 17:40  619M  Server install image for 64-bit PC (AMD64) computers (standard download)
+<img src="../cdicons/torrent.png" alt="[P2P]" width="22" height="22"> <a href="ubuntu-14.04.5-server-amd64.iso.torrent">ubuntu-14.04.5-server-amd64.iso.torrent</a>  2016-08-04 22:45   25K  Server install image for 64-bit PC (AMD64) computers (<a href="https://help.ubuntu.com/community/BitTorrent">BitTorrent</a> download)
+<img src="../cdicons/list.png" alt="[P2P]" width="22" height="22"> <a href="ubuntu-14.04.5-server-amd64.iso.zsync">ubuntu-14.04.5-server-amd64.iso.zsync</a>    2016-08-04 22:45  1.2M  Server install image for 64-bit PC (AMD64) computers (<a href="http://zsync.moria.org.uk/">zsync</a> metafile)
+<img src="../cdicons/jigdo.png" alt="[   ]" width="22" height="22"> <a href="ubuntu-14.04.5-server-amd64.jigdo">ubuntu-14.04.5-server-amd64.jigdo</a>        2016-08-04 22:45  127K  Server install image for 64-bit PC (AMD64) computers (<a href="http://atterer.org/jigdo">jigdo</a> download)
+<img src="../cdicons/list.png" alt="[TXT]" width="22" height="22"> <a href="ubuntu-14.04.5-server-amd64.list">ubuntu-14.04.5-server-amd64.list</a>         2016-08-03 17:40   92K  Server install image for 64-bit PC (AMD64) computers (file listing)
+<img src="../cdicons/torrent.png" alt="[P2P]" width="22" height="22"> <a href="ubuntu-14.04.5-server-amd64.metalink">ubuntu-14.04.5-server-amd64.metalink</a>     2016-08-04 22:46   44K  Ubuntu 14.04.5 LTS (Trusty Tahr)
+<img src="../cdicons/jigdo.png" alt="[   ]" width="22" height="22"> <a href="ubuntu-14.04.5-server-amd64.template">ubuntu-14.04.5-server-amd64.template</a>     2016-08-03 17:40   68M  Server install image for 64-bit PC (AMD64) computers (<a href="http://atterer.org/jigdo">jigdo</a> template)
+<img src="../cdicons/iso.png" alt="[ISO]" width="22" height="22"> <a href="ubuntu-14.04.5-server-i386.iso">ubuntu-14.04.5-server-i386.iso</a>           2016-08-03 17:44  595M  Server install image for 32-bit PC (i386) computers (standard download)
+<img src="../cdicons/torrent.png" alt="[P2P]" width="22" height="22"> <a href="ubuntu-14.04.5-server-i386.iso.torrent">ubuntu-14.04.5-server-i386.iso.torrent</a>   2016-08-04 22:46   24K  Server install image for 32-bit PC (i386) computers (<a href="https://help.ubuntu.com/community/BitTorrent">BitTorrent</a> download)
+<img src="../cdicons/list.png" alt="[P2P]" width="22" height="22"> <a href="ubuntu-14.04.5-server-i386.iso.zsync">ubuntu-14.04.5-server-i386.iso.zsync</a>     2016-08-04 22:45  1.2M  Server install image for 32-bit PC (i386) computers (<a href="http://zsync.moria.org.uk/">zsync</a> metafile)
+<img src="../cdicons/jigdo.png" alt="[   ]" width="22" height="22"> <a href="ubuntu-14.04.5-server-i386.jigdo">ubuntu-14.04.5-server-i386.jigdo</a>         2016-08-04 22:45  124K  Server install image for 32-bit PC (i386) computers (<a href="http://atterer.org/jigdo">jigdo</a> download)
+<img src="../cdicons/list.png" alt="[TXT]" width="22" height="22"> <a href="ubuntu-14.04.5-server-i386.list">ubuntu-14.04.5-server-i386.list</a>          2016-08-03 17:44   89K  Server install image for 32-bit PC (i386) computers (file listing)
+<img src="../cdicons/torrent.png" alt="[P2P]" width="22" height="22"> <a href="ubuntu-14.04.5-server-i386.metalink">ubuntu-14.04.5-server-i386.metalink</a>      2016-08-04 22:46   43K  Ubuntu 14.04.5 LTS (Trusty Tahr)
+<img src="../cdicons/jigdo.png" alt="[   ]" width="22" height="22"> <a href="ubuntu-14.04.5-server-i386.template">ubuntu-14.04.5-server-i386.template</a>      2016-08-03 17:44   64M  Server install image for 32-bit PC (i386) computers (<a href="http://atterer.org/jigdo">jigdo</a> template)
+<img src="/icons2/application-x-executable.png" alt="[EXE]" width="22" height="22"> <a href="wubi.exe">wubi.exe</a>                                 2014-04-14 18:04  2.4M  
+<hr></pre>
+</div></div></body></html>
