@@ -2208,5 +2208,37 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("MD5SUMS", webDirectory.Files[0].FileName);
             Assert.Equal(307, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: https://www.mmnt.net/db/0/0/89.179.242.201/Music
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing72aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(9, webDirectory.Subdirectories.Count);
+            Assert.Equal("5.1", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(9, webDirectory.Files.Count);
+            Assert.Equal("1.fpl", webDirectory.Files[0].FileName);
+            Assert.Equal(1132462, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: https://www.mmnt.net/db/0/0/89.179.242.201/Music/Disk
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing72bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Single(webDirectory.Subdirectories);
+            Assert.Equal("Metallica - Black Album", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(3, webDirectory.Files.Count);
+            Assert.Equal("Alan_Parsons_-_Turn_Of_A_Friendly_Card.iso", webDirectory.Files[0].FileName);
+            Assert.Equal(3661459620, webDirectory.Files[0].FileSize);
+        }
     }
 }

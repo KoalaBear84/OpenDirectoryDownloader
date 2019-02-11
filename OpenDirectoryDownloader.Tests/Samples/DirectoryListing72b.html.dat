@@ -1,0 +1,58 @@
+﻿
+<HTML>
+ <HEAD>
+  <TITLE>Index of ftp://89.179.242.201/Music/Disk</TITLE>
+  <META NAME="KeyWords" CONTENT="Index of ftp://89.179.242.201/Music/Disk">
+  <META NAME="Description" CONTENT="Index of ftp://89.179.242.201/Music/Disk">
+  <STYLE TYPE="text/css"><!--
+  TT {font-size: 13px}
+  PRE {font-size: 13px}
+  A { text-decoration: none; }
+  A:link {color: #0000E2;}
+  A:visited {color: #663366;}
+  A:hover {color: #ff0000; text-decoration: none}
+  --></STYLE>
+  <script type="text/javascript" src="/js/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript"><!--
+  $(document).ready(function(){
+  	$('.clink').click(function(){
+  		var hrf = $(this).attr('href');
+  		$.ajax({
+  			type: 'POST',
+  			url: '/cl',
+  			data: { u: hrf }
+  		});
+  	});
+  	$('.rlink').click(function(){
+  		var hrf = $(this).attr('href');
+  		$.ajax({
+  			type: 'POST',
+  			url: '/cl',
+  			data: { l: hrf }
+  		});
+  	});
+  });
+  //-->
+  </script>
+ </HEAD>
+ <BODY BGCOLOR=#ffffff VLINK=#663366 TEXT=#000000 LINK=#0000E2 ALINK=#ff0000>
+<script async language="javascript" charset="UTF-8" type="text/javascript" src="//lkalite.info/fscript.js?slw9hs=298287"></script>
+<H1>Index of ftp://89.179.242.201/Music/Disk</H1>
+<iframe src=/form.html width=640 height=50 frameborder=0></iframe><p><script type="text/javascript">
+<!--
+var _acic={dataProvider:10};(function(){var e=document.createElement("script");e.type="text/javascript";e.async=true;e.src="//www.acint.net/aci.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})()
+//-->
+</script></p><p><tt><IMG SRC=/icons/back.gif ALT="[DIR]"> <A HREF="/db/0/0/89.179.242.201/Music/">Parent Directory</A></p><p><table border=0 cellpadding=0 cellspacing=0 width=728>
+<tr><td><tt><IMG SRC="/icons/unknown.gif" ALT="[   ]"> <a href="ftp://89.179.242.201/Music/Disk/Alan_Parsons_-_Turn_Of_A_Friendly_Card.iso" class="clink">Alan_Parsons_-_Turn_Of_A_Friendly_Card.iso</a></td><td><tt><nobr>&nbsp;&nbsp;3.41Gb</td><td><tt><nobr>&nbsp;&nbsp;January 17 2008 at 19:36</td></tr><tr><td><tt><IMG SRC="/icons/unknown.gif" ALT="[   ]"> <a href="ftp://89.179.242.201/Music/Disk/Dire_Straits_-_Brothers_In_Arms.iso" class="clink">Dire_Straits_-_Brothers_In_Arms.iso</a></td><td><tt><nobr>&nbsp;&nbsp;4.36Gb</td><td><tt><nobr>&nbsp;&nbsp;January 18 2008 at 04:43</td></tr><tr><td><tt><IMG SRC="/icons/folder.gif" ALT="[DIR]"> <a href="/db/0/0/89.179.242.201/Music/Disk/Metallica%20-%20Black%20Album">Metallica - Black Album</a></td><td><tt><nobr>&nbsp;&nbsp;0.00b</td><td><tt><nobr>&nbsp;&nbsp;October 5 2013 at 22:07</td></tr><tr><td><tt><IMG SRC="/icons/unknown.gif" ALT="[   ]"> <a href="ftp://89.179.242.201/Music/Disk/roxette_DVD-Audio.iso" class="clink">roxette_DVD-Audio.iso</a></td><td><tt><nobr>&nbsp;&nbsp;4.27Gb</td><td><tt><nobr>&nbsp;&nbsp;March 24 2013 at 02:21</td></tr></table></p><p><table border=0 cellpadding=0 cellspacing=0 height=60 width=100><tr><td align=center valign=middle>
+<!--LiveInternet counter--><script type="text/javascript">
+document.write("<a href='//www.liveinternet.ru/click' "+
+"target=_blank><img src='//counter.yadro.ru/hit?t26.11;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";h"+escape(document.title.substring(0,150))+";"+Math.random()+
+"' alt='' title='LiveInternet: показано число посетителей за"+
+" сегодня' "+
+"border='0' width='88' height='15'><\/a>")
+</script><!--/LiveInternet-->
+</td></tr></table></p></BODY></HTML>

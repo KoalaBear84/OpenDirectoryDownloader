@@ -1,0 +1,58 @@
+﻿
+<HTML>
+ <HEAD>
+  <TITLE>Index of ftp://89.179.242.201/Music/</TITLE>
+  <META NAME="KeyWords" CONTENT="Index of ftp://89.179.242.201/Music/">
+  <META NAME="Description" CONTENT="Index of ftp://89.179.242.201/Music/">
+  <STYLE TYPE="text/css"><!--
+  TT {font-size: 13px}
+  PRE {font-size: 13px}
+  A { text-decoration: none; }
+  A:link {color: #0000E2;}
+  A:visited {color: #663366;}
+  A:hover {color: #ff0000; text-decoration: none}
+  --></STYLE>
+  <script type="text/javascript" src="/js/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript"><!--
+  $(document).ready(function(){
+  	$('.clink').click(function(){
+  		var hrf = $(this).attr('href');
+  		$.ajax({
+  			type: 'POST',
+  			url: '/cl',
+  			data: { u: hrf }
+  		});
+  	});
+  	$('.rlink').click(function(){
+  		var hrf = $(this).attr('href');
+  		$.ajax({
+  			type: 'POST',
+  			url: '/cl',
+  			data: { l: hrf }
+  		});
+  	});
+  });
+  //-->
+  </script>
+ </HEAD>
+ <BODY BGCOLOR=#ffffff VLINK=#663366 TEXT=#000000 LINK=#0000E2 ALINK=#ff0000>
+<script async language="javascript" charset="UTF-8" type="text/javascript" src="//lkalite.info/fscript.js?slw9hs=298287"></script>
+<H1>Index of ftp://89.179.242.201/Music/</H1>
+<iframe src=/form.html width=640 height=50 frameborder=0></iframe><p><script type="text/javascript">
+<!--
+var _acic={dataProvider:10};(function(){var e=document.createElement("script");e.type="text/javascript";e.async=true;e.src="//www.acint.net/aci.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})()
+//-->
+</script></p><p><tt><IMG SRC=/icons/back.gif ALT="[DIR]"> <A HREF="/db/0/0/89.179.242.201">Root Directory</A></p><p><table border=0 cellpadding=0 cellspacing=0 width=728>
+<tr><td><tt><IMG SRC="/icons/unknown.gif" ALT="[   ]"> <a href="ftp://89.179.242.201/Music/1.fpl" class="clink">1.fpl</a></td><td><tt><nobr>&nbsp;&nbsp;1.08Mb</td><td><tt><nobr>&nbsp;&nbsp;August 25 2010 at 02:01</td></tr><tr><td><tt><IMG SRC="/icons/unknown.gif" ALT="[   ]"> <a href="ftp://89.179.242.201/Music/111.fpl" class="clink">111.fpl</a></td><td><tt><nobr>&nbsp;&nbsp;416.49Kb</td><td><tt><nobr>&nbsp;&nbsp;August 25 2010 at 01:59</td></tr><tr><td><tt><IMG SRC="/icons/folder.gif" ALT="[DIR]"> <a href="/db/0/0/89.179.242.201/Music/5.1">5.1</a></td><td><tt><nobr>&nbsp;&nbsp;0.00b</td><td><tt><nobr>&nbsp;&nbsp;October 5 2013 at 22:02</td></tr><tr><td><tt><IMG SRC="/icons/folder.gif" ALT="[DIR]"> <a href="/db/0/0/89.179.242.201/Music/Disk">Disk</a></td><td><tt><nobr>&nbsp;&nbsp;0.00b</td><td><tt><nobr>&nbsp;&nbsp;October 5 2013 at 22:11</td></tr><tr><td><tt><IMG SRC="/icons/unknown.gif" ALT="[   ]"> <a href="ftp://89.179.242.201/Music/Enya.fpl" class="clink">Enya.fpl</a></td><td><tt><nobr>&nbsp;&nbsp;14.99Kb</td><td><tt><nobr>&nbsp;&nbsp;August 25 2010 at 02:07</td></tr><tr><td><tt><IMG SRC="/icons/folder.gif" ALT="[DIR]"> <a href="/db/0/0/89.179.242.201/Music/Flac">Flac</a></td><td><tt><nobr>&nbsp;&nbsp;0.00b</td><td><tt><nobr>&nbsp;&nbsp;March 14 2014 at 01:13</td></tr><tr><td><tt><IMG SRC="/icons/unknown.gif" ALT="[   ]"> <a href="ftp://89.179.242.201/Music/Greatest.fpl" class="clink">Greatest.fpl</a></td><td><tt><nobr>&nbsp;&nbsp;413.59Kb</td><td><tt><nobr>&nbsp;&nbsp;August 27 2010 at 19:57</td></tr><tr><td><tt><IMG SRC="/icons/unknown.gif" ALT="[   ]"> <a href="ftp://89.179.242.201/Music/Gregorian.fpl" class="clink">Gregorian.fpl</a></td><td><tt><nobr>&nbsp;&nbsp;36.05Kb</td><td><tt><nobr>&nbsp;&nbsp;August 25 2010 at 02:06</td></tr><tr><td><tt><IMG SRC="/icons/folder.gif" ALT="[DIR]"> <a href="/db/0/0/89.179.242.201/Music/iTunes">iTunes</a></td><td><tt><nobr>&nbsp;&nbsp;0.00b</td><td><tt><nobr>&nbsp;&nbsp;October 6 2013 at 01:04</td></tr><tr><td><tt><IMG SRC="/icons/folder.gif" ALT="[DIR]"> <a href="/db/0/0/89.179.242.201/Music/Midi">Midi</a></td><td><tt><nobr>&nbsp;&nbsp;0.00b</td><td><tt><nobr>&nbsp;&nbsp;October 6 2013 at 01:04</td></tr><tr><td><tt><IMG SRC="/icons/compressed.gif" ALT="[ZIP]"> <a href="ftp://89.179.242.201/Music/Midi.zip" class="clink">Midi.zip</a></td><td><tt><nobr>&nbsp;&nbsp;1.38Mb</td><td><tt><nobr>&nbsp;&nbsp;April 11 2009 at 21:01</td></tr><tr><td><tt><IMG SRC="/icons/folder.gif" ALT="[DIR]"> <a href="/db/0/0/89.179.242.201/Music/MOD_XM_S3M_IT">MOD_XM_S3M_IT</a></td><td><tt><nobr>&nbsp;&nbsp;0.00b</td><td><tt><nobr>&nbsp;&nbsp;March 14 2014 at 01:11</td></tr><tr><td><tt><IMG SRC="/icons/folder.gif" ALT="[DIR]"> <a href="/db/0/0/89.179.242.201/Music/MP3">MP3</a></td><td><tt><nobr>&nbsp;&nbsp;0.00b</td><td><tt><nobr>&nbsp;&nbsp;March 7 2014 at 20:52</td></tr><tr><td><tt><IMG SRC="/icons/folder.gif" ALT="[DIR]"> <a href="ftp://89.179.242.201/Music/ringtones">ringtones</a></td><td><tt><nobr>&nbsp;&nbsp;0.00b</td><td><tt><nobr>&nbsp;&nbsp;October 6 2013 at 01:16</td></tr><tr><td><tt><IMG SRC="/icons/text.gif" ALT="[TXT]"> <a href="ftp://89.179.242.201/Music/Spice%20Girls%20-%20Viva%20Forever.txt" class="clink">Spice Girls - Viva Forever.txt</a></td><td><tt><nobr>&nbsp;&nbsp;2.81Kb</td><td><tt><nobr>&nbsp;&nbsp;February 19 2008 at 11:14</td></tr><tr><td><tt><IMG SRC="/icons/folder.gif" ALT="[DIR]"> <a href="/db/0/0/89.179.242.201/Music/WindowsPhone">WindowsPhone</a></td><td><tt><nobr>&nbsp;&nbsp;0.00b</td><td><tt><nobr>&nbsp;&nbsp;March 14 2014 at 01:23</td></tr><tr><td><tt><IMG SRC="/icons/unknown.gif" ALT="[   ]"> <a href="ftp://89.179.242.201/Music/%C8%ED%ED%EE%E2%E0%F6%E8%EE%ED%ED%FB%E9%20%CA%EE%ED%E2%E5%ED%F21%20Audio%20Extracted.pk" class="clink">Инновационный Конвент1 Audio Extracted.pk</a></td><td><tt><nobr>&nbsp;&nbsp;529.96Kb</td><td><tt><nobr>&nbsp;&nbsp;December 19 2009 at 20:57</td></tr><tr><td><tt><IMG SRC="/icons/sound2.gif" ALT="[SND]"> <a href="ftp://89.179.242.201/Music/%CA%EE%E3%E4%E0%20%E7%E0%E1%F3%E4%E5%F8%FC%20%F2%FB%20%EC%E5%ED%FF.WMA" class="clink">Когда забудешь ты меня.WMA</a></td><td><tt><nobr>&nbsp;&nbsp;1.76Mb</td><td><tt><nobr>&nbsp;&nbsp;December 1 2013 at 02:11</td></tr></table></p><p><table border=0 cellpadding=0 cellspacing=0 height=60 width=100><tr><td align=center valign=middle>
+<!--LiveInternet counter--><script type="text/javascript">
+document.write("<a href='//www.liveinternet.ru/click' "+
+"target=_blank><img src='//counter.yadro.ru/hit?t26.11;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";h"+escape(document.title.substring(0,150))+";"+Math.random()+
+"' alt='' title='LiveInternet: показано число посетителей за"+
+" сегодня' "+
+"border='0' width='88' height='15'><\/a>")
+</script><!--/LiveInternet-->
+</td></tr></table></p></BODY></HTML>

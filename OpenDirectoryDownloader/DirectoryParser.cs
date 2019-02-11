@@ -431,10 +431,6 @@ namespace OpenDirectoryDownloader
             return parsedWebDirectory;
         }
 
-        /// <summary>
-        /// https://larsjung.de/h5ai/
-        /// </summary>
-        /// <returns></returns>
         private static WebDirectory ParseH5aiDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> h5aiTableRows)
         {
             IElement table = h5aiTableRows.First().Parent("table");
@@ -545,13 +541,17 @@ namespace OpenDirectoryDownloader
 
                                 fullUrl = StripUrl(fullUrl);
 
+                                IElement imageElement = tableRow.QuerySelector("img");
+                                bool isDirectory = imageElement != null && imageElement.HasAttribute("alt") && imageElement.Attributes["alt"].Value == "[DIR]";
+
                                 UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
 
                                 bool isFile =
                                     urlEncodingParser["file"] != null ||
+                                    !isDirectory &&
                                     (urlEncodingParser["dir"] == null && (
                                         (fileSizeHeader.Value == null && !linkHref.EndsWith("/")) ||
-                                        (size != "-" && size != "<Directory>" && !string.IsNullOrWhiteSpace(size) && (size?.Contains("item")).Value != true && !linkHref.EndsWith("/"))
+                                        (size != "-" && size != "<Directory>" && size != "0.00b" && !string.IsNullOrWhiteSpace(size) && (size?.Contains("item")).Value != true && !linkHref.EndsWith("/"))
                                     ));
 
                                 if (!isFile)
@@ -1462,50 +1462,42 @@ namespace OpenDirectoryDownloader
 
                     if (fileNameColumnIndex.Any())
                     {
-                        int columnIndex = ((int)fileNameColumnIndex.Average()) + 1;
+                        int columnIndex = ((int)Math.Round(fileNameColumnIndex.Average())) + 1;
 
-                        if (tableHeaders.ContainsKey(columnIndex))
+                        if (!tableHeaders.ContainsKey(columnIndex))
                         {
-                            return new Dictionary<int, TableHeaderInfo>();
+                            tableHeaders.Add(columnIndex, new TableHeaderInfo { Type = TableHeaderType.FileName });
                         }
-
-                        tableHeaders.Add(columnIndex, new TableHeaderInfo { Type = TableHeaderType.FileName });
                     }
 
                     if (dateColumnIndex.Any())
                     {
-                        int columnIndex = ((int)dateColumnIndex.Average()) + 1;
+                        int columnIndex = ((int)Math.Round(dateColumnIndex.Average())) + 1;
 
-                        if (tableHeaders.ContainsKey(columnIndex))
+                        if (!tableHeaders.ContainsKey(columnIndex))
                         {
-                            return new Dictionary<int, TableHeaderInfo>();
+                            tableHeaders.Add(columnIndex, new TableHeaderInfo { Type = TableHeaderType.Modified });
                         }
-
-                        tableHeaders.Add(columnIndex, new TableHeaderInfo { Type = TableHeaderType.Modified });
                     }
 
                     if (fileSizeColumnIndex.Any())
                     {
-                        int columnIndex = ((int)fileSizeColumnIndex.Average()) + 1;
+                        int columnIndex = ((int)Math.Round(fileSizeColumnIndex.Average())) + 1;
 
-                        if (tableHeaders.ContainsKey(columnIndex))
+                        if (!tableHeaders.ContainsKey(columnIndex))
                         {
-                            return new Dictionary<int, TableHeaderInfo>();
+                            tableHeaders.Add(columnIndex, new TableHeaderInfo { Type = TableHeaderType.FileSize });
                         }
-
-                        tableHeaders.Add(columnIndex, new TableHeaderInfo { Type = TableHeaderType.FileSize });
                     }
 
                     if (typeColumnIndex.Any())
                     {
-                        int columnIndex = ((int)typeColumnIndex.Average()) + 1;
+                        int columnIndex = ((int)Math.Round(typeColumnIndex.Average())) + 1;
 
-                        if (tableHeaders.ContainsKey(columnIndex))
+                        if (!tableHeaders.ContainsKey(columnIndex))
                         {
-                            return new Dictionary<int, TableHeaderInfo>();
+                            tableHeaders.Add(columnIndex, new TableHeaderInfo { Type = TableHeaderType.Type });
                         }
-
-                        tableHeaders.Add(columnIndex, new TableHeaderInfo { Type = TableHeaderType.Type });
                     }
                 }
 
