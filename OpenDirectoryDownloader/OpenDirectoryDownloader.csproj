@@ -13,11 +13,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="NLog.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.10.1" />
     <PackageReference Include="CommandLineParser" Version="2.4.3" />
     <PackageReference Include="FluentFTP" Version="21.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="NLog.config" Version="4.6.0-rc1" />
+    <PackageReference Include="NLog.Config" Version="4.5.11" />
     <PackageReference Include="Polly" Version="7.0.1" />
   </ItemGroup>
 
@@ -25,5 +35,4 @@
     <ProjectReference Include="..\OpenDirectoryDownloader.GoogleDrive\OpenDirectoryDownloader.GoogleDrive.csproj" />
     <ProjectReference Include="..\OpenDirectoryDownloader.Shared\OpenDirectoryDownloader.Shared.csproj" />
   </ItemGroup>
-
 </Project>

@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Google.Apis.Drive.v3" Version="1.38.0.1491" />
-    <PackageReference Include="NLog.config" Version="4.6.0-rc1" />
+    <PackageReference Include="NLog.Config" Version="4.5.11" />
   </ItemGroup>
 
   <ItemGroup>
