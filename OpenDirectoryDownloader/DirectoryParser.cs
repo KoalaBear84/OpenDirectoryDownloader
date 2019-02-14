@@ -971,6 +971,7 @@ namespace OpenDirectoryDownloader
 
                         if (succeeded)
                         {
+                            parsedWebDirectory.Parser = "ParsePreDirectoryListing";
                             break;
                         }
                     }
@@ -1234,6 +1235,8 @@ namespace OpenDirectoryDownloader
                     }
                     else
                     {
+                        parsedWebDirectory.Parser = parser;
+
                         if (dirParam)
                         {
                             parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
@@ -1268,12 +1271,67 @@ namespace OpenDirectoryDownloader
 
         private static void CheckParsedResults(WebDirectory webDirectory)
         {
+            if (!webDirectory.Subdirectories.Any() && !webDirectory.Files.Any())
+            {
+                return;
+            }
+
             foreach (WebDirectory webDirectorySub in webDirectory.Subdirectories)
             {
                 webDirectorySub.Url = StripUrl(webDirectorySub.Url);
             }
 
+            CleanFragments(webDirectory);
+
             CheckSymlinks(webDirectory);
+        }
+
+        private static void CleanFragments(WebDirectory webDirectory)
+        {
+            // Directories
+            List<WebDirectory> directoriesWithFragments = webDirectory.Subdirectories.Where(wd => wd.Url.Contains("#")).ToList();
+
+            if (directoriesWithFragments.Any())
+            {
+                List<WebDirectory> clientWebDirs = new List<WebDirectory>();
+
+                foreach (WebDirectory webDir in directoriesWithFragments)
+                {
+                    webDirectory.Subdirectories.Remove(webDir);
+                }
+
+                foreach (WebDirectory directoryWithFragments in directoriesWithFragments)
+                {
+                    Uri uri = new Uri(directoryWithFragments.Url);
+                    directoryWithFragments.Url = uri.GetLeftPart(UriPartial.Query);
+
+                    if (!webDirectory.Subdirectories.Any(wd => wd.Url == directoryWithFragments.Url))
+                    {
+                        webDirectory.Subdirectories.Add(directoryWithFragments);
+                    }
+                }
+            }
+
+            // Files
+            List<WebFile> filesWithFragments = webDirectory.Files.Where(wf => wf.Url.Contains("#")).ToList();
+
+            if (filesWithFragments.Any())
+            {
+                List<WebFile> cleanFiles = new List<WebFile>();
+
+                webDirectory.Files.RemoveAll(wf => wf.Url.Contains("#"));
+
+                foreach (WebFile fileWithFragment in filesWithFragments)
+                {
+                    Uri uri = new Uri(fileWithFragment.Url);
+                    fileWithFragment.Url = uri.GetLeftPart(UriPartial.Query);
+
+                    if (!webDirectory.Files.Any(wf => wf.Url == fileWithFragment.Url))
+                    {
+                        webDirectory.Files.Add(fileWithFragment);
+                    }
+                }
+            }
         }
 
         private static string StripUrl(string url)
