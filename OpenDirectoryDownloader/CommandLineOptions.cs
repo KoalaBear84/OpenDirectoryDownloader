@@ -22,6 +22,9 @@ namespace OpenDirectoryDownloader
         [Option('e', "exact-file-sizes", Required = false, Default = false, HelpText = "Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server)")]
         public bool ExactFileSizes { get; set; }
 
+        [Option('l', "upload-urls", Required = false, Default = false, HelpText = "Uploads urls file")]
+        public bool UploadUrls { get; set; }
+
         [Option('s', "speed-test", Required = false, Default = false, HelpText = "Do a speed test")]
         public bool Speedtest { get; set; }
 

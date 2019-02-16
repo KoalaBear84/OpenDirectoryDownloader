@@ -198,6 +198,7 @@ namespace OpenDirectoryDownloader
                     {
                         Logger.Info("Saving URL list to file...");
                         Console.WriteLine("Saving URL list to file...");
+
                         try
                         {
                             string fileUrls = string.Join(Environment.NewLine, Session.Root.AllFileUrls.Distinct());
@@ -208,15 +209,18 @@ namespace OpenDirectoryDownloader
                             Logger.Info($"Saved URL list to file: {urlsFileName}");
                             Console.WriteLine($"Saved URL list to file: {urlsFileName}");
 
-                            Console.WriteLine("Uploading URLs...");
+                            if (OpenDirectoryIndexerSettings.CommandLineOptions.UploadUrls)
+                            {
+                                Console.WriteLine("Uploading URLs...");
 
-                            UploadFilesFile uploadFilesFile = await UploadFileIo.UploadFile(HttpClient, urlsPath);
+                                UploadFilesFile uploadFilesFile = await UploadFileIo.UploadFile(HttpClient, urlsPath);
 
-                            HistoryLogger.Info($"uploadfiles.io: {JsonConvert.SerializeObject(uploadFilesFile)}");
+                                HistoryLogger.Info($"uploadfiles.io: {JsonConvert.SerializeObject(uploadFilesFile)}");
 
-                            Session.UploadedUrlsUrl = uploadFilesFile.Url.ToString();
+                                Session.UploadedUrlsUrl = uploadFilesFile.Url.ToString();
 
-                            Console.WriteLine("Uploaded URLs");
+                                Console.WriteLine($"Uploaded URLs: {Session.UploadedUrlsUrl}");
+                            }
                         }
                         catch (Exception ex)
                         {
