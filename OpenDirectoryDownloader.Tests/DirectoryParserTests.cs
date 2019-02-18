@@ -2240,5 +2240,35 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("Alan_Parsons_-_Turn_Of_A_Friendly_Card.iso", webDirectory.Files[0].FileName);
             Assert.Equal(3661459620, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: https://repo.zenk-security.com/?dir=.
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing73aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(21, webDirectory.Subdirectories.Count);
+            Assert.Equal("Conferences", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: https://repo.zenk-security.com/?dir=./Magazine%20E-book
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing73bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample(), url: "https://repo.zenk-security.com/?dir=./Magazine%20E-book");
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(4, webDirectory.Subdirectories.Count);
+            Assert.Equal("ActuSecu", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(80, webDirectory.Files.Count);
+            Assert.Equal("Android Hacker's Handbook.pdf", webDirectory.Files[0].FileName);
+            Assert.Equal(9437184, webDirectory.Files[0].FileSize);
+        }
     }
 }
