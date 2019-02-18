@@ -20,7 +20,7 @@ Short | Long | Description
  `-r` | `--no-reddit` | Do not show Reddit stats markdown
  `-l` | `--upload-urls` | Uploads urls file
  `-e` | `--exact-file-sizes` | Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server)
- `-s` | `--speed-test` | Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server)
+ `-s` | `--speed-test` | Does a speed test after indexing
 
 Example:
 `OpenDirectoryIndexer.exe --url "https://myopendirectory.com"`
