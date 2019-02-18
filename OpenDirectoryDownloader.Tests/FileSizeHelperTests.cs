@@ -19,15 +19,29 @@ namespace OpenDirectoryDownloader.Tests
         {
             Assert.Equal(1234567, FileSizeHelper.ParseFileSize("1234567 bytes"));
             Assert.Equal(KB, FileSizeHelper.ParseFileSize("1 kB"));
+            Assert.Equal(KB, FileSizeHelper.ParseFileSize("1 kiB"));
             Assert.Equal(KB, FileSizeHelper.ParseFileSize("1 K"));
+            Assert.Equal(KB, FileSizeHelper.ParseFileSize("1 Ko"));
+
             Assert.Equal(MB, FileSizeHelper.ParseFileSize("1 MB"));
+            Assert.Equal(MB, FileSizeHelper.ParseFileSize("1 MiB"));
             Assert.Equal(MB, FileSizeHelper.ParseFileSize("1 M"));
+            Assert.Equal(MB, FileSizeHelper.ParseFileSize("1 Mo"));
+
             Assert.Equal(GB, FileSizeHelper.ParseFileSize("1 GB"));
+            Assert.Equal(GB, FileSizeHelper.ParseFileSize("1 GiB"));
             Assert.Equal(GB, FileSizeHelper.ParseFileSize("1 G"));
+            Assert.Equal(GB, FileSizeHelper.ParseFileSize("1 Go"));
+
             Assert.Equal(TB, FileSizeHelper.ParseFileSize("1 TB"));
+            Assert.Equal(TB, FileSizeHelper.ParseFileSize("1 TiB"));
             Assert.Equal(TB, FileSizeHelper.ParseFileSize("1 T"));
+            Assert.Equal(TB, FileSizeHelper.ParseFileSize("1 To"));
+
             Assert.Equal(PB, FileSizeHelper.ParseFileSize("1 PB"));
+            Assert.Equal(PB, FileSizeHelper.ParseFileSize("1 PiB"));
             Assert.Equal(PB, FileSizeHelper.ParseFileSize("1 P"));
+            Assert.Equal(PB, FileSizeHelper.ParseFileSize("1 Po"));
         }
 
         /// <summary>

@@ -10,15 +10,15 @@ namespace OpenDirectoryDownloader.Helpers
         // Parse a file size.
         private static readonly string[][] SizeSuffixes =
         {
-            new string[] { "bytes", "B" },
-            new string[] { "KB", "K", "KiB", "KIB" },
-            new string[] { "MB", "M", "MiB", "MIB" },
-            new string[] { "GB", "G", "GiB", "GIB" },
-            new string[] { "TB", "T", "TiB", "TIB" },
-            new string[] { "PB", "P", "PiB", "PIB" },
-            new string[] { "EB", "E", "EiB", "EIB" },
-            new string[] { "ZB", "Z", "ZiB", "ZIB" },
-            new string[] { "YB", "Y", "YiB", "YIB" }
+            new string[] { "BYTES", "B", "OCTETS" },
+            new string[] { "KB", "K", "KIB", "KO" },
+            new string[] { "MB", "M", "MIB", "MO" },
+            new string[] { "GB", "G", "GIB", "GO" },
+            new string[] { "TB", "T", "TIB", "TO" },
+            new string[] { "PB", "P", "PIB", "PO" },
+            new string[] { "EB", "E", "EIB", "EO" },
+            new string[] { "ZB", "Z", "ZIB", "ZO" },
+            new string[] { "YB", "Y", "YIB", "YO" }
         };
         private static readonly Regex AlphaNumericRegex = new Regex("[^a-zA-Z0-9 .,-]");
 
@@ -58,15 +58,10 @@ namespace OpenDirectoryDownloader.Helpers
                 if (ext_start < value.Length)
                 {
                     suffix = value.Substring(ext_start).Trim().ToUpper();
-
-                    if (suffix == "BYTES")
-                    {
-                        suffix = "bytes";
-                    }
                 }
                 else
                 {
-                    suffix = "bytes";
+                    suffix = "BYTES";
                 }
 
                 // Find the extension in the list.
