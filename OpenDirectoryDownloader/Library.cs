@@ -43,7 +43,7 @@ namespace OpenDirectoryDownloader
 
             Uri uri = new Uri(url);
 
-            if (!url.EndsWith("/") && string.IsNullOrWhiteSpace(Path.GetFileName(WebUtility.UrlDecode(uri.AbsolutePath))))
+            if (!url.EndsWith("/") && string.IsNullOrWhiteSpace(Path.GetFileName(WebUtility.UrlDecode(uri.AbsolutePath))) && string.IsNullOrWhiteSpace(uri.Query))
             {
                 url += "/";
             }
