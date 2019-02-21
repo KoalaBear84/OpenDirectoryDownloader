@@ -2284,7 +2284,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("(000 papa intenso)", webDirectory.Subdirectories[0].Name);
             Assert.Equal(33, webDirectory.Files.Count);
             Assert.Equal("ALS Scan - Franziska Facella & Sara Jaymes - Clutch Hitter BTS (12-10-18).mp4", webDirectory.Files[0].FileName);
-            // There is a filesize in it, not yet fixed
+            // TODO: There is a filesize in it, not yet fixed
             Assert.Equal(-1, webDirectory.Files[0].FileSize);
         }
 
@@ -2301,8 +2301,40 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("Crack", webDirectory.Subdirectories[0].Name);
             Assert.Equal(4, webDirectory.Files.Count);
             Assert.Equal("AcrobatPro.exe", webDirectory.Files[0].FileName);
-            // There is a filesize in it, not yet fixed
+            // TODO: There is a filesize in it, not yet fixed
             Assert.Equal(-1, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://www.colladomusical.com/Music/index.php?dir=Musica/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing75aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(102, webDirectory.Subdirectories.Count);
+            Assert.Equal("Abril 2012", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(6, webDirectory.Files.Count);
+            Assert.Equal("BONCHEDIGITAL.COM_5002673.apk", webDirectory.Files[0].FileName);
+            Assert.Equal(5976883, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://www.colladomusical.com/Music/index.php?dir=Musica/Abril%202012/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing75bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(3, webDirectory.Subdirectories.Count);
+            Assert.Equal("17-4-2012", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(17, webDirectory.Files.Count);
+            Assert.Equal("Alex Bueno - Mi Razon %28Tema New 2012%29.mp3", webDirectory.Files[0].FileName);
+            Assert.Equal(3565158, webDirectory.Files[0].FileSize);
         }
     }
 }
