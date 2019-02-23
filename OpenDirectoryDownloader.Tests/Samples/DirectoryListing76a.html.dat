@@ -1,0 +1,393 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<title>1fichier.com: Cloud Storage</title>
+    <meta name="robots" content="noindex" />
+		<meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<link rel="shortcut icon" href="https://img.1fichier.com/favicon.ico" />
+		<link rel="icon" type="image/x-icon" href="https://img.1fichier.com/favicon.ico" />
+		<link rel="icon" type="image/png" href="https://img.1fichier.com/favicon.png" />
+		<link rel="apple-touch-icon" href="https://img.1fichier.com/favicon.png" />
+		<link rel="image_src" href="https://img.1fichier.com/favicon.png" />
+		<link rel="stylesheet" type="text/css" href="https://img.1fichier.com/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="https://img.1fichier.com/css/jquery.ui.css" />
+		<script type="text/javascript" src="https://img.1fichier.com/js/jquery.js"></script>
+	</head>
+<body>
+	<script type="text/javascript">
+	<!--
+		jQuery(document).ready(function($) {
+			if(getCookie('show_cm') != 'no') { $('#cookie_box').show(); }
+			$('.cookie_box_close').click(function() { $('#cookie_box').hide(); var expires = new Date(); expires.setTime(expires.getTime() + 15552000000); document.cookie = 'show_cm=no; expires=' + expires.toUTCString();	return false; });
+		});
+		function getCookie(cookie_name) {
+			if (document.cookie.length>0) {
+				cookie_start = document.cookie.indexOf(cookie_name + "=");
+				if (cookie_start != -1)	{	cookie_start = cookie_start + cookie_name.length+1;	cookie_end = document.cookie.indexOf(";",cookie_start);
+				if (cookie_end == -1)	{ cookie_end = document.cookie.length; }
+				return unescape(document.cookie.substring(cookie_start,cookie_end));
+			}}
+			return "";
+		}				
+	// -->
+</script>
+<div id="cookie_box">Our website need cookies to work.
+	<br/>Using our services, you accept usage of cookies.
+	<br/>For more informations :
+	<br/><br/><a href="https://1fichier.com/cgu.html">Legal Mentions, Terms of Services, Privacy Policy</a>
+	<br/><br/><a href="#" style="text-decoration-color: #fbc260" class="cookie_box_close">I fully accept usage of cookies and the Terms of Services</a>
+</div>
+
+	<script type="text/javascript">
+	<!-- 
+		$( function() {
+	    $.widget( "custom.iconselectmenu", $.ui.selectmenu, {
+  	    _renderItem: function( ul, item ) {
+    	    var li = $("<li>"), wrapper = $("<div>", { text: item.label });
+					if( item.element.attr("data-imagesrc") )	{ $( "<span>", { style: "background-image: url( \"" + item.element.attr("data-imagesrc") + "\")", "class": "ui-icon avatar" }).appendTo( wrapper ); }
+					else { $( "<span>", { style: "background-image:none", "class": "ui-icon avatar" }).appendTo( wrapper ); }
+	        return li.append( wrapper ).appendTo( ul );
+      	},
+				_renderButtonItem: function( item ) {
+				  var buttonItem;
+					if( item.element.attr("data-imagesrc") ) { buttonItem = $( "<span>", { style: "background-image: url( \"" + item.element.attr("data-imagesrc") + "\")", "class": "ui-selectmenu-text avatar" }) }
+					else {  buttonItem = $( "<span>", { style: "background-image:none", "class": "ui-selectmenu-text avatar" }) }
+				  this._setText( buttonItem, item.label );
+				  return buttonItem;
+				}
+    	});
+
+			
+    	$(".lselector").iconselectmenu({ width:200, change: function( event, ui ) { window.location.href=this.value; }  }).iconselectmenu("menuWidget").addClass( "ui-menu-icons" );
+  	});
+	-->
+</script>
+
+<div id="header">
+	<a href="https://1fichier.com" title="1fichier.com"><img id="logo" src="https://img.1fichier.com/logo.png" alt="logo" width="240" height="70" /></a>
+
+	<div id="btn-container">
+ 		<select class="lselector">
+			<option value="/dir/tPeqUIb0?lg=en" data-imagesrc="https://img.1fichier.com/flags/en.png" selected="selected">English</option>
+			<option value="/dir/tPeqUIb0?lg=fr" data-imagesrc="https://img.1fichier.com/flags/fr.png">Français</option>
+    </select>
+
+		<a class="ui-button ui-corner-all" href="https://1fichier.com/tarifs.html" title="Prices">Prices</a>
+
+		
+			<a class="ui-button ui-corner-all" href="https://1fichier.com/register.pl" title="Register">Register</a>
+			<a class="ui-button ui-corner-all" href="https://1fichier.com/login.pl" title="Login">My Account</a>
+		
+	</div>
+	<div class="spacer"></div>
+</div>
+<div class="spacer" style="height:140px"></div>		
+	<div class="bh3 alc">Shared folder 0000</div>
+  <span class="spacer spacer-20"></span>
+	
+		<table class="premium" cellspacing="2" style="padding:20px;margin:10px auto;min-width:700px">
+			<tr>
+				<td class="normal titre ohidden">File name</td>
+				<td class="normal titre" style="width:150px">Size</td>
+			</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.xil1oltb8xzxqjx6keg5" width="57" height="57" />
+						<a href="https://1fichier.com/?xil1oltb8xzxqjx6keg5" title="Download Cosmos.A.Space.Time.Odyssey.S01E01.480p.mkv">Cosmos.A.Space.Time.Odyssey.S01E01.480p.mkv</a>
+					</td>
+					<td class="normal">150.87 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.cm9z3mrcw65x23124dsz" width="57" height="57" />
+						<a href="https://1fichier.com/?cm9z3mrcw65x23124dsz" title="Download Cosmos.A.Space.Time.Odyssey.S01E01.720p.FardaDownload.mkv">Cosmos.A.Space.Time.Odyssey.S01E01.720p.FardaDownload.mkv</a>
+					</td>
+					<td class="normal">300.01 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.7528yfqmgajg8v59hl0s" width="57" height="57" />
+						<a href="https://1fichier.com/?7528yfqmgajg8v59hl0s" title="Download Cosmos.A.Space.Time.Odyssey.S01E02.480p.mkv">Cosmos.A.Space.Time.Odyssey.S01E02.480p.mkv</a>
+					</td>
+					<td class="normal">150.79 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.ktvi78yfmu3fsujxpg2r" width="57" height="57" />
+						<a href="https://1fichier.com/?ktvi78yfmu3fsujxpg2r" title="Download Cosmos.A.Space.Time.Odyssey.S01E02.720p.mkv">Cosmos.A.Space.Time.Odyssey.S01E02.720p.mkv</a>
+					</td>
+					<td class="normal">300.24 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.rl8ob26c6bauiiwyeaz9" width="57" height="57" />
+						<a href="https://1fichier.com/?rl8ob26c6bauiiwyeaz9" title="Download Cosmos.A.Space.Time.Odyssey.S01E03.480p.mkv">Cosmos.A.Space.Time.Odyssey.S01E03.480p.mkv</a>
+					</td>
+					<td class="normal">179.61 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.h4kdptx8t8gdagv89bbx" width="57" height="57" />
+						<a href="https://1fichier.com/?h4kdptx8t8gdagv89bbx" title="Download Cosmos.A.Space.Time.Odyssey.S01E03.720p.mkv">Cosmos.A.Space.Time.Odyssey.S01E03.720p.mkv</a>
+					</td>
+					<td class="normal">300.25 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.uk9l1o61zn81vy9rycr3" width="57" height="57" />
+						<a href="https://1fichier.com/?uk9l1o61zn81vy9rycr3" title="Download Cosmos.A.Space.Time.Odyssey.S01E04.480p.mkv">Cosmos.A.Space.Time.Odyssey.S01E04.480p.mkv</a>
+					</td>
+					<td class="normal">205.90 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.bg6xrh6mide916eu8ogr" width="57" height="57" />
+						<a href="https://1fichier.com/?bg6xrh6mide916eu8ogr" title="Download Cosmos.A.Space.Time.Odyssey.S01E04.720p.mkv">Cosmos.A.Space.Time.Odyssey.S01E04.720p.mkv</a>
+					</td>
+					<td class="normal">300.17 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.2b74o38e0kdtk3obzyvq" width="57" height="57" />
+						<a href="https://1fichier.com/?2b74o38e0kdtk3obzyvq" title="Download Cosmos.A.Space.Time.Odyssey.S01E05.480p.mkv">Cosmos.A.Space.Time.Odyssey.S01E05.480p.mkv</a>
+					</td>
+					<td class="normal">238.14 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.svlr7arljbry2l7rg3kq" width="57" height="57" />
+						<a href="https://1fichier.com/?svlr7arljbry2l7rg3kq" title="Download Cosmos.A.Space.Time.Odyssey.S01E05.720p.mkv">Cosmos.A.Space.Time.Odyssey.S01E05.720p.mkv</a>
+					</td>
+					<td class="normal">300.42 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.cvrjhcmd75hmifnygjfg" width="57" height="57" />
+						<a href="https://1fichier.com/?cvrjhcmd75hmifnygjfg" title="Download Cosmos.A.Space.Time.Odyssey.S01E06.480p.mkv">Cosmos.A.Space.Time.Odyssey.S01E06.480p.mkv</a>
+					</td>
+					<td class="normal">279.94 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.pivksk0pj6jedth2k9ed" width="57" height="57" />
+						<a href="https://1fichier.com/?pivksk0pj6jedth2k9ed" title="Download Cosmos.A.Space.Time.Odyssey.S01E06.720p.mkv">Cosmos.A.Space.Time.Odyssey.S01E06.720p.mkv</a>
+					</td>
+					<td class="normal">300.38 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.kww6a28s6kj4m4au5ucp" width="57" height="57" />
+						<a href="https://1fichier.com/?kww6a28s6kj4m4au5ucp" title="Download Cosmos.A.Space.Time.Odyssey.S01E07.480p.mkv">Cosmos.A.Space.Time.Odyssey.S01E07.480p.mkv</a>
+					</td>
+					<td class="normal">151.04 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.1s15teh9jz8ckw0uhybm" width="57" height="57" />
+						<a href="https://1fichier.com/?1s15teh9jz8ckw0uhybm" title="Download Cosmos.A.Space.Time.Odyssey.S01E07.720p.mkv">Cosmos.A.Space.Time.Odyssey.S01E07.720p.mkv</a>
+					</td>
+					<td class="normal">300.09 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.yozbl2sp669m8jy8d4ub" width="57" height="57" />
+						<a href="https://1fichier.com/?yozbl2sp669m8jy8d4ub" title="Download Cosmos.A.Space.Time.Odyssey.S01E08.480p.mkv">Cosmos.A.Space.Time.Odyssey.S01E08.480p.mkv</a>
+					</td>
+					<td class="normal">166.63 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.onlhowjhcqdo9te42yvv" width="57" height="57" />
+						<a href="https://1fichier.com/?onlhowjhcqdo9te42yvv" title="Download Cosmos.A.Space.Time.Odyssey.S01E08.720p.mkv">Cosmos.A.Space.Time.Odyssey.S01E08.720p.mkv</a>
+					</td>
+					<td class="normal">300.23 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.9xzb3noopw5dkjc5cgho" width="57" height="57" />
+						<a href="https://1fichier.com/?9xzb3noopw5dkjc5cgho" title="Download Cosmos.A.Space.Time.Odyssey.S01E09.480p.mkv">Cosmos.A.Space.Time.Odyssey.S01E09.480p.mkv</a>
+					</td>
+					<td class="normal">203.48 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.soi3erub3wb2zjwkoxk0" width="57" height="57" />
+						<a href="https://1fichier.com/?soi3erub3wb2zjwkoxk0" title="Download Cosmos.A.Space.Time.Odyssey.S01E09.720p.mkv">Cosmos.A.Space.Time.Odyssey.S01E09.720p.mkv</a>
+					</td>
+					<td class="normal">300.42 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.o2nbz6f8f5p5zk0irdot" width="57" height="57" />
+						<a href="https://1fichier.com/?o2nbz6f8f5p5zk0irdot" title="Download Cosmos.A.Space.Time.Odyssey.S01E10.480p.mkv">Cosmos.A.Space.Time.Odyssey.S01E10.480p.mkv</a>
+					</td>
+					<td class="normal">171.44 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.4vgv384xe0ovlhqrsl99" width="57" height="57" />
+						<a href="https://1fichier.com/?4vgv384xe0ovlhqrsl99" title="Download Cosmos.A.Space.Time.Odyssey.S01E10.720p.mkv">Cosmos.A.Space.Time.Odyssey.S01E10.720p.mkv</a>
+					</td>
+					<td class="normal">293.23 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.2h0gxrq4uzg9um8z25up" width="57" height="57" />
+						<a href="https://1fichier.com/?2h0gxrq4uzg9um8z25up" title="Download Cosmos.A.Space.Time.Odyssey.S01E11.720p.mkv">Cosmos.A.Space.Time.Odyssey.S01E11.720p.mkv</a>
+					</td>
+					<td class="normal">300.12 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.4q4dzoi2zqy245b59yz6" width="57" height="57" />
+						<a href="https://1fichier.com/?4q4dzoi2zqy245b59yz6" title="Download Cosmos.A.Space.Time.Odyssey.S01E12.480p.mkv">Cosmos.A.Space.Time.Odyssey.S01E12.480p.mkv</a>
+					</td>
+					<td class="normal">211.09 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.ayzqn52nczjdbjwcxa6a" width="57" height="57" />
+						<a href="https://1fichier.com/?ayzqn52nczjdbjwcxa6a" title="Download Cosmos.A.Space.Time.Odyssey.S01E12.720p.mkv">Cosmos.A.Space.Time.Odyssey.S01E12.720p.mkv</a>
+					</td>
+					<td class="normal">300.30 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.0g2fmaels0piebtkxyi7" width="57" height="57" />
+						<a href="https://1fichier.com/?0g2fmaels0piebtkxyi7" title="Download Cosmos.A.Space.Time.Odyssey.S01E13.480p.mkv">Cosmos.A.Space.Time.Odyssey.S01E13.480p.mkv</a>
+					</td>
+					<td class="normal">200.45 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.7soiwylw020r3t9k76ys" width="57" height="57" />
+						<a href="https://1fichier.com/?7soiwylw020r3t9k76ys" title="Download Cosmos.A.Space.Time.Odyssey.S01E13.720p.FardaDownload.mkv">Cosmos.A.Space.Time.Odyssey.S01E13.720p.FardaDownload.mkv</a>
+					</td>
+					<td class="normal">300.20 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.w4l2090f10acpfn036bi" width="57" height="57" />
+						<a href="https://1fichier.com/?w4l2090f10acpfn036bi" title="Download HIM Dream Cars Special Spy Cars 480p HDTV x264_AVADL.CoM.mkv">HIM Dream Cars Special Spy Cars 480p HDTV x264_AVADL.CoM.mkv</a>
+					</td>
+					<td class="normal">394.28 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.euu4rvuf14jfks1tfnmx" width="57" height="57" />
+						<a href="https://1fichier.com/?euu4rvuf14jfks1tfnmx" title="Download How It&#39;s Made Dream Cars - S01E04 - Audi R8 - 720P.HDTV.X265-O69.mkv">How It&#39;s Made Dream Cars - S01E04 - Audi R8 - 720P.HDTV.X265-O69.mkv</a>
+					</td>
+					<td class="normal">136.70 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.qz7nzp24yn13wauoszuo" width="57" height="57" />
+						<a href="https://1fichier.com/?qz7nzp24yn13wauoszuo" title="Download How It&#39;s Made Dream Cars - S02E01 - Bugatti Veyron - 720P.HDTV.X265-O69.mkv">How It&#39;s Made Dream Cars - S02E01 - Bugatti Veyron - 720P.HDTV.X265-O69.mkv</a>
+					</td>
+					<td class="normal">144.03 MB</td>
+				</tr>
+			
+				<tr>
+					<td class="normal alg" style="padding-left:10px;overflow:hidden;vertical-align:middle">
+						<img style="padding:5px;vertical-align:middle" src="https://1fichier.com/qr.pl?do=0.khnx8cgy1mzcc48swb4n" width="57" height="57" />
+						<a href="https://1fichier.com/?khnx8cgy1mzcc48swb4n" title="Download Steven.Universe.2013.Web-DLRip.1080p.S01E03.(Avadl.org).mp4">Steven.Universe.2013.Web-DLRip.1080p.S01E03.(Avadl.org).mp4</a>
+					</td>
+					<td class="normal">165.73 MB</td>
+				</tr>
+			
+		</table>
+		<span class="spacer spacer-20"></span>
+		<div class="bh3s alc" style="width:250px;margin:auto">Download link list :</div>
+		<textarea cols="80" rows="10" readonly style="display:block;margin:auto">https://1fichier.com/?xil1oltb8xzxqjx6keg5
+https://1fichier.com/?cm9z3mrcw65x23124dsz
+https://1fichier.com/?7528yfqmgajg8v59hl0s
+https://1fichier.com/?ktvi78yfmu3fsujxpg2r
+https://1fichier.com/?rl8ob26c6bauiiwyeaz9
+https://1fichier.com/?h4kdptx8t8gdagv89bbx
+https://1fichier.com/?uk9l1o61zn81vy9rycr3
+https://1fichier.com/?bg6xrh6mide916eu8ogr
+https://1fichier.com/?2b74o38e0kdtk3obzyvq
+https://1fichier.com/?svlr7arljbry2l7rg3kq
+https://1fichier.com/?cvrjhcmd75hmifnygjfg
+https://1fichier.com/?pivksk0pj6jedth2k9ed
+https://1fichier.com/?kww6a28s6kj4m4au5ucp
+https://1fichier.com/?1s15teh9jz8ckw0uhybm
+https://1fichier.com/?yozbl2sp669m8jy8d4ub
+https://1fichier.com/?onlhowjhcqdo9te42yvv
+https://1fichier.com/?9xzb3noopw5dkjc5cgho
+https://1fichier.com/?soi3erub3wb2zjwkoxk0
+https://1fichier.com/?o2nbz6f8f5p5zk0irdot
+https://1fichier.com/?4vgv384xe0ovlhqrsl99
+https://1fichier.com/?2h0gxrq4uzg9um8z25up
+https://1fichier.com/?4q4dzoi2zqy245b59yz6
+https://1fichier.com/?ayzqn52nczjdbjwcxa6a
+https://1fichier.com/?0g2fmaels0piebtkxyi7
+https://1fichier.com/?7soiwylw020r3t9k76ys
+https://1fichier.com/?w4l2090f10acpfn036bi
+https://1fichier.com/?euu4rvuf14jfks1tfnmx
+https://1fichier.com/?qz7nzp24yn13wauoszuo
+https://1fichier.com/?khnx8cgy1mzcc48swb4n</textarea>
+	
+	<span class="spacer spacer-10"></span>
+	<div class="ct_warn alc" style="display:table;margin:auto">
+		<div style="color:red;font-weight:bold">Developer tips</div>
+		CSV export using the "e=1" parameter<br/>
+		JSON exports using the "json=1|2" parameter<br/>
+		Check the help page for all informations
+	</div>
+	<span class="spacer" style="height:90px"></span>
+	<div id="footer">
+	<div class="center-container">
+		<a href="https://1fichier.com" title="Back to home page"><img class="gauche" src="https://img.1fichier.com/logo-footer.png" alt="1fichier.com" /></a>
+		<div id="link-container">
+			<a href="https://1fichier.com/cgu.html">Legal &amp; Terms</a>&nbsp;&nbsp;&nbsp;
+			<a href="https://1fichier.com/abus.html">Abuse</a>&nbsp;&nbsp;&nbsp;
+			<a href="https://1fichier.com/tarifs.html">Prices</a>&nbsp;&nbsp;&nbsp;
+			<a href="https://1fichier.com/revendeurs.html">Resellers</a>&nbsp;&nbsp;&nbsp;
+      <a href="https://1fichier.com/affiliation.html">Affiliation</a>&nbsp;&nbsp;&nbsp;
+			<a href="https://1fichier.com/hlp.html">Help</a>&nbsp;&nbsp;&nbsp;
+			<a href="https://1fichier.com/network.html">Network/Speedtest</a>&nbsp;&nbsp;&nbsp;
+			<a href="https://1fichier.com/contact.html">Contact</a>
+      <br/>
+      <a target="_new" href="https://twitter.com/1fichiercom"><img src="https://img.1fichier.com/twitter.png" alt="Twitter" style="padding:0;border:0" /></a>&nbsp;&nbsp;&nbsp;
+      <a target="_new" href="https://facebook.com/1fichiercom"><img src="https://img.1fichier.com/facebook.png" alt="Facebook" style="padding:0;border:0" /></a>&nbsp;&nbsp;&nbsp;
+			<a href="https://1fichier.com/api.html" style="vertical-align:top">API</a>&nbsp;&nbsp;&nbsp;
+      <a href="https://1fichier.com/servers.html" style="vertical-align:top">Dedicated Servers</a>&nbsp;&nbsp;&nbsp;
+      <a target="_new" href="https://dstorage.fr" style="vertical-align:top">DStorage SASU © 2009-2019</a>
+		</div>
+	</div>
+	<span class="spacer"></span>
+</div>       
+
+</body>
+</html>

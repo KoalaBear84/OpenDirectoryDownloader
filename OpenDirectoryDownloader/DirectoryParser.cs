@@ -588,6 +588,11 @@ namespace OpenDirectoryDownloader
                                         filename = urlEncodingParser["file"];
                                     }
 
+                                    if (string.IsNullOrWhiteSpace(filename))
+                                    {
+                                        filename = link.TextContent;
+                                    }
+
                                     parsedWebDirectory.Files.Add(new WebFile
                                     {
                                         Url = fullUrl,

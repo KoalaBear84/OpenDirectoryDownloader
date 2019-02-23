@@ -2336,5 +2336,20 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("Alex Bueno - Mi Razon %28Tema New 2012%29.mp3", webDirectory.Files[0].FileName);
             Assert.Equal(3565158, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: http://www.colladomusical.com/Music/index.php?dir=Musica/Abril%202012/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing76aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(29, webDirectory.Files.Count);
+            Assert.Equal("Cosmos.A.Space.Time.Odyssey.S01E01.480p.mkv", webDirectory.Files[0].FileName);
+            Assert.Equal(158198661, webDirectory.Files[0].FileSize);
+        }
     }
 }
