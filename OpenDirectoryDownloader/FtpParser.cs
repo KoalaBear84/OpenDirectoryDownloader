@@ -113,6 +113,7 @@ namespace OpenDirectoryDownloader
 
                 return
                     $"Connect Respones: {connectReply.InfoMessages}{Environment.NewLine}" +
+                    $"ServerType: {ftpClient.ServerType}{Environment.NewLine}" +
                     $"Help response: {helpReply.InfoMessages}{Environment.NewLine}" +
                     $"Status response: {statusReply.InfoMessages}{Environment.NewLine}" +
                     $"System response: {systemReply.InfoMessages}{Environment.NewLine}";
