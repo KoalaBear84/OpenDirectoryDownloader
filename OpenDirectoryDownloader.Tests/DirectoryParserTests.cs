@@ -2338,7 +2338,7 @@ namespace OpenDirectoryDownloader.Tests
         }
 
         /// <summary>
-        /// Url: http://www.colladomusical.com/Music/index.php?dir=Musica/Abril%202012/
+        /// Url: https://1fichier.com/dir/NP71kSmd/
         /// </summary>
         [Fact]
         public async Task TestDirectoryListing76aAsync()
@@ -2350,6 +2350,21 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal(29, webDirectory.Files.Count);
             Assert.Equal("Cosmos.A.Space.Time.Odyssey.S01E01.480p.mkv", webDirectory.Files[0].FileName);
             Assert.Equal(158198661, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: https://jonestown.sdsu.edu/?page_id=29043
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing77aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(487, webDirectory.Files.Count);
+            Assert.Equal("Q836 (Side A).mp3", webDirectory.Files[0].FileName);
+            Assert.Equal(-1, webDirectory.Files[0].FileSize);
         }
     }
 }

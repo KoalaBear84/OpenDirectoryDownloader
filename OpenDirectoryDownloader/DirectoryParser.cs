@@ -143,7 +143,12 @@ namespace OpenDirectoryDownloader
 
                 if (listItems.Any())
                 {
-                    return ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems);
+                    WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems);
+
+                    if (result.ParsedSuccesfully || result.Error)
+                    {
+                        return result;
+                    }
                 }
 
                 // Latest fallback
