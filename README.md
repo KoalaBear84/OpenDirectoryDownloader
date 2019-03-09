@@ -1,9 +1,9 @@
 # Open Directory Downloader
-Indexes open directories listings in 70 supported formats, including FTP, Google Drive.
+Indexes open directories listings in 75+ supported formats, including FTP, Google Drive.
 
 Written in C# with .NET Core, which means it is **cross platform**!
 
-Downloading is not (yet) implemented, but is possible when you use the resulting file into another tool.
+Downloading is not (yet) implemented, but is already possible when you use the resulting file into another tool.
 
 If you have improvements, supply me with a pull request! If you have a format not yet supported, please let me know.
 
@@ -25,6 +25,8 @@ Short | Long | Description
 Example:
 `OpenDirectoryIndexer.exe --url "https://myopendirectory.com"`
 
+If you want to learn more or contribute, see the following paragraphs!
+
 ## Getting the code
 
 ### For Visual Studio (Windows)
@@ -38,6 +40,7 @@ Example:
 1. Download Visual Studio Code: https://code.visualstudio.com/download
 2. Be sure to install Git: https://git-scm.com/downloads
 3. Clone the repository: https://code.visualstudio.com/docs/editor/versioncontrol#_cloning-a-repository
+4. More help: https://docs.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio-code
 
 ## Google Drive
 For Google Drive scanning you need to get a Google Drive API credentials file, it's free!
