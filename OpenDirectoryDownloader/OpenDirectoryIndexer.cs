@@ -672,7 +672,7 @@ namespace OpenDirectoryDownloader
     {
         public string Url { get; set; }
         public string FileName { get; set; }
-        public int Threads { get; set; } = 50;
+        public int Threads { get; set; } = 5;
         public bool DetermimeFileSizeByDownload { get; set; }
         public CommandLineOptions CommandLineOptions { get; set; }
     }

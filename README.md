@@ -14,6 +14,7 @@ Command line paremters:
 Short | Long | Description
 ---------|----------|---------
  `-u` | `--url` | Url to scan
+ `-t` | `--threads` | Number of threads
  `-q` | `--quit` | Do not wait after scanning
  `-j` | `--json` | Save JSON file
  `-f` | `--no-urls` | Do not save URLs file

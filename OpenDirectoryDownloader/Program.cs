@@ -13,7 +13,7 @@ namespace OpenDirectoryDownloader
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private static CommandLineOptions CommandLineOptions { get; set; }
 
-        static async Task Main(string[] args)
+        static async Task<int> Main(string[] args)
         {
             Console.Title = $"OpenDirectoryDownloader";
 
@@ -34,6 +34,12 @@ namespace OpenDirectoryDownloader
                     }
                 })
                 .WithParsed(o => CommandLineOptions = o);
+
+            if (CommandLineOptions.Threads < 1 || CommandLineOptions.Threads > 100)
+            {
+                Console.WriteLine("Threads must be between 1 and 100");
+                return 1;
+            }
 
             string url = CommandLineOptions.Url;
 
@@ -62,7 +68,7 @@ namespace OpenDirectoryDownloader
                 openDirectoryIndexerSettings.Url = url;
             }
 
-            openDirectoryIndexerSettings.Threads = 50;
+            openDirectoryIndexerSettings.Threads = openDirectoryIndexerSettings.CommandLineOptions.Threads;
 
             // FTP
             // TODO: Make dynamic
@@ -88,6 +94,8 @@ namespace OpenDirectoryDownloader
                 Console.WriteLine("Press ESC to exit");
                 Console.ReadKey();
             }
+
+            return 0;
         }
     }
 }
