@@ -11,11 +11,12 @@ namespace OpenDirectoryDownloader
     class Program
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        public static string ConsoleTitle { get; set; }
         private static CommandLineOptions CommandLineOptions { get; set; }
 
         static async Task<int> Main(string[] args)
         {
-            Console.Title = $"OpenDirectoryDownloader";
+            SetConsoleTitle("OpenDirectoryDownloader");
 
             Console.WriteLine("Started");
             Logger.Info("Started");
@@ -79,7 +80,7 @@ namespace OpenDirectoryDownloader
 
             OpenDirectoryIndexer openDirectoryIndexer = new OpenDirectoryIndexer(openDirectoryIndexerSettings);
 
-            Console.Title = $"{new Uri(url).Host.Replace("www.", string.Empty)} - {Console.Title}";
+            SetConsoleTitle($"{new Uri(url).Host.Replace("www.", string.Empty)} - {ConsoleTitle}");
 
             openDirectoryIndexer.StartIndexingAsync();
             Console.WriteLine("Started indexing!");
@@ -96,6 +97,13 @@ namespace OpenDirectoryDownloader
             }
 
             return 0;
+        }
+
+        public static void SetConsoleTitle(string title)
+        {
+            ConsoleTitle = title;
+
+            Console.Title = title;
         }
     }
 }

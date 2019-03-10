@@ -300,7 +300,7 @@ namespace OpenDirectoryDownloader
                     Logger.Info("Finished indexing!");
                     Console.WriteLine("Finished indexing!");
 
-                    Console.Title = $"✔ {Console.Title}";
+                    Program.SetConsoleTitle($"✔ {Program.ConsoleTitle}");
 
                     if (OpenDirectoryIndexerSettings.CommandLineOptions.Quit)
                     {
