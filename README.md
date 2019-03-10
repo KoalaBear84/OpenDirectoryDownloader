@@ -3,7 +3,7 @@ Indexes open directories listings in 75+ supported formats, including FTP, Googl
 
 Written in C# with .NET Core, which means it is **cross platform**!
 
-Downloading is not (yet) implemented, but is already possible when you use the resulting file into another tool.
+Downloading is not (yet) implemented, but is already possible when you use the resulting file into another tool (for most of the formats).
 
 If you have improvements, supply me with a pull request! If you have a format not yet supported, please let me know.
 
