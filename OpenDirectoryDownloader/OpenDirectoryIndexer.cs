@@ -228,25 +228,31 @@ namespace OpenDirectoryDownloader
                         }
                     }
 
-                    if (OpenDirectoryIndexerSettings.CommandLineOptions.Speedtest && Session.TotalFiles > 0 && (Session.Root.Uri.Scheme == "https" || Session.Root.Uri.Scheme == "http"))
+                    if (OpenDirectoryIndexerSettings.CommandLineOptions.Speedtest)
                     {
-                        try
+                        if (Session.TotalFiles > 0)
                         {
-                            WebFile biggestFile = Session.Root.AllFiles.OrderByDescending(f => f.FileSize).First();
+                            if (Session.Root.Uri.Scheme == "https" || Session.Root.Uri.Scheme == "http")
+                            {
+                                try
+                                {
+                                    WebFile biggestFile = Session.Root.AllFiles.OrderByDescending(f => f.FileSize).First();
 
-                            Console.WriteLine($"Starting speedtest (10-25 seconds)...");
-                            Console.WriteLine($"Test file: {FileSizeHelper.ToHumanReadable(biggestFile.FileSize)} {biggestFile.Url}");
-                            Session.SpeedtestResult = await Library.DoSpeedTestAsync(HttpClient, biggestFile.Url);
-                            Console.WriteLine($"Finished speedtest. Downloaded: {FileSizeHelper.ToHumanReadable(Session.SpeedtestResult.DownloadedBytes)}, Time: {Session.SpeedtestResult.ElapsedMiliseconds / 1000:F1} s, Speed: {Session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({Session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)");
+                                    Console.WriteLine($"Starting speedtest (10-25 seconds)...");
+                                    Console.WriteLine($"Test file: {FileSizeHelper.ToHumanReadable(biggestFile.FileSize)} {biggestFile.Url}");
+                                    Session.SpeedtestResult = await Library.DoSpeedTestAsync(HttpClient, biggestFile.Url);
+                                    Console.WriteLine($"Finished speedtest. Downloaded: {FileSizeHelper.ToHumanReadable(Session.SpeedtestResult.DownloadedBytes)}, Time: {Session.SpeedtestResult.ElapsedMiliseconds / 1000:F1} s, Speed: {Session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({Session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)");
+                                }
+                                catch (Exception ex)
+                                {
+                                    Logger.Error(ex, "Speedtest failed");
+                                }
+                            }
+                            else
+                            {
+                                Logger.Warn($"Only a speedtest for HTTP(S), not '{Session.Root.Uri.Scheme}'");
+                            }
                         }
-                        catch (Exception ex)
-                        {
-                            Logger.Error(ex, "Speedtest failed");
-                        }
-                    }
-                    else
-                    {
-                        Logger.Warn("Only a speedtest for HTTP(S)");
                     }
 
                     Logger.Info("Logging sessions stats...");
