@@ -600,7 +600,7 @@ namespace OpenDirectoryDownloader
             {
                 if (!Session.ProcessedUrls.Contains(subdirectory.Url))
                 {
-                    if (subdirectory.Uri.Host != Session.Root.Uri.Host || !subdirectory.Uri.LocalPath.StartsWith(Session.Root.Uri.LocalPath))
+                    if (subdirectory.Uri.Host != "drive.google.com" && (subdirectory.Uri.Host != Session.Root.Uri.Host || !subdirectory.Uri.LocalPath.StartsWith(Session.Root.Uri.LocalPath)))
                     {
                         Logger.Debug($"Removed subdirectory {subdirectory.Uri} from parsed webdirectory because it is not the same host");
                     }
