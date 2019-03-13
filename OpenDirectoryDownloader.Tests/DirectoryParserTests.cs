@@ -2366,5 +2366,36 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("Q836 (Side A).mp3", webDirectory.Files[0].FileName);
             Assert.Equal(-1, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: https://www.sec.gov/Archives/edgar/data/19617
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing78aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(4, webDirectory.Subdirectories.Count);
+            Assert.Equal("000089109219002813", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: https://www.sec.gov/Archives/edgar/data/19617/000089109219002813
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing78bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(3, webDirectory.Subdirectories.Count);
+            // Yes, very strange directory listing
+            Assert.Equal("0000891092-19-002813-index-headers.html", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(5, webDirectory.Files.Count);
+            Assert.Equal("e4343_424b2.htm", webDirectory.Files[0].FileName);
+            Assert.Equal(84285, webDirectory.Files[0].FileSize);
+        }
     }
 }
