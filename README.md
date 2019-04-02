@@ -7,7 +7,7 @@ Downloading is not (yet) implemented, but is already possible when you use the r
 
 If you have improvements, supply me with a pull request! If you have a format not yet supported, please let me know.
 
-## Prerequisite
+## Prerequisites
 
 Please install the .NET Core 3.0 Preview 3 version or higher.
 
