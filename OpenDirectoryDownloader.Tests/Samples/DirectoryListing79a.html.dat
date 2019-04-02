@@ -1,0 +1,113 @@
+﻿
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Netsyms CDN</title>
+<link rel="stylesheet" href="https://static.netsyms.net/bootstrap/4/bootstrap.darkly.min.css" />
+<link rel="stylesheet" href="https://static.netsyms.net/fontawesome/5/css/all.min.css" />
+<style>
+ul {
+list-style: none;
+}
+.display-5 {
+font-size: 2.75rem;
+font-weight: 300;
+line-height: 1.2;
+}
+.site-icon {
+width: 150px;
+max-width: 100%;
+}
+a {
+overflow-wrap: break-word;
+word-wrap: break-word;
+word-break: break-all;
+}
+@media (max-width: 991px) {
+	.display-4 {
+		font-size: 2.5rem;
+	}
+	.display-5 {
+		font-size: 2rem;
+	}
+}
+@media (max-width: 767px) {
+	.site-icon {
+		width: 100px;
+	}
+}
+@media (max-width: 474px) {
+	.display-4 {
+		font-size: 2rem;
+	}
+	.display-5 {
+		font-size: 1.75rem;
+	}
+}
+</style>
+<div class="container">
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-2" style="text-align: center;">
+                    <img src="https://static.netsyms.net/images/netsyms/logo-flat-512.png" class="site-icon" />
+                </div>
+                <div class="col-12 col-md-8 col-lg-10">
+                    <div class="d-flex flex-column justify-content-center" style="height: 100%;">
+                        <h1 class="display-4">Netsyms Technologies</h1>
+                        <h2 class="display-5">Static Content Server</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+            
+                <div class="card-header d-flex">
+                    <span class="mr-auto">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb m-0">
+                                	<li aria-current="page" class="breadcrumb-item active"><span class="fas fa-home"></span></li>
+                            </ol>
+                        </nav>
+                    </span>
+                </div>
+                
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex">
+	<a href="/bootstrap/"><span class="fas fa-folder fa-fw"></span> bootstrap</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/fontawesome/"><span class="fas fa-folder fa-fw"></span> fontawesome</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/fonts/"><span class="fas fa-folder fa-fw"></span> fonts</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/images/"><span class="fas fa-folder fa-fw"></span> images</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/jquery/"><span class="fas fa-folder fa-fw"></span> jquery</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/prism/"><span class="fas fa-folder fa-fw"></span> prism</a>
+</li>
+
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+</div>

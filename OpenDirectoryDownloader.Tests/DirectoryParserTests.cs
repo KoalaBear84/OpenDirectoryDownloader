@@ -2397,5 +2397,34 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("e4343_424b2.htm", webDirectory.Files[0].FileName);
             Assert.Equal(84285, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: https://static.netsyms.net/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing79aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(6, webDirectory.Subdirectories.Count);
+            Assert.Equal("bootstrap", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: https://static.netsyms.net/bootstrap/3/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing79bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(18, webDirectory.Files.Count);
+            Assert.Equal("bootstrap.cerulean.min.css", webDirectory.Files[0].FileName);
+            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+        }
     }
 }

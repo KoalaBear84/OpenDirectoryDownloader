@@ -1,0 +1,163 @@
+﻿
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Netsyms CDN</title>
+<link rel="stylesheet" href="https://static.netsyms.net/bootstrap/4/bootstrap.darkly.min.css" />
+<link rel="stylesheet" href="https://static.netsyms.net/fontawesome/5/css/all.min.css" />
+<style>
+ul {
+list-style: none;
+}
+.display-5 {
+font-size: 2.75rem;
+font-weight: 300;
+line-height: 1.2;
+}
+.site-icon {
+width: 150px;
+max-width: 100%;
+}
+a {
+overflow-wrap: break-word;
+word-wrap: break-word;
+word-break: break-all;
+}
+@media (max-width: 991px) {
+	.display-4 {
+		font-size: 2.5rem;
+	}
+	.display-5 {
+		font-size: 2rem;
+	}
+}
+@media (max-width: 767px) {
+	.site-icon {
+		width: 100px;
+	}
+}
+@media (max-width: 474px) {
+	.display-4 {
+		font-size: 2rem;
+	}
+	.display-5 {
+		font-size: 1.75rem;
+	}
+}
+</style>
+<div class="container">
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-2" style="text-align: center;">
+                    <img src="https://static.netsyms.net/images/netsyms/logo-flat-512.png" class="site-icon" />
+                </div>
+                <div class="col-12 col-md-8 col-lg-10">
+                    <div class="d-flex flex-column justify-content-center" style="height: 100%;">
+                        <h1 class="display-4">Netsyms Technologies</h1>
+                        <h2 class="display-5">Static Content Server</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+            
+                <div class="card-header d-flex">
+                    <span class="mr-auto">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb m-0">
+                                	<li class="breadcrumb-item"><a href="/"><span class="fas fa-home"></span></a></li>
+	<li class="breadcrumb-item"><a href="/bootstrap/">bootstrap</a></li>
+	<li aria-current="page" class="breadcrumb-item active">3</li>
+                            </ol>
+                        </nav>
+                    </span>
+                </div>
+                
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.cerulean.min.css"><span class="fab fa-css3 fa-fw"></span> bootstrap.cerulean.min.css</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.cosmo.min.css"><span class="fab fa-css3 fa-fw"></span> bootstrap.cosmo.min.css</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.cyborg.min.css"><span class="fab fa-css3 fa-fw"></span> bootstrap.cyborg.min.css</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.darkly.min.css"><span class="fab fa-css3 fa-fw"></span> bootstrap.darkly.min.css</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.flatly.min.css"><span class="fab fa-css3 fa-fw"></span> bootstrap.flatly.min.css</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.journal.min.css"><span class="fab fa-css3 fa-fw"></span> bootstrap.journal.min.css</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.lumen.min.css"><span class="fab fa-css3 fa-fw"></span> bootstrap.lumen.min.css</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.min.css"><span class="fab fa-css3 fa-fw"></span> bootstrap.min.css</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.min.js"><span class="fab fa-js fa-fw"></span> bootstrap.min.js</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.paper.min.css"><span class="fab fa-css3 fa-fw"></span> bootstrap.paper.min.css</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.readable.min.css"><span class="fab fa-css3 fa-fw"></span> bootstrap.readable.min.css</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.sandstone.min.css"><span class="fab fa-css3 fa-fw"></span> bootstrap.sandstone.min.css</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.simplex.min.css"><span class="fab fa-css3 fa-fw"></span> bootstrap.simplex.min.css</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.slate.min.css"><span class="fab fa-css3 fa-fw"></span> bootstrap.slate.min.css</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.spacelab.min.css"><span class="fab fa-css3 fa-fw"></span> bootstrap.spacelab.min.css</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.superhero.min.css"><span class="fab fa-css3 fa-fw"></span> bootstrap.superhero.min.css</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.united.min.css"><span class="fab fa-css3 fa-fw"></span> bootstrap.united.min.css</a>
+</li>
+
+<li class="list-group-item d-flex">
+	<a href="/bootstrap/3/bootstrap.yeti.min.css"><span class="fab fa-css3 fa-fw"></span> bootstrap.yeti.min.css</a>
+</li>
+
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
