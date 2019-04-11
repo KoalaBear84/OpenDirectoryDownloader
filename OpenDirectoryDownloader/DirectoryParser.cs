@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using NLog;
 using OpenDirectoryDownloader.GoogleDrive;
 using OpenDirectoryDownloader.Helpers;
+using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using System;
@@ -159,6 +160,8 @@ namespace OpenDirectoryDownloader
                     parsedWebDirectory = ParseLinksDirectoryListing(baseUrl, parsedWebDirectory, links);
                 }
 
+                parsedWebDirectory = await ParseDirectoryListingModel01(baseUrl, parsedWebDirectory, htmlDocument, httpClient);
+
                 CheckParsedResults(parsedWebDirectory);
 
                 return parsedWebDirectory;
@@ -173,6 +176,84 @@ namespace OpenDirectoryDownloader
             CheckParsedResults(parsedWebDirectory);
 
             return parsedWebDirectory;
+        }
+
+        private static async Task<WebDirectory> ParseDirectoryListingModel01(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, HttpClient httpClient)
+        {
+            // If anyone knows which directory listing this is... :P
+            IElement fileManager = htmlDocument.QuerySelector("div.filemanager");
+
+            if (fileManager != null)
+            {
+                IElement script = htmlDocument.QuerySelector("script[src*=\"script.js\"]");
+
+                if (script != null)
+                {
+                    Uri scriptUri = new Uri(new Uri(baseUrl), script.Attributes["src"].Value);
+                    string scriptBody = await httpClient.GetStringAsync(scriptUri);
+
+                    Match regexMatch = new Regex(@"\$\.get\('(?<DirectoryIndexFile>.*)',").Match(scriptBody);
+
+                    if (regexMatch.Success)
+                    {
+                        Uri directoryIndexFile = new Uri(new Uri(baseUrl), regexMatch.Groups["DirectoryIndexFile"].Value);
+
+                        string directoryIndexJson = await httpClient.GetStringAsync(directoryIndexFile);
+
+                        DirectoryListingModel01 directoryListingModel = JsonConvert.DeserializeObject<DirectoryListingModel01>(directoryIndexJson);
+
+                        WebDirectory newWebDirectory = ConvertDirectoryListingModel01(baseUrl, parsedWebDirectory, directoryListingModel);
+                        parsedWebDirectory.Description = newWebDirectory.Description;
+                        parsedWebDirectory.StartTime = newWebDirectory.StartTime;
+                        parsedWebDirectory.Files = newWebDirectory.Files;
+                        parsedWebDirectory.Finished = newWebDirectory.Finished;
+                        parsedWebDirectory.Name = newWebDirectory.Name;
+                        parsedWebDirectory.Subdirectories = newWebDirectory.Subdirectories;
+                        parsedWebDirectory.Url = newWebDirectory.Url;
+                        parsedWebDirectory.ParsedSuccesfully = true;
+                        parsedWebDirectory.Parser = "DirectoryListingModel01";
+                    }
+                }
+            }
+
+            return parsedWebDirectory;
+        }
+
+        private static WebDirectory ConvertDirectoryListingModel01(string baseUrl, WebDirectory parsedWebDirectory, DirectoryListingModel01 directoryListingModel)
+        {
+            Uri directoryUri = new Uri(new Uri(baseUrl), directoryListingModel.Path);
+            string directoryFullUrl = directoryUri.ToString();
+
+            WebDirectory webDirectory = new WebDirectory(parsedWebDirectory.ParentDirectory)
+            {
+                Url = directoryFullUrl,
+                Name = directoryListingModel.Name,
+                StartTime = DateTimeOffset.UtcNow,
+                Finished = true
+            };
+
+            foreach (DirectoryListingModel01 item in directoryListingModel.Items)
+            {
+                Uri uri = new Uri(new Uri(baseUrl), item.Path);
+                string itemFullUrl = uri.ToString();
+
+                if (item.Type == "folder")
+                {
+                    WebDirectory newWebDirectory = ConvertDirectoryListingModel01(baseUrl, webDirectory, item);
+                    webDirectory.Subdirectories.Add(newWebDirectory);
+                }
+                else
+                {
+                    webDirectory.Files.Add(new WebFile
+                    {
+                        Url = itemFullUrl,
+                        FileName = Path.GetFileName(itemFullUrl),
+                        FileSize = item.Size
+                    });
+                }
+            }
+
+            return webDirectory;
         }
 
         private static WebDirectory ParseCustomDivListing(ref string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> divElements)

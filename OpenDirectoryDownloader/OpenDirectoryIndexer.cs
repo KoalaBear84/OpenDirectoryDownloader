@@ -509,7 +509,8 @@ namespace OpenDirectoryDownloader
                                                 Session.TotalHttpTraffic += html.Length;
 
                                                 WebDirectory parsedWebDirectory = await DirectoryParser.ParseHtml(webDirectory, html, HttpClient);
-                                                AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
+                                                bool processSubdirectories = parsedWebDirectory.Parser != "DirectoryListingModel01";
+                                                AddProcessedWebDirectory(webDirectory, parsedWebDirectory, processSubdirectories);
                                             }
                                             else
                                             {
@@ -586,7 +587,7 @@ namespace OpenDirectoryDownloader
             return await httpResponseMessage.Content.ReadAsStringAsync();
         }
 
-        private void AddProcessedWebDirectory(WebDirectory webDirectory, WebDirectory parsedWebDirectory)
+        private void AddProcessedWebDirectory(WebDirectory webDirectory, WebDirectory parsedWebDirectory, bool processSubdirectories = true)
         {
             webDirectory.Description = parsedWebDirectory.Description;
             webDirectory.StartTime = parsedWebDirectory.StartTime;
@@ -596,22 +597,25 @@ namespace OpenDirectoryDownloader
             webDirectory.Subdirectories = parsedWebDirectory.Subdirectories;
             webDirectory.Url = parsedWebDirectory.Url;
 
-            foreach (WebDirectory subdirectory in webDirectory.Subdirectories)
+            if (processSubdirectories)
             {
-                if (!Session.ProcessedUrls.Contains(subdirectory.Url))
+                foreach (WebDirectory subdirectory in webDirectory.Subdirectories)
                 {
-                    if (subdirectory.Uri.Host != "drive.google.com" && (subdirectory.Uri.Host != Session.Root.Uri.Host || !subdirectory.Uri.LocalPath.StartsWith(Session.Root.Uri.LocalPath)))
+                    if (!Session.ProcessedUrls.Contains(subdirectory.Url))
                     {
-                        Logger.Debug($"Removed subdirectory {subdirectory.Uri} from parsed webdirectory because it is not the same host");
+                        if (subdirectory.Uri.Host != "drive.google.com" && (subdirectory.Uri.Host != Session.Root.Uri.Host || !subdirectory.Uri.LocalPath.StartsWith(Session.Root.Uri.LocalPath)))
+                        {
+                            Logger.Debug($"Removed subdirectory {subdirectory.Uri} from parsed webdirectory because it is not the same host");
+                        }
+                        else
+                        {
+                            WebDirectoriesQueue.Enqueue(subdirectory);
+                        }
                     }
                     else
                     {
-                        WebDirectoriesQueue.Enqueue(subdirectory);
+                        Logger.Warn($"Url '{subdirectory.Url}' already processed, skipping! Source: {webDirectory.Url}");
                     }
-                }
-                else
-                {
-                    Logger.Warn($"Url '{subdirectory.Url}' already processed, skipping! Source: {webDirectory.Url}");
                 }
             }
 
