@@ -55,13 +55,18 @@ namespace OpenDirectoryDownloader
         {
             JsonSerializer jsonSerializer = new JsonSerializer();
 
-            using (StreamWriter streamWriter = new StreamWriter($"{GetApplicationPath()}{PathHelper.GetValidPath(session.Root.Url)}.json"))
+            using (StreamWriter streamWriter = new StreamWriter($"{GetApplicationPath()}Scans{Path.DirectorySeparatorChar}{CleanUriToFilename(session.Root.Uri)}.json"))
             {
                 using (JsonWriter jsonWriter = new JsonTextWriter(streamWriter))
                 {
                     jsonSerializer.Serialize(jsonWriter, session);
                 }
             }
+        }
+
+        public static string CleanUriToFilename(Uri uri)
+        {
+            return PathHelper.GetValidPath(WebUtility.UrlDecode(uri.ToString()));
         }
 
         public static Session LoadSessionJson(string fileName)
