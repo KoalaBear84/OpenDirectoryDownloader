@@ -21,8 +21,8 @@ namespace OpenDirectoryDownloader
                 sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
                 onRetry: (ex, span, retryCount, context) =>
                 {
-                    // TODO: Url in Context!
-                    Logger.Warn($"Error {ex.Message} retrieving on try {retryCount} for url '{context}'. Waiting {span.TotalSeconds} seconds.");
+                    WebDirectory webDirectory = context["WebDirectory"] as WebDirectory;
+                    Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{webDirectory.Url}'. Waiting {span.TotalSeconds} seconds.");
                 }
             );
 
@@ -32,92 +32,108 @@ namespace OpenDirectoryDownloader
         {
             webDirectory.StartTime = DateTimeOffset.UtcNow;
 
-            return await RetryPolicy.ExecuteAsync(async () =>
+            Context pollyContext = new Context
             {
-                if (!FtpClients.ContainsKey(processor))
+                { "Processor", string.Empty },
+                { "WebDirectory", webDirectory }
+            };
+
+            return (await RetryPolicy.ExecuteAndCaptureAsync(ctx => ParseFtpInnerAsync(processor, webDirectory), pollyContext)).Result;
+        }
+
+        private static async Task<WebDirectory> ParseFtpInnerAsync(string processor, WebDirectory webDirectory)
+        {
+            if (!FtpClients.ContainsKey(processor))
+            {
+                GetCredentials(webDirectory, out string username, out string password);
+
+                FtpClients[processor] = new FtpClient(webDirectory.Uri.Host, webDirectory.Uri.Port, username, password)
                 {
-                    GetCredentials(webDirectory, out string username, out string password);
+                    ConnectTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
+                    DataConnectionConnectTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
+                    DataConnectionReadTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
+                    ReadTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds
+                };
 
-                    FtpClients[processor] = new FtpClient(webDirectory.Uri.Host, webDirectory.Uri.Port, username, password)
-                    {
-                        ConnectTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
-                        DataConnectionConnectTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
-                        DataConnectionReadTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
-                        ReadTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds
-                    };
+                await FtpClients[processor].ConnectAsync();
+            }
 
-                    await FtpClients[processor].ConnectAsync();
+            // TODO: If anybody knows a better way.. PR!
+            string relativeUrl = webDirectory.Uri.LocalPath + WebUtility.UrlDecode(webDirectory.Uri.Fragment);
+
+            Logger.Debug($"Started retrieving {relativeUrl}...");
+
+            foreach (FtpListItem item in FtpClients[processor].GetListing(relativeUrl))
+            {
+                // Some strange FTP servers.. Give parent directoryies back..
+                if (item.Name == "/" || item.FullName == webDirectory.Uri.LocalPath || !item.FullName.StartsWith(webDirectory.Uri.LocalPath))
+                {
+                    continue;
                 }
 
-                // TODO: If anybody knows a better way.. PR!
-                string relativeUrl = webDirectory.Uri.LocalPath + WebUtility.UrlDecode(webDirectory.Uri.Fragment);
+                Uri uri = new Uri(new Uri(webDirectory.Url), item.FullName);
+                string fullUrl = uri.ToString();
 
-                Logger.Debug($"Started retrieving {relativeUrl}...");
-
-                foreach (FtpListItem item in FtpClients[processor].GetListing(relativeUrl))
+                if (item.Type == FtpFileSystemObjectType.File)
                 {
-                    // Some strange FTP servers.. Give parent directoryies back..
-                    if (item.Name == "/" || item.FullName == webDirectory.Uri.LocalPath || !item.FullName.StartsWith(webDirectory.Uri.LocalPath))
+                    webDirectory.Files.Add(new WebFile
                     {
-                        continue;
-                    }
+                        Url = fullUrl,
+                        FileName = Path.GetFileName(new Uri(fullUrl).LocalPath),
+                        FileSize = item.Size
+                    });
+                }
 
-                    Uri uri = new Uri(new Uri(webDirectory.Url), item.FullName);
-                    string fullUrl = uri.ToString();
-
-                    if (item.Type == FtpFileSystemObjectType.File)
+                if (item.Type == FtpFileSystemObjectType.Directory)
+                {
+                    if (webDirectory.Url != fullUrl)
                     {
-                        webDirectory.Files.Add(new WebFile
+                        webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
                         {
                             Url = fullUrl,
-                            FileName = Path.GetFileName(new Uri(fullUrl).LocalPath),
-                            FileSize = item.Size
+                            Name = item.Name
                         });
                     }
-
-                    if (item.Type == FtpFileSystemObjectType.Directory)
-                    {
-                        if (webDirectory.Url != fullUrl)
-                        {
-                            webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
-                            {
-                                Url = fullUrl,
-                                Name = item.Name
-                            });
-                        }
-                    }
                 }
+            }
 
-                webDirectory.Finished = true;
+            webDirectory.Finished = true;
 
-                Logger.Debug($"Finished retrieving {relativeUrl}");
+            Logger.Debug($"Finished retrieving {relativeUrl}");
 
-                return webDirectory;
-            });
+            return webDirectory;
         }
 
         public static async Task<string> GetFtpServerInfo(WebDirectory webDirectory)
         {
-            return await RetryPolicy.ExecuteAsync(async () =>
+            Context pollyContext = new Context
             {
-                GetCredentials(webDirectory, out string username, out string password);
+                { "Processor", string.Empty },
+                { "WebDirectory", webDirectory }
+            };
 
-                FtpClient ftpClient = new FtpClient(webDirectory.Uri.Host, webDirectory.Uri.Port, username, password);
+            return (await RetryPolicy.ExecuteAndCaptureAsync(ctx => GetFtpServerInfoInnerAsync(webDirectory), pollyContext)).Result;
+        }
 
-                await ftpClient.ConnectAsync();
+        private static async Task<string> GetFtpServerInfoInnerAsync(WebDirectory webDirectory)
+        {
+            GetCredentials(webDirectory, out string username, out string password);
 
-                FtpReply connectReply = ftpClient.LastReply;
-                FtpReply helpReply = await ftpClient.ExecuteAsync("HELP");
-                FtpReply statusReply = await ftpClient.ExecuteAsync("STAT");
-                FtpReply systemReply = await ftpClient.ExecuteAsync("SYST");
+            FtpClient ftpClient = new FtpClient(webDirectory.Uri.Host, webDirectory.Uri.Port, username, password);
 
-                return
-                    $"Connect Respones: {connectReply.InfoMessages}{Environment.NewLine}" +
-                    $"ServerType: {ftpClient.ServerType}{Environment.NewLine}" +
-                    $"Help response: {helpReply.InfoMessages}{Environment.NewLine}" +
-                    $"Status response: {statusReply.InfoMessages}{Environment.NewLine}" +
-                    $"System response: {systemReply.InfoMessages}{Environment.NewLine}";
-            });
+            await ftpClient.ConnectAsync();
+
+            FtpReply connectReply = ftpClient.LastReply;
+            FtpReply helpReply = await ftpClient.ExecuteAsync("HELP");
+            FtpReply statusReply = await ftpClient.ExecuteAsync("STAT");
+            FtpReply systemReply = await ftpClient.ExecuteAsync("SYST");
+
+            return
+                $"Connect Respones: {connectReply.InfoMessages}{Environment.NewLine}" +
+                $"ServerType: {ftpClient.ServerType}{Environment.NewLine}" +
+                $"Help response: {helpReply.InfoMessages}{Environment.NewLine}" +
+                $"Status response: {statusReply.InfoMessages}{Environment.NewLine}" +
+                $"System response: {systemReply.InfoMessages}{Environment.NewLine}";
         }
 
         public static async void CloseAll()

@@ -17,7 +17,7 @@ namespace OpenDirectoryDownloader.Helpers
                 sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
                 onRetry: (ex, span, retryCount, context) =>
                 {
-                    Logger.Warn($"Error {ex.Message} retrieving on try {retryCount} for url '{context}'. Waiting {span.TotalSeconds} seconds.");
+                    Logger.Warn($"Error {ex.Message} retrieving on try {retryCount} for url '{context["Url"]}'. Waiting {span.TotalSeconds} seconds.");
                 }
             );
 
@@ -25,14 +25,12 @@ namespace OpenDirectoryDownloader.Helpers
         {
             try
             {
-                return await RetryPolicy.ExecuteAsync(async () =>
+                Context pollyContext = new Context
                 {
-                    return (await httpClient.SendAsync(new HttpRequestMessage
-                    {
-                        RequestUri = new Uri(url),
-                        Method = HttpMethod.Head
-                    }, HttpCompletionOption.ResponseHeadersRead)).Content?.Headers.ContentLength;
-                });
+                    { "Url", url }
+                };
+
+                return (await RetryPolicy.ExecuteAndCaptureAsync(ctx => GetUrlFileSizeInnerAsync(httpClient, url), pollyContext)).Result;
             }
             catch (Exception ex)
             {
@@ -40,19 +38,27 @@ namespace OpenDirectoryDownloader.Helpers
 
                 return null;
             }
+        }
+
+        private static async Task<long?> GetUrlFileSizeInnerAsync(HttpClient httpClient, string url)
+        {
+            return (await httpClient.SendAsync(new HttpRequestMessage
+            {
+                RequestUri = new Uri(url),
+                Method = HttpMethod.Head
+            }, HttpCompletionOption.ResponseHeadersRead)).Content?.Headers.ContentLength;
         }
 
         public static async Task<long?> GetUrlFileSizeByDownloadingAsync(this HttpClient httpClient, string url)
         {
             try
             {
-                return await RetryPolicy.ExecuteAsync(async () =>
+                Context pollyContext = new Context
                 {
-                    return (await httpClient.SendAsync(new HttpRequestMessage
-                    {
-                        RequestUri = new Uri(url)
-                    }, HttpCompletionOption.ResponseContentRead)).Content?.Headers.ContentLength;
-                });
+                    { "Url", url }
+                };
+
+                return (await RetryPolicy.ExecuteAndCaptureAsync(ctx => GetUrlFileSizeByDownloadingInnerAsync(httpClient, url), pollyContext)).Result;
             }
             catch (Exception ex)
             {
@@ -62,18 +68,24 @@ namespace OpenDirectoryDownloader.Helpers
             }
         }
 
+        private static async Task<long?> GetUrlFileSizeByDownloadingInnerAsync(HttpClient httpClient, string url)
+        {
+            return (await httpClient.SendAsync(new HttpRequestMessage
+            {
+                RequestUri = new Uri(url)
+            }, HttpCompletionOption.ResponseContentRead)).Content?.Headers.ContentLength;
+        }
+
         public static async Task<MediaTypeHeaderValue> GetContentTypeAsync(this HttpClient httpClient, string url)
         {
             try
             {
-                return await RetryPolicy.ExecuteAsync(async () =>
+                Context pollyContext = new Context
                 {
-                    return (await httpClient.SendAsync(new HttpRequestMessage
-                    {
-                        RequestUri = new Uri(url),
-                        Method = HttpMethod.Head
-                    }, HttpCompletionOption.ResponseHeadersRead)).Content?.Headers.ContentType;
-                });
+                    { "Url", url }
+                };
+
+                return (await RetryPolicy.ExecuteAndCaptureAsync(ctx => GetContentTypeInnerAsync(httpClient, url), pollyContext)).Result;
             }
             catch (Exception ex)
             {
@@ -81,6 +93,15 @@ namespace OpenDirectoryDownloader.Helpers
 
                 return null;
             }
+        }
+
+        private static async Task<MediaTypeHeaderValue> GetContentTypeInnerAsync(HttpClient httpClient, string url)
+        {
+            return (await httpClient.SendAsync(new HttpRequestMessage
+            {
+                RequestUri = new Uri(url),
+                Method = HttpMethod.Head
+            }, HttpCompletionOption.ResponseHeadersRead)).Content?.Headers.ContentType;
         }
     }
 }

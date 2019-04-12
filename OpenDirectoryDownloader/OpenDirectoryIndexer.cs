@@ -46,14 +46,14 @@ namespace OpenDirectoryDownloader
         private System.Timers.Timer TimerStatistics { get; set; }
         private readonly AsyncRetryPolicy RetryPolicy = Policy
             .Handle<Exception>()
-            .WaitAndRetryAsync(5, // 16 seconds
+            .WaitAndRetryAsync(5, // 32 seconds
                 sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(retryAttempt),
                 //sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(retryAttempt * 2),
                 //sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
                 onRetry: (ex, span, retryCount, context) =>
                 {
-                    // TODO: Correct URL, via context?
-                    Logger.Warn($"Error {ex.Message} retrieving on try {retryCount} for url '{context}'. Waiting {span.TotalSeconds} seconds.");
+                    WebDirectory webDirectory = context["WebDirectory"] as WebDirectory;
+                    Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{webDirectory.Url}'. Waiting {span.TotalSeconds} seconds.");
                 }
             );
 
@@ -391,146 +391,10 @@ namespace OpenDirectoryDownloader
                                 {
                                     Logger.Debug($"[{name}] Start download '{webDirectory.Url}'");
                                     Session.TotalHttpRequests++;
-
-                                    await RetryPolicy.ExecuteAsync(async () =>
-                                    {
-                                        webDirectory.StartTime = DateTimeOffset.UtcNow;
-
-                                        HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url);
-                                        string html = null;
-
-                                        if (httpResponseMessage.IsSuccessStatusCode)
-                                        {
-                                            html = await GetHtml(httpResponseMessage);
-                                        }
-
-                                        if (FirstRequest && !httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.IsSuccessStatusCode && string.IsNullOrWhiteSpace(html))
-                                        {
-                                            Logger.Warn("First request fails, using Curl fallback User-Agent");
-                                            HttpClient.DefaultRequestHeaders.UserAgent.Clear();
-                                            HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent_Curl);
-                                            httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url);
-
-                                            if (httpResponseMessage.IsSuccessStatusCode)
-                                            {
-                                                html = await GetHtml(httpResponseMessage);
-                                                Logger.Warn("Yes, this Curl User-Agent did the trick!");
-                                            }
-                                        }
-
-                                        if (FirstRequest && !httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.IsSuccessStatusCode && string.IsNullOrWhiteSpace(html))
-                                        {
-                                            Logger.Warn("First request fails, using Chrome fallback User-Agent");
-                                            HttpClient.DefaultRequestHeaders.UserAgent.Clear();
-                                            HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent_Chrome);
-                                            httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url);
-
-                                            if (httpResponseMessage.IsSuccessStatusCode)
-                                            {
-                                                html = await GetHtml(httpResponseMessage);
-                                                Logger.Warn("Yes, the Chrome User-Agent did the trick!");
-                                            }
-                                        }
-
-                                        bool calibreDetected = false;
-                                        string calibreVersionString = string.Empty;
-
-                                        if (httpResponseMessage.IsSuccessStatusCode)
-                                        {
-                                            FirstRequest = false;
-
-                                            List<string> serverHeaders = new List<string>();
-
-                                            if (httpResponseMessage.Headers.Contains("Server"))
-                                            {
-                                                serverHeaders = httpResponseMessage.Headers.GetValues("Server").ToList();
-
-                                                calibreDetected = serverHeaders.Any(h => h.Contains("calibre"));
-                                            }
-
-                                            if (calibreDetected)
-                                            {
-                                                string serverHeader = string.Join("/", serverHeaders);
-                                                calibreVersionString = serverHeader;
-                                            }
-                                            else
-                                            {
-                                                if (html == null)
-                                                {
-                                                    html = await GetHtml(httpResponseMessage);
-                                                }
-
-                                                // UNTESTED (cannot find or down Calibre with this issue)
-                                                const string calibreVersionIdentifier = "CALIBRE_VERSION = \"";
-                                                calibreDetected = html?.Contains(calibreVersionIdentifier) == true;
-
-                                                if (calibreDetected)
-                                                {
-                                                    int calibreVersionIdentifierStart = html.IndexOf(calibreVersionIdentifier);
-                                                    calibreVersionString = html.Substring(calibreVersionIdentifierStart, html.IndexOf("\"", ++calibreVersionIdentifierStart));
-                                                }
-                                            }
-                                        }
-
-                                        if (calibreDetected)
-                                        {
-                                            Version calibreVersion = CalibreParser.ParseVersion(calibreVersionString);
-
-                                            Console.WriteLine($"Calibre {calibreVersion} detected! I will index it at max 100 books per 30 seconds, else it will break Calibre...");
-                                            Logger.Info($"Calibre {calibreVersion} detected! I will index it at max 100 books per 30 seconds, else it will break Calibre...");
-
-                                            await CalibreParser.ParseCalibre(HttpClient, httpResponseMessage.RequestMessage.RequestUri, webDirectory, calibreVersion);
-
-                                            return;
-                                        }
-
-                                        Uri originalUri = new Uri(webDirectory.Url);
-                                        Logger.Debug($"[{name}] Finish download '{webDirectory.Url}'");
-
-                                        // Process only same site
-                                        if (httpResponseMessage.RequestMessage.RequestUri.Host == Session.Root.Uri.Host)
-                                        {
-                                            int httpStatusCode = (int)httpResponseMessage.StatusCode;
-
-                                            if (!Session.HttpStatusCodes.ContainsKey(httpStatusCode))
-                                            {
-                                                Session.HttpStatusCodes[httpStatusCode] = 0;
-                                            }
-
-                                            Session.HttpStatusCodes[httpStatusCode]++;
-
-                                            if (httpResponseMessage.IsSuccessStatusCode)
-                                            {
-                                                if (html == null)
-                                                {
-                                                    html = await GetHtml(httpResponseMessage);
-                                                }
-
-                                                Session.TotalHttpTraffic += html.Length;
-
-                                                WebDirectory parsedWebDirectory = await DirectoryParser.ParseHtml(webDirectory, html, HttpClient);
-                                                bool processSubdirectories = parsedWebDirectory.Parser != "DirectoryListingModel01";
-                                                AddProcessedWebDirectory(webDirectory, parsedWebDirectory, processSubdirectories);
-                                            }
-                                            else
-                                            {
-                                                Session.Errors++;
-                                                webDirectory.Error = true;
-
-                                                if (!Session.UrlsWithErrors.Contains(webDirectory.Url))
-                                                {
-                                                    Session.UrlsWithErrors.Add(webDirectory.Url);
-                                                }
-
-                                                httpResponseMessage.EnsureSuccessStatusCode();
-                                            }
-                                        }
-                                        else
-                                        {
-                                            Logger.Warn($"[{name}] Skipped result of '{webDirectory.Url}' which points to '{httpResponseMessage.RequestMessage.RequestUri}'");
-                                            Session.Skipped++;
-                                        }
-                                    });
+                                    Context pollyContext = new Context();
+                                    pollyContext.Add("Processor", name);
+                                    pollyContext.Add("WebDirectory", webDirectory);
+                                    await RetryPolicy.ExecuteAsync(ctx => ProcessWebDirectoryAsync(name, webDirectory), pollyContext);
                                 }
                                 else
                                 {
@@ -575,6 +439,146 @@ namespace OpenDirectoryDownloader
             while (!token.IsCancellationRequested && (!queue.IsEmpty || RunningWebDirectoryThreads > 0));
 
             Logger.Debug($"Finished [{name}]");
+        }
+
+        private async Task ProcessWebDirectoryAsync(string name, WebDirectory webDirectory)
+        {
+            webDirectory.StartTime = DateTimeOffset.UtcNow;
+
+            HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url);
+            string html = null;
+
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                html = await GetHtml(httpResponseMessage);
+            }
+
+            if (FirstRequest && !httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.IsSuccessStatusCode && string.IsNullOrWhiteSpace(html))
+            {
+                Logger.Warn("First request fails, using Curl fallback User-Agent");
+                HttpClient.DefaultRequestHeaders.UserAgent.Clear();
+                HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent_Curl);
+                httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url);
+
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    html = await GetHtml(httpResponseMessage);
+                    Logger.Warn("Yes, this Curl User-Agent did the trick!");
+                }
+            }
+
+            if (FirstRequest && !httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.IsSuccessStatusCode && string.IsNullOrWhiteSpace(html))
+            {
+                Logger.Warn("First request fails, using Chrome fallback User-Agent");
+                HttpClient.DefaultRequestHeaders.UserAgent.Clear();
+                HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent_Chrome);
+                httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url);
+
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    html = await GetHtml(httpResponseMessage);
+                    Logger.Warn("Yes, the Chrome User-Agent did the trick!");
+                }
+            }
+
+            bool calibreDetected = false;
+            string calibreVersionString = string.Empty;
+
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                FirstRequest = false;
+
+                List<string> serverHeaders = new List<string>();
+
+                if (httpResponseMessage.Headers.Contains("Server"))
+                {
+                    serverHeaders = httpResponseMessage.Headers.GetValues("Server").ToList();
+
+                    calibreDetected = serverHeaders.Any(h => h.Contains("calibre"));
+                }
+
+                if (calibreDetected)
+                {
+                    string serverHeader = string.Join("/", serverHeaders);
+                    calibreVersionString = serverHeader;
+                }
+                else
+                {
+                    if (html == null)
+                    {
+                        html = await GetHtml(httpResponseMessage);
+                    }
+
+                    // UNTESTED (cannot find or down Calibre with this issue)
+                    const string calibreVersionIdentifier = "CALIBRE_VERSION = \"";
+                    calibreDetected = html?.Contains(calibreVersionIdentifier) == true;
+
+                    if (calibreDetected)
+                    {
+                        int calibreVersionIdentifierStart = html.IndexOf(calibreVersionIdentifier);
+                        calibreVersionString = html.Substring(calibreVersionIdentifierStart, html.IndexOf("\"", ++calibreVersionIdentifierStart));
+                    }
+                }
+            }
+
+            if (calibreDetected)
+            {
+                Version calibreVersion = CalibreParser.ParseVersion(calibreVersionString);
+
+                Console.WriteLine($"Calibre {calibreVersion} detected! I will index it at max 100 books per 30 seconds, else it will break Calibre...");
+                Logger.Info($"Calibre {calibreVersion} detected! I will index it at max 100 books per 30 seconds, else it will break Calibre...");
+
+                await CalibreParser.ParseCalibre(HttpClient, httpResponseMessage.RequestMessage.RequestUri, webDirectory, calibreVersion);
+
+                return;
+            }
+
+            Uri originalUri = new Uri(webDirectory.Url);
+            Logger.Debug($"[{name}] Finish download '{webDirectory.Url}'");
+
+            // Process only same site
+            if (httpResponseMessage.RequestMessage.RequestUri.Host == Session.Root.Uri.Host)
+            {
+                int httpStatusCode = (int)httpResponseMessage.StatusCode;
+
+                if (!Session.HttpStatusCodes.ContainsKey(httpStatusCode))
+                {
+                    Session.HttpStatusCodes[httpStatusCode] = 0;
+                }
+
+                Session.HttpStatusCodes[httpStatusCode]++;
+
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    if (html == null)
+                    {
+                        html = await GetHtml(httpResponseMessage);
+                    }
+
+                    Session.TotalHttpTraffic += html.Length;
+
+                    WebDirectory parsedWebDirectory = await DirectoryParser.ParseHtml(webDirectory, html, HttpClient);
+                    bool processSubdirectories = parsedWebDirectory.Parser != "DirectoryListingModel01";
+                    AddProcessedWebDirectory(webDirectory, parsedWebDirectory, processSubdirectories);
+                }
+                else
+                {
+                    Session.Errors++;
+                    webDirectory.Error = true;
+
+                    if (!Session.UrlsWithErrors.Contains(webDirectory.Url))
+                    {
+                        Session.UrlsWithErrors.Add(webDirectory.Url);
+                    }
+
+                    httpResponseMessage.EnsureSuccessStatusCode();
+                }
+            }
+            else
+            {
+                Logger.Warn($"[{name}] Skipped result of '{webDirectory.Url}' which points to '{httpResponseMessage.RequestMessage.RequestUri}'");
+                Session.Skipped++;
+            }
         }
 
         private static async Task<string> GetHtml(HttpResponseMessage httpResponseMessage)
