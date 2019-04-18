@@ -103,65 +103,73 @@ namespace OpenDirectoryDownloader
             if (!httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.RequestMessage.RequestUri.ToString() != url)
             {
                 httpClient.DefaultRequestHeaders.Referrer = GetUrlDirectory(url);
+                httpResponseMessage.Dispose();
                 httpResponseMessage = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
             }
 
-            using (Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync())
+            try
             {
-                int miliseconds = seconds * 1000;
-
-                Stopwatch stopwatch = Stopwatch.StartNew();
-                long totalBytesRead = 0;
-
-                byte[] buffer = new byte[2048];
-                int bytesRead;
-
-                List<KeyValuePair<long, long>> measurements = new List<KeyValuePair<long, long>>(10_000);
-                long previousTime = 0;
-
-                while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
+                using (Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync())
                 {
-                    if (stopwatch.ElapsedMilliseconds >= miliseconds)
-                    {
-                        break;
-                    }
+                    int miliseconds = seconds * 1000;
 
-                    if (stopwatch.ElapsedMilliseconds >= 10_000)
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    long totalBytesRead = 0;
+
+                    byte[] buffer = new byte[2048];
+                    int bytesRead;
+
+                    List<KeyValuePair<long, long>> measurements = new List<KeyValuePair<long, long>>(10_000);
+                    long previousTime = 0;
+
+                    while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        // Second changed
-                        if (previousTime / 1000 < stopwatch.ElapsedMilliseconds / 1000)
+                        if (stopwatch.ElapsedMilliseconds >= miliseconds)
                         {
-                            List<IGrouping<long, KeyValuePair<long, long>>> perSecond = measurements.GroupBy(m => m.Key / 1000).ToList();
+                            break;
+                        }
 
-                            double maxSpeedLastSeconds = perSecond.TakeLast(3).Max(s => GetSpeedInMBs(s, 1000));
-                            double maxSpeedBefore = perSecond.Take(perSecond.Count - 3).Max(s => GetSpeedInMBs(s, 1000));
-
-                            // If no improvement in speed
-                            if (maxSpeedBefore > maxSpeedLastSeconds)
+                        if (stopwatch.ElapsedMilliseconds >= 10_000)
+                        {
+                            // Second changed
+                            if (previousTime / 1000 < stopwatch.ElapsedMilliseconds / 1000)
                             {
-                                break;
+                                List<IGrouping<long, KeyValuePair<long, long>>> perSecond = measurements.GroupBy(m => m.Key / 1000).ToList();
+
+                                double maxSpeedLastSeconds = perSecond.TakeLast(3).Max(s => GetSpeedInMBs(s, 1000));
+                                double maxSpeedBefore = perSecond.Take(perSecond.Count - 3).Max(s => GetSpeedInMBs(s, 1000));
+
+                                // If no improvement in speed
+                                if (maxSpeedBefore > maxSpeedLastSeconds)
+                                {
+                                    break;
+                                }
                             }
                         }
+
+                        totalBytesRead += bytesRead;
+
+                        measurements.Add(new KeyValuePair<long, long>(stopwatch.ElapsedMilliseconds, totalBytesRead));
+                        previousTime = stopwatch.ElapsedMilliseconds;
                     }
 
-                    totalBytesRead += bytesRead;
+                    stopwatch.Stop();
 
-                    measurements.Add(new KeyValuePair<long, long>(stopwatch.ElapsedMilliseconds, totalBytesRead));
-                    previousTime = stopwatch.ElapsedMilliseconds;
+                    SpeedtestResult speedtestResult = new SpeedtestResult
+                    {
+                        DownloadedBytes = totalBytesRead,
+                        ElapsedMiliseconds = stopwatch.ElapsedMilliseconds,
+                        MaxMBsPerSecond = measurements.GroupBy(m => m.Key / 1000).Max(s => GetSpeedInMBs(s, 1000))
+                    };
+
+                    Logger.Info($"Downloaded: {speedtestResult.DownloadedMBs:F2} MB, Time: {speedtestResult.ElapsedMiliseconds} ms, Speed: {speedtestResult.MaxMBsPerSecond:F1} MB/s ({speedtestResult.MaxMBsPerSecond * 8:F0} mbit)");
+
+                    return speedtestResult;
                 }
-
-                stopwatch.Stop();
-
-                SpeedtestResult speedtestResult = new SpeedtestResult
-                {
-                    DownloadedBytes = totalBytesRead,
-                    ElapsedMiliseconds = stopwatch.ElapsedMilliseconds,
-                    MaxMBsPerSecond = measurements.GroupBy(m => m.Key / 1000).Max(s => GetSpeedInMBs(s, 1000))
-                };
-
-                Logger.Info($"Downloaded: {speedtestResult.DownloadedMBs:F2} MB, Time: {speedtestResult.ElapsedMiliseconds} ms, Speed: {speedtestResult.MaxMBsPerSecond:F1} MB/s ({speedtestResult.MaxMBsPerSecond * 8:F0} mbit)");
-
-                return speedtestResult;
+            }
+            finally
+            {
+                httpResponseMessage.Dispose();
             }
         }
 

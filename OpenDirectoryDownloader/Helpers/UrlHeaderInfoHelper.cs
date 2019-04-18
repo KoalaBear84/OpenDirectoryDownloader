@@ -42,11 +42,20 @@ namespace OpenDirectoryDownloader.Helpers
 
         private static async Task<long?> GetUrlFileSizeInnerAsync(HttpClient httpClient, string url)
         {
-            return (await httpClient.SendAsync(new HttpRequestMessage
+            HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(new HttpRequestMessage
             {
                 RequestUri = new Uri(url),
                 Method = HttpMethod.Head
-            }, HttpCompletionOption.ResponseHeadersRead)).Content?.Headers.ContentLength;
+            }, HttpCompletionOption.ResponseHeadersRead);
+
+            try
+            {
+                return httpResponseMessage.Content?.Headers.ContentLength;
+            }
+            finally
+            {
+                httpResponseMessage.Dispose();
+            }
         }
 
         public static async Task<long?> GetUrlFileSizeByDownloadingAsync(this HttpClient httpClient, string url)
@@ -97,11 +106,20 @@ namespace OpenDirectoryDownloader.Helpers
 
         private static async Task<MediaTypeHeaderValue> GetContentTypeInnerAsync(HttpClient httpClient, string url)
         {
-            return (await httpClient.SendAsync(new HttpRequestMessage
+            HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(new HttpRequestMessage
             {
                 RequestUri = new Uri(url),
                 Method = HttpMethod.Head
-            }, HttpCompletionOption.ResponseHeadersRead)).Content?.Headers.ContentType;
+            }, HttpCompletionOption.ResponseHeadersRead);
+
+            try
+            {
+                return httpResponseMessage.Content?.Headers.ContentType;
+            }
+            finally
+            {
+                httpResponseMessage.Dispose();
+            }
         }
     }
 }
