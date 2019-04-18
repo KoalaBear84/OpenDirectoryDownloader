@@ -97,7 +97,7 @@ namespace OpenDirectoryDownloader.Helpers
             }
         }
 
-        private static readonly string[] sizeSuffixes = { "B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+        private static readonly string[] sizeSuffixes = { "B", "kiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB" };
 
         public static string ToHumanReadable(long size)
         {
