@@ -25,10 +25,10 @@
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.11.0" />
     <PackageReference Include="CommandLineParser" Version="2.4.3" />
-    <PackageReference Include="FluentFTP" Version="22.0.0" />
+    <PackageReference Include="FluentFTP" Version="24.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="NLog.Config" Version="4.6.0-rc1" />
-    <PackageReference Include="Polly" Version="7.0.3" />
+    <PackageReference Include="Polly" Version="7.1.0" />
   </ItemGroup>
 
   <ItemGroup>

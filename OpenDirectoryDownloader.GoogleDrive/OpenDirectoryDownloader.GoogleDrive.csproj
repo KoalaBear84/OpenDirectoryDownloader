@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Apis.Drive.v3" Version="1.38.0.1505" />
+    <PackageReference Include="Google.Apis.Drive.v3" Version="1.38.2.1566" />
     <PackageReference Include="NLog.Config" Version="4.6.0-rc1" />
   </ItemGroup>
 

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader
@@ -124,9 +125,11 @@ namespace OpenDirectoryDownloader
             await ftpClient.ConnectAsync();
 
             FtpReply connectReply = ftpClient.LastReply;
-            FtpReply helpReply = await ftpClient.ExecuteAsync("HELP");
-            FtpReply statusReply = await ftpClient.ExecuteAsync("STAT");
-            FtpReply systemReply = await ftpClient.ExecuteAsync("SYST");
+            CancellationToken cancellationToken = new CancellationToken();
+
+            FtpReply helpReply = await ftpClient.ExecuteAsync("HELP", cancellationToken);
+            FtpReply statusReply = await ftpClient.ExecuteAsync("STAT", cancellationToken);
+            FtpReply systemReply = await ftpClient.ExecuteAsync("SYST", cancellationToken);
 
             return
                 $"Connect Respones: {connectReply.InfoMessages}{Environment.NewLine}" +
