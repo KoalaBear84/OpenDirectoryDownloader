@@ -50,6 +50,8 @@ namespace OpenDirectoryDownloader
                 url = Console.ReadLine();
             }
 
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2Support", true);
+
             OpenDirectoryIndexerSettings openDirectoryIndexerSettings = new OpenDirectoryIndexerSettings
             {
                 CommandLineOptions = CommandLineOptions
