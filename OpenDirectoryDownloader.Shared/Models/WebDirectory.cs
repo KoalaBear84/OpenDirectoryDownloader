@@ -50,7 +50,7 @@ namespace OpenDirectoryDownloader.Shared.Models
         public IEnumerable<string> Urls => Files.Select(f => f.Url);
 
         [JsonIgnore]
-        public IEnumerable<string> AllFileUrls => Subdirectories.SelectMany(sd => sd.AllFileUrls.OrderBy(url => url)).Concat(Files.Select(f => f.Url).OrderBy(url => url));
+        public IEnumerable<string> AllFileUrls => Subdirectories.SelectMany(sd => sd.AllFileUrls).Concat(Urls).OrderBy(url => url);
 
         [JsonIgnore]
         public IEnumerable<WebFile> AllFiles => Subdirectories.SelectMany(sd => sd.AllFiles).Concat(Files);
