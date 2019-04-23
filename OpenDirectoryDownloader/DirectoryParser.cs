@@ -262,7 +262,7 @@ namespace OpenDirectoryDownloader
             {
                 string size = divElement.QuerySelector("em").TextContent.Trim();
 
-                bool isFile = size != "-";
+                bool isFile = IsFileSize(size);
 
                 IElement link = divElement.QuerySelector("a");
                 string linkHref = link.Attributes["href"].Value;
@@ -304,7 +304,7 @@ namespace OpenDirectoryDownloader
             {
                 string size = tableRow.QuerySelector("td:nth-child(3)").TextContent.Trim();
 
-                bool isFile = size != "-";
+                bool isFile = IsFileSize(size);
 
                 IElement link = tableRow.QuerySelector("a");
                 string linkHref = link.Attributes["href"].Value;
@@ -346,7 +346,7 @@ namespace OpenDirectoryDownloader
             {
                 string size = listItem.QuerySelector(".file-size").TextContent.Trim();
 
-                bool isFile = size != "-";
+                bool isFile = IsFileSize(size);
 
                 IElement link = listItem.QuerySelector("a");
                 string linkHref = link.Attributes["href"].Value;
@@ -403,7 +403,7 @@ namespace OpenDirectoryDownloader
                 {
                     string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim();
 
-                    bool isFile = size != "-" && !size.Contains("item");
+                    bool isFile = IsFileSize(size) && !size.Contains("item");
 
                     IHtmlAnchorElement link = tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})")?.QuerySelector("a") as IHtmlAnchorElement;
                     string linkHref = link?.Attributes["href"].Value;
@@ -637,7 +637,7 @@ namespace OpenDirectoryDownloader
                                     !isDirectory &&
                                     (urlEncodingParser["dir"] == null && (
                                         (fileSizeHeader.Value == null && !linkHref.EndsWith("/")) ||
-                                        (size != "-" && size != "<Directory>" && size != "0.00b" && !string.IsNullOrWhiteSpace(size) && (size?.Contains("item")).Value != true && !linkHref.EndsWith("/"))
+                                        (IsFileSize(size) && size != "0.00b" && !string.IsNullOrWhiteSpace(size) && (size?.Contains("item")).Value != true && !linkHref.EndsWith("/"))
                                     ));
 
                                 if (!isFile)
@@ -710,7 +710,7 @@ namespace OpenDirectoryDownloader
 
             if (match.Success)
             {
-                bool isFile = match.Groups["FileSize"].Value.Trim() != "-";
+                bool isFile = IsFileSize(match.Groups["FileSize"].Value.Trim());
 
                 IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
 
@@ -771,7 +771,7 @@ namespace OpenDirectoryDownloader
 
                 bool isFile = long.TryParse(fileSizeGroup, out long fileSize);
 
-                if (!isFile && fileSizeGroup != "-")
+                if (!isFile && IsFileSize(fileSizeGroup))
                 {
                     fileSize = FileSizeHelper.ParseFileSize(fileSizeGroup);
                     isFile = fileSize > 0;
@@ -1483,6 +1483,16 @@ namespace OpenDirectoryDownloader
             return false;
         }
 
+        /// <summary>
+        /// Check simple cases of file size
+        /// </summary>
+        /// <param name="value">Value to check</param>
+        /// <returns>Is it might be a file size</returns>
+        private static bool IsFileSize(string value)
+        {
+            return value != "-" && value != "—" && value != "<Directory>";
+        }
+
         public enum TableHeaderType
         {
             Unknown,
@@ -1662,6 +1672,7 @@ namespace OpenDirectoryDownloader
 
             return
                 linkHref != "/" &&
+                linkHref != ".." &&
                 linkHref != "../" &&
                 linkHref != "./." &&
                 linkHref != "./.." &&

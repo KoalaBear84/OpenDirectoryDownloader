@@ -2426,5 +2426,36 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("bootstrap.cerulean.min.css", webDirectory.Files[0].FileName);
             Assert.Equal(-1, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: https://esheavyindustries.com/zines/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing80aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(221, webDirectory.Subdirectories.Count);
+            Assert.Equal("020", webDirectory.Subdirectories[0].Name);
+            Assert.Single(webDirectory.Files);
+            Assert.Equal("publish.txt", webDirectory.Files[0].FileName);
+            Assert.Equal(24576, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: https://esheavyindustries.com/zines/020/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing80bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(3, webDirectory.Files.Count);
+            Assert.Equal("020_1.txt", webDirectory.Files[0].FileName);
+            Assert.Equal(28672, webDirectory.Files[0].FileSize);
+        }
     }
 }

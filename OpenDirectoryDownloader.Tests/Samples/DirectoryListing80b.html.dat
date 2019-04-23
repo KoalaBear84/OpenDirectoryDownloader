@@ -1,0 +1,137 @@
+﻿
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>020</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<style>
+body {
+	font-family: sans-serif;
+	text-rendering: optimizespeed;
+}
+table {
+	width: 75%;
+	border-collapse: collapse;
+}
+/*
+tr {
+	border-bottom: 1px dashed #dadada;
+}
+*/
+th,
+td {
+	text-align: left;
+	padding: 2px 0;
+}
+
+th {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	font-size: 16px;
+	white-space: nowrap;
+}
+
+th a {
+	color: black;
+}
+
+td {
+	white-space: nowrap;
+	font-size: 14px;
+}
+/*
+td:nth-child(2) {
+	width: 80%;
+}
+
+td:nth-child(3) {
+	padding: 0 20px 0 20px;
+}
+
+th:nth-child(4),
+td:nth-child(4) {
+	text-align: right;
+}
+
+td:nth-child(2) svg {
+	position: absolute;
+}
+*/
+/*
+td .name,
+td .goup {
+	margin-left: 1.75em;
+	word-break: break-all;
+	overflow-wrap: break-word;
+	white-space: pre-wrap;
+}
+*/
+	</style>
+	</head>
+	<body>
+		<h1>
+			<a href="../../">/</a><a href="../">zines</a>/<a href="">020</a>/
+		</h1>
+
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th>
+						Name
+					</th>
+					<th>
+						Size
+					</th>
+					<th>
+						Modified
+					</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td></td>
+					<td>
+						<a href="..">
+							<span class="goup">Go up</span>
+						</a>
+					</td>
+					<td>&mdash;</td>
+					<td class="hideable">&mdash;</td>
+					<td class="hideable"></td>
+				</tr>
+				<tr class="file">
+					<td></td>
+					<td>
+						<a href="./020_1.txt">020_1.txt</a>
+					</td>
+					<td data-order="28587">28 KiB</td>
+					<td><time datetime="2017-11-12T22:08:37Z">11/12/2017 10:08:37 PM +00:00</time></td>
+					<td></td>
+				</tr>
+				<tr class="file">
+					<td></td>
+					<td>
+						<a href="./020_2.txt">020_2.txt</a>
+					</td>
+					<td data-order="45434">44 KiB</td>
+					<td><time datetime="2017-11-12T22:08:37Z">11/12/2017 10:08:37 PM +00:00</time></td>
+					<td></td>
+				</tr>
+				<tr class="file">
+					<td></td>
+					<td>
+						<a href="./020_3.txt">020_3.txt</a>
+					</td>
+					<td data-order="34789">34 KiB</td>
+					<td><time datetime="2017-11-12T22:08:37Z">11/12/2017 10:08:37 PM +00:00</time></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</body>
+</html> 
