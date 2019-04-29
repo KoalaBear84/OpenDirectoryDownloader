@@ -10,7 +10,7 @@ namespace OpenDirectoryDownloader.Helpers
         // Parse a file size.
         private static readonly string[][] SizeSuffixes =
         {
-            new string[] { "BYTES", "B", "OCTETS" },
+            new string[] { "BYTES", "B", "OCTETS", "OCTET" },
             new string[] { "KB", "K", "KIB", "KO" },
             new string[] { "MB", "M", "MIB", "MO" },
             new string[] { "GB", "G", "GIB", "GO" },
@@ -20,7 +20,7 @@ namespace OpenDirectoryDownloader.Helpers
             new string[] { "ZB", "Z", "ZIB", "ZO" },
             new string[] { "YB", "Y", "YIB", "YO" }
         };
-        private static readonly Regex AlphaNumericRegex = new Regex("[^a-zA-Z0-9 .,-]");
+        private static readonly Regex AlphaNumericRegex = new Regex("[^a-zA-Z0-9 .,]");
 
         public static long ParseFileSize(string value, int kbValue = 1024, bool throwException = true)
         {

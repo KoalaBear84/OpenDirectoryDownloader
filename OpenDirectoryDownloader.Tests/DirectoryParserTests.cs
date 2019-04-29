@@ -2457,5 +2457,21 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("020_1.txt", webDirectory.Files[0].FileName);
             Assert.Equal(28672, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: http://mephistope.homegnu.org/docu/music/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing81aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(16, webDirectory.Subdirectories.Count);
+            Assert.Equal("n", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(68, webDirectory.Files.Count);
+            Assert.Equal("396Hz - Liberation From Fear (Solfeggio Tones).failed-conv.mp4", webDirectory.Files[0].FileName);
+            Assert.Equal(7172260, webDirectory.Files[0].FileSize);
+        }
     }
 }

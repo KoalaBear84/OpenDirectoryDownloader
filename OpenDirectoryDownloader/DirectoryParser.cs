@@ -628,7 +628,11 @@ namespace OpenDirectoryDownloader
                                 fullUrl = StripUrl(fullUrl);
 
                                 IElement imageElement = tableRow.QuerySelector("img");
-                                bool isDirectory = imageElement != null && imageElement.HasAttribute("alt") && imageElement.Attributes["alt"].Value == "[DIR]";
+                                bool isDirectory = imageElement != null &&
+                                    (
+                                        (imageElement.HasAttribute("alt") && imageElement.Attributes["alt"].Value == "[DIR]") ||
+                                        (imageElement.HasAttribute("src") && Path.GetFileName(imageElement.Attributes["src"].Value).Contains("dir"))
+                                    );
 
                                 UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
 
@@ -1557,7 +1561,7 @@ namespace OpenDirectoryDownloader
                         tableHeaderInfo.Type = TableHeaderType.Type;
                     }
 
-                    if (headerName == "size" || headerName.Contains("file size"))
+                    if (headerName == "size" || headerName.Contains("file size") || headerName.Contains("taille"))
                     {
                         tableHeaderInfo.Type = TableHeaderType.FileSize;
                     }
@@ -1573,7 +1577,8 @@ namespace OpenDirectoryDownloader
                         headerName == "name" ||
                         headerName.Contains("file name") ||
                         headerName.Contains("filename") ||
-                        headerName == "directory"))
+                        headerName == "directory" ||
+                        headerName.Contains("nom")))
                     {
                         tableHeaderInfo.Type = TableHeaderType.FileName;
                     }

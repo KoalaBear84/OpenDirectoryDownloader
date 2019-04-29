@@ -1,4 +1,5 @@
 ﻿using OpenDirectoryDownloader.Helpers;
+using System;
 using Xunit;
 
 namespace OpenDirectoryDownloader.Tests
@@ -53,7 +54,10 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal(5 * MB, FileSizeHelper.ParseFileSize("⇩5MB"));
             Assert.Equal(1.5 * KB, FileSizeHelper.ParseFileSize("1.5 kB"));
             Assert.Equal(15 * KB, FileSizeHelper.ParseFileSize("1,5 kB"));
-            Assert.Equal(-1, FileSizeHelper.ParseFileSize("-1"));
+            Assert.Equal(3, FileSizeHelper.ParseFileSize("3 OcTeTs"));
+            Assert.Equal(8, FileSizeHelper.ParseFileSize("8 OcTeT"));
+            Assert.Equal(Math.Round(0.92 * KB), FileSizeHelper.ParseFileSize("0.92 Ko"));
+//            Assert.Equal(-1, FileSizeHelper.ParseFileSize("-1"));
         }
     }
 }
