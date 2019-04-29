@@ -50,7 +50,8 @@ namespace OpenDirectoryDownloader
                 url = Console.ReadLine();
             }
 
-            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2Support", true);
+            // Wait until this ticket is closed: https://github.com/dotnet/corefx/pull/37050
+            //AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2Support", true);
 
             OpenDirectoryIndexerSettings openDirectoryIndexerSettings = new OpenDirectoryIndexerSettings
             {
