@@ -1,0 +1,66 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width"/>
+  <title>Files...</title>
+  <link rel="stylesheet" href="/fancyindex/css/fancyindex.css">
+  <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+  <script>
+    window.document.title = window.location.pathname;
+  </script>
+</head>
+<body>
+<div class="box box-breadcrumbs">
+    <div class="box-header">
+      <div class="box-header-content">
+        <div id="breadcrumbs" class="breadcrumbs">
+          <a href="#"></a>
+        </div>
+      </div>
+    </div>
+    <div class="box-content clearfix">
+      <h1>Index of:
+/mlp/</h1>
+<table id="list" cellpadding="0.1em" cellspacing="0">
+<colgroup><col width="55%"/><col width="20%"/><col width="25%"/></colgroup>
+<thead><tr><th><a href="?C=N&O=A">File Name</a>&nbsp;<a href="?C=N&O=D">&nbsp;&#8595;&nbsp;</a></th><th><a href="?C=S&O=A">File Size</a>&nbsp;<a href="?C=S&O=D">&nbsp;&#8595;&nbsp;</a></th><th><a href="?C=M&O=A">Date</a>&nbsp;<a href="?C=M&O=D">&nbsp;&#8595;&nbsp;</a></th></tr></thead>
+<tbody><tr><td><a href="../">Parent directory/</a></td><td>-</td><td>-</td></tr><tr><td><a href="Equestria.Girls/">Equestria.Girls/</a></td><td>-</td><td>2016-Dec-08 19:16</td></tr>
+<tr><td><a href="Season.1/">Season.1/</a></td><td>-</td><td>2016-Apr-11 12:59</td></tr>
+<tr><td><a href="Season.2/">Season.2/</a></td><td>-</td><td>2016-Aug-25 21:04</td></tr>
+<tr><td><a href="Season.3/">Season.3/</a></td><td>-</td><td>2016-Aug-21 16:17</td></tr>
+<tr><td><a href="Season.4/">Season.4/</a></td><td>-</td><td>2016-Aug-21 14:29</td></tr>
+<tr><td><a href="Season.5/">Season.5/</a></td><td>-</td><td>2016-Aug-21 16:47</td></tr>
+<tr><td><a href="Season.6/">Season.6/</a></td><td>-</td><td>2016-Oct-23 00:38</td></tr>
+<tr><td><a href="Season.7/">Season.7/</a></td><td>-</td><td>2017-Nov-12 03:22</td></tr>
+<tr><td><a href="Season.8/">Season.8/</a></td><td>-</td><td>2019-Apr-17 18:48</td></tr>
+<tr><td><a href="Season.9/">Season.9/</a></td><td>-</td><td>2019-Apr-28 01:34</td></tr>
+<tr><td><a href="Specials/">Specials/</a></td><td>-</td><td>2018-Oct-28 18:01</td></tr>
+<tr><td><a href="testfiles/">testfiles/</a></td><td>-</td><td>2017-Feb-07 19:35</td></tr>
+<tr><td><a href="Game.of.Thrones.S08E01.Kings.Landing.720p.AMZN.WEB-DL.DDP5.1.H.264-GoT.mkv">Game.of.Thrones.S08E01.Kings.Landing.720p.AMZN.WEB-DL.DDP5.1.H.264-GoT.mkv</a></td><td>     1G</td><td>2019-Apr-14 18:16</td></tr>
+<tr><td><a href="Game.of.Thrones.S08E02.720p.AMZN.WEB-DL.DDP5.1.H.264-GoT.mkv">Game.of.Thrones.S08E02.720p.AMZN.WEB-DL.DDP5.1.H.264-GoT.mkv</a></td><td>     1G</td><td>2019-Apr-21 18:44</td></tr>
+<tr><td><a href="My.Little.Pony.The.Movie.2017.1080p.BluRay.AC3.x264-BMF.mkv">My.Little.Pony.The.Movie.2017.1080p.BluRay.AC3.x264-BMF.mkv</a></td><td>     5G</td><td>2018-Feb-10 19:57</td></tr>
+</tbody></table>
+</div>
+</div>
+<script>
+  var loc = window.location.pathname;
+  var segments = loc.split('/');
+  var breadcrumbs = '';
+  var currentPath = '/';
+  for (var i=0; i<segments.length; i++) {
+    if (segments[i] !== '') {
+      currentPath += segments[i] + '/';
+      breadcrumbs += '<a href="' +  currentPath + '">' + window.unescape(segments[i]) + '<\/a>';
+    } else if (segments.length -1 !== i) {
+      currentPath += '';
+      breadcrumbs += '<a href="' + currentPath + '">Root<\/a>';
+    }
+  }
+  document.getElementById('breadcrumbs').innerHTML = breadcrumbs;
+</script>
+<!--<script src="/fancyindex/js/history.js"></script>-->
+</body>
+</html>

@@ -1,0 +1,58 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width"/>
+  <title>Files...</title>
+  <link rel="stylesheet" href="/fancyindex/css/fancyindex.css">
+  <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+  <script>
+    window.document.title = window.location.pathname;
+  </script>
+</head>
+<body>
+<div class="box box-breadcrumbs">
+    <div class="box-header">
+      <div class="box-header-content">
+        <div id="breadcrumbs" class="breadcrumbs">
+          <a href="#"></a>
+        </div>
+      </div>
+    </div>
+    <div class="box-content clearfix">
+      <h1>Index of:
+/mlp/Season.9/</h1>
+<table id="list" cellpadding="0.1em" cellspacing="0">
+<colgroup><col width="55%"/><col width="20%"/><col width="25%"/></colgroup>
+<thead><tr><th><a href="?C=N&O=A">File Name</a>&nbsp;<a href="?C=N&O=D">&nbsp;&#8595;&nbsp;</a></th><th><a href="?C=S&O=A">File Size</a>&nbsp;<a href="?C=S&O=D">&nbsp;&#8595;&nbsp;</a></th><th><a href="?C=M&O=A">Date</a>&nbsp;<a href="?C=M&O=D">&nbsp;&#8595;&nbsp;</a></th></tr></thead>
+<tbody><tr><td><a href="../">Parent directory/</a></td><td>-</td><td>-</td></tr><tr><td><a href="720p/">720p/</a></td><td>-</td><td>2019-Apr-28 01:34</td></tr>
+<tr><td><a href="MP4-AAC/">MP4-AAC/</a></td><td>-</td><td>2019-Apr-28 01:34</td></tr>
+<tr><td><a href="My.Little.Pony.Friendship.is.Magic.S09E01.The.Beginning.of.the.End.Part.1.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv">My.Little.Pony.Friendship.is.Magic.S09E01.The.Beginning.of.the.End.Part.1.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv</a></td><td>   863M</td><td>2019-Apr-07 12:31</td></tr>
+<tr><td><a href="My.Little.Pony.Friendship.is.Magic.S09E02.The.Beginning.of.the.End.Part.2.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv">My.Little.Pony.Friendship.is.Magic.S09E02.The.Beginning.of.the.End.Part.2.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv</a></td><td>   862M</td><td>2019-Apr-07 12:32</td></tr>
+<tr><td><a href="My.Little.Pony.Friendship.is.Magic.S09E03.Uprooted.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv">My.Little.Pony.Friendship.is.Magic.S09E03.Uprooted.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv</a></td><td>   866M</td><td>2019-Apr-14 01:41</td></tr>
+<tr><td><a href="My.Little.Pony.Friendship.is.Magic.S09E04.Twilights.Seven.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv">My.Little.Pony.Friendship.is.Magic.S09E04.Twilights.Seven.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv</a></td><td>   873M</td><td>2019-Apr-21 00:52</td></tr>
+<tr><td><a href="My.Little.Pony.Friendship.is.Magic.S09E05.The.Point.of.No.Return.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv">My.Little.Pony.Friendship.is.Magic.S09E05.The.Point.of.No.Return.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv</a></td><td>   872M</td><td>2019-Apr-28 01:31</td></tr>
+</tbody></table>
+</div>
+</div>
+<script>
+  var loc = window.location.pathname;
+  var segments = loc.split('/');
+  var breadcrumbs = '';
+  var currentPath = '/';
+  for (var i=0; i<segments.length; i++) {
+    if (segments[i] !== '') {
+      currentPath += segments[i] + '/';
+      breadcrumbs += '<a href="' +  currentPath + '">' + window.unescape(segments[i]) + '<\/a>';
+    } else if (segments.length -1 !== i) {
+      currentPath += '';
+      breadcrumbs += '<a href="' + currentPath + '">Root<\/a>';
+    }
+  }
+  document.getElementById('breadcrumbs').innerHTML = breadcrumbs;
+</script>
+<!--<script src="/fancyindex/js/history.js"></script>-->
+</body>
+</html>

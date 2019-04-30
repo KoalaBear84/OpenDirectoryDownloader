@@ -34,6 +34,11 @@ namespace OpenDirectoryDownloader.Helpers
             // Remove leading and trailing spaces.
             value = value.Trim();
 
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return -1;
+            }
+
             try
             {
                 // Find the last non-alphabetic character.

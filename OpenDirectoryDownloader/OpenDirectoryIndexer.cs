@@ -152,8 +152,6 @@ namespace OpenDirectoryDownloader
 
                     IndexingTaskCTS = new CancellationTokenSource();
 
-                    //var taskSource = Task.Run(() => TaskProducer(taskQueue));
-
                     for (int i = 1; i <= OpenDirectoryIndexerSettings.Threads; i++)
                     {
                         string processorId = i.ToString();
@@ -167,9 +165,6 @@ namespace OpenDirectoryDownloader
 
                         WebFileFileSizeProcessors[i - 1] = WebFileFileSizeProcessor(WebFilesFileSizeQueue, $"Processor {processorId}", IndexingTaskCTS.Token, WebDirectoryProcessors);
                     }
-
-                    //await taskSource;
-                    //IndexingTaskCTS.CancelAfter(TimeSpan.FromSeconds(2));
 
                     await Task.WhenAll(WebDirectoryProcessors);
                     Console.WriteLine("Finshed indexing");
@@ -631,7 +626,7 @@ namespace OpenDirectoryDownloader
             webDirectory.Files.RemoveAll(f =>
             {
                 Uri uri = new Uri(f.Url);
-                return uri.Scheme != "https" && uri.Scheme != "http" && uri.Scheme != "ftp" && (uri.Host != Session.Root.Uri.Host || !uri.LocalPath.StartsWith(Session.Root.Uri.LocalPath));
+                return (uri.Scheme != "https" && uri.Scheme != "http" && uri.Scheme != "ftp") || (uri.Host != Session.Root.Uri.Host || !uri.LocalPath.StartsWith(Session.Root.Uri.LocalPath));
             });
 
             foreach (WebFile webFile in webDirectory.Files.Where(f => f.FileSize == -1 || OpenDirectoryIndexerSettings.CommandLineOptions.ExactFileSizes))

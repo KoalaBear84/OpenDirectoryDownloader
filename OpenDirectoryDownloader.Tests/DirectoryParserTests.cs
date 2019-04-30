@@ -2473,5 +2473,37 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("396Hz - Liberation From Fear (Solfeggio Tones).failed-conv.mp4", webDirectory.Files[0].FileName);
             Assert.Equal(7172260, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: http://mlpeps.com/mlp/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing82aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(12, webDirectory.Subdirectories.Count);
+            Assert.Equal("Equestria.Girls", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(3, webDirectory.Files.Count);
+            Assert.Equal("Game.of.Thrones.S08E01.Kings.Landing.720p.AMZN.WEB-DL.DDP5.1.H.264-GoT.mkv", webDirectory.Files[0].FileName);
+            Assert.Equal(1073741824, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://mlpeps.com/mlp/Season.9/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing82bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(2, webDirectory.Subdirectories.Count);
+            Assert.Equal("720p", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(5, webDirectory.Files.Count);
+            Assert.Equal("My.Little.Pony.Friendship.is.Magic.S09E01.The.Beginning.of.the.End.Part.1.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv", webDirectory.Files[0].FileName);
+            Assert.Equal(904921088, webDirectory.Files[0].FileSize);
+        }
     }
 }
