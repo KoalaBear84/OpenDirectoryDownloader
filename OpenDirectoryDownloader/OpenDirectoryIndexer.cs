@@ -445,6 +445,8 @@ namespace OpenDirectoryDownloader
 
             if (httpResponseMessage.IsSuccessStatusCode)
             {
+                SetRootUrl(httpResponseMessage);
+
                 html = await GetHtml(httpResponseMessage);
             }
 
@@ -457,6 +459,8 @@ namespace OpenDirectoryDownloader
 
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
+                    SetRootUrl(httpResponseMessage);
+
                     html = await GetHtml(httpResponseMessage);
                     Logger.Warn("Yes, this Curl User-Agent did the trick!");
                 }
@@ -471,6 +475,8 @@ namespace OpenDirectoryDownloader
 
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
+                    SetRootUrl(httpResponseMessage);
+
                     html = await GetHtml(httpResponseMessage);
                     Logger.Warn("Yes, the Chrome User-Agent did the trick!");
                 }
@@ -573,6 +579,18 @@ namespace OpenDirectoryDownloader
             {
                 Logger.Warn($"[{name}] Skipped result of '{webDirectory.Url}' which points to '{httpResponseMessage.RequestMessage.RequestUri}'");
                 Session.Skipped++;
+            }
+        }
+
+        private void SetRootUrl(HttpResponseMessage httpResponseMessage)
+        {
+            if (FirstRequest)
+            {
+                if (Session.Root.Url != httpResponseMessage.RequestMessage.RequestUri.ToString())
+                {
+                    Session.Root.Url = httpResponseMessage.RequestMessage.RequestUri.ToString();
+                    Logger.Warn($"Retrieved URL: {Session.Root.Url}");
+                }
             }
         }
 
