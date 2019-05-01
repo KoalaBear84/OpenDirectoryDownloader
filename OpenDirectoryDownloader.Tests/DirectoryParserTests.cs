@@ -2505,5 +2505,20 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("My.Little.Pony.Friendship.is.Magic.S09E01.The.Beginning.of.the.End.Part.1.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv", webDirectory.Files[0].FileName);
             Assert.Equal(904921088, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: http://cybercloud.zone/dirs/movie/movieland/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing83aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(643, webDirectory.Files.Count);
+            Assert.Equal("Stan.and.Ollie.2018.BDRip.x264-DRONES.mkv", webDirectory.Files[0].FileName);
+            Assert.Equal(524288000, webDirectory.Files[0].FileSize);
+        }
     }
 }

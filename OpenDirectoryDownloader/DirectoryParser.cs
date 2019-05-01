@@ -767,7 +767,7 @@ namespace OpenDirectoryDownloader
 
         private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser2 = async (webDirectory, baseUrl, line) =>
         {
-            Match match = Regex.Match(line, @"<a.*<\/a>\s*(?<DateTime>\d+-\w+-\d+\s\d+:\d+)\s*(?<FileSize>\S+\s?\S*)\s*\S*");
+            Match match = Regex.Match(line, @"<a.*<\/a>\s*(?<DateTime>\d+-\w+-\d+\s\d+:\d{0,2})\s*(?<FileSize>\S+\s?\S*)\s*\S*");
 
             if (match.Success)
             {

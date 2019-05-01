@@ -29,6 +29,9 @@ namespace OpenDirectoryDownloader.Helpers
                 return -1;
             }
 
+            // Strip HTML
+            value = Regex.Replace(value, "<.*?>", string.Empty);
+
             value = AlphaNumericRegex.Replace(value, string.Empty);
 
             // Remove leading and trailing spaces.
