@@ -621,10 +621,10 @@ namespace OpenDirectoryDownloader
                             tableRow.QuerySelector("table") == null)
                         {
                             IElement link = tableRow.QuerySelector("a");
-                            string linkHref = link.Attributes["href"].Value;
 
                             if (IsValidLink(link))
                             {
+                                string linkHref = link.Attributes["href"].Value;
                                 Uri uri = new Uri(new Uri(baseUrl), linkHref);
                                 string fullUrl = uri.ToString();
 
