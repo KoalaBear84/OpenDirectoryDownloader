@@ -534,6 +534,12 @@ namespace OpenDirectoryDownloader
                 string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim();
 
                 bool isFile = !string.IsNullOrWhiteSpace(size);
+                IElement image = tableRow.QuerySelector("img");
+
+                if (isFile && image != null && image.HasAttribute("alt") && image.Attributes["alt"].Value == "folder")
+                {
+                    isFile = false;
+                }
 
                 IHtmlAnchorElement link = tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})")?.QuerySelector("a") as IHtmlAnchorElement;
                 string linkHref = link?.Attributes["href"]?.Value;
