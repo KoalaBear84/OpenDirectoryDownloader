@@ -620,9 +620,6 @@ namespace OpenDirectoryDownloader
                             !tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})").TextContent.ToLower().Contains("parent directory") &&
                             tableRow.QuerySelector("table") == null)
                         {
-                            string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim().Replace(" ", string.Empty);
-                            string description = tableRow.QuerySelector($"td:nth-child({descriptionHeaderColumnIndex})")?.TextContent.Trim();
-
                             IElement link = tableRow.QuerySelector("a");
                             string linkHref = link.Attributes["href"].Value;
 
@@ -641,6 +638,9 @@ namespace OpenDirectoryDownloader
                                     );
 
                                 UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
+
+                                string description = tableRow.QuerySelector($"td:nth-child({descriptionHeaderColumnIndex})")?.TextContent.Trim();
+                                string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim().Replace(" ", string.Empty);
 
                                 bool isFile =
                                     urlEncodingParser["file"] != null ||
@@ -666,11 +666,17 @@ namespace OpenDirectoryDownloader
                                         directoryName = link.TextContent.Trim();
                                     }
 
+                                    if (urlEncodingParser["directory"] != null)
+                                    {
+                                        directoryName = link.TextContent.Trim();
+                                    }
+
                                     parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
                                     {
                                         Parser = "ParseTablesDirectoryListing",
                                         Url = fullUrl,
-                                        Name = WebUtility.UrlDecode(directoryName)
+                                        Name = WebUtility.UrlDecode(directoryName),
+                                        Description = description
                                     });
                                 }
                                 else
