@@ -1,0 +1,169 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Directory listing for support.j2rs.com/?directory=.%2FDocuments%2F</title>
+		<link rel="stylesheet" type="text/css" href="/style.css" />
+	</head>
+<body>
+	<div id="headerwrap">
+		<div id="header">
+			<h1><?printBreadcrumb();?></h1>
+			<form action="/index.php" method="get">
+						<input type="hidden" name="directory" value="./Documents/" />
+			<ul>
+								<li><a href="javascript:history.back()" onclick="history.back()"><img src="/.pdirl/icons/default/back.png" alt="Back" title="Back" class="back" /></a></li>
+				
+								
+					<li><a href="?directory="><img src="/.pdirl/icons/default/parent.png" alt="Parent Directory" title="Parent Directory" class="parent" /></a></li>
+					<li><a href=""><img src="/.pdirl/icons/default/home.png" alt="Home Directory" title="Home Directory" class="home" /></a></li>
+					
+								
+				<li><a href="/?directory=.%2FDocuments%2F"><img src="/.pdirl/icons/default/reload.png" alt="Reload" title="Reload" class="reload" /></a></li>
+				<li style="color: #0C4F5F">|</li>
+				<li>
+					<img src="/.pdirl/icons/default/search.png" alt="Search..." title="Search..." class="search" />					<input name="gosearch" id="search" type="text" value="Search..." onclick=" if(this.value == 'Search...') { this.value = ''; }" /></li>
+			</ul>
+			</form>
+			<div style="clear:left;"></div>
+		</div>
+	</div>
+	<div id="contentwrap">
+					<table>
+				<thead>
+					<tr>
+						<td >
+						<a class="asc"  href="/index.php?sortkey=name&sortorder=SORT_DESC&directory=./Documents/">Name</a></td>
+													<td><a  href="/index.php?sortkey=mtime&sortorder=SORT_ASC&directory=./Documents/">Last modification</a></td>
+												<td><a  href="/index.php?sortkey=bytes&sortorder=SORT_ASC&directory=./Documents/">Size</a></td>
+					</tr>
+				</thead>
+				<tbody>
+											<tr>
+							<td class="name" 
+							colspan="2" title="Directory">
+								<img src="/.pdirl/icons/default/directory.png" alt="Directory" />
+																<a href="?directory=.%2FDocuments%2FEnglishDocs%2F" id="EnglishDocs">
+									EnglishDocs								</a>
+															</td>
+																								<td class="size">
+										19 elements									</td>
+																					</tr>
+											<tr>
+							<td class="name" 
+							colspan="2" title="Directory">
+								<img src="/.pdirl/icons/default/directory.png" alt="Directory" />
+																<a href="?directory=.%2FDocuments%2FFrenchDocs%2F" id="FrenchDocs">
+									FrenchDocs								</a>
+															</td>
+																								<td class="size">
+										6 elements									</td>
+																					</tr>
+											<tr>
+							<td class="name" 
+							colspan="2" title="Directory">
+								<img src="/.pdirl/icons/default/directory.png" alt="Directory" />
+																<a href="?directory=.%2FDocuments%2FGermanDocs%2F" id="GermanDocs">
+									GermanDocs								</a>
+															</td>
+																								<td class="size">
+										8 elements									</td>
+																					</tr>
+											<tr>
+							<td class="name" 
+							colspan="2" title="Directory">
+								<img src="/.pdirl/icons/default/directory.png" alt="Directory" />
+																<a href="?directory=.%2FDocuments%2FOldDocs%2F" id="OldDocs">
+									OldDocs								</a>
+															</td>
+																								<td class="size">
+										3 elements									</td>
+																					</tr>
+											<tr>
+							<td class="name" 
+							colspan="2" title="Directory">
+								<img src="/.pdirl/icons/default/directory.png" alt="Directory" />
+																<a href="?directory=.%2FDocuments%2FReplace+LCDs%2F" id="Replace LCDs">
+									Replace LCDs								</a>
+															</td>
+																								<td class="size">
+										1 elements									</td>
+																					</tr>
+											<tr>
+							<td class="name" 
+							colspan="2" title="Directory">
+								<img src="/.pdirl/icons/default/directory.png" alt="Directory" />
+																<a href="?directory=.%2FDocuments%2FSpanishDocs%2F" id="SpanishDocs">
+									SpanishDocs								</a>
+															</td>
+																								<td class="size">
+										0 elements									</td>
+																					</tr>
+											<tr>
+							<td class="name" 
+							colspan="2" title="Directory">
+								<img src="/.pdirl/icons/default/directory.png" alt="Directory" />
+																<a href="?directory=.%2FDocuments%2FTechnicalDocs%2F" id="TechnicalDocs">
+									TechnicalDocs								</a>
+															</td>
+																								<td class="size">
+										18 elements									</td>
+																					</tr>
+											<tr>
+							<td class="name" 
+							 title="Text document">
+								<img src="/.pdirl/icons/default/text.png" alt="Directory" />
+																<a href="./Documents/J2%20Products%20Comparison.pdf" id="J2 Products Comparison.pdf">
+									J2 Products Comparison.pdf								</a>
+															</td>
+																								<td class="mtime">
+										2 years ago									</td>
+									<td class="size">
+										71 KB									</td>
+																					</tr>
+											<tr>
+							<td class="name" 
+							 title="Text document">
+								<img src="/.pdirl/icons/default/text.png" alt="Directory" />
+																<a href="./Documents/J2%20White%20Paper%20AC%20Power%20Conditioning%20Urban%20Myths%20Ver%201.0.pdf" id="J2 White Paper AC Power Conditioning Urban Myths Ver 1.0.pdf">
+									J2 White Paper AC Power Conditioning Urban Myths Ver 1.0.pdf								</a>
+															</td>
+																								<td class="mtime">
+										2 years ago									</td>
+									<td class="size">
+										322 KB									</td>
+																					</tr>
+											<tr>
+							<td class="name" 
+							 title="Text document">
+								<img src="/.pdirl/icons/default/text.png" alt="Directory" />
+																<a href="./Documents/J2%20White%20Paper%20Solid%20State%20Drives%20Ver1.0.pdf" id="J2 White Paper Solid State Drives Ver1.0.pdf">
+									J2 White Paper Solid State Drives Ver1.0.pdf								</a>
+															</td>
+																								<td class="mtime">
+										2 years ago									</td>
+									<td class="size">
+										137 KB									</td>
+																					</tr>
+											<tr>
+							<td class="name" 
+							 title="Text document">
+								<img src="/.pdirl/icons/default/text.png" alt="Directory" />
+																<a href="./Documents/J2%20White%20Paper%2C%20Embedded%20Operating%20Systems%20March%2009.pdf" id="J2 White Paper, Embedded Operating Systems March 09.pdf">
+									J2 White Paper, Embedded Operating Systems March 09.pdf								</a>
+															</td>
+																								<td class="mtime">
+										2 years ago									</td>
+									<td class="size">
+										114 KB									</td>
+																					</tr>
+									</tbody>
+			</table>
+									</div>
+			<div id="footer">
+								<p>This directory contains 11 element(s) totalling 644 KB in size.</p>
+								<p><small>powered by <a href="http://pdirl.newroots.de/">pdirl - PHP Directory Listing</a>.</small></p>
+			</div>
+</body>
+</html>

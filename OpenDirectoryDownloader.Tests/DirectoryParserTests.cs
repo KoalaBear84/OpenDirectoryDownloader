@@ -2520,5 +2520,66 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("Stan.and.Ollie.2018.BDRip.x264-DRONES.mkv", webDirectory.Files[0].FileName);
             Assert.Equal(524288000, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: https://webmail.rabouin.es/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing84aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(2, webDirectory.Subdirectories.Count);
+            Assert.Equal("Claustrophobia", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(4, webDirectory.Files.Count);
+            Assert.Equal("bonnie++", webDirectory.Files[0].FileName);
+            Assert.Equal(55296, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: https://webmail.rabouin.es/Claustrophobia/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing84bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(21, webDirectory.Files.Count);
+            Assert.Equal("Air putride.pdf", webDirectory.Files[0].FileName);
+            Assert.Equal(4458496, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://support.j2rs.com/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing85aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(9, webDirectory.Subdirectories.Count);
+            Assert.Equal("225_625", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: http://support.j2rs.com/?directory=.%2FDocuments%2F
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing85bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(7, webDirectory.Subdirectories.Count);
+            Assert.Equal("EnglishDocs", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(4, webDirectory.Files.Count);
+            Assert.Equal("J2 Products Comparison.pdf", webDirectory.Files[0].FileName);
+            Assert.Equal(72704, webDirectory.Files[0].FileSize);
+        }
     }
 }
