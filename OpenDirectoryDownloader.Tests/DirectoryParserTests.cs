@@ -1,4 +1,6 @@
 ﻿using OpenDirectoryDownloader.Shared.Models;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -17,6 +19,31 @@ namespace OpenDirectoryDownloader.Tests
             string fileName = TestMethodRegex.Match(new StackTrace().GetFrame(1).GetMethod().DeclaringType.Name).Groups[1].Value;
 
             return File.ReadAllText($"Samples\\{fileName}.html.dat");
+        }
+
+        private static void CleanWebDirectory(WebDirectory webDirectory, Uri testedUri)
+        {
+            List<WebDirectory> newWebDirectories = new List<WebDirectory>();
+
+            foreach (WebDirectory subdirectory in webDirectory.Subdirectories)
+            {
+                if (subdirectory.Uri.Host == testedUri.Host && subdirectory.Uri.LocalPath.StartsWith(testedUri.LocalPath))
+                {
+                    newWebDirectories.Add(subdirectory);
+                }
+            }
+
+            if (newWebDirectories.Count != webDirectory.Subdirectories.Count)
+            {
+                webDirectory.Subdirectories.Clear();
+                webDirectory.Subdirectories.AddRange(newWebDirectories);
+            }
+
+            webDirectory.Files.RemoveAll(f =>
+            {
+                Uri uri = new Uri(f.Url);
+                return (uri.Scheme != "https" && uri.Scheme != "http" && uri.Scheme != "ftp") || (uri.Host != testedUri.Host || !uri.LocalPath.StartsWith(testedUri.LocalPath));
+            });
         }
 
         private static async Task<WebDirectory> ParseHtml(string html, string url = "http://localhost/")
@@ -902,9 +929,11 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing29aAsync()
         {
-            WebDirectory webDirectory = await ParseHtml(GetSample());
+            Uri uri = new Uri("https://files.sq10.net/music/vaporwave/list/");
+            WebDirectory webDirectory = await ParseHtml(GetSample(), uri.ToString());
+            CleanWebDirectory(webDirectory, uri);
 
-            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal("list", webDirectory.Name);
             Assert.Equal(468, webDirectory.Subdirectories.Count);
             Assert.Equal("$PL▲$H ¢LUB 7-Contact Lens", webDirectory.Subdirectories[0].Name);
             Assert.Empty(webDirectory.Files);
@@ -916,9 +945,11 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing29bAsync()
         {
-            WebDirectory webDirectory = await ParseHtml(GetSample());
+            Uri uri = new Uri("https://files.sq10.net/music/vaporwave/list/WASTED%20NIGHTS/WASTED%20NIGHTS%20-%20SEAMS%20EP/");
+            WebDirectory webDirectory = await ParseHtml(GetSample(), uri.ToString());
+            CleanWebDirectory(webDirectory, uri);
 
-            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal("WASTED NIGHTS - SEAMS EP", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
             Assert.Equal(3, webDirectory.Files.Count);
             Assert.Equal("WASTED NIGHTS - SEAMS EP - 01 SEAMS.flac", webDirectory.Files[0].FileName);
@@ -2034,7 +2065,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(12, webDirectory.Subdirectories.Count);
             Assert.Equal("558_2908", webDirectory.Subdirectories[0].Name);
-            Assert.Equal(81, webDirectory.Files.Count);
+            Assert.Equal(80, webDirectory.Files.Count);
             Assert.Equal("Casso_Blax_-_Falling_Star.m4a.zip", webDirectory.Files[0].FileName);
             Assert.Equal(1363149, webDirectory.Files[0].FileSize);
         }
@@ -2049,11 +2080,9 @@ namespace OpenDirectoryDownloader.Tests
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
-            Assert.Equal(2, webDirectory.Files.Count);
-            Assert.Equal("index.php", webDirectory.Files[0].FileName);
-            Assert.Equal("winamp_dts.exe", webDirectory.Files[1].FileName);
-            Assert.Equal(5120, webDirectory.Files[0].FileSize);
-            Assert.Equal(181453, webDirectory.Files[1].FileSize);
+            Assert.Single(webDirectory.Files);
+            Assert.Equal("winamp_dts.exe", webDirectory.Files[0].FileName);
+            Assert.Equal(181453, webDirectory.Files[0].FileSize);
         }
 
         /// <summary>
@@ -2469,7 +2498,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(16, webDirectory.Subdirectories.Count);
             Assert.Equal("n", webDirectory.Subdirectories[0].Name);
-            Assert.Equal(68, webDirectory.Files.Count);
+            Assert.Equal(67, webDirectory.Files.Count);
             Assert.Equal("396Hz - Liberation From Fear (Solfeggio Tones).failed-conv.mp4", webDirectory.Files[0].FileName);
             Assert.Equal(7172260, webDirectory.Files[0].FileSize);
         }

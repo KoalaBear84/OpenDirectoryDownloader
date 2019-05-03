@@ -15,6 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -579,11 +580,12 @@ namespace OpenDirectoryDownloader
         {
             foreach (IElement table in tables)
             {
+                // Not needed anymore
                 // Skip when there is another table in it
-                if (table.QuerySelector("table") != null)
-                {
-                    continue;
-                }
+                //if (table.QuerySelector("table") != null)
+                //{
+                //    continue;
+                //}
 
                 Dictionary<int, TableHeaderInfo> tableHeaders = GetTableHeaders(table);
 
@@ -634,7 +636,7 @@ namespace OpenDirectoryDownloader
                                 bool isDirectory = imageElement != null &&
                                     (
                                         (imageElement.HasAttribute("alt") && imageElement.Attributes["alt"].Value == "[DIR]") ||
-                                        (imageElement.HasAttribute("src") && Path.GetFileName(imageElement.Attributes["src"].Value).Contains("dir"))
+                                        (imageElement.HasAttribute("src") && (Path.GetFileName(imageElement.Attributes["src"].Value).Contains("dir") || Path.GetFileName(imageElement.Attributes["src"].Value).Contains("folder")))
                                     );
 
                                 UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
@@ -671,6 +673,18 @@ namespace OpenDirectoryDownloader
                                         directoryName = link.TextContent.Trim();
                                     }
 
+                                    if (urlEncodingParser["folder"] != null)
+                                    {
+                                        if (Library.IsBase64(urlEncodingParser["folder"]))
+                                        {
+                                            directoryName = Encoding.UTF8.GetString(Convert.FromBase64String(urlEncodingParser["folder"]));
+                                        }
+                                        else
+                                        {
+                                            directoryName = link.TextContent.Trim();
+                                        }
+                                    }
+
                                     parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
                                     {
                                         Parser = "ParseTablesDirectoryListing",
@@ -687,12 +701,17 @@ namespace OpenDirectoryDownloader
 
                                     if (urlEncodingParser["file"] != null)
                                     {
-                                        filename = urlEncodingParser["file"];
+                                        filename = Path.GetFileName(urlEncodingParser["file"]);
                                     }
 
                                     if (string.IsNullOrWhiteSpace(filename))
                                     {
                                         filename = link.TextContent;
+                                    }
+
+                                    if (urlEncodingParser.Count == 0 && filename.ToLower() == "index.php")
+                                    {
+                                        continue;
                                     }
 
                                     parsedWebDirectory.Files.Add(new WebFile
@@ -1545,7 +1564,7 @@ namespace OpenDirectoryDownloader
 
             if (headers == null || headers.Length == 0)
             {
-                headers = table.QuerySelectorAll("tr:nth-child(1) td");
+                headers = table.QuerySelectorAll("> tr:nth-child(1) > td");
             }
 
             if (headers?.Any() == true)
@@ -1554,6 +1573,11 @@ namespace OpenDirectoryDownloader
 
                 foreach (IElement header in headers)
                 {
+                    if (header.QuerySelector("table") != null)
+                    {
+                        continue;
+                    }
+
                     string headerName = header.TextContent.Trim();
 
                     TableHeaderInfo tableHeaderInfo = new TableHeaderInfo
