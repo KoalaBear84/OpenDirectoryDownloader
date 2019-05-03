@@ -117,8 +117,8 @@ namespace OpenDirectoryDownloader.Calibre
                         }
                     });
 
-                    Console.WriteLine($"Parsing info of {libraryResult.Metadata.Count} books for library {library.Value}");
-                    Logger.Info($"Parsing info of {libraryResult.Metadata.Count} books for library {library.Value}");
+                    Console.WriteLine($"Parsed info of {libraryResult.Metadata.Count} books for library {library.Value}");
+                    Logger.Info($"Parsed info of {libraryResult.Metadata.Count} books for library {library.Value}");
                 }
 
                 webDirectory.Finished = true;
