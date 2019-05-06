@@ -44,12 +44,13 @@ namespace OpenDirectoryDownloader
         private HttpClient HttpClient { get; set; }
         private OpenDirectoryIndexerSettings OpenDirectoryIndexerSettings { get; set; }
         private System.Timers.Timer TimerStatistics { get; set; }
+
         private readonly AsyncRetryPolicy RetryPolicy = Policy
             .Handle<Exception>()
-            .WaitAndRetryAsync(5, // 32 seconds
-                sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(retryAttempt),
-                //sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(retryAttempt * 2),
-                //sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+            .WaitAndRetryAsync(4, // 16 seconds
+                                  //sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(retryAttempt),
+                                  //sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(retryAttempt * 2),
+                sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
                 onRetry: (ex, span, retryCount, context) =>
                 {
                     WebDirectory webDirectory = context["WebDirectory"] as WebDirectory;
@@ -403,7 +404,7 @@ namespace OpenDirectoryDownloader
                         }
                         else
                         {
-                            Logger.Warn($"[{name}] Skip, already processed: {webDirectory.Uri}");
+                            //Logger.Warn($"[{name}] Skip, already processed: {webDirectory.Uri}");
                         }
                     }
                     catch (Exception ex)
@@ -631,7 +632,7 @@ namespace OpenDirectoryDownloader
                     }
                     else
                     {
-                        Logger.Warn($"Url '{subdirectory.Url}' already processed, skipping! Source: {webDirectory.Url}");
+                        //Logger.Warn($"Url '{subdirectory.Url}' already processed, skipping! Source: {webDirectory.Url}");
                     }
                 }
             }
@@ -644,7 +645,13 @@ namespace OpenDirectoryDownloader
             webDirectory.Files.RemoveAll(f =>
             {
                 Uri uri = new Uri(f.Url);
-                return (uri.Scheme != "https" && uri.Scheme != "http" && uri.Scheme != "ftp") || (uri.Host != Session.Root.Uri.Host || !uri.LocalPath.StartsWith(Session.Root.Uri.LocalPath));
+
+                if (uri.Host == "drive.google.com")
+                {
+                    return false;
+                }
+
+                return (uri.Scheme != "https" && uri.Scheme != "http" && uri.Scheme != "ftp") || uri.Host != Session.Root.Uri.Host || !uri.LocalPath.StartsWith(Session.Root.Uri.LocalPath);
             });
 
             foreach (WebFile webFile in webDirectory.Files.Where(f => f.FileSize == -1 || OpenDirectoryIndexerSettings.CommandLineOptions.ExactFileSizes))
