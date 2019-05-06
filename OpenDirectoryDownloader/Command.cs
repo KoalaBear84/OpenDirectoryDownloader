@@ -9,7 +9,6 @@ namespace OpenDirectoryDownloader
     public class Command
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private static OpenDirectoryIndexer OpenDirectoryIndexer;
 
         /// <summary>
         /// Set console properties (Window size)
@@ -38,8 +37,6 @@ namespace OpenDirectoryDownloader
 
         internal static void ProcessConsoleInput(OpenDirectoryIndexer openDirectoryIndexer)
         {
-            OpenDirectoryIndexer = openDirectoryIndexer;
-
             while (true)
             {
                 try
