@@ -612,115 +612,121 @@ namespace OpenDirectoryDownloader
                     // Dirty solution..
                     bool hasSeperateDirectoryAndFilesTables = false;
 
-                    foreach (IElement tableRow in table.QuerySelectorAll("tr"))
+                    foreach (IElement tableRow in table.QuerySelectorAll("tbody tr"))
                     {
                         if (tableRow.QuerySelector("img[alt=\"[ICO]\"]") == null &&
                             tableRow.QuerySelector("img[alt=\"[PARENTDIR]\"]") == null &&
                             tableRow.QuerySelector("a") != null &&
+                            tableRow.QuerySelector("th") == null &&
                             !tableRow.ClassList.Contains("snHeading") &&
                             tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})") != null &&
                             !tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})").TextContent.ToLower().Contains("parent directory") &&
                             tableRow.QuerySelector("table") == null)
                         {
-                            IElement link = tableRow.QuerySelector("a");
+                            bool addedEntry = false;
 
-                            if (IsValidLink(link))
+                            foreach (IElement link in tableRow.QuerySelectorAll("a"))
                             {
-                                string linkHref = link.Attributes["href"].Value;
-                                Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                                string fullUrl = uri.ToString();
-
-                                fullUrl = StripUrl(fullUrl);
-
-                                IElement imageElement = tableRow.QuerySelector("img");
-                                bool isDirectory = imageElement != null &&
-                                    (
-                                        (imageElement.HasAttribute("alt") && imageElement.Attributes["alt"].Value == "[DIR]") ||
-                                        (imageElement.HasAttribute("src") && (Path.GetFileName(imageElement.Attributes["src"].Value).Contains("dir") || Path.GetFileName(imageElement.Attributes["src"].Value).Contains("folder")))
-                                    );
-
-                                UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
-
-                                string description = tableRow.QuerySelector($"td:nth-child({descriptionHeaderColumnIndex})")?.TextContent.Trim();
-                                string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim().Replace(" ", string.Empty);
-
-                                bool isFile =
-                                    urlEncodingParser["file"] != null ||
-                                    !isDirectory &&
-                                    (urlEncodingParser["dir"] == null && (
-                                        (fileSizeHeader.Value == null && !linkHref.EndsWith("/")) ||
-                                        (IsFileSize(size) && size != "0.00b" && !string.IsNullOrWhiteSpace(size) && (size?.Contains("item")).Value != true && !linkHref.EndsWith("/"))
-                                    ));
-
-                                if (!isFile)
+                                if (!addedEntry && IsValidLink(link))
                                 {
-                                    string directoryName = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last()));
+                                    addedEntry = true;
 
-                                    // Fallback..
-                                    if (string.IsNullOrWhiteSpace(directoryName))
-                                    {
-                                        directoryName = uri.Segments.Last();
-                                    }
+                                    string linkHref = link.Attributes["href"].Value;
+                                    Uri uri = new Uri(new Uri(baseUrl), linkHref);
+                                    string fullUrl = uri.ToString();
 
-                                    if (urlEncodingParser["dir"] != null)
-                                    {
-                                        hasSeperateDirectoryAndFilesTables = true;
-                                        directoryName = link.TextContent.Trim();
-                                    }
+                                    fullUrl = StripUrl(fullUrl);
 
-                                    if (urlEncodingParser["directory"] != null)
-                                    {
-                                        directoryName = link.TextContent.Trim();
-                                    }
+                                    IElement imageElement = tableRow.QuerySelector("img");
+                                    bool isDirectory = imageElement != null &&
+                                        (
+                                            (imageElement.HasAttribute("alt") && imageElement.Attributes["alt"].Value == "[DIR]") ||
+                                            (imageElement.HasAttribute("src") && (Path.GetFileName(imageElement.Attributes["src"].Value).Contains("dir") || Path.GetFileName(imageElement.Attributes["src"].Value).Contains("folder")))
+                                        );
 
-                                    if (urlEncodingParser["folder"] != null)
+                                    UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
+
+                                    string description = tableRow.QuerySelector($"td:nth-child({descriptionHeaderColumnIndex})")?.TextContent.Trim();
+                                    string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim().Replace(" ", string.Empty);
+
+                                    bool isFile =
+                                        urlEncodingParser["file"] != null ||
+                                        !isDirectory &&
+                                        (urlEncodingParser["dir"] == null && (
+                                            (fileSizeHeader.Value == null && !linkHref.EndsWith("/")) ||
+                                            (IsFileSize(size) && size != "0.00b" && !string.IsNullOrWhiteSpace(size) && (size?.Contains("item")).Value != true && !linkHref.EndsWith("/"))
+                                        ));
+
+                                    if (!isFile)
                                     {
-                                        if (Library.IsBase64(urlEncodingParser["folder"]))
+                                        string directoryName = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last()));
+
+                                        // Fallback..
+                                        if (string.IsNullOrWhiteSpace(directoryName))
                                         {
-                                            directoryName = Encoding.UTF8.GetString(Convert.FromBase64String(urlEncodingParser["folder"]));
+                                            directoryName = uri.Segments.Last();
                                         }
-                                        else
+
+                                        if (urlEncodingParser["dir"] != null)
+                                        {
+                                            hasSeperateDirectoryAndFilesTables = true;
+                                            directoryName = link.TextContent.Trim();
+                                        }
+
+                                        if (urlEncodingParser["directory"] != null)
                                         {
                                             directoryName = link.TextContent.Trim();
                                         }
+
+                                        if (urlEncodingParser["folder"] != null)
+                                        {
+                                            if (Library.IsBase64(urlEncodingParser["folder"]))
+                                            {
+                                                directoryName = Encoding.UTF8.GetString(Convert.FromBase64String(urlEncodingParser["folder"]));
+                                            }
+                                            else
+                                            {
+                                                directoryName = link.TextContent.Trim();
+                                            }
+                                        }
+
+                                        parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
+                                        {
+                                            Parser = "ParseTablesDirectoryListing",
+                                            Url = fullUrl,
+                                            Name = WebUtility.UrlDecode(directoryName),
+                                            Description = description
+                                        });
                                     }
-
-                                    parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
+                                    else
                                     {
-                                        Parser = "ParseTablesDirectoryListing",
-                                        Url = fullUrl,
-                                        Name = WebUtility.UrlDecode(directoryName),
-                                        Description = description
-                                    });
-                                }
-                                else
-                                {
-                                    parsedWebDirectory.Parser = "ParseTablesDirectoryListing";
+                                        parsedWebDirectory.Parser = "ParseTablesDirectoryListing";
 
-                                    string filename = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath));
+                                        string filename = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath));
 
-                                    if (urlEncodingParser["file"] != null)
-                                    {
-                                        filename = Path.GetFileName(urlEncodingParser["file"]);
+                                        if (urlEncodingParser["file"] != null)
+                                        {
+                                            filename = Path.GetFileName(urlEncodingParser["file"]);
+                                        }
+
+                                        if (string.IsNullOrWhiteSpace(filename))
+                                        {
+                                            filename = link.TextContent;
+                                        }
+
+                                        if (urlEncodingParser.Count == 0 && filename.ToLower() == "index.php")
+                                        {
+                                            continue;
+                                        }
+
+                                        parsedWebDirectory.Files.Add(new WebFile
+                                        {
+                                            Url = fullUrl,
+                                            FileName = filename,
+                                            FileSize = FileSizeHelper.ParseFileSize(size),
+                                            Description = description
+                                        });
                                     }
-
-                                    if (string.IsNullOrWhiteSpace(filename))
-                                    {
-                                        filename = link.TextContent;
-                                    }
-
-                                    if (urlEncodingParser.Count == 0 && filename.ToLower() == "index.php")
-                                    {
-                                        continue;
-                                    }
-
-                                    parsedWebDirectory.Files.Add(new WebFile
-                                    {
-                                        Url = fullUrl,
-                                        FileName = filename,
-                                        FileSize = FileSizeHelper.ParseFileSize(size),
-                                        Description = description
-                                    });
                                 }
                             }
                         }
@@ -1709,7 +1715,7 @@ namespace OpenDirectoryDownloader
 
         private static bool IsValidLink(IElement link)
         {
-            string linkHref = link.Attributes["href"].Value;
+            string linkHref = link.Attributes["href"]?.Value;
 
             return
                 linkHref != "/" &&
@@ -1721,10 +1727,11 @@ namespace OpenDirectoryDownloader
                 (link as IHtmlAnchorElement)?.Title != ".." &&
                 link.TextContent.Trim() != ".." &&
                 link.TextContent.Trim() != "." &&
-                !linkHref.ToLower().StartsWith("javascript") &&
-                !linkHref.ToLower().StartsWith("mailto:") &&
+                linkHref?.ToLower().StartsWith("javascript") == false &&
+                linkHref?.ToLower().StartsWith("mailto:") == false &&
                 link.TextContent.ToLower() != "parent directory" &&
                 link.TextContent.Trim() != "Name" &&
+                linkHref?.Contains("&expand") == false &&
                 (Path.GetFileName(linkHref) != "DirectoryList.asp" || !string.IsNullOrWhiteSpace(link.TextContent));
         }
     }

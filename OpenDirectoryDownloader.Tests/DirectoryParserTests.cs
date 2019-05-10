@@ -2610,5 +2610,34 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("J2 Products Comparison.pdf", webDirectory.Files[0].FileName);
             Assert.Equal(72704, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: http://103.81.104.98/DATA/index.php?dir=NAS1
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing86aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(10, webDirectory.Subdirectories.Count);
+            Assert.Equal("Bangladeshi-Natok-UP", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: http://103.81.104.98/DATA/index.php?dir=NAS1/Bangladeshi-Natok-UP/Binodoni%20Kinba%20Kobi/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing86bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(3, webDirectory.Files.Count);
+            Assert.Equal("Bangla New_Latest Natok March 2013 - Binodoni Kinba Kobi %28HQ%29 by - %5BMim%2CMilon%5D-thumb.jpg", webDirectory.Files[0].FileName);
+            Assert.Equal(21094, webDirectory.Files[0].FileSize);
+        }
     }
 }
