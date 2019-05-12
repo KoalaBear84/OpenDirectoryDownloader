@@ -2639,5 +2639,34 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("Bangla New_Latest Natok March 2013 - Binodoni Kinba Kobi %28HQ%29 by - %5BMim%2CMilon%5D-thumb.jpg", webDirectory.Files[0].FileName);
             Assert.Equal(21094, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: http://thiscatis.online/shared/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing87aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(6, webDirectory.Subdirectories.Count);
+            Assert.Equal("Audio", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: http://thiscatis.online/shared/Books/Academic%20Papers/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing87bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(32, webDirectory.Files.Count);
+            Assert.Equal("10.0000@newleftreview.org@3150.pdf", webDirectory.Files[0].FileName);
+            Assert.Equal(665600, webDirectory.Files[0].FileSize);
+        }
     }
 }
