@@ -51,7 +51,7 @@ namespace OpenDirectoryDownloader
 
             try
             {
-                if (webDirectory.Uri.Host == "drive.google.com")
+                if (webDirectory.Uri.Host == Constants.GoogleDriveDomain)
                 {
                     return await GoogleDriveIndexer.IndexAsync(webDirectory);
                     //return GoogleDriveParser.ParseGoogleDriveHtml(html, webDirectory);
@@ -1362,6 +1362,7 @@ namespace OpenDirectoryDownloader
                         {
                             Url = fullUrl,
                             FileName = Path.GetFileName(WebUtility.UrlDecode(linkHref)),
+                            //FileName = link.TextContent.Trim(),
                             FileSize = fileSize,
                         });
                     }

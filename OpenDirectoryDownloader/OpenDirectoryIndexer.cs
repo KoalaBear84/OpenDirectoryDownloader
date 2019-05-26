@@ -58,9 +58,6 @@ namespace OpenDirectoryDownloader
                 }
             );
 
-        private const string UserAgent_Curl = "curl/7.55.1";
-        private const string UserAgent_Chrome = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3642.0 Safari/537.36";
-
         public OpenDirectoryIndexer(OpenDirectoryIndexerSettings openDirectoryIndexerSettings)
         {
             OpenDirectoryIndexerSettings = openDirectoryIndexerSettings;
@@ -81,8 +78,8 @@ namespace OpenDirectoryDownloader
             WebDirectoryProcessors = new Task[OpenDirectoryIndexerSettings.Threads];
             WebFileFileSizeProcessors = new Task[OpenDirectoryIndexerSettings.Threads];
 
-            //HttpClient.DefaultRequestHeaders.Add("User-Agent", UserAgent_Curl);
-            //HttpClient.DefaultRequestHeaders.Add("User-Agent", UserAgent_Chrome);
+            //HttpClient.DefaultRequestHeaders.Add("User-Agent", Constants.UserAgent.Curl);
+            //HttpClient.DefaultRequestHeaders.Add("User-Agent", Constants.UserAgent.Chrome);
         }
 
         public async void StartIndexingAsync()
@@ -109,7 +106,7 @@ namespace OpenDirectoryDownloader
                 };
             }
 
-            if (Session.Root.Uri.Host == "drive.google.com")
+            if (Session.Root.Uri.Host == Constants.GoogleDriveDomain)
             {
                 Logger.Warn("Google Drive scanning is limited to 10 directories per second!");
             }
@@ -372,7 +369,7 @@ namespace OpenDirectoryDownloader
                                 AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
                             }
                             else
-                            if (Session.Root.Uri.Host == "drive.google.com")
+                            if (Session.Root.Uri.Host == Constants.GoogleDriveDomain)
                             {
                                 string baseUrl = webDirectory.Url;
 
@@ -387,9 +384,11 @@ namespace OpenDirectoryDownloader
                                 {
                                     Logger.Debug($"[{name}] Start download '{webDirectory.Url}'");
                                     Session.TotalHttpRequests++;
-                                    Context pollyContext = new Context();
-                                    pollyContext.Add("Processor", name);
-                                    pollyContext.Add("WebDirectory", webDirectory);
+                                    Context pollyContext = new Context
+                                    {
+                                        { "Processor", name },
+                                        { "WebDirectory", webDirectory }
+                                    };
                                     await RetryPolicy.ExecuteAsync(ctx => ProcessWebDirectoryAsync(name, webDirectory), pollyContext);
                                 }
                                 else
@@ -455,7 +454,7 @@ namespace OpenDirectoryDownloader
             {
                 Logger.Warn("First request fails, using Curl fallback User-Agent");
                 HttpClient.DefaultRequestHeaders.UserAgent.Clear();
-                HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent_Curl);
+                HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Curl);
                 httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url);
 
                 if (httpResponseMessage.IsSuccessStatusCode)
@@ -463,7 +462,7 @@ namespace OpenDirectoryDownloader
                     SetRootUrl(httpResponseMessage);
 
                     html = await GetHtml(httpResponseMessage);
-                    Logger.Warn("Yes, this Curl User-Agent did the trick!");
+                    Logger.Warn("Yes, the Curl User-Agent did the trick!");
                 }
             }
 
@@ -471,7 +470,7 @@ namespace OpenDirectoryDownloader
             {
                 Logger.Warn("First request fails, using Chrome fallback User-Agent");
                 HttpClient.DefaultRequestHeaders.UserAgent.Clear();
-                HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent_Chrome);
+                HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
                 httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url);
 
                 if (httpResponseMessage.IsSuccessStatusCode)
@@ -621,7 +620,7 @@ namespace OpenDirectoryDownloader
                 {
                     if (!Session.ProcessedUrls.Contains(subdirectory.Url))
                     {
-                        if (subdirectory.Uri.Host != "drive.google.com" && (subdirectory.Uri.Host != Session.Root.Uri.Host || !subdirectory.Uri.LocalPath.StartsWith(Session.Root.Uri.LocalPath)))
+                        if (subdirectory.Uri.Host != Constants.GoogleDriveDomain && (subdirectory.Uri.Host != Session.Root.Uri.Host || !subdirectory.Uri.LocalPath.StartsWith(Session.Root.Uri.LocalPath)))
                         {
                             Logger.Debug($"Removed subdirectory {subdirectory.Uri} from parsed webdirectory because it is not the same host");
                         }
@@ -646,7 +645,7 @@ namespace OpenDirectoryDownloader
             {
                 Uri uri = new Uri(f.Url);
 
-                if (uri.Host == "drive.google.com")
+                if (uri.Host == Constants.GoogleDriveDomain)
                 {
                     return false;
                 }
