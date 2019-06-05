@@ -150,14 +150,14 @@ namespace OpenDirectoryDownloader
 
                     IndexingTaskCTS = new CancellationTokenSource();
 
-                    for (int i = 1; i <= OpenDirectoryIndexerSettings.Threads; i++)
+                    for (int i = 1; i <= WebDirectoryProcessors.Length; i++)
                     {
                         string processorId = i.ToString();
 
                         WebDirectoryProcessors[i - 1] = WebDirectoryProcessor(WebDirectoriesQueue, $"Processor {processorId}", IndexingTaskCTS.Token);
                     }
 
-                    for (int i = 1; i <= OpenDirectoryIndexerSettings.Threads; i++)
+                    for (int i = 1; i <= WebFileFileSizeProcessors.Length; i++)
                     {
                         string processorId = i.ToString();
 
