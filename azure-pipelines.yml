@@ -17,5 +17,12 @@ steps:
   displayName: 'Install .net core 3.0 (preview)'
   inputs:
     version: '3.0.100-preview6-012264'
+
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: '**/*Tests/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
