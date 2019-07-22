@@ -88,10 +88,6 @@ For Google Drive scanning you need to get a Google Drive API credentials file, i
 17. The needed Json file is downloaded
 18. Rename this file to "OpenDirectoryDownloader.GoogleDrive.json" and place it in the OpenDirectoryDownloader.Google project, or place it in the same directory as the executable
 
-## TODO (for readme)
-
-* Building on linux
-
 ## Contact me
 
 Reddit https://www.reddit.com/user/KoalaBear84
