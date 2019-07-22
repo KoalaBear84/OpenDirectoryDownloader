@@ -55,6 +55,16 @@ If you want to learn more or contribute, see the following paragraphs!
 3. Clone the repository: https://code.visualstudio.com/docs/editor/versioncontrol#_cloning-a-repository
 4. More help: https://docs.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio-code
 
+## Building on Linux
+1. Install the newest preview of .NET Core 3.0. 
+2. `git clone https://github.com/KoalaBear84/OpenDirectoryDownloader`
+3. `cd OpenDirectoryDownloader/OpenDirectoryDownloader`
+4. `dotnet build .`
+5. `cd bin/Debug/netcoreapp3.0`
+6. `./OpenDirectoryDownloader --url "https://myopendirectory.com"`
+
+Then, if you need to package it into a binary, you can use [warp-packer](https://github.com/dgiagio/warp#quickstart-with-net-core)
+
 ## Google Drive
 For Google Drive scanning you need to get a Google Drive API credentials file, it's free!
 
