@@ -192,11 +192,13 @@ namespace OpenDirectoryDownloader
                         Logger.Info("Saving URL list to file...");
                         Console.WriteLine("Saving URL list to file...");
 
+                        string scansPath = Library.GetScansPath();
+
                         try
                         {
                             string fileUrls = string.Join(Environment.NewLine, Session.Root.AllFileUrls.Distinct());
                             string urlsFileName = $"{Library.CleanUriToFilename(Session.Root.Uri)}.txt";
-                            string urlsPath = $"{Library.GetApplicationPath()}Scans{Path.DirectorySeparatorChar}{urlsFileName}";
+                            string urlsPath = Path.Combine(scansPath, urlsFileName);
                             Logger.Info("String joined");
                             File.WriteAllText(urlsPath, fileUrls);
                             Logger.Info($"Saved URL list to file: {urlsFileName}");

@@ -32,6 +32,18 @@ namespace OpenDirectoryDownloader
             return appPath;
         }
 
+        public static string GetScansPath()
+        {
+            string scansPath = $"{GetApplicationPath()}Scans";
+
+            if (!Directory.Exists(scansPath))
+            {
+                Directory.CreateDirectory(scansPath);
+            }
+
+            return scansPath;
+        }
+
         public static string FixUrl(string url)
         {
             url = url.Trim();
@@ -55,7 +67,9 @@ namespace OpenDirectoryDownloader
         {
             JsonSerializer jsonSerializer = new JsonSerializer();
 
-            using (StreamWriter streamWriter = new StreamWriter($"{GetApplicationPath()}Scans{Path.DirectorySeparatorChar}{CleanUriToFilename(session.Root.Uri)}.json"))
+            string scansPath = GetScansPath();
+
+            using (StreamWriter streamWriter = new StreamWriter(Path.Combine(scansPath, $"{CleanUriToFilename(session.Root.Uri)}.json")))
             {
                 using (JsonWriter jsonWriter = new JsonTextWriter(streamWriter))
                 {
