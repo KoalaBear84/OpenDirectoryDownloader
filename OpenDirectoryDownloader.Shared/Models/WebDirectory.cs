@@ -47,6 +47,9 @@ namespace OpenDirectoryDownloader.Shared.Models
         public int TotalDirectories => Subdirectories.Sum(sd => sd.TotalDirectories) + Subdirectories.Count(sd => sd.Finished);
 
         [JsonIgnore]
+        public int TotalDirectoriesIncludingUnfinished => Subdirectories.Sum(sd => sd.TotalDirectories) + Subdirectories.Count;
+
+        [JsonIgnore]
         public IEnumerable<string> Urls => Files.Select(f => f.Url);
 
         [JsonIgnore]

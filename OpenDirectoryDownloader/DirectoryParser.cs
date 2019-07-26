@@ -730,7 +730,7 @@ namespace OpenDirectoryDownloader
 
             if (!hasSeperateDirectoryAndFilesTables)
             {
-                parsedWebDirectory = results.Where(r => r.ParsedSuccesfully || r.Error).OrderByDescending(r => r.TotalDirectories + r.TotalFiles).First();
+                parsedWebDirectory = results.Where(r => r.ParsedSuccesfully || r.Error).OrderByDescending(r => r.TotalDirectoriesIncludingUnfinished + r.TotalFiles).First();
             }
             else
             {
