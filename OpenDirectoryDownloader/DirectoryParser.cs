@@ -126,12 +126,7 @@ namespace OpenDirectoryDownloader
 
                 if (tables.Any())
                 {
-                    WebDirectory result = ParseTablesDirectoryListing(baseUrl, parsedWebDirectory, tables);
-
-                    if (result.ParsedSuccesfully || result.Error)
-                    {
-                        return result;
-                    }
+                    return ParseTablesDirectoryListing(baseUrl, parsedWebDirectory, tables);
                 }
 
                 IHtmlCollection<IElement> materialDesignListItems = htmlDocument.QuerySelectorAll("ul.mdui-list li");
@@ -578,14 +573,14 @@ namespace OpenDirectoryDownloader
 
         private static WebDirectory ParseTablesDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> tables)
         {
+            // Dirty solution..
+            bool hasSeperateDirectoryAndFilesTables = false;
+
+            List<WebDirectory> results = new List<WebDirectory>();
+
             foreach (IElement table in tables)
             {
-                // Not needed anymore
-                // Skip when there is another table in it
-                //if (table.QuerySelector("table") != null)
-                //{
-                //    continue;
-                //}
+                WebDirectory webDirectoryCopy = JsonConvert.DeserializeObject<WebDirectory>(JsonConvert.SerializeObject(parsedWebDirectory));
 
                 Dictionary<int, TableHeaderInfo> tableHeaders = GetTableHeaders(table);
 
@@ -602,15 +597,12 @@ namespace OpenDirectoryDownloader
                 {
                     if (table.QuerySelector("a") != null)
                     {
-                        parsedWebDirectory = ParseLinksDirectoryListing(baseUrl, parsedWebDirectory, table.QuerySelectorAll("a"));
+                        webDirectoryCopy = ParseLinksDirectoryListing(baseUrl, webDirectoryCopy, table.QuerySelectorAll("a"));
                     }
                 }
                 else
                 {
-                    parsedWebDirectory.ParsedSuccesfully = true;
-
-                    // Dirty solution..
-                    bool hasSeperateDirectoryAndFilesTables = false;
+                    webDirectoryCopy.ParsedSuccesfully = true;
 
                     foreach (IElement tableRow in table.QuerySelectorAll("tbody tr"))
                     {
@@ -690,7 +682,7 @@ namespace OpenDirectoryDownloader
                                             }
                                         }
 
-                                        parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
+                                        webDirectoryCopy.Subdirectories.Add(new WebDirectory(webDirectoryCopy)
                                         {
                                             Parser = "ParseTablesDirectoryListing",
                                             Url = fullUrl,
@@ -700,7 +692,7 @@ namespace OpenDirectoryDownloader
                                     }
                                     else
                                     {
-                                        parsedWebDirectory.Parser = "ParseTablesDirectoryListing";
+                                        webDirectoryCopy.Parser = "ParseTablesDirectoryListing";
 
                                         string filename = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath));
 
@@ -719,7 +711,7 @@ namespace OpenDirectoryDownloader
                                             continue;
                                         }
 
-                                        parsedWebDirectory.Files.Add(new WebFile
+                                        webDirectoryCopy.Files.Add(new WebFile
                                         {
                                             Url = fullUrl,
                                             FileName = filename,
@@ -731,13 +723,19 @@ namespace OpenDirectoryDownloader
                             }
                         }
                     }
-
-                    if ((parsedWebDirectory.Files.Any() || parsedWebDirectory.Subdirectories.Any()) && !hasSeperateDirectoryAndFilesTables)
-                    {
-                        // Break is results are found
-                        break;
-                    }
                 }
+
+                results.Add(webDirectoryCopy);
+            }
+
+            if (!hasSeperateDirectoryAndFilesTables)
+            {
+                parsedWebDirectory = results.Where(r => r.ParsedSuccesfully || r.Error).OrderByDescending(r => r.TotalDirectories + r.TotalFiles).First();
+            }
+            else
+            {
+                parsedWebDirectory.Subdirectories = new ConcurrentList<WebDirectory>(results.SelectMany(r => r.Subdirectories));
+                parsedWebDirectory.Files = results.SelectMany(r => r.Files).ToList();
             }
 
             CheckParsedResults(parsedWebDirectory);
@@ -1571,7 +1569,12 @@ namespace OpenDirectoryDownloader
 
             if (headers == null || headers.Length == 0)
             {
-                headers = table.QuerySelectorAll("> tr:nth-child(1) > td");
+                headers = table.QuerySelectorAll("tr:nth-child(1) > th");
+            }
+
+            if (headers == null || headers.Length == 0)
+            {
+                headers = table.QuerySelectorAll("tr:nth-child(1) > td");
             }
 
             if (headers?.Any() == true)
@@ -1604,7 +1607,7 @@ namespace OpenDirectoryDownloader
                         tableHeaderInfo.Type = TableHeaderType.Type;
                     }
 
-                    if (headerName == "size" || headerName.Contains("file size") || headerName.Contains("taille"))
+                    if (headerName == "size" || headerName.Contains("file size") || headerName.Contains("filesize") || headerName.Contains("taille"))
                     {
                         tableHeaderInfo.Type = TableHeaderType.FileSize;
                     }
@@ -1627,6 +1630,11 @@ namespace OpenDirectoryDownloader
                     }
 
                     tableHeaders.Add(headerIndex, tableHeaderInfo);
+
+                    if (header.HasAttribute("colspan"))
+                    {
+                        headerIndex += int.Parse(header.GetAttribute("colspan")) - 1;
+                    }
 
                     headerIndex++;
                 }

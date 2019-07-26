@@ -2668,5 +2668,35 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("10.0000@newleftreview.org@3150.pdf", webDirectory.Files[0].FileName);
             Assert.Equal(665600, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: http://193.68.19.127/AZBUCHNIK/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing88aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(22, webDirectory.Subdirectories.Count);
+            Assert.Equal("A", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(3, webDirectory.Files.Count);
+            Assert.Equal("Radio.pls", webDirectory.Files[0].FileName);
+            Assert.Equal(3277, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://193.68.19.127/AZBUCHNIK/A/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing88bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(54, webDirectory.Subdirectories.Count);
+            Assert.Equal("ABID SAKALAS-2005", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
     }
 }
