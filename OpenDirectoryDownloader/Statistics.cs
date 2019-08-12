@@ -14,11 +14,6 @@ namespace OpenDirectoryDownloader
         {
             Dictionary<string, ExtensionStats> extensionCount;
 
-            // Old by URL style
-            //extensionCount = webDirectory.Files
-            //    .GroupBy(f => Path.GetExtension(new Uri(f.Url).AbsolutePath), f => f)
-            //    .ToDictionary(f => f.Key, f => new ExtensionStats { Count = f.Count(), FileSize = f.ToList().Sum(f2 => f2.FileSize) });
-
             extensionCount = webDirectory.Files
                 .GroupBy(f => Path.GetExtension(f.FileName).ToLowerInvariant(), f => f)
                 .ToDictionary(f => f.Key.ToLowerInvariant(), f => new ExtensionStats { Count = f.Count(), FileSize = f.ToList().Sum(f2 => f2.FileSize) });
@@ -98,7 +93,8 @@ namespace OpenDirectoryDownloader
 
                 stringBuilder.AppendLine($"|**Dirs:** {Library.FormatWithThousands(session.Root.TotalDirectories + 1)} **Ext:** {Library.FormatWithThousands(extensionsStats.Count)}|**Total:** {Library.FormatWithThousands(session.TotalFiles)}|**Total:** {FileSizeHelper.ToHumanReadable(session.TotalFileSizeEstimated)}|");
             }
-            stringBuilder.AppendLine($"|**Date:** {session.Started}|**Time:** {TimeSpan.FromSeconds((int)((session.Finished == DateTimeOffset.MinValue ? DateTimeOffset.UtcNow : session.Finished) - session.Started).TotalSeconds)}|{(session.SpeedtestResult != null ? $"**Speed:** {session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)" : string.Empty)}|");
+
+            stringBuilder.AppendLine($"|**Date:** {session.Started.ToString(Constants.DateTimeFormat)}|**Time:** {TimeSpan.FromSeconds((int)((session.Finished == DateTimeOffset.MinValue ? DateTimeOffset.UtcNow : session.Finished) - session.Started).TotalSeconds)}|{(session.SpeedtestResult != null ? $"**Speed:** {session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)" : string.Empty)}|");
 
             return stringBuilder.ToString();
         }
