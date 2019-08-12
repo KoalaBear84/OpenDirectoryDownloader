@@ -23,7 +23,7 @@ namespace OpenDirectoryDownloader.GoogleDrive
         static readonly DriveService DriveService;
         static readonly string ApplicationName = "OpenDirectoryDownloader";
         const string FolderMimeType = "application/vnd.google-apps.folder";
-        static readonly RateLimiter RateLimiter = new RateLimiter(900, TimeSpan.FromSeconds(100));
+        static readonly RateLimiter RateLimiter = new RateLimiter(900, TimeSpan.FromSeconds(100), 0.9d);
 
         static GoogleDriveIndexer()
         {
