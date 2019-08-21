@@ -21,7 +21,7 @@ https://dotnet.microsoft.com/download/dotnet-core/3.0
 
 ## Usage
 
-Command line paremters:
+Command line paremeters:
 
 Short | Long | Description
 ---------|----------|---------
