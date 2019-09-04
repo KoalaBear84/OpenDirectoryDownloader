@@ -2698,5 +2698,35 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("ABID SAKALAS-2005", webDirectory.Subdirectories[0].Name);
             Assert.Empty(webDirectory.Files);
         }
+
+        /// <summary>
+        /// Url: https://www.otakucloud.net/A:/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing89aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(5, webDirectory.Subdirectories.Count);
+            Assert.Equal("写真", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: https://www.otakucloud.net/A:/%E5%86%99%E7%9C%9F/%E8%90%9D%E8%8E%89%E6%B6%B2%E6%B6%B2%E9%85%B1YeYe/01%E6%B6%B2%E6%B6%B2%E9%85%B1%E2%80%94%E5%BC%B9%E4%B8%B8%E8%AE%BA%E7%A0%B4%E8%8E%AB%E8%AF%BA%E7%BE%8E%E6%8B%9F%E4%BA%BAcos%20%2832P%2B3V%29
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing89bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Single(webDirectory.Subdirectories);
+            Assert.Equal("视频", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(32, webDirectory.Files.Count);
+            Assert.Equal("␠(1).jpg", webDirectory.Files[0].FileName);
+            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+        }
     }
 }

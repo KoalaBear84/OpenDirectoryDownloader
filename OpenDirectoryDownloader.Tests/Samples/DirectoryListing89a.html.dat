@@ -1,0 +1,363 @@
+﻿
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title> A: - 御宅网盘</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.staticfile.org/bootswatch/4.3.1/sketchy/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/bootstrap-switch/4.0.0-alpha.1/css/bootstrap-switch.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- <link rel='stylesheet' href='/static/theme/bst4/css/style.css?t=20190130' type='text/css' /> -->
+    <script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/layer/2.3/layer.js"></script>
+    <style>
+        .cut {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .mt-15 {margin-top: 15px;margin-bottom: 15px;font-size: 15px;}
+        /* 固定到右下角的 FAB 按钮 */
+        .fab-fixed {
+          position: fixed !important;
+          /* 手机平板上距离屏幕右下角 16px */
+          right: 16px;
+          bottom: 16px;
+        }
+        @media (min-width: 1024px) {
+          .fab-fixed {
+            /* 电脑上距离屏幕右下角 24px */
+            right: 24px;
+            bottom: 24px;
+          }
+        }
+
+    </style>
+    
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="/">御宅网盘</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+        
+            
+                
+                <li class="nav-item">
+                <a class="nav-link active" href="/A:">A盘<span class="sr-only">(current)</span></a>
+                </li>
+                
+          
+        
+            
+                
+                <li class="nav-item">
+                <a class="nav-link" href="/B:">B盘</a>
+                </li>
+                
+          
+        
+            
+                
+                <li class="nav-item">
+                <a class="nav-link" href="/C:">C盘</a>
+                </li>
+                
+          
+        
+            
+                
+                <li class="nav-item">
+                <a class="nav-link" href="/D:">D盘</a>
+                </li>
+                
+          
+        
+            
+                
+                <li class="nav-item">
+                <a class="nav-link" href="/E:">E盘</a>
+                </li>
+                
+          
+        
+            
+                
+                <li class="nav-item">
+                <a class="nav-link" href="/F:">F盘</a>
+                </li>
+                
+          
+        
+        </ul>
+        <div class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" id='key_word' placeholder="关键词">
+            <button class="btn btn-secondary my-2 my-sm-0" onclick="py_find();">搜索</button>
+        </div>
+      </div>
+    </div>
+</nav>
+<br>
+<div class="container mt-3">
+    
+    <nav aria-label="breadcrumb" class="d-none d-md-block d-md-none">
+        <ol class="breadcrumb">
+            
+                
+                <li class="breadcrumb-item"><a href="/A:">A</a></li>
+                
+            
+        </ol>
+    </nav>
+    
+</div>
+    
+<div class="container mt-3">
+    <div class="form-inline">
+        <label for="image_view">看图模式</label>
+        <input type="checkbox" id="image_view" class="form-control" data-switch-value="mini" onclick="changeMode()"  />
+    </div>
+    <hr>
+    
+
+    <div class="card border-light mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-8 col-sm-6">
+                    
+    <a href="/A:?order=asc&sortby=name">
+    标题
+    
+    </a>
+
+                </div>
+                <div class="col-sm-2 d-none d-md-block d-md-none">
+                    <span class="pull-right">
+    <a href="/A:?order=asc&sortby=lastModtime">
+    修改时间
+    
+        
+            <i class="fa fa-arrow-down" aria-hidden="true"></i>
+        
+    
+    </a>
+</span>
+                </div>
+                <div class="col-sm-2 d-none d-md-block d-md-none">
+                    <span class="pull-right">
+    <a href="/A:?order=asc&sortby=type">
+    类型
+    
+    </a>
+</span>
+                </div>
+                <div class="col-4 col-sm-2">
+                    <span class="pull-right">
+    <a href="/A:?order=asc&sortby=size">
+    大小
+    
+    </a>
+</span>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            
+            <div class="list-group item-list">
+                
+                    
+                        <li class="list-group-item list-group-item-action">
+                            <a href="/A:/%E5%86%99%E7%9C%9F">
+                            <div class="row">
+                                <div class="col-8 col-sm-6" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><i class="fa fa-folder-o"></i>写真</div>
+                                <div class="col-sm-2 d-none d-md-block d-md-none"><span class="pull-right">2019/01/28</span></div>
+                                <div class="col-sm-2 d-none d-md-block d-md-none"><span class="pull-right">folder</span></div>
+                                <div class="col-4 col-sm-2"><span class="pull-right">328.5G</span></div>
+                            </div>
+                            </a>
+                        </li>
+                    
+                
+                    
+                        <li class="list-group-item list-group-item-action">
+                            <a href="/A:/%E8%A7%86%E9%A2%91">
+                            <div class="row">
+                                <div class="col-8 col-sm-6" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><i class="fa fa-folder-o"></i>视频</div>
+                                <div class="col-sm-2 d-none d-md-block d-md-none"><span class="pull-right">2019/01/21</span></div>
+                                <div class="col-sm-2 d-none d-md-block d-md-none"><span class="pull-right">folder</span></div>
+                                <div class="col-4 col-sm-2"><span class="pull-right">1.7G</span></div>
+                            </div>
+                            </a>
+                        </li>
+                    
+                
+                    
+                        <li class="list-group-item list-group-item-action">
+                            <a href="/A:/3D%E4%BD%9C%E5%93%81">
+                            <div class="row">
+                                <div class="col-8 col-sm-6" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><i class="fa fa-folder-o"></i>3D作品</div>
+                                <div class="col-sm-2 d-none d-md-block d-md-none"><span class="pull-right">2019/01/20</span></div>
+                                <div class="col-sm-2 d-none d-md-block d-md-none"><span class="pull-right">folder</span></div>
+                                <div class="col-4 col-sm-2"><span class="pull-right">130.2G</span></div>
+                            </div>
+                            </a>
+                        </li>
+                    
+                
+                    
+                        <li class="list-group-item list-group-item-action">
+                            <a href="/A:/VIP%E4%B8%93%E5%8C%BA">
+                            <div class="row">
+                                <div class="col-8 col-sm-6" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><i class="fa fa-folder-o"></i>VIP专区</div>
+                                <div class="col-sm-2 d-none d-md-block d-md-none"><span class="pull-right">2019/01/17</span></div>
+                                <div class="col-sm-2 d-none d-md-block d-md-none"><span class="pull-right">folder</span></div>
+                                <div class="col-4 col-sm-2"><span class="pull-right">1.4T</span></div>
+                            </div>
+                            </a>
+                        </li>
+                    
+                
+                    
+                        <li class="list-group-item list-group-item-action">
+                            <a href="/A:/%E5%8E%86%E4%BB%A3%E9%87%8C%E7%95%AA%E5%90%88%E9%9B%86">
+                            <div class="row">
+                                <div class="col-8 col-sm-6" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><i class="fa fa-folder-o"></i>历代里番合集</div>
+                                <div class="col-sm-2 d-none d-md-block d-md-none"><span class="pull-right">2019/01/15</span></div>
+                                <div class="col-sm-2 d-none d-md-block d-md-none"><span class="pull-right">folder</span></div>
+                                <div class="col-4 col-sm-2"><span class="pull-right">1.1T</span></div>
+                            </div>
+                            </a>
+                        </li>
+                    
+                
+                
+            </div>
+        </div>
+    </div>
+
+    <center>
+    
+        
+    
+
+    
+    </center>
+</div>
+
+
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.staticfile.org/bootstrap-switch/4.0.0-alpha.1/js/bootstrap-switch.min.js"></script>
+    <script type="text/javascript">
+    function py_find() {
+        var key_word = document.getElementById("key_word"); //获取key_word那个div
+        var patrn = /[@#\$%\^&\*\\/]+/g; //正则表达式
+        if (patrn.exec(key_word.value)) {
+            $('.alert').css('display', '');
+            $('#error_msg').html('关键词不能包含特殊字符！');
+            return false;
+        }
+        if (key_word.value == '') {
+            $('.alert').css('display', '');
+            $('#error_msg').html('关键词不能为空！');
+            return false;
+        }
+        $('.alert').css('display', 'none');
+        window.location.href = "/py_find/" + key_word.value;
+    }
+
+    $('.sitenav-on').on('click', function() {
+        $('body').toggleClass('sitenav-active')
+    })
+
+    $('.sitenav-mask').on('click', function() {
+        $('body').removeClass('sitenav-active')
+    })
+
+
+    $('.searchstart-on').on('click', function() {
+        $(this).hide()
+        $('.searchstart-off').show()
+        $('body').addClass('searchform-active')
+        $('.sinput').focus()
+    })
+
+    $('.searchstart-off').on('click', function() {
+        $(this).hide()
+        $('.searchstart-on').show()
+        $('body').removeClass('searchform-active')
+    })
+    function copyUrl(eid) {
+        var Url=document.getElementById(eid);
+        Url.select();
+        document.execCommand("Copy");
+        $('.alert').css('display', '');
+        $('#error_msg').html('复制成功');
+    }
+    </script>
+    
+<script>
+$("#image_view").bootstrapSwitch({
+    size: 'mini',
+    onSwitchChange:function(){
+        var ckname = 'image_mode'
+        if ($('#image_view').attr('checked')) {
+            setCookie(ckname, 1, 1);
+            window.location.href = "/A:?image_mode=0";
+        } else {
+            setCookie(ckname, 0, 1);
+            window.location.href = "/A:?image_mode=1";
+        }
+    }
+})
+;
+$(function() {
+    $('.file a').each(function() {
+        $(this).on('click', function() {
+            layer.open({
+                type: 2,
+                title: 'PyOne播放窗口',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['100%', '100%'],
+                
+                content: $(this).attr('href') + "&action=share" //iframe的url
+                
+            });
+            return false;
+        });
+    });
+});
+
+function setCookie(c_name, value, exdays) {
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    var c_value = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString());
+    document.cookie = c_name + "=" + c_value;
+}
+
+
+
+
+</script>
+
+    <div style="display: none;">
+
+</div>
+
+</body>
+
+</html>

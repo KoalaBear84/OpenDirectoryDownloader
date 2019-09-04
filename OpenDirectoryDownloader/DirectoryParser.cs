@@ -65,6 +65,7 @@ namespace OpenDirectoryDownloader
                 }
 
                 htmlDocument.QuerySelectorAll("#sidebar").ToList().ForEach(e => e.Remove());
+                htmlDocument.QuerySelectorAll("nav").ToList().ForEach(e => e.Remove());
 
                 // The order of the checks are very important!
 
@@ -137,6 +138,18 @@ namespace OpenDirectoryDownloader
                 }
 
                 IHtmlCollection<IElement> listItems = htmlDocument.QuerySelectorAll("ul li");
+
+                if (listItems.Any())
+                {
+                    WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems);
+
+                    if (result.ParsedSuccesfully || result.Error)
+                    {
+                        return result;
+                    }
+                }
+
+                listItems = htmlDocument.QuerySelectorAll(".list-group li");
 
                 if (listItems.Any())
                 {
@@ -1356,11 +1369,20 @@ namespace OpenDirectoryDownloader
 
                         long fileSize = FileSizeHelper.ParseFileSize(link.ParentElement?.QuerySelector(".fileSize")?.TextContent);
 
+                        string fileName = Path.GetFileName(WebUtility.UrlDecode(linkHref));
+                        urlEncodingParser = new UrlEncodingParser(fileName);
+
+                        // Clear token
+                        if (urlEncodingParser["token"] != null)
+                        {
+                            urlEncodingParser.Remove("token");
+                            fileName = urlEncodingParser.ToString();
+                        }
+
                         parsedWebDirectory.Files.Add(new WebFile
                         {
                             Url = fullUrl,
-                            FileName = Path.GetFileName(WebUtility.UrlDecode(linkHref)),
-                            //FileName = link.TextContent.Trim(),
+                            FileName = fileName,
                             FileSize = fileSize,
                         });
                     }
