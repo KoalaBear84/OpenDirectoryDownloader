@@ -3,7 +3,7 @@
     public class Constants
     {
         public const string GoogleDriveDomain = "drive.google.com";
-        public const string DateTimeFormat = "YYYY-mm-dd HH:ii:ss";
+        public const string DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
         public class UserAgent
         {
