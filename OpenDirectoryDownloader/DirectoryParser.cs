@@ -137,7 +137,7 @@ namespace OpenDirectoryDownloader
                     return ParseMaterialDesignListItemsDirectoryListing(baseUrl, parsedWebDirectory, materialDesignListItems);
                 }
 
-                IHtmlCollection<IElement> listItems = htmlDocument.QuerySelectorAll("ul li");
+                IHtmlCollection<IElement> listItems = htmlDocument.QuerySelectorAll(".list-group li");
 
                 if (listItems.Any())
                 {
@@ -149,7 +149,7 @@ namespace OpenDirectoryDownloader
                     }
                 }
 
-                listItems = htmlDocument.QuerySelectorAll(".list-group li");
+                listItems = htmlDocument.QuerySelectorAll("ul li");
 
                 if (listItems.Any())
                 {

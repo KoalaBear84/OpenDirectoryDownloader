@@ -2728,5 +2728,19 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("␠(1).jpg", webDirectory.Files[0].FileName);
             Assert.Equal(-1, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: https://www.otakucloud.net/B:
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing89cAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(4, webDirectory.Subdirectories.Count);
+            Assert.Equal("本子", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
     }
 }
