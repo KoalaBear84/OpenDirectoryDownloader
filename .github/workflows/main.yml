@@ -21,8 +21,5 @@ jobs:
         dotnet-version: 3.0.100-preview8-013656
     - name: Build with dotnet
       run: dotnet build --configuration Release
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: test
-        projects: '**/*Tests/*.csproj'
-        arguments: '--configuration Release'
+    - name: Test with dotnet
+      run: dotnet test --configuration Release
