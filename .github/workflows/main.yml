@@ -7,9 +7,6 @@ jobs:
 
     runs-on: ubuntu-latest
     
-  variables:
-    buildConfiguration: 'Release'
-  
   steps:
     - uses: actions/checkout@v1
     - name: Run a one-line script
@@ -23,4 +20,4 @@ jobs:
       with:
         dotnet-version: 3.0.0-preview9-19423-09
     - name: Build with dotnet
-      run: dotnet build --configuration $(buildConfiguration)
+      run: dotnet build --configuration Release
