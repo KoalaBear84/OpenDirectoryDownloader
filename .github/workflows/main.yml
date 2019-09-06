@@ -1,0 +1,26 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+  variables:
+    buildConfiguration: 'Release'
+  
+  steps:
+    - uses: actions/checkout@v1
+    - name: Run a one-line script
+      run: echo Hello, world!
+    - name: Run a multi-line script
+      run: |
+        echo Add other actions to build,
+        echo test, and deploy your project.
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.0.0-preview9-19423-09
+    - name: Build with dotnet
+      run: dotnet build --configuration $(buildConfiguration)
