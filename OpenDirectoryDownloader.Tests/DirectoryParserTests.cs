@@ -2742,5 +2742,36 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("本子", webDirectory.Subdirectories[0].Name);
             Assert.Empty(webDirectory.Files);
         }
+
+        /// <summary>
+        /// Url: http://1-up.cc/roms/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing90aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(36, webDirectory.Subdirectories.Count);
+            Assert.Equal("Amiga", webDirectory.Subdirectories[0].Name);
+            Assert.Single(webDirectory.Files);
+            Assert.Equal("[All Systems-Complete].torrent", webDirectory.Files[0].FileName);
+            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://1-up.cc/roms/Amiga/0/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing90bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(8, webDirectory.Files.Count);
+            Assert.Equal("3D Boxing.zip", webDirectory.Files[0].FileName);
+            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+        }
     }
 }

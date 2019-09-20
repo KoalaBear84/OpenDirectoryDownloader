@@ -1,0 +1,172 @@
+﻿
+<!doctype html>
+
+<html>
+<head>
+ <title></title>
+ <script> 
+  str = "Emulation Station :: "
+  str += decodeURI(document.location.pathname)
+  document.title=(str);
+ </script>
+ <link rel="icon" href="/gfx/shroom.gif">
+ <link href="/includes/style.css" type="text/css" rel="stylesheet">
+ <script src="/includes/sweetalert.min.js"></script>
+</head>
+<body>
+
+<!--[if !IE 7]>
+ <style type="text/css">
+  #wrap {display:table; height:100%;}
+ </style>
+<![endif]-->
+
+<div id="wrap">
+<div id="main">
+
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr>
+<td background="/gfx/gradient.png" width="33%">&nbsp;</td>
+
+<td width="200" align="center"><img src="/gfx/dekutree.png" width="200" height="150" alt="The great Deku Tree" style="display: block;"></td>
+
+<td width="596" background="/gfx/gradient.png" valign="top">
+
+<img src="/gfx/logo.png" alt="Emulation Station">
+
+<ul id="navbar">
+ <li style="border: 1px solid silver; border-right: 0px solid silver;"><a href="/"><b>Home</b></a></li>
+ <li style="border: 1px solid silver; border-right: 0px solid silver;"><a href="#" onClick="swal('Select a system.');"><b>ROMs</b></a>
+ <ul>
+  <li style="border-top: 1px solid silver; border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/DOS/">DOS</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Win_3.1/">Win 3.1</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Amiga/">Amiga</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Atari_2600/">Atari 2600</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Atari_5200/">Atari 5200</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Atari_7800/">Atari 7800</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Atari_Jaguar/">Atari Jaguar</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Atari_Lynx/">Atari Lynx</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Nintendo_NES/">Nintendo</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Super_Nintendo/">Super Nintendo</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Nintendo_64/">Nintendo 64</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Gamecube/">Gamecube</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Wii/">Wii</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/GameBoy_Color/">GameBoy/Color</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/GameBoy_Advance/">GameBoy&nbsp;Advance</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Nintendo_DS/">Nintendo DS</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Virtual_Boy/">Virtual Boy</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Sega_Master_System/">Master System</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Sega_Genesis/">Sega Genesis</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Game_Gear/">Game Gear</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Sega_32X/">Sega 32X</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Sega_CD/">Sega CD</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Sega_Saturn/">Sega Saturn</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Dreamcast/">Dreamcast</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Super_Model/">Super Model</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/PlayStation/">PlayStation</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/PlayStation_2/">PlayStation 2</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/PSP/">PSP</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/PS_Vita/">PS Vita</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/MAME/">MAME</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/CPS_1_2_3/">CPS 1, 2, & 3</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Neo-Geo/">Neo-Geo</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/Neo-Geo_Pocket/">Neo-Geo Pocket</a></li>
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver;"><a href="/roms/NEC_PC-Engine/">NEC PC-Engine</a></li> 
+  <li style="border-right: 1px solid silver; border-left: 1px solid silver; border-bottom: 1px solid silver;"><a href="/roms/Other_Systems/">More...</a></li>
+ </ul>
+ </li>
+ <li style="border: 1px solid silver; border-right: 0px solid silver;"><a href="/Emulators/"><b>Emulators</b></a></li>
+ <li style="border: 1px solid silver; border-right: 0px solid silver;"><a href="/Forum/"><b>Forum</b></a></li>
+ <li style="border: 1px solid silver; border-right: 0px solid silver;"><a href="/Search/"><b>Search</b></a></li>
+ <li style="border: 1px solid silver;"><a href="/Contact/"><b>Contact</b></a></li>
+</ul>
+
+</td>
+
+<td background="/gfx/gradient.png" width="33%">&nbsp;</td>
+
+</tr>
+</table>
+
+<table cellspacing="0" cellpadding="0" height="100%" width="720" align="center">
+<tr>
+<td valign="top">
+
+<!-- Content -->
+
+
+<center>
+
+<big><b><div id="shadow">
+
+Index of 
+
+<script> 
+ str = decodeURI(document.location.pathname)
+ document.write(str);
+</script>
+
+</div></b></big>
+
+<br>
+
+  <table id="indexlist">
+   <tr class="indexhead"><th class="indexcolname">Name</th></tr>
+   <tr class="even"><td class="indexcolname"><a href="/roms/Amiga/">Parent Directory</a></td></tr>
+   <tr class="odd"><td class="indexcolname"><a href="3D%20Boxing.zip">3D Boxing.zip</a></td></tr>
+   <tr class="even"><td class="indexcolname"><a href="3D%20Pool.zip">3D Pool.zip</a></td></tr>
+   <tr class="odd"><td class="indexcolname"><a href="3D%20World%20Tennis.zip">3D World Tennis.zip</a></td></tr>
+   <tr class="even"><td class="indexcolname"><a href="4D%20Sports%20Boxing.zip">4D Sports Boxing.zip</a></td></tr>
+   <tr class="odd"><td class="indexcolname"><a href="18th%20Hole.zip">18th Hole.zip</a></td></tr>
+   <tr class="even"><td class="indexcolname"><a href="688%20Attack%20Sub.zip">688 Attack Sub.zip</a></td></tr>
+   <tr class="odd"><td class="indexcolname"><a href="1869%20AGA.zip">1869 AGA.zip</a></td></tr>
+   <tr class="even"><td class="indexcolname"><a href="1942.zip">1942.zip</a></td></tr>
+</table>
+
+</center>
+
+
+<!-- /Content -->
+
+<br>
+<br>
+
+</td>
+</tr>
+</table>
+
+</div>
+</div>
+
+<div id="footer">
+ <center>
+ <a href="javascript: history.go(-1)"><img src="/gfx/warptile.gif" border="0" alt="Use the warp tile to go back."></a>
+ <p><b><div id="shadow" style="font-size: 10pt; font-family: Trebuchet MS;"> &copy; Emulation Station </div></b>
+ </center>
+</div>
+
+<script>
+ document.body.innerHTML = document.body.innerHTML.replace('Parent Directory', '../');
+ document.body.innerHTML = document.body.innerHTML.replace('Name', '&nbsp; &nbsp; &nbsp; File &nbsp; &nbsp; &nbsp; ');
+</script>
+
+<!-- Start Open Web Analytics Tracker -->
+<script>
+//<![CDATA[
+var owa_baseUrl = 'http://www.1-up.cc/owa/';
+var owa_cmds = owa_cmds || [];
+owa_cmds.push(['setSiteId', 'd0dc4cc29f1bfa7dc9c68290f6a44fdd']);
+owa_cmds.push(['trackPageView']);
+owa_cmds.push(['trackClicks']);
+
+(function() {
+	var _owa = document.createElement('script'); _owa.type = 'text/javascript'; _owa.async = true;
+	owa_baseUrl = ('https:' == document.location.protocol ? window.owa_baseSecUrl || owa_baseUrl.replace(/http:/, 'https:') : owa_baseUrl );
+	_owa.src = owa_baseUrl + 'modules/base/js/owa.tracker-combined-min.js';
+	var _owa_s = document.getElementsByTagName('script')[0]; _owa_s.parentNode.insertBefore(_owa, _owa_s);
+}());
+//]]>
+</script>
+
+</body>
+</html>
