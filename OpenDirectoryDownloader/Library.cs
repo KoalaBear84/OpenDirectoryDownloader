@@ -85,13 +85,11 @@ namespace OpenDirectoryDownloader
 
         public static Session LoadSessionJson(string fileName)
         {
-            JsonSerializer jsonSerializer = new JsonSerializer();
-
             using (StreamReader streamReader = new StreamReader(fileName))
             {
                 using (JsonReader jsonReader = new JsonTextReader(streamReader))
                 {
-                    return jsonSerializer.Deserialize<Session>(jsonReader);
+                    return new JsonSerializer().Deserialize<Session>(jsonReader);
                 }
             }
         }
