@@ -3,6 +3,7 @@ using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TextCopy;
 
 namespace OpenDirectoryDownloader
 {
@@ -48,6 +49,13 @@ namespace OpenDirectoryDownloader
                             break;
                         case ConsoleKey.I:
                             ShowInfoAndCommands();
+                            break;
+                        case ConsoleKey.C:
+                            if (openDirectoryIndexer.Session.Finished != DateTimeOffset.MinValue)
+                            {
+                                Clipboard.SetText(Statistics.GetSessionStats(openDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
+                                KillApplication();
+                            }
                             break;
                         case ConsoleKey.S:
                             ShowStatistics(openDirectoryIndexer);

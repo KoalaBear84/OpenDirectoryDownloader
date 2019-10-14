@@ -37,7 +37,7 @@ namespace OpenDirectoryDownloader
             return extensionCount;
         }
 
-        public static string GetSessionStats(Session session, bool includeExtensions = false, bool includeFullExtensions = false)
+        public static string GetSessionStats(Session session, bool includeExtensions = false, bool includeFullExtensions = false, bool onlyRedditStats = false)
         {
             Dictionary<string, ExtensionStats> extensionsStats = new Dictionary<string, ExtensionStats>();
 
@@ -68,6 +68,11 @@ namespace OpenDirectoryDownloader
             stringBuilder.AppendLine($"Total files: {Library.FormatWithThousands(session.Root.TotalFiles)}, Total estimated size: {FileSizeHelper.ToHumanReadable(session.Root.TotalFileSize)}");
             stringBuilder.AppendLine($"Total directories: {Library.FormatWithThousands(session.Root.TotalDirectories + 1)}");
             stringBuilder.AppendLine($"Total HTTP requests: {Library.FormatWithThousands(session.TotalHttpRequests)}, Total HTTP traffic: {FileSizeHelper.ToHumanReadable(session.TotalHttpTraffic)}");
+
+            if (onlyRedditStats)
+            {
+                stringBuilder.Clear();
+            }
 
             string uploadedUrlsText = !string.IsNullOrWhiteSpace(session.UploadedUrlsUrl) ? $"[Urls file]({session.UploadedUrlsUrl})" : string.Empty;
 

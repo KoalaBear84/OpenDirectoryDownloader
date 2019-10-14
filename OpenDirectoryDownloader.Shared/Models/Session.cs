@@ -8,8 +8,8 @@ namespace OpenDirectoryDownloader.Shared.Models
     public class Session
     {
         public WebDirectory Root { get; set; }
-        public DateTimeOffset Started { get; set; }
-        public DateTimeOffset Finished { get; set; }
+        public DateTimeOffset Started { get; set; } = DateTimeOffset.MinValue;
+        public DateTimeOffset Finished { get; set; } = DateTimeOffset.MinValue;
         public Dictionary<int, int> HttpStatusCodes { get; set; } = new Dictionary<int, int>();
         public long TotalHttpTraffic { get; set; }
         public int TotalHttpRequests { get; set; }

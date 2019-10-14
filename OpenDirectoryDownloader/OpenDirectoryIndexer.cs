@@ -307,6 +307,10 @@ namespace OpenDirectoryDownloader
                     {
                         Command.KillApplication();
                     }
+                    else
+                    {
+                        Console.WriteLine("Press ESC to exit! Or C to copy to clipboard and quit!");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -482,6 +486,11 @@ namespace OpenDirectoryDownloader
                     html = await GetHtml(httpResponseMessage);
                     Logger.Warn("Yes, the Chrome User-Agent did the trick!");
                 }
+            }
+
+            if (!HttpClient.DefaultRequestHeaders.Contains("Referer"))
+            {
+                HttpClient.DefaultRequestHeaders.Add("Referer", webDirectory.Url);
             }
 
             bool calibreDetected = false;

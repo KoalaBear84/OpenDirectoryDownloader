@@ -29,6 +29,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="NLog.Config" Version="4.6.6" />
     <PackageReference Include="Polly" Version="7.1.0" />
+    <PackageReference Include="TextCopy" Version="1.7.1" />
   </ItemGroup>
 
   <ItemGroup>
