@@ -18,7 +18,7 @@ namespace OpenDirectoryDownloader.Tests
             // Ugly, but it works
             string fileName = TestMethodRegex.Match(new StackTrace().GetFrame(1).GetMethod().DeclaringType.Name).Groups[1].Value;
 
-            return File.ReadAllText($"Samples\\{fileName}.html.dat");
+            return File.ReadAllText($"Samples{Path.DirectorySeparatorChar}{fileName}.html.dat");
         }
 
         private static void CleanWebDirectory(WebDirectory webDirectory, Uri testedUri)
