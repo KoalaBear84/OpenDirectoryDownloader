@@ -204,15 +204,17 @@ namespace OpenDirectoryDownloader
                             Logger.Info($"Saved URL list to file: {urlsFileName}");
                             Console.WriteLine($"Saved URL list to file: {urlsFileName}");
 
-                            if (OpenDirectoryIndexerSettings.CommandLineOptions.UploadUrls)
+                            if (OpenDirectoryIndexerSettings.CommandLineOptions.UploadUrls && Session.TotalFiles > 0)
                             {
                                 Console.WriteLine("Uploading URLs...");
 
-                                UploadFilesFile uploadFilesFile = await UploadFileIo.UploadFile(HttpClient, urlsPath);
+                                //UploadFilesFile uploadFilesFile = await UploadFileIo.UploadFile(HttpClient, urlsPath);
+                                //HistoryLogger.Info($"uploadfiles.io: {JsonConvert.SerializeObject(uploadFilesFile)}");
+                                //Session.UploadedUrlsUrl = uploadFilesFile.Url.ToString();
 
-                                HistoryLogger.Info($"uploadfiles.io: {JsonConvert.SerializeObject(uploadFilesFile)}");
-
-                                Session.UploadedUrlsUrl = uploadFilesFile.Url.ToString();
+                                GoFilesFile uploadedFile = await GoFileIo.UploadFile(HttpClient, urlsPath);
+                                HistoryLogger.Info($"goFile.io: {JsonConvert.SerializeObject(uploadedFile)}");
+                                Session.UploadedUrlsUrl = uploadedFile.Url.ToString();
 
                                 Console.WriteLine($"Uploaded URLs: {Session.UploadedUrlsUrl}");
                             }

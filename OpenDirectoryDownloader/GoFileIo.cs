@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NLog;
 using System;
 using System.IO;
@@ -7,15 +8,21 @@ using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader
 {
-    public class UploadFileIo
+    public class GoFileIo
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public static async Task<UploadFilesFile> UploadFile(HttpClient httpClient, string path)
+        public static async Task<GoFilesFile> UploadFile(HttpClient httpClient, string path)
         {
+            string jsonServer = await httpClient.GetStringAsync("https://apiv2.gofile.io/getServer");
+
+            string server = JObject.Parse(jsonServer).SelectToken("data.server").Value<string>();
+
             using (MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent($"Upload----{Guid.NewGuid()}"))
             {
-                multipartFormDataContent.Add(new StreamContent(new FileStream(path, FileMode.Open)), "file", Path.GetFileName(path));
+                multipartFormDataContent.Add(new StreamContent(new FileStream(path, FileMode.Open)), "filesUploaded", Path.GetFileName(path));
+                multipartFormDataContent.Add(new StringContent("file"), "category");
+                multipartFormDataContent.Add(new StringContent("0"), "category");
 
                 int i = 0;
                 int retries = 5;
@@ -24,15 +31,15 @@ namespace OpenDirectoryDownloader
                 {
                     try
                     {
-                        using (HttpResponseMessage httpResponseMessage = await httpClient.PostAsync("https://up.uploadfiles.io/upload", multipartFormDataContent))
+                        using (HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"https://{server}.gofile.io/upload", multipartFormDataContent))
                         {
                             if (httpResponseMessage.IsSuccessStatusCode)
                             {
                                 string response = await httpResponseMessage.Content.ReadAsStringAsync();
 
-                                Logger.Debug($"Response from Uploadfiles.io: {response}");
+                                Logger.Debug($"Response from GoFile.io: {response}");
 
-                                return JsonConvert.DeserializeObject<UploadFilesFile>(response);
+                                return JsonConvert.DeserializeObject<GoFilesFile>(response);
                             }
                             else
                             {
@@ -55,42 +62,23 @@ namespace OpenDirectoryDownloader
         }
     }
 
-    public class UploadFilesFile
+    public class GoFilesFile
     {
         [JsonProperty("status")]
-        public bool Status { get; set; }
+        public string Status { get; set; }
 
-        [JsonProperty("id")]
-        public long Id { get; set; }
+        [JsonProperty("data")]
+        public GoFilesFileData Data { get; set; }
 
-        [JsonProperty("url")]
-        public Uri Url { get; set; }
+        public string Url { get => $"https://gofile.io/?c={Data.Code}"; }
+    }
 
-        [JsonProperty("destination")]
-        public Uri Destination { get; set; }
+    public class GoFilesFileData
+    {
+        [JsonProperty("code")]
+        public string Code { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("filename")]
-        public string Filename { get; set; }
-
-        [JsonProperty("slug")]
-        public string Slug { get; set; }
-
-        [JsonProperty("size")]
-        public string Size { get; set; }
-
-        [JsonProperty("type")]
-        public string Type { get; set; }
-
-        [JsonProperty("expiry")]
-        public string Expiry { get; set; }
-
-        [JsonProperty("session_id")]
-        public string SessionId { get; set; }
-
-        [JsonProperty("timing")]
-        public string Timing { get; set; }
+        [JsonProperty("removalCode")]
+        public string RemovalCode { get; set; }
     }
 }
