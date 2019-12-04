@@ -9,7 +9,7 @@ Downloading with [aria2c](https://aria2.github.io/):
 `aria2c -i theurlsfile.txt`
 
 Downloading with wget:
-`wget -i theurlsfile.txt`
+`wget -x -i theurlsfile.txt`
 
 If you have improvements, supply me with a pull request! If you have a format not yet supported, please let me know.
 
