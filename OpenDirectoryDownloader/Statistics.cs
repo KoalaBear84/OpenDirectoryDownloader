@@ -101,6 +101,12 @@ namespace OpenDirectoryDownloader
 
             stringBuilder.AppendLine($"|**Date:** {session.Started.ToString(Constants.DateTimeFormat)}|**Time:** {TimeSpan.FromSeconds((int)((session.Finished == DateTimeOffset.MinValue ? DateTimeOffset.UtcNow : session.Finished) - session.Started).TotalSeconds)}|{(session.SpeedtestResult != null ? $"**Speed:** {session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)" : string.Empty)}|");
 
+            if (onlyRedditStats)
+            {
+                stringBuilder.AppendLine();
+                stringBuilder.AppendLine($"^(Created by [KoalaBear84's OpenDirectory Indexer](https://www.reddit.com/r/opendirectories/comments/azdgc2/open_directory_indexer_open_sourcedreleased/))");
+            }
+
             return stringBuilder.ToString();
         }
     }
