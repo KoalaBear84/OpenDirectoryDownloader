@@ -82,7 +82,7 @@ namespace OpenDirectoryDownloader
             }
             else
             {
-                stringBuilder.AppendLine($"|**Url:** {$"[{session.Root.Url.Substring(0, 40)}...]({session.Root.Url})"}||{uploadedUrlsText}|");
+                stringBuilder.AppendLine($"|**Url:** {$"[{session.Root.Url.Substring(0, 38)}...]({session.Root.Url})"}||{uploadedUrlsText}|");
             }
 
             stringBuilder.AppendLine("|:-|-:|-:|");
@@ -99,7 +99,7 @@ namespace OpenDirectoryDownloader
                 stringBuilder.AppendLine($"|**Dirs:** {Library.FormatWithThousands(session.Root.TotalDirectories + 1)} **Ext:** {Library.FormatWithThousands(extensionsStats.Count)}|**Total:** {Library.FormatWithThousands(session.TotalFiles)}|**Total:** {FileSizeHelper.ToHumanReadable(session.TotalFileSizeEstimated)}|");
             }
 
-            stringBuilder.AppendLine($"|**Date:** {session.Started.ToString(Constants.DateTimeFormat)}|**Time:** {TimeSpan.FromSeconds((int)((session.Finished == DateTimeOffset.MinValue ? DateTimeOffset.UtcNow : session.Finished) - session.Started).TotalSeconds)}|{(session.SpeedtestResult != null ? $"**Speed:** {session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)" : string.Empty)}|");
+            stringBuilder.AppendLine($"|**Date (UTC):** {session.Started.ToString(Constants.DateTimeFormat)}|**Time:** {TimeSpan.FromSeconds((int)((session.Finished == DateTimeOffset.MinValue ? DateTimeOffset.UtcNow : session.Finished) - session.Started).TotalSeconds)}|{(session.SpeedtestResult != null ? $"**Speed:** {session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)" : string.Empty)}|");
 
             if (onlyRedditStats)
             {
