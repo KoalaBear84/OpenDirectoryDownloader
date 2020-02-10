@@ -10,6 +10,9 @@ namespace OpenDirectoryDownloader
         [Option('t', "threads", Required = false, Default = 5, HelpText = "Number of threads")]
         public int Threads { get; set; }
 
+        [Option('o', "timeout", Required = false, Default = 100, HelpText = "Number of seconds for timeout")]
+        public int Timeout { get; set; }
+
         [Option('q', "quit", Required = false, Default = false, HelpText = "Do not wait after scanning")]
         public bool Quit { get; set; }
 

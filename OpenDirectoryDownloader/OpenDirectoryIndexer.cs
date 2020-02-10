@@ -69,7 +69,7 @@ namespace OpenDirectoryDownloader
 
             HttpClient = new HttpClient(HttpClientHandler)
             {
-                Timeout = TimeSpan.FromMinutes(5)
+                Timeout = TimeSpan.FromSeconds(OpenDirectoryIndexerSettings.Timeout)
             };
 
             // Fix encoding issue with "windows-1251"
@@ -719,6 +719,7 @@ namespace OpenDirectoryDownloader
         public string Url { get; set; }
         public string FileName { get; set; }
         public int Threads { get; set; } = 5;
+        public int Timeout { get; set; } = 100;
         public bool DetermimeFileSizeByDownload { get; set; }
         public CommandLineOptions CommandLineOptions { get; set; }
     }
