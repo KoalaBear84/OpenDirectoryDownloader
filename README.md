@@ -35,6 +35,8 @@ Short | Long | Description
  `-l` | `--upload-urls` | Uploads urls file
  `-e` | `--exact-file-sizes` | Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server)
  `-s` | `--speed-test` | Does a speed test after indexing
+  | `--username` | Username
+  | `--password` | Password
 
 Example:
 `OpenDirectoryIndexer.exe --url "https://myopendirectory.com"`
