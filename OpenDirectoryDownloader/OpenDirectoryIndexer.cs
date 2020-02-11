@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -71,6 +72,11 @@ namespace OpenDirectoryDownloader
             {
                 Timeout = TimeSpan.FromSeconds(OpenDirectoryIndexerSettings.Timeout)
             };
+
+            if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.Username) && !string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.Password))
+            {
+                HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{OpenDirectoryIndexerSettings.Username}:{OpenDirectoryIndexerSettings.Password}")));
+            }
 
             // Fix encoding issue with "windows-1251"
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -720,6 +726,8 @@ namespace OpenDirectoryDownloader
         public string FileName { get; set; }
         public int Threads { get; set; } = 5;
         public int Timeout { get; set; } = 100;
+        public string Username { get; set; }
+        public string Password { get; set; }
         public bool DetermimeFileSizeByDownload { get; set; }
         public CommandLineOptions CommandLineOptions { get; set; }
     }

@@ -73,6 +73,9 @@ namespace OpenDirectoryDownloader
             }
 
             openDirectoryIndexerSettings.Threads = openDirectoryIndexerSettings.CommandLineOptions.Threads;
+            openDirectoryIndexerSettings.Timeout = openDirectoryIndexerSettings.CommandLineOptions.Timeout;
+            openDirectoryIndexerSettings.Username = openDirectoryIndexerSettings.CommandLineOptions.Username;
+            openDirectoryIndexerSettings.Password = openDirectoryIndexerSettings.CommandLineOptions.Password;
 
             // FTP
             // TODO: Make dynamic

@@ -34,6 +34,12 @@ namespace OpenDirectoryDownloader
         [Option('s', "speed-test", Required = false, Default = false, HelpText = "Do a speed test")]
         public bool Speedtest { get; set; }
 
+        [Option("username", Required = false, Default = "", HelpText = "Username")]
+        public string Username { get; set; }
+
+        [Option("password", Required = false, Default = "", HelpText = "Password")]
+        public string Password { get; set; }
+
         // TODO: Future use
         //[Option('d', "download", Required = false, HelpText = "Downloads the contents (after indexing is finished)")]
         //public bool Download { get; set; }
