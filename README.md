@@ -23,20 +23,20 @@ https://dotnet.microsoft.com/download/dotnet-core/3.0
 
 Command line parameters:
 
-Short | Long | Description
----------|----------|---------
- `-u` | `--url` | Url to scan
- `-t` | `--threads` | Number of threads
- `-o` | `--timeout` | Number of seconds for timeout
- `-q` | `--quit` | Do not wait after scanning
- `-j` | `--json` | Save JSON file
- `-f` | `--no-urls` | Do not save URLs file
- `-r` | `--no-reddit` | Do not show Reddit stats markdown
- `-l` | `--upload-urls` | Uploads urls file
- `-e` | `--exact-file-sizes` | Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server)
- `-s` | `--speed-test` | Does a speed test after indexing
-  | `--username` | Username
-  | `--password` | Password
+| Short | Long | Description
+|---------|----------|---------
+| `-u` | `--url` | Url to scan
+| `-t` | `--threads` | Number of threads
+| `-o` | `--timeout` | Number of seconds for timeout
+| `-q` | `--quit` | Do not wait after scanning
+| `-j` | `--json` | Save JSON file
+| `-f` | `--no-urls` | Do not save URLs file
+| `-r` | `--no-reddit` | Do not show Reddit stats markdown
+| `-l` | `--upload-urls` | Uploads urls file
+| `-e` | `--exact-file-sizes` | Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server)
+| `-s` | `--speed-test` | Does a speed test after indexing
+| | `--username` | Username
+| | `--password` | Password
 
 Example:
 `OpenDirectoryIndexer.exe --url "https://myopendirectory.com"`
