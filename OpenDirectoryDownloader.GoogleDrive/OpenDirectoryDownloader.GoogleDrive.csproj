@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Apis.Drive.v3" Version="1.43.0.1841" />
+    <PackageReference Include="Google.Apis.Drive.v3" Version="1.44.1.1888" />
     <PackageReference Include="NLog.Config" Version="4.6.8" />
   </ItemGroup>
 
@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <None Update="OpenDirectoryDownloader.GoogleDrive.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

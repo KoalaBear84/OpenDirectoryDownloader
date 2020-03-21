@@ -1,0 +1,37 @@
+﻿
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Central Repository: HTTPClient/HTTPClient/0.3-3</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+body {
+	background: #fff;
+}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>HTTPClient/HTTPClient/0.3-3</h1>
+	</header>
+	<hr/>
+	<main>
+		<pre id="contents">
+<a href="../">../</a>
+<a href="HTTPClient-0.3-3.jar" title="HTTPClient-0.3-3.jar">HTTPClient-0.3-3.jar</a>                              2005-09-21 03:35    733741      
+<a href="HTTPClient-0.3-3.jar.md5" title="HTTPClient-0.3-3.jar.md5">HTTPClient-0.3-3.jar.md5</a>                          2005-09-21 03:35        32      
+<a href="HTTPClient-0.3-3.jar.sha1" title="HTTPClient-0.3-3.jar.sha1">HTTPClient-0.3-3.jar.sha1</a>                         2005-09-21 03:35        40      
+<a href="HTTPClient-0.3-3.pom" title="HTTPClient-0.3-3.pom">HTTPClient-0.3-3.pom</a>                              2005-09-21 03:35       154      
+<a href="HTTPClient-0.3-3.pom.md5" title="HTTPClient-0.3-3.pom.md5">HTTPClient-0.3-3.pom.md5</a>                          2005-09-21 03:35       141      
+<a href="HTTPClient-0.3-3.pom.sha1" title="HTTPClient-0.3-3.pom.sha1">HTTPClient-0.3-3.pom.sha1</a>                         2005-09-21 03:35       149      
+<a href="maven-metadata.xml" title="maven-metadata.xml">maven-metadata.xml</a>                                2005-09-21 03:35       119      
+<a href="maven-metadata.xml.md5" title="maven-metadata.xml.md5">maven-metadata.xml.md5</a>                            2005-09-21 03:35        83      
+<a href="maven-metadata.xml.sha1" title="maven-metadata.xml.sha1">maven-metadata.xml.sha1</a>                           2005-09-21 03:35       138      
+		</pre>
+	</main>
+	<hr/>
+</body>
+
+</html>

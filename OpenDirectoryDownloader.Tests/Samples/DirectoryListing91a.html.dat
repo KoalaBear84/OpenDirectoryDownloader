@@ -1,0 +1,32 @@
+﻿
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Central Repository: HTTPClient/HTTPClient</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+body {
+	background: #fff;
+}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>HTTPClient/HTTPClient</h1>
+	</header>
+	<hr/>
+	<main>
+		<pre id="contents">
+<a href="../">../</a>
+<a href="0.3-3/" title="0.3-3/">0.3-3/</a>                                            2005-09-21 03:35         -      
+<a href="maven-metadata.xml" title="maven-metadata.xml">maven-metadata.xml</a>                                2005-09-21 03:35       212      
+<a href="maven-metadata.xml.md5" title="maven-metadata.xml.md5">maven-metadata.xml.md5</a>                            2005-09-21 03:35        77      
+<a href="maven-metadata.xml.sha1" title="maven-metadata.xml.sha1">maven-metadata.xml.sha1</a>                           2005-09-21 03:35       132      
+		</pre>
+	</main>
+	<hr/>
+</body>
+
+</html>
