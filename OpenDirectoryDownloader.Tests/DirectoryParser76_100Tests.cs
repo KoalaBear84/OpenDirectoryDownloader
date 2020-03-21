@@ -478,5 +478,21 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("HTTPClient-0.3-3.jar", webDirectory.Files[0].FileName);
             Assert.Equal(733741, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: https://repo1.maven.org/maven2/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing91cAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(124, webDirectory.Subdirectories.Count);
+            Assert.Equal("HTTPClient", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(6, webDirectory.Files.Count);
+            Assert.Equal("archetype-catalog.xml", webDirectory.Files[0].FileName);
+            Assert.Equal(9064608, webDirectory.Files[0].FileSize);
+        }
     }
 }
