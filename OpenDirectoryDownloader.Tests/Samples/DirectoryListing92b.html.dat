@@ -1,0 +1,2116 @@
+﻿
+<!DOCTYPE html>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="icon" href="app/assets/images/favicon.dark.png">
+<link rel="stylesheet" href="app/assets/app.css?id=1f80478ef508c3c1063c">
+
+
+<title>ACS/Season 1 &bull; Directory Lister</title>
+
+<div id="app" class="flex flex-col min-h-screen font-sans dark-mode">
+        <header id="header" class="bg-blue-600 shadow sticky top-0">
+    <div class="container flex flex-col flex-coljustify-between items-center mx-auto p-4 md:flex-row">
+        <div class="flex-grow font-mono text-white text-sm tracking-tight mb-2 md:my-1">
+            <a href="." class="hover:underline">Home</a>
+
+                                                / <a href="?dir=ACS" class="hover:underline">ACS</a>
+                                    / <a href="?dir=ACS/Season 1" class="hover:underline">Season 1</a>
+                                    </div>
+
+        <div class="flex justify-end items-center">
+                            <a href="?zip=ACS/Season 1" title="Download this Directory" class="inline-block text-white mx-2 p-1 hover:text-gray-400">
+                    <i class="fas fa-download fa-lg"></i>
+                </a>
+            
+            <form action="." method="get" id="search" class="flex-grow group relative block bg-blue-700 rounded-full shadow-inner">
+                <input v-model="search" ref="searchInput" v-on:focus="$event.target.select()"
+                    type="text" name="search" placeholder="Search..." value=""
+                    class="bg-transparent placeholder-gray-900 text-white w-full px-10 py-2"
+                >
+
+                <div class="flex items-center absolute left-0 inset-y-0 ml-2 pointer-events-none">
+                    <div class="flex justify-center items-center text-blue-900 w-6 h-6">
+                        <i class="fas fa-search fa-fw"></i>
+                    </div>
+                </div>
+
+                <div class="flex items-center absolute right-0 inset-y-0 mr-2" v-show="search">
+                    <a href="."  class="flex justify-center items-center rounded-full text-blue-900 w-6 h-6 hover:bg-red-700 hover:text-white hover:shadow">
+                        <i class="fas fa-times"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</header>
+
+    <div id="content" class="flex-grow container mx-auto px-4">
+        <div class="my-4">
+            <div class="flex justify-between font-bold p-4">
+                <div class="flex-grow font-mono mr-2">
+                    File Name
+                </div>
+
+                <div class="font-mono text-right w-1/6 mx-2 hidden sm:block">
+                    Size
+                </div>
+
+                <div class="font-mono text-right w-1/4 ml-2 hidden sm:block">
+                    Date
+                </div>
+            </div>
+
+            <ul id="file-list">
+                <li>
+                                            <a
+    href="?dir=ACS"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-level-up-alt fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            ..
+        </div>
+
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                                —
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            —
+        </div>
+    </div>
+</a>
+
+                                    </li>
+
+                <li>
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E01 From the Ashes of Tragedy-thumb.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E01 From the Ashes of Tragedy-thumb.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E01\u0020From\u0020the\u0020Ashes\u0020of\u0020Tragedy\u002Dthumb.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            88.07KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:37:57
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E01 From the Ashes of Tragedy.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E01 From the Ashes of Tragedy.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E01\u0020From\u0020the\u0020Ashes\u0020of\u0020Tragedy.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            88.07KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:37:57
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E01 From the Ashes of Tragedy.metathumb"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E01 From the Ashes of Tragedy.metathumb
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E01\u0020From\u0020the\u0020Ashes\u0020of\u0020Tragedy.metathumb')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            88.07KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:37:57
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E01 From the Ashes of Tragedy.mkv"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-video fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E01 From the Ashes of Tragedy.mkv
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E01\u0020From\u0020the\u0020Ashes\u0020of\u0020Tragedy.mkv')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            3.77GB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2017-05-22 11:37:46
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E01 From the Ashes of Tragedy.nfo"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E01 From the Ashes of Tragedy.nfo
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E01\u0020From\u0020the\u0020Ashes\u0020of\u0020Tragedy.nfo')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            1.07KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-28 13:50:35
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E01 From the Ashes of Tragedy.xml"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-code fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E01 From the Ashes of Tragedy.xml
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E01\u0020From\u0020the\u0020Ashes\u0020of\u0020Tragedy.xml')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            434.00B
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:37:57
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E02 The Run of His Life-thumb.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E02 The Run of His Life-thumb.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E02\u0020The\u0020Run\u0020of\u0020His\u0020Life\u002Dthumb.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            72.70KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:43:55
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E02 The Run of His Life.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E02 The Run of His Life.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E02\u0020The\u0020Run\u0020of\u0020His\u0020Life.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            72.70KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:43:57
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E02 The Run of His Life.metathumb"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E02 The Run of His Life.metathumb
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E02\u0020The\u0020Run\u0020of\u0020His\u0020Life.metathumb')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            72.70KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:43:55
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E02 The Run of His Life.mkv"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-video fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E02 The Run of His Life.mkv
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E02\u0020The\u0020Run\u0020of\u0020His\u0020Life.mkv')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            2.84GB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2017-05-23 11:37:00
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E02 The Run of His Life.nfo"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E02 The Run of His Life.nfo
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E02\u0020The\u0020Run\u0020of\u0020His\u0020Life.nfo')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            1.08KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-28 13:50:36
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E02 The Run of His Life.xml"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-code fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E02 The Run of His Life.xml
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E02\u0020The\u0020Run\u0020of\u0020His\u0020Life.xml')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            506.00B
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:43:56
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E03 The Dream Team-thumb.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E03 The Dream Team-thumb.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E03\u0020The\u0020Dream\u0020Team\u002Dthumb.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            75.23KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:52:27
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E03 The Dream Team.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E03 The Dream Team.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E03\u0020The\u0020Dream\u0020Team.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            75.23KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:52:28
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E03 The Dream Team.metathumb"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E03 The Dream Team.metathumb
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E03\u0020The\u0020Dream\u0020Team.metathumb')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            75.23KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:52:27
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E03 The Dream Team.mkv"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-video fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E03 The Dream Team.mkv
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E03\u0020The\u0020Dream\u0020Team.mkv')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            2.85GB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2017-05-22 11:37:16
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E03 The Dream Team.nfo"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E03 The Dream Team.nfo
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E03\u0020The\u0020Dream\u0020Team.nfo')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            1.21KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-28 13:50:36
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E03 The Dream Team.xml"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-code fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E03 The Dream Team.xml
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E03\u0020The\u0020Dream\u0020Team.xml')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            578.00B
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:52:28
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E04 100% Not Guilty-thumb.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E04 100% Not Guilty-thumb.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E04\u0020100\u0025\u0020Not\u0020Guilty\u002Dthumb.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            103.08KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 22:00:27
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E04 100% Not Guilty.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E04 100% Not Guilty.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E04\u0020100\u0025\u0020Not\u0020Guilty.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            103.08KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 22:00:27
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E04 100% Not Guilty.metathumb"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E04 100% Not Guilty.metathumb
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E04\u0020100\u0025\u0020Not\u0020Guilty.metathumb')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            103.08KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 22:00:27
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E04 100% Not Guilty.mkv"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-video fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E04 100% Not Guilty.mkv
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E04\u0020100\u0025\u0020Not\u0020Guilty.mkv')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            3.44GB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2017-05-22 11:37:54
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E04 100% Not Guilty.nfo"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E04 100% Not Guilty.nfo
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E04\u0020100\u0025\u0020Not\u0020Guilty.nfo')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            1.26KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-28 13:50:36
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E04 100% Not Guilty.xml"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-code fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E04 100% Not Guilty.xml
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E04\u0020100\u0025\u0020Not\u0020Guilty.xml')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            628.00B
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 22:00:27
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E05 The Race Card-thumb.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E05 The Race Card-thumb.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E05\u0020The\u0020Race\u0020Card\u002Dthumb.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            98.31KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 22:14:49
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E05 The Race Card.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E05 The Race Card.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E05\u0020The\u0020Race\u0020Card.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            98.31KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 22:14:49
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E05 The Race Card.metathumb"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E05 The Race Card.metathumb
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E05\u0020The\u0020Race\u0020Card.metathumb')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            98.31KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 22:14:49
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E05 The Race Card.mkv"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-video fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E05 The Race Card.mkv
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E05\u0020The\u0020Race\u0020Card.mkv')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            3.01GB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2017-05-22 11:37:00
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E05 The Race Card.nfo"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E05 The Race Card.nfo
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E05\u0020The\u0020Race\u0020Card.nfo')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            1.14KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-28 13:50:36
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E05 The Race Card.xml"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-code fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E05 The Race Card.xml
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E05\u0020The\u0020Race\u0020Card.xml')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            487.00B
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 22:14:49
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E06 Marcia, Marcia, Marcia-thumb.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E06 Marcia, Marcia, Marcia-thumb.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E06\u0020Marcia,\u0020Marcia,\u0020Marcia\u002Dthumb.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            68.67KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 22:22:04
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E06 Marcia, Marcia, Marcia.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E06 Marcia, Marcia, Marcia.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E06\u0020Marcia,\u0020Marcia,\u0020Marcia.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            68.67KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 22:22:05
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E06 Marcia, Marcia, Marcia.metathumb"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E06 Marcia, Marcia, Marcia.metathumb
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E06\u0020Marcia,\u0020Marcia,\u0020Marcia.metathumb')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            68.67KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 22:22:04
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E06 Marcia, Marcia, Marcia.mkv"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-video fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E06 Marcia, Marcia, Marcia.mkv
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E06\u0020Marcia,\u0020Marcia,\u0020Marcia.mkv')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            3.09GB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2017-05-22 11:37:34
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E06 Marcia, Marcia, Marcia.nfo"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E06 Marcia, Marcia, Marcia.nfo
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E06\u0020Marcia,\u0020Marcia,\u0020Marcia.nfo')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            1.08KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-28 13:50:37
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E06 Marcia, Marcia, Marcia.xml"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-code fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E06 Marcia, Marcia, Marcia.xml
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E06\u0020Marcia,\u0020Marcia,\u0020Marcia.xml')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            447.00B
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 22:22:04
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E07 Conspiracy Theories-thumb.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E07 Conspiracy Theories-thumb.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E07\u0020Conspiracy\u0020Theories\u002Dthumb.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            73.40KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:33:40
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E07 Conspiracy Theories.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E07 Conspiracy Theories.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E07\u0020Conspiracy\u0020Theories.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            73.40KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:33:40
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E07 Conspiracy Theories.metathumb"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E07 Conspiracy Theories.metathumb
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E07\u0020Conspiracy\u0020Theories.metathumb')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            73.40KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:33:40
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E07 Conspiracy Theories.mkv"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-video fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E07 Conspiracy Theories.mkv
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E07\u0020Conspiracy\u0020Theories.mkv')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            2.83GB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2017-05-22 11:37:38
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E07 Conspiracy Theories.nfo"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E07 Conspiracy Theories.nfo
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E07\u0020Conspiracy\u0020Theories.nfo')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            1.05KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-28 13:50:33
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E07 Conspiracy Theories.xml"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-code fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E07 Conspiracy Theories.xml
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E07\u0020Conspiracy\u0020Theories.xml')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            473.00B
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:33:40
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E08 A Jury in Jail-thumb.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E08 A Jury in Jail-thumb.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E08\u0020A\u0020Jury\u0020in\u0020Jail\u002Dthumb.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            73.83KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:28:55
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E08 A Jury in Jail.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E08 A Jury in Jail.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E08\u0020A\u0020Jury\u0020in\u0020Jail.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            73.83KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:28:55
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E08 A Jury in Jail.metathumb"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E08 A Jury in Jail.metathumb
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E08\u0020A\u0020Jury\u0020in\u0020Jail.metathumb')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            73.83KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:28:55
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E08 A Jury in Jail.mkv"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-video fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E08 A Jury in Jail.mkv
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E08\u0020A\u0020Jury\u0020in\u0020Jail.mkv')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            2.54GB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2017-05-22 11:37:18
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E08 A Jury in Jail.nfo"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E08 A Jury in Jail.nfo
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E08\u0020A\u0020Jury\u0020in\u0020Jail.nfo')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            1.22KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-28 13:50:33
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E08 A Jury in Jail.xml"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-code fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E08 A Jury in Jail.xml
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E08\u0020A\u0020Jury\u0020in\u0020Jail.xml')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            577.00B
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 21:28:55
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E09 Manna from Heaven-thumb.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E09 Manna from Heaven-thumb.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E09\u0020Manna\u0020from\u0020Heaven\u002Dthumb.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            56.01KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 23:56:52
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E09 Manna from Heaven.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E09 Manna from Heaven.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E09\u0020Manna\u0020from\u0020Heaven.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            56.01KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 23:56:52
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E09 Manna from Heaven.metathumb"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E09 Manna from Heaven.metathumb
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E09\u0020Manna\u0020from\u0020Heaven.metathumb')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            56.01KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 23:56:52
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E09 Manna from Heaven.mkv"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-video fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E09 Manna from Heaven.mkv
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E09\u0020Manna\u0020from\u0020Heaven.mkv')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            3.20GB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2017-05-22 11:37:10
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E09 Manna from Heaven.nfo"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E09 Manna from Heaven.nfo
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E09\u0020Manna\u0020from\u0020Heaven.nfo')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            1.17KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-28 13:50:39
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E09 Manna from Heaven.xml"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-code fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E09 Manna from Heaven.xml
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E09\u0020Manna\u0020from\u0020Heaven.xml')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            528.00B
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 23:56:52
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E10 The Verdict-thumb.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E10 The Verdict-thumb.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E10\u0020The\u0020Verdict\u002Dthumb.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            63.47KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 22:30:42
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E10 The Verdict.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E10 The Verdict.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E10\u0020The\u0020Verdict.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            63.47KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 22:30:43
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E10 The Verdict.metathumb"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E10 The Verdict.metathumb
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E10\u0020The\u0020Verdict.metathumb')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            63.47KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 22:30:42
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E10 The Verdict.mkv"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-video fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E10 The Verdict.mkv
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E10\u0020The\u0020Verdict.mkv')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            4.21GB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2017-05-22 11:37:28
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E10 The Verdict.nfo"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-file fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E10 The Verdict.nfo
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E10\u0020The\u0020Verdict.nfo')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            1.10KB
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-28 13:50:37
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="ACS/Season 1/American Crime Story S01E10 The Verdict.xml"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-200 hover:shadow"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-code fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            American Crime Story S01E10 The Verdict.xml
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-400 hover:shadow group-hover:visible"
+                    v-on:click.prevent="showFileInfo('ACS\/Season\u00201\/American\u0020Crime\u0020Story\u0020S01E10\u0020The\u0020Verdict.xml')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-no-wrap text-right mx-2 w-1/6 sm:block">
+                            454.00B
+                    </div>
+
+        <div class="hidden whitespace-no-wrap text-right truncate ml-2 w-1/4 sm:block">
+            2020-01-25 22:30:43
+        </div>
+    </div>
+</a>
+
+                                    </li>
+            </ul>
+        </div>
+
+            </div>
+
+    <footer class="container border-t-2 border-gray-800 text-center mx-auto px-4 py-8">
+    <div class="flex flex-col justify-center items-center">
+        <p class="mb-4">
+            Powered by <a href="https://www.directorylister.com" class="underline hover:text-blue-700">Directory Lister</a>
+        </p>
+
+        <div class="flex">
+            <a href="https://github.com/DirectoryLister/DirectoryLister" title="GitHub" class="text-gray-400 mx-2 hover:text-github">
+                <i class="fab fa-github fa-lg"></i>
+            </a>
+
+            <a href="https://twitter.com/DirectoryLister" title="Twitter" class="text-gray-400 mx-2 hover:text-twitter">
+                <i class="fab fa-twitter fa-lg"></i>
+            </a>
+
+            <a href="https://spectrum.chat/directory-lister" title="Spectrum" class="text-gray-400 mx-2 hover:text-spectrum">
+                <i class="fas fa-comments fa-lg"></i>
+            </a>
+        </div>
+    </div>
+</footer>
+
+    <div class="fixed bottom-0 left-0 right-0 pointer-events-none">
+    <div class="container flex justify-end mx-auto px-4 py-10">
+        <button id="scroll-to-top" ref="scrollToTop"
+            class="flex justify-center items-center w-12 h-12 right-0 rounded-full shadow-lg bg-blue-600 text-white cursor-pointer pointer-events-auto hover:bg-blue-700 hidden"
+            onclick="window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });" title="Scroll to Top"
+        >
+            <i class="fas fa-arrow-up fa-lg"></i>
+        </button>
+    </div>
+</div>
+    <file-info-modal ref="fileInfoModal"></file-info-modal>
+</div>
+
+<script src="app/assets/app.js?id=b3fc65843ed213aef4a1" defer></script>

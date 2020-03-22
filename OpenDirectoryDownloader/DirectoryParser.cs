@@ -137,6 +137,11 @@ namespace OpenDirectoryDownloader
                     return ParseMaterialDesignListItemsDirectoryListing(baseUrl, parsedWebDirectory, materialDesignListItems);
                 }
 
+                if (htmlDocument.Title.EndsWith("Directory Lister") && htmlDocument.QuerySelectorAll("#content ul#file-list li").Length == 2)
+                {
+                    return ParseDirectoryListerDirectoryListing(baseUrl, parsedWebDirectory, htmlDocument);
+                }
+
                 IHtmlCollection<IElement> listItems = htmlDocument.QuerySelectorAll(".list-group li");
 
                 if (listItems.Any())
@@ -398,12 +403,12 @@ namespace OpenDirectoryDownloader
         {
             IElement table = snifTableRows.First().Parent("table");
 
-            Dictionary<int, TableHeaderInfo> tableHeaders = GetTableHeaders(table);
+            Dictionary<int, HeaderInfo> tableHeaders = GetTableHeaders(table);
 
-            KeyValuePair<int, TableHeaderInfo> fileSizeHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == TableHeaderType.FileSize);
+            KeyValuePair<int, HeaderInfo> fileSizeHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileSize);
             int fileSizeHeaderColumnIndex = fileSizeHeader.Value != null ? fileSizeHeader.Key : 0;
 
-            KeyValuePair<int, TableHeaderInfo> nameHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == TableHeaderType.FileName);
+            KeyValuePair<int, HeaderInfo> nameHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileName);
             int nameHeaderColumnIndex = nameHeader.Value != null ? nameHeader.Key : 0;
 
             foreach (IElement tableRow in snifTableRows)
@@ -467,12 +472,12 @@ namespace OpenDirectoryDownloader
             {
                 IElement table = pureTableRows.First().Parent("table");
 
-                Dictionary<int, TableHeaderInfo> tableHeaders = GetTableHeaders(table);
+                Dictionary<int, HeaderInfo> tableHeaders = GetTableHeaders(table);
 
-                KeyValuePair<int, TableHeaderInfo> fileSizeHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == TableHeaderType.FileSize);
+                KeyValuePair<int, HeaderInfo> fileSizeHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileSize);
                 int fileSizeHeaderColumnIndex = fileSizeHeader.Value != null ? fileSizeHeader.Key : 0;
 
-                KeyValuePair<int, TableHeaderInfo> nameHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == TableHeaderType.FileName);
+                KeyValuePair<int, HeaderInfo> nameHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileName);
                 int nameHeaderColumnIndex = nameHeader.Value != null ? nameHeader.Key : 0;
 
                 foreach (IElement tableRow in pureTableRows)
@@ -530,12 +535,12 @@ namespace OpenDirectoryDownloader
         {
             IElement table = h5aiTableRows.First().Parent("table");
 
-            Dictionary<int, TableHeaderInfo> tableHeaders = GetTableHeaders(table);
+            Dictionary<int, HeaderInfo> tableHeaders = GetTableHeaders(table);
 
-            KeyValuePair<int, TableHeaderInfo> fileSizeHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == TableHeaderType.FileSize);
+            KeyValuePair<int, HeaderInfo> fileSizeHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileSize);
             int fileSizeHeaderColumnIndex = fileSizeHeader.Value != null ? fileSizeHeader.Key : 0;
 
-            KeyValuePair<int, TableHeaderInfo> nameHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == TableHeaderType.FileName);
+            KeyValuePair<int, HeaderInfo> nameHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileName);
             int nameHeaderColumnIndex = nameHeader.Value != null ? nameHeader.Key : 0;
 
             foreach (IElement tableRow in h5aiTableRows)
@@ -595,15 +600,15 @@ namespace OpenDirectoryDownloader
             {
                 WebDirectory webDirectoryCopy = JsonConvert.DeserializeObject<WebDirectory>(JsonConvert.SerializeObject(parsedWebDirectory));
 
-                Dictionary<int, TableHeaderInfo> tableHeaders = GetTableHeaders(table);
+                Dictionary<int, HeaderInfo> tableHeaders = GetTableHeaders(table);
 
-                KeyValuePair<int, TableHeaderInfo> fileSizeHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == TableHeaderType.FileSize);
+                KeyValuePair<int, HeaderInfo> fileSizeHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileSize);
                 int fileSizeHeaderColumnIndex = fileSizeHeader.Value != null ? fileSizeHeader.Key : 0;
 
-                KeyValuePair<int, TableHeaderInfo> nameHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == TableHeaderType.FileName);
+                KeyValuePair<int, HeaderInfo> nameHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileName);
                 int nameHeaderColumnIndex = nameHeader.Value != null ? nameHeader.Key : 0;
 
-                KeyValuePair<int, TableHeaderInfo> descriptionHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == TableHeaderType.Description);
+                KeyValuePair<int, HeaderInfo> descriptionHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.Description);
                 int descriptionHeaderColumnIndex = descriptionHeader.Value != null ? descriptionHeader.Key : 0;
 
                 if (fileSizeHeaderColumnIndex == 0 && nameHeaderColumnIndex == 0)
@@ -1292,6 +1297,69 @@ namespace OpenDirectoryDownloader
             return parsedWebDirectory;
         }
 
+        private static WebDirectory ParseDirectoryListerDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument)
+        {
+            List<HeaderInfo> tableHeaderInfos = new List<HeaderInfo>();
+
+            IHtmlCollection<IElement> headerDivs = htmlDocument.QuerySelectorAll("#content > div > div > div");
+
+            foreach (IElement headerDiv in headerDivs)
+            {
+                tableHeaderInfos.Add(GetHeaderInfo(headerDiv));
+            }
+
+            IHtmlCollection<IElement> entries = htmlDocument.QuerySelectorAll("#content ul#file-list li").Last().QuerySelectorAll("a");
+
+            foreach (IElement entry in entries)
+            {
+                bool isFile = !entry.QuerySelector("i").ClassList.Contains("fa-folder");
+
+                //IElement link = entry.QuerySelector("a");
+                string linkHref = entry.Attributes["href"].Value;
+
+                if (IsValidLink(entry))
+                {
+                    Uri uri = new Uri(new Uri(baseUrl), linkHref);
+                    string fullUrl = uri.ToString();
+
+                    if (!isFile)
+                    {
+                        parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
+                        {
+                            Parser = "ParseDirectoryListerDirectoryListing",
+                            Url = fullUrl,
+                            Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last())),
+                        });
+                    }
+                    else
+                    {
+                        try
+                        {
+                            List<IElement> divs = entry.QuerySelectorAll("div > div").ToList();
+                            // Remove file info 'column'
+                            divs.RemoveAt(tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileName) + 1);
+                            string fileSize = entry.QuerySelectorAll("div > div").Skip(2).ToList()[tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileSize)].TextContent;
+
+                            parsedWebDirectory.Files.Add(new WebFile
+                            {
+                                Url = fullUrl,
+                                FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+                                FileSize = FileSizeHelper.ParseFileSize(fileSize),
+                            });
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Error(ex, $"Error parsing with ParseDirectoryListerDirectoryListing");
+                        }
+                    }
+                }
+            }
+
+            CheckParsedResults(parsedWebDirectory);
+
+            return parsedWebDirectory;
+        }
+
         private static WebDirectory ParseListItemsDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> listItems)
         {
             bool firstLink = true;
@@ -1555,7 +1623,7 @@ namespace OpenDirectoryDownloader
             return value != "-" && value != "—" && value != "<Directory>";
         }
 
-        public enum TableHeaderType
+        public enum HeaderType
         {
             Unknown,
             FileName,
@@ -1566,15 +1634,15 @@ namespace OpenDirectoryDownloader
         }
 
         [DebuggerDisplay("{Type,nq}, {Header,nq}")]
-        private class TableHeaderInfo
+        private class HeaderInfo
         {
             public string Header { get; set; }
-            public TableHeaderType Type { get; set; } = TableHeaderType.Unknown;
+            public HeaderType Type { get; set; } = HeaderType.Unknown;
         }
 
-        private static Dictionary<int, TableHeaderInfo> GetTableHeaders(IElement table)
+        private static Dictionary<int, HeaderInfo> GetTableHeaders(IElement table)
         {
-            Dictionary<int, TableHeaderInfo> tableHeaders = new Dictionary<int, TableHeaderInfo>();
+            Dictionary<int, HeaderInfo> tableHeaders = new Dictionary<int, HeaderInfo>();
 
             IHtmlCollection<IElement> headers = table.QuerySelector("th")?.ParentElement?.QuerySelectorAll("th");
 
@@ -1610,46 +1678,7 @@ namespace OpenDirectoryDownloader
                         continue;
                     }
 
-                    string headerName = header.TextContent.Trim();
-
-                    TableHeaderInfo tableHeaderInfo = new TableHeaderInfo
-                    {
-                        Header = headerName
-                    };
-
-                    headerName = headerName.ToLower();
-
-                    if (headerName == "last modified" || headerName == "modified" || headerName.Contains("date") || headerName.Contains("last modification"))
-                    {
-                        tableHeaderInfo.Type = TableHeaderType.Modified;
-                    }
-
-                    if (headerName == "type")
-                    {
-                        tableHeaderInfo.Type = TableHeaderType.Type;
-                    }
-
-                    if (headerName == "size" || headerName.Contains("file size") || headerName.Contains("filesize") || headerName.Contains("taille"))
-                    {
-                        tableHeaderInfo.Type = TableHeaderType.FileSize;
-                    }
-
-                    if (headerName == "description")
-                    {
-                        tableHeaderInfo.Type = TableHeaderType.Description;
-                    }
-
-                    // Check this as last one because of generic 'file' in it..
-                    if (tableHeaderInfo.Type == TableHeaderType.Unknown &&
-                        (headerName == "file" ||
-                        headerName == "name" ||
-                        headerName.Contains("file name") ||
-                        headerName.Contains("filename") ||
-                        headerName == "directory" ||
-                        headerName.Contains("nom")))
-                    {
-                        tableHeaderInfo.Type = TableHeaderType.FileName;
-                    }
+                    HeaderInfo tableHeaderInfo = GetHeaderInfo(header);
 
                     tableHeaders.Add(headerIndex, tableHeaderInfo);
 
@@ -1662,7 +1691,7 @@ namespace OpenDirectoryDownloader
                 }
 
                 // Dynamically guess column types
-                if (tableHeaders.All(th => th.Value.Type == TableHeaderType.Unknown))
+                if (tableHeaders.All(th => th.Value.Type == HeaderType.Unknown))
                 {
                     tableHeaders.Clear();
 
@@ -1703,7 +1732,7 @@ namespace OpenDirectoryDownloader
 
                         if (!tableHeaders.ContainsKey(columnIndex))
                         {
-                            tableHeaders.Add(columnIndex, new TableHeaderInfo { Type = TableHeaderType.FileName });
+                            tableHeaders.Add(columnIndex, new HeaderInfo { Type = HeaderType.FileName });
                         }
                     }
 
@@ -1713,7 +1742,7 @@ namespace OpenDirectoryDownloader
 
                         if (!tableHeaders.ContainsKey(columnIndex))
                         {
-                            tableHeaders.Add(columnIndex, new TableHeaderInfo { Type = TableHeaderType.Modified });
+                            tableHeaders.Add(columnIndex, new HeaderInfo { Type = HeaderType.Modified });
                         }
                     }
 
@@ -1723,7 +1752,7 @@ namespace OpenDirectoryDownloader
 
                         if (!tableHeaders.ContainsKey(columnIndex))
                         {
-                            tableHeaders.Add(columnIndex, new TableHeaderInfo { Type = TableHeaderType.FileSize });
+                            tableHeaders.Add(columnIndex, new HeaderInfo { Type = HeaderType.FileSize });
                         }
                     }
 
@@ -1733,7 +1762,7 @@ namespace OpenDirectoryDownloader
 
                         if (!tableHeaders.ContainsKey(columnIndex))
                         {
-                            tableHeaders.Add(columnIndex, new TableHeaderInfo { Type = TableHeaderType.Type });
+                            tableHeaders.Add(columnIndex, new HeaderInfo { Type = HeaderType.Type });
                         }
                     }
                 }
@@ -1742,6 +1771,52 @@ namespace OpenDirectoryDownloader
             }
 
             return tableHeaders;
+        }
+
+        private static HeaderInfo GetHeaderInfo(IElement header)
+        {
+            string headerName = header.TextContent.Trim();
+
+            HeaderInfo headerInfo = new HeaderInfo
+            {
+                Header = headerName
+            };
+
+            headerName = headerName.ToLower();
+
+            if (headerName == "last modified" || headerName == "modified" || headerName.Contains("date") || headerName.Contains("last modification"))
+            {
+                headerInfo.Type = HeaderType.Modified;
+            }
+
+            if (headerName == "type")
+            {
+                headerInfo.Type = HeaderType.Type;
+            }
+
+            if (headerName == "size" || headerName.Contains("file size") || headerName.Contains("filesize") || headerName.Contains("taille"))
+            {
+                headerInfo.Type = HeaderType.FileSize;
+            }
+
+            if (headerName == "description")
+            {
+                headerInfo.Type = HeaderType.Description;
+            }
+
+            // Check this as last one because of generic 'file' in it..
+            if (headerInfo.Type == HeaderType.Unknown &&
+                (headerName == "file" ||
+                headerName == "name" ||
+                headerName.Contains("file name") ||
+                headerName.Contains("filename") ||
+                headerName == "directory" ||
+                headerName.Contains("nom")))
+            {
+                headerInfo.Type = HeaderType.FileName;
+            }
+
+            return headerInfo;
         }
 
         private static bool IsValidLink(IElement link)
