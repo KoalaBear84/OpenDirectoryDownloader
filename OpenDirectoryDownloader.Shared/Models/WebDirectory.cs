@@ -65,5 +65,8 @@ namespace OpenDirectoryDownloader.Shared.Models
         public DateTimeOffset StartTime { get; set; }
         [JsonIgnore]
         public DateTimeOffset FinishTime { get; set; }
+
+        [JsonIgnore]
+        public int HeaderCount { get; set; }
     }
 }

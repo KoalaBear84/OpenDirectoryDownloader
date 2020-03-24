@@ -523,5 +523,51 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("American Crime Story S01E01 From the Ashes of Tragedy-thumb.jpg", webDirectory.Files[0].FileName);
             Assert.Equal(90184, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: https://archive.midnightchannel.net/SonyPS/PS3/Source%20Code/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing93aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(2, webDirectory.Subdirectories.Count);
+            Assert.Equal("Scripts", webDirectory.Subdirectories[0].Name);
+            Assert.Single(webDirectory.Files);
+            Assert.Equal("aldostools-ps3netsrv-20170310-a61f9354a2d122e92f9336ac6f110d911ad0e629.tar.gz", webDirectory.Files[0].FileName);
+            Assert.Equal(27341, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: https://archive.midnightchannel.net/zefie/linux/nexus7_2012/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing93bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Single(webDirectory.Subdirectories);
+            Assert.Equal("ubuntu-13.04", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: https://archive.midnightchannel.net/SonyPS/PS3/Source Code/gitorious.ps3dev.net/
+        /// Added for specific check regarding ".net" which looks like an extension
+        /// But fixed in another way, outside of the ParseHtml
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing93cAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample(), "https://archive.midnightchannel.net/SonyPS/PS3/Source Code/gitorious.ps3dev.net/");
+
+            Assert.Equal("gitorious.ps3dev.net", webDirectory.Name);
+            Assert.Equal(44, webDirectory.Subdirectories.Count);
+            Assert.Equal("4.40, 4.41, 4.46 and 4.50 PS3 Key", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
     }
 }

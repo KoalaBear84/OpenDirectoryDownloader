@@ -601,6 +601,7 @@ namespace OpenDirectoryDownloader
                 WebDirectory webDirectoryCopy = JsonConvert.DeserializeObject<WebDirectory>(JsonConvert.SerializeObject(parsedWebDirectory));
 
                 Dictionary<int, HeaderInfo> tableHeaders = GetTableHeaders(table);
+                webDirectoryCopy.HeaderCount = tableHeaders.Count(th => th.Value.Type != HeaderType.Unknown);
 
                 KeyValuePair<int, HeaderInfo> fileSizeHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileSize);
                 int fileSizeHeaderColumnIndex = fileSizeHeader.Value != null ? fileSizeHeader.Key : 0;
@@ -748,7 +749,7 @@ namespace OpenDirectoryDownloader
 
             if (!hasSeperateDirectoryAndFilesTables)
             {
-                parsedWebDirectory = results.Where(r => r.ParsedSuccesfully || r.Error).OrderByDescending(r => r.TotalDirectoriesIncludingUnfinished + r.TotalFiles).FirstOrDefault() ?? parsedWebDirectory;
+                parsedWebDirectory = results.Where(r => (r.ParsedSuccesfully || r.Error) && (r.Files.Count > 0 || r.Subdirectories.Count > 0)).OrderByDescending(r => r.HeaderCount).ThenByDescending(r => r.TotalDirectoriesIncludingUnfinished + r.TotalFiles).FirstOrDefault() ?? parsedWebDirectory;
             }
             else
             {
@@ -1647,6 +1648,13 @@ namespace OpenDirectoryDownloader
 
             IHtmlCollection<IElement> headers = table.QuerySelector("th")?.ParentElement?.QuerySelectorAll("th");
 
+            bool removeFirstRow = false;
+
+            if (headers != null && headers.First().ChildElementCount != table.QuerySelector("tr").QuerySelectorAll("td").Length)
+            {
+                headers = null;
+            }
+
             if (headers == null)
             {
                 // snif directory listing
@@ -1666,6 +1674,11 @@ namespace OpenDirectoryDownloader
             if (headers == null || headers.Length == 0)
             {
                 headers = table.QuerySelectorAll("tr:nth-child(1) > td");
+
+                if (headers?.Length > 0)
+                {
+                    removeFirstRow = true;
+                }
             }
 
             if (headers?.Any() == true)
@@ -1765,6 +1778,13 @@ namespace OpenDirectoryDownloader
                         {
                             tableHeaders.Add(columnIndex, new HeaderInfo { Type = HeaderType.Type });
                         }
+                    }
+                }
+                else
+                {
+                    if (tableHeaders.Any(th => th.Value.Type == HeaderType.FileName) && tableHeaders.Any(th => th.Value.Type == HeaderType.FileSize) && removeFirstRow)
+                    {
+                        table.QuerySelector("tr:nth-child(1)").Remove();
                     }
                 }
 

@@ -1,0 +1,155 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+ <head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>Index of /zefie/linux/nexus7_2012 - The Midnight Channel Archives</title>
+ <link rel="stylesheet" type="text/css" href="/zindexer_system/basic_style.css" />
+ <link rel="stylesheet" type="text/css" href="/zindexer_system/style-zefie.css" />
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-1255621814107363",
+          enable_page_level_ads: true
+     });
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-1428034-12"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-1428034-12');
+</script>
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#000"
+    },
+    "button": {
+      "background": "#f1d600"
+    }
+  }
+})});
+</script> 
+ </head>
+ <body>
+ <script type="text/javascript" src="/zindexer_system/wz_tooltip.js"></script>
+ <script type="text/javascript" src="/zindexer_system/ajax.js"></script>
+ <script type="text/javascript" src="/zindexer_system/jquery.min.js"></script>
+ <script type="text/javascript" src="/zindexer_system/animatedcollapse.js"></script>
+ <script type="text/javascript">
+ 	function getID3(file) {
+ 		requestid3('/zefie/linux/nexus7_2012/'+file);
+		return false;
+ 	}
+ 	function getImgInfo(file) {
+ 		requestimginfo('/zefie/linux/nexus7_2012/'+file);
+		return false;
+ 	}
+ 	function playvid(vid) {
+					btmvideohd = window.open ("https://archive.midnightchannel.net/playvid/zefie/linux/nexus7_2012/"+vid,"btm_video_hd","menubar=0,resizable=0,scrollbars=0,width=854,height=480");
+				return false;
+ 	}
+ </script>
+<div class="maincontent">
+
+
+
+<div id="zindexer">
+<h1>Index of /zefie/linux/nexus7_2012</h1>
+<table class="mono" width="100%" id="maintab" cellpadding="0" cellspacing="0">
+<tr>
+<td class="mono" width="30"> &nbsp; </td>
+<td class="fname"><a href="?C=N&amp;O=A&amp;S=&amp;P=">Name</a></td>
+<td class="time" width="130"><a href="?C=M&amp;O=A&amp;S=&amp;P=">Last Modified</a></td>
+<td class="size" width="70"><a href="?C=S&amp;O=A&amp;S=&amp;P=">Size</a></td>
+<td class="extra mono" width="284">Extra</td>
+</tr>
+<tr><th class="mono" colspan="6"><hr /></th></tr>
+<tr class="style1">
+<td class="mono style1 icon"><a href=".."><img
+src="/zindexer_system/icons/back.png" width="16" height="16" border="0" alt="Up" /></a></td>
+<td class="fname mono style1"><a href="..">Parent Directory</a></td>
+<td class="time mono style1"> - </td>
+<td class="size mono style1"> - </td>
+<td class="extra mono style1" colspan="2"> &nbsp; </td>
+</tr>
+<tr class="style2">
+<td class="mono style2 icon"><a href="ubuntu-13.04"><img src="/zindexer_system/icons/folder.png" border="0" width="16" height="16" alt="Folder" /></a></td>
+<td class="fname mono style2"><a href="ubuntu-13.04">ubuntu-13.04</a></td>
+<td class="time mono style2">2014-Jun-02 04:31</td>
+<td class="size mono style2"> - </td>
+<td class="extra mono style2">  </td>
+</tr><tr><th colspan="6"><hr /></th></tr></table>
+
+<script type="text/javascript">
+animatedcollapse.addDiv('search', 'fade=1,height=25px,group=zindex')
+animatedcollapse.addDiv('filter', 'fade=1,height=25px,group=zindex')
+animatedcollapse.addDiv('cc_donate', 'fade=1,height=40px,group=zindex')
+animatedcollapse.ontoggle=function($, divobj, state){ //fires each time a DIV is expanded/contracted
+	//$: Access to jQuery
+	//divobj: DOM reference to DIV being expanded/ collapsed. Use "divobj.id" to get its ID
+	//state: "block" or "none", depending on state
+}
+
+animatedcollapse.init()
+</script>
+<span id="vanity" style="font-size: 10pt; font-family: Verdana, sans-serif">
+<a href="javascript:animatedcollapse.toggle('search')">Search The Midnight Channel Archives</a> - 
+<a href="javascript:animatedcollapse.toggle('filter')">Filter results</a> 
+</span>
+<br>
+<div id="search">
+<form method="get" onsubmit="animatedcollapse.hide('search')" action="">
+Search The Midnight Channel Archives: 
+ <input type="text" value="" name="S" id="searchbox" />
+ <input type="submit" value="Search within this directory" />
+</form>
+</div>
+<div id="filter">
+<form method="get" onsubmit="animatedcollapse.hide('filter')" action="">
+Filter results: 
+ <input type="text" value="" name="P" id="filterbox" />
+ <input type="submit" value="Filter results within this directory" />
+</form>
+</div>
+<script type="text/javascript">
+function load() {
+	if (0 > 0) animatedcollapse.show('filter')
+	if (0 > 0) animatedcollapse.show('search')
+}
+window.onload = load
+</script>
+<br />
+<div id="footer">
+<span style="font-style: italic; font-size: 8pt; font-family: Verdana, sans-serif">
+<p class="slogan">Party like its 1999</p>This directory contains  1 directory.<br />Overall, The Midnight Channel Archives contains roughly  291.5GB of data.<br /><br />Feeling generous? [ <a href="javascript:animatedcollapse.toggle('cc_donate')">Show Donation Options</a> ]
+<div id="cc_donate">
+<table style="border: 0px">
+<tr id="cc_donate_pat"><td class="cc_donate_head">Patreon:</td><td><img src="/zindexer_system/icons/patreon.png" alt="Patreon" class="cc_donate_ico" /><a href="https://patreon.com/zefie">patreon.com/zefie</a></tr><tr id="cc_donate_pp"><td class="cc_donate_head">PayPal:</td><td><img src="/zindexer_system/icons/paypal.png" alt="PayPal" class="cc_donate_ico" /><a href="https://paypal.me/zefie">paypal.me/zefie</a></tr></table>
+</div>
+<br />
+</span>
+<br /><br />
+<table style="width: 100%">
+<tr>
+<td style="width: 50%; text-align: left; font-style: italic; font-size: 9pt; font-family: Verdana, sans-serif; vertical-align: bottom">
+</td>
+<td style="width: 50%; text-align: right;">
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<script type="text/javascript"  charset="utf-8">
+eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--){d[e(c)]=k[c]||e(c)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}(';q P=\'\',28=\'21\';1P(q i=0;i<12;i++)P+=28.10(C.K(C.O()*28.G));q 2z=1,2d=4y,2T=4z,2K=61,2t=D(t){q o=!1,i=D(){z(k.1h){k.2Z(\'2W\',e);F.2Z(\'1T\',e)}S{k.32(\'2L\',e);F.32(\'26\',e)}},e=D(){z(!o&&(k.1h||4A.2r===\'1T\'||k.33===\'2X\')){o=!0;i();t()}};z(k.33===\'2X\'){t()}S z(k.1h){k.1h(\'2W\',e);F.1h(\'1T\',e)}S{k.2R(\'2L\',e);F.2R(\'26\',e);q n=!1;2O{n=F.4C==4D&&k.1X}2U(r){};z(n&&n.35){(D a(){z(o)H;2O{n.35(\'14\')}2U(e){H 4E(a,50)};o=!0;i();t()})()}}};F[\'\'+P+\'\']=(D(){q t={t$:\'21+/=\',4F:D(e){q a=\'\',d,n,o,c,s,l,i,r=0;e=t.e$(e);1f(r<e.G){d=e.17(r++);n=e.17(r++);o=e.17(r++);c=d>>2;s=(d&3)<<4|n>>4;l=(n&15)<<2|o>>6;i=o&63;z(38(n)){l=i=64}S z(38(o)){i=64};a=a+11.t$.10(c)+11.t$.10(s)+11.t$.10(l)+11.t$.10(i)};H a},13:D(e){q n=\'\',d,l,c,s,r,i,a,o=0;e=e.1r(/[^A-4x-4G-9\\+\\/\\=]/g,\'\');1f(o<e.G){s=11.t$.1M(e.10(o++));r=11.t$.1M(e.10(o++));i=11.t$.1M(e.10(o++));a=11.t$.1M(e.10(o++));d=s<<2|r>>4;l=(r&15)<<4|i>>2;c=(i&3)<<6|a;n=n+T.U(d);z(i!=64){n=n+T.U(l)};z(a!=64){n=n+T.U(c)}};n=t.n$(n);H n},e$:D(t){t=t.1r(/;/g,\';\');q n=\'\';1P(q o=0;o<t.G;o++){q e=t.17(o);z(e<1D){n+=T.U(e)}S z(e>4I&&e<4J){n+=T.U(e>>6|4K);n+=T.U(e&63|1D)}S{n+=T.U(e>>12|2B);n+=T.U(e>>6&63|1D);n+=T.U(e&63|1D)}};H n},n$:D(t){q o=\'\',e=0,n=4L=1n=0;1f(e<t.G){n=t.17(e);z(n<1D){o+=T.U(n);e++}S z(n>4M&&n<2B){1n=t.17(e+1);o+=T.U((n&31)<<6|1n&63);e+=2}S{1n=t.17(e+1);2o=t.17(e+2);o+=T.U((n&15)<<12|(1n&63)<<6|2o&63);e+=3}};H o}};q a=[\'4N==\',\'4O\',\'4P=\',\'4H\',\'4v\',\'4l=\',\'4u=\',\'4d=\',\'4e\',\'4f\',\'4g=\',\'4h=\',\'4i\',\'4j\',\'4c=\',\'4k\',\'4m=\',\'4n=\',\'4o=\',\'4p=\',\'4q=\',\'4r=\',\'4s==\',\'4t==\',\'4Q==\',\'4w==\',\'4R=\',\'5f\',\'5h\',\'5i\',\'5j\',\'5k\',\'5l\',\'5m==\',\'5n=\',\'5o=\',\'5g=\',\'5p==\',\'5r=\',\'5s\',\'5t=\',\'5u=\',\'5v==\',\'5w=\',\'5x==\',\'5y==\',\'5q=\',\'5e=\',\'54\',\'5d==\',\'5z==\',\'4V\',\'4W==\',\'4X=\'],b=C.K(C.O()*a.G),Y=t.13(a[b]),W=Y,L=1,w=\'#4Y\',r=\'#4Z\',g=\'#51\',f=\'#52\',A=\'\',y=\'4T!\',v=\'53 55 56 57\\\'58 59 5a 2u 2v. 5b\\\'s 5c.  4S 4b\\\'t?\',p=\'3R 49 3d 3e 3f 3g 3h 3i. 3k 3c 3n 3t 3v 3x 3o.\',s=\'I 3m, I 3y 3w 3u 2u 2v.  3s 3r 3q!\',o=0,u=0,n=\'3p.3z\',l=0,M=e()+\'.37\';D h(t){z(t)t=t.1L(t.G-15);q o=k.2G(\'3l\');1P(q n=o.G;n--;){q e=T(o[n].1I);z(e)e=e.1L(e.G-15);z(e===t)H!0};H!1};D m(t){z(t)t=t.1L(t.G-15);q e=k.3j;x=0;1f(x<e.G){1m=e[x].1p;z(1m)1m=1m.1L(1m.G-15);z(1m===t)H!0;x++};H!1};D e(t){q n=\'\',o=\'21\';t=t||30;1P(q e=0;e<t;e++)n+=o.10(C.K(C.O()*o.G));H n};D i(o){q i=[\'3S\',\'3U==\',\'3V\',\'3W\',\'2q\',\'3A==\',\'3Y=\',\'3Z==\',\'3T=\',\'43==\',\'45==\',\'46==\',\'47\',\'48\',\'42\',\'2q\'],r=[\'2n=\',\'3C==\',\'3Q==\',\'3O==\',\'3N=\',\'3M\',\'3K=\',\'3I=\',\'2n=\',\'3H\',\'3D==\',\'3E\',\'3F==\',\'3G==\',\'3J==\',\'3L=\'];x=0;1R=[];1f(x<o){c=i[C.K(C.O()*i.G)];d=r[C.K(C.O()*r.G)];c=t.13(c);d=t.13(d);q a=C.K(C.O()*2)+1;z(a==1){n=\'//\'+c+\'/\'+d}S{n=\'//\'+c+\'/\'+e(C.K(C.O()*20)+4)+\'.37\'};1R[x]=23 24();1R[x].1U=D(){q t=1;1f(t<7){t++}};1R[x].1I=n;x++}};D Z(t){};H{39:D(t,r){z(3P k.N==\'44\'){H};q o=\'0.1\',r=W,e=k.1b(\'1x\');e.16=r;e.j.1l=\'1J\';e.j.14=\'-1i\';e.j.X=\'-1i\';e.j.1c=\'29\';e.j.V=\'41\';q d=k.N.2M,a=C.K(d.G/2);z(a>15){q n=k.1b(\'2c\');n.j.1l=\'1J\';n.j.1c=\'1v\';n.j.V=\'1v\';n.j.X=\'-1i\';n.j.14=\'-1i\';k.N.3X(n,k.N.2M[a]);n.1d(e);q i=k.1b(\'1x\');i.16=\'2Q\';i.j.1l=\'1J\';i.j.14=\'-1i\';i.j.X=\'-1i\';k.N.1d(i)}S{e.16=\'2Q\';k.N.1d(e)};l=4U(D(){z(e){t((e.1W==0),o);t((e.1Y==0),o);t((e.1S==\'2x\'),o);t((e.1G==\'2p\'),o);t((e.1K==0),o)}S{t(!0,o)}},27)},1O:D(e,c){z((e)&&(o==0)){o=1;F[\'\'+P+\'\'].1C();F[\'\'+P+\'\'].1O=D(){H}}S{q p=t.13(\'5B\'),u=k.6d(p);z((u)&&(o==0)){z((2d%3)==0){q l=\'7K=\';l=t.13(l);z(h(l)){z(u.1Q.1r(/\\s/g,\'\').G==0){o=1;F[\'\'+P+\'\'].1C()}}}};q b=!1;z(o==0){z((2T%3)==0){z(!F[\'\'+P+\'\'].2m){q d=[\'73==\',\'75==\',\'7c=\',\'7e=\',\'7i=\'],m=d.G,r=d[C.K(C.O()*m)],a=r;1f(r==a){a=d[C.K(C.O()*m)]};r=t.13(r);a=t.13(a);i(C.K(C.O()*2)+1);q n=23 24(),s=23 24();n.1U=D(){i(C.K(C.O()*2)+1);s.1I=a;i(C.K(C.O()*2)+1)};s.1U=D(){o=1;i(C.K(C.O()*3)+1);F[\'\'+P+\'\'].1C()};n.1I=r;z((2K%3)==0){n.26=D(){z((n.V<8)&&(n.V>0)){F[\'\'+P+\'\'].1C()}}};i(C.K(C.O()*3)+1);F[\'\'+P+\'\'].2m=!0};F[\'\'+P+\'\'].1O=D(){H}}}}},1C:D(){z(u==1){q Q=2g.7j(\'2f\');z(Q>0){H!0}S{2g.7h(\'2f\',(C.O()+1)*27)}};q h=\'7f==\';h=t.13(h);z(!m(h)){q c=k.1b(\'6Y\');c.1Z(\'79\',\'78\');c.1Z(\'2r\',\'1g/77\');c.1Z(\'1p\',h);k.2G(\'76\')[0].1d(c)};74(l);k.N.1Q=\'\';k.N.j.19+=\'R:1v !1a\';k.N.j.19+=\'1u:1v !1a\';q M=k.1X.1Y||F.3b||k.N.1Y,b=F.7o||k.N.1W||k.1X.1W,a=k.1b(\'1x\'),L=e();a.16=L;a.j.1l=\'2J\';a.j.14=\'0\';a.j.X=\'0\';a.j.V=M+\'1A\';a.j.1c=b+\'1A\';a.j.2j=w;a.j.1V=\'71\';k.N.1d(a);q d=\'<a 1p="70://6Z.5A"><2D 16="2E" V="2y" 1c="40"><2w 16="2F" V="2y" 1c="40" 7n:1p="7b:2w/7p;7E,7F+7I+7D+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+B+7M+7C+7B/7A/7y/7x/7w/7v+/7u/7s+7r/7J+7q/7t/7z/7L/7H/7G/7d+6X/6j+6V+5W+5X+5Y+5Z/62+66/67+5V/68+6a+6b+6c+6W/6e+6f/6g/69/5T+5K+5S/5D+5E+5F+5G+E+5H/5I/5C/5J/5L/5M/+5N/5O++5P/5Q/5R+6h/5U+6i+6D==">;</2D></a>\';d=d.1r(\'2E\',e());d=d.1r(\'2F\',e());q i=k.1b(\'1x\');i.1Q=d;i.j.1l=\'1J\';i.j.1z=\'1N\';i.j.14=\'1N\';i.j.V=\'6G\';i.j.1c=\'6H\';i.j.1V=\'2l\';i.j.1K=\'.6\';i.j.2i=\'2h\';i.1h(\'6I\',D(){n=n.6J(\'\').6K().6L(\'\');F.2e.1p=\'//\'+n});k.1F(L).1d(i);q o=k.1b(\'1x\'),Z=e();o.16=Z;o.j.1l=\'2J\';o.j.X=b/7+\'1A\';o.j.6M=M-6O+\'1A\';o.j.6P=b/3.5+\'1A\';o.j.2j=\'#6Q\';o.j.1V=\'2l\';o.j.19+=\'J-1w: "6R 6S", 1o, 1t, 1s-1q !1a\';o.j.19+=\'6T-1c: 6N !1a\';o.j.19+=\'J-1j: 6C !1a\';o.j.19+=\'1g-1B: 1y !1a\';o.j.19+=\'1u: 6t !1a\';o.j.1S+=\'2S\';o.j.34=\'1N\';o.j.6B=\'1N\';o.j.6l=\'2H\';k.N.1d(o);o.j.6n=\'1v 6p 6q -6r 6k(0,0,0,0.3)\';o.j.1G=\'2A\';q W=30,Y=22,A=18,x=18;z((F.3b<3a)||(6s.V<3a)){o.j.2N=\'50%\';o.j.19+=\'J-1j: 6u !1a\';o.j.34=\'6v;\';i.j.2N=\'65%\';q W=22,Y=18,A=12,x=12};o.1Q=\'<36 j="1k:#6x;J-1j:\'+W+\'1E;1k:\'+r+\';J-1w:1o, 1t, 1s-1q;J-1H:6y;R-X:1e;R-1z:1e;1g-1B:1y;">\'+y+\'</36><2Y j="J-1j:\'+Y+\'1E;J-1H:6z;J-1w:1o, 1t, 1s-1q;1k:\'+r+\';R-X:1e;R-1z:1e;1g-1B:1y;">\'+v+\'</2Y><6A j=" 1S: 2S;R-X: 0.2P;R-1z: 0.2P;R-14: 2a;R-2C: 2a; 2s:72 4a #6w; V: 25%;1g-1B:1y;"><p j="J-1w:1o, 1t, 1s-1q;J-1H:2k;J-1j:\'+A+\'1E;1k:\'+r+\';1g-1B:1y;">\'+p+\'</p><p j="R-X:6o;"><2c 6m="11.j.1K=.9;" 6U="11.j.1K=1;"  16="\'+e()+\'" j="2i:2h;J-1j:\'+x+\'1E;J-1w:1o, 1t, 1s-1q; J-1H:2k;2s-6E:2H;1u:1e;6F-1k:\'+g+\';1k:\'+f+\';1u-14:29;1u-2C:29;V:60%;R:2a;R-X:1e;R-1z:1e;" 7a="F.2e.7g();">\'+s+\'</2c></p>\'}}})();F.2V=D(t,e){q n=7k.7l,o=F.7m,a=n(),i,r=D(){n()-a<e?i||o(r):t()};o(r);H{3B:D(){i=1}}};q 2I;z(k.N){k.N.j.1G=\'2A\'};2t(D(){z(k.1F(\'2b\')){k.1F(\'2b\').j.1G=\'2x\';k.1F(\'2b\').j.1S=\'2p\'};2I=F.2V(D(){F[\'\'+P+\'\'].39(F[\'\'+P+\'\'].1O,F[\'\'+P+\'\'].4B)},2z*27)});',62,483,'|||||||||||||||||||style|document||||||var|||||||||if||vr6|Math|function||window|length|return||font|floor|||body|random|PptVzAKLjbis||margin|else|String|fromCharCode|width||top|||charAt|this||decode|left||id|charCodeAt||cssText|important|createElement|height|appendChild|10px|while|text|addEventListener|5000px|size|color|position|thisurl|c2|Helvetica|href|serif|replace|sans|geneva|padding|0px|family|DIV|center|bottom|px|align|KtvYgKFMww|128|pt|getElementById|visibility|weight|src|absolute|opacity|substr|indexOf|30px|qgBNMKHkol|for|innerHTML|spimg|display|load|onerror|zIndex|clientHeight|documentElement|clientWidth|setAttribute||ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789||new|Image||onload|1000|NrQXYrqdGr|60px|auto|babasbmsgx|div|oZMHHArTQX|location|babn|sessionStorage|pointer|cursor|backgroundColor|300|10000|ranAlready|ZmF2aWNvbi5pY28|c3|none|cGFydG5lcmFkcy55c20ueWFob28uY29t|type|border|sdmCaRvQKu|ad|blocker|image|hidden|160|ScExYSZdlp|visible|224|right|svg|FILLVECTID1|FILLVECTID2|getElementsByTagName|15px|RDkHdHwUec|fixed|JFccohwwIs|onreadystatechange|childNodes|zoom|try|5em|banner_ad|attachEvent|block|agfIpaUMDs|catch|nwIUZVheBG|DOMContentLoaded|complete|h1|removeEventListener|||detachEvent|readyState|marginLeft|doScroll|h3|jpg|isNaN|xXzSGymVfU|640|innerWidth|helps|not|show|abusive|or|malware|ads|styleSheets|Advertising|script|understand|us|available|moc|in|me|Let|keep|my|the|disabled|archive|have|kcolbdakcolb|YS5saXZlc3BvcnRtZWRpYS5ldQ|clear|YmFubmVyLmpwZw|c3F1YXJlLWFkLnBuZw|ZmF2aWNvbjEuaWNv|YmFubmVyX2FkLmdpZg|bGFyZ2VfYmFubmVyLmdpZg|YWQtbGFyZ2UucG5n|Q0ROLTMzNC0xMDktMTM3eC1hZC1iYW5uZXI|d2lkZV9za3lzY3JhcGVyLmpwZw|YWRjbGllbnQtMDAyMTQ3LWhvc3QxLWJhbm5lci1hZC5qcGc|YWR2ZXJ0aXNlbWVudC0zNDMyMy5qcGc|MTM2N19hZC1jbGllbnRJRDI0NjQuanBn|c2t5c2NyYXBlci5qcGc|NzIweDkwLmpwZw|typeof|NDY4eDYwLmpwZw|We|YWRuLmViYXkuY29t|Y2FzLmNsaWNrYWJpbGl0eS5jb20|YWQubWFpbC5ydQ|anVpY3lhZHMuY29t|YWQuZm94bmV0d29ya3MuY29t|insertBefore|YWdvZGEubmV0L2Jhbm5lcnM|YWR2ZXJ0aXNpbmcuYW9sLmNvbQ||468px|YXMuaW5ib3guY29t|cHJvbW90ZS5wYWlyLmNvbQ|undefined|YWRzLnlhaG9vLmNvbQ|YWRzLnp5bmdhLmNvbQ|YWRzYXR0LmFiY25ld3Muc3RhcndhdmUuY29t|YWRzYXR0LmVzcG4uc3RhcndhdmUuY29t|do|solid|doesn|QWQ3Mjh4OTA|YWQtbGI|YWQtZm9vdGVy|YWQtY29udGFpbmVy|YWQtY29udGFpbmVyLTE|YWQtY29udGFpbmVyLTI|QWQzMDB4MTQ1|QWQzMDB4MjUw|QWRBcmVh|YWQtaW5uZXI|QWRGcmFtZTE|QWRGcmFtZTI|QWRGcmFtZTM|QWRGcmFtZTQ|QWRMYXllcjE|QWRMYXllcjI|QWRzX2dvb2dsZV8wMQ|QWRzX2dvb2dsZV8wMg|YWQtbGFiZWw|YWQtaW1n|QWRzX2dvb2dsZV8wNA|Za|145|178|event|yvPZixjirz|frameElement|null|setTimeout|encode|z0|YWQtaGVhZGVy|127|2048|192|c1|191|YWQtbGVmdA|YWRCYW5uZXJXcmFw|YWQtZnJhbWU|QWRzX2dvb2dsZV8wMw|RGl2QWQ|Who|Welcome|setInterval|Z29vZ2xlX2Fk|b3V0YnJhaW4tcGFpZA|c3BvbnNvcmVkX2xpbms|101010|777777||9200cc|FFFFFF|It|YWRzbG90|looks|like|you|re|using|an|That|okay|cG9wdXBhZA|YmFubmVyaWQ|RGl2QWQx|QWRDb250YWluZXI|RGl2QWQy|RGl2QWQz|RGl2QWRB|RGl2QWRC|RGl2QWRD|QWRJbWFnZQ|QWREaXY|QWRCb3gxNjA|Z2xpbmtzd3JhcHBlcg|YWRzZXJ2ZXI|YWRUZWFzZXI|YmFubmVyX2Fk|YWRCYW5uZXI|YWRiYW5uZXI|YWRBZA|YmFubmVyYWQ|IGFkX2JveA|YWRfY2hhbm5lbA|YWRzZW5zZQ|com|aW5zLmFkc2J5Z29vZ2xl|CGf7SAP2V6AjTOUa8IzD3ckqe2ENGulWGfx9VKIBB72JM1lAuLKB3taONCBn3PY0II5cFrLr7cCp|E5HlQS6SHvVSU0V|j9xJVBEEbWEXFVZQNX9|1HX6ghkAR9E5crTgM|0t6qjIlZbzSpemi|MjA3XJUKy|SRWhNsmOazvKzQYcE0hV5nDkuQQKfUgm4HmqA2yuPxfMU1m4zLRTMAqLhN6BHCeEXMDo2NsY8MdCeBB6JydMlps3uGxZefy7EO1vyPvhOxL7TPWjVUVvZkNJ|UIWrdVPEp7zHy7oWXiUgmR3kdujbZI73kghTaoaEKMOh8up2M8BVceotd|F2Q|BNyENiFGe5CxgZyIT6KVyGO2s5J5ce|14XO7cR5WV1QBedt3c|QhZLYLN54|e8xr8n5lpXyn|u3T9AbDjXwIMXfxmsarwK9wUBB5Kj8y2dCw|Kq8b7m0RpwasnR|uJylU|bTplhb|x0z6tauQYvPxwT0VM1lH9Adt5Lp|Uv0LfPzlsBELZ|iqKjoRAEDlZ4soLhxSgcy6ghgOy7EeC2PI4DHb7pO7mRwTByv5hGxF|CXRTTQawVogbKeDEs2hs4MtJcNVTY2KgclwH2vYODFTa4FQ|1FMzZIGQR3HWJ4F1TqWtOaADq0Z9itVZrg1S6JLi7B1MAtUCX1xNB0Y0oL9hpK4|YbUMNVjqGySwrRUGsLu6|uWD20LsNIDdQut4LXA|||KmSx||||0nga14QJ3GOWqDmOwJgRoSme8OOhAQqiUhPMbUGksCj5Lta4CbeFhX9NN0Tpny|BKpxaqlAOvCqBjzTFAp2NFudJ5paelS5TbwtBlAvNgEdeEGI6O6JUt42NhuvzZvjXTHxwiaBXUIMnAKa5Pq9SL3gn1KAOEkgHVWBIMU14DBF2OH3KOfQpG2oSQpKYAEdK0MGcDg1xbdOWy|I1TpO7CnBZO|pyQLiBu8WDYgxEZMbeEqIiSM8r|QcWrURHJSLrbBNAxZTHbgSCsHXJkmBxisMvErFVcgE|h0GsOCs9UwP2xo6|UimAyng9UePurpvM8WmAdsvi6gNwBMhPrPqemoXywZs8qL9JZybhqF6LZBZJNANmYsOSaBTkSqcpnCFEkntYjtREFlATEtgxdDQlffhS3ddDAzfbbHYPUDGJpGT|querySelector|uI70wOsgFWUQCfZC1UI0Ettoh66D|szSdAtKtwkRRNnCIiDzNzc0RO|kmLbKmsE|dEflqX6gzC4hd1jSgz0ujmPkygDjvNYDsU0ZggjKBqLPrQLfDUQIzxMBtSOucRwLzrdQ2DFO0NDdnsYq0yoJyEB0FHTBHefyxcyUy8jflH7sHszSfgath4hYwcD3M29I5DMzdBNO2IFcC5y6HSduof4G5dQNMWd4cDcjNNeNGmb02|3eUeuATRaNMs0zfml|RUIrwGk|rgba|borderRadius|onmouseover|boxShadow|35px|14px|24px|8px|screen|12px|18pt|45px|CCC|999|200|500|hr|marginRight|16pt|gkJocgFtzfMzwAAAABJRU5ErkJggg|radius|background|160px|40px|click|split|reverse|join|minWidth|normal|120|minHeight|fff|Arial|Black|line|onmouseout|qdWy60K14k|UADVgvxHBzP9LUufqQDtV|EuJ0GtLUjVftvwEYqmaR66JX9Apap6cCyKhiV|link|blockadblock|http|9999|1px|Ly93d3cuZ29vZ2xlLmNvbS9hZHNlbnNlL3N0YXJ0L2ltYWdlcy9mYXZpY29uLmljbw|clearInterval|Ly93d3cuZ3N0YXRpYy5jb20vYWR4L2RvdWJsZWNsaWNrLmljbw|head|css|stylesheet|rel|onclick|data|Ly9hZHZlcnRpc2luZy55YWhvby5jb20vZmF2aWNvbi5pY28|0idvgbrDeBhcK|Ly9hZHMudHdpdHRlci5jb20vZmF2aWNvbi5pY28|Ly95dWkueWFob29hcGlzLmNvbS8zLjE4LjEvYnVpbGQvY3NzcmVzZXQvY3NzcmVzZXQtbWluLmNzcw|reload|setItem|Ly93d3cuZG91YmxlY2xpY2tieWdvb2dsZS5jb20vZmF2aWNvbi5pY28|getItem|Date|now|requestAnimationFrame|xlink|innerHeight|png|MgzNFaCVyHVIONbx1EDrtCzt6zMEGzFzFwFZJ19jpJy2qx5BcmyBM|cIa9Z8IkGYa9OGXPJDm5RnMX5pim7YtTLB24btUKmKnZeWsWpgHnzIP5UucvNoDrl8GUrVyUBM4xqQ|ejIzabW26SkqgMDA7HByRAADoM7kjAAAAInRSTlM6ACT4xhkPtY5iNiAI9PLv6drSpqGYclpM5bengkQ8NDAnsGiGMwAABetJREFUWMPN2GdTE1EYhmFQ7L339rwngV2IiRJNIGAg1SQkFAHpgnQpKnZBAXvvvXf9mb5nsxuTqDN|oGKmW8DAFeDOxfOJM4DcnTYrtT7dhZltTW7OXHB1ClEWkPO0JmgEM1pebs5CcA2UCTS6QyHMaEtyc3LAlWcDjZReyLpKZS9uT02086vu0tJa|b29vlvb2xn5|v7|aa2thYWHXUFDUPDzUOTno0dHipqbceHjaZ2dCQkLSLy|PzNzc3myMjlurrjsLDhoaHdf3|v792dnbbdHTZYWHZXl7YWlpZWVnVRkYnJib8|Lnx0tILMKp3uvxI61iYH33Qq3M24k|Ly8vKysrDw8O4uLjkt7fhnJzgl5d7e3tkZGTYVlZPT08vLi7OCwu|fn5EREQ9PT3SKSnV1dXks7OsrKypqambmpqRkZFdXV1RUVHRISHQHR309PTq4eHp3NzPz8|enp7TNTUoJyfm5ualpaV5eXkODg7k5OTaamoqKSnc3NzZ2dmHh4dra2tHR0fVQUFAQEDPExPNBQXo6Ohvb28ICAjp19fS0tLnzc29vb25ubm1tbWWlpaNjY3dfX1oaGhUVFRMTEwaGhoXFxfq5ubh4eHe3t7Hx8fgk5PfjY3eg4OBgYF|sAAADr6|base64|iVBORw0KGgoAAAANSUhEUgAAAKAAAAAoCAMAAABO8gGqAAAB|wd4KAnkmbaePspA|HY9WAzpZLSSCNQrZbGO1n4V4h9uDP7RTiIIyaFQoirfxCftiht4sK8KeKqPh34D2S7TsROHRiyMrAxrtNms9H5Qaw9ObU1H4Wdv8z0J8obvOo|1BMVEXr6|ISwIz5vfQyDF3X|Ly9wYWdlYWQyLmdvb2dsZXN5bmRpY2F0aW9uLmNvbS9wYWdlYWQvanMvYWRzYnlnb29nbGUuanM|VOPel7RIdeIBkdo|sAAADMAAAsKysKCgokJCRycnIEBATq6uoUFBTMzMzr6urjqqoSEhIGBgaxsbHcd3dYWFg0NDTmw8PZY2M5OTkfHx'.split('|'),0,{}));
+</script>
+</body>
+</html>
