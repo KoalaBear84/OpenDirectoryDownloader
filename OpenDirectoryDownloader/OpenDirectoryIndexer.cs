@@ -558,7 +558,10 @@ namespace OpenDirectoryDownloader
                 return;
             }
 
-            webDirectory.Url = httpResponseMessage.RequestMessage.RequestUri.ToString();
+            if (httpResponseMessage.IsSuccessStatusCode && webDirectory.Url != httpResponseMessage.RequestMessage.RequestUri.ToString())
+            {
+                webDirectory.Url = httpResponseMessage.RequestMessage.RequestUri.ToString();
+            }
 
             Uri originalUri = new Uri(webDirectory.Url);
             Logger.Debug($"[{name}] Finish download '{webDirectory.Url}'");
