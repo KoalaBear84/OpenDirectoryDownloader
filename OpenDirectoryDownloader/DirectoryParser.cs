@@ -1321,6 +1321,7 @@ namespace OpenDirectoryDownloader
                 {
                     Uri uri = new Uri(new Uri(baseUrl), linkHref);
                     string fullUrl = uri.ToString();
+                    UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
 
                     if (!isFile)
                     {
@@ -1328,7 +1329,7 @@ namespace OpenDirectoryDownloader
                         {
                             Parser = "ParseDirectoryListerDirectoryListing",
                             Url = fullUrl,
-                            Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last())),
+                            Name = WebUtility.UrlDecode(urlEncodingParser["dir"].Split("/").Last()),
                         });
                     }
                     else
