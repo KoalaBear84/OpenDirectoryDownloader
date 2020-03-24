@@ -504,10 +504,9 @@ namespace OpenDirectoryDownloader.Tests
             WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
-            Assert.Empty(webDirectory.Subdirectories);
-            Assert.Equal(9, webDirectory.Files.Count);
-            Assert.Equal("HTTPClient-0.3-3.jar", webDirectory.Files[0].FileName);
-            Assert.Equal(733741, webDirectory.Files[0].FileSize);
+            Assert.Equal(2, webDirectory.Subdirectories.Count);
+            Assert.Equal("Season 1", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
         }
 
         /// <summary>
@@ -519,11 +518,10 @@ namespace OpenDirectoryDownloader.Tests
             WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
-            Assert.Equal(124, webDirectory.Subdirectories.Count);
-            Assert.Equal("HTTPClient", webDirectory.Subdirectories[0].Name);
-            Assert.Equal(6, webDirectory.Files.Count);
-            Assert.Equal("archetype-catalog.xml", webDirectory.Files[0].FileName);
-            Assert.Equal(9064608, webDirectory.Files[0].FileSize);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(60, webDirectory.Files.Count);
+            Assert.Equal("American Crime Story S01E01 From the Ashes of Tragedy-thumb.jpg", webDirectory.Files[0].FileName);
+            Assert.Equal(90184, webDirectory.Files[0].FileSize);
         }
     }
 }
