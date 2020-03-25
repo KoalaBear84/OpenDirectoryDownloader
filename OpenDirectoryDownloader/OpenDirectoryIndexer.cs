@@ -457,7 +457,13 @@ namespace OpenDirectoryDownloader
 
         private bool SameHostAndDirectory(Uri baseUri, Uri checkUri)
         {
-            string urlWithoutFileName = checkUri.LocalPath.Replace(Path.GetFileName(checkUri.ToString()), string.Empty);
+            string urlWithoutFileName = checkUri.LocalPath;
+            string fileName = Path.GetFileName(checkUri.ToString());
+
+            if (!string.IsNullOrWhiteSpace(fileName))
+            {
+                urlWithoutFileName = checkUri.LocalPath.Replace(fileName, string.Empty);
+            }
 
             return baseUri.Host == checkUri.Host && (checkUri.LocalPath.StartsWith(baseUri.LocalPath) || baseUri.LocalPath.StartsWith(urlWithoutFileName));
         }
@@ -649,8 +655,6 @@ namespace OpenDirectoryDownloader
             webDirectory.Name = parsedWebDirectory.Name;
             webDirectory.Subdirectories = parsedWebDirectory.Subdirectories;
             webDirectory.Url = parsedWebDirectory.Url;
-
-            string sessionUrlWithoutFileName = Session.Root.Uri.LocalPath.Replace(Path.GetFileName(Session.Root.Uri.ToString()), string.Empty);
 
             if (processSubdirectories)
             {
