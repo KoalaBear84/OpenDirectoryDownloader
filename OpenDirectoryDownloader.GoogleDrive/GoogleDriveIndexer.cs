@@ -1,4 +1,5 @@
-﻿using Google.Apis.Auth.OAuth2;
+﻿using Google;
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
@@ -60,41 +61,56 @@ namespace OpenDirectoryDownloader.GoogleDrive
 
             do
             {
-                await RateLimiter.RateLimit();
+                bool rateLimitException = false;
 
-                Logger.Debug($"Started Google Drive Request for Folder {folderId}");
-
-                FilesResource.ListRequest listRequest = DriveService.Files.List();
-                listRequest.PageSize = 1000;
-                listRequest.Q = $"'{folderId}' in parents";
-                listRequest.PageToken = nextPageToken;
-                listRequest.Fields = "nextPageToken, files(id, name, mimeType, size)";
-                Google.Apis.Drive.v3.Data.FileList fileList = await listRequest.ExecuteAsync();
-
-                foreach (Google.Apis.Drive.v3.Data.File file in fileList.Files.OrderByDescending(f => f.MimeType == FolderMimeType).ThenBy(f => f.Name))
+                do
                 {
-                    bool isFile = file.MimeType != FolderMimeType;
-
-                    if (!isFile)
+                    try
                     {
-                        webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
-                        {
-                            Url = $"https://drive.google.com/drive/folders/{file.Id}",
-                            Name = file.Name
-                        });
-                    }
-                    else
-                    {
-                        webDirectory.Files.Add(new WebFile
-                        {
-                            Url = $"https://drive.google.com/uc?export=download&id={file.Id}",
-                            FileName = file.Name,
-                            FileSize = file.Size ?? 0
-                        });
-                    }
-                }
+                        await RateLimiter.RateLimit();
 
-                nextPageToken = fileList.NextPageToken;
+                        Logger.Debug($"Started Google Drive Request for Folder {folderId}");
+
+                        FilesResource.ListRequest listRequest = DriveService.Files.List();
+                        listRequest.PageSize = 1000;
+                        listRequest.Q = $"'{folderId}' in parents";
+                        listRequest.PageToken = nextPageToken;
+                        listRequest.Fields = "nextPageToken, files(id, name, mimeType, size)";
+                        Google.Apis.Drive.v3.Data.FileList fileList = await listRequest.ExecuteAsync();
+
+                        foreach (Google.Apis.Drive.v3.Data.File file in fileList.Files.OrderByDescending(f => f.MimeType == FolderMimeType).ThenBy(f => f.Name))
+                        {
+                            bool isFile = file.MimeType != FolderMimeType;
+
+                            if (!isFile)
+                            {
+                                webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+                                {
+                                    Url = $"https://drive.google.com/drive/folders/{file.Id}",
+                                    Name = file.Name
+                                });
+                            }
+                            else
+                            {
+                                webDirectory.Files.Add(new WebFile
+                                {
+                                    Url = $"https://drive.google.com/uc?export=download&id={file.Id}",
+                                    FileName = file.Name,
+                                    FileSize = file.Size ?? 0
+                                });
+                            }
+                        }
+
+                        nextPageToken = fileList.NextPageToken;
+
+                        rateLimitException = false;
+                    }
+                    catch (GoogleApiException ex)
+                    {
+                        rateLimitException = ex.Error.Message == "User rate limit exceeded.";
+                        Logger.Debug($"Google Drive rate limit, try again");
+                    }
+                } while (rateLimitException);
             } while (!string.IsNullOrWhiteSpace(nextPageToken));
 
             webDirectory.Finished = true;

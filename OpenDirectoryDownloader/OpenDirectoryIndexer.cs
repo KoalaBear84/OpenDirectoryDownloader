@@ -115,7 +115,7 @@ namespace OpenDirectoryDownloader
 
             if (Session.Root.Uri.Host == Constants.GoogleDriveDomain)
             {
-                Logger.Warn("Google Drive scanning is limited to 10 directories per second!");
+                Logger.Warn("Google Drive scanning is limited to 9 directories per second!");
             }
 
             if (Session.Root.Uri.Scheme == "ftp")
@@ -194,7 +194,7 @@ namespace OpenDirectoryDownloader
                     Session.TotalFiles = Session.Root.TotalFiles;
                     Session.TotalFileSizeEstimated = Session.Root.TotalFileSize;
 
-                    if (!OpenDirectoryIndexerSettings.CommandLineOptions.NoUrls)
+                    if (!OpenDirectoryIndexerSettings.CommandLineOptions.NoUrls && Session.Root.Uri.Host != Constants.GoogleDriveDomain)
                     {
                         Logger.Info("Saving URL list to file...");
                         Console.WriteLine("Saving URL list to file...");
@@ -236,7 +236,7 @@ namespace OpenDirectoryDownloader
                         }
                     }
 
-                    if (OpenDirectoryIndexerSettings.CommandLineOptions.Speedtest)
+                    if (OpenDirectoryIndexerSettings.CommandLineOptions.Speedtest && Session.Root.Uri.Host != Constants.GoogleDriveDomain)
                     {
                         if (Session.TotalFiles > 0)
                         {
