@@ -399,7 +399,7 @@ namespace OpenDirectoryDownloader
                             }
                             else
                             {
-                                if (webDirectory.Uri.Host == Session.Root.Uri.Host && webDirectory.Uri.LocalPath.StartsWith(Session.Root.Uri.LocalPath))
+                                if (SameHostAndDirectory(Session.Root.Uri, webDirectory.Uri))
                                 {
                                     Logger.Debug($"[{name}] Start download '{webDirectory.Url}'");
                                     Session.TotalHttpRequests++;
@@ -453,6 +453,13 @@ namespace OpenDirectoryDownloader
             while (!token.IsCancellationRequested && (!queue.IsEmpty || RunningWebDirectoryThreads > 0));
 
             Logger.Debug($"Finished [{name}]");
+        }
+
+        private bool SameHostAndDirectory(Uri baseUri, Uri checkUri)
+        {
+            string urlWithoutFileName = checkUri.LocalPath.Replace(Path.GetFileName(checkUri.ToString()), string.Empty);
+
+            return baseUri.Host == checkUri.Host && (checkUri.LocalPath.StartsWith(baseUri.LocalPath) || baseUri.LocalPath.StartsWith(urlWithoutFileName));
         }
 
         private async Task ProcessWebDirectoryAsync(string name, WebDirectory webDirectory)
@@ -643,13 +650,15 @@ namespace OpenDirectoryDownloader
             webDirectory.Subdirectories = parsedWebDirectory.Subdirectories;
             webDirectory.Url = parsedWebDirectory.Url;
 
+            string sessionUrlWithoutFileName = Session.Root.Uri.LocalPath.Replace(Path.GetFileName(Session.Root.Uri.ToString()), string.Empty);
+
             if (processSubdirectories)
             {
                 foreach (WebDirectory subdirectory in webDirectory.Subdirectories)
                 {
                     if (!Session.ProcessedUrls.Contains(subdirectory.Url))
                     {
-                        if (subdirectory.Uri.Host != Constants.GoogleDriveDomain && (subdirectory.Uri.Host != Session.Root.Uri.Host || !subdirectory.Uri.LocalPath.StartsWith(Session.Root.Uri.LocalPath)))
+                        if (subdirectory.Uri.Host != Constants.GoogleDriveDomain && !SameHostAndDirectory(Session.Root.Uri, subdirectory.Uri))
                         {
                             Logger.Debug($"Removed subdirectory {subdirectory.Uri} from parsed webdirectory because it is not the same host");
                         }
@@ -679,7 +688,7 @@ namespace OpenDirectoryDownloader
                     return false;
                 }
 
-                return (uri.Scheme != "https" && uri.Scheme != "http" && uri.Scheme != "ftp") || uri.Host != Session.Root.Uri.Host || !uri.LocalPath.StartsWith(Session.Root.Uri.LocalPath);
+                return (uri.Scheme != "https" && uri.Scheme != "http" && uri.Scheme != "ftp") || uri.Host != Session.Root.Uri.Host || !SameHostAndDirectory(uri, Session.Root.Uri);
             });
 
             foreach (WebFile webFile in webDirectory.Files.Where(f => f.FileSize == -1 || OpenDirectoryIndexerSettings.CommandLineOptions.ExactFileSizes))
