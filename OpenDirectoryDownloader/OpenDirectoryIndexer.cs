@@ -219,13 +219,9 @@ namespace OpenDirectoryDownloader
                                 //HistoryLogger.Info($"uploadfiles.io: {JsonConvert.SerializeObject(uploadFilesFile)}");
                                 //Session.UploadedUrlsUrl = uploadFilesFile.Url.ToString();
 
-                                //GoFilesFile uploadedFile = await GoFileIo.UploadFile(HttpClient, urlsPath);
-                                //HistoryLogger.Info($"goFile.io: {JsonConvert.SerializeObject(uploadedFile)}");
-                                //Session.UploadedUrlsUrl = uploadedFile.Url.ToString();
-
-                                FileIoFile uploadedFile = await FileIo.UploadFile(HttpClient, urlsPath);
-                                HistoryLogger.Info($"File.io: {JsonConvert.SerializeObject(uploadedFile)}");
-                                Session.UploadedUrlsUrl = uploadedFile.Link.ToString();
+                                GoFilesFile uploadedFile = await GoFileIo.UploadFile(HttpClient, urlsPath);
+                                HistoryLogger.Info($"goFile.io: {JsonConvert.SerializeObject(uploadedFile)}");
+                                Session.UploadedUrlsUrl = uploadedFile.Url.ToString();
 
                                 Console.WriteLine($"Uploaded URLs: {Session.UploadedUrlsUrl}");
                             }
