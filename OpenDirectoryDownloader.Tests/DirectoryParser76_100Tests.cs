@@ -569,5 +569,19 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("4.40, 4.41, 4.46 and 4.50 PS3 Key", webDirectory.Subdirectories[0].Name);
             Assert.Empty(webDirectory.Files);
         }
+
+        /// <summary>
+        /// Url: http://pacsteam.org/Shareware/Games/lost-coast/
+        /// Added to check for empty listing
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing94aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Empty(webDirectory.Files);
+        }
     }
 }

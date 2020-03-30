@@ -1859,6 +1859,7 @@ namespace OpenDirectoryDownloader
                 link.TextContent.ToLower() != "parent directory" &&
                 link.TextContent.Trim() != "Name" &&
                 linkHref?.Contains("&expand") == false &&
+                !new Regex(@"\?[NMSD][AD]").IsMatch(linkHref) &&
                 (Path.GetFileName(linkHref) != "DirectoryList.asp" || !string.IsNullOrWhiteSpace(link.TextContent));
         }
     }
