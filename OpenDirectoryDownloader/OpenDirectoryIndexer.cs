@@ -50,7 +50,7 @@ namespace OpenDirectoryDownloader
         private static readonly Random Jitterer = new Random();
 
         private readonly AsyncRetryPolicy RetryPolicy = Policy
-            .Handle<HttpRequestException>()
+            .Handle<Exception>()
             .WaitAndRetryAsync(4,
                 sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)) + TimeSpan.FromMilliseconds(Jitterer.Next(0, 200)),
                 onRetry: (ex, span, retryCount, context) =>
@@ -63,7 +63,7 @@ namespace OpenDirectoryDownloader
                     }
                     else
                     {
-                        Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{webDirectory.Url}'. Waiting {span.TotalSeconds} seconds.");
+                        Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{webDirectory.Url}'. Waiting {span.TotalSeconds:F0} seconds.");
                     }
                 }
             );
