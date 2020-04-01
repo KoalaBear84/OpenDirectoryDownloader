@@ -47,16 +47,24 @@ namespace OpenDirectoryDownloader
         private OpenDirectoryIndexerSettings OpenDirectoryIndexerSettings { get; set; }
         private System.Timers.Timer TimerStatistics { get; set; }
 
+        private static readonly Random Jitterer = new Random();
+
         private readonly AsyncRetryPolicy RetryPolicy = Policy
-            .Handle<Exception>()
-            .WaitAndRetryAsync(4, // 16 seconds
-                                  //sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(retryAttempt),
-                                  //sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(retryAttempt * 2),
-                sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+            .Handle<HttpRequestException>()
+            .WaitAndRetryAsync(4,
+                sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)) + TimeSpan.FromMilliseconds(Jitterer.Next(0, 200)),
                 onRetry: (ex, span, retryCount, context) =>
                 {
                     WebDirectory webDirectory = context["WebDirectory"] as WebDirectory;
-                    Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{webDirectory.Url}'. Waiting {span.TotalSeconds} seconds.");
+
+                    if (webDirectory.Uri.Segments.LastOrDefault() == "cgi-bin/")
+                    {
+                        (context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
+                    }
+                    else
+                    {
+                        Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{webDirectory.Url}'. Waiting {span.TotalSeconds} seconds.");
+                    }
                 }
             );
 
@@ -399,12 +407,17 @@ namespace OpenDirectoryDownloader
                                 {
                                     Logger.Debug($"[{name}] Start download '{webDirectory.Url}'");
                                     Session.TotalHttpRequests++;
+
+                                    CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
                                     Context pollyContext = new Context
                                     {
                                         { "Processor", name },
-                                        { "WebDirectory", webDirectory }
+                                        { "WebDirectory", webDirectory },
+                                        { "CancellationTokenSource", cancellationTokenSource }
                                     };
-                                    await RetryPolicy.ExecuteAsync(ctx => ProcessWebDirectoryAsync(name, webDirectory), pollyContext);
+
+                                    await RetryPolicy.ExecuteAsync(async (context, token) => { await ProcessWebDirectoryAsync(name, webDirectory); }, pollyContext, cancellationTokenSource.Token);
                                 }
                                 else
                                 {
@@ -423,7 +436,14 @@ namespace OpenDirectoryDownloader
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(ex, $"Error processing Url: '{webDirectory.Url}' from parent '{webDirectory.ParentDirectory.Url}'");
+                        if (ex is TaskCanceledException taskCanceledException)
+                        {
+                            Logger.Warn($"Skipped processing Url: '{webDirectory.Url}' from parent '{webDirectory.ParentDirectory.Url}'");
+                        }
+                        else
+                        {
+                            Logger.Error(ex, $"Error processing Url: '{webDirectory.Url}' from parent '{webDirectory.ParentDirectory.Url}'");
+                        }
 
                         Session.Errors++;
 
