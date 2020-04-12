@@ -1,5 +1,4 @@
 ﻿using OpenDirectoryDownloader.Shared.Models;
-using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -707,8 +706,10 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("(000 papa intenso)", webDirectory.Subdirectories[0].Name);
             Assert.Equal(33, webDirectory.Files.Count);
             Assert.Equal("ALS Scan - Franziska Facella & Sara Jaymes - Clutch Hitter BTS (12-10-18).mp4", webDirectory.Files[0].FileName);
-            // TODO: There is a filesize in it, not yet fixed
-            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+            Assert.Equal(335910500, webDirectory.Files[0].FileSize);
+
+            // This directory listing contains negative file sizes, which will result in "-1"
+            Assert.Contains(webDirectory.Files, f => f.FileSize == -1);
         }
 
         /// <summary>
@@ -724,8 +725,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("Crack", webDirectory.Subdirectories[0].Name);
             Assert.Equal(4, webDirectory.Files.Count);
             Assert.Equal("AcrobatPro.exe", webDirectory.Files[0].FileName);
-            // TODO: There is a filesize in it, not yet fixed
-            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+            Assert.Equal(525508520, webDirectory.Files[0].FileSize);
         }
 
         /// <summary>

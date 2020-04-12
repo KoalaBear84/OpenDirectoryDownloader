@@ -1,0 +1,24 @@
+﻿
+<html><head><TITLE>Index of /</TITLE>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="Index">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<style type="text/css">
+a { color: #00EE00; }
+.red { color: red }
+body { background-color: #101010; color: #eeeeee; -webkit-font-smoothing: none; padding: 0 5px; margin: 40px auto; max-width: 750px; line-height: 1.1; -webkit-font-smoothing: none;}
+fieldset { margin: 0; border: 12px groove #008080;}
+</style><link rel="stylesheet" type="text/css" href="/style.css"/></head><body>
+<div id="particles-js"></div>
+<p>&nbsp;&nbsp;Navigate: <a href="/index.html">homepage</a>/</p>
+<fieldset><legend><h3><span class="red">[</span>Index of /<span class="red">]</span></h3></legend>
+<pre>
+mode  links  bytes  last-changed  name
+<HR>dr-x   5        4096  Jan 27 21:53  <A HREF="/./">.</A>/
+dr-x   6        4096  Mar  9 02:11  <A HREF="/../">..</A>/
+dr-x   6        4096  Dec 17 02:40  <A HREF="/DEF%20CON%201/">DEF CON 1</A>/
+dr-x   8        4096  Mar 29 07:44  <A HREF="/Music/">Music</A>/
+dr-x  30        4096  Mar 29 07:56  <A HREF="/Videos/">Videos</A>/
+</pre></fieldset><hr><p>Powered by <a href="https://github.com/blueness/sthttpd">sthttpd</a>, <a href="http://www.haproxy.org/">Haproxy</a> and <a href="https://www.archlinux.org/">Archlinux</a></p><script src="/scripts.js"></script></body>
+</html>

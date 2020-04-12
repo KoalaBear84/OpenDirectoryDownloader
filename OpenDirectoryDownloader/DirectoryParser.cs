@@ -1096,6 +1096,67 @@ namespace OpenDirectoryDownloader
             return match.Success;
         };
 
+        private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser7 = async (webDirectory, baseUrl, line) =>
+        {
+            Match match = Regex.Match(line, @"(?i)(?<FileMode>[d-]r[-w][x-])\s*\d*\s*(?<FileSize>-?\d*)\s*(\S{3}\s*\d*\s*(?:\d*:\d*(:\d*)?|\d*\.?))\s*(<a.*<\/a>\/?)");
+
+            if (match.Success)
+            {
+                bool isFile = !match.Groups["FileMode"].Value.ToLower().StartsWith("d");
+
+                IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+
+                if (parsedLine.QuerySelector("a") != null)
+                {
+                    IElement link = parsedLine.QuerySelector("a");
+                    string linkHref = link.Attributes["href"].Value;
+
+                    if (IsValidLink(link))
+                    {
+                        Uri uri = new Uri(new Uri(baseUrl), linkHref);
+                        string fullUrl = uri.ToString();
+
+                        if (!isFile)
+                        {
+                            webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+                            {
+                                Parser = "RegexParser7",
+                                Url = fullUrl,
+                                Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last()))
+                            });
+                        }
+                        else
+                        {
+                            try
+                            {
+                                string fileSize = match.Groups["FileSize"].Value;
+
+                                if (fileSize.StartsWith("-"))
+                                {
+                                    // If filesize is negative, it will be 4GB minus the amount of bytes (without the - sign),
+                                    // but this will only work for when it is between 2 and 4 GB, so skip it
+                                    fileSize = string.Empty;
+                                }
+
+                                webDirectory.Files.Add(new WebFile
+                                {
+                                    Url = fullUrl,
+                                    FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+                                    FileSize = FileSizeHelper.ParseFileSize(fileSize)
+                                });
+                            }
+                            catch (Exception ex)
+                            {
+                                Logger.Error(ex, $"Error parsing with RegexParser7");
+                            }
+                        }
+                    }
+                }
+            }
+
+            return match.Success;
+        };
+
         private static async Task<WebDirectory> ParsePreDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> pres)
         {
             List<Func<WebDirectory, string, string, Task<bool>>> regexFuncs = new List<Func<WebDirectory, string, string, Task<bool>>>
@@ -1106,6 +1167,7 @@ namespace OpenDirectoryDownloader
                 RegexParser4,
                 RegexParser5,
                 RegexParser6,
+                RegexParser7,
             };
 
             foreach (IElement pre in pres)
@@ -1650,7 +1712,7 @@ namespace OpenDirectoryDownloader
 
             bool removeFirstRow = false;
 
-            if (headers != null && headers.First().ChildElementCount != table.QuerySelector("tr").QuerySelectorAll("td").Length)
+            if (headers != null && headers.First().HasAttribute("colspan"))
             {
                 headers = null;
             }
@@ -1804,6 +1866,8 @@ namespace OpenDirectoryDownloader
             };
 
             headerName = headerName.ToLower();
+
+            headerName = Regex.Replace(headerName, @"[^a-zA-Z0-9\s]", string.Empty);
 
             if (headerName == "last modified" || headerName == "modified" || headerName.Contains("date") || headerName.Contains("last modification"))
             {

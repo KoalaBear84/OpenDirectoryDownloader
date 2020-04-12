@@ -1,0 +1,373 @@
+﻿
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Index of /</title><style>
+     html {
+        font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        width: 100%;
+        height: 100%;
+    }
+    body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,"Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 300;
+        color: #fefefe;
+        background: #383c4a;
+        position: relative;
+        min-height: 100%;
+    }
+    .container {
+        padding: 1.5rem 5rem;
+    }
+    .title {
+        word-break: break-word;
+    }
+    a {
+        text-decoration: none;
+    }
+    a.root, a.root:visited, .root-chevron {
+        font-weight: bold;
+        color: #abb2bb;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    a.directory, a.directory:visited {
+        font-weight: bold;
+        color: #03a9f4;
+    }
+    a.file, a.file:visited, .error-back, .error-back:visited {
+        color: #ea95ff;
+    }
+    a.symlink, a.symlink:visited {
+        color: #ff9800;
+    }
+    a.directory:hover {
+        color: #03a9f4;
+    }
+    a.file:hover {
+        color: #ea95ff;
+    }
+    a.symlink:hover {
+        color: #ff9800;
+    }
+    .symlink-symbol {
+        display: inline-block;
+        border: 1px solid #ff9800;
+        margin-left: 0.5rem;
+        border-radius: .2rem;
+        padding: 0 0.1rem;
+    }
+    nav {
+        padding: 0 5rem;
+    }
+    nav ul {
+        text-align: right;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    nav ul li {
+        display: block;
+        transition-duration: 0.5s;
+        float: right;
+        position: relative;
+        padding: 0.5rem 1rem;
+        background: #4b5162;
+        width: 8rem;
+        text-align: center;
+    }
+    nav ul li:hover {
+        cursor: pointer;
+        text-decoration: none;
+        color: #fefefe
+    }
+    nav ul li a:hover {
+        text-decoration: none;
+        color: #fefefe;
+    }
+    nav ul li ul {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        transition: all 0.5s ease;
+        margin-top: 0.5rem;
+        left: 0;
+        display: none;
+        text-align: center;
+    }
+    nav ul li:hover > ul,
+    nav ul li ul:hover {
+        visibility: visible;
+        opacity: 1;
+        display: block;
+    }
+    nav ul li ul li:first-of-type {
+        border-top: 1px solid #6a728a;
+    }
+    nav ul li ul li {
+        clear: both;
+        width: 8rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+    nav ul li ul li a:hover {
+        text-decoration: underline;
+    }
+    nav ul li a, nav ul li ul li a, nav ul li a:visited, nav ul li ul li a:visited {
+        color: #fefefe
+    }
+    nav ul li ul li.active a {
+        font-weight: bold;
+        color: #ea95ff;
+    }
+    p {
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        margin-top: 0;
+        font-size: 1.5rem;
+    }
+    table {
+        margin-top: 2rem;
+        width: 100%;
+        border: 0;
+        table-layout: auto;
+        background: #353946;
+    }
+    table thead tr th,
+    table tbody tr td {
+        padding: 0.5625rem 0.625rem;
+        font-size: 0.875rem;
+        color: #eeeeee;
+        text-align: left;
+        line-height: 1.125rem;
+        width: 33.333%;
+    }
+    table thead tr th {
+        padding: 0.5rem 0.625rem 0.625rem;
+        font-weight: bold;
+    }
+    table tbody tr:nth-child(odd) {
+        background: #404552;
+    }
+    table tbody tr:nth-child(even) {
+        background: #4b5162;
+    }
+    table thead {
+        background: #5294e2;
+    }
+    table tbody tr:hover {
+        background: #5194e259;
+    }
+    td.date-cell {
+        display: flex;
+        width: calc(100% - 1.25rem);
+        justify-content: space-between;
+    }
+    .at {
+        color: #9ebbdc;
+    }
+    .history {
+        color: #9ebbdc;
+    }
+    .file-entry {
+        display: flex;
+        justify-content: space-between;
+    }
+    span.size {
+        border-radius: 1rem;
+        background: #5294e2;
+        padding: 0 0.25rem;
+        font-size: 0.7rem;
+        color: #fefefe
+    }
+    .mobile-info {
+        display: none;
+    }
+    th a, th a:visited, .chevron {
+        color: #eeeeee;
+    }
+    .chevron, .root-chevron {
+        margin-right: .5rem;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+    th span.active a, th span.active span {
+        color: #ffffff;
+    }
+    .back {
+        position: fixed;
+        width: 3.8rem;
+        height: 3.8rem;
+        align-items: center;
+        justify-content: center;
+        bottom: 3rem;
+        right: 3.75rem;
+        background: #ea95ff;
+        border-radius: 100%;
+        box-shadow: 0 0 8px -4px #888888;
+        color: #ffffff;
+        display: none;
+    }
+    .back:visited {
+        color: #ffffff;
+    }
+    .back:hover {
+        color: #ffffff;
+        font-weight: bold;
+        text-decoration: none;
+        background: #ea95ff;
+    }
+    .toolbar {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    .download {
+        margin-top: 1rem;
+        padding: 0.125rem;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+    .download a, .download a:visited {
+        color: #ffffff;
+    }
+    .download a {
+        background: #ea95ff;
+        padding: 0.5rem;
+        border-radius: 0.2rem;
+    }
+    .download a:hover {
+        background: #eea7ff;
+        color: #ffffff;
+    }
+    .download a:not(:last-of-type) {
+        margin-right: 1rem;
+    }
+    .upload {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: flex-end;
+    }
+    .upload p {
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+        color: #fefefe;
+    }
+    .upload form {
+        padding: 1rem;
+        border: 1px solid #353946;
+        background: #4b5162;
+    }
+    .upload button {
+        background: #ea95ff;
+        padding: 0.5rem;
+        border-radius: 0.2rem;
+        color: #ffffff;
+        border: none;
+    }
+    .upload div {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+    }
+    .drag-form {
+        display: none;
+        background: #3333338f;
+        position: absolute;
+        border: 0.5rem dashed #fefefe;
+        width: calc(100% - 1rem);
+        height: calc(100% - 1rem);
+        text-align: center;
+        z-index: 2;
+    }
+    .drag-title {
+        position: fixed;
+        color: #fefefe;
+        top: 50%;
+        width: 100%;
+        text-align: center;
+    }
+    .error {
+        margin: 2rem;
+    }
+    .error p {
+        margin: 1rem 0;
+        font-size: 0.9rem;
+        word-break: break-all;
+    }
+    .error p:first-of-type {
+        font-size: 1.25rem;
+        color: #e44b4b;
+        margin-bottom: 2rem;
+    }
+    .error p:nth-of-type(2) {
+        font-weight: bold;
+    }
+    .error-nav {
+        margin-top: 4rem;
+    }
+    @media (max-width: 760px) {
+        nav {
+            padding: 0 2.5rem;
+        }
+        .container {
+            padding: 1.5rem 2.5rem;
+        }
+        h1 {
+            font-size: 1.4em;
+        }
+        td:not(:nth-child(1)), th:not(:nth-child(1)){
+            display: none;
+        }
+        .mobile-info {
+            display: block;
+        }
+        table tbody tr td {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        a.directory {
+            display: block;
+            padding: 0.5625rem 0;
+        }
+        .file-entry {
+            align-items: center;
+        }
+        a.root, a.file, a.symlink {
+            display: inline-block;
+            flex: 1;
+            padding: 0.5625rem 0;
+        }
+        a.symlink {
+            width: 100%;
+        }
+        .back {
+            display: flex;
+        }
+        .back {
+            right: 1.5rem;
+        }
+    }
+    @media (max-width: 600px) {
+        h1 {
+            font-size: 1.375em;
+        }
+    }
+    @media (max-width: 400px) {
+        nav {
+            padding: 0 0.5rem;
+        }
+        .container {
+            padding: 0.5rem;
+        }
+        h1 {
+            font-size: 1.375em;
+        }
+        .back {
+            right: 1.5rem;
+        }
+    }</style></head><body id="drop-container"><nav><ul><li><a class="change-theme" href="#" title="Change theme">Change theme...</a><ul><li class="active"><a href="/" title="Switch to Archlinux theme">Archlinux (dark)</a></li><li><a href="/?theme=zenburn" title="Switch to Zenburn theme">Zenburn (dark)</a></li><li><a href="/?theme=monokai" title="Switch to Monokai theme">Monokai (dark)</a></li><li><a href="/?theme=squirrel" title="Switch to Squirrel theme">Squirrel (light)</a></li></ul></li></ul></nav><div class="container"><span id="top"></span><h1 class="title">Index of /</h1><div class="toolbar"><div class="download"><a href="?download=tar_gz">Download .tar.gz</a><a href="?download=tar">Download .tar</a></div></div><table><thead><th><span class=""><span class="chevron">▴</span><a href="?sort=name&amp;order=asc" title="Sort by name in ascending order">Name</a></span></th><th><span class=""><span class="chevron">▴</span><a href="?sort=size&amp;order=asc" title="Sort by size in ascending order">Size</a></span></th><th><span class=""><span class="chevron">▴</span><a href="?sort=date&amp;order=asc" title="Sort by date in ascending order">Last modification</a></span></th></thead><tbody><tr><td><p><a class="directory" href="/Climbing/">Climbing/</a></p></td><td></td><td class="date-cell"><span>Mar 16 <span class="at"> at </span>06:53 </span><span class="history">3 weeks ago</span></td></tr><tr><td><p><a class="directory" href="/Movies/">Movies/</a></p></td><td></td><td class="date-cell"><span>Apr  8 <span class="at"> at </span>02:30 </span><span class="history">4 days ago</span></td></tr><tr><td><p><a class="directory" href="/Music/">Music/</a></p></td><td></td><td class="date-cell"><span>Dec 27 <span class="at"> at </span>03:38 </span><span class="history">2 years ago</span></td></tr><tr><td><p><a class="directory" href="/Other%20Videos/">Other Videos/</a></p></td><td></td><td class="date-cell"><span>Apr  8 <span class="at"> at </span>01:31 </span><span class="history">a year ago</span></td></tr><tr><td><p><a class="directory" href="/ROMs/">ROMs/</a></p></td><td></td><td class="date-cell"><span>Jun 23 <span class="at"> at </span>00:16 </span><span class="history">2 years ago</span></td></tr><tr><td><p><a class="directory" href="/TV/">TV/</a></p></td><td></td><td class="date-cell"><span>Apr  9 <span class="at"> at </span>11:54 </span><span class="history">3 days ago</span></td></tr></tbody></table><a class="back" href="#top">⇪</a></div></body></html>

@@ -583,5 +583,65 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Empty(webDirectory.Subdirectories);
             Assert.Empty(webDirectory.Files);
         }
+
+        /// <summary>
+        /// Url: https://dl.jeremylee.sh/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing95aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(3, webDirectory.Subdirectories.Count);
+            Assert.Equal("DEF CON 1", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: https://dl.jeremylee.sh/Videos/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing95bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(28, webDirectory.Subdirectories.Count);
+            Assert.Equal("2005 - Avatar The Last Airbender S01-S03", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(20, webDirectory.Files.Count);
+            Assert.Equal("1980 - The Final Countdown.mkv", webDirectory.Files[0].FileName);
+            Assert.Equal(1370035176, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: https://home.bjeanes.com/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing96aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(6, webDirectory.Subdirectories.Count);
+            Assert.Equal("Climbing", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: https://home.bjeanes.com/Other%20Videos/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing96bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(2, webDirectory.Subdirectories.Count);
+            Assert.Equal("@eaDir", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(4, webDirectory.Files.Count);
+            Assert.Equal("Uncharted Lines (2017).mp4", webDirectory.Files[0].FileName);
+            Assert.Equal(2469606195, webDirectory.Files[0].FileSize);
+        }
     }
 }
