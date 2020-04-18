@@ -20,9 +20,12 @@ jobs:
     - name: Publish with dotnet
       run: dotnet publish OpenDirectoryDownloader -c Release -o ./artifacts
 
-    - name: Zip
-      run: zip -r OpenDirectoryDownloader.zip .
-    
+    - name: Zipping
+      uses: papeloto/action-zip@v1
+      with:
+        files: OpenDirectoryDownloader/artifacts/
+        dest: OpenDirectoryDownloader.zip
+
     - name: Create release
       id: create_release
       uses: actions/create-release@v1.0.0
