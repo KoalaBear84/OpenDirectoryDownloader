@@ -31,8 +31,8 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          tag=$(git describe --tags --abbrev=0)
-          release_name="App-$tag-${{ matrix.target }}"
+          git_hash=$(git rev-parse --short "$GITHUB_SHA")
+          release_name="App-$git_hash-${{ matrix.target }}"
           # Build everything
           dotnet publish -c Release -o "$release_name"
           # Pack files
