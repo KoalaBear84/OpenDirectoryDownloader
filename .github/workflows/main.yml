@@ -18,7 +18,7 @@ jobs:
       run: dotnet test --configuration Release
 
     - name: Publish with dotnet
-      run: dotnet publish -c Release -o ./artifacts
+      run: dotnet publish OpenDirectoryDownloader -c Release -o ./artifacts
 
     - name: Zip
       run: zip -r OpenDirectoryDownloader.zip
