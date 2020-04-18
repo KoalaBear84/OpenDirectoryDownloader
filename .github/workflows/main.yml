@@ -3,65 +3,45 @@ name: CI
 on: [push]
 
 jobs:
-  release:
-    name: Release
-    strategy:
-      matrix:
-        kind: ['linux', 'windows', 'macOS']
-        include:
-          - kind: linux
-            os: ubuntu-latest
-            target: linux-x64
-          - kind: windows
-            os: windows-latest
-            target: win-x64
-          - kind: macOS
-            os: macos-latest
-            target: osx-x64
-    runs-on: ${{ matrix.os }}
+  build:
+
+    runs-on: windows-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
+    - name: Checkout
+      uses: actions/checkout@v1
 
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.101
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
 
-      - name: Build
-        shell: bash
-        run: |
-          tag=$(git describe --tags --abbrev=0)
-          git_hash=$(git rev-parse --short "$GITHUB_SHA")
-          release_name="App-$tag-${{ matrix.target }}"
-          # Build everything
-          dotnet publish OpenDirectoryDownloader -c Release -o "$release_name"
-          # Pack files
-          if [ "${{ matrix.target }}" == "win-x64" ]; then
-            # Pack to zip for Windows
-            7z a -tzip "OpenDirectoryDownloader.zip" "./${release_name}/*"
-          else
-          tar czvf "OpenDirectoryDownloader.tar.gz" "$release_name"
-          fi
-          # Delete output directory
-          rm -r "$release_name"
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release $(git rev-parse --short "$GITHUB_SHA")
-          draft: false
-          prerelease: false
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./OpenDirectoryDownloader.zip
-          asset_name: OpenDirectoryDownloader.zip
-          asset_content_type: application/zip
+    - name: Test with dotnet
+      run: dotnet test --configuration Release
+
+    - name: Publish with dotnet
+      run: dotnet publish -c Release -o ./artifacts
+
+    - name: Zip
+      uses: edgarrc/action-7z@v1.0.4
+      with:
+        args: 7z a -tzip -mx=9 OpenDirectoryDownloader.zip ./build/
+    
+    - name: Create release
+      id: create_release
+      uses: actions/create-release@v1.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    - name: Upload Release Asset
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./OpenDirectoryDownloader.zip
+        asset_name: OpenDirectoryDownloader.zip
+        asset_content_type: application/zip
