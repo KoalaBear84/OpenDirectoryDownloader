@@ -17,11 +17,11 @@ jobs:
       with:
         dotnet-version: 3.1.100
 
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+    #- name: Build with dotnet
+    #  run: dotnet build --configuration Release
     
-    - name: Test with dotnet
-      run: dotnet test --configuration Release
+    #- name: Test with dotnet
+    #  run: dotnet test --configuration Release
 
     - name: Publish with dotnet
       run: dotnet publish -c Release -o ./artifacts
