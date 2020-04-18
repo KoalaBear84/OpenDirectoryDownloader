@@ -17,11 +17,14 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
 
+    - name: Build with dotnet
+      run: dotnet build OpenDirectoryDownloader --configuration Release
+
     - name: Test with dotnet
-      run: dotnet test --configuration Release
+      run: dotnet test OpenDirectoryDownloader --configuration Release
 
     - name: Publish with dotnet
-      run: dotnet publish OpenDirectoryDownloader -c Release -o ./artifacts
+      run: dotnet publish OpenDirectoryDownloader --configuration Release -o ./artifacts
 
     - name: Zipping
       uses: papeloto/action-zip@v1
