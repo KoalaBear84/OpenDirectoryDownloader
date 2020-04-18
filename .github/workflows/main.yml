@@ -21,9 +21,7 @@ jobs:
       run: dotnet publish -c Release -o ./artifacts
 
     - name: Zip
-      uses: edgarrc/action-7z@v1.0.4
-      with:
-        args: 7z a -tzip -mx=9 OpenDirectoryDownloader.zip ./build/
+      run: zip -r OpenDirectoryDownloader.zip
     
     - name: Create release
       id: create_release
