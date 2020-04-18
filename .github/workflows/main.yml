@@ -21,7 +21,7 @@ jobs:
       run: dotnet publish OpenDirectoryDownloader -c Release -o ./artifacts
 
     - name: Zip
-      run: zip -r OpenDirectoryDownloader.zip
+      run: zip -r OpenDirectoryDownloader.zip .
     
     - name: Create release
       id: create_release
