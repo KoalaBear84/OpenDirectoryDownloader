@@ -35,7 +35,7 @@ jobs:
           git_hash=$(git rev-parse --short "$GITHUB_SHA")
           release_name="App-$tag-${{ matrix.target }}"
           # Build everything
-          dotnet publish -c Release -o "$release_name"
+          dotnet publish OpenDirectoryDownloader -c Release -o "$release_name"
           # Pack files
           if [ "${{ matrix.target }}" == "win-x64" ]; then
             # Pack to zip for Windows
@@ -45,9 +45,23 @@ jobs:
           fi
           # Delete output directory
           rm -r "$release_name"
-      - name: Publish
-        uses: softprops/action-gh-release@v1
-        with:
-          files: "App*"
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./release.zip
+          asset_name: release.zip
+          asset_content_type: application/zip
