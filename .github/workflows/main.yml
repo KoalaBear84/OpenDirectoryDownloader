@@ -23,7 +23,7 @@ jobs:
     - name: Zipping
       uses: papeloto/action-zip@v1
       with:
-        files: OpenDirectoryDownloader/artifacts/
+        files: ./artifacts
         dest: OpenDirectoryDownloader.zip
 
     - name: Create release
