@@ -90,7 +90,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./OpenDirectoryDownloader-ubuntu.zip
+        asset_path: OpenDirectoryDownloader-ubuntu.zip
         asset_name: OpenDirectoryDownloader-ubuntu.zip
         asset_content_type: application/zip
 
@@ -100,7 +100,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./OpenDirectoryDownloader-windows.zip
+        asset_path: OpenDirectoryDownloader-windows.zip
         asset_name: OpenDirectoryDownloader-windows.zip
         asset_content_type: application/zip
 
@@ -110,6 +110,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./OpenDirectoryDownloader-macos.zip
+        asset_path: OpenDirectoryDownloader-macos.zip
         asset_name: OpenDirectoryDownloader-macos.zip
         asset_content_type: application/zip
