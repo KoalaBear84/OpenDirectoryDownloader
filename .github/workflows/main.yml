@@ -12,9 +12,9 @@ jobs:
       fail-fast: true
       matrix:
         config:
+          - {os: ubuntu-latest}
           - {os: windows-latest}
           - {os: macOS-latest}
-          - {os: ubuntu-latest}
 
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.os }}
@@ -53,7 +53,7 @@ jobs:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
         body: ${{ github.event.commits[0].message }}
-        draft: false
+        draft: true
         prerelease: false
         allowUpdates: true
     - name: Upload Release Asset
