@@ -52,7 +52,7 @@ jobs:
 
   release:
     needs: [build_and_zip]
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     name: Release
 
     steps:
