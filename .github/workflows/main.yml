@@ -60,19 +60,19 @@ jobs:
       uses: actions/download-artifact@v1.0.0
       with:
         name: OpenDirectoryDownloader-ubuntu.zip
-        path: /home/artifacts/OpenDirectoryDownloader-ununtu.zip
+        path: OpenDirectoryDownloader-ununtu.zip
 
     - name: Download artifact 2/3
       uses: actions/download-artifact@v1.0.0
       with:
         name: OpenDirectoryDownloader-windows.zip
-        path: /home/artifacts/OpenDirectoryDownloader-windows.zip
+        path: OpenDirectoryDownloader-windows.zip
 
     - name: Download artifact 3/3
       uses: actions/download-artifact@v1.0.0
       with:
         name: OpenDirectoryDownloader-macos.zip
-        path: /home/artifacts/OpenDirectoryDownloader-macos.zip
+        path: OpenDirectoryDownloader-macos.zip
 
     - name: Create release
       id: create_release
