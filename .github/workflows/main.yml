@@ -52,7 +52,7 @@ jobs:
 
   release:
     needs: [build_and_zip]
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     name: Release
 
     steps:
@@ -60,19 +60,19 @@ jobs:
       uses: actions/download-artifact@v1.0.0
       with:
         name: OpenDirectoryDownloader-ubuntu.zip
-        path: ./OpenDirectoryDownloader-ununtu.zip
+        path: OpenDirectoryDownloader-ununtu.zip
 
     - name: Download artifact 2/3
       uses: actions/download-artifact@v1.0.0
       with:
         name: OpenDirectoryDownloader-windows.zip
-        path: ./OpenDirectoryDownloader-windows.zip
+        path: OpenDirectoryDownloader-windows.zip
 
     - name: Download artifact 3/3
-      uses: actions/download-artifact@v1.0.0
+      uses: actions/download-artifact@v2
       with:
         name: OpenDirectoryDownloader-macos.zip
-        path: ./OpenDirectoryDownloader-macos.zip
+        path: OpenDirectoryDownloader-macos.zip
 
     - name: Create release
       id: create_release
@@ -81,7 +81,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        release_name: OpenDirectoryDownloader ${{ github.ref }}
         body: ${{ github.event.commits[0].message }}
         draft: true
         prerelease: false
@@ -93,7 +93,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./OpenDirectoryDownloader-ubuntu.zip.zip
+        asset_path: OpenDirectoryDownloader-ubuntu.zip
         asset_name: OpenDirectoryDownloader-ubuntu.zip
         asset_content_type: application/zip
 
@@ -103,7 +103,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./OpenDirectoryDownloader-windows.zip.zip
+        asset_path: OpenDirectoryDownloader-windows.zip
         asset_name: OpenDirectoryDownloader-windows.zip
         asset_content_type: application/zip
 
@@ -113,6 +113,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./OpenDirectoryDownloader-macos.zip.zip
+        asset_path: OpenDirectoryDownloader-macos.zip
         asset_name: OpenDirectoryDownloader-macos.zip
         asset_content_type: application/zip
