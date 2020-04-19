@@ -7,17 +7,17 @@ on:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
-  release:
+  build_and_zip:
     strategy:
       fail-fast: true
       matrix:
         config:
-          - {os: ubuntu-latest}
-          - {os: windows-latest}
-          - {os: macOS-latest}
+          - {os: ubuntu-latest, assetname: 'OpenDirectoryDownloader-ubuntu.zip'}
+          - {os: windows-latest, assetname: 'OpenDirectoryDownloader-windows.zip'}
+          - {os: macOS-latest, assetname: 'OpenDirectoryDownloader-macos.zip'}
 
     runs-on: ${{ matrix.config.os }}
-    name: ${{ matrix.config.os }}
+    name: Build and zip ${{ matrix.config.os }}
 
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -42,7 +42,33 @@ jobs:
       uses: papeloto/action-zip@v1
       with:
         files: ./artifacts
-        dest: OpenDirectoryDownloader.zip
+        dest: ${{ matrix.config.assetname }}
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: ${{ matrix.config.assetname }}
+
+  release:
+    needs: [build_and_zip]
+    runs-on: ubuntu-latest
+    name: Release
+
+    steps:
+    - name: Download artifact 1/3
+      uses: actions/download-artifact@v1.0.0
+      with:
+        name: 'OpenDirectoryDownloader-ubuntu.zip'
+
+    - name: Download artifact 2/3
+      uses: actions/download-artifact@v1.0.0
+      with:
+        name: 'OpenDirectoryDownloader-windows.zip'
+
+    - name: Download artifact 3/3
+      uses: actions/download-artifact@v1.0.0
+      with:
+        name: 'OpenDirectoryDownloader-macos.zip'
 
     - name: Create release
       id: create_release
@@ -57,12 +83,29 @@ jobs:
         prerelease: false
         allowUpdates: true
     - name: Upload Release Asset
-      id: upload-release-asset
       uses: actions/upload-release-asset@v1.0.1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./OpenDirectoryDownloader.zip
-        asset_name: OpenDirectoryDownloader.zip
+        asset_path: ./OpenDirectoryDownloader-ubuntu.zip
+        asset_name: OpenDirectoryDownloader-ubuntu.zip
+        asset_content_type: application/zip
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./OpenDirectoryDownloader-windows.zip
+        asset_name: OpenDirectoryDownloader-windows.zip
+        asset_content_type: application/zip
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./OpenDirectoryDownloader-macos.zip
+        asset_name: OpenDirectoryDownloader-macos.zip
         asset_content_type: application/zip
