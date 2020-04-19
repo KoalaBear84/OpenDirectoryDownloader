@@ -1,6 +1,10 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
   build:
@@ -38,8 +42,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.sha }}
-        release_name: Release ${{ github.sha }}
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
         draft: false
         prerelease: false
         allowUpdates: true
