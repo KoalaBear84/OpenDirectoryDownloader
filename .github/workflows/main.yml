@@ -7,9 +7,17 @@ on:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
-  build:
+  release:
+    strategy:
+      fail-fast: true
+      matrix:
+        config:
+          - {os: windows-latest}
+          - {os: macOS-latest}
+          - {os: ubuntu-latest}
 
-    runs-on: windows-latest
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.os }}
 
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -44,6 +52,7 @@ jobs:
       with:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
+        body: ${{ github.event.commits[0].message }}
         draft: false
         prerelease: false
         allowUpdates: true
