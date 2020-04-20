@@ -34,7 +34,7 @@ jobs:
       uses: papeloto/action-zip@v1
       with:
         files: ./artifacts
-        dest: OpenDirectoryDownloader-${{ github.ref }}-windows.zip
+        dest: OpenDirectoryDownloader-windows.zip
 
     - name: Create release
       id: create_release
@@ -55,6 +55,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./artifacts/OpenDirectoryDownloader-${{ github.ref }}-windows.zip
-        asset_name: OpenDirectoryDownloader-${{ github.ref }}-windows.zip
+        asset_path: ./artifacts/OpenDirectoryDownloader-windows.zip
+        asset_name: OpenDirectoryDownloader-windows.zip
         asset_content_type: application/zip
