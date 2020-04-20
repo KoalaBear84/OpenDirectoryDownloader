@@ -18,6 +18,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
 
+    - name: Set output
+      id: get_version
+      run: echo ::set-output name=tag::${GITHUB_REF:10}
+    - name: Check output
+      env:
+        RELEASE_VERSION: ${{ steps.get_version.outputs.tag }}
+      run: |
+        echo $RELEASE_VERSION
+        echo ${{ steps.vars.outputs.tag }}
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
 
