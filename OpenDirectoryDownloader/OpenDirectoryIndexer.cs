@@ -384,6 +384,8 @@ namespace OpenDirectoryDownloader
                         if (!Session.ProcessedUrls.Contains(webDirectory.Url))
                         {
                             Session.ProcessedUrls.Add(webDirectory.Url);
+                            webDirectory.StartTime = DateTimeOffset.UtcNow;
+
                             Logger.Info($"[{name}] Begin processing {webDirectory.Url}");
 
                             if (Session.Root.Uri.Scheme == "ftp")
@@ -458,6 +460,9 @@ namespace OpenDirectoryDownloader
                         {
                             WebDirectoryProcessorInfo.Remove(name);
                         }
+
+                        webDirectory.Finished = true;
+                        webDirectory.FinishTime = DateTimeOffset.UtcNow;
                     }
                 }
 
@@ -668,6 +673,7 @@ namespace OpenDirectoryDownloader
             webDirectory.StartTime = parsedWebDirectory.StartTime;
             webDirectory.Files = parsedWebDirectory.Files;
             webDirectory.Finished = parsedWebDirectory.Finished;
+            webDirectory.FinishTime = parsedWebDirectory.FinishTime;
             webDirectory.Name = parsedWebDirectory.Name;
             webDirectory.Subdirectories = parsedWebDirectory.Subdirectories;
             webDirectory.Url = parsedWebDirectory.Url;

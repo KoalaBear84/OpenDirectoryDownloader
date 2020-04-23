@@ -120,8 +120,6 @@ namespace OpenDirectoryDownloader.Calibre
                     Console.WriteLine($"Parsed info of {libraryResult.Metadata.Count} books for library {library.Value}");
                     Logger.Info($"Parsed info of {libraryResult.Metadata.Count} books for library {library.Value}");
                 }
-
-                webDirectory.Finished = true;
             }
             catch (Exception ex)
             {
@@ -186,8 +184,6 @@ namespace OpenDirectoryDownloader.Calibre
                         FileSize = book.Value.FormatSizes.ContainsKey(format) ? book.Value.FormatSizes[format] : 0
                     });
                 }
-
-                bookWebDirectory.Finished = true;
 
                 libraryWebDirectory.Subdirectories.Add(bookWebDirectory);
 

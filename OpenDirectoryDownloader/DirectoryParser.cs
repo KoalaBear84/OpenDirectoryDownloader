@@ -44,9 +44,7 @@ namespace OpenDirectoryDownloader
             WebDirectory parsedWebDirectory = new WebDirectory(webDirectory.ParentDirectory)
             {
                 Url = baseUrl,
-                Name = WebUtility.UrlDecode(Path.GetDirectoryName(new Uri(baseUrl).Segments.LastOrDefault())) ?? "ROOT",
-                StartTime = DateTimeOffset.UtcNow,
-                Finished = true
+                Name = WebUtility.UrlDecode(Path.GetDirectoryName(new Uri(baseUrl).Segments.LastOrDefault())) ?? "ROOT"
             };
 
             try
@@ -221,6 +219,7 @@ namespace OpenDirectoryDownloader
                         parsedWebDirectory.StartTime = newWebDirectory.StartTime;
                         parsedWebDirectory.Files = newWebDirectory.Files;
                         parsedWebDirectory.Finished = newWebDirectory.Finished;
+                        parsedWebDirectory.FinishTime = newWebDirectory.FinishTime;
                         parsedWebDirectory.Name = newWebDirectory.Name;
                         parsedWebDirectory.Subdirectories = newWebDirectory.Subdirectories;
                         parsedWebDirectory.Url = newWebDirectory.Url;
@@ -241,9 +240,7 @@ namespace OpenDirectoryDownloader
             WebDirectory webDirectory = new WebDirectory(parsedWebDirectory.ParentDirectory)
             {
                 Url = directoryFullUrl,
-                Name = directoryListingModel.Name,
-                StartTime = DateTimeOffset.UtcNow,
-                Finished = true
+                Name = directoryListingModel.Name
             };
 
             foreach (DirectoryListingModel01 item in directoryListingModel.Items)

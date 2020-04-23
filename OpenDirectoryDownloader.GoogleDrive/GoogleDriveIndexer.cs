@@ -113,8 +113,6 @@ namespace OpenDirectoryDownloader.GoogleDrive
                 } while (rateLimitException);
             } while (!string.IsNullOrWhiteSpace(nextPageToken));
 
-            webDirectory.Finished = true;
-
             Logger.Debug($"Finished Google Drive Request for Folder {folderId}");
 
             return webDirectory;

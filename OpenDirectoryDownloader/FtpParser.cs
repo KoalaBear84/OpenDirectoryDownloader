@@ -31,8 +31,6 @@ namespace OpenDirectoryDownloader
 
         public static async Task<WebDirectory> ParseFtpAsync(string processor, WebDirectory webDirectory)
         {
-            webDirectory.StartTime = DateTimeOffset.UtcNow;
-
             Context pollyContext = new Context
             {
                 { "Processor", string.Empty },
@@ -97,8 +95,6 @@ namespace OpenDirectoryDownloader
                     }
                 }
             }
-
-            webDirectory.Finished = true;
 
             Logger.Debug($"Finished retrieving {relativeUrl}");
 
