@@ -51,19 +51,58 @@ namespace OpenDirectoryDownloader
 
         private readonly AsyncRetryPolicy RetryPolicy = Policy
             .Handle<Exception>()
-            .WaitAndRetryAsync(4,
-                sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)) + TimeSpan.FromMilliseconds(Jitterer.Next(0, 200)),
+            .WaitAndRetryAsync(100,
+                sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Min(16, Math.Pow(2, retryAttempt))) + TimeSpan.FromMilliseconds(Jitterer.Next(0, 200)),
                 onRetry: (ex, span, retryCount, context) =>
                 {
                     WebDirectory webDirectory = context["WebDirectory"] as WebDirectory;
 
-                    if (webDirectory.Uri.Segments.LastOrDefault() == "cgi-bin/")
+                    string relativeUrl = webDirectory.Uri.PathAndQuery;
+
+                    if (ex is HttpRequestException httpRequestException)
+                    {
+                        if (ex.Message.Contains("503 (Service Temporarily Unavailable)") || ex.Message.Contains("503 (Service Unavailable)") || ex.Message.Contains("429 (Too Many Requests)"))
+                        {
+                            Logger.Warn($"[{context["Processor"]}] Rate limited (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+                        }
+                        else if (ex.Message.Contains("No connection could be made because the target machine actively refused it."))
+                        {
+                            Logger.Warn($"[{context["Processor"]}] Rate limited? (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+                        }
+                        else if (ex.Message.Contains("404 (Not Found)") || ex.Message == "No such host is known.")
+                        {
+                            Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{relativeUrl}'. Skipping..");
+                            (context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
+                        }
+                        else if ((ex.Message.Contains("401 (Unauthorized)") || ex.Message.Contains("403 (Forbidden)")) && retryCount >= 3)
+                        {
+                            Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{relativeUrl}'. Skipping..");
+                            (context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
+                        }
+                        else if (retryCount <= 4)
+                        {
+                            Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+                        }
+                        else
+                        {
+                            (context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
+                        }
+
+                    }
+                    else if (webDirectory.Uri.Segments.LastOrDefault() == "cgi-bin/")
                     {
                         (context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
                     }
                     else
                     {
-                        Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{webDirectory.Url}'. Waiting {span.TotalSeconds:F0} seconds.");
+                        if (retryCount <= 4)
+                        {
+                            Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+                        }
+                        else
+                        {
+                            (context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
+                        }
                     }
                 }
             );
@@ -373,7 +412,7 @@ namespace OpenDirectoryDownloader
             }
         }
 
-        private async Task WebDirectoryProcessor(ConcurrentQueue<WebDirectory> queue, string name, CancellationToken token)
+        private async Task WebDirectoryProcessor(ConcurrentQueue<WebDirectory> queue, string name, CancellationToken cancellationToken)
         {
             Logger.Debug($"Start [{name}]");
 
@@ -421,6 +460,8 @@ namespace OpenDirectoryDownloader
 
                                     CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
+                                    cancellationTokenSource.CancelAfter(TimeSpan.FromMinutes(5));
+
                                     Context pollyContext = new Context
                                     {
                                         { "Processor", name },
@@ -428,7 +469,7 @@ namespace OpenDirectoryDownloader
                                         { "CancellationTokenSource", cancellationTokenSource }
                                     };
 
-                                    await RetryPolicy.ExecuteAsync(async (context, token) => { await ProcessWebDirectoryAsync(name, webDirectory); }, pollyContext, cancellationTokenSource.Token);
+                                    await RetryPolicy.ExecuteAsync(async (context, token) => { await ProcessWebDirectoryAsync(name, webDirectory, cancellationTokenSource.Token); }, pollyContext, cancellationTokenSource.Token);
                                 }
                                 else
                                 {
@@ -449,11 +490,19 @@ namespace OpenDirectoryDownloader
                     {
                         if (ex is TaskCanceledException taskCanceledException)
                         {
-                            Logger.Warn($"Skipped processing Url: '{webDirectory.Url}' from parent '{webDirectory.ParentDirectory.Url}'");
+                            if (webDirectory.ParentDirectory?.Url != null)
+                            {
+                                Logger.Warn($"Skipped processing Url: '{webDirectory.Url}' from parent '{webDirectory.ParentDirectory.Url}'");
+                            }
+                            else
+                            {
+                                Logger.Warn($"Skipped processing Url: '{webDirectory.Url}'");
+                                Session.Root.Error = true;
+                            }
                         }
                         else
                         {
-                            Logger.Error(ex, $"Error processing Url: '{webDirectory.Url}' from parent '{webDirectory.ParentDirectory.Url}'");
+                            Logger.Error(ex, $"Error processing Url: '{webDirectory.Url}' from parent '{webDirectory.ParentDirectory?.Url}'");
                         }
 
                         Session.Errors++;
@@ -480,7 +529,7 @@ namespace OpenDirectoryDownloader
                 // Needed!
                 await Task.Delay(TimeSpan.FromMilliseconds(10));
             }
-            while (!token.IsCancellationRequested && (!queue.IsEmpty || RunningWebDirectoryThreads > 0));
+            while (!cancellationToken.IsCancellationRequested && (!queue.IsEmpty || RunningWebDirectoryThreads > 0));
 
             Logger.Debug($"Finished [{name}]");
         }
@@ -498,11 +547,9 @@ namespace OpenDirectoryDownloader
             return baseUri.Host == checkUri.Host && (checkUri.LocalPath.StartsWith(baseUri.LocalPath) || baseUri.LocalPath.StartsWith(urlWithoutFileName));
         }
 
-        private async Task ProcessWebDirectoryAsync(string name, WebDirectory webDirectory)
+        private async Task ProcessWebDirectoryAsync(string name, WebDirectory webDirectory, CancellationToken cancellationToken)
         {
-            webDirectory.StartTime = DateTimeOffset.UtcNow;
-
-            HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url);
+            HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationToken);
             string html = null;
 
             if (httpResponseMessage.IsSuccessStatusCode)
