@@ -204,39 +204,48 @@ namespace OpenDirectoryDownloader
 
                     if (!OpenDirectoryIndexerSettings.CommandLineOptions.NoUrls && Session.Root.Uri.Host != Constants.GoogleDriveDomain)
                     {
-                        Logger.Info("Saving URL list to file...");
-                        Console.WriteLine("Saving URL list to file...");
-
-                        string scansPath = Library.GetScansPath();
-
-                        try
+                        if (Session.TotalFiles > 0)
                         {
-                            string fileUrls = string.Join(Environment.NewLine, Session.Root.AllFileUrls.Distinct());
-                            string urlsFileName = $"{Library.CleanUriToFilename(Session.Root.Uri)}.txt";
-                            string urlsPath = Path.Combine(scansPath, urlsFileName);
-                            Logger.Info("String joined");
-                            File.WriteAllText(urlsPath, fileUrls);
-                            Logger.Info($"Saved URL list to file: {urlsFileName}");
-                            Console.WriteLine($"Saved URL list to file: {urlsFileName}");
+                            Logger.Info("Saving URL list to file...");
+                            Console.WriteLine("Saving URL list to file...");
 
-                            if (OpenDirectoryIndexerSettings.CommandLineOptions.UploadUrls && Session.TotalFiles > 0)
+                            string scansPath = Library.GetScansPath();
+
+                            try
                             {
-                                Console.WriteLine("Uploading URLs...");
+                                string fileUrls = string.Join(Environment.NewLine, Session.Root.AllFileUrls.Distinct());
 
-                                //UploadFilesFile uploadFilesFile = await UploadFileIo.UploadFile(HttpClient, urlsPath);
-                                //HistoryLogger.Info($"uploadfiles.io: {JsonConvert.SerializeObject(uploadFilesFile)}");
-                                //Session.UploadedUrlsUrl = uploadFilesFile.Url.ToString();
+                                string urlsFileName = $"{Library.CleanUriToFilename(Session.Root.Uri)}.txt";
+                                string urlsPath = Path.Combine(scansPath, urlsFileName);
+                                Logger.Info("String joined");
+                                File.WriteAllText(urlsPath, fileUrls);
+                                Logger.Info($"Saved URL list to file: {urlsFileName}");
+                                Console.WriteLine($"Saved URL list to file: {urlsFileName}");
 
-                                GoFilesFile uploadedFile = await GoFileIo.UploadFile(HttpClient, urlsPath);
-                                HistoryLogger.Info($"goFile.io: {JsonConvert.SerializeObject(uploadedFile)}");
-                                Session.UploadedUrlsUrl = uploadedFile.Url.ToString();
+                                if (OpenDirectoryIndexerSettings.CommandLineOptions.UploadUrls && Session.TotalFiles > 0)
+                                {
+                                    Console.WriteLine("Uploading URLs...");
 
-                                Console.WriteLine($"Uploaded URLs: {Session.UploadedUrlsUrl}");
+                                    //UploadFilesFile uploadFilesFile = await UploadFileIo.UploadFile(HttpClient, urlsPath);
+                                    //HistoryLogger.Info($"uploadfiles.io: {JsonConvert.SerializeObject(uploadFilesFile)}");
+                                    //Session.UploadedUrlsUrl = uploadFilesFile.Url.ToString();
+
+                                    GoFilesFile uploadedFile = await GoFileIo.UploadFile(HttpClient, urlsPath);
+                                    HistoryLogger.Info($"goFile.io: {JsonConvert.SerializeObject(uploadedFile)}");
+                                    Session.UploadedUrlsUrl = uploadedFile.Url.ToString();
+
+                                    Console.WriteLine($"Uploaded URLs: {Session.UploadedUrlsUrl}");
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Logger.Error(ex);
                             }
                         }
-                        catch (Exception ex)
+                        else
                         {
-                            Logger.Error(ex);
+                            Logger.Info("No URLs to save");
+                            Console.WriteLine("No URLs to save");
                         }
                     }
 
