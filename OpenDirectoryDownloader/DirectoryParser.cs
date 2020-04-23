@@ -824,14 +824,6 @@ namespace OpenDirectoryDownloader
             {
                 string fileSizeGroup = match.Groups["FileSize"].Value.Trim();
 
-                bool isFile = long.TryParse(fileSizeGroup, out long fileSize);
-
-                if (!isFile && IsFileSize(fileSizeGroup))
-                {
-                    fileSize = FileSizeHelper.ParseFileSize(fileSizeGroup);
-                    isFile = fileSize > 0;
-                }
-
                 IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
                 IElement link = parsedLine.QuerySelector("a");
                 string linkHref = link.Attributes["href"].Value;
@@ -841,6 +833,14 @@ namespace OpenDirectoryDownloader
 
                 if (IsValidLink(link))
                 {
+                    bool isFile = long.TryParse(fileSizeGroup, out long fileSize);
+
+                    if (!isFile && IsFileSize(fileSizeGroup))
+                    {
+                        fileSize = FileSizeHelper.ParseFileSize(fileSizeGroup);
+                        isFile = fileSize > 0;
+                    }
+
                     if (!isFile)
                     {
                         webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
@@ -1893,6 +1893,7 @@ namespace OpenDirectoryDownloader
                 headerName.Contains("file name") ||
                 headerName.Contains("filename") ||
                 headerName == "directory" ||
+                headerName.Contains("link") ||
                 headerName.Contains("nom")))
             {
                 headerInfo.Type = HeaderType.FileName;
@@ -1920,7 +1921,7 @@ namespace OpenDirectoryDownloader
                 link.TextContent.ToLower() != "parent directory" &&
                 link.TextContent.Trim() != "Name" &&
                 linkHref?.Contains("&expand") == false &&
-                (!new Regex(@"\?[NMSD][AD]").IsMatch(linkHref) || linkHref.StartsWith("DirectoryList.asp")) &&
+                (!new Regex(@"\?[NMSD]=?[AD]").IsMatch(linkHref) || linkHref.StartsWith("DirectoryList.asp")) &&
                 (Path.GetFileName(linkHref) != "DirectoryList.asp" || !string.IsNullOrWhiteSpace(link.TextContent));
         }
     }

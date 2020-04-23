@@ -643,5 +643,81 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("Uncharted Lines (2017).mp4", webDirectory.Files[0].FileName);
             Assert.Equal(2469606195, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: http://ftp.uni-bayreuth.de/netsoftware/apache/trafficserver/patches/
+        /// Added to check for empty listing
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing97aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: http://82.94.215.218/download/
+        /// Added to check "Input string was not in a correct format."
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing98aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(27, webDirectory.Subdirectories.Count);
+            Assert.Equal("Dj Vela", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: http://82.94.215.218/download/Dj%20Vela/
+        /// Added to check "Input string was not in a correct format."
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing98bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(2, webDirectory.Subdirectories.Count);
+            Assert.Equal("short promo mixes", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(8, webDirectory.Files.Count);
+            Assert.Equal("DJ VELA & ROLLIN THUNDER 20.9.2014 in Tresor .mp3", webDirectory.Files[0].FileName);
+            Assert.Equal(288358400, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://ftp.heanet.ie/mirrors/ubuntu-cdimage/source/source/
+        /// Added to check for sortable headers on multiple properties
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing99aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(6, webDirectory.Subdirectories.Count);
+            Assert.Equal("20200403", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: https://archive.midnightchannel.net/SonyPS/Firmware/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing100aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(149, webDirectory.Files.Count);
+            Assert.Equal("CEX_CRC[37b6628d]_FW[v1.02]_PS3UPDAT.PUP", webDirectory.Files[0].FileName);
+            Assert.Equal(95357501, webDirectory.Files[0].FileSize);
+        }
     }
 }
