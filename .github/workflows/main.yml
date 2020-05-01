@@ -1,9 +1,6 @@
 name: Continuous Integration
 
-on:
-  push:
-    branches:
-      - master
+on: push
 
 jobs:
   build_and_zip:
