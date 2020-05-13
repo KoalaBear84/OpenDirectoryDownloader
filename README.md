@@ -15,9 +15,9 @@ If you have improvements, supply me with a pull request! If you have a format no
 
 ## Prerequisites
 
-Please install the newest preview of .NET Core 3.0.
+Please install the latest version of .NET Core 3.1.
 
-https://dotnet.microsoft.com/download/dotnet-core/3.0
+https://dotnet.microsoft.com/download/dotnet-core/3.1
 
 ## Usage
 
