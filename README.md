@@ -5,11 +5,11 @@ Written in C# with .NET Core, which means it is **cross platform**!
 
 Downloading is not (yet) implemented, but is already possible when you use the resulting file into another tool (for most of the formats).
 
-Downloading with [aria2c](https://aria2.github.io/):
-`aria2c -i theurlsfile.txt`
-
 Downloading with wget:
 `wget -x -i theurlsfile.txt`
+
+Downloading with [aria2c](https://aria2.github.io/) (Does not support directory structure..):
+`aria2c -i theurlsfile.txt`
 
 If you have improvements, supply me with a pull request! If you have a format not yet supported, please let me know.
 
@@ -59,7 +59,7 @@ If you want to learn more or contribute, see the following paragraphs!
 4. More help: https://docs.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio-code
 
 ## Building on Linux
-1. Install the newest preview of .NET Core 3.0. 
+1. Install the newest .NET Core 3.1. 
 2. `git clone https://github.com/KoalaBear84/OpenDirectoryDownloader`
 3. `cd OpenDirectoryDownloader/OpenDirectoryDownloader`
 4. `dotnet build .`
