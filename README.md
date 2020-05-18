@@ -13,6 +13,12 @@ Downloading with [aria2c](https://aria2.github.io/) (Does not support directory 
 
 If you have improvements, supply me with a pull request! If you have a format not yet supported, please let me know.
 
+## Releases / Binaries
+
+For builds (64-bit) for Windows, Linux and Mac:
+
+https://github.com/KoalaBear84/OpenDirectoryDownloader/releases
+
 ## Prerequisites
 
 Please install the latest version of .NET Core 3.1.
