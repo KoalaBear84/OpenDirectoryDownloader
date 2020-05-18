@@ -1,5 +1,5 @@
 # Open Directory Downloader
-Indexes open directories listings in 80+ supported formats, including FTP, Google Drive.
+Indexes open directories listings in 90+ supported formats, including FTP, Google Drive.
 
 Written in C# with .NET Core, which means it is **cross platform**!
 
@@ -58,15 +58,18 @@ If you want to learn more or contribute, see the following paragraphs!
 3. Clone the repository: https://code.visualstudio.com/docs/editor/versioncontrol#_cloning-a-repository
 4. More help: https://docs.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio-code
 
-## Building on Linux
-1. Install the newest .NET Core 3.1. 
+## Building
+1. Install the newest .NET Core 3.1 SDK. 
 2. `git clone https://github.com/KoalaBear84/OpenDirectoryDownloader`
 3. `cd OpenDirectoryDownloader/OpenDirectoryDownloader`
 4. `dotnet build .`
 5. `cd bin/Debug/netcoreapp3.0`
 6. `./OpenDirectoryDownloader --url "https://myopendirectory.com"`
 
+For Linux:
 Then, if you need to package it into a binary, you can use [warp-packer](https://github.com/dgiagio/warp#quickstart-with-net-core)
+
+When you have cloned the code, you can also run it without the SDK. For that, download the ["Runtime"](https://dotnet.microsoft.com/download) and do "`dotnet run .`" instead of build.
 
 ## Google Drive
 For Google Drive scanning you need to get a Google Drive API credentials file, it's free!
