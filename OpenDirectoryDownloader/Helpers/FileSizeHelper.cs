@@ -58,7 +58,7 @@ namespace OpenDirectoryDownloader.Helpers
                 }
 
                 // Get the numeric part.
-                double number = double.Parse(value.Substring(0, ext_start));
+                double number = double.Parse(value.Substring(0, ext_start), CultureInfo.InvariantCulture);
 
                 // Get the extension.
                 string suffix;
