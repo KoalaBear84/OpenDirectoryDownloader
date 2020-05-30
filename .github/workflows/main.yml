@@ -22,13 +22,13 @@ jobs:
       uses: actions/setup-dotnet@v1
 
     - name: Build with dotnet
-      run: dotnet build OpenDirectoryDownloader --configuration Release
+      run: dotnet build OpenDirectoryDownloader --no-restore --configuration Release
 
     - name: Test with dotnet
-      run: dotnet test OpenDirectoryDownloader --configuration Release
+      run: dotnet test OpenDirectoryDownloader --no-restore --configuration Release
 
     - name: Publish with dotnet win-x64
-      run: dotnet publish OpenDirectoryDownloader --configuration Release --framework netcoreapp3.1 --runtime win-x64 --no-self-contained --output ./OpenDirectoryDownloader-win-x64
+      run: dotnet publish OpenDirectoryDownloader --no-restore --configuration Release --framework netcoreapp3.1 --runtime win-x64 --no-self-contained --output ./OpenDirectoryDownloader-win-x64
 
     - name: Zipping win-x64
       uses: papeloto/action-zip@v1
@@ -37,7 +37,7 @@ jobs:
         dest: OpenDirectoryDownloader-win-x64.zip
 
     - name: Publish with dotnet linux-x64
-      run: dotnet publish OpenDirectoryDownloader --configuration Release --framework netcoreapp3.1 --runtime linux-x64 --no-self-contained --output ./OpenDirectoryDownloader-linux-x64
+      run: dotnet publish OpenDirectoryDownloader --no-restore --configuration Release --framework netcoreapp3.1 --runtime linux-x64 --no-self-contained --output ./OpenDirectoryDownloader-linux-x64
 
     - name: Zipping linux-x64
       uses: papeloto/action-zip@v1
@@ -46,7 +46,7 @@ jobs:
         dest: OpenDirectoryDownloader-linux-x64.zip
 
     - name: Publish with dotnet osx-x64
-      run: dotnet publish OpenDirectoryDownloader --configuration Release --framework netcoreapp3.1 --runtime osx-x64 --no-self-contained --output ./OpenDirectoryDownloader-osx-x64
+      run: dotnet publish OpenDirectoryDownloader --no-restore --configuration Release --framework netcoreapp3.1 --runtime osx-x64 --no-self-contained --output ./OpenDirectoryDownloader-osx-x64
 
     - name: Zipping osx-x64
       uses: papeloto/action-zip@v1
