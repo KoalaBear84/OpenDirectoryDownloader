@@ -30,7 +30,7 @@ namespace OpenDirectoryDownloader
                 "***  Press T for thread info                                             ***\n" +
                 "***  Press J for Save JSON                                               ***\n" +
                 "***                                                                      ***\n" +
-                "***  Press ESC to EXIT                                                   ***\n" +
+                "***  Press ESC or X to EXIT                                              ***\n" +
                 "****************************************************************************\n" +
                 "****************************************************************************"
             );
@@ -38,41 +38,101 @@ namespace OpenDirectoryDownloader
 
         internal static void ProcessConsoleInput(OpenDirectoryIndexer openDirectoryIndexer)
         {
+            if (Console.IsInputRedirected)
+            {
+                string message = "Console input is redirect, maybe it is run inside another host. This could mean that no input will be send/processed.";
+                Console.WriteLine(message);
+                Logger.Warn(message);
+            }
+
             while (true)
             {
                 try
                 {
-                    switch (Console.ReadKey(true).Key)
+                    if (Console.IsInputRedirected)
                     {
-                        case ConsoleKey.Escape:
-                            KillApplication();
-                            break;
-                        case ConsoleKey.I:
-                            ShowInfoAndCommands();
-                            break;
-                        case ConsoleKey.C:
-                            if (openDirectoryIndexer.Session.Finished != DateTimeOffset.MinValue)
-                            {
-                                Clipboard.SetText(Statistics.GetSessionStats(openDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
+                        int keyPressed = Console.Read();
+
+                        //if (char.IsControl((char)keyPressed))
+                        //{
+                        //    Console.WriteLine($"Pressed Console.Read(): {keyPressed}");
+                        //}
+                        //else
+                        //{
+                        //    Console.WriteLine($"Pressed Console.Read(): {(char)keyPressed}");
+                        //}
+
+                        switch (keyPressed)
+                        {
+                            case 'x':
+                            case 'X':
                                 KillApplication();
-                            }
-                            break;
-                        case ConsoleKey.S:
-                            ShowStatistics(openDirectoryIndexer);
-                            break;
-                        case ConsoleKey.T:
-                            ShowThreads(openDirectoryIndexer);
-                            break;
-                        case ConsoleKey.J:
-                            SaveSession(openDirectoryIndexer);
-                            break;
-                        default:
-                            break;
+                                break;
+                            case 'i':
+                                ShowInfoAndCommands();
+                                break;
+                            case 'c':
+                                if (OpenDirectoryIndexer.Session.Finished != DateTimeOffset.MinValue)
+                                {
+                                    Clipboard.SetText(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
+                                    KillApplication();
+                                }
+                                break;
+                            case 's':
+                            case 'S':
+                                ShowStatistics(openDirectoryIndexer);
+                                break;
+                            case 't':
+                            case 'T':
+                                ShowThreads(openDirectoryIndexer);
+                                break;
+                            case 'j':
+                            case 'J':
+                                SaveSession(openDirectoryIndexer);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        ConsoleKey keyPressed = Console.ReadKey(intercept: true).Key;
+                        //Console.WriteLine($"Pressed (Console.ReadKey(): {keyPressed}");
+
+                        switch (keyPressed)
+                        {
+                            case ConsoleKey.X:
+                            case ConsoleKey.Escape:
+                                KillApplication();
+                                break;
+                            case ConsoleKey.I:
+                                ShowInfoAndCommands();
+                                break;
+                            case ConsoleKey.C:
+                                if (openDirectoryIndexer.Session.Finished != DateTimeOffset.MinValue)
+                                {
+                                    Clipboard.SetText(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
+                                    KillApplication();
+                                }
+                                break;
+                            case ConsoleKey.S:
+                                ShowStatistics(openDirectoryIndexer);
+                                break;
+                            case ConsoleKey.T:
+                                ShowThreads(openDirectoryIndexer);
+                                break;
+                            case ConsoleKey.J:
+                                SaveSession(openDirectoryIndexer);
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
                     Logger.Error(ex, "Error processing action");
+                    throw;
                 }
             }
         }
