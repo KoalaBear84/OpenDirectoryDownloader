@@ -72,7 +72,7 @@ namespace OpenDirectoryDownloader
                                 ShowInfoAndCommands();
                                 break;
                             case 'c':
-                                if (OpenDirectoryIndexer.Session.Finished != DateTimeOffset.MinValue)
+                                if (openDirectoryIndexer.Session.Finished != DateTimeOffset.MinValue)
                                 {
                                     Clipboard.SetText(Statistics.GetSessionStats(openDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
                                     KillApplication();
@@ -142,7 +142,7 @@ namespace OpenDirectoryDownloader
             try
             {
                 Console.WriteLine("Saving session to JSON");
-                Library.SaveSessionJson(OpenDirectoryIndexer.Session);
+                Library.SaveSessionJson(openDirectoryIndexer.Session);
                 Console.WriteLine("Saved session to JSON");
             }
             catch (Exception ex)
