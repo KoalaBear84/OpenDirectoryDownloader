@@ -1,4 +1,4 @@
-﻿using AngleSharp.Dom;
+using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
 using Newtonsoft.Json;
@@ -1359,6 +1359,7 @@ namespace OpenDirectoryDownloader
 
         private static WebDirectory ParseDirectoryListerDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument)
         {
+            parsedWebDirectory.Parser = "ParseDirectoryListerDirectoryListing";
             List<HeaderInfo> tableHeaderInfos = new List<HeaderInfo>();
 
             IHtmlCollection<IElement> headerDivs = htmlDocument.QuerySelectorAll("#content > div > div > div");
