@@ -22,7 +22,7 @@ jobs:
       uses: actions/setup-dotnet@v1
 
     - name: Build with dotnet
-      run: dotnet build OpenDirectoryDownloader --no-restore --configuration Release
+      run: dotnet build OpenDirectoryDownloader --configuration Release
 
     - name: Test with dotnet
       run: dotnet test OpenDirectoryDownloader --no-restore --configuration Release
