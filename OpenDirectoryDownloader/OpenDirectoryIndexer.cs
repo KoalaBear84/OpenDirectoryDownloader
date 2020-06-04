@@ -25,7 +25,7 @@ namespace OpenDirectoryDownloader
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private static readonly Logger HistoryLogger = LogManager.GetLogger("historyFile");
 
-        public Session Session { get; set; }
+        public static Session Session { get; set; }
 
         public ConcurrentQueue<WebDirectory> WebDirectoriesQueue { get; set; } = new ConcurrentQueue<WebDirectory>();
         public int RunningWebDirectoryThreads;

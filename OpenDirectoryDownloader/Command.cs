@@ -72,9 +72,9 @@ namespace OpenDirectoryDownloader
                                 ShowInfoAndCommands();
                                 break;
                             case 'c':
-                                if (openDirectoryIndexer.Session.Finished != DateTimeOffset.MinValue)
+                                if (OpenDirectoryIndexer.Session.Finished != DateTimeOffset.MinValue)
                                 {
-                                    Clipboard.SetText(Statistics.GetSessionStats(openDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
+                                    Clipboard.SetText(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
                                     KillApplication();
                                 }
                                 break;
@@ -109,9 +109,9 @@ namespace OpenDirectoryDownloader
                                 ShowInfoAndCommands();
                                 break;
                             case ConsoleKey.C:
-                                if (openDirectoryIndexer.Session.Finished != DateTimeOffset.MinValue)
+                                if (OpenDirectoryIndexer.Session.Finished != DateTimeOffset.MinValue)
                                 {
-                                    Clipboard.SetText(Statistics.GetSessionStats(openDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
+                                    Clipboard.SetText(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
                                     KillApplication();
                                 }
                                 break;
@@ -142,7 +142,7 @@ namespace OpenDirectoryDownloader
             try
             {
                 Console.WriteLine("Saving session to JSON");
-                Library.SaveSessionJson(openDirectoryIndexer.Session);
+                Library.SaveSessionJson(OpenDirectoryIndexer.Session);
                 Console.WriteLine("Saved session to JSON");
             }
             catch (Exception ex)
@@ -173,7 +173,7 @@ namespace OpenDirectoryDownloader
 
         private static void ShowStatistics(OpenDirectoryIndexer openDirectoryIndexer)
         {
-            Console.WriteLine(Statistics.GetSessionStats(openDirectoryIndexer.Session, includeExtensions: true));
+            Console.WriteLine(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true));
             Console.WriteLine($"Queue: {Library.FormatWithThousands(openDirectoryIndexer.WebDirectoriesQueue.Count)}, Threads: {openDirectoryIndexer.RunningWebDirectoryThreads}");
             Console.WriteLine($"Queue (filesize): {Library.FormatWithThousands(openDirectoryIndexer.WebFilesFileSizeQueue.Count)}, Threads (filesize): {openDirectoryIndexer.RunningWebFileFileSizeThreads}");
         }
