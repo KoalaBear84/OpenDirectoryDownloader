@@ -74,6 +74,13 @@ namespace OpenDirectoryDownloader
                     return ParseDirectoryListingDoctComDirectoryListing(baseUrl, parsedWebDirectory, directoryListingDotComlistItems);
                 }
 
+                IHtmlCollection<IElement> directoryListingDotCom2listItems = htmlDocument.QuerySelectorAll(".directory-listing li");
+
+                if (directoryListingDotCom2listItems.Any())
+                {
+                    return ParseDirectoryListingDoctComDirectoryListing(baseUrl, parsedWebDirectory, directoryListingDotCom2listItems);
+                }
+
                 IHtmlCollection<IElement> h5aiTableRows = htmlDocument.QuerySelectorAll("#fallback table tr");
 
                 if (h5aiTableRows.Any())
