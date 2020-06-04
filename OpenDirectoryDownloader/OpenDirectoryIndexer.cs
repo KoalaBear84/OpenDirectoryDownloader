@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using NLog;
 using OpenDirectoryDownloader.Calibre;
 using OpenDirectoryDownloader.FileUpload;
@@ -536,15 +536,27 @@ namespace OpenDirectoryDownloader
 
         private bool SameHostAndDirectory(Uri baseUri, Uri checkUri)
         {
-            string urlWithoutFileName = checkUri.LocalPath;
-            string fileName = Path.GetFileName(checkUri.ToString());
+            string checkUrlWithoutFileName = checkUri.LocalPath;
+            string checkUrlFileName = Path.GetFileName(checkUri.ToString());
 
-            if (!string.IsNullOrWhiteSpace(fileName))
+            if (!string.IsNullOrWhiteSpace(checkUrlFileName))
             {
-                urlWithoutFileName = checkUri.LocalPath.Replace(fileName, string.Empty);
+                checkUrlWithoutFileName = checkUri.LocalPath.Replace(checkUrlFileName, string.Empty);
             }
 
-            return baseUri.Host == checkUri.Host && (checkUri.LocalPath.StartsWith(baseUri.LocalPath) || baseUri.LocalPath.StartsWith(urlWithoutFileName));
+            string baseUrlWithoutFileName = baseUri.LocalPath;
+            string baseUrlFileName = Path.GetFileName(baseUri.ToString());
+
+            if (!string.IsNullOrWhiteSpace(baseUrlFileName))
+            {
+                baseUrlWithoutFileName = baseUri.LocalPath.Replace(baseUrlFileName, string.Empty);
+            }
+
+            return baseUri.ToString() == checkUri.ToString() || (baseUri.Host == checkUri.Host && (
+                checkUri.LocalPath.StartsWith(baseUri.LocalPath) ||
+                checkUri.LocalPath.StartsWith(baseUrlWithoutFileName) ||
+                baseUri.LocalPath.StartsWith(checkUrlWithoutFileName)
+            ));
         }
 
         private async Task ProcessWebDirectoryAsync(string name, WebDirectory webDirectory, CancellationToken cancellationToken)
