@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader
@@ -44,9 +45,21 @@ namespace OpenDirectoryDownloader
             return scansPath;
         }
 
+        public static bool IsBase64String(string base64)
+        {
+            Span<byte> buffer = new Span<byte>(new byte[base64.Length]);
+            return Convert.TryFromBase64String(base64, buffer, out int bytesParsed);
+        }
+
         public static string FixUrl(string url)
         {
             url = url.Trim();
+
+            if (IsBase64String(url))
+            {
+                byte[] data = Convert.FromBase64String(url);
+                url = Encoding.UTF8.GetString(data);
+            }
 
             if (!url.Contains("http:") && !url.Contains("https:") && !url.Contains("ftp:"))
             {
@@ -193,27 +206,6 @@ namespace OpenDirectoryDownloader
         public static DateTime UnixTimestampToDateTime(long unixTimeStamp)
         {
             return new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(unixTimeStamp);
-        }
-
-        public static bool IsBase64(string base64String)
-        {
-            if (string.IsNullOrEmpty(base64String) || base64String.Length % 4 != 0
-               || base64String.Contains(" ") || base64String.Contains("\t") || base64String.Contains("\r") || base64String.Contains("\n"))
-            {
-                return false;
-            }
-
-            try
-            {
-                Convert.FromBase64String(base64String);
-                return true;
-            }
-            catch (Exception)
-            {
-                // Handle the exception
-            }
-
-            return false;
         }
     }
 }

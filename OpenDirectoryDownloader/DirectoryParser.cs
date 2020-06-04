@@ -688,7 +688,7 @@ namespace OpenDirectoryDownloader
 
                                         if (urlEncodingParser["folder"] != null)
                                         {
-                                            if (Library.IsBase64(urlEncodingParser["folder"]))
+                                            if (Library.IsBase64String(urlEncodingParser["folder"]))
                                             {
                                                 directoryName = Encoding.UTF8.GetString(Convert.FromBase64String(urlEncodingParser["folder"]));
                                             }
