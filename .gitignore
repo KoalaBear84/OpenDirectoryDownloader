@@ -358,3 +358,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+### Custom OpenDirectoryDownloader enties
+# Google Drive API Credentials
+/OpenDirectoryDownloader.GoogleDrive/OpenDirectoryDownloader.GoogleDrive.json
+# Local todo file
+/TODO.txt
