@@ -1,4 +1,4 @@
-﻿using FluentFTP;
+using FluentFTP;
 using NLog;
 using OpenDirectoryDownloader.Shared.Models;
 using Polly;
@@ -152,8 +152,8 @@ namespace OpenDirectoryDownloader
             {
                 string[] splitted = webDirectory.Uri.UserInfo.Split(':');
 
-                username = splitted.First();
-                password = splitted.Last();
+                username = WebUtility.UrlDecode(splitted.First());
+                password = WebUtility.UrlDecode(splitted.Last());
             }
         }
     }
