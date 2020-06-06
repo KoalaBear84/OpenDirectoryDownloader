@@ -5,7 +5,7 @@ using Xunit;
 
 namespace OpenDirectoryDownloader.Tests
 {
-    public class DirectoryParser76_100Tests : DirectoryParserTests
+    public class DirectoryParser076_100Tests : DirectoryParserTests
     {
         /// <summary>
         /// Url: http://www.colladomusical.com/Music/index.php?dir=Musica/

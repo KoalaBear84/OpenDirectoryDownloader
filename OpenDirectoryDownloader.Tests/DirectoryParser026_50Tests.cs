@@ -5,7 +5,7 @@ using Xunit;
 
 namespace OpenDirectoryDownloader.Tests
 {
-    public class DirectoryParser26_50Tests : DirectoryParserTests
+    public class DirectoryParser026_50Tests : DirectoryParserTests
     {
         /// <summary>
         /// Url: http://blindleaf.freeservers.com/Tabs/
