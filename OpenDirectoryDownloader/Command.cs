@@ -74,7 +74,7 @@ namespace OpenDirectoryDownloader
                             case 'c':
                                 if (OpenDirectoryIndexer.Session.Finished != DateTimeOffset.MinValue)
                                 {
-                                    Clipboard.SetText(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
+                                    new Clipboard().SetText(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
                                     KillApplication();
                                 }
                                 break;
@@ -111,7 +111,7 @@ namespace OpenDirectoryDownloader
                             case ConsoleKey.C:
                                 if (OpenDirectoryIndexer.Session.Finished != DateTimeOffset.MinValue)
                                 {
-                                    Clipboard.SetText(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
+                                    new Clipboard().SetText(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
                                     KillApplication();
                                 }
                                 break;
