@@ -117,7 +117,15 @@ namespace OpenDirectoryDownloader.GoogleDrive
                     catch (GoogleApiException ex)
                     {
                         rateLimitException = ex.Error.Message == "User rate limit exceeded.";
-                        Logger.Debug($"Google Drive rate limit, try again");
+
+                        if (rateLimitException)
+                        {
+                            Logger.Debug($"Google Drive rate limit, try again");
+                        }
+                        else
+                        {
+                            Logger.Error($"Google Drive error: {ex}");
+                        }
                     }
                 } while (rateLimitException);
             } while (!string.IsNullOrWhiteSpace(nextPageToken));
