@@ -5,4 +5,4 @@ WORKDIR /app
 
 RUN dotnet build OpenDirectoryDownloader
 
-ENTRYPOINT ["./OpenDirectoryDownloader/bin/Debug/netcoreapp3.0/OpenDirectoryDownloader"]
+ENTRYPOINT ["./OpenDirectoryDownloader/bin/Debug/netcoreapp3.1/OpenDirectoryDownloader"]
