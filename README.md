@@ -45,7 +45,7 @@ Command line parameters:
 | | `--password` | Password
 
 Example:
-`OpenDirectoryDownloaded.exe --url "https://myopendirectory.com"`
+`OpenDirectoryDownloader.exe --url "https://myopendirectory.com"`
 
 If you want to learn more or contribute, see the following paragraphs!
 
