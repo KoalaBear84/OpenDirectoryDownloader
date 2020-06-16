@@ -577,7 +577,7 @@ namespace OpenDirectoryDownloader
                 html = await GetHtml(httpResponseMessage);
             }
 
-            if (FirstRequest && !httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.IsSuccessStatusCode && string.IsNullOrWhiteSpace(html))
+            if (FirstRequest && !httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.IsSuccessStatusCode && string.IsNullOrWhiteSpace(html) || html?.Contains("HTTP_USER_AGENT") == true)
             {
                 Logger.Warn("First request fails, using Curl fallback User-Agent");
                 HttpClient.DefaultRequestHeaders.UserAgent.Clear();
@@ -589,7 +589,7 @@ namespace OpenDirectoryDownloader
                     SetRootUrl(httpResponseMessage);
 
                     html = await GetHtml(httpResponseMessage);
-                    Logger.Warn("Yes, the Curl User-Agent did the trick!");
+                    Logger.Warn("Yes, Curl User-Agent did the trick!");
                 }
             }
 
@@ -605,7 +605,7 @@ namespace OpenDirectoryDownloader
                     SetRootUrl(httpResponseMessage);
 
                     html = await GetHtml(httpResponseMessage);
-                    Logger.Warn("Yes, the Chrome User-Agent did the trick!");
+                    Logger.Warn("Yes, Chrome User-Agent did the trick!");
                 }
             }
 
