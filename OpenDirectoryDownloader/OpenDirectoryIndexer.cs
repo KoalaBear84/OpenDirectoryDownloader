@@ -85,12 +85,13 @@ namespace OpenDirectoryDownloader
                         }
                         else
                         {
+                            Logger.Warn($"[{context["Processor"]}] Cancelling on try {retryCount} for url '{relativeUrl}'.");
                             (context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
                         }
-
                     }
                     else if (webDirectory.Uri.Segments.LastOrDefault() == "cgi-bin/")
                     {
+                        Logger.Warn($"[{context["Processor"]}] Cancelling on try {retryCount} for url '{relativeUrl}'.");
                         (context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
                     }
                     else
@@ -101,6 +102,7 @@ namespace OpenDirectoryDownloader
                         }
                         else
                         {
+                            Logger.Warn($"[{context["Processor"]}] Cancelling on try {retryCount} for url '{relativeUrl}'.");
                             (context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
                         }
                     }
