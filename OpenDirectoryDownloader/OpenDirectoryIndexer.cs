@@ -301,7 +301,11 @@ namespace OpenDirectoryDownloader
                                     Console.WriteLine($"Starting speedtest (10-25 seconds)...");
                                     Console.WriteLine($"Test file: {FileSizeHelper.ToHumanReadable(biggestFile.FileSize)} {biggestFile.Url}");
                                     Session.SpeedtestResult = await Library.DoSpeedTestAsync(HttpClient, biggestFile.Url);
+
+                                    if (Session.SpeedtestResult != null)
+                                    {
                                     Console.WriteLine($"Finished speedtest. Downloaded: {FileSizeHelper.ToHumanReadable(Session.SpeedtestResult.DownloadedBytes)}, Time: {Session.SpeedtestResult.ElapsedMiliseconds / 1000:F1} s, Speed: {Session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({Session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)");
+                                }
                                 }
                                 catch (Exception ex)
                                 {

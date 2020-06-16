@@ -184,10 +184,17 @@ namespace OpenDirectoryDownloader
                     {
                         DownloadedBytes = totalBytesRead,
                         ElapsedMiliseconds = stopwatch.ElapsedMilliseconds,
-                        MaxMBsPerSecond = measurements.GroupBy(m => m.Key / 1000).Max(s => GetSpeedInMBs(s, 1000))
+                        MaxMBsPerSecond = measurements.Any() ? measurements.GroupBy(m => m.Key / 1000).Max(s => GetSpeedInMBs(s, 1000)) : 0
                     };
 
-                    Logger.Info($"Downloaded: {speedtestResult.DownloadedMBs:F2} MB, Time: {speedtestResult.ElapsedMiliseconds} ms, Speed: {speedtestResult.MaxMBsPerSecond:F1} MB/s ({speedtestResult.MaxMBsPerSecond * 8:F0} mbit)");
+                    if (measurements.Any())
+                    {
+                        Logger.Info($"Downloaded: {speedtestResult.DownloadedMBs:F2} MB, Time: {speedtestResult.ElapsedMiliseconds} ms, Speed: {speedtestResult.MaxMBsPerSecond:F1} MB/s ({speedtestResult.MaxMBsPerSecond * 8:F0} mbit)");
+                    }
+                    else
+                    {
+                        Logger.Warn($"Speedtest failed, nothing downloaded.");
+                    }
 
                     return speedtestResult;
                 }
