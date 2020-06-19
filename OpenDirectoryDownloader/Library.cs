@@ -161,6 +161,11 @@ namespace OpenDirectoryDownloader
                             {
                                 List<IGrouping<long, KeyValuePair<long, long>>> perSecond = measurements.GroupBy(m => m.Key / 1000).ToList();
 
+                                if (!perSecond.Any())
+                                {
+                                    break;
+                                }
+
                                 double maxSpeedLastSeconds = perSecond.TakeLast(3).Max(s => GetSpeedInMBs(s, 1000));
                                 double maxSpeedBefore = perSecond.Take(perSecond.Count - 3).Max(s => GetSpeedInMBs(s, 1000));
 
