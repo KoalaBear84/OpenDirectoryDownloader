@@ -1,5 +1,5 @@
 # Open Directory Downloader
-Indexes open directories listings in 90+ supported formats, including FTP, Google Drive.
+Indexes open directories listings in 95+ supported formats, including FTP, Google Drive.
 
 Written in C# with .NET Core, which means it is **cross platform**!
 
@@ -53,8 +53,8 @@ If you want to learn more or contribute, see the following paragraphs!
 
 ### For Visual Studio (Windows)
 1. Install Visual Studio: https://visualstudio.microsoft.com/vs/community/
-  a. With workload: ".NET Core cross-platform development"
-  b. With individual components: Code tools > Git for Windows and Code tools > GitHub extension for Visual Studio
+* With workload: ".NET Core cross-platform development"
+* With individual components: Code tools > Git for Windows and Code tools > GitHub extension for Visual Studio
 2. Be sure to install Git: https://git-scm.com/downloads
 3. Clone the repository by clicking "Clone or download" and click "Open in Visual Studio"
 
@@ -69,7 +69,7 @@ If you want to learn more or contribute, see the following paragraphs!
 2. `git clone https://github.com/KoalaBear84/OpenDirectoryDownloader`
 3. `cd OpenDirectoryDownloader/OpenDirectoryDownloader`
 4. `dotnet build .`
-5. `cd bin/Debug/netcoreapp3.0`
+5. `cd bin/Debug/netcoreapp3.1`
 6. `./OpenDirectoryDownloader --url "https://myopendirectory.com"`
 
 For Linux:
