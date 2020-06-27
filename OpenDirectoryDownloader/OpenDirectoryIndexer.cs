@@ -267,6 +267,8 @@ namespace OpenDirectoryDownloader
                                 {
                                     Console.WriteLine("Uploading URLs...");
 
+                                    try
+                                    {
                                     //UploadFilesFile uploadFilesFile = await UploadFileIo.UploadFile(HttpClient, urlsPath);
                                     //HistoryLogger.Info($"uploadfiles.io: {JsonConvert.SerializeObject(uploadFilesFile)}");
                                     //Session.UploadedUrlsUrl = uploadFilesFile.Url.ToString();
@@ -276,6 +278,11 @@ namespace OpenDirectoryDownloader
                                     Session.UploadedUrlsUrl = uploadedFile.Url.ToString();
 
                                     Console.WriteLine($"Uploaded URLs: {Session.UploadedUrlsUrl}");
+                                }
+                                    catch (Exception ex)
+                                    {
+                                        Logger.Warn($"Error uploading URLs: {ex.Message}");
+                                    }
                                 }
                             }
                             catch (Exception ex)

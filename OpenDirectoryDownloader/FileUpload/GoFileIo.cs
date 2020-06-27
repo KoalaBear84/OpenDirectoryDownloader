@@ -16,7 +16,14 @@ namespace OpenDirectoryDownloader.FileUpload
         {
             string jsonServer = await httpClient.GetStringAsync("https://apiv2.gofile.io/getServer");
 
-            string server = JObject.Parse(jsonServer).SelectToken("data.server").Value<string>();
+            JObject result = JObject.Parse(jsonServer);
+
+            if (result["status"].Value<string>() == "error")
+            {
+                throw new Exception("GoFile.io error, probably in maintenance");
+            }
+
+            string server = result.SelectToken("data.server").Value<string>();
 
             using (MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent($"Upload----{Guid.NewGuid()}"))
             {
