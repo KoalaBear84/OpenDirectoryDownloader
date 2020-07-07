@@ -28,9 +28,9 @@ namespace OpenDirectoryDownloader.Site.BlitzfilesTech
                     Logger.Info($"{Parser} will always be indexed with only 1 thread, else you will run into problems and errors.");
                     //OpenDirectoryIndexer.Session.MaxThreads = 1;
 
-                    //Console.WriteLine("Check if password is needed (unsupported currently)...");
-                    //Logger.Info("Check if password is needed (unsupported currently)...");
-                    //OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] = string.Empty;
+                    Console.WriteLine("Check if password is needed (unsupported currently)...");
+                    Logger.Info("Check if password is needed (unsupported currently)...");
+                    OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] = string.Empty;
 
                     HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(GetFolderUrl(driveHash, string.Empty, 0));
 
