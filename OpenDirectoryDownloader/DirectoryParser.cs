@@ -62,16 +62,6 @@ namespace OpenDirectoryDownloader
                     return await BlitzfilesTechParser.ParseIndex(httpClient, webDirectory);
                 }
 
-                if (htmlDocument.QuerySelector("script[src*=\"goindex-drive\"]") != null || htmlDocument.QuerySelector("script[src*=\"/goindex/\"]") != null)
-                {
-                    return await GoIndexParser.ParseIndex(httpClient, webDirectory);
-                }
-
-                if (htmlDocument.QuerySelector("script[src*=\"Bhadoo-Drive-Index\"]") != null)
-                {
-                    return await BhadooIndexParser.ParseIndex(httpClient, webDirectory);
-                }
-
                 htmlDocument.QuerySelectorAll("#sidebar").ToList().ForEach(e => e.Remove());
                 htmlDocument.QuerySelectorAll("nav").ToList().ForEach(e => e.Remove());
 
