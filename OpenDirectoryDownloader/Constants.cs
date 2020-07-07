@@ -3,7 +3,9 @@
     public class Constants
     {
         public const string GoogleDriveDomain = "drive.google.com";
+        public const string BlitzfilesTechDomain = "blitzfiles.tech";
         public const string DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+        public const string Parameters_Password = "PASSWORD";
 
         public class UserAgent
         {

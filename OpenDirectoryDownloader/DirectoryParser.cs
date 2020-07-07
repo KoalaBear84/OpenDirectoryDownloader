@@ -8,6 +8,7 @@ using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
+using OpenDirectoryDownloader.Site.BlitzfilesTech;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -49,13 +50,19 @@ namespace OpenDirectoryDownloader
 
             try
             {
-                if (webDirectory.Uri.Host == Constants.GoogleDriveDomain)
+                IHtmlDocument htmlDocument = await HtmlParser.ParseDocumentAsync(html);
+
+                if (webDirectory.Uri.Host == "ipfs.io" || webDirectory.Uri.Host == "gateway.ipfs.io")
                 {
                     return await GoogleDriveIndexer.IndexAsync(webDirectory);
                     //return GoogleDriveParser.ParseGoogleDriveHtml(html, webDirectory);
                 }
 
-                IHtmlDocument htmlDocument = await HtmlParser.ParseDocumentAsync(html);
+                if (webDirectory.Uri.Host == Constants.BlitzfilesTechDomain)
+                {
+                    return await BlitzfilesTechParser.ParseIndex(httpClient, webDirectory);
+                }
+
 
                 if (webDirectory.Uri.Host == "ipfs.io" || webDirectory.Uri.Host == "gateway.ipfs.io")
                 {

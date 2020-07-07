@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
@@ -11,6 +11,7 @@ namespace OpenDirectoryDownloader.Shared.Models
         public DateTimeOffset Started { get; set; } = DateTimeOffset.MinValue;
         public DateTimeOffset Finished { get; set; } = DateTimeOffset.MinValue;
         public Dictionary<int, int> HttpStatusCodes { get; set; } = new Dictionary<int, int>();
+        public Dictionary<string, string> Parameters { get; set; } = new Dictionary<string, string>();
         public long TotalHttpTraffic { get; set; }
         public int TotalHttpRequests { get; set; }
         public int TotalFiles { get; set; }

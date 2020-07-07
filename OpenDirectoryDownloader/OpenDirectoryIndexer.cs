@@ -243,7 +243,7 @@ namespace OpenDirectoryDownloader
                     Session.TotalFiles = Session.Root.TotalFiles;
                     Session.TotalFileSizeEstimated = Session.Root.TotalFileSize;
 
-                    if (!OpenDirectoryIndexerSettings.CommandLineOptions.NoUrls && Session.Root.Uri.Host != Constants.GoogleDriveDomain)
+                    if (!OpenDirectoryIndexerSettings.CommandLineOptions.NoUrls && Session.Root.Uri.Host != Constants.GoogleDriveDomain && Session.Root.Uri.Host != Constants.BlitzfilesTechDomain)
                     {
                         if (Session.TotalFiles > 0)
                         {
@@ -297,7 +297,7 @@ namespace OpenDirectoryDownloader
                         }
                     }
 
-                    if (OpenDirectoryIndexerSettings.CommandLineOptions.Speedtest && Session.Root.Uri.Host != Constants.GoogleDriveDomain)
+                    if (OpenDirectoryIndexerSettings.CommandLineOptions.Speedtest && Session.Root.Uri.Host != Constants.GoogleDriveDomain && Session.Root.Uri.Host != Constants.BlitzfilesTechDomain)
                     {
                         if (Session.TotalFiles > 0)
                         {
@@ -466,7 +466,7 @@ namespace OpenDirectoryDownloader
                             }
                             else
                             {
-                                if (SameHostAndDirectory(Session.Root.Uri, webDirectory.Uri))
+                                if (Session.Root.Uri.Host == Constants.BlitzfilesTechDomain || SameHostAndDirectory(Session.Root.Uri, webDirectory.Uri))
                                 {
                                     Logger.Debug($"[{name}] Start download '{webDirectory.Url}'");
                                     Session.TotalHttpRequests++;
@@ -765,7 +765,7 @@ namespace OpenDirectoryDownloader
                 {
                     if (!Session.ProcessedUrls.Contains(subdirectory.Url))
                     {
-                        if (subdirectory.Uri.Host != Constants.GoogleDriveDomain && !SameHostAndDirectory(Session.Root.Uri, subdirectory.Uri))
+                        if (subdirectory.Uri.Host != Constants.GoogleDriveDomain && subdirectory.Uri.Host != Constants.BlitzfilesTechDomain && !SameHostAndDirectory(Session.Root.Uri, subdirectory.Uri))
                         {
                             Logger.Debug($"Removed subdirectory {subdirectory.Uri} from parsed webdirectory because it is not the same host");
                         }
@@ -790,7 +790,7 @@ namespace OpenDirectoryDownloader
             {
                 Uri uri = new Uri(f.Url);
 
-                if (uri.Host == Constants.GoogleDriveDomain)
+                if (uri.Host == Constants.GoogleDriveDomain || uri.Host == Constants.BlitzfilesTechDomain)
                 {
                     return false;
                 }
