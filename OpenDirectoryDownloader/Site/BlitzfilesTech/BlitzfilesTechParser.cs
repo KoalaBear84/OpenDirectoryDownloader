@@ -26,7 +26,7 @@ namespace OpenDirectoryDownloader.Site.BlitzfilesTech
                 {
                     Console.WriteLine($"{Parser} will always be indexed with only 1 thread, else you will run into problems and errors.");
                     Logger.Info($"{Parser} will always be indexed with only 1 thread, else you will run into problems and errors.");
-                    OpenDirectoryIndexer.Session.MaxThreads = 1;
+                    //OpenDirectoryIndexer.Session.MaxThreads = 1;
 
                     //Console.WriteLine("Check if password is needed (unsupported currently)...");
                     //Logger.Info("Check if password is needed (unsupported currently)...");
