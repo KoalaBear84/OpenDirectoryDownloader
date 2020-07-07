@@ -54,8 +54,7 @@ namespace OpenDirectoryDownloader
 
                 if (webDirectory.Uri.Host == "ipfs.io" || webDirectory.Uri.Host == "gateway.ipfs.io")
                 {
-                    return await GoogleDriveIndexer.IndexAsync(webDirectory);
-                    //return GoogleDriveParser.ParseGoogleDriveHtml(html, webDirectory);
+                    return ParseIpfsDirectoryListing(baseUrl, parsedWebDirectory, htmlDocument);
                 }
 
                 if (webDirectory.Uri.Host == Constants.BlitzfilesTechDomain)
@@ -63,10 +62,14 @@ namespace OpenDirectoryDownloader
                     return await BlitzfilesTechParser.ParseIndex(httpClient, webDirectory);
                 }
 
-
-                if (webDirectory.Uri.Host == "ipfs.io" || webDirectory.Uri.Host == "gateway.ipfs.io")
+                if (htmlDocument.QuerySelector("script[src*=\"goindex-drive\"]") != null || htmlDocument.QuerySelector("script[src*=\"/goindex/\"]") != null)
                 {
-                    return ParseIpfsDirectoryListing(baseUrl, parsedWebDirectory, htmlDocument);
+                    return await GoIndexParser.ParseIndex(httpClient, webDirectory);
+                }
+
+                if (htmlDocument.QuerySelector("script[src*=\"Bhadoo-Drive-Index\"]") != null)
+                {
+                    return await BhadooIndexParser.ParseIndex(httpClient, webDirectory);
                 }
 
                 htmlDocument.QuerySelectorAll("#sidebar").ToList().ForEach(e => e.Remove());
