@@ -1154,6 +1154,65 @@ namespace OpenDirectoryDownloader
             return match.Success;
         };
 
+        private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser8 = async (webDirectory, baseUrl, line) =>
+        {
+            Match match = Regex.Match(line, @"<a.*<\/a>\s*\/?(?<FileSize>\S+)?");
+
+            if (match.Success)
+            {
+                bool isFile = !string.IsNullOrWhiteSpace(match.Groups["FileSize"].Value);
+
+                if (match.Groups["FileSize"].Value.Contains("<"))
+                {
+                    return false;
+                }
+
+                IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+
+                if (parsedLine.QuerySelector("a") != null)
+                {
+                    IElement link = parsedLine.QuerySelector("a");
+                    string linkHref = link.Attributes["href"].Value;
+
+                    if (IsValidLink(link))
+                    {
+                        Uri uri = new Uri(new Uri(baseUrl), linkHref);
+                        string fullUrl = uri.ToString();
+
+                        if (!isFile)
+                        {
+                            webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+                            {
+                                Parser = "RegexParser8",
+                                Url = fullUrl,
+                                Name = WebUtility.UrlDecode(linkHref)
+                            });
+                        }
+                        else
+                        {
+                            try
+                            {
+                                string fileSize = match.Groups["FileSize"].Value;
+
+                                webDirectory.Files.Add(new WebFile
+                                {
+                                    Url = fullUrl,
+                                    FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+                                    FileSize = FileSizeHelper.ParseFileSize(fileSize)
+                                });
+                            }
+                            catch (Exception ex)
+                            {
+                                Logger.Error(ex, $"Error parsing with RegexParser8");
+                            }
+                        }
+                    }
+                }
+            }
+
+            return match.Success;
+        };
+
         private static async Task<WebDirectory> ParsePreDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> pres)
         {
             List<Func<WebDirectory, string, string, Task<bool>>> regexFuncs = new List<Func<WebDirectory, string, string, Task<bool>>>
@@ -1165,6 +1224,7 @@ namespace OpenDirectoryDownloader
                 RegexParser5,
                 RegexParser6,
                 RegexParser7,
+                RegexParser8,
             };
 
             foreach (IElement pre in pres)

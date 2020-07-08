@@ -1,4 +1,4 @@
-using OpenDirectoryDownloader.Shared.Models;
+﻿using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -23,7 +23,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("Rulebooklet-PNP.pdf", webDirectory.Files[0].FileName);
             Assert.Equal(14680064, webDirectory.Files[0].FileSize);
         }
-
+        
         /// <summary>
         /// Url: https://media.thqnordic.com/?dir=Monkey_King/Trailer
         /// </summary>
@@ -83,6 +83,37 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal(24, webDirectory.Files.Count);
             Assert.Equal("Amazon.cbr", webDirectory.Files[0].FileName);
             Assert.Equal(-1, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://51.158.144.75:8081/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing104aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(165, webDirectory.Subdirectories.Count);
+            Assert.Equal("1917.2019.DVDSCR.x264-TOPKEK[TGx]", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(30, webDirectory.Files.Count);
+            Assert.Equal("Arrow.S07E01.HDTV.x264-SVA[eztv].mkv", webDirectory.Files[0].FileName);
+            Assert.Equal(307526887, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://51.158.144.75:8081/1917.2019.DVDSCR.x264-TOPKEK%5BTGx%5D/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing104bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(2, webDirectory.Files.Count);
+            Assert.Equal("1917.2019.DVDSCR.x264-TOPKEK.mp4", webDirectory.Files[0].FileName);
+            Assert.Equal(1202701165, webDirectory.Files[0].FileSize);
         }
     } 
 }
