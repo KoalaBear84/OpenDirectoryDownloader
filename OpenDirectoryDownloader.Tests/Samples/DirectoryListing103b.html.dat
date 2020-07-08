@@ -1,0 +1,30 @@
+﻿
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>./Comics/MARVEL/</title>
+ </head>
+<body>
+
+<h3>./Comics/MARVEL/</h3>
+<ul>
+<li type="circle"><a href="?path=./Comics/MARVEL/Avengers/">Avengers</a></li>
+<li type="circle"><a href="?path=./Comics/MARVEL/Black%20Panther/">Black Panther</a></li>
+<li type="circle"><a href="?path=./Comics/MARVEL/Blade/">Blade</a></li>
+<li type="circle"><a href="?path=./Comics/MARVEL/Captain%20America/">Captain America</a></li>
+<li type="circle"><a href="?path=./Comics/MARVEL/Captain%20Marvel/">Captain Marvel</a></li>
+<li type="circle"><a href="?path=./Comics/MARVEL/Comics/">Comics</a></li>
+<li type="circle"><a href="?path=./Comics/MARVEL/Daredevil/">Daredevil</a></li>
+<li type="circle"><a href="?path=./Comics/MARVEL/Deadpool/">Deadpool</a></li>
+<li type="circle"><a href="?path=./Comics/MARVEL/Fantastic%20Four/">Fantastic Four</a></li>
+<li type="circle"><a href="?path=./Comics/MARVEL/Ghost%20Rider/">Ghost Rider</a></li>
+<li type="circle"><a href="?path=./Comics/MARVEL/Hulk/">Hulk</a></li>
+<li type="circle"><a href="?path=./Comics/MARVEL/Ironman/">Ironman</a></li>
+<li type="circle"><a href="?path=./Comics/MARVEL/Spiderman/">Spiderman</a></li>
+<li type="circle"><a href="?path=./Comics/MARVEL/Thor/">Thor</a></li>
+<li type="circle"><a href="?path=./Comics/MARVEL/X-Men/">X-Men</a></li>
+</ul>
+</body>
+</html>

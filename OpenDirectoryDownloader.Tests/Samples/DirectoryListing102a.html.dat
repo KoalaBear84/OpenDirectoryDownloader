@@ -1,0 +1,99 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>THQ Nordic | Directory listing of https://media.thqnordic.com/Monkey_King/Trailer</title>
+        <link rel="shortcut icon" href="resources/themes/thqnordic-16/img/favicon.ico">
+
+        <!-- STYLES -->
+        <link rel="stylesheet" type="text/css" href="resources/themes/thqnordic-16/css/style.css">
+
+        <!-- META -->
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charset="utf-8">
+
+            </head>
+    <body>
+		<div class="wrapper">
+				<div class="breadcrumb">
+									<p class="navbar-text">
+																		  <a href="https://media.thqnordic.com/">Home</a>
+							  <span class="divider">/</span>
+																									  <a href="https://media.thqnordic.com/?dir=Monkey_King">Monkey_King</a>
+							  <span class="divider">/</span>
+																									Trailer																</p>
+				</div>
+        
+				<div class="logo">
+					<a href="http://www.thqnordic.com" title="THQ Nordic GmbH" target="_blank">
+						<img src="resources/themes/thqnordic-16/img/thqnordic-logo.png" alt="Logo: THQ Nordic GmbH" />
+					</a>
+					<h2>Media</h2>
+				</div>
+
+                        
+            <div class="directory-header">
+	            <div class="width-60 float-left">Name</div>
+	            <div class="width-30 float-left">Last Modified</div>
+	            <div class="width-10 float-left text-right">Size</div>
+            </div>
+
+            <ul class="directory-listing">
+	            	              <li data-name=".." data-href="https://media.thqnordic.com/?dir=Monkey_King">
+	                  <a href="https://media.thqnordic.com/?dir=Monkey_King" data-name="..">
+	                    <span class="file-name width-60"><img src="resources/themes/thqnordic-16/img/folder-home.png" alt="icon" />..</span>
+	                    <span class="file-modified width-30">2019-10-17 14:28:50</span>
+	                    <span class="file-size width-10 text-right">-</span>
+	                  </a>
+	              </li>
+	            	              <li data-name="PC" data-href="?dir=Monkey_King/Trailer/PC">
+	                  <a href="?dir=Monkey_King/Trailer/PC" data-name="PC">
+	                    <span class="file-name width-60"><img src="resources/themes/thqnordic-16/img/folder.png" alt="icon" />PC</span>
+	                    <span class="file-modified width-30">2019-10-17 14:22:43</span>
+	                    <span class="file-size width-10 text-right">-</span>
+	                  </a>
+	              </li>
+	            	              <li data-name="PS4 EU" data-href="?dir=Monkey_King/Trailer/PS4%20EU">
+	                  <a href="?dir=Monkey_King/Trailer/PS4%20EU" data-name="PS4 EU">
+	                    <span class="file-name width-60"><img src="resources/themes/thqnordic-16/img/folder.png" alt="icon" />PS4 EU</span>
+	                    <span class="file-modified width-30">2019-10-17 14:25:54</span>
+	                    <span class="file-size width-10 text-right">-</span>
+	                  </a>
+	              </li>
+	            	              <li data-name="PS4 US" data-href="?dir=Monkey_King/Trailer/PS4%20US">
+	                  <a href="?dir=Monkey_King/Trailer/PS4%20US" data-name="PS4 US">
+	                    <span class="file-name width-60"><img src="resources/themes/thqnordic-16/img/folder.png" alt="icon" />PS4 US</span>
+	                    <span class="file-modified width-30">2019-10-17 14:26:18</span>
+	                    <span class="file-size width-10 text-right">-</span>
+	                  </a>
+	              </li>
+	            	              <li data-name="MonkeyKing_DLC2_Trailer_PC_ESRB_EN.mp4" data-href="Monkey_King/Trailer/MonkeyKing_DLC2_Trailer_PC_ESRB_EN.mp4">
+	                  <a href="Monkey_King/Trailer/MonkeyKing_DLC2_Trailer_PC_ESRB_EN.mp4" data-name="MonkeyKing_DLC2_Trailer_PC_ESRB_EN.mp4">
+	                    <span class="file-name width-60"><img src="resources/themes/thqnordic-16/img/video.png" alt="icon" />MonkeyKing_DLC2_Trailer_PC_ESRB_EN.mp4</span>
+	                    <span class="file-modified width-30">2019-12-19 14:01:15</span>
+	                    <span class="file-size width-10 text-right">67.00MB</span>
+	                  </a>
+	              </li>
+	            	              <li data-name="Monkey_King_Announcement_Trailer.mp4" data-href="Monkey_King/Trailer/Monkey_King_Announcement_Trailer.mp4">
+	                  <a href="Monkey_King/Trailer/Monkey_King_Announcement_Trailer.mp4" data-name="Monkey_King_Announcement_Trailer.mp4">
+	                    <span class="file-name width-60"><img src="resources/themes/thqnordic-16/img/video.png" alt="icon" />Monkey_King_Announcement_Trailer.mp4</span>
+	                    <span class="file-modified width-30">2019-10-17 14:21:32</span>
+	                    <span class="file-size width-10 text-right">283.10MB</span>
+	                  </a>
+	              </li>
+	            	              <li data-name="Monkey_King_Uproar_in_Heaven_DLC_Trailer" data-href="Monkey_King/Trailer/Monkey_King_Uproar_in_Heaven_DLC_Trailer">
+	                  <a href="Monkey_King/Trailer/Monkey_King_Uproar_in_Heaven_DLC_Trailer" data-name="Monkey_King_Uproar_in_Heaven_DLC_Trailer">
+	                    <span class="file-name width-60"><img src="resources/themes/thqnordic-16/img/blank.png" alt="icon" />Monkey_King_Uproar_in_Heaven_DLC_Trailer</span>
+	                    <span class="file-modified width-30">2019-11-21 14:47:44</span>
+	                    <span class="file-size width-10 text-right">0.98GB</span>
+	                  </a>
+	              </li>
+	                        </ul>
+    </div>
+    
+<div class="footer">
+	<!-- Powered by, <a href="http://www.directorylister.com">Directory Lister</a> -->
+	Copyright © 2020 <a href="http://www.thqnordic.com" target="_blank">THQ Nordic GmbH</a> | <a href="https://www.thqnordic.com/legal/privacy" target="_blank">Privacy policy</a>
+</div>    </body>
+</html>

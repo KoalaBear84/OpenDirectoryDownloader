@@ -1478,7 +1478,7 @@ namespace OpenDirectoryDownloader
 
                     UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
 
-                    if (uri.Segments.Length == 1 && uri.Segments.Last() == "/" && urlEncodingParser["dir"] == null)
+                    if (uri.Segments.Length == 1 && uri.Segments.Last() == "/" && urlEncodingParser["dir"] == null && urlEncodingParser["path"] == null)
                     {
                         return;
                     }
@@ -1491,7 +1491,7 @@ namespace OpenDirectoryDownloader
                     parsedWebDirectory.ParsedSuccesfully = true;
 
                     bool directoryListAsp = Path.GetFileName(fullUrl) == "DirectoryList.asp" || fullUrl.Contains("DirectoryList.asp");
-                    bool dirParam = urlEncodingParser["dir"] != null;
+                    bool dirParam = urlEncodingParser["dir"] != null || urlEncodingParser["path"] != null;
 
                     if (!string.IsNullOrWhiteSpace(Path.GetExtension(fullUrl)) && !directoryListAsp && !dirParam)
                     {
@@ -1526,7 +1526,7 @@ namespace OpenDirectoryDownloader
                             {
                                 Parser = parser,
                                 Url = fullUrl,
-                                Name = urlEncodingParser["dir"]
+                                Name = urlEncodingParser["dir"] ?? WebUtility.UrlDecode(new Uri(parsedWebDirectory.Uri, urlEncodingParser["path"]).Segments.Last()).TrimEnd(new char[] { '/' })
                             });
                         }
                         else if (!directoryListAsp)
