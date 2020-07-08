@@ -453,7 +453,7 @@ namespace OpenDirectoryDownloader
 
         private static WebDirectory ParsePureDirectoryListing(ref string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> pureTableRows)
         {
-            string urlFromBreadcrumbs = string.Join("/", htmlDocument.QuerySelectorAll(".breadcrumbs_main .breadcrumb").Where(b => !b.ClassList.Contains("smaller")).Select(b => b.TextContent.Trim())) + "/";
+            string urlFromBreadcrumbs = Uri.EscapeUriString(string.Join("/", htmlDocument.QuerySelectorAll(".breadcrumbs_main .breadcrumb").Where(b => !b.ClassList.Contains("smaller")).Select(b => b.TextContent.Trim())) + "/");
 
             // Remove possible file part (index.html) from url
             if (!string.IsNullOrWhiteSpace(Path.GetFileName(WebUtility.UrlDecode(baseUrl))))
@@ -488,7 +488,7 @@ namespace OpenDirectoryDownloader
 
                     if (IsValidLink(link))
                     {
-                        Uri uri = new Uri(new Uri(baseUrl), linkHref);
+                        Uri uri = new Uri(new Uri(baseUrl), Uri.EscapeUriString(linkHref));
                         string fullUrl = uri.ToString();
 
                         if (!isFile)
@@ -502,7 +502,7 @@ namespace OpenDirectoryDownloader
                             {
                                 Parser = "ParsePureDirectoryListing",
                                 Url = $"{fullUrl}/",
-                                Name = link.TextContent.Trim()
+                                Name = link.TextContent
                             });
                         }
                         else
@@ -510,7 +510,7 @@ namespace OpenDirectoryDownloader
                             parsedWebDirectory.Files.Add(new WebFile
                             {
                                 Url = fullUrl,
-                                FileName = link.TextContent.Trim(),
+                                FileName = link.TextContent,
                                 FileSize = FileSizeHelper.ParseFileSize(tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})").TextContent)
                             });
                         }
