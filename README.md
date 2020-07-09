@@ -1,5 +1,5 @@
 # Open Directory Downloader
-Indexes open directories listings in 95+ supported formats, including FTP, Google Drive.
+Indexes open directories listings in 100+ supported formats, including FTP, Google Drive, GoIndex (alternatives).
 
 Written in C# with .NET Core, which means it is **cross platform**!
 
