@@ -3,12 +3,15 @@ using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
 using Newtonsoft.Json;
 using NLog;
-using OpenDirectoryDownloader.GoogleDrive;
 using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using OpenDirectoryDownloader.Site.BlitzfilesTech;
+using OpenDirectoryDownloader.Site.GoIndex;
+using OpenDirectoryDownloader.Site.GoIndex.Bhadoo;
+using OpenDirectoryDownloader.Site.GoIndex.GdIndex;
+using OpenDirectoryDownloader.Site.GoIndex.Go2Index;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -62,6 +65,32 @@ namespace OpenDirectoryDownloader
                     return await BlitzfilesTechParser.ParseIndex(httpClient, webDirectory);
                 }
 
+                if (htmlDocument.QuerySelector("script[src*=\"goindex-theme-acrou\"]") != null)
+                {
+                    return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
+                }
+
+                if (htmlDocument.QuerySelector("script[src*=\"Bhadoo-Drive-Index\"]") != null)
+                {
+                    return await BhadooIndexParser.ParseIndex(httpClient, webDirectory);
+                }
+
+                // goindex, goindex-drive, goindex-backup
+                if (htmlDocument.QuerySelector("script[src*=\"goindex\"]") != null)
+                {
+                    return await GoIndexParser.ParseIndex(httpClient, webDirectory);
+                }
+
+                if (htmlDocument.QuerySelector("script[src*=\"gdindex\"]") != null)
+                {
+                    return await GdIndexParser.ParseIndex(httpClient, webDirectory, html);
+                }
+
+                if (htmlDocument.QuerySelector("script[src*=\"/go2index/\"]") != null)
+                {
+                    return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
+                }
+
                 htmlDocument.QuerySelectorAll("#sidebar").ToList().ForEach(e => e.Remove());
                 htmlDocument.QuerySelectorAll("nav").ToList().ForEach(e => e.Remove());
 
@@ -95,7 +124,7 @@ namespace OpenDirectoryDownloader
 
                 if (pureTableRows.Any())
                 {
-                    return ParsePureDirectoryListing(ref baseUrl, parsedWebDirectory, htmlDocument, pureTableRows);
+                   return ParsePureDirectoryListing(ref baseUrl, parsedWebDirectory, htmlDocument, pureTableRows);
                 }
 
                 // Remove it after ParsePureDirectoryListing (.breadcrumb is used in it)
@@ -177,6 +206,12 @@ namespace OpenDirectoryDownloader
                 CheckParsedResults(parsedWebDirectory);
 
                 return parsedWebDirectory;
+            }
+            catch (FriendlyException ex)
+            {
+                Logger.Error(ex.Message);
+
+                parsedWebDirectory.Error = true;
             }
             catch (Exception ex)
             {
@@ -1980,6 +2015,7 @@ namespace OpenDirectoryDownloader
                 linkHref?.ToLower().StartsWith("javascript") == false &&
                 linkHref?.ToLower().StartsWith("mailto:") == false &&
                 link.TextContent.ToLower() != "parent directory" &&
+                link.TextContent.ToLower() != "[to parent directory]" &&
                 link.TextContent.Trim() != "Name" &&
                 linkHref?.Contains("&expand") == false &&
                 (!new Regex(@"\?[NMSD]=?[AD]").IsMatch(linkHref) || linkHref.StartsWith("DirectoryList.asp")) &&

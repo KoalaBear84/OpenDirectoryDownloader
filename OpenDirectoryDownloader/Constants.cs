@@ -6,6 +6,7 @@
         public const string BlitzfilesTechDomain = "blitzfiles.tech";
         public const string DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
         public const string Parameters_Password = "PASSWORD";
+        public const string Parameters_GdIndex_RootId = "GdIndex_RootId";
 
         public class UserAgent
         {

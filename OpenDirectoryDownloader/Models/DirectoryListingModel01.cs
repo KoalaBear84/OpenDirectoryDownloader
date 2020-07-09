@@ -18,6 +18,6 @@ namespace OpenDirectoryDownloader.Models
         public List<DirectoryListingModel01> Items { get; set; }
 
         [JsonProperty(PropertyName = "size")]
-        public long Size{ get; set; }
+        public long Size { get; set; }
     }
 }

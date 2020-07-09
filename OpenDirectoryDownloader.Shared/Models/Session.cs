@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
@@ -17,6 +17,8 @@ namespace OpenDirectoryDownloader.Shared.Models
         public int TotalFiles { get; set; }
         public long TotalFileSizeEstimated { get; set; }
         public int Errors { get; set; }
+        [JsonIgnore]
+        public int MaxThreads { get; set; }
         public int Skipped { get; set; }
         [JsonIgnore]
         public bool StopLogging { get; set; }

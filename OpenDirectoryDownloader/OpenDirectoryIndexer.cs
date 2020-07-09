@@ -574,6 +574,12 @@ namespace OpenDirectoryDownloader
 
         private async Task ProcessWebDirectoryAsync(string name, WebDirectory webDirectory, CancellationToken cancellationToken)
         {
+            if (Session.Parameters.ContainsKey(Constants.Parameters_GdIndex_RootId))
+            {
+                await Site.GoIndex.GdIndex.GdIndexParser.ParseIndex(HttpClient, webDirectory, string.Empty);
+                return;
+            }
+
             HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationToken);
             string html = null;
 

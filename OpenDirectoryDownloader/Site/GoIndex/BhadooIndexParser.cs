@@ -2,20 +2,20 @@
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared.Models;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace OpenDirectoryDownloader.Site.BlitzfilesTech
+namespace OpenDirectoryDownloader.Site.GoIndex.Bhadoo
 {
     /// <summary>
     /// Similar to GoIndex
     /// </summary>
-    public static class BlitzfilesTechParser
+    public static class BhadooIndexParser
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private static readonly Regex DriveHashRegex = new Regex(@"\/drive\/s\/(?<DriveHash>.*)");
-        const string Parser = "BlitzfilesTech";
+        private const string FolderMimeType = "application/vnd.google-apps.folder";
+        const string Parser = "BhadooIndex";
 
         public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory)
         {
@@ -26,25 +26,31 @@ namespace OpenDirectoryDownloader.Site.BlitzfilesTech
 
             try
             {
-                string driveHash = GetDriveHash(webDirectory);
-
                 if (!OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_Password))
                 {
                     Console.WriteLine($"{Parser} will always be indexed with only 1 thread, else you will run into problems and errors.");
                     Logger.Info($"{Parser} will always be indexed with only 1 thread, else you will run into problems and errors.");
-                    //OpenDirectoryIndexer.Session.MaxThreads = 1;
+                    OpenDirectoryIndexer.Session.MaxThreads = 1;
 
                     Console.WriteLine("Check if password is needed (unsupported currently)...");
                     Logger.Info("Check if password is needed (unsupported currently)...");
-                    OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] = string.Empty;
+                    OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] = "";
 
-                    HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(GetFolderUrl(driveHash, string.Empty, 0));
+                    Dictionary<string, string> postValues = new Dictionary<string, string>
+                    {
+                        { "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
+                        { "page_token", string.Empty },
+                        { "page_index", "0" },
+                        { "q", "" }
+                    };
+                    HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, webDirectory.Uri) { Content = new FormUrlEncodedContent(postValues) };
+                    HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
                     if (httpResponseMessage.IsSuccessStatusCode)
                     {
                         string responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
 
-                        BlitzfilesTechResponse response = BlitzfilesTechResponse.FromJson(responseJson);
+                        BhadooIndexResponse response = BhadooIndexResponse.FromJson(responseJson);
 
                         webDirectory = await ScanAsync(httpClient, webDirectory);
                     }
@@ -72,18 +78,6 @@ namespace OpenDirectoryDownloader.Site.BlitzfilesTech
             return webDirectory;
         }
 
-        private static string GetDriveHash(WebDirectory webDirectory)
-        {
-            Match driveHashRegexMatch = DriveHashRegex.Match(webDirectory.Url);
-
-            if (!driveHashRegexMatch.Success)
-            {
-                throw new Exception("Error getting drivehash");
-            }
-
-            return driveHashRegexMatch.Groups["DriveHash"].Value;
-        }
-
         private static async Task<WebDirectory> ScanAsync(HttpClient httpClient, WebDirectory webDirectory)
         {
             Logger.Debug($"Retrieving listings for {webDirectory.Uri} with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}");
@@ -92,50 +86,60 @@ namespace OpenDirectoryDownloader.Site.BlitzfilesTech
 
             try
             {
-                string driveHash = GetDriveHash(webDirectory);
-                string entryHash = string.Empty;
+                if (!webDirectory.Url.EndsWith("/"))
+                {
+                    webDirectory.Url += "/";
+                }
+
                 long pageIndex = 0;
-                long totalPages = 0;
+                string nextPageToken = string.Empty;
 
                 do
                 {
                     Logger.Warn($"Retrieving listings for {webDirectory.Uri} with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}, page {pageIndex + 1}");
 
-                    HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(GetFolderUrl(driveHash, entryHash, pageIndex));
+                    Dictionary<string, string> postValues = new Dictionary<string, string>
+                    {
+                        { "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
+                        { "page_token", nextPageToken },
+                        { "page_index", pageIndex.ToString() }
+                    };
+                    HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, webDirectory.Uri) { Content = new FormUrlEncodedContent(postValues) };
+                    HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
                     webDirectory.ParsedSuccesfully = httpResponseMessage.IsSuccessStatusCode;
                     httpResponseMessage.EnsureSuccessStatusCode();
 
                     string responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
 
-                    BlitzfilesTechResponse indexResponse = BlitzfilesTechResponse.FromJson(responseJson);
-                    entryHash = indexResponse.Link.Entry.Hash;
+                    BhadooIndexResponse indexResponse = BhadooIndexResponse.FromJson(responseJson);
 
-                    pageIndex = indexResponse.FolderChildren.CurrentPage;
-                    totalPages = indexResponse.FolderChildren.LastPage;
+                    nextPageToken = indexResponse.NextPageToken;
+                    pageIndex = indexResponse.CurPageIndex + 1;
 
-                    foreach (Entry entry in indexResponse.FolderChildren.Data)
+                    foreach (File file in indexResponse.Data.Files)
                     {
-                        if (entry.Type == "folder")
+                        if (file.MimeType == FolderMimeType)
                         {
                             webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
                             {
                                 Parser = Parser,
-                                Url = $"https://blitzfiles.tech/files/drive/s/{driveHash}:{entry.Hash}",
-                                Name = entry.Name
+                                // Yes, string concatenation, do not use new Uri(webDirectory.Uri, file.Name), because things could end with a space...
+                                Url = $"{webDirectory.Uri}{file.Name}/",
+                                Name = file.Name
                             });
                         }
                         else
                         {
                             webDirectory.Files.Add(new WebFile
                             {
-                                Url = $"https://blitzfiles.tech/files/secure/uploads/download?hashes={entry.Hash}&shareable_link={indexResponse.Link.Id}",
-                                FileName = entry.Name,
-                                FileSize = entry.FileSize
+                                Url = new Uri(webDirectory.Uri, file.Name).ToString(),
+                                FileName = file.Name,
+                                FileSize = file.Size
                             });
                         }
                     }
-                } while (pageIndex < totalPages);
+                } while (!string.IsNullOrWhiteSpace(nextPageToken));
             }
             catch (Exception ex)
             {
@@ -153,11 +157,6 @@ namespace OpenDirectoryDownloader.Site.BlitzfilesTech
             }
 
             return webDirectory;
-        }
-
-        private static string GetFolderUrl(string driveHash, string entryHash, long pageIndex)
-        {
-            return $"https://blitzfiles.tech/files/secure/drive/shareable-links/{driveHash}{(!string.IsNullOrWhiteSpace(entryHash) ? $":{entryHash}" : string.Empty)}?page={pageIndex + 1}&order=updated_at:desc&withEntries=true";
         }
     }
 }
