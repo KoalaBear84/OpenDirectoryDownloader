@@ -267,7 +267,7 @@ namespace OpenDirectoryDownloader
 
                                 if (OpenDirectoryIndexerSettings.CommandLineOptions.UploadUrls && Session.TotalFiles > 0)
                                 {
-                                    Console.WriteLine("Uploading URLs...");
+                                    Console.WriteLine($"Uploading URLs ({FileSizeHelper.ToHumanReadable(new FileInfo(urlsPath).Length)})...");
 
                                     try
                                     {
