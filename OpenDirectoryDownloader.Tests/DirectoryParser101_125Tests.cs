@@ -144,5 +144,34 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("1942 [Instruction] [English].pdf", webDirectory.Files[0].FileName);
             Assert.Equal(2936013, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: http://dl.liansec.net/srv1/Black%20Hat/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing106aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(12, webDirectory.Subdirectories.Count);
+            Assert.Equal("2015 Asia", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: http://dl.liansec.net/srv1/Black%20Hat/2018%20USA/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing106bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(4, webDirectory.Files.Count);
+            Assert.Equal("2018 USA.part1.rar", webDirectory.Files[0].FileName);
+            Assert.Equal(3221225472, webDirectory.Files[0].FileSize);
+        }
     } 
 }

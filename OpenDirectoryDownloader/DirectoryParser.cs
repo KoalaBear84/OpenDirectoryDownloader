@@ -1077,7 +1077,7 @@ namespace OpenDirectoryDownloader
 
         private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser6 = async (webDirectory, baseUrl, line) =>
         {
-            Match match = Regex.Match(line, @"(?<Modified>\d+\/\d+\/\d+\s*\d+:\d+\s+[APM]+)\s+(?<FileSize>\S*)\s*<a.*<\/a>");
+            Match match = Regex.Match(line, @"(?<Modified>\d+\/\d+\/\d+(\s*\d+:\d+\s+[APM]+)?)\s+(?<FileSize>\S*)\s*<a.*<\/a>");
 
             if (match.Success)
             {
