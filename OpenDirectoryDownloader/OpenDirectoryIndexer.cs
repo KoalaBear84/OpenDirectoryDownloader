@@ -162,6 +162,8 @@ namespace OpenDirectoryDownloader
                 };
             }
 
+            Session.MaxThreads = OpenDirectoryIndexerSettings.Threads;
+
             if (Session.Root.Uri.Host == Constants.GoogleDriveDomain)
             {
                 Logger.Warn("Google Drive scanning is limited to 9 directories per second!");
