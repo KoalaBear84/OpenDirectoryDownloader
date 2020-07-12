@@ -154,7 +154,8 @@ namespace OpenDirectoryDownloader
 
                 if (tables.Any())
                 {
-                    return ParseTablesDirectoryListing(baseUrl, parsedWebDirectory, tables);
+                    bool containsFileSizeClass = htmlDocument.QuerySelector(".fileSize") != null;
+                    return ParseTablesDirectoryListing(baseUrl, parsedWebDirectory, tables, containsFileSizeClass);
                 }
 
                 IHtmlCollection<IElement> materialDesignListItems = htmlDocument.QuerySelectorAll("ul.mdui-list li");
@@ -173,7 +174,8 @@ namespace OpenDirectoryDownloader
 
                 if (listItems.Any())
                 {
-                    WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems);
+                    bool containsFileSizeClass = htmlDocument.QuerySelector(".fileSize") != null;
+                    WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems, containsFileSizeClass);
 
                     if (result.ParsedSuccesfully || result.Error)
                     {
@@ -185,7 +187,8 @@ namespace OpenDirectoryDownloader
 
                 if (listItems.Any())
                 {
-                    WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems);
+                    bool containsFileSizeClass = htmlDocument.QuerySelector(".fileSize") != null;
+                    WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems, containsFileSizeClass);
 
                     if (result.ParsedSuccesfully || result.Error)
                     {
@@ -198,7 +201,8 @@ namespace OpenDirectoryDownloader
 
                 if (links.Any())
                 {
-                    parsedWebDirectory = ParseLinksDirectoryListing(baseUrl, parsedWebDirectory, links);
+                    bool containsFileSizeClass = htmlDocument.QuerySelector(".fileSize") != null;
+                    parsedWebDirectory = ParseLinksDirectoryListing(baseUrl, parsedWebDirectory, links, containsFileSizeClass);
                 }
 
                 parsedWebDirectory = await ParseDirectoryListingModel01(baseUrl, parsedWebDirectory, htmlDocument, httpClient);
@@ -621,7 +625,7 @@ namespace OpenDirectoryDownloader
             return parsedWebDirectory;
         }
 
-        private static WebDirectory ParseTablesDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> tables)
+        private static WebDirectory ParseTablesDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> tables, bool containsFileSizeClass)
         {
             // Dirty solution..
             bool hasSeperateDirectoryAndFilesTables = false;
@@ -648,7 +652,7 @@ namespace OpenDirectoryDownloader
                 {
                     if (table.QuerySelector("a") != null)
                     {
-                        webDirectoryCopy = ParseLinksDirectoryListing(baseUrl, webDirectoryCopy, table.QuerySelectorAll("a"));
+                        webDirectoryCopy = ParseLinksDirectoryListing(baseUrl, webDirectoryCopy, table.QuerySelectorAll("a"), containsFileSizeClass);
                     }
                 }
                 else
@@ -1542,7 +1546,7 @@ namespace OpenDirectoryDownloader
             return parsedWebDirectory;
         }
 
-        private static WebDirectory ParseListItemsDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> listItems)
+        private static WebDirectory ParseListItemsDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> listItems, bool containsFileSizeClass)
         {
             bool firstLink = true;
 
@@ -1562,7 +1566,7 @@ namespace OpenDirectoryDownloader
 
                 if (link != null)
                 {
-                    ProcessLink(baseUrl, parsedWebDirectory, link, "ParseListItemsDirectoryListing");
+                    ProcessLink(baseUrl, parsedWebDirectory, link, "ParseListItemsDirectoryListing", containsFileSizeClass);
                 }
             }
 
@@ -1571,11 +1575,11 @@ namespace OpenDirectoryDownloader
             return parsedWebDirectory;
         }
 
-        private static WebDirectory ParseLinksDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> links)
+        private static WebDirectory ParseLinksDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> links, bool containsFileSizeClass)
         {
             foreach (IElement link in links)
             {
-                ProcessLink(baseUrl, parsedWebDirectory, link, "ParseLinksDirectoryListing");
+                ProcessLink(baseUrl, parsedWebDirectory, link, "ParseLinksDirectoryListing", containsFileSizeClass);
             }
 
             CheckParsedResults(parsedWebDirectory);
@@ -1583,7 +1587,7 @@ namespace OpenDirectoryDownloader
             return parsedWebDirectory;
         }
 
-        private static void ProcessLink(string baseUrl, WebDirectory parsedWebDirectory, IElement link, string parser)
+        private static void ProcessLink(string baseUrl, WebDirectory parsedWebDirectory, IElement link, string parser, bool containsFileSizeClass)
         {
             if (link.HasAttribute("href"))
             {
@@ -1617,7 +1621,7 @@ namespace OpenDirectoryDownloader
                     {
                         parsedWebDirectory.Parser = parser;
 
-                        long fileSize = FileSizeHelper.ParseFileSize(link.ParentElement?.QuerySelector(".fileSize")?.TextContent);
+                        long fileSize = FileSizeHelper.ParseFileSize(containsFileSizeClass ? link.ParentElement?.QuerySelector(".fileSize")?.TextContent : null);
 
                         string fileName = Path.GetFileName(WebUtility.UrlDecode(linkHref));
                         urlEncodingParser = new UrlEncodingParser(fileName);
