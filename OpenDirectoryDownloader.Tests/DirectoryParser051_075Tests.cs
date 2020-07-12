@@ -4,7 +4,7 @@ using Xunit;
 
 namespace OpenDirectoryDownloader.Tests
 {
-    public class DirectoryParser051_75Tests : DirectoryParserTests
+    public class DirectoryParser051_075Tests : DirectoryParserTests
     {
         /// <summary>
         /// Url: https://twistedmatrix.com/Releases/reality/

@@ -5,7 +5,7 @@ using Xunit;
 
 namespace OpenDirectoryDownloader.Tests
 {
-    public class DirectoryParser000_25Tests : DirectoryParserTests
+    public class DirectoryParser000_025Tests : DirectoryParserTests
     {
         /// <summary>
         /// Url: http://178.216.250.167/
