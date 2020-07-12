@@ -31,7 +31,7 @@ namespace OpenDirectoryDownloader
         [Option('l', "upload-urls", Required = false, Default = false, HelpText = "Uploads urls file")]
         public bool UploadUrls { get; set; }
 
-        [Option('s', "speed-test", Required = false, Default = false, HelpText = "Do a speed test")]
+        [Option('s', "speedtest", Required = false, Default = false, HelpText = "Do a speed test")]
         public bool Speedtest { get; set; }
 
         [Option("username", Required = false, Default = "", HelpText = "Username")]
