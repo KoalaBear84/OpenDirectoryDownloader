@@ -492,7 +492,7 @@ namespace OpenDirectoryDownloader
 
         private static WebDirectory ParsePureDirectoryListing(ref string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> pureTableRows)
         {
-            string urlFromBreadcrumbs = Uri.EscapeUriString(string.Join("/", htmlDocument.QuerySelectorAll(".breadcrumbs_main .breadcrumb").Where(b => !b.ClassList.Contains("smaller")).Select(b => b.TextContent.Trim())) + "/");
+            string urlFromBreadcrumbs = Uri.EscapeUriString(string.Join("/", htmlDocument.QuerySelectorAll(".breadcrumbs_main .breadcrumb").Where(b => !b.ClassList.Contains("smaller")).Select(b => b.TextContent)) + "/");
 
             // Remove possible file part (index.html) from url
             if (!string.IsNullOrWhiteSpace(Path.GetFileName(WebUtility.UrlDecode(baseUrl))))
@@ -504,7 +504,7 @@ namespace OpenDirectoryDownloader
             string urlFromBaseUrl = baseUrl.Remove(0, new Uri(baseUrl).Scheme.Length + new Uri(baseUrl).Host.Length + 3).Replace("/.", "/");
             urlFromBaseUrl = urlFromBaseUrl.Replace("%23", "#");
 
-            if (urlFromBreadcrumbs == urlFromBaseUrl)
+            if (urlFromBreadcrumbs == urlFromBaseUrl || urlFromBreadcrumbs == Uri.EscapeUriString(urlFromBaseUrl))
             {
                 IElement table = pureTableRows.First().Parent("table");
 
