@@ -34,6 +34,33 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Bhadoo
 
         [JsonProperty("files")]
         public List<File> Files { get; set; }
+
+        [JsonProperty("error")]
+        public DataError Error { get; set; }
+    }
+
+    public partial class DataError
+    {
+        [JsonProperty("errors")]
+        public List<ErrorElement> Errors { get; set; }
+
+        [JsonProperty("code")]
+        public long Code { get; set; }
+
+        [JsonProperty("message")]
+        public string Message { get; set; }
+    }
+
+    public partial class ErrorElement
+    {
+        [JsonProperty("domain")]
+        public string Domain { get; set; }
+
+        [JsonProperty("reason")]
+        public string Reason { get; set; }
+
+        [JsonProperty("message")]
+        public string Message { get; set; }
     }
 
     public partial class File

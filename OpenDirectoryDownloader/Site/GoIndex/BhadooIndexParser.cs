@@ -1,5 +1,6 @@
 ﻿using NLog;
 using OpenDirectoryDownloader.Models;
+using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -16,21 +17,16 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Bhadoo
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private const string FolderMimeType = "application/vnd.google-apps.folder";
         const string Parser = "BhadooIndex";
+        static readonly RateLimiter RateLimiter = new RateLimiter(1, TimeSpan.FromSeconds(1));
 
         public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory)
         {
-            if (OpenDirectoryIndexer.Session.MaxThreads > 1)
-            {
-                throw new FriendlyException($"{Parser} can only scan at maximum of 1 thread, please call with -t 1 or --threads 1");
-            }
-
             try
             {
                 if (!OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_Password))
                 {
-                    Console.WriteLine($"{Parser} will always be indexed with only 1 thread, else you will run into problems and errors.");
-                    Logger.Info($"{Parser} will always be indexed with only 1 thread, else you will run into problems and errors.");
-                    OpenDirectoryIndexer.Session.MaxThreads = 1;
+                    Console.WriteLine($"{Parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.");
+                    Logger.Info($"{Parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.");
 
                     Console.WriteLine("Check if password is needed (unsupported currently)...");
                     Logger.Info("Check if password is needed (unsupported currently)...");
@@ -86,6 +82,8 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Bhadoo
 
             try
             {
+                await RateLimiter.RateLimit();
+
                 if (!webDirectory.Url.EndsWith("/"))
                 {
                     webDirectory.Url += "/";
@@ -93,6 +91,7 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Bhadoo
 
                 long pageIndex = 0;
                 string nextPageToken = string.Empty;
+                int errors = 0;
 
                 do
                 {
@@ -107,39 +106,74 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Bhadoo
                     HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, webDirectory.Uri) { Content = new FormUrlEncodedContent(postValues) };
                     HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
-                    webDirectory.ParsedSuccesfully = httpResponseMessage.IsSuccessStatusCode;
-                    httpResponseMessage.EnsureSuccessStatusCode();
-
-                    string responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
-
-                    BhadooIndexResponse indexResponse = BhadooIndexResponse.FromJson(responseJson);
-
-                    nextPageToken = indexResponse.NextPageToken;
-                    pageIndex = indexResponse.CurPageIndex + 1;
-
-                    foreach (File file in indexResponse.Data.Files)
+                    if (!httpResponseMessage.IsSuccessStatusCode)
                     {
-                        if (file.MimeType == FolderMimeType)
+                        Logger.Warn("Directory listing retrieval error (HTTP Error), waiting 10 seconds..");
+                        errors++;
+                        await Task.Delay(TimeSpan.FromSeconds(10));
+                    }
+                    else
+                    {
+                        webDirectory.ParsedSuccesfully = httpResponseMessage.IsSuccessStatusCode;
+                        httpResponseMessage.EnsureSuccessStatusCode();
+
+                        string responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
+
+                        BhadooIndexResponse indexResponse = BhadooIndexResponse.FromJson(responseJson);
+
+                        webDirectory.ParsedSuccesfully = indexResponse.Data.Error == null;
+
+                        if (indexResponse.Data.Error?.Message == "Rate Limit Exceeded")
                         {
-                            webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
-                            {
-                                Parser = Parser,
-                                // Yes, string concatenation, do not use new Uri(webDirectory.Uri, file.Name), because things could end with a space...
-                                Url = $"{webDirectory.Uri}{file.Name}/",
-                                Name = file.Name
-                            });
+                            Logger.Warn("Rate limit exceeded, waiting 10 seconds..");
+                            errors++;
+                            await Task.Delay(TimeSpan.FromSeconds(10));
                         }
                         else
                         {
-                            webDirectory.Files.Add(new WebFile
+                            if (indexResponse.Data.Files == null)
                             {
-                                Url = new Uri(webDirectory.Uri, file.Name).ToString(),
-                                FileName = file.Name,
-                                FileSize = file.Size
-                            });
+                                Logger.Warn("Directory listing retrieval error (Files null), waiting 10 seconds..");
+                                errors++;
+                                await Task.Delay(TimeSpan.FromSeconds(10));
+                            }
+                            else
+                            {
+                                errors = 0;
+                                nextPageToken = indexResponse.NextPageToken;
+                                pageIndex = indexResponse.CurPageIndex + 1;
+
+                                foreach (File file in indexResponse.Data.Files)
+                                {
+                                    if (file.MimeType == FolderMimeType)
+                                    {
+                                        webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+                                        {
+                                            Parser = Parser,
+                                            // Yes, string concatenation, do not use new Uri(webDirectory.Uri, file.Name), because things could end with a space...
+                                            Url = $"{webDirectory.Uri}{file.Name}/",
+                                            Name = file.Name
+                                        });
+                                    }
+                                    else
+                                    {
+                                        webDirectory.Files.Add(new WebFile
+                                        {
+                                            Url = new Uri(webDirectory.Uri, file.Name).ToString(),
+                                            FileName = file.Name,
+                                            FileSize = file.Size
+                                        });
+                                    }
+                                }
+                            }
                         }
                     }
-                } while (!string.IsNullOrWhiteSpace(nextPageToken));
+
+                    if (errors >= 5)
+                    {
+                        throw new FriendlyException($"Error retrieving directory listing for {webDirectory.Uri}");
+                    }
+                } while (!string.IsNullOrWhiteSpace(nextPageToken) || errors > 0);
             }
             catch (Exception ex)
             {

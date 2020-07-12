@@ -70,15 +70,9 @@ namespace OpenDirectoryDownloader
                     return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
                 }
 
-                if (htmlDocument.QuerySelector("script[src*=\"Bhadoo-Drive-Index\"]") != null)
+                if (htmlDocument.QuerySelector("script[src*=\"Bhadoo-Drive-Index\"]") != null || htmlDocument.QuerySelector("script[src*=\"/AjmalShajahan97/goindex\"]") != null)
                 {
                     return await BhadooIndexParser.ParseIndex(httpClient, webDirectory);
-                }
-
-                // goindex, goindex-drive, goindex-backup
-                if (htmlDocument.QuerySelector("script[src*=\"goindex\"]") != null)
-                {
-                    return await GoIndexParser.ParseIndex(httpClient, webDirectory);
                 }
 
                 if (htmlDocument.QuerySelector("script[src*=\"gdindex\"]") != null)
@@ -89,6 +83,12 @@ namespace OpenDirectoryDownloader
                 if (htmlDocument.QuerySelector("script[src*=\"/go2index/\"]") != null)
                 {
                     return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
+                }
+
+                // goindex, goindex-drive, goindex-backup
+                if (htmlDocument.QuerySelector("script[src*=\"goindex\"]") != null)
+                {
+                    return await GoIndexParser.ParseIndex(httpClient, webDirectory);
                 }
 
                 htmlDocument.QuerySelectorAll("#sidebar").ToList().ForEach(e => e.Remove());

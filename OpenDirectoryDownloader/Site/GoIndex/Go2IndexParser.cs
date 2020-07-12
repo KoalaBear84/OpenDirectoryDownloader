@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using NLog;
-using OpenDirectoryDownloader.Models;
+using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -15,21 +15,16 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Go2Index
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private const string FolderMimeType = "application/vnd.google-apps.folder";
         const string Parser = "Go2Index";
+        static readonly RateLimiter RateLimiter = new RateLimiter(1, TimeSpan.FromSeconds(1));
 
         public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory)
         {
-            if (OpenDirectoryIndexer.Session.MaxThreads > 1)
-            {
-                throw new FriendlyException($"{Parser} can only scan at maximum of 1 thread, please call with -t 1 or --threads 1");
-            }
-
             try
             {
                 if (!OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_Password))
                 {
-                    Console.WriteLine($"{Parser} will always be indexed with only 1 thread, else you will run into problems and errors.");
-                    Logger.Info($"{Parser} will always be indexed with only 1 thread, else you will run into problems and errors.");
-                    OpenDirectoryIndexer.Session.MaxThreads = 1;
+                    Console.WriteLine($"{Parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.");
+                    Logger.Info($"{Parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.");
 
                     Console.WriteLine("Check if password is needed...");
                     Logger.Info("Check if password is needed...");
@@ -121,6 +116,8 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Go2Index
 
             try
             {
+                await RateLimiter.RateLimit();
+                
                 if (!webDirectory.Url.EndsWith("/"))
                 {
                     webDirectory.Url += "/";
