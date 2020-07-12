@@ -1,0 +1,36 @@
+﻿
+<HTML>
+<TITLE>T E X T F I L E S</TITLE>
+<BODY BGCOLOR="#FFFFFF" TEXT="#222222" LINK="#000000" ALINK="#222222" VLINK="#000000">
+<H1>Manuals.</H1>
+<P>
+Sometimes you just can't find the manual to something. Luckily, as time has gone on, more and
+more companies make their manuals available online for download and reference. It helps a lot
+when you're trying to find that important fact, or you picked up a piece of equipment used.
+<P>
+<TABLE WIDTH=100%>
+<TD BGCOLOR=#000000><FONT COLOR=#FFFFFF><B>Filename</B><BR></FONT></TD>
+<TD BGCOLOR=#444444><FONT COLOR=#FFFFFF><B>Size</B><BR></FONT></TD>
+<TD BGCOLOR=#888888><FONT COLOR=#FFFFFF><B>PDF Description</B><BR></TD></TR>
+
+<tab indent=60 id=T><br>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="ARCADE">ARCADE</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Manuals for Arcade Games</B></TD></TR>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="CAMERAS">CAMERAS</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Manuals for Cameras and Camera Accessories</B></TD></TR>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="CARS">CARS</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Manuals for Cars</B></TD></TR>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="CBRADIO">CBRADIO</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Manuals for CB Radios </B></TD></TR>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="CELLPHONES">CELLPHONES</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Manuals for Cell Telephones </B></TD></TR>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="ELECTRONICS">ELECTRONICS</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Various Consumer Electronics</B></TD></TR>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="FAXMACHINES">FAXMACHINES</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Manuals of Fax Machines</B></TD></TR>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="FIREARMS">FIREARMS</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Manuals for Firearms</B></TD></TR>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="HANDHELDS">HANDHELDS</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Manuals for Handheld Games</B></TD></TR>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="MILITARY">MILITARY</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Manuals from Military Sources</B></TD></TR>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="PDA">PDA</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Manuals of Personal Data Assistants</B></TD></TR>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="SCANNERS-A-E">SCANNERS-A-E</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Manuals for Radio Scanners (A-E)</B></TD></TR>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="SCANNERS-F-R">SCANNERS-F-R</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Manuals for Radio Scanners (F-R)</B></TD></TR>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="SCANNERS-S-Z">SCANNERS-S-Z</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Manuals for Radio Scanners (S-Z)</B></TD></TR>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="SOUND">SOUND</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Manuals for Sound Equipment</B></TD></TR>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="TELECOM-A-E">TELECOM-A-E</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Manuals for Telecommunications Equipment (A-E)</B></TD></TR>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="TELECOM-F-R">TELECOM-F-R</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Manuals for Telecommunications Equipment (F-R)</B></TD></TR>
+<TR VALIGN=TOP><TD VALIGN=TOP><B><A HREF="TELECOM-S-Z">TELECOM-S-Z</A></B><TAB TO=T><TD WIDTH=20></TD><TD><B>Manuals for Telecommunications Equipment (S-Z)</B></TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+</TABLE><P><TABLE WIDTH=100%><TR><TD ALIGN=RIGHT><SMALL>There are 18 directories.</SMALL></TABLE>

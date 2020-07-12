@@ -115,5 +115,34 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("1917.2019.DVDSCR.x264-TOPKEK.mp4", webDirectory.Files[0].FileName);
             Assert.Equal(1202701165, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: http://pdf.textfiles.com/manuals/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing105aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(18, webDirectory.Subdirectories.Count);
+            Assert.Equal("ARCADE", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: http://pdf.textfiles.com/manuals/ARCADE/0-9/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing105bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(16, webDirectory.Files.Count);
+            Assert.Equal("1942 [Instruction] [English].pdf", webDirectory.Files[0].FileName);
+            Assert.Equal(2936013, webDirectory.Files[0].FileSize);
+        }
     } 
 }
