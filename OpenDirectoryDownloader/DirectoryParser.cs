@@ -124,7 +124,7 @@ namespace OpenDirectoryDownloader
 
                 if (pureTableRows.Any())
                 {
-                   return ParsePureDirectoryListing(ref baseUrl, parsedWebDirectory, htmlDocument, pureTableRows);
+                    return ParsePureDirectoryListing(ref baseUrl, parsedWebDirectory, htmlDocument, pureTableRows);
                 }
 
                 // Remove it after ParsePureDirectoryListing (.breadcrumb is used in it)
@@ -1347,6 +1347,24 @@ namespace OpenDirectoryDownloader
                     }
                 }
 
+                if (!div.Children.Any())
+                {
+                    switch (GetHeaderInfo(div).Type)
+                    {
+                        case HeaderType.FileName:
+                            nameIndex = columnIndex;
+                            break;
+                        case HeaderType.FileSize:
+                            sizeIndex = columnIndex;
+                            break;
+                        case HeaderType.Modified:
+                            modifiedIndex = columnIndex;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
                 columnIndex++;
             }
 
@@ -1363,6 +1381,13 @@ namespace OpenDirectoryDownloader
             //	<div class="mdui-col-xs-4 mdui-col-sm-2"><a href="/A:?order=asc&sortby=lastModtime">修改时间<i class="mdui-icon material-icons">arrow_downward</i></a></div>
             //	<div class="mdui-col-sm-2 mdui-text-right"><a href="/A:?order=asc&sortby=type">文件类型</a></div>
             //	<div class="mdui-col-sm-2 mdui-text-right"><a href="/A:?order=asc&sortby=size">大小</a></div>
+            //</li>
+
+            // Format 3
+            //<li class="mdui-list-item th">
+            //  <div class="mdui-col-xs-12 mdui-col-sm-7">文件</div>
+            //  <div class="mdui-col-sm-3 mdui-text-right">修改时间</div>
+            //  <div class="mdui-col-sm-2 mdui-text-right">大小</div>
             //</li>
 
             foreach (IElement listItem in listItems.Where(li => li.ClassList.Contains("mdui-list-item") && !li.ClassList.Contains("th")))
@@ -1960,9 +1985,9 @@ namespace OpenDirectoryDownloader
 
             headerName = headerName.ToLower();
 
-            headerName = Regex.Replace(headerName, @"[^a-zA-Z0-9\s]", string.Empty);
+            headerName = Regex.Replace(headerName, @"[^a-zA-Z0-9\s一-龥]", string.Empty);
 
-            if (headerName == "last modified" || headerName == "modified" || headerName.Contains("date") || headerName.Contains("last modification"))
+            if (headerName == "last modified" || headerName == "modified" || headerName.Contains("date") || headerName.Contains("last modification") || headerName.Contains("time") || headerName.Contains("修改时间"))
             {
                 headerInfo.Type = HeaderType.Modified;
             }
@@ -1972,7 +1997,7 @@ namespace OpenDirectoryDownloader
                 headerInfo.Type = HeaderType.Type;
             }
 
-            if (headerName == "size" || headerName.Contains("file size") || headerName.Contains("filesize") || headerName.Contains("taille"))
+            if (headerName == "size" || headerName.Contains("file size") || headerName.Contains("filesize") || headerName.Contains("taille") || headerName.Contains("大小"))
             {
                 headerInfo.Type = HeaderType.FileSize;
             }
@@ -1990,7 +2015,8 @@ namespace OpenDirectoryDownloader
                 headerName.Contains("filename") ||
                 headerName == "directory" ||
                 headerName.Contains("link") ||
-                headerName.Contains("nom")))
+                headerName.Contains("nom") ||
+                headerName.Contains("文件")))
             {
                 headerInfo.Type = HeaderType.FileName;
             }
