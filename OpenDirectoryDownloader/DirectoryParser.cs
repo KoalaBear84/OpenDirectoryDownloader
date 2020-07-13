@@ -1991,7 +1991,7 @@ namespace OpenDirectoryDownloader
 
             headerName = Regex.Replace(headerName, @"[^a-zA-Z0-9\s一-龥]", string.Empty);
 
-            if (headerName == "last modified" || headerName == "modified" || headerName.Contains("date") || headerName.Contains("last modification") || headerName.Contains("time") || headerName.Contains("修改时间"))
+            if (headerName == "last modified" || headerName == "modified" || headerName.Contains("date") || headerName.Contains("last modification") || headerName.Contains("time") || headerName.Contains("修改时间") || headerName.Contains("修改日期"))
             {
                 headerInfo.Type = HeaderType.Modified;
             }
