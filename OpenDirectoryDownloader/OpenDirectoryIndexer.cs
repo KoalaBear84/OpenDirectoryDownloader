@@ -191,7 +191,7 @@ namespace OpenDirectoryDownloader
                 string serverInfo = await FtpParser.GetFtpServerInfo(Session.Root, OpenDirectoryIndexerSettings.Username, OpenDirectoryIndexerSettings.Password);
 
                 if (string.IsNullOrWhiteSpace(serverInfo))
-            {
+                {
                     serverInfo = "Failed or no server info available.";
                 }
 
@@ -292,16 +292,16 @@ namespace OpenDirectoryDownloader
 
                                     try
                                     {
-                                    //UploadFilesFile uploadFilesFile = await UploadFileIo.UploadFile(HttpClient, urlsPath);
-                                    //HistoryLogger.Info($"uploadfiles.io: {JsonConvert.SerializeObject(uploadFilesFile)}");
-                                    //Session.UploadedUrlsUrl = uploadFilesFile.Url.ToString();
+                                        //UploadFilesFile uploadFilesFile = await UploadFileIo.UploadFile(HttpClient, urlsPath);
+                                        //HistoryLogger.Info($"uploadfiles.io: {JsonConvert.SerializeObject(uploadFilesFile)}");
+                                        //Session.UploadedUrlsUrl = uploadFilesFile.Url.ToString();
 
-                                    GoFilesFile uploadedFile = await GoFileIo.UploadFile(HttpClient, urlsPath);
-                                    HistoryLogger.Info($"goFile.io: {JsonConvert.SerializeObject(uploadedFile)}");
-                                    Session.UploadedUrlsUrl = uploadedFile.Url.ToString();
+                                        GoFilesFile uploadedFile = await GoFileIo.UploadFile(HttpClient, urlsPath);
+                                        HistoryLogger.Info($"goFile.io: {JsonConvert.SerializeObject(uploadedFile)}");
+                                        Session.UploadedUrlsUrl = uploadedFile.Url.ToString();
 
-                                    Console.WriteLine($"Uploaded URLs: {Session.UploadedUrlsUrl}");
-                                }
+                                        Console.WriteLine($"Uploaded URLs: {Session.UploadedUrlsUrl}");
+                                    }
                                     catch (Exception ex)
                                     {
                                         Logger.Warn($"Error uploading URLs: {ex.Message}");
@@ -336,8 +336,8 @@ namespace OpenDirectoryDownloader
 
                                     if (Session.SpeedtestResult != null)
                                     {
-                                    Console.WriteLine($"Finished speedtest. Downloaded: {FileSizeHelper.ToHumanReadable(Session.SpeedtestResult.DownloadedBytes)}, Time: {Session.SpeedtestResult.ElapsedMiliseconds / 1000:F1} s, Speed: {Session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({Session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)");
-                                }
+                                        Console.WriteLine($"Finished speedtest. Downloaded: {FileSizeHelper.ToHumanReadable(Session.SpeedtestResult.DownloadedBytes)}, Time: {Session.SpeedtestResult.ElapsedMiliseconds / 1000:F1} s, Speed: {Session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({Session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)");
+                                    }
                                 }
                                 catch (Exception ex)
                                 {
@@ -475,13 +475,9 @@ namespace OpenDirectoryDownloader
                             if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftp || Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
                             {
                                 WebDirectory parsedWebDirectory = await FtpParser.ParseFtpAsync(name, webDirectory, OpenDirectoryIndexerSettings.Username, OpenDirectoryIndexerSettings.Password);
-
-                            {
-                                WebDirectory parsedWebDirectory = await FtpParser.ParseFtpAsync(name, webDirectory);
                                 AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
                             }
-                            else
-                            if (Session.Root.Uri.Host == Constants.GoogleDriveDomain)
+                            else if (Session.Root.Uri.Host == Constants.GoogleDriveDomain)
                             {
                                 string baseUrl = webDirectory.Url;
 
