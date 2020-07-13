@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using NLog;
 using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Shared;
@@ -61,7 +61,7 @@ namespace OpenDirectoryDownloader
                 url = Encoding.UTF8.GetString(data);
             }
 
-            if (!url.Contains("http:") && !url.Contains("https:") && !url.Contains("ftp:"))
+            if (!url.Contains("http:") && !url.Contains("https:") && !url.Contains("ftp:") && !url.Contains("ftps:"))
             {
                 url = $"http://{url}";
             }

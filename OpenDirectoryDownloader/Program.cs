@@ -1,4 +1,4 @@
-﻿using CommandLine;
+using CommandLine;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -79,7 +79,7 @@ namespace OpenDirectoryDownloader
 
             // FTP
             // TODO: Make dynamic
-            if (openDirectoryIndexerSettings.Url?.StartsWith("ftp") == true)
+            if (openDirectoryIndexerSettings.Url?.StartsWith(Constants.UriScheme.Ftp) == true || openDirectoryIndexerSettings.Url?.StartsWith(Constants.UriScheme.Ftps) == true)
             {
                 openDirectoryIndexerSettings.Threads = 6;
             }

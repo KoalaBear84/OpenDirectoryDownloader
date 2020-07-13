@@ -169,12 +169,33 @@ namespace OpenDirectoryDownloader
                 Logger.Warn("Google Drive scanning is limited to 9 directories per second!");
             }
 
-            if (Session.Root.Uri.Scheme == "ftp")
+            if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftp || Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
             {
-                Logger.Warn("Retrieving FTP software!");
-                // TODO: Replace with library?
-                Logger.Warn(await FtpParser.GetFtpServerInfo(Session.Root));
-                //AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
+                Logger.Warn("Retrieving FTP(S) software!");
+
+                if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
+                {
+                    if (Session.Root.Uri.Port == -1)
+                    {
+                        Logger.Warn("Using default port (990) for FTPS");
+
+                        UriBuilder uriBuilder = new UriBuilder(Session.Root.Uri)
+                        {
+                            Port = 990
+                        };
+
+                        Session.Root.Url = uriBuilder.Uri.ToString();
+                    }
+                }
+
+                string serverInfo = await FtpParser.GetFtpServerInfo(Session.Root, OpenDirectoryIndexerSettings.Username, OpenDirectoryIndexerSettings.Password);
+
+                if (string.IsNullOrWhiteSpace(serverInfo))
+            {
+                    serverInfo = "Failed or no server info available.";
+                }
+
+                Logger.Warn(serverInfo);
             }
 
             TimerStatistics = new System.Timers.Timer
@@ -226,7 +247,7 @@ namespace OpenDirectoryDownloader
                     Console.WriteLine("Finshed indexing");
                     Logger.Info("Finshed indexing");
 
-                    if (Session.Root.Uri.Scheme == "ftp")
+                    if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftp || Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
                     {
                         FtpParser.CloseAll();
                     }
@@ -303,7 +324,7 @@ namespace OpenDirectoryDownloader
                     {
                         if (Session.TotalFiles > 0)
                         {
-                            if (Session.Root.Uri.Scheme == "https" || Session.Root.Uri.Scheme == "http")
+                            if (Session.Root.Uri.Scheme == Constants.UriScheme.Http || Session.Root.Uri.Scheme == Constants.UriScheme.Https)
                             {
                                 try
                                 {
@@ -451,7 +472,10 @@ namespace OpenDirectoryDownloader
 
                             Logger.Info($"[{name}] Begin processing {webDirectory.Url}");
 
-                            if (Session.Root.Uri.Scheme == "ftp")
+                            if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftp || Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
+                            {
+                                WebDirectory parsedWebDirectory = await FtpParser.ParseFtpAsync(name, webDirectory, OpenDirectoryIndexerSettings.Username, OpenDirectoryIndexerSettings.Password);
+
                             {
                                 WebDirectory parsedWebDirectory = await FtpParser.ParseFtpAsync(name, webDirectory);
                                 AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
@@ -507,11 +531,11 @@ namespace OpenDirectoryDownloader
                         {
                             if (webDirectory.ParentDirectory?.Url != null)
                             {
-                                Logger.Warn($"Skipped processing Url: '{webDirectory.Url}' from parent '{webDirectory.ParentDirectory.Url}'");
+                                Logger.Error($"Skipped processing Url: '{webDirectory.Url}' from parent '{webDirectory.ParentDirectory.Url}'");
                             }
                             else
                             {
-                                Logger.Warn($"Skipped processing Url: '{webDirectory.Url}'");
+                                Logger.Error($"Skipped processing Url: '{webDirectory.Url}'");
                                 Session.Root.Error = true;
                             }
                         }
@@ -803,7 +827,7 @@ namespace OpenDirectoryDownloader
                     return false;
                 }
 
-                return (uri.Scheme != "https" && uri.Scheme != "http" && uri.Scheme != "ftp") || uri.Host != Session.Root.Uri.Host || !SameHostAndDirectory(uri, Session.Root.Uri);
+                return (uri.Scheme != Constants.UriScheme.Https && uri.Scheme != Constants.UriScheme.Http && uri.Scheme != Constants.UriScheme.Ftp && uri.Scheme != Constants.UriScheme.Ftps) || uri.Host != Session.Root.Uri.Host || !SameHostAndDirectory(uri, Session.Root.Uri);
             });
 
             foreach (WebFile webFile in webDirectory.Files.Where(f => f.FileSize == -1 || OpenDirectoryIndexerSettings.CommandLineOptions.ExactFileSizes))
