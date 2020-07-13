@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NLog;
+using OpenDirectoryDownloader.Models;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -14,30 +15,30 @@ namespace OpenDirectoryDownloader.FileUpload
 
         public static async Task<GoFilesFile> UploadFile(HttpClient httpClient, string path)
         {
-            string jsonServer = await httpClient.GetStringAsync("https://apiv2.gofile.io/getServer");
+            int retries = 0;
+            int maxRetries = 5;
 
-            JObject result = JObject.Parse(jsonServer);
-
-            if (result["status"].Value<string>() == "error")
+            while (retries < maxRetries)
             {
-                throw new Exception("GoFile.io error, probably in maintenance");
-            }
-
-            string server = result.SelectToken("data.server").Value<string>();
-
-            using (MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent($"Upload----{Guid.NewGuid()}"))
-            {
-                multipartFormDataContent.Add(new StreamContent(new FileStream(path, FileMode.Open)), "filesUploaded", Path.GetFileName(path));
-                multipartFormDataContent.Add(new StringContent("file"), "category");
-                multipartFormDataContent.Add(new StringContent("0"), "category");
-
-                int i = 0;
-                int retries = 5;
-
-                while (i < retries)
+                try
                 {
-                    try
+                    string jsonServer = await httpClient.GetStringAsync("https://apiv2.gofile.io/getServer");
+
+                    JObject result = JObject.Parse(jsonServer);
+
+                    if (result["status"].Value<string>() == "error")
                     {
+                        throw new Exception("GoFile.io error, probably in maintenance");
+                    }
+
+                    string server = result.SelectToken("data.server").Value<string>();
+
+                    using (MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent($"Upload----{Guid.NewGuid()}"))
+                    {
+                        multipartFormDataContent.Add(new StreamContent(new FileStream(path, FileMode.Open)), "filesUploaded", Path.GetFileName(path));
+                        multipartFormDataContent.Add(new StringContent("file"), "category");
+                        multipartFormDataContent.Add(new StringContent("0"), "category");
+
                         using (HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"https://{server}.gofile.io/upload", multipartFormDataContent))
                         {
                             if (httpResponseMessage.IsSuccessStatusCode)
@@ -56,16 +57,16 @@ namespace OpenDirectoryDownloader.FileUpload
                             }
                         }
                     }
-                    catch (Exception)
-                    {
-                        retries++;
-                        Logger.Error($"Error uploading file... Retry in 5 seconds!!!");
-                        await Task.Delay(TimeSpan.FromSeconds(5));
-                    }
                 }
-
-                throw new Exception("Error uploading Urls file...");
+                catch (Exception)
+                {
+                    retries++;
+                    Logger.Error($"Error uploading file... Retry in 5 seconds!!!");
+                    await Task.Delay(TimeSpan.FromSeconds(5));
+                }
             }
+
+            throw new FriendlyException("Error uploading URLs");
         }
     }
 
