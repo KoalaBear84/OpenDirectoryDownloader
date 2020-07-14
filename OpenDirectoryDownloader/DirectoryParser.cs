@@ -1195,9 +1195,9 @@ namespace OpenDirectoryDownloader
 
         private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser8 = async (webDirectory, baseUrl, line) =>
         {
-            Match match = Regex.Match(line, @"<a.*<\/a>\s*\/?(?<FileSize>\S+)?");
+            Match match = Regex.Match(line, @"<a.*<\/a>\s*(?<IsDirectory>\/?)(?<FileSize>(\d+\S+))?");
 
-            if (match.Success)
+            if (match.Success && (match.Groups["IsDirectory"].Success && !string.IsNullOrWhiteSpace(match.Groups["IsDirectory"].Value)) != match.Groups["FileSize"].Success)
             {
                 bool isFile = !string.IsNullOrWhiteSpace(match.Groups["FileSize"].Value);
 
@@ -1912,7 +1912,7 @@ namespace OpenDirectoryDownloader
                                 dateColumnIndex.Add(tableColumn.Index());
                             }
 
-                            if (FileSizeHelper.ParseFileSize(tableColumn.TextContent, default, false) > -1)
+                            if (FileSizeHelper.ParseFileSize(tableColumn.TextContent) > -1)
                             {
                                 fileSizeColumnIndex.Add(tableColumn.Index());
                             }

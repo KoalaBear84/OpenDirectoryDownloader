@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -8,6 +9,8 @@ namespace OpenDirectoryDownloader.Helpers
 {
     public static class FileSizeHelper
     {
+        public static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        
         // Parse a file size.
         private static readonly string[][] SizeSuffixes =
         {
@@ -23,7 +26,7 @@ namespace OpenDirectoryDownloader.Helpers
         };
         private static readonly Regex AlphaNumericRegex = new Regex("[^a-zA-Z0-9 .,]");
 
-        public static long ParseFileSize(string value, int kbValue = 1024, bool throwException = true)
+        public static long ParseFileSize(string value, int kbValue = 1024, bool throwException = false)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -59,39 +62,42 @@ namespace OpenDirectoryDownloader.Helpers
                 }
 
                 // Get the numeric part.
-                double number = double.Parse(value.Substring(0, ext_start), CultureInfo.InvariantCulture);
-
-                // Get the extension.
-                string suffix;
-
-                if (ext_start < value.Length)
+                if (double.TryParse(value.Substring(0, ext_start), NumberStyles.Any, CultureInfo.InvariantCulture, out double number))
                 {
-                    suffix = value.Substring(ext_start).Trim().ToUpper();
-                }
-                else
-                {
-                    suffix = "BYTES";
-                }
+                    // Get the extension.
+                    string suffix;
 
-                // Find the extension in the list.
-                int suffix_index = -1;
-
-                for (int i = 0; i < SizeSuffixes.Length; i++)
-                {
-                    if (SizeSuffixes[i].ToList().Contains(suffix))
+                    if (ext_start < value.Length)
                     {
-                        suffix_index = i;
-                        break;
+                        suffix = value.Substring(ext_start).Trim().ToUpper();
                     }
+                    else
+                    {
+                        suffix = "BYTES";
+                    }
+
+                    // Find the extension in the list.
+                    int suffix_index = -1;
+
+                    for (int i = 0; i < SizeSuffixes.Length; i++)
+                    {
+                        if (SizeSuffixes[i].ToList().Contains(suffix))
+                        {
+                            suffix_index = i;
+                            break;
+                        }
+                    }
+
+                    if (suffix_index < 0)
+                    {
+                        throw new FormatException($"Unknown file size extension {suffix}, value: {value}.");
+                    }
+
+                    // Return the result.
+                    return (long)Math.Round(number * Math.Pow(kbValue, suffix_index));
                 }
 
-                if (suffix_index < 0)
-                {
-                    throw new FormatException($"Unknown file size extension {suffix}, value: {value}.");
-                }
-
-                // Return the result.
-                return (long)Math.Round(number * Math.Pow(kbValue, suffix_index));
+                return -1;
             }
             catch (Exception ex)
             {
@@ -101,6 +107,7 @@ namespace OpenDirectoryDownloader.Helpers
                 }
                 else
                 {
+                    Logger.Warn($"Cannot parse \"{value}\" as a filesize.");
                     return -1;
                 }
             }
