@@ -1,5 +1,5 @@
 ﻿using NLog;
-using OpenDirectoryDownloader.Models;
+using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Net.Http;
@@ -16,23 +16,18 @@ namespace OpenDirectoryDownloader.Site.BlitzfilesTech
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private static readonly Regex DriveHashRegex = new Regex(@"\/drive\/s\/(?<DriveHash>.*)");
         const string Parser = "BlitzfilesTech";
+        static readonly RateLimiter RateLimiter = new RateLimiter(1, TimeSpan.FromSeconds(1));
 
         public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory)
         {
-            if (OpenDirectoryIndexer.Session.MaxThreads > 1)
-            {
-                throw new FriendlyException($"{Parser} can only scan at maximum of 1 thread, please call with -t 1 or --threads 1");
-            }
-
             try
             {
                 string driveHash = GetDriveHash(webDirectory);
 
                 if (!OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_Password))
                 {
-                    Console.WriteLine($"{Parser} will always be indexed with only 1 thread, else you will run into problems and errors.");
-                    Logger.Info($"{Parser} will always be indexed with only 1 thread, else you will run into problems and errors.");
-                    //OpenDirectoryIndexer.Session.MaxThreads = 1;
+                    Console.WriteLine($"{Parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.");
+                    Logger.Info($"{Parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.");
 
                     Console.WriteLine("Check if password is needed (unsupported currently)...");
                     Logger.Info("Check if password is needed (unsupported currently)...");
@@ -92,6 +87,8 @@ namespace OpenDirectoryDownloader.Site.BlitzfilesTech
 
             try
             {
+                await RateLimiter.RateLimit();
+
                 string driveHash = GetDriveHash(webDirectory);
                 string entryHash = string.Empty;
                 long pageIndex = 0;
