@@ -341,6 +341,8 @@ namespace OpenDirectoryDownloader
                                 }
                                 catch (Exception ex)
                                 {
+                                    // Give empty speedtest, so it will be reported as Failed
+                                    Session.SpeedtestResult = new Shared.SpeedtestResult();
                                     Logger.Error(ex, "Speedtest failed");
                                 }
                             }
