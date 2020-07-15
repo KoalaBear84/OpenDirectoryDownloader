@@ -30,7 +30,7 @@ namespace OpenDirectoryDownloader.Helpers
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-                return -1;
+                return Constants.NoFileSize;
             }
 
             // Strip HTML
@@ -43,7 +43,7 @@ namespace OpenDirectoryDownloader.Helpers
 
             if (string.IsNullOrWhiteSpace(value))
             {
-                return -1;
+                return Constants.NoFileSize;
             }
 
             try
@@ -97,7 +97,7 @@ namespace OpenDirectoryDownloader.Helpers
                     return (long)Math.Round(number * Math.Pow(kbValue, suffix_index));
                 }
 
-                return -1;
+                return Constants.NoFileSize;
             }
             catch (Exception ex)
             {
@@ -108,7 +108,7 @@ namespace OpenDirectoryDownloader.Helpers
                 else
                 {
                     Logger.Warn($"Cannot parse \"{value}\" as a filesize.");
-                    return -1;
+                    return Constants.NoFileSize;
                 }
             }
         }

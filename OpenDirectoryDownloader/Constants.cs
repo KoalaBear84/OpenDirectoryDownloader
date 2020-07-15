@@ -8,6 +8,7 @@
         public const string Parameters_Password = "PASSWORD";
         public const string Parameters_GdIndex_RootId = "GdIndex_RootId";
         public const string Parameters_FtpEncryptionMode = "FtpEncryptionMode";
+        public const long NoFileSize = -1;
 
         public class UserAgent
         {
