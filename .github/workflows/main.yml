@@ -64,6 +64,8 @@ jobs:
         release_name: OpenDirectoryDownloader ${{ github.ref }}
         draft: false
         prerelease: false
+        allowUpdates: true
+        body: ${{ github.event.head_commit.message }}
 
     - name: Upload Release Asset win-x64
       uses: actions/upload-release-asset@v1.0.1
