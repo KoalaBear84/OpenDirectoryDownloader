@@ -1,0 +1,354 @@
+﻿
+<!DOCTYPE html><html><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><else><title>Index of /ABP-918</title></else><style>
+     html {
+        font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        width: 100%;
+        height: 100%;
+    }
+    body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,"Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 300;
+        color: #323232;
+        background: #FFFFFF;
+        position: relative;
+        min-height: 100%;
+    }
+    .container {
+        padding: 1.5rem 5rem;
+    }
+    .title {
+        word-break: break-word;
+    }
+    a {
+        text-decoration: none;
+    }
+    a.root, a.root:visited, .root-chevron {
+        font-weight: bold;
+        color: #323232;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    a.directory, a.directory:visited {
+        font-weight: bold;
+        color: #d02474;
+    }
+    a.file, a.file:visited, .error-back, .error-back:visited {
+        color: #0086B3;
+    }
+    a.symlink, a.symlink:visited {
+        color: #ED6A43;
+    }
+    a.directory:hover {
+        color: #d02474;
+    }
+    a.file:hover {
+        color: #0086B3;
+    }
+    a.symlink:hover {
+        color: #ED6A43;
+    }
+    .symlink-symbol {
+        display: inline-block;
+        border: 1px solid #ED6A43;
+        margin-left: 0.5rem;
+        border-radius: .2rem;
+        padding: 0 0.1rem;
+    }
+    nav {
+        padding: 0 5rem;
+    }
+    nav ul {
+        text-align: right;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    nav ul li {
+        display: block;
+        transition-duration: 0.5s;
+        float: right;
+        position: relative;
+        padding: 0.5rem 1rem;
+        background: #323232;
+        width: 8rem;
+        text-align: center;
+    }
+    nav ul li:hover {
+        cursor: pointer;
+        text-decoration: none;
+        color: #F5F5F5
+    }
+    nav ul li a:hover {
+        text-decoration: none;
+        color: #F5F5F5;
+    }
+    nav ul li ul {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        transition: all 0.5s ease;
+        margin-top: 0.5rem;
+        left: 0;
+        display: none;
+        text-align: center;
+    }
+    nav ul li:hover > ul,
+    nav ul li ul:hover {
+        visibility: visible;
+        opacity: 1;
+        display: block;
+    }
+    nav ul li ul li:first-of-type {
+        border-top: 1px solid #49483E;
+    }
+    nav ul li ul li {
+        clear: both;
+        width: 8rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+    nav ul li ul li a:hover {
+        text-decoration: underline;
+    }
+    nav ul li a, nav ul li ul li a, nav ul li a:visited, nav ul li ul li a:visited {
+        color: #F5F5F5
+    }
+    nav ul li ul li.active a {
+        font-weight: bold;
+        color: #d02474;
+    }
+    p {
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        margin-top: 0;
+        font-size: 1.5rem;
+    }
+    table {
+        margin-top: 2rem;
+        width: 100%;
+        border: 0;
+        table-layout: auto;
+        background: #ffffff;
+    }
+    table thead tr th,
+    table tbody tr td {
+        padding: 0.5625rem 0.625rem;
+        font-size: 0.875rem;
+        color: #323232;
+        text-align: left;
+        line-height: 1.125rem;
+        width: 33.333%;
+    }
+    table thead tr th {
+        padding: 0.5rem 0.625rem 0.625rem;
+        font-weight: bold;
+    }
+    table tbody tr:nth-child(odd) {
+        background: #fbfbfb;
+    }
+    table tbody tr:nth-child(even) {
+        background: #f2f2f2;
+    }
+    table thead {
+        background: #323232;
+    }
+    table tbody tr:hover {
+        background: #f6f8fa;
+    }
+    td.date-cell {
+        display: flex;
+        width: calc(100% - 1.25rem);
+        justify-content: space-between;
+    }
+    .at {
+        color: #797979;
+    }
+    .history {
+        color: #797979;
+    }
+    .file-entry {
+        display: flex;
+        justify-content: space-between;
+    }
+    span.size {
+        border-radius: 1rem;
+        background: #323232;
+        padding: 0 0.25rem;
+        font-size: 0.7rem;
+        color: #FFFFFF
+    }
+    .mobile-info {
+        display: none;
+    }
+    th a, th a:visited, .chevron {
+        color: #F5F5F5;
+    }
+    .chevron, .root-chevron {
+        margin-right: .5rem;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+    th span.active a, th span.active span {
+        color: #FFFFFF;
+    }
+    .back {
+        position: fixed;
+        width: 3.8rem;
+        height: 3.8rem;
+        align-items: center;
+        justify-content: center;
+        bottom: 3rem;
+        right: 3.75rem;
+        background: #d02474;
+        border-radius: 100%;
+        box-shadow: 0 0 8px -4px #888888;
+        color: #FFFFFF;
+        display: none;
+    }
+    .back:visited {
+        color: #FFFFFF;
+    }
+    .back:hover {
+        color: #FFFFFF;
+        font-weight: bold;
+        text-decoration: none;
+        background: #d02474;
+    }
+    .toolbar {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    .download {
+        margin-top: 1rem;
+        padding: 0.125rem;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+    .download a, .download a:visited {
+        color: #FFFFFF;
+    }
+    .download a {
+        background: #d02474;
+        padding: 0.5rem;
+        border-radius: 0.2rem;
+    }
+    .download a:hover {
+        background: #f52d8a;
+        color: #FFFFFF;
+    }
+    .download a:not(:last-of-type) {
+        margin-right: 1rem;
+    }
+    .upload {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: flex-end;
+    }
+    .upload p {
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+        color: #323232;
+    }
+    .upload form {
+        padding: 1rem;
+        border: 1px solid #d2d2d2;
+        background: #f2f2f2;
+    }
+    .upload button {
+        background: #d02474;
+        padding: 0.5rem;
+        border-radius: 0.2rem;
+        color: #FFFFFF;
+        border: none;
+    }
+    .upload div {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+    }
+    .drag-form {
+        display: none;
+        background: #3333338f;
+        position: absolute;
+        border: 0.5rem dashed #ffffff;
+        width: calc(100% - 1rem);
+        height: calc(100% - 1rem);
+        text-align: center;
+        z-index: 2;
+    }
+    .drag-title {
+        position: fixed;
+        color: #ffffff;
+        top: 50%;
+        width: 100%;
+        text-align: center;
+    }
+    .error {
+        margin: 2rem;
+    }
+    .error p {
+        margin: 1rem 0;
+        font-size: 0.9rem;
+        word-break: break-all;
+    }
+    .error p:first-of-type {
+        font-size: 1.25rem;
+        color: #d02424;
+        margin-bottom: 2rem;
+    }
+    .error p:nth-of-type(2) {
+        font-weight: bold;
+    }
+    .error-nav {
+        margin-top: 4rem;
+    }
+    @media (max-width: 760px) {
+        nav {
+            padding: 0 2.5rem;
+        }
+        .container {
+            padding: 1.5rem 2.5rem;
+        }
+        h1 {
+            font-size: 1.4em;
+        }
+        td:not(:nth-child(1)), th:not(:nth-child(1)){
+            display: none;
+        }
+        .mobile-info {
+            display: block;
+        }
+        .back {
+            display: flex;
+        }
+        .back {
+            right: 1.5rem;
+        }
+    }
+    @media (max-width: 600px) {
+        h1 {
+            font-size: 1.375em;
+        }
+    }
+    @media (max-width: 400px) {
+        nav {
+            padding: 0 0.5rem;
+        }
+        .container {
+            padding: 0.5rem;
+        }
+        h1 {
+            font-size: 1.375em;
+        }
+        .back {
+            right: 1.5rem;
+        }
+    }</style></html><body id="drop-container"><nav><ul><li><a class="change-theme" href="#" title="Change theme">Change theme...</a><ul><li><a href="/ABP-918?theme=archlinux" title="Switch to Archlinux theme">Archlinux (dark)</a></li><li><a href="/ABP-918?theme=zenburn" title="Switch to Zenburn theme">Zenburn (dark)</a></li><li><a href="/ABP-918?theme=monokai" title="Switch to Monokai theme">Monokai (dark)</a></li><li class="active"><a href="/ABP-918" title="Switch to Squirrel theme">Squirrel (light)</a></li></ul></li></ul></nav><div class="container"><span id="top"></span><h1 class="title">Index of /ABP-918</h1><div class="toolbar"><div class="download"><a href="?download=tar_gz">Download .tar.gz</a><a href="?download=tar">Download .tar</a></div></div><table><thead><th><span class=""><span class="chevron">▴</span><a href="?sort=name&amp;order=asc" title="Sort by name in ascending order">Name</a></span></th><th><span class=""><span class="chevron">▴</span><a href="?sort=size&amp;order=asc" title="Sort by size in ascending order">Size</a></span></th><th><span class=""><span class="chevron">▴</span><a href="?sort=date&amp;order=asc" title="Sort by date in ascending order">Last modification</a></span></th></thead><tbody><tr><td colspan="3"><span class="root-chevron">◂</span><a class="root" href="/">Parent directory</a></td></tr><tr><td><p><div class="file-entry"><a class="file" href="/ABP-918/%E2%98%85%E7%BA%BF%E4%B8%8A%E5%BD%B1%E9%9F%B3%E2%98%85%20gan8.in%20%E6%9C%80%E6%96%B0%E7%BD%91%E5%9D%80.url">★线上影音★ gan8.in 最新网址.url</a><span class="mobile-info size">114 B</span></div></p></td><td>114 B</td><td class="date-cell"><span>Jul 12 <span class="at"> at </span>19:49 </span><span class="history">3 weeks ago</span></td></tr><tr><td><p><div class="file-entry"><a class="file" href="/ABP-918/%E2%98%85%E7%BA%BF%E4%B8%8A%E5%BD%B1%E9%9F%B3%E2%98%85%20skrav.com.url">★线上影音★ skrav.com.url</a><span class="mobile-info size">57 B</span></div></p></td><td>57 B</td><td class="date-cell"><span>Jul 12 <span class="at"> at </span>19:49 </span><span class="history">3 weeks ago</span></td></tr><tr><td><p><div class="file-entry"><a class="file" href="/ABP-918/%E2%98%85%E7%BA%BF%E4%B8%8A%E5%BD%B1%E9%9F%B3%E5%AF%BC%E8%88%AA%E2%98%85.txt">★线上影音导航★.txt</a><span class="mobile-info size">1.1 KB</span></div></p></td><td>1.1 KB</td><td class="date-cell"><span>Jul 12 <span class="at"> at </span>19:49 </span><span class="history">3 weeks ago</span></td></tr><tr><td><p><div class="file-entry"><a class="file" href="/ABP-918/%E2%98%85%E7%BA%BF%E4%B8%8A%E5%BD%B1%E9%9F%B3%20%E6%B0%B8%E4%B9%85%E5%9C%B0%E5%9D%80%E5%8F%91%E5%B8%83%E2%98%85.url">★线上影音 永久地址发布★.url</a><span class="mobile-info size">44 B</span></div></p></td><td>44 B</td><td class="date-cell"><span>Jul 12 <span class="at"> at </span>19:49 </span><span class="history">3 weeks ago</span></td></tr><tr><td><p><div class="file-entry"><a class="file" href="/ABP-918/%E2%98%85%E9%80%9F%E7%9C%8B%E5%BD%B1%E5%9F%8E%E2%98%85%20sk999.me.url">★速看影城★ sk999.me.url</a><span class="mobile-info size">43 B</span></div></p></td><td>43 B</td><td class="date-cell"><span>Jul 12 <span class="at"> at </span>19:49 </span><span class="history">3 weeks ago</span></td></tr><tr><td><p><div class="file-entry"><a class="file" href="/ABP-918/%E2%98%85%E9%80%9F%E7%9C%8B%E5%BD%B1%E5%9F%8E%E5%AF%BC%E8%88%AA%E2%98%85.txt">★速看影城导航★.txt</a><span class="mobile-info size">650 B</span></div></p></td><td>650 B</td><td class="date-cell"><span>Jul 12 <span class="at"> at </span>19:49 </span><span class="history">3 weeks ago</span></td></tr><tr><td><p><div class="file-entry"><a class="file" href="/ABP-918/%E6%96%B0%E6%96%87%E5%AD%97%E6%96%87%E4%BB%B6.txt">新文字文件.txt</a><span class="mobile-info size">68 B</span></div></p></td><td>68 B</td><td class="date-cell"><span>Jul 12 <span class="at"> at </span>19:49 </span><span class="history">3 weeks ago</span></td></tr><tr><td><p><div class="file-entry"><a class="file" href="/ABP-918/ABP-918-c.jpg">ABP-918-c.jpg</a><span class="mobile-info size">506.1 KB</span></div></p></td><td>506.1 KB</td><td class="date-cell"><span>Jul 12 <span class="at"> at </span>21:29 </span><span class="history">3 weeks ago</span></td></tr><tr><td><p><div class="file-entry"><a class="file" href="/ABP-918/ABP-918-s.jpg">ABP-918-s.jpg</a><span class="mobile-info size">369.2 KB</span></div></p></td><td>369.2 KB</td><td class="date-cell"><span>Jul 12 <span class="at"> at </span>21:29 </span><span class="history">3 weeks ago</span></td></tr><tr><td><p><div class="file-entry"><a class="file" href="/ABP-918/ABP-918.jpg">ABP-918.jpg</a><span class="mobile-info size">173.7 KB</span></div></p></td><td>173.7 KB</td><td class="date-cell"><span>Jul 12 <span class="at"> at </span>19:50 </span><span class="history">3 weeks ago</span></td></tr><tr><td><p><div class="file-entry"><a class="file" href="/ABP-918/ABP-918.mp4">ABP-918.mp4</a><span class="mobile-info size">1.3 GB</span></div></p></td><td>1.3 GB</td><td class="date-cell"><span>Jul 13 <span class="at"> at </span>07:35 </span><span class="history">3 weeks ago</span></td></tr></tbody></table><a class="back" href="#top">⇪</a></div></body>

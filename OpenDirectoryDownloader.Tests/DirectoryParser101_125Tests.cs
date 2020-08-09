@@ -1,4 +1,4 @@
-﻿using OpenDirectoryDownloader.Shared.Models;
+using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -172,6 +172,37 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal(4, webDirectory.Files.Count);
             Assert.Equal("2018 USA.part1.rar", webDirectory.Files[0].FileName);
             Assert.Equal(3221225472, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://51.158.150.43:8080/ABP-918
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing107aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(11, webDirectory.Files.Count);
+            Assert.Equal("★线上影音★ gan8.in 最新网址.url", webDirectory.Files[0].FileName);
+            Assert.Equal(114, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://51.158.150.43:8080/1128urmc013FHD
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing107bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Single(webDirectory.Subdirectories);
+            Assert.Equal("宣傳文件", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(29, webDirectory.Files.Count);
+            Assert.Equal("★★★★美女裸聊，免费试看加QQ群616731437★★★★.gif", webDirectory.Files[0].FileName);
+            Assert.Equal(2411725, webDirectory.Files[0].FileSize);
         }
     } 
 }
