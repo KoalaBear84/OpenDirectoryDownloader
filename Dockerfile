@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core-nightly/sdk:3.1-alpine3.10
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1
 
 COPY . /app
 WORKDIR /app

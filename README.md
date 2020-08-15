@@ -49,6 +49,13 @@ Example:
 
 If you want to learn more or contribute, see the following paragraphs!
 
+## Docker
+
+1. Clone repository
+2. Go to main folder
+3. Run `docker build . -t opendirectorydownloader`
+4. Run `docker run --rm -it opendirectorydownloader` whenever you want a scan
+
 ## Getting the code
 
 ### For Visual Studio (Windows)
