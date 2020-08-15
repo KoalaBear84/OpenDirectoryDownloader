@@ -70,7 +70,9 @@ namespace OpenDirectoryDownloader
                     return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
                 }
 
-                if (htmlDocument.QuerySelector("script[src*=\"Bhadoo-Drive-Index\"]") != null || htmlDocument.QuerySelector("script[src*=\"/AjmalShajahan97/goindex\"]") != null)
+                if (htmlDocument.QuerySelector("script[src*=\"Bhadoo-Drive-Index\"]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/AjmalShajahan97/goindex\"]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/LeeluPradhan/G-Index\"]") != null)
                 {
                     return await BhadooIndexParser.ParseIndex(httpClient, webDirectory);
                 }
