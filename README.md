@@ -53,7 +53,7 @@ If you want to learn more or contribute, see the following paragraphs!
 
 1. Clone repository
 2. Go to main folder
-3. Run `docker build . -t opendirectorydownloader`
+3. Run `docker build . -t opendirectorydownloader` initially, or whenever you updated the code
 4. Run `docker run --rm -it opendirectorydownloader` whenever you want a scan
 
 ## Getting the code
