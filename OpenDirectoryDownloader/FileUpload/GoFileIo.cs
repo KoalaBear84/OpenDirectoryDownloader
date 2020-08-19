@@ -35,11 +35,9 @@ namespace OpenDirectoryDownloader.FileUpload
 
                     using (MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent($"Upload----{Guid.NewGuid()}"))
                     {
-                        multipartFormDataContent.Add(new StreamContent(new FileStream(path, FileMode.Open)), "filesUploaded", Path.GetFileName(path));
-                        multipartFormDataContent.Add(new StringContent("file"), "category");
-                        multipartFormDataContent.Add(new StringContent("0"), "category");
+                        multipartFormDataContent.Add(new StreamContent(new FileStream(path, FileMode.Open)), "file", Path.GetFileName(path));
 
-                        using (HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"https://{server}.gofile.io/upload", multipartFormDataContent))
+                        using (HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"https://{server}.gofile.io/uploadFile", multipartFormDataContent))
                         {
                             if (httpResponseMessage.IsSuccessStatusCode)
                             {
