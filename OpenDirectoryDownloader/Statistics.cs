@@ -104,7 +104,7 @@ namespace OpenDirectoryDownloader
             if (onlyRedditStats)
             {
                 stringBuilder.AppendLine();
-                stringBuilder.AppendLine($"^(Created by [KoalaBear84's OpenDirectory Indexer](https://www.reddit.com/r/opendirectories/comments/azdgc2/open_directory_indexer_open_sourcedreleased/))");
+                stringBuilder.AppendLine($"^(Created by [KoalaBear84's OpenDirectory Indexer](https://github.com/KoalaBear84/OpenDirectoryDownloader/))");
             }
 
             return stringBuilder.ToString();
