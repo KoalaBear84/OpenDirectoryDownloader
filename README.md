@@ -34,7 +34,7 @@ Command line parameters:
 | `-u` | `--url` | Url to scan
 | `-t` | `--threads` | Number of threads (default 5)
 | `-o` | `--timeout` | Number of seconds for timeout
-| `-q` | `--quit` | Do not wait after scanning
+| `-q` | `--quit` | Quit after scanning (No "Press a key")
 | `-j` | `--json` | Save JSON file
 | `-f` | `--no-urls` | Do not save URLs file
 | `-r` | `--no-reddit` | Do not show Reddit stats markdown
