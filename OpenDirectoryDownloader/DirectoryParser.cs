@@ -72,7 +72,8 @@ namespace OpenDirectoryDownloader
 
                 if (htmlDocument.QuerySelector("script[src*=\"Bhadoo-Drive-Index\"]") != null ||
                     htmlDocument.QuerySelector("script[src*=\"/AjmalShajahan97/goindex\"]") != null ||
-                    htmlDocument.QuerySelector("script[src*=\"/LeeluPradhan/G-Index\"]") != null)
+                    htmlDocument.QuerySelector("script[src*=\"/LeeluPradhan/G-Index\"]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/K-E-N-W-A-Y/GD-Index-Dark\"]") != null)
                 {
                     return await BhadooIndexParser.ParseIndex(httpClient, webDirectory);
                 }
