@@ -111,6 +111,7 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Bhadoo
                         Logger.Warn("Directory listing retrieval error (HTTP Error), waiting 10 seconds..");
                         errors++;
                         await Task.Delay(TimeSpan.FromSeconds(10));
+                        await RateLimiter.RateLimit();
                     }
                     else
                     {
