@@ -53,14 +53,17 @@ If you want to learn more or contribute, see the following paragraphs!
 
 Available on dockerhub: `docker pull ralane/opendirectorydownloader`
 
-> Need persistent storage for your json or url files? Create a volume for `/app/OpenDirectoryDownloader/bin/Debug/netcoreapp3.1/Scans`.
-
-### Building Docker
+### Building Dockerile
 
 1. Clone repository
 2. Go to main folder
 3. Run `docker build . -t opendirectorydownloader` initially, or whenever you updated the code
-4. Run `docker run --rm -it opendirectorydownloader` whenever you want a scan
+
+### Running Docker
+
+1. Run `docker run --rm -it opendirectorydownloader` whenever you want a scan
+
+> Need persistent storage for your json or url files? Create a volume for `/app/OpenDirectoryDownloader/bin/Debug/netcoreapp3.1/Scans`.
 
 ## Getting the code
 
