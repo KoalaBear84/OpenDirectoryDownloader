@@ -1,8 +1,8 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1
 
 COPY . /app
-WORKDIR /app
+WORKDIR /
 
-RUN dotnet build OpenDirectoryDownloader
+RUN dotnet build /app/OpenDirectoryDownloader
 
-ENTRYPOINT ["./OpenDirectoryDownloader/bin/Debug/netcoreapp3.1/OpenDirectoryDownloader"]
+ENTRYPOINT ["/app/OpenDirectoryDownloader/bin/Debug/netcoreapp3.1/OpenDirectoryDownloader"]
