@@ -51,7 +51,7 @@ If you want to learn more or contribute, see the following paragraphs!
 
 ## Docker
 
-DockerHub avaiable here: [OpenDirectoryDownloader](https://hub.docker.com/r/ralane/opendirectorydownloader)
+Available on dockerhub: `docker pull ralane/opendirectorydownloader`
 
 > Need persistent storage for your json or url files? Create a volume for `/app/OpenDirectoryDownloader/bin/Debug/netcoreapp3.1/Scans`.
 
