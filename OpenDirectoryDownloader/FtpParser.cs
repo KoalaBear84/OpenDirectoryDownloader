@@ -90,12 +90,20 @@ namespace OpenDirectoryDownloader
 
                 FtpClients[processor].ValidateAnyCertificate = true;
 
+                try
+                {
                 await FtpClients[processor].ConnectAsync(cancellationToken);
 
                 if (!FtpClients[processor].IsConnected)
                 {
                     FtpClients.Remove(processor);
                     throw new Exception("Error connecting to FTP");
+                }
+            }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex, "Error connecting to FTP");
+                    throw ex;
                 }
             }
 
