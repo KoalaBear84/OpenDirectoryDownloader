@@ -579,7 +579,15 @@ namespace OpenDirectoryDownloader
                 Interlocked.Decrement(ref RunningWebDirectoryThreads);
 
                 // Needed, because of the TryDequeue, no waiting in ConcurrentQueue!
-                await Task.Delay(TimeSpan.FromMilliseconds(10));
+                if (queue.IsEmpty)
+                {
+                    // Don't hog the CPU when queue < threads
+                    await Task.Delay(TimeSpan.FromMilliseconds(1000));
+                }
+                else
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(10));
+                }
             }
             while (!cancellationToken.IsCancellationRequested && (!queue.IsEmpty || RunningWebDirectoryThreads > 0));
 
@@ -883,7 +891,15 @@ namespace OpenDirectoryDownloader
                 Interlocked.Decrement(ref RunningWebFileFileSizeThreads);
 
                 // Needed, because of the TryDequeue, no waiting in ConcurrentQueue!
-                await Task.Delay(TimeSpan.FromMilliseconds(10));
+                if (queue.IsEmpty)
+                {
+                    // Don't hog the CPU when queue < threads
+                    await Task.Delay(TimeSpan.FromMilliseconds(1000));
+                }
+                else
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(10));
+                }
             }
             while (!token.IsCancellationRequested && (!queue.IsEmpty || RunningWebFileFileSizeThreads > 0 || RunningWebDirectoryThreads > 0 || !tasks.All(t => t.IsCompleted)));
 
