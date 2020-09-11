@@ -19,8 +19,10 @@ namespace OpenDirectoryDownloader
         {
             SetConsoleTitle("OpenDirectoryDownloader");
 
-            Console.WriteLine("Started");
-            Logger.Info("Started");
+            Process currentProcess = Process.GetCurrentProcess();
+
+            Console.WriteLine($"Started with PID {currentProcess.Id}");
+            Logger.Info($"Started with PID {currentProcess.Id}");
 
             Thread.CurrentThread.Name = "Main thread";
 
