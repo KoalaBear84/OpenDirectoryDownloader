@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader
@@ -20,6 +21,8 @@ namespace OpenDirectoryDownloader
 
             Console.WriteLine("Started");
             Logger.Info("Started");
+
+            Thread.CurrentThread.Name = "Main thread";
 
             Parser.Default.ParseArguments<CommandLineOptions>(args)
                 .WithNotParsed(o =>
