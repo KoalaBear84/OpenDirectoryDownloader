@@ -156,7 +156,7 @@ namespace OpenDirectoryDownloader
                     Started = DateTimeOffset.UtcNow,
                     Root = new WebDirectory(parentWebDirectory: null)
                     {
-                        Name = "ROOT",
+                        Name = Constants.Root,
                         Url = OpenDirectoryIndexerSettings.Url
                     }
                 };

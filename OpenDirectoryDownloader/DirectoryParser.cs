@@ -48,7 +48,7 @@ namespace OpenDirectoryDownloader
             WebDirectory parsedWebDirectory = new WebDirectory(webDirectory.ParentDirectory)
             {
                 Url = baseUrl,
-                Name = WebUtility.UrlDecode(Path.GetDirectoryName(new Uri(baseUrl).Segments.LastOrDefault())) ?? "ROOT"
+                Name = WebUtility.UrlDecode(Path.GetDirectoryName(new Uri(baseUrl).Segments.LastOrDefault())) ?? Constants.Root
             };
 
             try

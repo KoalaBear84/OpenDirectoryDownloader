@@ -1,4 +1,4 @@
-﻿namespace OpenDirectoryDownloader
+namespace OpenDirectoryDownloader
 {
     public class Constants
     {
@@ -9,6 +9,7 @@
         public const string Parameters_GdIndex_RootId = "GdIndex_RootId";
         public const string Parameters_FtpEncryptionMode = "FtpEncryptionMode";
         public const long NoFileSize = -1;
+        public const string Root = "ROOT";
 
         public class UserAgent
         {
