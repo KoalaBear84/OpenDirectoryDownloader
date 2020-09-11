@@ -85,7 +85,7 @@ namespace OpenDirectoryDownloader
                     DataConnectionConnectTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
                     DataConnectionReadTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
                     ReadTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
-                    EncryptionMode = Enum.Parse<FtpEncryptionMode>(OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_FtpEncryptionMode])
+                    EncryptionMode = OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_FtpEncryptionMode) ? Enum.Parse<FtpEncryptionMode>(OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_FtpEncryptionMode]) : FtpEncryptionMode.None
                 };
 
                 FtpClients[processor].ValidateAnyCertificate = true;
