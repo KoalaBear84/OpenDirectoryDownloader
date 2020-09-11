@@ -287,23 +287,41 @@ namespace OpenDirectoryDownloader
                                 {
                                     Console.WriteLine($"Uploading URLs ({FileSizeHelper.ToHumanReadable(new FileInfo(urlsPath).Length)})...");
 
+                                    bool uploadSucceeded = false;
+
                                     try
                                     {
-                                        //UploadFilesFile uploadFilesFile = await UploadFileIo.UploadFile(HttpClient, urlsPath);
-                                        //HistoryLogger.Info($"uploadfiles.io: {JsonConvert.SerializeObject(uploadFilesFile)}");
-                                        //Session.UploadedUrlsUrl = uploadFilesFile.Url.ToString();
+                                        FileIoFile uploadedFile = await FileIo.UploadFile(HttpClient, urlsPath);
+                                        HistoryLogger.Info($"File.io: {JsonConvert.SerializeObject(uploadedFile)}");
+                                        Session.UploadedUrlsUrl = uploadedFile.Url.ToString();
+                                        uploadSucceeded = true;
 
-                                        GoFilesFile uploadedFile = await GoFileIo.UploadFile(HttpClient, urlsPath);
+                                        Console.WriteLine($"Uploaded URLs link: {Session.UploadedUrlsUrl}");
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Logger.Warn($"Error uploading URLs: {ex.Message}");
+                                    }
+
+                                    if (!uploadSucceeded)
+                                    {
+                                        Logger.Warn($"Using fallback for uploading URLs file.");
+
+                                        try
+                                        {
+                                            GoFileIoFile uploadedFile = await GoFileIo.UploadFile(HttpClient, urlsPath);
                                         HistoryLogger.Info($"goFile.io: {JsonConvert.SerializeObject(uploadedFile)}");
                                         Session.UploadedUrlsUrl = uploadedFile.Url.ToString();
+                                            uploadSucceeded = true;
 
-                                        Console.WriteLine($"Uploaded URLs: {Session.UploadedUrlsUrl}");
+                                            Console.WriteLine($"Uploaded URLs link: {Session.UploadedUrlsUrl}");
                                     }
                                     catch (Exception ex)
                                     {
                                         Logger.Warn($"Error uploading URLs: {ex.Message}");
                                     }
                                 }
+                            }
                             }
                             catch (Exception ex)
                             {
