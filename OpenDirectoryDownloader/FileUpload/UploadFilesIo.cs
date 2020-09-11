@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader.FileUpload
 {
-    public class UploadFileIo
+    public class UploadFilesIo
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public static async Task<UploadFilesFile> UploadFile(HttpClient httpClient, string path)
+        public static async Task<UploadFilesIoFile> UploadFile(HttpClient httpClient, string path)
         {
             using (MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent($"Upload----{Guid.NewGuid()}"))
             {
@@ -32,7 +32,7 @@ namespace OpenDirectoryDownloader.FileUpload
 
                                 Logger.Debug($"Response from Uploadfiles.io: {response}");
 
-                                return JsonConvert.DeserializeObject<UploadFilesFile>(response);
+                                return JsonConvert.DeserializeObject<UploadFilesIoFile>(response);
                             }
                             else
                             {
@@ -55,7 +55,7 @@ namespace OpenDirectoryDownloader.FileUpload
         }
     }
 
-    public class UploadFilesFile
+    public class UploadFilesIoFile
     {
         [JsonProperty("status")]
         public bool Status { get; set; }
