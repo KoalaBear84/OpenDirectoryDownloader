@@ -44,10 +44,11 @@ namespace OpenDirectoryDownloader.FileUpload
                     }
                     catch (Exception)
                     {
-                        retries++;
                         Logger.Error($"Error uploading file... Retry in 5 seconds!!!");
                         await Task.Delay(TimeSpan.FromSeconds(5));
                     }
+
+                    retries++;
                 }
 
                 throw new Exception("Error uploading Urls file...");
