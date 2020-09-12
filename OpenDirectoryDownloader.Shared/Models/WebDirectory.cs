@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -33,7 +33,7 @@ namespace OpenDirectoryDownloader.Shared.Models
 
         public ConcurrentList<WebDirectory> Subdirectories { get; set; } = new ConcurrentList<WebDirectory>();
 
-        public List<WebFile> Files { get; set; } = new List<WebFile>();
+        public ConcurrentList<WebFile> Files { get; set; } = new ConcurrentList<WebFile>();
 
         public bool Error { get; set; }
 

@@ -630,7 +630,7 @@ namespace OpenDirectoryDownloader
             // Dirty solution..
             bool hasSeperateDirectoryAndFilesTables = false;
 
-            List<WebDirectory> results = new List<WebDirectory>();
+            ConcurrentList<WebDirectory> results = new ConcurrentList<WebDirectory>();
 
             foreach (IElement table in tables)
             {
@@ -790,7 +790,7 @@ namespace OpenDirectoryDownloader
             else
             {
                 parsedWebDirectory.Subdirectories = new ConcurrentList<WebDirectory>(results.SelectMany(r => r.Subdirectories));
-                parsedWebDirectory.Files = results.SelectMany(r => r.Files).ToList();
+                parsedWebDirectory.Files = new ConcurrentList<WebFile>(results.SelectMany(r => r.Files));
             }
 
             CheckParsedResults(parsedWebDirectory);
@@ -1729,9 +1729,7 @@ namespace OpenDirectoryDownloader
 
             if (filesWithFragments.Any())
             {
-                List<WebFile> cleanFiles = new List<WebFile>();
-
-                webDirectory.Files.RemoveAll(wf => wf.Url.Contains("#"));
+                webDirectory.Files.Where(wf => wf.Url.Contains("#")).ToList().ForEach(wd => webDirectory.Files.Remove(wd));
 
                 foreach (WebFile fileWithFragment in filesWithFragments)
                 {
@@ -1777,7 +1775,7 @@ namespace OpenDirectoryDownloader
                             Logger.Error($"Possible virtual directory or symlink detected (level {level})! SKIPPING! Url: {webDirectory.Url}");
 
                             webDirectory.Subdirectories = new ConcurrentList<WebDirectory>();
-                            webDirectory.Files = new List<WebFile>();
+                            webDirectory.Files = new ConcurrentList<WebFile>();
                             webDirectory.Error = true;
                             break;
                         }
