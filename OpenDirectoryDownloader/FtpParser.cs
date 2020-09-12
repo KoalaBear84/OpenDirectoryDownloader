@@ -79,6 +79,8 @@ namespace OpenDirectoryDownloader
                     password = password1;
                 }
 
+                Logger.Warn($"[{processor}] Connecting to FTP...");
+
                 FtpClients[processor] = new FtpClient(webDirectory.Uri.Host, webDirectory.Uri.Port, username, password)
                 {
                     ConnectTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
@@ -97,12 +99,12 @@ namespace OpenDirectoryDownloader
                 if (!FtpClients[processor].IsConnected)
                 {
                     FtpClients.Remove(processor);
-                    throw new Exception("Error connecting to FTP");
+                        throw new Exception($"[{processor}] Error connecting to FTP");
                 }
             }
                 catch (Exception ex)
                 {
-                    Logger.Error(ex, "Error connecting to FTP");
+                    Logger.Error(ex, $"[{processor}] Error connecting to FTP");
                     throw ex;
                 }
             }
@@ -201,6 +203,8 @@ namespace OpenDirectoryDownloader
             FtpReply helpReply = await ftpClient.ExecuteAsync("HELP", cancellationToken);
             FtpReply statusReply = await ftpClient.ExecuteAsync("STAT", cancellationToken);
             FtpReply systemReply = await ftpClient.ExecuteAsync("SYST", cancellationToken);
+
+                    await ftpClient.DisconnectAsync(cancellationToken);
 
             return
                 $"Connect Respones: {connectReply.InfoMessages}{Environment.NewLine}" +
