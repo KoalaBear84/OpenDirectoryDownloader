@@ -542,6 +542,14 @@ namespace OpenDirectoryDownloader
                     {
                         if (ex is TaskCanceledException taskCanceledException)
                         {
+                            Session.Errors++;
+                            webDirectory.Error = true;
+
+                            if (!Session.UrlsWithErrors.Contains(webDirectory.Url))
+                            {
+                                Session.UrlsWithErrors.Add(webDirectory.Url);
+                            }
+
                             if (webDirectory.ParentDirectory?.Url != null)
                             {
                                 Logger.Error($"Skipped processing Url: '{webDirectory.Url}' from parent '{webDirectory.ParentDirectory.Url}'");
@@ -555,13 +563,6 @@ namespace OpenDirectoryDownloader
                         else
                         {
                             Logger.Error(ex, $"Error processing Url: '{webDirectory.Url}' from parent '{webDirectory.ParentDirectory?.Url}'");
-                        }
-
-                        Session.Errors++;
-
-                        if (!Session.UrlsWithErrors.Contains(webDirectory.Url))
-                        {
-                            Session.UrlsWithErrors.Add(webDirectory.Url);
                         }
                     }
                     finally
@@ -761,14 +762,6 @@ namespace OpenDirectoryDownloader
                 }
                 else
                 {
-                    Session.Errors++;
-                    webDirectory.Error = true;
-
-                    if (!Session.UrlsWithErrors.Contains(webDirectory.Url))
-                    {
-                        Session.UrlsWithErrors.Add(webDirectory.Url);
-                    }
-
                     httpResponseMessage.EnsureSuccessStatusCode();
                 }
             }
