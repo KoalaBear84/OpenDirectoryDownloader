@@ -3,6 +3,7 @@ using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TextCopy;
 
 namespace OpenDirectoryDownloader
@@ -52,6 +53,12 @@ namespace OpenDirectoryDownloader
                     if (Console.IsInputRedirected)
                     {
                         int keyPressed = Console.Read();
+
+                        if (keyPressed == -1)
+                        {
+                            // Needed, when input is redirected it will immediately return with -1
+                            Task.Delay(1).Wait();
+                        }
 
                         //if (char.IsControl((char)keyPressed))
                         //{
