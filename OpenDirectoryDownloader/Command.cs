@@ -57,7 +57,7 @@ namespace OpenDirectoryDownloader
                         if (keyPressed == -1)
                         {
                             // Needed, when input is redirected it will immediately return with -1
-                            Task.Delay(1).Wait();
+                            Task.Delay(10).Wait();
                         }
 
                         //if (char.IsControl((char)keyPressed))
