@@ -1915,7 +1915,7 @@ namespace OpenDirectoryDownloader
                                 dateColumnIndex.Add(tableColumn.Index());
                             }
 
-                            if (FileSizeHelper.ParseFileSize(tableColumn.TextContent) > -1)
+                            if (FileSizeHelper.ParseFileSize(tableColumn.TextContent, onlyChecking: true) > Constants.NoFileSize)
                             {
                                 fileSizeColumnIndex.Add(tableColumn.Index());
                             }

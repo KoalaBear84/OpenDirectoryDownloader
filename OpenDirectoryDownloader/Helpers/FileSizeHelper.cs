@@ -26,7 +26,7 @@ namespace OpenDirectoryDownloader.Helpers
         };
         private static readonly Regex AlphaNumericRegex = new Regex("[^a-zA-Z0-9 .,]");
 
-        public static long ParseFileSize(string value, int kbValue = 1024, bool throwException = false)
+        public static long ParseFileSize(string value, int kbValue = 1024, bool throwException = false, bool onlyChecking = false)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -107,7 +107,11 @@ namespace OpenDirectoryDownloader.Helpers
                 }
                 else
                 {
-                    Logger.Warn($"Cannot parse \"{value}\" as a filesize.");
+                    if (!onlyChecking)
+                    {
+                        Logger.Warn($"Cannot parse \"{value}\" as a filesize.");
+                    }
+
                     return Constants.NoFileSize;
                 }
             }
