@@ -3,6 +3,7 @@ using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using TextCopy;
 
@@ -17,8 +18,11 @@ namespace OpenDirectoryDownloader
         /// </summary>
         internal static void SetConsoleProperties()
         {
-            Console.WindowWidth = Math.Min(170, Console.LargestWindowWidth);
-            Console.WindowHeight = Math.Min(34, Console.LargestWindowHeight);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Console.WindowWidth = Math.Min(170, Console.LargestWindowWidth);
+                Console.WindowHeight = Math.Min(34, Console.LargestWindowHeight);
+            }
         }
 
         internal static void ShowInfoAndCommands()
