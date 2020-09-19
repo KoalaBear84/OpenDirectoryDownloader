@@ -447,8 +447,8 @@ namespace OpenDirectoryDownloader
                         try
                         {
                             Library.SaveSessionJson(Session);
-                            Logger.Info($"Saved session: {{CleanUriToFilename(session.Root.Uri)}.json");
-                            Console.WriteLine($"Saved session: {{CleanUriToFilename(session.Root.Uri)}.json");
+                            Logger.Info($"Saved session: {Library.CleanUriToFilename(Session.Root.Uri)}.json");
+                            Console.WriteLine($"Saved session: {Library.CleanUriToFilename(Session.Root.Uri)}.json");
                         }
                         catch (Exception ex)
                         {
