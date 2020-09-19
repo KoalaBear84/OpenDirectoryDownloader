@@ -247,11 +247,6 @@ namespace OpenDirectoryDownloader
                     Console.WriteLine("Finshed indexing");
                     Logger.Info("Finshed indexing");
 
-                    if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftp || Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
-                    {
-                        FtpParser.CloseAll();
-                    }
-
                     if (WebFilesFileSizeQueue.Any())
                     {
                         TimerStatistics.Interval = TimeSpan.FromSeconds(5).TotalMilliseconds;
@@ -347,7 +342,7 @@ namespace OpenDirectoryDownloader
 
                                     Console.WriteLine($"Starting speedtest (10-25 seconds)...");
                                     Console.WriteLine($"Test file: {FileSizeHelper.ToHumanReadable(biggestFile.FileSize)} {biggestFile.Url}");
-                                    Session.SpeedtestResult = await Library.DoSpeedTestAsync(HttpClient, biggestFile.Url);
+                                    Session.SpeedtestResult = await Library.DoSpeedTestHttpAsync(HttpClient, biggestFile.Url);
 
                                     if (Session.SpeedtestResult != null)
                                     {
@@ -361,11 +356,47 @@ namespace OpenDirectoryDownloader
                                     Logger.Error(ex, "Speedtest failed");
                                 }
                             }
+                            else if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftp || Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
+                            {
+                                try
+                                {
+                                    FluentFTP.FtpClient ftpClient = FtpParser.FtpClients.FirstOrDefault(c => c.Value.IsConnected).Value;
+
+                                    FtpParser.CloseAll(exceptFtpClient: ftpClient);
+
+                                    if (ftpClient != null)
+                                    {
+
+                                        WebFile biggestFile = Session.Root.AllFiles.OrderByDescending(f => f.FileSize).First();
+
+                                        Console.WriteLine($"Starting speedtest (10-25 seconds)...");
+                                        Console.WriteLine($"Test file: {FileSizeHelper.ToHumanReadable(biggestFile.FileSize)} {biggestFile.Url}");
+
+                                        Session.SpeedtestResult = await Library.DoSpeedTestFtpAsync(ftpClient, biggestFile.Url);
+
+                                        if (Session.SpeedtestResult != null)
+                                        {
+                                            Console.WriteLine($"Finished speedtest. Downloaded: {FileSizeHelper.ToHumanReadable(Session.SpeedtestResult.DownloadedBytes)}, Time: {Session.SpeedtestResult.ElapsedMilliseconds / 1000:F1} s, Speed: {Session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({Session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)");
+                                        }
+                                    }
                             else
                             {
-                                Logger.Warn($"Only a speedtest for HTTP(S), not '{Session.Root.Uri.Scheme}'");
+                                        Console.WriteLine($"Cannot do speedtest because there is no connected FTP client anymore");
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    // Give empty speedtest, so it will be reported as Failed
+                                    Session.SpeedtestResult = new Shared.SpeedtestResult();
+                                    Logger.Error(ex, "Speedtest failed");
+                                }
                             }
                         }
+                    }
+
+                    if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftp || Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
+                    {
+                        FtpParser.CloseAll();
                     }
 
                     Logger.Info("Logging sessions stats...");

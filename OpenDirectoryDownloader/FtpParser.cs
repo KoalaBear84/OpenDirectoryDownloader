@@ -222,11 +222,16 @@ namespace OpenDirectoryDownloader
             return null;
         }
 
-        public static async void CloseAll()
+        public static async void CloseAll(FtpClient exceptFtpClient = null)
         {
             foreach (KeyValuePair<string, FtpClient> keyValuePair in FtpClients)
             {
-                await keyValuePair.Value.DisconnectAsync();
+                FtpClient ftpClient = keyValuePair.Value;
+
+                if (exceptFtpClient is null || ftpClient != exceptFtpClient)
+                {
+                    await ftpClient.DisconnectAsync();
+                }
             }
         }
 

@@ -1,3 +1,4 @@
+using FluentFTP;
 using Newtonsoft.Json;
 using NLog;
 using OpenDirectoryDownloader.Helpers;
@@ -119,9 +120,9 @@ namespace OpenDirectoryDownloader
             return downloadedMBs / (time / 1000d);
         }
 
-        public static async Task<SpeedtestResult> DoSpeedTestAsync(HttpClient httpClient, string url, int seconds = 25)
+        public static async Task<SpeedtestResult> DoSpeedTestHttpAsync(HttpClient httpClient, string url, int seconds = 25)
         {
-            Logger.Info($"Do speedtest for {url}");
+            Logger.Info($"Do HTTP speedtest for {url}");
 
             HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
 
@@ -136,70 +137,7 @@ namespace OpenDirectoryDownloader
             {
                 using (Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync())
                 {
-                    int miliseconds = seconds * 1000;
-
-                    Stopwatch stopwatch = Stopwatch.StartNew();
-                    long totalBytesRead = 0;
-
-                    byte[] buffer = new byte[2048];
-                    int bytesRead;
-
-                    List<KeyValuePair<long, long>> measurements = new List<KeyValuePair<long, long>>(10_000);
-                    long previousTime = 0;
-
-                    while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
-                    {
-                        if (stopwatch.ElapsedMilliseconds >= miliseconds)
-                        {
-                            break;
-                        }
-
-                        if (stopwatch.ElapsedMilliseconds >= 10_000)
-                        {
-                            // Second changed
-                            if (previousTime / 1000 < stopwatch.ElapsedMilliseconds / 1000)
-                            {
-                                List<IGrouping<long, KeyValuePair<long, long>>> perSecond = measurements.GroupBy(m => m.Key / 1000).ToList();
-
-                                if (!perSecond.Any())
-                                {
-                                    break;
-                                }
-
-                                double maxSpeedLastSeconds = perSecond.TakeLast(3).Max(s => GetSpeedInMBs(s, 1000));
-                                double maxSpeedBefore = perSecond.Take(perSecond.Count - 3).Max(s => GetSpeedInMBs(s, 1000));
-
-                                // If no improvement in speed
-                                if (maxSpeedBefore > maxSpeedLastSeconds)
-                                {
-                                    break;
-                                }
-                            }
-                        }
-
-                        totalBytesRead += bytesRead;
-
-                        measurements.Add(new KeyValuePair<long, long>(stopwatch.ElapsedMilliseconds, totalBytesRead));
-                        previousTime = stopwatch.ElapsedMilliseconds;
-                    }
-
-                    stopwatch.Stop();
-
-                    SpeedtestResult speedtestResult = new SpeedtestResult
-                    {
-                        DownloadedBytes = totalBytesRead,
-                        ElapsedMiliseconds = stopwatch.ElapsedMilliseconds,
-                        MaxMBsPerSecond = measurements.Any() ? measurements.GroupBy(m => m.Key / 1000).Max(s => GetSpeedInMBs(s, 1000)) : 0
-                    };
-
-                    if (measurements.Any())
-                    {
-                        Logger.Info($"Downloaded: {speedtestResult.DownloadedMBs:F2} MB, Time: {speedtestResult.ElapsedMiliseconds} ms, Speed: {speedtestResult.MaxMBsPerSecond:F1} MB/s ({speedtestResult.MaxMBsPerSecond * 8:F0} mbit)");
-                    }
-                    else
-                    {
-                        Logger.Warn($"Speedtest failed, nothing downloaded.");
-                    }
+                    SpeedtestResult speedtestResult = SpeedtestFromStream(stream, seconds);
 
                     return speedtestResult;
                 }
@@ -208,6 +146,99 @@ namespace OpenDirectoryDownloader
             {
                 httpResponseMessage.Dispose();
             }
+        }
+
+        public static async Task<SpeedtestResult> DoSpeedTestFtpAsync(FtpClient ftpClient, string url, int seconds = 25)
+        {
+            Logger.Info($"Do FTP speedtest for {url}");
+
+            Uri uri = new Uri(url);
+
+            using (Stream stream = await ftpClient.OpenReadAsync(uri.LocalPath))
+            {
+                SpeedtestResult speedtestResult = SpeedtestFromStream(stream, seconds);
+
+                return speedtestResult;
+            }
+        }
+
+        private static SpeedtestResult SpeedtestFromStream(Stream stream, int seconds)
+        {
+            int miliseconds = seconds * 1000;
+
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            long totalBytesRead = 0;
+
+            byte[] buffer = new byte[2048];
+            int bytesRead;
+
+            List<KeyValuePair<long, long>> measurements = new List<KeyValuePair<long, long>>(10_000);
+            long previousTime = 0;
+
+            while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                if (stopwatch.ElapsedMilliseconds >= miliseconds)
+                {
+                    break;
+                }
+
+                if (previousTime / 1000 < stopwatch.ElapsedMilliseconds / 1000)
+                {
+                    string clearLine = new string('\b', Console.WindowWidth);
+                    double maxMBsPerSecond = measurements.Any() ? measurements.GroupBy(m => m.Key / 1000).Max(s => GetSpeedInMBs(s, 1000)) : 0;
+                    Console.Write($"{clearLine}Downloaded: {FileSizeHelper.ToHumanReadable(totalBytesRead)} MB, Time: {stopwatch.ElapsedMilliseconds / 1000}s, Speed: {maxMBsPerSecond:F1} MB/s ({maxMBsPerSecond * 8:F0} mbit)");
+                }
+
+                if (stopwatch.ElapsedMilliseconds >= 10_000)
+                {
+                    // Second changed
+                    if (previousTime / 1000 < stopwatch.ElapsedMilliseconds / 1000)
+                    {
+                        List<IGrouping<long, KeyValuePair<long, long>>> perSecond = measurements.GroupBy(m => m.Key / 1000).ToList();
+
+                        if (!perSecond.Any())
+                        {
+                            break;
+                        }
+
+                        double maxSpeedLastSeconds = perSecond.TakeLast(3).Max(s => GetSpeedInMBs(s, 1000));
+                        double maxSpeedBefore = perSecond.Take(perSecond.Count - 3).Max(s => GetSpeedInMBs(s, 1000));
+
+                        // If no improvement in speed
+                        if (maxSpeedBefore > maxSpeedLastSeconds)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                totalBytesRead += bytesRead;
+
+                measurements.Add(new KeyValuePair<long, long>(stopwatch.ElapsedMilliseconds, totalBytesRead));
+                previousTime = stopwatch.ElapsedMilliseconds;
+            }
+
+            Console.WriteLine();
+
+            stopwatch.Stop();
+
+            SpeedtestResult speedtestResult = new SpeedtestResult
+            {
+                DownloadedBytes = totalBytesRead,
+                ElapsedMilliseconds = stopwatch.ElapsedMilliseconds,
+                MaxMBsPerSecond = measurements.Any() ? measurements.GroupBy(m => m.Key / 1000).Max(s => GetSpeedInMBs(s, 1000)) : 0
+            };
+
+            if (measurements.Any())
+            {
+                Logger.Info($"Downloaded: {speedtestResult.DownloadedMBs:F2} MB, Time: {speedtestResult.ElapsedMilliseconds} ms, Speed: {speedtestResult.MaxMBsPerSecond:F1} MB/s ({speedtestResult.MaxMBsPerSecond * 8:F0} mbit)");
+            }
+            else
+            {
+                Logger.Warn($"Speedtest failed, nothing downloaded.");
+            }
+
+            return speedtestResult;
         }
 
         private static Uri GetUrlDirectory(string url)
