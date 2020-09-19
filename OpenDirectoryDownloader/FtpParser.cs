@@ -105,7 +105,7 @@ namespace OpenDirectoryDownloader
                 catch (Exception ex)
                 {
                     Logger.Error(ex, $"[{processor}] Error connecting to FTP");
-                    throw ex;
+                    throw;
                 }
             }
 
