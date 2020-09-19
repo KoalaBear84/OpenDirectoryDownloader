@@ -1,4 +1,4 @@
-namespace OpenDirectoryDownloader
+﻿namespace OpenDirectoryDownloader
 {
     public class Constants
     {
@@ -10,6 +10,7 @@ namespace OpenDirectoryDownloader
         public const string Parameters_FtpEncryptionMode = "FtpEncryptionMode";
         public const long NoFileSize = -1;
         public const string Root = "ROOT";
+        public const string Ftp_Max_Connections = "MAX_CONNECTIONS";
 
         public class UserAgent
         {

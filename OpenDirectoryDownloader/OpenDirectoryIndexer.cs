@@ -15,6 +15,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -158,7 +159,8 @@ namespace OpenDirectoryDownloader
                     {
                         Name = Constants.Root,
                         Url = OpenDirectoryIndexerSettings.Url
-                    }
+                    },
+                    MaxThreads = OpenDirectoryIndexerSettings.Threads
                 };
             }
 
@@ -193,6 +195,13 @@ namespace OpenDirectoryDownloader
                 if (string.IsNullOrWhiteSpace(serverInfo))
                 {
                     serverInfo = "Failed or no server info available.";
+                }
+                else
+                {
+                    // Remove IP from server info
+                    Regex.Replace(serverInfo, @"(Connected to )(\d*\.\d*.\d*.\d*)", "$1IP Address");
+
+                    Session.Description = $"FTP INFO{Environment.NewLine}{serverInfo}";
                 }
 
                 Logger.Warn(serverInfo);
@@ -306,17 +315,17 @@ namespace OpenDirectoryDownloader
                                         {
                                             UploadFilesIoFile uploadedFile = await UploadFilesIo.UploadFile(HttpClient, urlsPath);
                                             HistoryLogger.Info($"UploadFiles.io: {JsonConvert.SerializeObject(uploadedFile)}");
-                                        Session.UploadedUrlsUrl = uploadedFile.Url.ToString();
+                                            Session.UploadedUrlsUrl = uploadedFile.Url.ToString();
                                             uploadSucceeded = true;
 
                                             Console.WriteLine($"Uploaded URLs link: {Session.UploadedUrlsUrl}");
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        Logger.Warn($"Error uploading URLs: {ex.Message}");
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Logger.Warn($"Error uploading URLs: {ex.Message}");
+                                        }
                                     }
                                 }
-                            }
                             }
                             catch (Exception ex)
                             {
@@ -379,8 +388,8 @@ namespace OpenDirectoryDownloader
                                             Console.WriteLine($"Finished speedtest. Downloaded: {FileSizeHelper.ToHumanReadable(Session.SpeedtestResult.DownloadedBytes)}, Time: {Session.SpeedtestResult.ElapsedMilliseconds / 1000:F1} s, Speed: {Session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({Session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)");
                                         }
                                     }
-                            else
-                            {
+                                    else
+                                    {
                                         Console.WriteLine($"Cannot do speedtest because there is no connected FTP client anymore");
                                     }
                                 }
@@ -500,6 +509,8 @@ namespace OpenDirectoryDownloader
         {
             Logger.Debug($"Start [{name}]");
 
+            bool maxConnections = false;
+
             do
             {
                 Interlocked.Increment(ref RunningWebDirectoryThreads);
@@ -523,7 +534,42 @@ namespace OpenDirectoryDownloader
                             if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftp || Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
                             {
                                 WebDirectory parsedWebDirectory = await FtpParser.ParseFtpAsync(name, webDirectory, OpenDirectoryIndexerSettings.Username, OpenDirectoryIndexerSettings.Password);
-                                AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
+
+                                if (webDirectory?.CancellationReason == Constants.Ftp_Max_Connections)
+                                {
+                                    webDirectory.CancellationReason = null;
+                                    maxConnections = true;
+
+                                    if (webDirectory.Name == Constants.Root)
+                                    {
+                                        webDirectory.Error = true;
+                                        Interlocked.Decrement(ref RunningWebDirectoryThreads);
+                                        throw new Exception("Error checking FTP because maximum connections reached");
+                                    }
+
+                                    // Requeue
+                                    Session.ProcessedUrls.Remove(webDirectory.Url);
+                                    queue.Enqueue(webDirectory);
+
+                                    try
+                                    {
+                                        await FtpParser.FtpClients[name].DisconnectAsync();
+
+                                        lock (FtpParser.FtpClients)
+                                        {
+                                            FtpParser.FtpClients.Remove(name);
+                                        }
+                                    }
+                                    catch (Exception exFtpDisconnect)
+                                    {
+                                        Logger.Error(exFtpDisconnect, "Error disconnecting FTP connection.");
+                                    }
+                                }
+
+                                if (parsedWebDirectory != null)
+                                {
+                                    AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
+                                }
                             }
                             else if (Session.Root.Uri.Host == Constants.GoogleDriveDomain)
                             {
@@ -603,8 +649,11 @@ namespace OpenDirectoryDownloader
                             WebDirectoryProcessorInfo.Remove(name);
                         }
 
-                        webDirectory.Finished = true;
-                        webDirectory.FinishTime = DateTimeOffset.UtcNow;
+                        if (string.IsNullOrWhiteSpace(webDirectory.CancellationReason))
+                        {
+                            webDirectory.Finished = true;
+                            webDirectory.FinishTime = DateTimeOffset.UtcNow;
+                        }
                     }
                 }
 
@@ -621,7 +670,7 @@ namespace OpenDirectoryDownloader
                     await Task.Delay(TimeSpan.FromMilliseconds(10));
                 }
             }
-            while (!cancellationToken.IsCancellationRequested && (!queue.IsEmpty || RunningWebDirectoryThreads > 0));
+            while (!cancellationToken.IsCancellationRequested && (!queue.IsEmpty || RunningWebDirectoryThreads > 0) && !maxConnections);
 
             Logger.Debug($"Finished [{name}]");
         }

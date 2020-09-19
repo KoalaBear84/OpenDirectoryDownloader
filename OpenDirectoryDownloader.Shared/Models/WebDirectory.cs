@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -68,5 +68,8 @@ namespace OpenDirectoryDownloader.Shared.Models
 
         [JsonIgnore]
         public int HeaderCount { get; set; }
+
+        [JsonIgnore]
+        public string CancellationReason { get; set; }
     }
 }

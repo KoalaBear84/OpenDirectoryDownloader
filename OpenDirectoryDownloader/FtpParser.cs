@@ -1,4 +1,4 @@
-using FluentFTP;
+﻿using FluentFTP;
 using NLog;
 using OpenDirectoryDownloader.Shared.Models;
 using Polly;
@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,6 +17,19 @@ namespace OpenDirectoryDownloader
     public class FtpParser
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+        private static readonly Regex RegexMaxThreadsSpecific01 = new Regex(@"Too many connections \((?<MaxThreads>\d*)\) from this IP");
+        private static readonly Regex RegexMaxThreadsSpecific02 = new Regex(@"Sorry, the maximum number of clients \((?<MaxThreads>\d*)\) from your host are already connected.");
+        private static readonly Regex RegexMaxThreadsSpecific03 = new Regex(@"Sorry, your system may not connect more than (?<MaxThreads>\d*) times.");
+        private static readonly Regex RegexMaxThreadsSpecific04 = new Regex(@"Not logged in, only (?<MaxThreads>\d*) sessions from same IP allowed concurrently.");
+
+        private static readonly Regex RegexMaxThreadsGeneral01 = new Regex(@"Too many connections");
+        private static readonly Regex RegexMaxThreadsGeneral02 = new Regex(@"There are too many connections from your internet address.");
+        private static readonly Regex RegexMaxThreadsGeneral03 = new Regex(@"No more connections allowed from your IP.");
+        private static readonly Regex RegexMaxThreadsGeneral04 = new Regex(@"There are too many connected users, please try later.");
+        private static readonly Regex RegexMaxThreadsGeneral05 = new Regex(@"Too many users logged in for this account.*");
+        private static readonly Regex RegexMaxThreadsGeneral06 = new Regex(@"Sorry, the maximum number of clients \(\d*\) for this user are already connected.");
+
         private static readonly Random Jitterer = new Random();
         private static readonly AsyncRetryPolicy RetryPolicyNew = Policy
             .Handle<Exception>()
@@ -26,6 +40,18 @@ namespace OpenDirectoryDownloader
                     WebDirectory webDirectory = context["WebDirectory"] as WebDirectory;
 
                     string relativeUrl = webDirectory.Uri.PathAndQuery;
+
+                    if (ex is FtpCommandException ftpCommandException)
+                    {
+                        if (IsMaxThreads(ftpCommandException))
+                        {
+                            Logger.Warn($"[{context["Processor"]}] Maximum connections reached: {ftpCommandException.Message}");
+                            // Stop this thread nicely
+                            webDirectory.CancellationReason = Constants.Ftp_Max_Connections;
+                            (context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
+                            return;
+                        }
+                    }
 
                     if (ex is FtpAuthenticationException ftpAuthenticationException)
                     {
@@ -48,6 +74,66 @@ namespace OpenDirectoryDownloader
                     }
                 }
             );
+
+        private static bool IsMaxThreads(FtpCommandException ftpCommandException)
+        {
+            List<Regex> regexes = new List<Regex>
+            {
+                RegexMaxThreadsSpecific01,
+                RegexMaxThreadsSpecific02,
+                RegexMaxThreadsSpecific03,
+                RegexMaxThreadsSpecific04,
+
+                // General needs to be check the latest
+                RegexMaxThreadsGeneral01,
+                RegexMaxThreadsGeneral02,
+                RegexMaxThreadsGeneral03,
+                RegexMaxThreadsGeneral05,
+                RegexMaxThreadsGeneral06
+            };
+
+            foreach (Regex regex in regexes)
+            {
+                if (regex.IsMatch(ftpCommandException.Message))
+                {
+                    Match regexMatch = regex.Match(ftpCommandException.Message);
+
+                    int newThreads = OpenDirectoryIndexer.Session.MaxThreads;
+
+                    if (regexMatch.Groups.ContainsKey("MaxThreads"))
+                    {
+                        // Should be one less than..
+                        if (regex == RegexMaxThreadsSpecific01)
+                        {
+                            OpenDirectoryIndexer.Session.MaxThreads = int.Parse(regexMatch.Groups["MaxThreads"].Value) - 1;
+                        }
+                        else
+                        {
+                            OpenDirectoryIndexer.Session.MaxThreads = int.Parse(regexMatch.Groups["MaxThreads"].Value);
+                        }
+                    }
+                    else
+                    {
+                        OpenDirectoryIndexer.Session.MaxThreads = Math.Max(1, Interlocked.Decrement(ref OpenDirectoryIndexer.Session.MaxThreads));
+                    }
+
+                    if (newThreads != OpenDirectoryIndexer.Session.MaxThreads)
+                    {
+                        Logger.Warn($"Max threads reduced to {OpenDirectoryIndexer.Session.MaxThreads}");
+                    }
+
+                    return true;
+                }
+            }
+
+            // This one is not specific to threads
+            if (RegexMaxThreadsGeneral04.IsMatch(ftpCommandException.Message))
+            {
+                throw ftpCommandException;
+            }
+
+            return false;
+        }
 
         public static Dictionary<string, FtpClient> FtpClients { get; set; } = new Dictionary<string, FtpClient>();
 
@@ -94,14 +180,14 @@ namespace OpenDirectoryDownloader
 
                 try
                 {
-                await FtpClients[processor].ConnectAsync(cancellationToken);
+                    await FtpClients[processor].ConnectAsync(cancellationToken);
 
-                if (!FtpClients[processor].IsConnected)
-                {
-                    FtpClients.Remove(processor);
+                    if (!FtpClients[processor].IsConnected)
+                    {
+                        FtpClients.Remove(processor);
                         throw new Exception($"[{processor}] Error connecting to FTP");
+                    }
                 }
-            }
                 catch (Exception ex)
                 {
                     Logger.Error(ex, $"[{processor}] Error connecting to FTP");
@@ -179,7 +265,7 @@ namespace OpenDirectoryDownloader
 
                 username = username1;
                 password = password1;
-        }
+            }
 
             // Try multiple possible options, the AutoDetect and AutoConnectAsync are not working (reliably)
             foreach (FtpEncryptionMode ftpEncryptionMode in Enum.GetValues(typeof(FtpEncryptionMode)))
@@ -189,7 +275,7 @@ namespace OpenDirectoryDownloader
                     Logger.Warn($"Try FTP(S) connection with EncryptionMode {ftpEncryptionMode}");
 
                     FtpClient ftpClient = new FtpClient(webDirectory.Uri.Host, webDirectory.Uri.Port, username, password)
-        {
+                    {
                         EncryptionMode = ftpEncryptionMode
                     };
 
@@ -198,23 +284,31 @@ namespace OpenDirectoryDownloader
 
                     OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_FtpEncryptionMode] = ftpEncryptionMode.ToString();
 
-            FtpReply connectReply = ftpClient.LastReply;
+                    FtpReply connectReply = ftpClient.LastReply;
 
-            FtpReply helpReply = await ftpClient.ExecuteAsync("HELP", cancellationToken);
-            FtpReply statusReply = await ftpClient.ExecuteAsync("STAT", cancellationToken);
-            FtpReply systemReply = await ftpClient.ExecuteAsync("SYST", cancellationToken);
+                    FtpReply helpReply = await ftpClient.ExecuteAsync("HELP", cancellationToken);
+                    FtpReply statusReply = await ftpClient.ExecuteAsync("STAT", cancellationToken);
+                    FtpReply systemReply = await ftpClient.ExecuteAsync("SYST", cancellationToken);
 
                     await ftpClient.DisconnectAsync(cancellationToken);
 
-            return
-                $"Connect Respones: {connectReply.InfoMessages}{Environment.NewLine}" +
-                $"ServerType: {ftpClient.ServerType}{Environment.NewLine}" +
-                $"Help response: {helpReply.InfoMessages}{Environment.NewLine}" +
-                $"Status response: {statusReply.InfoMessages}{Environment.NewLine}" +
-                $"System response: {systemReply.InfoMessages}{Environment.NewLine}";
-        }
+                    return
+                        $"Connect Respones: {connectReply.InfoMessages}{Environment.NewLine}" +
+                        $"ServerType: {ftpClient.ServerType}{Environment.NewLine}" +
+                        $"Help response: {helpReply.InfoMessages}{Environment.NewLine}" +
+                        $"Status response: {statusReply.InfoMessages}{Environment.NewLine}" +
+                        $"System response: {systemReply.InfoMessages}{Environment.NewLine}";
+                }
                 catch (Exception ex)
                 {
+                    if (ex is FtpCommandException ftpCommandException)
+                    {
+                        if (IsMaxThreads(ftpCommandException))
+                        {
+                            return null;
+                        }
+                    }
+
                     Logger.Error($"FTP EncryptionMode {ftpEncryptionMode} failed: {ex.Message}");
                 }
             }
