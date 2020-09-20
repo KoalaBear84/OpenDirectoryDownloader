@@ -635,6 +635,7 @@ namespace OpenDirectoryDownloader
             foreach (IElement table in tables)
             {
                 WebDirectory webDirectoryCopy = JsonConvert.DeserializeObject<WebDirectory>(JsonConvert.SerializeObject(parsedWebDirectory));
+                webDirectoryCopy.ParentDirectory = parsedWebDirectory.ParentDirectory;
 
                 Dictionary<int, HeaderInfo> tableHeaders = GetTableHeaders(table);
                 webDirectoryCopy.HeaderCount = tableHeaders.Count(th => th.Value.Type != HeaderType.Unknown);
