@@ -249,7 +249,7 @@ namespace OpenDirectoryDownloader
                     {
                         string processorId = i.ToString();
 
-                        WebFileFileSizeProcessors[i - 1] = WebFileFileSizeProcessor(WebFilesFileSizeQueue, $"Processor {processorId}", IndexingTaskCTS.Token, WebDirectoryProcessors);
+                        WebFileFileSizeProcessors[i - 1] = WebFileFileSizeProcessor(WebFilesFileSizeQueue, $"Processor {processorId}", WebDirectoryProcessors, IndexingTaskCTS.Token);
                     }
 
                     await Task.WhenAll(WebDirectoryProcessors);
@@ -553,7 +553,7 @@ namespace OpenDirectoryDownloader
 
                                     try
                                     {
-                                        await FtpParser.FtpClients[name].DisconnectAsync();
+                                        await FtpParser.FtpClients[name].DisconnectAsync(cancellationToken);
 
                                         lock (FtpParser.FtpClients)
                                         {
@@ -568,6 +568,7 @@ namespace OpenDirectoryDownloader
 
                                 if (parsedWebDirectory != null)
                                 {
+                                    DirectoryParser.CheckParsedResults(parsedWebDirectory);
                                     AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
                                 }
                             }
@@ -663,11 +664,11 @@ namespace OpenDirectoryDownloader
                 if (queue.IsEmpty)
                 {
                     // Don't hog the CPU when queue < threads
-                    await Task.Delay(TimeSpan.FromMilliseconds(1000));
+                    await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
                 }
                 else
                 {
-                    await Task.Delay(TimeSpan.FromMilliseconds(10));
+                    await Task.Delay(TimeSpan.FromMilliseconds(10), cancellationToken);
                 }
             }
             while (!cancellationToken.IsCancellationRequested && (!queue.IsEmpty || RunningWebDirectoryThreads > 0) && !maxConnections);
@@ -930,7 +931,7 @@ namespace OpenDirectoryDownloader
             }
         }
 
-        private async Task WebFileFileSizeProcessor(ConcurrentQueue<WebFile> queue, string name, CancellationToken token, Task[] tasks)
+        private async Task WebFileFileSizeProcessor(ConcurrentQueue<WebFile> queue, string name, Task[] tasks, CancellationToken cancellationToken)
         {
             Logger.Debug($"Start [{name}]");
 
@@ -967,14 +968,14 @@ namespace OpenDirectoryDownloader
                 if (queue.IsEmpty)
                 {
                     // Don't hog the CPU when queue < threads
-                    await Task.Delay(TimeSpan.FromMilliseconds(1000));
+                    await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
                 }
                 else
                 {
-                    await Task.Delay(TimeSpan.FromMilliseconds(10));
+                    await Task.Delay(TimeSpan.FromMilliseconds(10), cancellationToken);
                 }
             }
-            while (!token.IsCancellationRequested && (!queue.IsEmpty || RunningWebFileFileSizeThreads > 0 || RunningWebDirectoryThreads > 0 || !tasks.All(t => t.IsCompleted)));
+            while (!cancellationToken.IsCancellationRequested && (!queue.IsEmpty || RunningWebFileFileSizeThreads > 0 || RunningWebDirectoryThreads > 0 || !tasks.All(t => t.IsCompleted)));
 
             Logger.Debug($"Finished [{name}]");
         }

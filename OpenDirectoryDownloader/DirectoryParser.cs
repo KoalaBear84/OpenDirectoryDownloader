@@ -1682,7 +1682,7 @@ namespace OpenDirectoryDownloader
             }
         }
 
-        private static void CheckParsedResults(WebDirectory webDirectory)
+        public static void CheckParsedResults(WebDirectory webDirectory)
         {
             if (!webDirectory.Subdirectories.Any() && !webDirectory.Files.Any())
             {
