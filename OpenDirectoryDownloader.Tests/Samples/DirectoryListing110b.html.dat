@@ -1,0 +1,41 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Directory Listing of /docu/manuals/midas_manuals/</title>
+<link rel="stylesheet" type="text/css" href="dlf/styles.css" />
+<script language="javascript" type="text/javascript">
+<!--
+function o(n, i) {
+	document.images['thumb'+n].src = 'dlf/i.php?f='+i;
+
+}
+
+function f(n) {
+	document.images['thumb'+n].src = 'dlf/trans.gif';
+}
+//-->
+</script>
+</head>
+<body>
+<div id="container">
+  <h1>Directory Listing of /docu/manuals/midas_manuals/</h1>
+  <div id="breadcrumbs"> <a href="/docu/manuals/index.php">home</a> 
+   &gt; <a href="/docu/manuals/index.php?dir=midas_manuals%2F">midas_manuals</a>  </div>
+  <div id="listingcontainer">
+    <div id="listingheader"> 
+	<div id="headerfile"><a href="/docu/manuals/index.php?dir=midas_manuals/&amp;sort=name&amp;order=desc">File</a></div>
+	<div id="headersize"><a href="/docu/manuals/index.php?dir=midas_manuals/&amp;sort=size&amp;order=asc">Size</a></div>
+	<div id="headermodified"><a href="/docu/manuals/index.php?dir=midas_manuals/&amp;sort=date&amp;order=asc">Last Modified</a></div>
+	</div>
+    <div id="listing">
+		<div><a href="/docu/manuals/index.php?dir=" class="b"><img src="dlf/dirup.png" alt="Folder" /><strong>..</strong> <em>&nbsp;</em>&nbsp;</a></div>
+		<div><a href="/docu/manuals/index.php?dir=midas_manuals%2FMSCB%2F" class="w"><img src="dlf/folder.png" alt="MSCB/" /><strong>MSCB/</strong> <em>-</em> Jan 25 2005 04:46:15 PM</a></div>
+		<div><a href="midas_manuals/midas-1.9.5.pdf" class="b"><img src="dlf/pdf.gif" alt="midas-1.9.5.pdf" /><strong>midas-1.9.5.pdf</strong> <em>4199KB</em> Oct 12 2004 09:10:47 PM</a></div>
+	</div>
+	  </div>
+</div>
+<div id="copy">Directory Listing Script &copy;2008 Evoluted, <a href="http://www.evoluted.net/">Web Design Sheffield</a>.</div>
+</body>
+</html>

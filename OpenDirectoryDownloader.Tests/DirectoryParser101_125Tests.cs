@@ -251,5 +251,35 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("1917 (2019) MULTi VFF 2160p 10bit 4KLight HDR10PLUS BluRay AC3 5.1 x265-QTZ.mkv", webDirectory.Files[0].FileName);
             Assert.Equal(5046586573, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: http://lmu.web.psi.ch/docu/manuals/index.php
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing110aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(3, webDirectory.Subdirectories.Count);
+            Assert.Equal("bulk_manuals", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: http://lmu.web.psi.ch/docu/manuals/index.php?dir=midas_manuals%2F
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing110bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Single(webDirectory.Subdirectories);
+            Assert.Equal("MSCB", webDirectory.Subdirectories[0].Name);
+            Assert.Single(webDirectory.Files);
+            Assert.Equal("midas-1.9.5.pdf", webDirectory.Files[0].FileName);
+            Assert.Equal(4299776, webDirectory.Files[0].FileSize);
+        }
     } 
 }

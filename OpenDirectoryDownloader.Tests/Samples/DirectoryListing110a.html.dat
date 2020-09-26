@@ -1,0 +1,41 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Directory Listing of /docu/manuals/</title>
+<link rel="stylesheet" type="text/css" href="dlf/styles.css" />
+<script language="javascript" type="text/javascript">
+<!--
+function o(n, i) {
+	document.images['thumb'+n].src = 'dlf/i.php?f='+i;
+
+}
+
+function f(n) {
+	document.images['thumb'+n].src = 'dlf/trans.gif';
+}
+//-->
+</script>
+</head>
+<body>
+<div id="container">
+  <h1>Directory Listing of /docu/manuals/</h1>
+  <div id="breadcrumbs"> <a href="/docu/manuals/index.php">home</a> 
+    </div>
+  <div id="listingcontainer">
+    <div id="listingheader"> 
+	<div id="headerfile"><a href="/docu/manuals/index.php?dir=&amp;sort=name&amp;order=desc">File</a></div>
+	<div id="headersize"><a href="/docu/manuals/index.php?dir=&amp;sort=size&amp;order=asc">Size</a></div>
+	<div id="headermodified"><a href="/docu/manuals/index.php?dir=&amp;sort=date&amp;order=asc">Last Modified</a></div>
+	</div>
+    <div id="listing">
+		<div><a href="/docu/manuals/index.php?dir=bulk_manuals%2F" class="b"><img src="dlf/folder.png" alt="bulk_manuals/" /><strong>bulk_manuals/</strong> <em>-</em> Jul 16 2020 12:24:38 PM</a></div>
+		<div><a href="/docu/manuals/index.php?dir=midas_manuals%2F" class="w"><img src="dlf/folder.png" alt="midas_manuals/" /><strong>midas_manuals/</strong> <em>-</em> Apr 28 2014 05:43:52 PM</a></div>
+		<div><a href="/docu/manuals/index.php?dir=software_manuals%2F" class="b"><img src="dlf/folder.png" alt="software_manuals/" /><strong>software_manuals/</strong> <em>-</em> May 14 2012 03:56:53 PM</a></div>
+	</div>
+	  </div>
+</div>
+<div id="copy">Directory Listing Script &copy;2008 Evoluted, <a href="http://www.evoluted.net/">Web Design Sheffield</a>.</div>
+</body>
+</html>

@@ -1,0 +1,476 @@
+﻿
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1" />
+		<meta name="robots" content="noindex,nofollow" />
+		<meta name="generator" content="HFS2.3k (+ HFS-Clean[EN] template by Chionsas)" />
+		<meta name="uptime" content="(34 days) 07:09:14" />
+		<link rel="shortcut icon" href="/~img_folder" />
+		<title>/eBooks/WoodWorking/</title>
+		<style type="text/css">
+			body { font-size: 76%; font-family: Verdana, Arial, Tahoma, sans; margin:0px; background-color:white; color: teal; }
+#heading { padding:1.3em; background-color: #EFEFEF; }
+h1 { font-size:2em; font-weight:bold; font-family: "Trebuchet MS"; color: black; margin: 0px; padding: 0px; }
+h1 a { color: black; text-decoration: none; }
+a { color: #278DCF; text-decoration:none; }
+a:hover { color: black; }
+img { border:none; }
+.little { font-size: 1.4em; }
+.right { text-align: right; }
+.center { text-align: center; }
+.grid { padding:15px; margin:15px; }
+.button { float:right; padding:0.5em; background-repeat: no-repeat; background-position: 0% 50%; margin-right: 0.5em; }
+.error { margin: 2em; }
+
+			#filelist { border-collapse: collapse; table-layout: fixed; width:78em; }
+			#filelist td, #filelist th { vertical-align: middle; border-bottom: 1px solid #EFEFEF; overflow: hidden; white-space: nowrap; }
+			#filelist th { padding-bottom: 0.5em; padding-top:0.5em; font-size: 1.7em; }
+			#filelist th a { color: #436976; height:16px; }
+			#filelist th a:hover { text-decoration: underline; color: #278DCF; }
+			#up { display: block; text-align: left; padding-left: 0px; padding-top: 0.0em; padding-bottom: 0.5em; }
+			.file a, .folder a, .link a { display: block; width: 100%; height: 100%; padding:0.3em; background-repeat: no-repeat; background-position: 0% 50%; text-indent: 34px; font-weight: bold; font-size: 1.6em;}
+			.new { color: red; }
+			.folder a { background-position: 0% 60%; }
+			.file a  span, .folder a span, .link a span { display: block;}
+			.file-audio .inner { display: inline-block; vertical-align: middle; padding: 3px 5px; font-weight:bold; font-size: 100%; color: #278DCF; } 
+			.filehits { text-align: center; padding-right: 0.5em; }
+			audio:hover, audio:focus, audio:active
+			{
+				-webkit-box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+				-moz-box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+				box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+				-webkit-transform: scale(1.05);
+				-moz-transform: scale(1.05);
+				transform: scale(1.05);
+			}
+			audio
+			{
+				-webkit-transition:all 0.5s linear;
+				-moz-transition:all 0.5s linear;
+				-o-transition:all 0.5s linear;
+				transition:all 0.5s linear;
+				-moz-box-shadow: 2px 2px 4px 0px #006773;
+				-webkit-box-shadow:  2px 2px 4px 0px #006773;
+				box-shadow: 2px 2px 4px 0px #006773;
+				-moz-border-radius:7px 7px 7px 7px ;
+				-webkit-border-radius:7px 7px 7px 7px ;
+				border-radius:7px 7px 7px 7px ;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="heading">
+			
+			
+			
+			<h1>Current Folder: /eBooks/WoodWorking/</h1>
+			<script type="text/javascript">
+				if ("/eBooks/WoodWorking/" == "/") {
+					document.getElementById('title').innerHTML = "24.31.171.181:81";
+					document.title = "24.31.171.181:81";
+				}
+			</script>
+			<form method="get">
+				<input style="margin-top:10px" type="input" value="" name="search" size="20"/> 
+				<input type="submit" value="Search" />
+			</form>
+		</div>
+		<div class="grid">
+			
+			<table id="filelist">
+	<thead>
+		<tr>
+			<th style="width:6%; padding:0px;"><a href="/eBooks/" id="up"><img src="/~img14" width="30" height="30" align="top" alt="up" title="up" /></a>
+</th>
+			<th style="width:65%; text-align:left"><a href="/eBooks/WoodWorking/?sort=n">Filename</a></th>
+			<th style="width:10%; text-align:center">Type</th>
+			<th style="width:10%; text-align:center"><a href="/eBooks/WoodWorking/?sort=s">Size</a></th>
+			<th style="width:9%; text-align:center"><label title="number of times a file has been downloaded">Hits</label></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td class="folder" colspan="2"><a href="Taunton%27s%20Complete%20Illustrated%20Guides/" style="background-size: 30px 30px; background-image:url('/~img_folder')">Taunton&#039;s Complete Illustrated Guides</a></td>
+	<td class="center">Folder</td>
+	<td class="center"></td>
+	<td class="filehits"></td>
+</tr>
+<tr>
+	<td class="folder" colspan="2"><a href="The%20Art%20of%20Woodworking/" style="background-size: 30px 30px; background-image:url('/~img_folder')">The Art of Woodworking</a></td>
+	<td class="center">Folder</td>
+	<td class="center"></td>
+	<td class="filehits"></td>
+</tr>
+<tr>
+	<td class="folder" colspan="2"><a href="The%20Family%20Handyman%20Magazine/" style="background-size: 30px 30px; background-image:url('/~img_folder')">The Family Handyman Magazine</a></td>
+	<td class="center">Folder</td>
+	<td class="center"></td>
+	<td class="filehits"></td>
+</tr>
+<tr>
+	<td class="folder" colspan="2"><a href="Wood%20Magazine/" style="background-size: 30px 30px; background-image:url('/~img_folder')">Wood Magazine</a></td>
+	<td class="center">Folder</td>
+	<td class="center"></td>
+	<td class="filehits"></td>
+</tr>
+<tr>
+	<td class="folder" colspan="2"><a href="Wood%20Magazine%20-%20Special%20Issues/" style="background-size: 30px 30px; background-image:url('/~img_folder')">Wood Magazine - Special Issues</a></td>
+	<td class="center">Folder</td>
+	<td class="center"></td>
+	<td class="filehits"></td>
+</tr>
+<tr>
+	<td class="folder" colspan="2"><a href="Woodsmith%20Magazine/" style="background-size: 30px 30px; background-image:url('/~img_folder')">Woodsmith Magazine</a></td>
+	<td class="center">Folder</td>
+	<td class="center"></td>
+	<td class="filehits"></td>
+</tr>
+<tr>
+	<td class="folder" colspan="2"><a href="Woodsmith%20Magazine%20-%20Special%20Issues/" style="background-size: 30px 30px; background-image:url('/~img_folder')">Woodsmith Magazine - Special Issues</a></td>
+	<td class="center">Folder</td>
+	<td class="center"></td>
+	<td class="filehits"></td>
+</tr>
+<script language="javascript">
+	var image=""; 
+	var mime="";
+	var c='Complete Book Tips Tricks Techniques - Popular Woodworking.pdf'; 
+	var filename=c.replace(/\.[^/.]+$/, "");
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{ 
+		case '.mp3' : image='media.gif'; mime='audio/mpeg'; break; 
+		case '.avi' : image='video_icon_2.png'; mime='video/x-msvideo'; break; 
+		case '.mp4' : image='video_icon_2.png'; mime='video/mp4'; break;
+		case '.mov' : image='video_icon_2.png'; mime='video/quicktime'; break;
+		case '.wmv' : image='video_icon_2.png'; mime='video/x-ms-wmv'; break;
+		case '.txt' : image='text.gif'; mime='text/plain'; break; 
+		case '.doc' : image='doc.gif'; mime='application/msword'; break; 
+		case '.epub' : image='epub_icon_4.png'; mime='application/epub+zip'; break; 
+		case '.pdf' : image='pdf_icon_2.png'; mime='application/pdf'; break; 
+		case '.rar' : image='rar.gif'; mime='application/x-rar-compressed'; break; 
+		case '.rtf' : image='ttf.gif'; mime='application/rtf'; break; 
+		default : image='default.gif'; mime='image/gif'; 
+	} 
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{
+		case '.mp3' :
+			document.write('<tr><td class="file-audio" colspan="2"><div class="block"><div class="inner">Complete Book Tips Tricks Techniques - Popular Woodworking.pdf</div><div class="inner"><audio controls><source src="Complete Book Tips Tricks Techniques - Popular Woodworking.pdf"></audio></div></div></td><td class="center">68.2 M</td><td class="filehits">2</td></tr>');
+			break;
+		 default:
+			document.write('<tr><td class="file" colspan="2"><a href="Complete%20Book%20Tips%20Tricks%20Techniques%20-%20Popular%20Woodworking.pdf" style="background-size: 30px 30px; background-image:url(\'/ebooks/resources/icons/' + image +'\')">'+filename+'</a></td><td class="center">pdf</td><td class="center">68.2 M</td><td class="filehits">2</td></tr>');
+	}
+
+</script> 
+<script language="javascript">
+	var image=""; 
+	var mime="";
+	var c='Complete Guide To Home Carpentry - Black &amp; Decker.pdf'; 
+	var filename=c.replace(/\.[^/.]+$/, "");
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{ 
+		case '.mp3' : image='media.gif'; mime='audio/mpeg'; break; 
+		case '.avi' : image='video_icon_2.png'; mime='video/x-msvideo'; break; 
+		case '.mp4' : image='video_icon_2.png'; mime='video/mp4'; break;
+		case '.mov' : image='video_icon_2.png'; mime='video/quicktime'; break;
+		case '.wmv' : image='video_icon_2.png'; mime='video/x-ms-wmv'; break;
+		case '.txt' : image='text.gif'; mime='text/plain'; break; 
+		case '.doc' : image='doc.gif'; mime='application/msword'; break; 
+		case '.epub' : image='epub_icon_4.png'; mime='application/epub+zip'; break; 
+		case '.pdf' : image='pdf_icon_2.png'; mime='application/pdf'; break; 
+		case '.rar' : image='rar.gif'; mime='application/x-rar-compressed'; break; 
+		case '.rtf' : image='ttf.gif'; mime='application/rtf'; break; 
+		default : image='default.gif'; mime='image/gif'; 
+	} 
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{
+		case '.mp3' :
+			document.write('<tr><td class="file-audio" colspan="2"><div class="block"><div class="inner">Complete Guide To Home Carpentry - Black &amp; Decker.pdf</div><div class="inner"><audio controls><source src="Complete Guide To Home Carpentry - Black &amp; Decker.pdf"></audio></div></div></td><td class="center">18.6 M</td><td class="filehits">2</td></tr>');
+			break;
+		 default:
+			document.write('<tr><td class="file" colspan="2"><a href="Complete%20Guide%20To%20Home%20Carpentry%20-%20Black%20%26%20Decker.pdf" style="background-size: 30px 30px; background-image:url(\'/ebooks/resources/icons/' + image +'\')">'+filename+'</a></td><td class="center">pdf</td><td class="center">18.6 M</td><td class="filehits">2</td></tr>');
+	}
+
+</script> 
+<script language="javascript">
+	var image=""; 
+	var mime="";
+	var c='Essential Guide to Tablesaws - Popular Woodworking.pdf'; 
+	var filename=c.replace(/\.[^/.]+$/, "");
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{ 
+		case '.mp3' : image='media.gif'; mime='audio/mpeg'; break; 
+		case '.avi' : image='video_icon_2.png'; mime='video/x-msvideo'; break; 
+		case '.mp4' : image='video_icon_2.png'; mime='video/mp4'; break;
+		case '.mov' : image='video_icon_2.png'; mime='video/quicktime'; break;
+		case '.wmv' : image='video_icon_2.png'; mime='video/x-ms-wmv'; break;
+		case '.txt' : image='text.gif'; mime='text/plain'; break; 
+		case '.doc' : image='doc.gif'; mime='application/msword'; break; 
+		case '.epub' : image='epub_icon_4.png'; mime='application/epub+zip'; break; 
+		case '.pdf' : image='pdf_icon_2.png'; mime='application/pdf'; break; 
+		case '.rar' : image='rar.gif'; mime='application/x-rar-compressed'; break; 
+		case '.rtf' : image='ttf.gif'; mime='application/rtf'; break; 
+		default : image='default.gif'; mime='image/gif'; 
+	} 
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{
+		case '.mp3' :
+			document.write('<tr><td class="file-audio" colspan="2"><div class="block"><div class="inner">Essential Guide to Tablesaws - Popular Woodworking.pdf</div><div class="inner"><audio controls><source src="Essential Guide to Tablesaws - Popular Woodworking.pdf"></audio></div></div></td><td class="center">14.5 M</td><td class="filehits">2</td></tr>');
+			break;
+		 default:
+			document.write('<tr><td class="file" colspan="2"><a href="Essential%20Guide%20to%20Tablesaws%20-%20Popular%20Woodworking.pdf" style="background-size: 30px 30px; background-image:url(\'/ebooks/resources/icons/' + image +'\')">'+filename+'</a></td><td class="center">pdf</td><td class="center">14.5 M</td><td class="filehits">2</td></tr>');
+	}
+
+</script> 
+<script language="javascript">
+	var image=""; 
+	var mime="";
+	var c='Finishing Wood - Fine Woodworking.pdf'; 
+	var filename=c.replace(/\.[^/.]+$/, "");
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{ 
+		case '.mp3' : image='media.gif'; mime='audio/mpeg'; break; 
+		case '.avi' : image='video_icon_2.png'; mime='video/x-msvideo'; break; 
+		case '.mp4' : image='video_icon_2.png'; mime='video/mp4'; break;
+		case '.mov' : image='video_icon_2.png'; mime='video/quicktime'; break;
+		case '.wmv' : image='video_icon_2.png'; mime='video/x-ms-wmv'; break;
+		case '.txt' : image='text.gif'; mime='text/plain'; break; 
+		case '.doc' : image='doc.gif'; mime='application/msword'; break; 
+		case '.epub' : image='epub_icon_4.png'; mime='application/epub+zip'; break; 
+		case '.pdf' : image='pdf_icon_2.png'; mime='application/pdf'; break; 
+		case '.rar' : image='rar.gif'; mime='application/x-rar-compressed'; break; 
+		case '.rtf' : image='ttf.gif'; mime='application/rtf'; break; 
+		default : image='default.gif'; mime='image/gif'; 
+	} 
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{
+		case '.mp3' :
+			document.write('<tr><td class="file-audio" colspan="2"><div class="block"><div class="inner">Finishing Wood - Fine Woodworking.pdf</div><div class="inner"><audio controls><source src="Finishing Wood - Fine Woodworking.pdf"></audio></div></div></td><td class="center">45.5 M</td><td class="filehits">3</td></tr>');
+			break;
+		 default:
+			document.write('<tr><td class="file" colspan="2"><a href="Finishing%20Wood%20-%20Fine%20Woodworking.pdf" style="background-size: 30px 30px; background-image:url(\'/ebooks/resources/icons/' + image +'\')">'+filename+'</a></td><td class="center">pdf</td><td class="center">45.5 M</td><td class="filehits">3</td></tr>');
+	}
+
+</script> 
+<script language="javascript">
+	var image=""; 
+	var mime="";
+	var c='Good Wood Joints - Collins.pdf'; 
+	var filename=c.replace(/\.[^/.]+$/, "");
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{ 
+		case '.mp3' : image='media.gif'; mime='audio/mpeg'; break; 
+		case '.avi' : image='video_icon_2.png'; mime='video/x-msvideo'; break; 
+		case '.mp4' : image='video_icon_2.png'; mime='video/mp4'; break;
+		case '.mov' : image='video_icon_2.png'; mime='video/quicktime'; break;
+		case '.wmv' : image='video_icon_2.png'; mime='video/x-ms-wmv'; break;
+		case '.txt' : image='text.gif'; mime='text/plain'; break; 
+		case '.doc' : image='doc.gif'; mime='application/msword'; break; 
+		case '.epub' : image='epub_icon_4.png'; mime='application/epub+zip'; break; 
+		case '.pdf' : image='pdf_icon_2.png'; mime='application/pdf'; break; 
+		case '.rar' : image='rar.gif'; mime='application/x-rar-compressed'; break; 
+		case '.rtf' : image='ttf.gif'; mime='application/rtf'; break; 
+		default : image='default.gif'; mime='image/gif'; 
+	} 
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{
+		case '.mp3' :
+			document.write('<tr><td class="file-audio" colspan="2"><div class="block"><div class="inner">Good Wood Joints - Collins.pdf</div><div class="inner"><audio controls><source src="Good Wood Joints - Collins.pdf"></audio></div></div></td><td class="center">28.6 M</td><td class="filehits">2</td></tr>');
+			break;
+		 default:
+			document.write('<tr><td class="file" colspan="2"><a href="Good%20Wood%20Joints%20-%20Collins.pdf" style="background-size: 30px 30px; background-image:url(\'/ebooks/resources/icons/' + image +'\')">'+filename+'</a></td><td class="center">pdf</td><td class="center">28.6 M</td><td class="filehits">2</td></tr>');
+	}
+
+</script> 
+<script language="javascript">
+	var image=""; 
+	var mime="";
+	var c='Joining Wood - The Workshop Companion.pdf'; 
+	var filename=c.replace(/\.[^/.]+$/, "");
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{ 
+		case '.mp3' : image='media.gif'; mime='audio/mpeg'; break; 
+		case '.avi' : image='video_icon_2.png'; mime='video/x-msvideo'; break; 
+		case '.mp4' : image='video_icon_2.png'; mime='video/mp4'; break;
+		case '.mov' : image='video_icon_2.png'; mime='video/quicktime'; break;
+		case '.wmv' : image='video_icon_2.png'; mime='video/x-ms-wmv'; break;
+		case '.txt' : image='text.gif'; mime='text/plain'; break; 
+		case '.doc' : image='doc.gif'; mime='application/msword'; break; 
+		case '.epub' : image='epub_icon_4.png'; mime='application/epub+zip'; break; 
+		case '.pdf' : image='pdf_icon_2.png'; mime='application/pdf'; break; 
+		case '.rar' : image='rar.gif'; mime='application/x-rar-compressed'; break; 
+		case '.rtf' : image='ttf.gif'; mime='application/rtf'; break; 
+		default : image='default.gif'; mime='image/gif'; 
+	} 
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{
+		case '.mp3' :
+			document.write('<tr><td class="file-audio" colspan="2"><div class="block"><div class="inner">Joining Wood - The Workshop Companion.pdf</div><div class="inner"><audio controls><source src="Joining Wood - The Workshop Companion.pdf"></audio></div></div></td><td class="center">26.7 M</td><td class="filehits">2</td></tr>');
+			break;
+		 default:
+			document.write('<tr><td class="file" colspan="2"><a href="Joining%20Wood%20-%20The%20Workshop%20Companion.pdf" style="background-size: 30px 30px; background-image:url(\'/ebooks/resources/icons/' + image +'\')">'+filename+'</a></td><td class="center">pdf</td><td class="center">26.7 M</td><td class="filehits">2</td></tr>');
+	}
+
+</script> 
+<script language="javascript">
+	var image=""; 
+	var mime="";
+	var c='Table Saw Secrets Tips Techniques Plans - Woodsmith.pdf'; 
+	var filename=c.replace(/\.[^/.]+$/, "");
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{ 
+		case '.mp3' : image='media.gif'; mime='audio/mpeg'; break; 
+		case '.avi' : image='video_icon_2.png'; mime='video/x-msvideo'; break; 
+		case '.mp4' : image='video_icon_2.png'; mime='video/mp4'; break;
+		case '.mov' : image='video_icon_2.png'; mime='video/quicktime'; break;
+		case '.wmv' : image='video_icon_2.png'; mime='video/x-ms-wmv'; break;
+		case '.txt' : image='text.gif'; mime='text/plain'; break; 
+		case '.doc' : image='doc.gif'; mime='application/msword'; break; 
+		case '.epub' : image='epub_icon_4.png'; mime='application/epub+zip'; break; 
+		case '.pdf' : image='pdf_icon_2.png'; mime='application/pdf'; break; 
+		case '.rar' : image='rar.gif'; mime='application/x-rar-compressed'; break; 
+		case '.rtf' : image='ttf.gif'; mime='application/rtf'; break; 
+		default : image='default.gif'; mime='image/gif'; 
+	} 
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{
+		case '.mp3' :
+			document.write('<tr><td class="file-audio" colspan="2"><div class="block"><div class="inner">Table Saw Secrets Tips Techniques Plans - Woodsmith.pdf</div><div class="inner"><audio controls><source src="Table Saw Secrets Tips Techniques Plans - Woodsmith.pdf"></audio></div></div></td><td class="center">17.2 M</td><td class="filehits">2</td></tr>');
+			break;
+		 default:
+			document.write('<tr><td class="file" colspan="2"><a href="Table%20Saw%20Secrets%20Tips%20Techniques%20Plans%20-%20Woodsmith.pdf" style="background-size: 30px 30px; background-image:url(\'/ebooks/resources/icons/' + image +'\')">'+filename+'</a></td><td class="center">pdf</td><td class="center">17.2 M</td><td class="filehits">2</td></tr>');
+	}
+
+</script> 
+<script language="javascript">
+	var image=""; 
+	var mime="";
+	var c='The Seven Essentials of Woodworking.pdf'; 
+	var filename=c.replace(/\.[^/.]+$/, "");
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{ 
+		case '.mp3' : image='media.gif'; mime='audio/mpeg'; break; 
+		case '.avi' : image='video_icon_2.png'; mime='video/x-msvideo'; break; 
+		case '.mp4' : image='video_icon_2.png'; mime='video/mp4'; break;
+		case '.mov' : image='video_icon_2.png'; mime='video/quicktime'; break;
+		case '.wmv' : image='video_icon_2.png'; mime='video/x-ms-wmv'; break;
+		case '.txt' : image='text.gif'; mime='text/plain'; break; 
+		case '.doc' : image='doc.gif'; mime='application/msword'; break; 
+		case '.epub' : image='epub_icon_4.png'; mime='application/epub+zip'; break; 
+		case '.pdf' : image='pdf_icon_2.png'; mime='application/pdf'; break; 
+		case '.rar' : image='rar.gif'; mime='application/x-rar-compressed'; break; 
+		case '.rtf' : image='ttf.gif'; mime='application/rtf'; break; 
+		default : image='default.gif'; mime='image/gif'; 
+	} 
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{
+		case '.mp3' :
+			document.write('<tr><td class="file-audio" colspan="2"><div class="block"><div class="inner">The Seven Essentials of Woodworking.pdf</div><div class="inner"><audio controls><source src="The Seven Essentials of Woodworking.pdf"></audio></div></div></td><td class="center">35.2 M</td><td class="filehits">2</td></tr>');
+			break;
+		 default:
+			document.write('<tr><td class="file" colspan="2"><a href="The%20Seven%20Essentials%20of%20Woodworking.pdf" style="background-size: 30px 30px; background-image:url(\'/ebooks/resources/icons/' + image +'\')">'+filename+'</a></td><td class="center">pdf</td><td class="center">35.2 M</td><td class="filehits">2</td></tr>');
+	}
+
+</script> 
+<script language="javascript">
+	var image=""; 
+	var mime="";
+	var c='The Ultimate Router Guide - Popular Woodworking.pdf'; 
+	var filename=c.replace(/\.[^/.]+$/, "");
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{ 
+		case '.mp3' : image='media.gif'; mime='audio/mpeg'; break; 
+		case '.avi' : image='video_icon_2.png'; mime='video/x-msvideo'; break; 
+		case '.mp4' : image='video_icon_2.png'; mime='video/mp4'; break;
+		case '.mov' : image='video_icon_2.png'; mime='video/quicktime'; break;
+		case '.wmv' : image='video_icon_2.png'; mime='video/x-ms-wmv'; break;
+		case '.txt' : image='text.gif'; mime='text/plain'; break; 
+		case '.doc' : image='doc.gif'; mime='application/msword'; break; 
+		case '.epub' : image='epub_icon_4.png'; mime='application/epub+zip'; break; 
+		case '.pdf' : image='pdf_icon_2.png'; mime='application/pdf'; break; 
+		case '.rar' : image='rar.gif'; mime='application/x-rar-compressed'; break; 
+		case '.rtf' : image='ttf.gif'; mime='application/rtf'; break; 
+		default : image='default.gif'; mime='image/gif'; 
+	} 
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{
+		case '.mp3' :
+			document.write('<tr><td class="file-audio" colspan="2"><div class="block"><div class="inner">The Ultimate Router Guide - Popular Woodworking.pdf</div><div class="inner"><audio controls><source src="The Ultimate Router Guide - Popular Woodworking.pdf"></audio></div></div></td><td class="center">32.0 M</td><td class="filehits">2</td></tr>');
+			break;
+		 default:
+			document.write('<tr><td class="file" colspan="2"><a href="The%20Ultimate%20Router%20Guide%20-%20Popular%20Woodworking.pdf" style="background-size: 30px 30px; background-image:url(\'/ebooks/resources/icons/' + image +'\')">'+filename+'</a></td><td class="center">pdf</td><td class="center">32.0 M</td><td class="filehits">2</td></tr>');
+	}
+
+</script> 
+<script language="javascript">
+	var image=""; 
+	var mime="";
+	var c='Weekend Woodworking - Quick Tips &amp; Techniques - Woodsmith.pdf'; 
+	var filename=c.replace(/\.[^/.]+$/, "");
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{ 
+		case '.mp3' : image='media.gif'; mime='audio/mpeg'; break; 
+		case '.avi' : image='video_icon_2.png'; mime='video/x-msvideo'; break; 
+		case '.mp4' : image='video_icon_2.png'; mime='video/mp4'; break;
+		case '.mov' : image='video_icon_2.png'; mime='video/quicktime'; break;
+		case '.wmv' : image='video_icon_2.png'; mime='video/x-ms-wmv'; break;
+		case '.txt' : image='text.gif'; mime='text/plain'; break; 
+		case '.doc' : image='doc.gif'; mime='application/msword'; break; 
+		case '.epub' : image='epub_icon_4.png'; mime='application/epub+zip'; break; 
+		case '.pdf' : image='pdf_icon_2.png'; mime='application/pdf'; break; 
+		case '.rar' : image='rar.gif'; mime='application/x-rar-compressed'; break; 
+		case '.rtf' : image='ttf.gif'; mime='application/rtf'; break; 
+		default : image='default.gif'; mime='image/gif'; 
+	} 
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{
+		case '.mp3' :
+			document.write('<tr><td class="file-audio" colspan="2"><div class="block"><div class="inner">Weekend Woodworking - Quick Tips &amp; Techniques - Woodsmith.pdf</div><div class="inner"><audio controls><source src="Weekend Woodworking - Quick Tips &amp; Techniques - Woodsmith.pdf"></audio></div></div></td><td class="center">78.1 M</td><td class="filehits">3</td></tr>');
+			break;
+		 default:
+			document.write('<tr><td class="file" colspan="2"><a href="Weekend%20Woodworking%20-%20Quick%20Tips%20%26%20Techniques%20-%20Woodsmith.pdf" style="background-size: 30px 30px; background-image:url(\'/ebooks/resources/icons/' + image +'\')">'+filename+'</a></td><td class="center">pdf</td><td class="center">78.1 M</td><td class="filehits">3</td></tr>');
+	}
+
+</script> 
+<script language="javascript">
+	var image=""; 
+	var mime="";
+	var c='Wood Finishing - Time Life.pdf'; 
+	var filename=c.replace(/\.[^/.]+$/, "");
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{ 
+		case '.mp3' : image='media.gif'; mime='audio/mpeg'; break; 
+		case '.avi' : image='video_icon_2.png'; mime='video/x-msvideo'; break; 
+		case '.mp4' : image='video_icon_2.png'; mime='video/mp4'; break;
+		case '.mov' : image='video_icon_2.png'; mime='video/quicktime'; break;
+		case '.wmv' : image='video_icon_2.png'; mime='video/x-ms-wmv'; break;
+		case '.txt' : image='text.gif'; mime='text/plain'; break; 
+		case '.doc' : image='doc.gif'; mime='application/msword'; break; 
+		case '.epub' : image='epub_icon_4.png'; mime='application/epub+zip'; break; 
+		case '.pdf' : image='pdf_icon_2.png'; mime='application/pdf'; break; 
+		case '.rar' : image='rar.gif'; mime='application/x-rar-compressed'; break; 
+		case '.rtf' : image='ttf.gif'; mime='application/rtf'; break; 
+		default : image='default.gif'; mime='image/gif'; 
+	} 
+	switch (  c.substr(  c.lastIndexOf('.')  ) .toLowerCase()  ) 
+	{
+		case '.mp3' :
+			document.write('<tr><td class="file-audio" colspan="2"><div class="block"><div class="inner">Wood Finishing - Time Life.pdf</div><div class="inner"><audio controls><source src="Wood Finishing - Time Life.pdf"></audio></div></div></td><td class="center">89.3 M</td><td class="filehits">2</td></tr>');
+			break;
+		 default:
+			document.write('<tr><td class="file" colspan="2"><a href="Wood%20Finishing%20-%20Time%20Life.pdf" style="background-size: 30px 30px; background-image:url(\'/ebooks/resources/icons/' + image +'\')">'+filename+'</a></td><td class="center">pdf</td><td class="center">89.3 M</td><td class="filehits">2</td></tr>');
+	}
+
+</script> 
+
+	</tbody>
+</table>
+<p class="center" style="width:78em">
+	<span class="little">Contents: 7 folders and <a href="/eBooks/WoodWorking/~files.lst">11 files</a>. Total size for this folder: 454.0 M</span>
+</p>
+
+		</div>
+		<!-- generated in 0.031s -->
+	</body>
+</html>
