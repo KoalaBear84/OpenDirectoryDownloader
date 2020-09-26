@@ -204,5 +204,52 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("★★★★美女裸聊，免费试看加QQ群616731437★★★★.gif", webDirectory.Files[0].FileName);
             Assert.Equal(2411725, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: https://d.arti.ee/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing108aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(13, webDirectory.Subdirectories.Count);
+            Assert.Equal("ETS4", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(111, webDirectory.Files.Count);
+            Assert.Equal("(kooli kell)Alizee - Jen ai marre-240S04eCCC0.wav", webDirectory.Files[0].FileName);
+            Assert.Equal(1258291, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: https://d.arti.ee/Proged/donkeykong/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing108bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(19, webDirectory.Files.Count);
+            Assert.Equal("BitBaitconvert.cpp", webDirectory.Files[0].FileName);
+            Assert.Equal(11366, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://51.15.177.144:5000/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing109aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(13, webDirectory.Subdirectories.Count);
+            Assert.Equal("12 Years a Slave (2013) MULTi (VFF-VO-VFQ) [1080p] BluRay x264-PopHD", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(41, webDirectory.Files.Count);
+            Assert.Equal("1917 (2019) MULTi VFF 2160p 10bit 4KLight HDR10PLUS BluRay AC3 5.1 x265-QTZ.mkv", webDirectory.Files[0].FileName);
+            Assert.Equal(5046586573, webDirectory.Files[0].FileSize);
+        }
     } 
 }

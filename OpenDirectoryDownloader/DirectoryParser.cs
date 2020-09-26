@@ -2046,7 +2046,7 @@ namespace OpenDirectoryDownloader
                 (link as IHtmlAnchorElement)?.Title != ".." &&
                 link.TextContent.Trim() != ".." &&
                 link.TextContent.Trim() != "." &&
-                linkHref?.ToLower().StartsWith("javascript") == false &&
+                linkHref?.ToLower().StartsWith("javascript:") == false &&
                 linkHref?.ToLower().StartsWith("mailto:") == false &&
                 link.TextContent.ToLower() != "parent directory" &&
                 link.TextContent.ToLower() != "[to parent directory]" &&

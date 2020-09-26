@@ -1,0 +1,67 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width"/>
+  <title>Files...</title>
+  <link rel="stylesheet" href="/fancyindex/css/fancyindex.css">
+  <script>
+    window.document.title = window.location.pathname;
+  </script>
+</head>
+<body>
+<div class="box box-breadcrumbs">
+    <div class="box-header">
+      <div class="box-header-content">
+        <div id="breadcrumbs" class="breadcrumbs">
+          <a href="#"></a>
+        </div>
+      </div>
+    </div>
+    <div class="box-content clearfix">
+      <h1>Index of:
+/Proged/donkeykong/</h1>
+<table id="list"><thead><tr><th style="width:55%"><a href="?C=N&O=A">File Name</a>&nbsp;<a href="?C=N&O=D">&nbsp;&darr;&nbsp;</a></th><th style="width:20%"><a href="?C=S&O=A">File Size</a>&nbsp;<a href="?C=S&O=D">&nbsp;&darr;&nbsp;</a></th><th style="width:25%"><a href="?C=M&O=A">Date</a>&nbsp;<a href="?C=M&O=D">&nbsp;&darr;&nbsp;</a></th></tr></thead>
+<tbody><tr><td class="link"><a href="../">Parent directory/</a></td><td class="size">-</td><td class="date">-</td></tr><tr><td class="link"><a href="BitBaitconvert.cpp" title="BitBaitconvert.cpp">BitBaitconvert.cpp</a></td><td class="size">11.1 KiB</td><td class="date">2011-Feb-16 22:46</td></tr>
+<tr><td class="link"><a href="BitBaitconvert.cpp~" title="BitBaitconvert.cpp~">BitBaitconvert.cpp~</a></td><td class="size">11.1 KiB</td><td class="date">2011-Feb-16 22:46</td></tr>
+<tr><td class="link"><a href="BitBaitconvert.exe" title="BitBaitconvert.exe">BitBaitconvert.exe</a></td><td class="size">471.2 KiB</td><td class="date">2011-Feb-16 23:10</td></tr>
+<tr><td class="link"><a href="BitBaitconvert.htm" title="BitBaitconvert.htm">BitBaitconvert.htm</a></td><td class="size">3.2 KiB</td><td class="date">2011-Feb-21 08:50</td></tr>
+<tr><td class="link"><a href="BitBaitconvert_errorCheck.cpp" title="BitBaitconvert_errorCheck.cpp">BitBaitconvert_errorCheck.cpp</a></td><td class="size">13.3 KiB</td><td class="date">2011-Feb-19 22:25</td></tr>
+<tr><td class="link"><a href="bittobyte.cpp" title="bittobyte.cpp">bittobyte.cpp</a></td><td class="size">10.9 KiB</td><td class="date">2011-Feb-16 22:38</td></tr>
+<tr><td class="link"><a href="donkeykong2.cpp" title="donkeykong2.cpp">donkeykong2.cpp</a></td><td class="size">1.5 KiB</td><td class="date">2011-Feb-15 20:29</td></tr>
+<tr><td class="link"><a href="donkeykong3.cpp" title="donkeykong3.cpp">donkeykong3.cpp</a></td><td class="size">2.1 KiB</td><td class="date">2011-Feb-15 22:02</td></tr>
+<tr><td class="link"><a href="eurokalk.cpp" title="eurokalk.cpp">eurokalk.cpp</a></td><td class="size">2.7 KiB</td><td class="date">2011-Feb-19 16:57</td></tr>
+<tr><td class="link"><a href="eurokalk.html" title="eurokalk.html">eurokalk.html</a></td><td class="size">368 B</td><td class="date">2011-Feb-19 17:26</td></tr>
+<tr><td class="link"><a href="eurokalk.jpg" title="eurokalk.jpg">eurokalk.jpg</a></td><td class="size">85.9 KiB</td><td class="date">2011-Feb-19 17:24</td></tr>
+<tr><td class="link"><a href="kalkulaator" title="kalkulaator">kalkulaator</a></td><td class="size">12.1 KiB</td><td class="date">2011-Feb-16 18:47</td></tr>
+<tr><td class="link"><a href="kalkulaator.cpp" title="kalkulaator.cpp">kalkulaator.cpp</a></td><td class="size">1.2 KiB</td><td class="date">2011-Feb-14 23:09</td></tr>
+<tr><td class="link"><a href="kalkulaator.html" title="kalkulaator.html">kalkulaator.html</a></td><td class="size">379 B</td><td class="date">2011-Feb-21 08:39</td></tr>
+<tr><td class="link"><a href="kalkulaator.png" title="kalkulaator.png">kalkulaator.png</a></td><td class="size">250.7 KiB</td><td class="date">2011-Feb-16 18:48</td></tr>
+<tr><td class="link"><a href="temperatuuri_app" title="temperatuuri_app">temperatuuri_app</a></td><td class="size">11.8 KiB</td><td class="date">2011-Feb-16 18:41</td></tr>
+<tr><td class="link"><a href="temperatuuri_app.cpp" title="temperatuuri_app.cpp">temperatuuri_app.cpp</a></td><td class="size">2.8 KiB</td><td class="date">2011-Feb-15 23:48</td></tr>
+<tr><td class="link"><a href="temperatuuri_app.html" title="temperatuuri_app.html">temperatuuri_app.html</a></td><td class="size">425 B</td><td class="date">2011-Feb-19 22:50</td></tr>
+<tr><td class="link"><a href="temperatuuri_app.png" title="temperatuuri_app.png">temperatuuri_app.png</a></td><td class="size">276.0 KiB</td><td class="date">2011-Feb-16 18:43</td></tr>
+</tbody></table>
+</div>
+</div>
+<script>
+  var loc = window.location.pathname;
+  var segments = loc.split('/');
+  var breadcrumbs = '';
+  var currentPath = '/';
+  for (var i=0; i<segments.length; i++) {
+    if (segments[i] !== '') {
+      currentPath += segments[i] + '/';
+      breadcrumbs += '<a href="' +  currentPath + '">' + window.unescape(segments[i]) + '<\/a>';
+    } else if (segments.length -1 !== i) {
+      currentPath += '';
+      breadcrumbs += '<a href="' + currentPath + '">Root<\/a>';
+    }
+  }
+  document.getElementById('breadcrumbs').innerHTML = breadcrumbs;
+</script>
+<script src="/fancyindex/js/history.js"></script>
+</body>
+</html>

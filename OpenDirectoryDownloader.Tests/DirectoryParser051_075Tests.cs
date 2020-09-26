@@ -216,7 +216,7 @@ namespace OpenDirectoryDownloader.Tests
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
-            Assert.Equal(507, webDirectory.Files.Count);
+            Assert.Equal(509, webDirectory.Files.Count);
             Assert.Equal("100 Deadly Skills.pdf", webDirectory.Files[0].FileName);
             Assert.Equal(58720256, webDirectory.Files[0].FileSize);
         }
