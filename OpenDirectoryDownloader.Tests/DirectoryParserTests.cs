@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -38,11 +39,11 @@ namespace OpenDirectoryDownloader.Tests
                 webDirectory.Subdirectories.AddRange(newWebDirectories);
             }
 
-            webDirectory.Files.RemoveAll(f =>
+            webDirectory.Files.Where(f =>
             {
                 Uri uri = new Uri(f.Url);
                 return (uri.Scheme != "https" && uri.Scheme != "http" && uri.Scheme != "ftp") || (uri.Host != testedUri.Host || !uri.LocalPath.StartsWith(testedUri.LocalPath));
-            });
+            }).ToList().ForEach(wd => webDirectory.Files.Remove(wd));
         }
 
         public static async Task<WebDirectory> ParseHtml(string html, string url = "http://localhost/")
