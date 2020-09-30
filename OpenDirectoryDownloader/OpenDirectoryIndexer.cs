@@ -270,6 +270,13 @@ namespace OpenDirectoryDownloader
                     Session.TotalFiles = Session.Root.TotalFiles;
                     Session.TotalFileSizeEstimated = Session.Root.TotalFileSize;
 
+                    IEnumerable<string> distinctUrls = Session.Root.AllFileUrls.Distinct();
+
+                    if (Session.TotalFiles != distinctUrls.Count())
+                    {
+                        Logger.Error($"Indexed files and unique files is not the same, please check results. Found a total of{Session.TotalFiles} files resulting in {distinctUrls.Count()} urls");
+                    }
+
                     if (!OpenDirectoryIndexerSettings.CommandLineOptions.NoUrls && Session.Root.Uri.Host != Constants.GoogleDriveDomain && Session.Root.Uri.Host != Constants.BlitzfilesTechDomain)
                     {
                         if (Session.TotalFiles > 0)
@@ -283,7 +290,7 @@ namespace OpenDirectoryDownloader
                             {
                                 string urlsFileName = $"{Library.CleanUriToFilename(Session.Root.Uri)}.txt";
                                 string urlsPath = Path.Combine(scansPath, urlsFileName);
-                                File.WriteAllLines(urlsPath, Session.Root.AllFileUrls.Distinct());
+                                File.WriteAllLines(urlsPath, distinctUrls);
                                 Logger.Info($"Saved URL list to file: {urlsFileName}");
                                 Console.WriteLine($"Saved URL list to file: {urlsFileName}");
 
@@ -338,6 +345,8 @@ namespace OpenDirectoryDownloader
                             Console.WriteLine("No URLs to save");
                         }
                     }
+
+                    distinctUrls = null;
 
                     if (OpenDirectoryIndexerSettings.CommandLineOptions.Speedtest && Session.Root.Uri.Host != Constants.GoogleDriveDomain && Session.Root.Uri.Host != Constants.BlitzfilesTechDomain)
                     {
