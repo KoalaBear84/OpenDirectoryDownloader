@@ -685,14 +685,15 @@ namespace OpenDirectoryDownloader
 
                                     fullUrl = StripUrl(fullUrl);
 
+                                    UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
+
                                     IElement imageElement = tableRow.QuerySelector("img");
                                     bool isDirectory = imageElement != null &&
                                         (
                                             (imageElement.HasAttribute("alt") && imageElement.Attributes["alt"].Value == "[DIR]") ||
-                                            (imageElement.HasAttribute("src") && (Path.GetFileName(imageElement.Attributes["src"].Value).Contains("dir") || Path.GetFileName(imageElement.Attributes["src"].Value).Contains("folder")))
+                                            (imageElement.HasAttribute("src") && (Path.GetFileName(imageElement.Attributes["src"].Value).Contains("dir") || Path.GetFileName(imageElement.Attributes["src"].Value).Contains("folder"))) ||
+                                            urlEncodingParser["dirname"] != null
                                         );
-
-                                    UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
 
                                     string description = tableRow.QuerySelector($"td:nth-child({descriptionHeaderColumnIndex})")?.TextContent.Trim();
                                     string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim().Replace(" ", string.Empty);
@@ -726,6 +727,11 @@ namespace OpenDirectoryDownloader
                                             directoryName = link.TextContent.Trim();
                                         }
 
+                                        if (urlEncodingParser["dirname"] != null)
+                                        {
+                                            directoryName = link.TextContent.Trim();
+                                        }
+
                                         if (urlEncodingParser["folder"] != null)
                                         {
                                             if (Library.IsBase64String(urlEncodingParser["folder"]))
@@ -751,6 +757,11 @@ namespace OpenDirectoryDownloader
                                         webDirectoryCopy.Parser = "ParseTablesDirectoryListing";
 
                                         string filename = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath));
+
+                                        if (urlEncodingParser["url"] != null)
+                                        {
+                                            filename = Path.GetFileName(WebUtility.UrlDecode(new Uri(urlEncodingParser["url"]).AbsolutePath));
+                                        }
 
                                         if (urlEncodingParser["file"] != null)
                                         {
@@ -1656,7 +1667,9 @@ namespace OpenDirectoryDownloader
                             {
                                 Parser = parser,
                                 Url = fullUrl,
-                                Name = urlEncodingParser["dir"] ?? WebUtility.UrlDecode(new Uri(parsedWebDirectory.Uri, urlEncodingParser["path"]).Segments.Last()).TrimEnd(new char[] { '/' })
+                                Name = urlEncodingParser["dir"] != null ?
+                                    WebUtility.UrlDecode(new Uri(parsedWebDirectory.Uri, urlEncodingParser["dir"]).Segments.Last()).TrimEnd(new char[] { '/' }) :
+                                    WebUtility.UrlDecode(new Uri(parsedWebDirectory.Uri, urlEncodingParser["path"]).Segments.Last()).TrimEnd(new char[] { '/' })
                             });
                         }
                         else if (!directoryListAsp)
@@ -1993,7 +2006,7 @@ namespace OpenDirectoryDownloader
 
             headerName = headerName.ToLower();
 
-            headerName = Regex.Replace(headerName, @"[^a-zA-Z0-9\s一-龥]", string.Empty);
+            headerName = Regex.Replace(headerName, @"[^a-zA-Z0-9\s一-龥äöüÄÖÜß]", string.Empty);
 
             if (headerName == "last modified" || headerName == "modified" || headerName.Contains("date") || headerName.Contains("last modification") || headerName.Contains("time") || headerName.Contains("修改时间") || headerName.Contains("修改日期"))
             {
@@ -2005,7 +2018,11 @@ namespace OpenDirectoryDownloader
                 headerInfo.Type = HeaderType.Type;
             }
 
-            if (headerName == "size" || headerName.Contains("file size") || headerName.Contains("filesize") || headerName.Contains("taille") || headerName.Contains("大小"))
+            if (headerName == "size" || headerName.Contains("file size") || headerName.Contains("filesize") ||
+                headerName.Contains("taille") ||
+                // Creates a problem for a single testcase, need to find a better way
+                //headerName.Contains("größe") ||
+                headerName.Contains("大小"))
             {
                 headerInfo.Type = HeaderType.FileSize;
             }
