@@ -122,7 +122,15 @@ namespace OpenDirectoryDownloader
                             case ConsoleKey.C:
                                 if (OpenDirectoryIndexer.Session.Finished != DateTimeOffset.MinValue)
                                 {
-                                    new Clipboard().SetText(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
+                                    try
+                                    {
+                                        new Clipboard().SetText(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Logger.Error($"Error copying stats to clipboard: {ex.Message}");
+                                    }
+
                                     KillApplication();
                                 }
                                 break;
