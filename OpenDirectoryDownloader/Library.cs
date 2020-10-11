@@ -184,9 +184,9 @@ namespace OpenDirectoryDownloader
 
                 if (previousTime / 1000 < stopwatch.ElapsedMilliseconds / 1000)
                 {
-                    string clearLine = new string('\b', Console.WindowWidth);
+                    ClearCurrentLine();
                     double maxMBsPerSecond = measurements.Any() ? measurements.GroupBy(m => m.Key / 1000).Max(s => GetSpeedInMBs(s, 1000)) : 0;
-                    Console.Write($"{clearLine}Downloaded: {FileSizeHelper.ToHumanReadable(totalBytesRead)}, Time: {stopwatch.ElapsedMilliseconds / 1000}s, Speed: {maxMBsPerSecond:F1} MB/s ({maxMBsPerSecond * 8:F0} mbit)");
+                    Console.Write($"Downloaded: {FileSizeHelper.ToHumanReadable(totalBytesRead)}, Time: {stopwatch.ElapsedMilliseconds / 1000}s, Speed: {maxMBsPerSecond:F1} MB/s ({maxMBsPerSecond * 8:F0} mbit)");
                 }
 
                 if (stopwatch.ElapsedMilliseconds >= 10_000)
@@ -239,6 +239,11 @@ namespace OpenDirectoryDownloader
             }
 
             return speedtestResult;
+        }
+
+        private static void ClearCurrentLine()
+        {
+            do { Console.Write("\b \b"); } while (Console.CursorLeft > 0);
         }
 
         private static Uri GetUrlDirectory(string url)
