@@ -12,6 +12,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -116,13 +117,16 @@ namespace OpenDirectoryDownloader
 
             HttpClientHandler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true,
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli
             };
 
             HttpClient = new HttpClient(HttpClientHandler)
             {
                 Timeout = TimeSpan.FromSeconds(OpenDirectoryIndexerSettings.Timeout)
             };
+
+            HttpClient.DefaultRequestHeaders.AcceptEncoding.ParseAdd("gzip, deflate, br");
 
             if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.Username) && !string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.Password))
             {
