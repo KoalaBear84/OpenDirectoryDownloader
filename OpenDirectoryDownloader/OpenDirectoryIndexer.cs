@@ -278,7 +278,7 @@ namespace OpenDirectoryDownloader
 
                     if (Session.TotalFiles != distinctUrls.Count())
                     {
-                        Logger.Error($"Indexed files and unique files is not the same, please check results. Found a total of{Session.TotalFiles} files resulting in {distinctUrls.Count()} urls");
+                        Logger.Error($"Indexed files and unique files is not the same, please check results. Found a total of {Session.TotalFiles} files resulting in {distinctUrls.Count()} urls");
                     }
 
                     if (!OpenDirectoryIndexerSettings.CommandLineOptions.NoUrls && Session.Root.Uri.Host != Constants.GoogleDriveDomain && Session.Root.Uri.Host != Constants.BlitzfilesTechDomain)
