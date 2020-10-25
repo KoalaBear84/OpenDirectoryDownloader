@@ -41,6 +41,7 @@ Command line parameters:
 | `-l` | `--upload-urls` | Uploads urls file
 | `-e` | `--exact-file-sizes` | Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server)
 | `-s` | `--speedtest` | Does a speed test after indexing
+| `-a` | `--user-agent` | Use custom default User Agent
 | | `--username` | Username
 | | `--password` | Password
 
