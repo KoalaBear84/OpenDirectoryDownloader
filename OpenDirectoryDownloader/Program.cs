@@ -72,10 +72,14 @@ namespace OpenDirectoryDownloader
             {
                 Console.WriteLine($"URL specified: {url}");
 
-                url = Library.FixUrl(url);
-                Console.WriteLine($"URL fixed: {url}");
+                string newUrl = Library.FixUrl(url);
 
-                openDirectoryIndexerSettings.Url = url;
+                if (newUrl != url)
+                {
+                Console.WriteLine($"URL fixed: {url}");
+                }
+
+                openDirectoryIndexerSettings.Url = newUrl;
             }
 
             openDirectoryIndexerSettings.Threads = openDirectoryIndexerSettings.CommandLineOptions.Threads;
@@ -84,7 +88,6 @@ namespace OpenDirectoryDownloader
             openDirectoryIndexerSettings.Password = openDirectoryIndexerSettings.CommandLineOptions.Password;
 
             // FTP
-            // TODO: Make dynamic
             if (openDirectoryIndexerSettings.Url?.StartsWith(Constants.UriScheme.Ftp) == true || openDirectoryIndexerSettings.Url?.StartsWith(Constants.UriScheme.Ftps) == true)
             {
                 openDirectoryIndexerSettings.Threads = 6;
