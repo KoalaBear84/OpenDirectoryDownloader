@@ -76,7 +76,7 @@ namespace OpenDirectoryDownloader.Calibre
                     httpResponseMessage = await httpClient.GetAsync(libraryMetadataUri, cancellationToken);
                     httpResponseMessage.EnsureSuccessStatusCode();
 
-                    string libraryResultJson = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
+                    string libraryResultJson = await httpResponseMessage.Content.ReadAsStringAsync();
 
                     libraryWebDirectory.Files.Add(new WebFile
                     {
