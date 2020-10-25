@@ -722,6 +722,12 @@ namespace OpenDirectoryDownloader
                 return;
             }
 
+            if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.CommandLineOptions.UserAgent))
+            {
+                HttpClient.DefaultRequestHeaders.UserAgent.Clear();
+                HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(OpenDirectoryIndexerSettings.CommandLineOptions.UserAgent);
+            }
+
             HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationToken);
             string html = null;
 
@@ -872,6 +878,11 @@ namespace OpenDirectoryDownloader
             {
                 if (Session.Root.Url != httpResponseMessage.RequestMessage.RequestUri.ToString())
                 {
+                    if (Session.Root.Uri.Host != httpResponseMessage.RequestMessage.RequestUri.Host)
+                    {
+                        Logger.Error($"Response is NOT from requested host ({Session.Root.Uri.Host}), but from {httpResponseMessage.RequestMessage.RequestUri.Host}, maybe retry with different user agent, see Command Line options");
+                    }
+
                     Session.Root.Url = httpResponseMessage.RequestMessage.RequestUri.ToString();
                     Logger.Warn($"Retrieved URL: {Session.Root.Url}");
                 }

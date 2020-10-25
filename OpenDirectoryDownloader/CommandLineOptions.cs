@@ -34,6 +34,9 @@ namespace OpenDirectoryDownloader
         [Option('s', "speedtest", Required = false, Default = false, HelpText = "Do a speed test")]
         public bool Speedtest { get; set; }
 
+        [Option('a', "user-agent", Required = false, HelpText = "Use custom default User Agent")]
+        public string UserAgent { get; set; }
+
         [Option("username", Required = false, Default = "", HelpText = "Username")]
         public string Username { get; set; }
 
