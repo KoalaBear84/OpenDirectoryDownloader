@@ -34,7 +34,7 @@ namespace OpenDirectoryDownloader.Calibre
             return Version.Parse(versionString);
         }
 
-        public static async Task ParseCalibre(HttpClient httpClient, Uri calibreRootUri, WebDirectory webDirectory, Version version)
+        public static async Task ParseCalibre(HttpClient httpClient, Uri calibreRootUri, WebDirectory webDirectory, Version version, CancellationToken cancellationToken)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace OpenDirectoryDownloader.Calibre
                     return;
                 }
 
-                HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(new Uri(calibreRootUri, "./interface-data/update"));
+                HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(new Uri(calibreRootUri, "./interface-data/update"), cancellationToken);
                 httpResponseMessage.EnsureSuccessStatusCode();
 
                 string updateResultJson = await httpResponseMessage.Content.ReadAsStringAsync();
@@ -73,10 +73,10 @@ namespace OpenDirectoryDownloader.Calibre
 
                     Uri libraryMetadataUri = new Uri(calibreRootUri, $"./interface-data/books-init?library_id={library.Key}&num=999999999");
 
-                    httpResponseMessage = await httpClient.GetAsync(libraryMetadataUri);
+                    httpResponseMessage = await httpClient.GetAsync(libraryMetadataUri, cancellationToken);
                     httpResponseMessage.EnsureSuccessStatusCode();
 
-                    string libraryResultJson = await httpResponseMessage.Content.ReadAsStringAsync();
+                    string libraryResultJson = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
 
                     libraryWebDirectory.Files.Add(new WebFile
                     {

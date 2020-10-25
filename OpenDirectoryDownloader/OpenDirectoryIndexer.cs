@@ -737,7 +737,7 @@ namespace OpenDirectoryDownloader
                 Logger.Warn("First request fails, using Curl fallback User-Agent");
                 HttpClient.DefaultRequestHeaders.UserAgent.Clear();
                 HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Curl);
-                httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url);
+                httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationToken);
 
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
@@ -753,7 +753,7 @@ namespace OpenDirectoryDownloader
                 Logger.Warn("First request fails, using Chrome fallback User-Agent");
                 HttpClient.DefaultRequestHeaders.UserAgent.Clear();
                 HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
-                httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url);
+                httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationToken);
 
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
@@ -816,7 +816,7 @@ namespace OpenDirectoryDownloader
                 Console.WriteLine($"Calibre {calibreVersion} detected! I will index it at max 100 books per 30 seconds, else it will break Calibre...");
                 Logger.Info($"Calibre {calibreVersion} detected! I will index it at max 100 books per 30 seconds, else it will break Calibre...");
 
-                await CalibreParser.ParseCalibre(HttpClient, httpResponseMessage.RequestMessage.RequestUri, webDirectory, calibreVersion);
+                await CalibreParser.ParseCalibre(HttpClient, httpResponseMessage.RequestMessage.RequestUri, webDirectory, calibreVersion, cancellationToken);
 
                 return;
             }
