@@ -19,6 +19,10 @@ Please install the latest/current Runtime version of .NET Core:
 
 https://dotnet.microsoft.com/download/dotnet-core/current/runtime
 
+### Copying on Linux
+
+When you want to copy (`C` key) the stats at the end on Linux you need to have xclip installed.
+
 ## Releases / Binaries
 
 For builds (64-bit) for Windows, Linux and Mac:
