@@ -424,7 +424,7 @@ namespace OpenDirectoryDownloader
                     Logger.Info("Logging sessions stats...");
                     try
                     {
-                        string sessionStats = Statistics.GetSessionStats(Session, includeExtensions: true);
+                        string sessionStats = Statistics.GetSessionStats(Session, includeExtensions: true, includeBanner: true);
                         Logger.Info(sessionStats);
                         HistoryLogger.Info(sessionStats);
                         Logger.Info("Logged sessions stats");

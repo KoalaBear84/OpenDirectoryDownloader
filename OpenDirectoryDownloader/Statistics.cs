@@ -37,7 +37,7 @@ namespace OpenDirectoryDownloader
             return extensionCount;
         }
 
-        public static string GetSessionStats(Session session, bool includeExtensions = false, bool includeFullExtensions = false, bool onlyRedditStats = false)
+        public static string GetSessionStats(Session session, bool includeExtensions = false, bool includeFullExtensions = false, bool onlyRedditStats = false, bool includeBanner = false)
         {
             Dictionary<string, ExtensionStats> extensionsStats = new Dictionary<string, ExtensionStats>();
 
@@ -101,7 +101,7 @@ namespace OpenDirectoryDownloader
 
             stringBuilder.AppendLine($"|**Date (UTC):** {session.Started.ToString(Constants.DateTimeFormat)}|**Time:** {TimeSpan.FromSeconds((int)((session.Finished == DateTimeOffset.MinValue ? DateTimeOffset.UtcNow : session.Finished) - session.Started).TotalSeconds)}|{(session.SpeedtestResult != null ? $"**Speed:** {(session.SpeedtestResult.DownloadedBytes > 0 ? $"{session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)" : "Failed")}" : string.Empty)}|");
 
-            if (onlyRedditStats)
+            if (onlyRedditStats || includeBanner)
             {
                 stringBuilder.AppendLine();
                 stringBuilder.AppendLine($"^(Created by [KoalaBear84's OpenDirectory Indexer](https://github.com/KoalaBear84/OpenDirectoryDownloader/))");
