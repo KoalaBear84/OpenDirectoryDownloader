@@ -32,7 +32,7 @@ jobs:
       run: dotnet test OpenDirectoryDownloader --configuration Release
 
     - name: Publish with dotnet win-x64
-      run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime win-x64 --no-self-contained --output ./OpenDirectoryDownloader-win-x64
+      run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime win-x64 --no-self-contained -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-win-x64
 
     - name: Zipping win-x64
       uses: papeloto/action-zip@v1
@@ -41,7 +41,7 @@ jobs:
         dest: OpenDirectoryDownloader-win-x64.zip
 
     - name: Publish with dotnet linux-x64
-      run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime linux-x64 --no-self-contained --output ./OpenDirectoryDownloader-linux-x64
+      run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime linux-x64 --no-self-contained -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-linux-x64
 
     - name: Zipping linux-x64
       uses: papeloto/action-zip@v1
@@ -50,7 +50,7 @@ jobs:
         dest: OpenDirectoryDownloader-linux-x64.zip
 
     - name: Publish with dotnet osx-x64
-      run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime osx-x64 --no-self-contained --output ./OpenDirectoryDownloader-osx-x64
+      run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime osx-x64 --no-self-contained -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-osx-x64
 
     - name: Zipping osx-x64
       uses: papeloto/action-zip@v1
