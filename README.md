@@ -1,7 +1,7 @@
 # Open Directory Downloader
 Indexes open directories listings in 100+ supported formats, including FTP, Google Drive, GoIndex (alternatives).
 
-Written in C# with .NET Core, which means it is **cross platform**!
+Written in C# with .NET (Core), which means it is **cross platform**!
 
 Downloading is not (yet) implemented, but is already possible when you use the resulting file into another tool (for most of the formats).
 
@@ -15,9 +15,9 @@ If you have improvements, supply me with a pull request! If you have a format no
 
 ## Prerequisites
 
-Please install the latest/current Runtime version of .NET Core:
+Please install the latest/current Runtime version of .NET:
 
-https://dotnet.microsoft.com/download/dotnet-core/current/runtime
+https://dotnet.microsoft.com/download/dotnet/current/runtime
 
 ### Copying on Linux
 
@@ -77,14 +77,14 @@ If you want to learn more or contribute, see the following paragraphs!
 4. More help: https://docs.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio-code
 
 ## Building
-1. Install the newest .NET Core 3.1 SDK. 
+1. Install the newest .NET 5 SDK. 
 2. `git clone https://github.com/KoalaBear84/OpenDirectoryDownloader`
 3. `cd OpenDirectoryDownloader/OpenDirectoryDownloader`
 4. `dotnet build .`
-5. `cd bin/Debug/netcoreapp3.1`
+5. `cd bin/Debug/net5.0`
 6. `./OpenDirectoryDownloader --url "https://myopendirectory.com"`
 
-For Linux:
+For Linux (Might not be needed since .NET 5):
 Then, if you need to package it into a binary, you can use [warp-packer](https://github.com/dgiagio/warp#quickstart-with-net-core)
 
 When you have cloned the code, you can also run it without the SDK. For that, download the ["Runtime"](https://dotnet.microsoft.com/download) and do "`dotnet run .`" instead of build.
