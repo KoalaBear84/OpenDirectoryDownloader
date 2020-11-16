@@ -23,8 +23,7 @@ namespace OpenDirectoryDownloader
 
         public static string GetApplicationPath()
         {
-            string appPath = Assembly.GetEntryAssembly().Location;
-            appPath = Path.GetDirectoryName(appPath);
+            string appPath = AppContext.BaseDirectory;
 
             if (!appPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
             {
