@@ -13,12 +13,6 @@ Downloading with [aria2c](https://aria2.github.io/) (Does not support directory 
 
 If you have improvements, supply me with a pull request! If you have a format not yet supported, please let me know.
 
-## Prerequisites
-
-When you are NOT using the self-contained releases, you need to install the latest/current Runtime version of .NET:
-
-https://dotnet.microsoft.com/download/dotnet/current/runtime
-
 ## Releases / Binaries
 
 For builds (64-bit) for Windows, Linux and Mac:
@@ -26,6 +20,12 @@ For builds (64-bit) for Windows, Linux and Mac:
 https://github.com/KoalaBear84/OpenDirectoryDownloader/releases
 
 When using the self-contained releases you don't need to install the .NET Runtime.
+
+## Prerequisites
+
+When you are NOT using the self-contained releases, you need to install the latest/current Runtime version of .NET:
+
+https://dotnet.microsoft.com/download/dotnet/current/runtime
 
 ## Usage
 
