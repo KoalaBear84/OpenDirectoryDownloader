@@ -28,17 +28,14 @@ namespace OpenDirectoryDownloader
         internal static void ShowInfoAndCommands()
         {
             Console.WriteLine(
-                "****************************************************************************\n" +
-                "****************************************************************************\n" +
-                "***  Press I for info (this)                                             ***\n" +
-                "***  Press S for statistics                                              ***\n" +
-                "***  Press T for thread info                                             ***\n" +
-                "***  Press J for Save JSON                                               ***\n" +
-                "***                                                                      ***\n" +
-                "***  Press ESC or X to EXIT                                              ***\n" +
-                "****************************************************************************\n" +
-                "****************************************************************************"
-            );
+                "┌─────────────────────────────────────────────────────────────────────────┐\n" +
+                "│  Press I for info (this)                                                │\n" +
+                "│  Press S for statistics                                                 │\n" +
+                "│  Press T for thread info                                                │\n" +
+                "│  Press J for Save JSON                                                  │\n" +
+                "├─────────────────────────────────────────────────────────────────────────┤\n" +
+                "│  Press ESC or X to EXIT                                                 │\n" +
+                "└─────────────────────────────────────────────────────────────────────────┘\n");
         }
 
         internal static void ProcessConsoleInput(OpenDirectoryIndexer openDirectoryIndexer)
