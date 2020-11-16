@@ -31,6 +31,8 @@ jobs:
     - name: Test with dotnet
       run: dotnet test OpenDirectoryDownloader --configuration Release
 
+
+
     - name: Publish with dotnet win-x64
       run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime win-x64 --no-self-contained -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-win-x64
 
@@ -39,6 +41,17 @@ jobs:
       with:
         files: ./OpenDirectoryDownloader-win-x64
         dest: OpenDirectoryDownloader-win-x64.zip
+
+    - name: Publish with dotnet win-x64 self-contained
+      run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime win-x64 --self-contained=true -p:PublishSingleFile=true -p:PublishTrimmed=true -p:IncludeNativeLibrariesForSelfExtract=true --output ./OpenDirectoryDownloader-win-x64-self-contained
+
+    - name: Zipping win-x64 self-contained
+      uses: papeloto/action-zip@v1
+      with:
+        files: ./OpenDirectoryDownloader-win-x64-self-contained
+        dest: OpenDirectoryDownloader-win-x64-self-contained.zip
+
+
 
     - name: Publish with dotnet linux-x64
       run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime linux-x64 --no-self-contained -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-linux-x64
@@ -49,6 +62,17 @@ jobs:
         files: ./OpenDirectoryDownloader-linux-x64
         dest: OpenDirectoryDownloader-linux-x64.zip
 
+    - name: Publish with dotnet linux-x64 self-contained
+      run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime linux-x64 --self-contained=true -p:PublishSingleFile=true -p:PublishTrimmed=true -p:IncludeNativeLibrariesForSelfExtract=true --output ./OpenDirectoryDownloader-linux-x64-self-contained
+
+    - name: Zipping linux-x64 self-contained
+      uses: papeloto/action-zip@v1
+      with:
+        files: ./OpenDirectoryDownloader-linux-x64-self-contained
+        dest: OpenDirectoryDownloader-linux-x64-self-contained.zip
+
+
+
     - name: Publish with dotnet osx-x64
       run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime osx-x64 --no-self-contained -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-osx-x64
 
@@ -57,6 +81,17 @@ jobs:
       with:
         files: ./OpenDirectoryDownloader-osx-x64
         dest: OpenDirectoryDownloader-osx-x64.zip
+
+    - name: Publish with dotnet osx-x64 self-contained
+      run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime osx-x64 --self-contained=true -p:PublishSingleFile=true -p:PublishTrimmed=true -p:IncludeNativeLibrariesForSelfExtract=true --output ./OpenDirectoryDownloader-osx-x64-self-contained
+
+    - name: Zipping osx-x64 self-contained
+      uses: papeloto/action-zip@v1
+      with:
+        files: ./OpenDirectoryDownloader-osx-x64-self-contained
+        dest: OpenDirectoryDownloader-osx-x64-self-contained.zip
+
+
 
     - name: Create release
       id: create_release
@@ -70,6 +105,8 @@ jobs:
         prerelease: false
         body: ${{ github.event.head_commit.message }}
 
+
+
     - name: Upload Release Asset win-x64
       uses: actions/upload-release-asset@v1.0.1
       env:
@@ -80,6 +117,18 @@ jobs:
         asset_name: OpenDirectoryDownloader-win-x64.zip
         asset_content_type: application/zip
 
+    - name: Upload Release Asset win-x64 self-contained
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./OpenDirectoryDownloader-win-x64-self-contained.zip
+        asset_name: OpenDirectoryDownloader-win-x64-self-contained.zip
+        asset_content_type: application/zip
+
+
+
     - name: Upload Release Asset linux-x64
       uses: actions/upload-release-asset@v1.0.1
       env:
@@ -89,7 +138,18 @@ jobs:
         asset_path: ./OpenDirectoryDownloader-linux-x64.zip
         asset_name: OpenDirectoryDownloader-linux-x64.zip
         asset_content_type: application/zip
+
+    - name: Upload Release Asset linux-x64 self-contained
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./OpenDirectoryDownloader-linux-x64-self-contained.zip
+        asset_name: OpenDirectoryDownloader-linux-x64-self-contained.zip
+        asset_content_type: application/zip
         
+
 
     - name: Upload Release Asset osx-x64
       id: upload-release-asset
@@ -100,4 +160,15 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./OpenDirectoryDownloader-osx-x64.zip
         asset_name: OpenDirectoryDownloader-osx-x64.zip
+        asset_content_type: application/zip
+
+    - name: Upload Release Asset osx-x64 self-contained
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./OpenDirectoryDownloader-osx-x64-self-contained.zip
+        asset_name: OpenDirectoryDownloader-osx-x64-self-contained.zip
         asset_content_type: application/zip
