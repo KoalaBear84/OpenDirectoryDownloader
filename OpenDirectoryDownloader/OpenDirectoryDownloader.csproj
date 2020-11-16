@@ -17,9 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="NLog.config" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,7 +25,7 @@
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
     <PackageReference Include="FluentFTP" Version="33.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="NLog.Config" Version="4.7.5" />
+    <PackageReference Include="NLog" Version="4.7.5" />
     <PackageReference Include="Polly" Version="7.2.1" />
     <PackageReference Include="TextCopy" Version="4.2.0" />
   </ItemGroup>

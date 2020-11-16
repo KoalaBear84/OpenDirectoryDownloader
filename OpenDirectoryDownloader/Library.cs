@@ -255,5 +255,17 @@ namespace OpenDirectoryDownloader
         {
             return new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(unixTimeStamp);
         }
+
+        public static Stream GetEmbeddedResourceStream(Assembly assembly, string resourceFileName)
+        {
+            List<string> resourcePaths = assembly.GetManifestResourceNames().Where(x => x.EndsWith(resourceFileName, StringComparison.OrdinalIgnoreCase)).ToList();
+            
+            if (resourcePaths.Count == 1)
+            {
+                return assembly.GetManifestResourceStream(resourcePaths.Single());
+            }
+
+            return null;
+        }
     }
 }

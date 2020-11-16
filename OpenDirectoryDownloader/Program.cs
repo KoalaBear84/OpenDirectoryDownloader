@@ -1,12 +1,15 @@
 using CommandLine;
 using NLog;
+using NLog.Config;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace OpenDirectoryDownloader
 {
@@ -19,6 +22,14 @@ namespace OpenDirectoryDownloader
         static async Task<int> Main(string[] args)
         {
             SetConsoleTitle("OpenDirectoryDownloader");
+
+            Stream nlogConfigFile = Library.GetEmbeddedResourceStream(Assembly.GetEntryAssembly(), "NLog.config");
+
+            if (nlogConfigFile != null)
+            {
+                XmlReader xmlReader = XmlReader.Create(nlogConfigFile);
+                LogManager.Configuration = new XmlLoggingConfiguration(xmlReader, null);
+            }
 
             Process currentProcess = Process.GetCurrentProcess();
 
