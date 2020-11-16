@@ -50,7 +50,7 @@ namespace OpenDirectoryDownloader.Calibre
                 HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(new Uri(calibreRootUri, "./interface-data/update"), cancellationToken);
                 httpResponseMessage.EnsureSuccessStatusCode();
 
-                string updateResultJson = await httpResponseMessage.Content.ReadAsStringAsync();
+                string updateResultJson = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
 
                 CalibreUpdate.CalibreUpdate calibreUpdate = CalibreUpdate.CalibreUpdate.FromJson(updateResultJson);
 
@@ -76,7 +76,8 @@ namespace OpenDirectoryDownloader.Calibre
                     httpResponseMessage = await httpClient.GetAsync(libraryMetadataUri, cancellationToken);
                     httpResponseMessage.EnsureSuccessStatusCode();
 
-                    string libraryResultJson = await httpResponseMessage.Content.ReadAsStringAsync();
+                    string libraryResultJson = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
+
 
                     libraryWebDirectory.Files.Add(new WebFile
                     {
