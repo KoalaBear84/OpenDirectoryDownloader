@@ -13,6 +13,7 @@ jobs:
 
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      DOTNET_NOLOGO: 1
 
     steps:
     - name: Checkout
@@ -20,6 +21,8 @@ jobs:
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.100
 
     - name: Build with dotnet
       run: dotnet build OpenDirectoryDownloader --configuration Release
