@@ -15,19 +15,17 @@ If you have improvements, supply me with a pull request! If you have a format no
 
 ## Prerequisites
 
-Please install the latest/current Runtime version of .NET:
+When you are NOT using the self-contained releases, you need to install the latest/current Runtime version of .NET:
 
 https://dotnet.microsoft.com/download/dotnet/current/runtime
-
-### Copying on Linux
-
-When you want to copy (`C` key) the stats at the end on Linux you need to have xclip installed.
 
 ## Releases / Binaries
 
 For builds (64-bit) for Windows, Linux and Mac:
 
 https://github.com/KoalaBear84/OpenDirectoryDownloader/releases
+
+When using the self-contained releases you don't need to install the .NET Runtime.
 
 ## Usage
 
@@ -53,6 +51,10 @@ Example:
 `OpenDirectoryDownloader.exe --url "https://myopendirectory.com"`
 
 If you want to learn more or contribute, see the following paragraphs!
+
+### Copying on Linux
+
+When you want to copy (`C` key) the stats at the end on Linux you need to have xclip installed.
 
 ## Docker
 
