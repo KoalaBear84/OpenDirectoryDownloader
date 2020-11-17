@@ -87,7 +87,7 @@ namespace OpenDirectoryDownloader
 
                 if (newUrl != url)
                 {
-                Console.WriteLine($"URL fixed: {url}");
+                    Console.WriteLine($"URL fixed    : {newUrl}");
                 }
 
                 openDirectoryIndexerSettings.Url = newUrl;
