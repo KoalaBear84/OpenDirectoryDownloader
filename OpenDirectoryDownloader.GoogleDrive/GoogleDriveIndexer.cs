@@ -85,6 +85,8 @@ namespace OpenDirectoryDownloader.GoogleDrive
                         listRequest.Q = $"'{folderId}' in parents";
                         listRequest.PageToken = nextPageToken;
                         listRequest.Fields = "nextPageToken, files(id, name, mimeType, size)";
+                        listRequest.IncludeItemsFromAllDrives = true;
+                        listRequest.SupportsAllDrives = true;
                         Google.Apis.Drive.v3.Data.FileList fileList = await listRequest.ExecuteAsync();
 
                         foreach (Google.Apis.Drive.v3.Data.File file in fileList.Files.OrderByDescending(f => f.MimeType == FolderMimeType).ThenBy(f => f.Name))
