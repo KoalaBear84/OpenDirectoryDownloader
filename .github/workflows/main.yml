@@ -84,6 +84,7 @@ jobs:
           Dockerfile
 
 
+
     - name: Publish with dotnet linux-arm64
       run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime linux-arm64 --no-self-contained -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-linux-arm64
 
@@ -101,6 +102,26 @@ jobs:
       with:
         files: ./OpenDirectoryDownloader-linux-arm64-self-contained
         dest: OpenDirectoryDownloader-linux-arm64-self-contained.zip
+
+
+
+    - name: Publish with dotnet linux-arm
+      run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime linux-arm --no-self-contained -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-linux-arm
+
+    - name: Zipping linux-arm
+      uses: papeloto/action-zip@v1
+      with:
+        files: ./OpenDirectoryDownloader-linux-arm
+        dest: OpenDirectoryDownloader-linux-arm.zip
+
+    - name: Publish with dotnet linux-arm (self-contained)
+      run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime linux-arm --self-contained=true -p:PublishSingleFile=true -p:PublishTrimmed=true -p:IncludeNativeLibrariesForSelfExtract=true --output ./OpenDirectoryDownloader-linux-arm-self-contained
+
+    - name: Zipping linux-arm (self-contained)
+      uses: papeloto/action-zip@v1
+      with:
+        files: ./OpenDirectoryDownloader-linux-arm-self-contained
+        dest: OpenDirectoryDownloader-linux-arm-self-contained.zip
 
 
 
@@ -200,6 +221,28 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./OpenDirectoryDownloader-linux-arm64-self-contained.zip
         asset_name: OpenDirectoryDownloader-linux-arm64-self-contained.zip
+        asset_content_type: application/zip
+
+
+
+    - name: Upload Release Asset linux-arm
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./OpenDirectoryDownloader-linux-arm.zip
+        asset_name: OpenDirectoryDownloader-linux-arm.zip
+        asset_content_type: application/zip
+
+    - name: Upload Release Asset linux-arm (self-contained)
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./OpenDirectoryDownloader-linux-arm-self-contained.zip
+        asset_name: OpenDirectoryDownloader-linux-arm-self-contained.zip
         asset_content_type: application/zip
 
 
