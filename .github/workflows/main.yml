@@ -73,6 +73,26 @@ jobs:
 
 
 
+    - name: Publish with dotnet linux-arm64
+      run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime linux-arm64 --no-self-contained -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-linux-arm64
+
+    - name: Zipping linux-arm64
+      uses: papeloto/action-zip@v1
+      with:
+        files: ./OpenDirectoryDownloader-linux-arm64
+        dest: OpenDirectoryDownloader-linux-arm64.zip
+
+    - name: Publish with dotnet linux-arm64 (self-contained)
+      run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime linux-arm64 --self-contained=true -p:PublishSingleFile=true -p:PublishTrimmed=true -p:IncludeNativeLibrariesForSelfExtract=true --output ./OpenDirectoryDownloader-linux-arm64-self-contained
+
+    - name: Zipping linux-arm64 (self-contained)
+      uses: papeloto/action-zip@v1
+      with:
+        files: ./OpenDirectoryDownloader-linux-arm64-self-contained
+        dest: OpenDirectoryDownloader-linux-arm64-self-contained.zip
+
+
+
     - name: Publish with dotnet osx-x64
       run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime osx-x64 --no-self-contained -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-osx-x64
 
