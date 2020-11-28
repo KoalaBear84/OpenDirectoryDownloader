@@ -171,6 +171,28 @@ jobs:
 
 
 
+    - name: Upload Release Asset linux-arm64
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./OpenDirectoryDownloader-linux-arm64.zip
+        asset_name: OpenDirectoryDownloader-linux-arm64.zip
+        asset_content_type: application/zip
+
+    - name: Upload Release Asset linux-arm64 (self-contained)
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./OpenDirectoryDownloader-linux-arm64-self-contained.zip
+        asset_name: OpenDirectoryDownloader-linux-arm64-self-contained.zip
+        asset_content_type: application/zip
+
+
+
     - name: Upload Release Asset osx-x64
       uses: actions/upload-release-asset@v1.0.1
       env:
