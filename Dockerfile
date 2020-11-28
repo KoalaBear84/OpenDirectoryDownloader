@@ -1,7 +1,8 @@
 FROM mcr.microsoft.com/dotnet/runtime
 
-ADD app /app
 WORKDIR /app
+
+ADD app /app
 
 RUN chmod +x OpenDirectoryDownloader
 
