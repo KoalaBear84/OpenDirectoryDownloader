@@ -54,7 +54,9 @@ jobs:
 
 
     - name: Publish with dotnet linux-x64
-      run: dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime linux-x64 --no-self-contained -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-linux-x64
+      run: |
+        dotnet publish OpenDirectoryDownloader --configuration Release --framework net5.0 --runtime linux-x64 --no-self-contained -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-linux-x64
+        chmod +x ./OpenDirectoryDownloader-linux-x64/OpenDirectoryDownloader
 
     - name: Zipping linux-x64
       uses: papeloto/action-zip@v1
