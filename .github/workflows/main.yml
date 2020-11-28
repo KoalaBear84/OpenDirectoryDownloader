@@ -224,7 +224,8 @@ jobs:
         asset_name: OpenDirectoryDownloader-osx-x64-self-contained.zip
         asset_content_type: application/zip
 
-  main:
+  docker:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact linux-x64
