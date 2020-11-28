@@ -59,10 +59,17 @@ When you want to copy (`C` key) the stats at the end on Linux you need to have x
 
 ## Docker
 
-1.  Clone repository
-2.  Go to main folder
-3.  Run `docker build . -t opendirectorydownloader` initially, or whenever you updated the code
-4.  Run `docker run --rm -it opendirectorydownloader` whenever you want a scan
+Every release will automatically push an image to the Docker Hub:
+
+https://hub.docker.com/repository/docker/koalabear84/opendirectorydownloader
+
+Run it like:
+
+`docker run --rm -v c:/Scans:/app/Scans -it koalabear84/opendirectorydownloader --quit --speedtest`
+
+It will save the URLs files onto C:\\Scans (windows), or replace with a custom folder on other OS-ses.
+
+\* You can also run it without `-v c:/scans:/app/Scans` if you don't want to save the results on your host.
 
 ## Getting the code
 
