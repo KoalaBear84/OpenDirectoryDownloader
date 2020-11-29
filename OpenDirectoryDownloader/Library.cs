@@ -132,6 +132,23 @@ namespace OpenDirectoryDownloader
                 httpResponseMessage = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
             }
 
+            if (!httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.RequestMessage.RequestUri.ToString() != url)
+            {
+                string retrievedUrl = null;
+
+                if (httpResponseMessage.RequestMessage.RequestUri.ToString() != url)
+                {
+                    retrievedUrl = httpResponseMessage.RequestMessage.RequestUri.ToString();
+                }
+                else if (httpResponseMessage.Headers.Location is not null)
+                {
+                    retrievedUrl = httpResponseMessage.Headers.Location.ToString();
+                }
+
+                Logger.Warn($"Speedtest cancelled because it returns HTTP {(int)httpResponseMessage.StatusCode}{(retrievedUrl is not null ? $" with URL {retrievedUrl}" : string.Empty)}");
+                return new SpeedtestResult();
+            }
+
             try
             {
                 using (Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync())
