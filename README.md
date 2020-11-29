@@ -16,7 +16,7 @@ If you have improvements, supply me with a pull request! If you have a format no
 
 ## Releases / Binaries
 
-For builds (64-bit) for Windows, Linux and Mac:
+For builds (64-bit) for Windows, Linux and Mac, or ARM/ARM64 builds for Pi:
 
 https://github.com/KoalaBear84/OpenDirectoryDownloader/releases
 
