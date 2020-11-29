@@ -242,7 +242,22 @@ namespace OpenDirectoryDownloader
 
         private static void ClearCurrentLine()
         {
-            do { Console.Write("\b \b"); } while (Console.CursorLeft > 0);
+            try
+            {
+                if (!Console.IsOutputRedirected)
+                {
+                    Console.Write(new string('+', Console.WindowWidth).Replace("+", "\b \b"));
+                }
+                else
+                {
+                    Console.WriteLine();
+                }
+            }
+            catch
+            {
+                // Happens when console is redirected, and just to be sure
+                Console.WriteLine();
+            }
         }
 
         private static Uri GetUrlDirectory(string url)
@@ -258,7 +273,7 @@ namespace OpenDirectoryDownloader
         public static Stream GetEmbeddedResourceStream(Assembly assembly, string resourceFileName)
         {
             List<string> resourcePaths = assembly.GetManifestResourceNames().Where(x => x.EndsWith(resourceFileName, StringComparison.OrdinalIgnoreCase)).ToList();
-            
+
             if (resourcePaths.Count == 1)
             {
                 return assembly.GetManifestResourceStream(resourcePaths.Single());
