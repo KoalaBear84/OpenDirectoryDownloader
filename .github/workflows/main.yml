@@ -48,7 +48,7 @@ jobs:
     - name: Get version info
       id: get_version
 #      run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/v}
-      run: echo ::set-output name=VERSION::"${{ hashFiles('.github/workflows/main.yml') }}" # TODO: Change back
+      run: echo ::set-output name=VERSION::"2" # TODO: Change back
       
     - name: Build with dotnet
       run: dotnet build OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }}
