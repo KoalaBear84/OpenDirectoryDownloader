@@ -63,8 +63,8 @@ jobs:
     - name: Zipping
       uses: papeloto/action-zip@v1
       with:
-        files: ./OpenDirectoryDownloader-{{ matrix.target }}
-        dest: OpenDirectoryDownloader-{{ matrix.target }}.zip
+        files: ./OpenDirectoryDownloader-${{ matrix.target }}
+        dest: OpenDirectoryDownloader-${{ matrix.target }}.zip
 
 
     - name: Publish with dotnet (self-contained)
