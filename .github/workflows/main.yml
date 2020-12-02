@@ -81,12 +81,11 @@ jobs:
       run: dotnet publish OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }} --framework net5.0 --runtime ${{ matrix.target }} ${{ matrix.build_args }} -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}
 
     - name: Zipping
-      uses: papeloto/action-zip@v1
-      with:
-        files: ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}
-        dest: OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}.zip
+      run: |
+        7z a OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}.zip ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}
+        # 7z is installed in all environments and supports unix permissions while compresisng (but not while decompressing!)
 
-    - name: Upload artifact for docker job (linux only)
+    - name: Upload artifact for docker job (linux non-self-contained only)
       if: ${{ matrix.kind == 'linux' && matrix.self-contained == 'non-self-contained' }}
       uses: actions/upload-artifact@v2
       with:
