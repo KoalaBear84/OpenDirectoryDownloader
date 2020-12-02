@@ -29,7 +29,7 @@ jobs:
           - win-x64
           - osx-x64
         self-contained:
-          - non-self-contained
+          - normal
           - self-contained
         include:
           - target: linux-x64
