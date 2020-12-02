@@ -106,6 +106,7 @@ namespace OpenDirectoryDownloader
                     {
                         if (!Console.KeyAvailable)
                         {
+                            Task.Delay(10).Wait();
                             continue;
                         }
                         ConsoleKey keyPressed = Console.ReadKey(intercept: true).Key;
