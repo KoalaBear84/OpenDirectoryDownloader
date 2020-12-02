@@ -79,11 +79,10 @@ jobs:
       if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
         chmod +x ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}/OpenDirectoryDownloader
-        ls -lah ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}
 
     - name: Zipping
       run: |
-        7z a OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}.zip ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}
+        7z a OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}.zip ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}/*
         # 7z is installed in all environments and supports unix permissions while compressing (but not while decompressing!)
 
     - name: Upload artifact for docker job (linux-x64 normal only)
