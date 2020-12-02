@@ -77,7 +77,9 @@ jobs:
 
     - name: Set executable bit (linux only)
       if: ${{ matrix.os == 'ubuntu-latest' }}
-      run: chmod +x ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}/OpenDirectoryDownloader
+      run: |
+        chmod +x ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}/OpenDirectoryDownloader
+        ls -lah ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}
 
     - name: Zipping
       run: |
