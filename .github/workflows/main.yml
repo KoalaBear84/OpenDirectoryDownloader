@@ -22,7 +22,17 @@ jobs:
     
     strategy:
       matrix:
-        kind: ['linux', 'windows', 'mac']
+        kind: 
+          - linux
+          - linux-arm
+          - linux-arm64
+          - windows
+          - mac
+          - linux-self-contained
+          - linux-arm-self-contained
+          - linux-arm64-self-contained
+          - windows-self-contained
+          - mac-self-contained
         include:
           - kind: linux
             os: ubuntu-latest
