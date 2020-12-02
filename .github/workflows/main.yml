@@ -29,6 +29,16 @@ jobs:
             target: linux-x64
             build_args: --no-self-contained
             suffix: ""
+          - kind: linux-arm
+            os: ubuntu-latest
+            target: linux-arm
+            build_args: --no-self-contained
+            suffix: ""
+          - kind: linux-arm64
+            os: ubuntu-latest
+            target: linux-arm64
+            build_args: --no-self-contained
+            suffix: ""
           - kind: windows
             os: windows-latest
             target: win-x64
@@ -43,6 +53,16 @@ jobs:
           - kind: linux-self-contained
             os: ubuntu-latest
             target: linux-x64
+            build_args: --self-contained=true
+            suffix: -self-contained
+          - kind: linux-arm-self-contained
+            os: ubuntu-latest
+            target: linux-arm
+            build_args: --self-contained=true
+            suffix: -self-contained
+          - kind: linux-arm64-self-contained
+            os: ubuntu-latest
+            target: linux-arm64
             build_args: --self-contained=true
             suffix: -self-contained
           - kind: windows-self-contained
