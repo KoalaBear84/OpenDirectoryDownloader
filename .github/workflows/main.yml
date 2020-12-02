@@ -28,63 +28,32 @@ jobs:
           - linux-arm64
           - windows
           - mac
-          - linux-self-contained
-          - linux-arm-self-contained
-          - linux-arm64-self-contained
-          - windows-self-contained
-          - mac-self-contained
+        self-contained:
+          - true
+          - false
         include:
           - kind: linux
             os: ubuntu-latest
             target: linux-x64
-            build_args: --no-self-contained
-            suffix: ""
           - kind: linux-arm
             os: ubuntu-latest
             target: linux-arm
-            build_args: --no-self-contained
-            suffix: ""
           - kind: linux-arm64
             os: ubuntu-latest
             target: linux-arm64
-            build_args: --no-self-contained
-            suffix: ""
           - kind: windows
             os: windows-latest
             target: win-x64
-            build_args: --no-self-contained
-            suffix: ""
           - kind: mac
             os: macos-latest
             target: osx-x64
+          
+          - self-contained: false
             build_args: --no-self-contained
             suffix: ""
-
-          - kind: linux-self-contained
-            os: ubuntu-latest
-            target: linux-x64
+          - self-contained: true
             build_args: --self-contained=true
-            suffix: -self-contained
-          - kind: linux-arm-self-contained
-            os: ubuntu-latest
-            target: linux-arm
-            build_args: --self-contained=true
-            suffix: -self-contained
-          - kind: linux-arm64-self-contained
-            os: ubuntu-latest
-            target: linux-arm64
-            build_args: --self-contained=true
-            suffix: -self-contained
-          - kind: windows-self-contained
-            os: windows-latest
-            target: win-x64
-            build_args: --self-contained=true
-            suffix: -self-contained
-          - kind: mac-self-contained
-            os: macos-latest
-            target: osx-x64
-            build_args: --self-contained=true
-            suffix: -self-contained
+            suffix: "-self-contained"
 
     runs-on: ${{ matrix.os }}
 
@@ -118,7 +87,7 @@ jobs:
         dest: OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}.zip
 
     - name: Upload artifact for docker job (linux only)
-      if: matrix.kind == 'linux'
+      if: ${{ matrix.kind == 'linux' && matrix.self-contained == false }}
       uses: actions/upload-artifact@v2
       with:
         name: linux-x64
