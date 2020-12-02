@@ -102,7 +102,7 @@ jobs:
           OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}.zip
 
 
-  create_release:
+  release:
     needs: build
     runs-on: ubuntu-latest
 
