@@ -97,26 +97,9 @@ jobs:
         draft: false
         prerelease: false
         body: ${{ github.event.head_commit.message }}
-        
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./OpenDirectoryDownloader-${{ matrix.target }}.zip
-        asset_name: OpenDirectoryDownloader-${{ matrix.target }}.zip
-        asset_content_type: application/zip
-        
-    - name: Upload Release Asset (self-contained)
-      uses: actions/upload-release-asset@v1.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./OpenDirectoryDownloader-${{ matrix.target }}-self-contained.zip
-        asset_name: OpenDirectoryDownloader-${{ matrix.target }}-self-contained.zip
-        asset_content_type: application/zip
+        files: |
+          OpenDirectoryDownloader-${{ matrix.target }}.zip
+          OpenDirectoryDownloader-${{ matrix.target }}-self-contained.zip
 
 
 
