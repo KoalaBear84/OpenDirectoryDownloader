@@ -27,12 +27,34 @@ jobs:
           - kind: linux
             os: ubuntu-latest
             target: linux-x64
+            build_args: --no-self-contained
+            suffix: ""
           - kind: windows
             os: windows-latest
             target: win-x64
+            build_args: --no-self-contained
+            suffix: ""
           - kind: mac
             os: macos-latest
             target: osx-x64
+            build_args: --no-self-contained
+            suffix: ""
+
+          - kind: linux-self-contained
+            os: ubuntu-latest
+            target: linux-x64
+            build_args: --self-contained=true
+            suffix: -self-contained
+          - kind: windows-self-contained
+            os: windows-latest
+            target: win-x64
+            build_args: --self-contained=true
+            suffix: -self-contained
+          - kind: mac-self-contained
+            os: macos-latest
+            target: osx-x64
+            build_args: --self-contained=true
+            suffix: -self-contained
 
     runs-on: ${{ matrix.os }}
 
@@ -56,26 +78,14 @@ jobs:
     - name: Test with dotnet
       run: dotnet test OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }}
 
-
     - name: Publish with dotnet
-      run: dotnet publish OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }} --framework net5.0 --runtime ${{ matrix.target }} --no-self-contained -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-${{ matrix.target }}
+      run: dotnet publish OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }} --framework net5.0 --runtime ${{ matrix.target }} ${{ matrix.build_args }} --p:PublishSingleFile=true --output ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}
 
     - name: Zipping
       uses: papeloto/action-zip@v1
       with:
-        files: ./OpenDirectoryDownloader-${{ matrix.target }}
-        dest: OpenDirectoryDownloader-${{ matrix.target }}.zip
-
-
-    - name: Publish with dotnet (self-contained)
-      run: dotnet publish OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }} --framework net5.0 --runtime ${{ matrix.target }} --self-contained=true -p:PublishSingleFile=true -p:PublishTrimmed=true -p:IncludeNativeLibrariesForSelfExtract=true --output ./OpenDirectoryDownloader-${{ matrix.target }}-self-contained
-
-    - name: Zipping (self-contained)
-      uses: papeloto/action-zip@v1
-      with:
-        files: ./OpenDirectoryDownloader-${{ matrix.target }}-self-contained
-        dest: OpenDirectoryDownloader-${{ matrix.target }}-self-contained.zip
-
+        files: ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}
+        dest: OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}.zip
 
     - name: Upload artifact for docker job (linux only)
       if: matrix.kind == 'linux'
@@ -83,7 +93,7 @@ jobs:
       with:
         name: linux-x64
         path: |
-          OpenDirectoryDownloader-${{ matrix.target }}.zip
+          OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}.zip
           Dockerfile
 
     - name: Create release
@@ -98,9 +108,7 @@ jobs:
         prerelease: false
         body: ${{ github.event.head_commit.message }}
         files: |
-          OpenDirectoryDownloader-${{ matrix.target }}.zip
-          OpenDirectoryDownloader-${{ matrix.target }}-self-contained.zip
-
+          OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}.zip
 
 
   docker:
