@@ -22,33 +22,28 @@ jobs:
     
     strategy:
       matrix:
-        kind: 
-          - linux
+        target: 
+          - linux-x64
           - linux-arm
           - linux-arm64
-          - windows
-          - mac
+          - win-x64
+          - osx-x64
         self-contained:
           - non-self-contained
           - self-contained
         include:
-          - kind: linux
+          - target: linux-x64
             os: ubuntu-latest
-            target: linux-x64
-          - kind: linux-arm
+          - target: linux-arm
             os: ubuntu-latest
-            target: linux-arm
-          - kind: linux-arm64
+          - target: linux-arm64
             os: ubuntu-latest
-            target: linux-arm64
-          - kind: windows
+          - target: win-x64
             os: windows-latest
-            target: win-x64
-          - kind: mac
+          - target: osx-x64
             os: macos-latest
-            target: osx-x64
           
-          - self-contained: non-self-contained
+          - self-contained: normal
             build_args: --no-self-contained
             suffix: ""
           - self-contained: self-contained
@@ -81,16 +76,16 @@ jobs:
       run: dotnet publish OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }} --framework net5.0 --runtime ${{ matrix.target }} ${{ matrix.build_args }} -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}
 
     - name: Set executable bit (linux only)
-      if: ${{ matrix.os == 'linux' }}
+      if: ${{ matrix.os == 'ubuntu-latest' }}
       run: chmod +x ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}/OpenDirectoryDownloader
 
     - name: Zipping
       run: |
         7z a OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}.zip ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}
-        # 7z is installed in all environments and supports unix permissions while compresisng (but not while decompressing!)
+        # 7z is installed in all environments and supports unix permissions while compressing (but not while decompressing!)
 
-    - name: Upload artifact for docker job (linux non-self-contained only)
-      if: ${{ matrix.kind == 'linux' && matrix.self-contained == 'non-self-contained' }}
+    - name: Upload artifact for docker job (linux-x64 normal only)
+      if: ${{ matrix.target == 'linux-x64' && matrix.self-contained == 'normal' }}
       uses: actions/upload-artifact@v2
       with:
         name: linux-x64
