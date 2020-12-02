@@ -122,7 +122,7 @@ jobs:
         prerelease: false
         body: ${{ github.event.head_commit.message }}
         files: |
-          OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}.zip
+          OpenDirectoryDownloader-*.zip
     
 
   docker:
