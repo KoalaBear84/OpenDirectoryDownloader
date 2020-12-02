@@ -80,6 +80,10 @@ jobs:
     - name: Publish with dotnet
       run: dotnet publish OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }} --framework net5.0 --runtime ${{ matrix.target }} ${{ matrix.build_args }} -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}
 
+    - name: Set executable bit (linux only)
+      if: ${{ matrix.os == 'linux' }}
+      run: chmod +x ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}/OpenDirectoryDownloader
+
     - name: Zipping
       run: |
         7z a OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}.zip ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}
