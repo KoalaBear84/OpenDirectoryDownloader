@@ -82,14 +82,6 @@ jobs:
         7z a OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}.zip ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}/*
         # 7z is installed in all environments and supports unix permissions while compressing (but not while decompressing!)
 
-    - name: Upload Dockerfile (linux-x64 normal only, artibtrary)
-      if: ${{ matrix.target == 'linux-x64' && matrix.self-contained == 'normal' }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: Dockerfile
-        path: |
-          Dockerfile
-
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
@@ -131,11 +123,6 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: OpenDirectoryDownloader-linux-x64
-
-      - name: Download artifact Dockerfile
-        uses: actions/download-artifact@v2
-        with:
-          name: Dockerfile
 
       - name: Decompress artifact linux-x64
         uses: TonyBogdanov/zip@1.0
