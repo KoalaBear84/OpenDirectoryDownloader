@@ -65,18 +65,26 @@ namespace OpenDirectoryDownloader.Site.GoIndex
                         }
                     }
 
-                    if (indexResponse.Error == null)
+                    if (indexResponse is null)
                     {
-                        Console.WriteLine("Password OK!");
-                        Logger.Info("Password OK!");
-
-                        webDirectory = await ScanIndexAsync(httpClient, webDirectory);
+                        Console.WriteLine("Error. Invalid response. Stopping.");
+                        Logger.Error("Error. Invalid response. Stopping.");
                     }
                     else
                     {
-                        OpenDirectoryIndexer.Session.Parameters.Remove(Constants.Parameters_Password);
-                        Console.WriteLine($"Error. Code: {indexResponse.Error.Code}, Message: {indexResponse.Error.Message}. Stopping.");
-                        Logger.Error($"Error. Code: {indexResponse.Error.Code}, Message: {indexResponse.Error.Message}. Stopping.");
+                        if (indexResponse.Error == null)
+                        {
+                            Console.WriteLine("Password OK!");
+                            Logger.Info("Password OK!");
+
+                            webDirectory = await ScanIndexAsync(httpClient, webDirectory);
+                        }
+                        else
+                        {
+                            OpenDirectoryIndexer.Session.Parameters.Remove(Constants.Parameters_Password);
+                            Console.WriteLine($"Error. Code: {indexResponse.Error.Code}, Message: {indexResponse.Error.Message}. Stopping.");
+                            Logger.Error($"Error. Code: {indexResponse.Error.Code}, Message: {indexResponse.Error.Message}. Stopping.");
+                        }
                     }
                 }
                 else
@@ -112,7 +120,7 @@ namespace OpenDirectoryDownloader.Site.GoIndex
             try
             {
                 await RateLimiter.RateLimit();
-                
+
                 if (!webDirectory.Url.EndsWith("/"))
                 {
                     webDirectory.Url += "/";

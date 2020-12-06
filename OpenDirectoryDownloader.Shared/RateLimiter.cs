@@ -55,7 +55,7 @@ namespace OpenDirectoryDownloader.Shared
         /// <param name="timeSpan">TimeSpan to add</param>
         public void AddDelay(TimeSpan timeSpan)
         {
-            LastRequest.Add(timeSpan);
+            LastRequest = LastRequest.Add(timeSpan);
         }
     }
 }
