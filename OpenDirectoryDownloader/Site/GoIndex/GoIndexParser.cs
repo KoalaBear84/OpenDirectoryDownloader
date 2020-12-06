@@ -86,6 +86,7 @@ namespace OpenDirectoryDownloader.Site.GoIndex
             }
             catch (Exception ex)
             {
+                RateLimiter.AddDelay(TimeSpan.FromSeconds(5));
                 Logger.Error(ex, $"Error parsing {Parser} for URL: {webDirectory.Url}");
                 webDirectory.Error = true;
 
@@ -161,6 +162,7 @@ namespace OpenDirectoryDownloader.Site.GoIndex
             }
             catch (Exception ex)
             {
+                RateLimiter.AddDelay(TimeSpan.FromSeconds(5));
                 Logger.Error(ex, $"Error processing {Parser} for URL: {webDirectory.Url}");
                 webDirectory.Error = true;
 
