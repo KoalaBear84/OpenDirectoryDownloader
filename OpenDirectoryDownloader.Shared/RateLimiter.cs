@@ -48,5 +48,14 @@ namespace OpenDirectoryDownloader.Shared
                 }
             } while (true);
         }
+
+        /// <summary>
+        /// Add extra delay in case of errors etc.
+        /// </summary>
+        /// <param name="timeSpan">TimeSpan to add</param>
+        public void AddDelay(TimeSpan timeSpan)
+        {
+            LastRequest.Add(timeSpan);
+        }
     }
 }
