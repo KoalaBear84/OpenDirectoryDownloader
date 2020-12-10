@@ -2,6 +2,7 @@
 using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ namespace OpenDirectoryDownloader
                 "│  Press I for info (this)                                                │\n" +
                 "│  Press S for statistics                                                 │\n" +
                 "│  Press T for thread info                                                │\n" +
+                "│  Press U for Save TXT                                                   │\n" +
                 "│  Press J for Save JSON                                                  │\n" +
                 "├─────────────────────────────────────────────────────────────────────────┤\n" +
                 "│  Press ESC or X to EXIT                                                 │\n" +
@@ -145,6 +147,9 @@ namespace OpenDirectoryDownloader
                             case ConsoleKey.J:
                                 SaveSession(openDirectoryIndexer);
                                 break;
+                            case ConsoleKey.U:
+                                SaveSessionText(openDirectoryIndexer);
+                                break;
                             default:
                                 break;
                         }
@@ -165,6 +170,29 @@ namespace OpenDirectoryDownloader
                 Console.WriteLine("Saving session to JSON");
                 Library.SaveSessionJson(OpenDirectoryIndexer.Session);
                 Console.WriteLine("Saved session to JSON");
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+            }
+        }
+
+        private static void SaveSessionText(OpenDirectoryIndexer openDirectoryIndexer)
+        {
+            try
+            {
+                Logger.Info("Saving URL list to file...");
+                Console.WriteLine("Saving URL list to file...");
+
+                IEnumerable<string> distinctUrls = OpenDirectoryIndexer.Session.Root.AllFileUrls.Distinct();
+                string scansPath = Library.GetScansPath();
+
+                string urlsFileName = $"{Library.CleanUriToFilename(OpenDirectoryIndexer.Session.Root.Uri)}.txt";
+                string urlsPath = Path.Combine(scansPath, urlsFileName);
+                File.WriteAllLines(urlsPath, distinctUrls);
+                Logger.Info($"Saved URL list to file: {urlsFileName}");
+                Console.WriteLine($"Saved URL list to file: {urlsFileName}");
+
             }
             catch (Exception ex)
             {
