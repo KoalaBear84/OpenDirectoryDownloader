@@ -61,7 +61,11 @@ namespace OpenDirectoryDownloader
 
                     string relativeUrl = webDirectory.Uri.PathAndQuery;
 
-                    if (ex is HttpRequestException httpRequestException)
+                    if (ex is SilentException)
+                    {
+                        // Silence
+                    }
+                    else if (ex is HttpRequestException httpRequestException)
                     {
                         if (ex.Message.Contains("503 (Service Temporarily Unavailable)") || ex.Message.Contains("503 (Service Unavailable)") || ex.Message.Contains("429 (Too Many Requests)"))
                         {
@@ -612,7 +616,7 @@ namespace OpenDirectoryDownloader
                                         { "CancellationTokenSource", cancellationTokenSource }
                                     };
 
-                                    await RetryPolicy.ExecuteAsync(async (context, token) => { await ProcessWebDirectoryAsync(name, webDirectory, cancellationTokenSource.Token); }, pollyContext, cancellationTokenSource.Token);
+                                    await RetryPolicy.ExecuteAsync(async (context, token) => { await ProcessWebDirectoryAsync(name, webDirectory, cancellationTokenSource); }, pollyContext, cancellationTokenSource.Token);
                                 }
                                 else
                                 {
@@ -714,7 +718,7 @@ namespace OpenDirectoryDownloader
             ));
         }
 
-        private async Task ProcessWebDirectoryAsync(string name, WebDirectory webDirectory, CancellationToken cancellationToken)
+        private async Task ProcessWebDirectoryAsync(string name, WebDirectory webDirectory, CancellationTokenSource cancellationTokenSource)
         {
             if (Session.Parameters.ContainsKey(Constants.Parameters_GdIndex_RootId))
             {
@@ -728,7 +732,8 @@ namespace OpenDirectoryDownloader
                 HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(OpenDirectoryIndexerSettings.CommandLineOptions.UserAgent);
             }
 
-            HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationToken);
+            HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
+
             string html = null;
 
             if (httpResponseMessage.IsSuccessStatusCode)
@@ -743,7 +748,7 @@ namespace OpenDirectoryDownloader
                 Logger.Warn("First request fails, using Curl fallback User-Agent");
                 HttpClient.DefaultRequestHeaders.UserAgent.Clear();
                 HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Curl);
-                httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationToken);
+                httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
 
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
@@ -759,7 +764,7 @@ namespace OpenDirectoryDownloader
                 Logger.Warn("First request fails, using Chrome fallback User-Agent");
                 HttpClient.DefaultRequestHeaders.UserAgent.Clear();
                 HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
-                httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationToken);
+                httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
 
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
@@ -822,7 +827,7 @@ namespace OpenDirectoryDownloader
                 Console.WriteLine($"Calibre {calibreVersion} detected! I will index it at max 100 books per 30 seconds, else it will break Calibre...");
                 Logger.Info($"Calibre {calibreVersion} detected! I will index it at max 100 books per 30 seconds, else it will break Calibre...");
 
-                await CalibreParser.ParseCalibre(HttpClient, httpResponseMessage.RequestMessage.RequestUri, webDirectory, calibreVersion, cancellationToken);
+                await CalibreParser.ParseCalibre(HttpClient, httpResponseMessage.RequestMessage.RequestUri, webDirectory, calibreVersion, cancellationTokenSource.Token);
 
                 return;
             }
@@ -862,7 +867,37 @@ namespace OpenDirectoryDownloader
                 }
                 else
                 {
-                    httpResponseMessage.EnsureSuccessStatusCode();
+                    if (httpResponseMessage.StatusCode == HttpStatusCode.TooManyRequests)
+                    {
+                        if (httpResponseMessage.Headers.RetryAfter is RetryConditionHeaderValue retryConditionHeaderValue)
+                        {
+                            if (retryConditionHeaderValue.Date is DateTimeOffset dateTimeOffset)
+                            {
+                                Logger.Warn($"[{name}] Rate limited on Url '{webDirectory.Url}'. Need to wait until {retryConditionHeaderValue.Date} ({(DateTimeOffset.UtcNow - dateTimeOffset).TotalSeconds:F1}) seconds.");
+                                httpResponseMessage.Dispose();
+                                TimeSpan rateLimitTimeSpan = DateTimeOffset.UtcNow - dateTimeOffset;
+                                cancellationTokenSource.CancelAfter(rateLimitTimeSpan.Add(TimeSpan.FromMinutes(5)));
+                                await Task.Delay(rateLimitTimeSpan, cancellationTokenSource.Token);
+                                throw new SilentException();
+                            }
+                            else if (retryConditionHeaderValue.Delta is TimeSpan timeSpan)
+                            {
+                                Logger.Warn($"[{name}] Rate limited on Url '{webDirectory.Url}'. Need to wait for {timeSpan.TotalSeconds:F1} seconds.");
+                                httpResponseMessage.Dispose();
+                                cancellationTokenSource.CancelAfter(timeSpan.Add(TimeSpan.FromMinutes(5)));
+                                await Task.Delay(timeSpan, cancellationTokenSource.Token);
+                                throw new SilentException();
+                            }
+                            else
+                            {
+                                httpResponseMessage.EnsureSuccessStatusCode();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        httpResponseMessage.EnsureSuccessStatusCode();
+                    }
                 }
             }
             else
