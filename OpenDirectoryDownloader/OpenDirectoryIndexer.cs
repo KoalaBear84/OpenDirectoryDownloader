@@ -882,7 +882,7 @@ namespace OpenDirectoryDownloader
                             }
                             else if (retryConditionHeaderValue.Delta is TimeSpan timeSpan)
                             {
-                                Logger.Warn($"[{name}] Rate limited on Url '{webDirectory.Url}'. Need to wait for {timeSpan.TotalSeconds:F1} seconds.");
+                                Logger.Warn($"[{name}] Rate limited on Url '{webDirectory.Url}'. Need to wait for {timeSpan.TotalSeconds:F1} seconds ({DateTime.Now.Add(timeSpan):HH:mm:ss}).");
                                 httpResponseMessage.Dispose();
                                 cancellationTokenSource.CancelAfter(timeSpan.Add(TimeSpan.FromMinutes(5)));
                                 await Task.Delay(timeSpan, cancellationTokenSource.Token);
