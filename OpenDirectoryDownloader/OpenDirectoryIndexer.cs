@@ -292,12 +292,28 @@ namespace OpenDirectoryDownloader
                             Logger.Info("Saving URL list to file...");
                             Console.WriteLine("Saving URL list to file...");
 
-                            string scansPath = Library.GetScansPath();
-
                             try
                             {
-                                string urlsFileName = $"{Library.CleanUriToFilename(Session.Root.Uri)}.txt";
-                                string urlsPath = Path.Combine(scansPath, urlsFileName);
+                                // Translates . and .. etc
+                                if (OpenDirectoryIndexerSettings.CommandLineOptions.OutputFile is not null)
+                                {
+                                    OpenDirectoryIndexerSettings.CommandLineOptions.OutputFile = Path.GetFullPath(OpenDirectoryIndexerSettings.CommandLineOptions.OutputFile);
+                                }
+
+                                string urlsFileName = OpenDirectoryIndexerSettings.CommandLineOptions.OutputFile ?? $"{Library.CleanUriToFilename(Session.Root.Uri)}.txt";
+
+                                string urlsPath;
+
+                                if (Path.IsPathFullyQualified(urlsFileName))
+                                {
+                                    urlsPath = urlsFileName;
+                                }
+                                else
+                                {
+                                    string scansPath = Library.GetScansPath();
+                                    urlsPath = Path.Combine(scansPath, urlsFileName);
+                                }
+
                                 File.WriteAllLines(urlsPath, distinctUrls);
                                 Logger.Info($"Saved URL list to file: {urlsFileName}");
                                 Console.WriteLine($"Saved URL list to file: {urlsFileName}");

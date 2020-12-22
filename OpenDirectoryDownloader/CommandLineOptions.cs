@@ -43,6 +43,9 @@ namespace OpenDirectoryDownloader
         [Option("password", Required = false, Default = "", HelpText = "Password")]
         public string Password { get; set; }
 
+        [Option("output-file", Required = false, Default = null, HelpText = "Save Output File to specific file")]
+        public string OutputFile { get; set; }
+
         // TODO: Future use
         //[Option('d', "download", Required = false, HelpText = "Downloads the contents (after indexing is finished)")]
         //public bool Download { get; set; }
