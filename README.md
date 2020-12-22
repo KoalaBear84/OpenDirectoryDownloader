@@ -47,6 +47,7 @@ Command line parameters:
 | `-a` | `--user-agent` | Use custom default User Agent |
 |   | `--username` | Username |
 |   | `--password` | Password |
+|   | `--output-file` | Output file to use for urls file |
 
 Example:  
 `OpenDirectoryDownloader.exe --url "https://myopendirectory.com"`
