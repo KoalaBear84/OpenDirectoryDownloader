@@ -750,6 +750,14 @@ namespace OpenDirectoryDownloader
 
             HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
 
+            if (httpResponseMessage.StatusCode == HttpStatusCode.Moved || httpResponseMessage.StatusCode == HttpStatusCode.MovedPermanently)
+            {
+                if (httpResponseMessage.Headers.Location != null)
+                {
+                    httpResponseMessage = await HttpClient.GetAsync(httpResponseMessage.Headers.Location, cancellationTokenSource.Token);
+                }
+            }
+
             string html = null;
 
             if (httpResponseMessage.IsSuccessStatusCode)
