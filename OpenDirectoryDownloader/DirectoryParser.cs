@@ -84,7 +84,8 @@ namespace OpenDirectoryDownloader
                     return await GdIndexParser.ParseIndex(httpClient, webDirectory, html);
                 }
 
-                if (htmlDocument.QuerySelector("script[src*=\"/go2index/\"]") != null)
+                if (htmlDocument.QuerySelector("script[src*=\"/go2index/\"]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/alx-xlx/goindex\"]") != null)
                 {
                     return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
                 }

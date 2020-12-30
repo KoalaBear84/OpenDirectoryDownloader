@@ -125,8 +125,6 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Go2Index
 
             try
             {
-                await RateLimiter.RateLimit();
-                
                 if (!webDirectory.Url.EndsWith("/"))
                 {
                     webDirectory.Url += "/";
@@ -137,61 +135,87 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Go2Index
 
                 do
                 {
-                    Logger.Warn($"Retrieving listings for {webDirectory.Uri} with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}, page {pageIndex + 1}");
+                    int retry = 0;
+                    bool error = false;
 
-                    HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
+                    do
                     {
-                        { "page_index", pageIndex },
-                        { "page_token", nextPageToken },
-                        { "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
-                        { "q", "" }
-                    })));
+                        await RateLimiter.RateLimit();
 
-                    webDirectory.ParsedSuccesfully = httpResponseMessage.IsSuccessStatusCode;
-                    httpResponseMessage.EnsureSuccessStatusCode();
+                        Logger.Warn($"Retrieving listings {(retry > 0 ? $"(retry {retry})" : string.Empty)} for {webDirectory.Uri} with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}, page {pageIndex + 1}");
 
-                    string responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
-
-                    Go2IndexResponse indexResponse = Go2IndexResponse.FromJson(responseJson);
-
-                    webDirectory.ParsedSuccesfully = indexResponse.Error == null;
-
-                    if (indexResponse.Error != null)
-                    {
-                        throw new Exception($"{indexResponse.Error.Code} | {indexResponse.Error.Message}");
-                    }
-
-                    nextPageToken = indexResponse.NextPageToken;
-                    pageIndex = indexResponse.CurPageIndex + 1;
-
-                    foreach (File file in indexResponse.Data.Files)
-                    {
-                        if (file.MimeType == FolderMimeType)
+                        HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
                         {
-                            webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
-                            {
-                                Parser = Parser,
-                                // Yes, string concatenation, do not use new Uri(webDirectory.Uri, file.Name), because things could end with a space...
-                                Url = $"{webDirectory.Uri}{file.Name}/",
-                                Name = file.Name
-                            });
-                        }
-                        else
+                            { "page_index", pageIndex },
+                            { "page_token", nextPageToken },
+                            { "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
+                            { "q", "" }
+                        })));
+
+                        webDirectory.ParsedSuccesfully = httpResponseMessage.IsSuccessStatusCode;
+                        httpResponseMessage.EnsureSuccessStatusCode();
+
+                        string responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
+
+                        Go2IndexResponse indexResponse = Go2IndexResponse.FromJson(responseJson);
+
+                        webDirectory.ParsedSuccesfully = indexResponse.Error == null;
+
+                        if (indexResponse.Error != null)
                         {
-                            webDirectory.Files.Add(new WebFile
-                            {
-                                Url = new Uri(webDirectory.Uri, file.Name).ToString(),
-                                FileName = file.Name,
-                                FileSize = file.Size
-                            });
+                            throw new Exception($"{indexResponse.Error.Code} | {indexResponse.Error.Message}");
                         }
-                    }
+
+                        if (indexResponse.Data?.Error != null)
+                        {
+                            if (indexResponse.Data.Error?.Message == "Rate Limit Exceeded")
+                            {
+                                error = true;
+                                retry++;
+                                RateLimiter.AddDelay(TimeSpan.FromSeconds(5));
+                                Logger.Warn($"Error processing {Parser}, will be retried, for URL: {webDirectory.Url}");
+                                continue;
+                            }
+                            else
+                            {
+                                throw new Exception($"{indexResponse.Data.Error?.Code} | {indexResponse.Data.Error?.Message}");
+                            }
+                        }
+
+                        nextPageToken = indexResponse.NextPageToken;
+                        pageIndex = indexResponse.CurPageIndex + 1;
+
+                        foreach (File file in indexResponse.Data.Files)
+                        {
+                            if (file.MimeType == FolderMimeType)
+                            {
+                                webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+                                {
+                                    Parser = Parser,
+                                    // Yes, string concatenation, do not use new Uri(webDirectory.Uri, file.Name), because things could end with a space...
+                                    Url = $"{webDirectory.Uri}{file.Name}/",
+                                    Name = file.Name
+                                });
+                            }
+                            else
+                            {
+                                webDirectory.Files.Add(new WebFile
+                                {
+                                    Url = new Uri(webDirectory.Uri, file.Name).ToString(),
+                                    FileName = file.Name,
+                                    FileSize = file.Size
+                                });
+                            }
+                        }
+                    } while (error && retry < 5);
                 } while (!string.IsNullOrWhiteSpace(nextPageToken));
+
+                webDirectory.Error = false;
             }
             catch (Exception ex)
             {
                 RateLimiter.AddDelay(TimeSpan.FromSeconds(5));
-                Logger.Error(ex, $"Error processing {Parser} for URL: {webDirectory.Url}");
+                Logger.Error(ex, $"Error processing {Parser}, will be retried, for URL: {webDirectory.Url}");
                 webDirectory.Error = true;
 
                 OpenDirectoryIndexer.Session.Errors++;

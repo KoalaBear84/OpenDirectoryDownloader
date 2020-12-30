@@ -34,6 +34,10 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Go2Index
     {
         [JsonProperty("files")]
         public List<File> Files { get; set; }
+
+        // Needed for alx-xlx/goindex
+        [JsonProperty("error")]
+        public Error Error { get; set; }
     }
 
     public partial class File
