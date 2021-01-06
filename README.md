@@ -153,6 +153,12 @@ This will 'abuse' a 'Quickstart' project.
 
 On the first use, you will get a browser screen that you need to grant access for it, and because we haven't granted out OAuth consent screen (This app isn't verified), we get an extra warning. You can use the "Advanced" link, and use the "Go to yourappname (unsafe)" link.
 
+## Support
+
+If you like OpenDirectoryDownloader, please consider supporting me!
+
+[:heart: Sponsor](https://github.com/sponsors/KoalaBear84)
+
 ## Contact me
 
 Reddit https://www.reddit.com/user/KoalaBear84
