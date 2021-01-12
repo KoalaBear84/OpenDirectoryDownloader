@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using TextCopy;
@@ -13,6 +14,7 @@ namespace OpenDirectoryDownloader
     public class Command
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly string VersionNumber = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         /// <summary>
         /// Set console properties (Window size)
@@ -30,13 +32,15 @@ namespace OpenDirectoryDownloader
         {
             Console.WriteLine(
                 "┌─────────────────────────────────────────────────────────────────────────┐\n" +
-                "│  Press I for info (this)                                                │\n" +
-                "│  Press S for statistics                                                 │\n" +
-                "│  Press T for thread info                                                │\n" +
-                "│  Press U for Save TXT                                                   │\n" +
-                "│  Press J for Save JSON                                                  │\n" +
+                $"│ KoalaBear84/OpenDirectoryDownloader {VersionNumber}{string.Empty.PadLeft(36 - VersionNumber.Length)}│\n" +
                 "├─────────────────────────────────────────────────────────────────────────┤\n" +
-                "│  Press ESC or X to EXIT                                                 │\n" +
+                "│ Press I for info (this)                                                 │\n" +
+                "│ Press S for statistics                                                  │\n" +
+                "│ Press T for thread info                                                 │\n" +
+                "│ Press U for Save TXT                                                    │\n" +
+                "│ Press J for Save JSON                                                   │\n" +
+                "├─────────────────────────────────────────────────────────────────────────┤\n" +
+                "│ Press ESC or X to EXIT                                                  │\n" +
                 "└─────────────────────────────────────────────────────────────────────────┘\n");
         }
 
