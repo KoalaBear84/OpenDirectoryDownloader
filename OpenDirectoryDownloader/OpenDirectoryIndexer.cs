@@ -957,6 +957,11 @@ namespace OpenDirectoryDownloader
                 httpResponseMessage.Content.Headers.ContentType.CharSet = "UTF-8";
             }
 
+            if (httpResponseMessage.Content.Headers.ContentType?.CharSet == "WIN-1251")
+            {
+                httpResponseMessage.Content.Headers.ContentType.CharSet = "Windows-1251";
+            }
+
             return await httpResponseMessage.Content.ReadAsStringAsync();
         }
 
