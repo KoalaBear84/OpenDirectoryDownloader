@@ -73,6 +73,18 @@ namespace OpenDirectoryDownloader
                 url += "/";
             }
 
+            if (uri.Host == Constants.GoogleDriveDomain)
+            {
+                UrlEncodingParser urlEncodingParser = new UrlEncodingParser(url);
+
+                if (urlEncodingParser.AllKeys.Contains("usp"))
+                {
+                    urlEncodingParser.Remove("usp");
+                }
+
+                url = urlEncodingParser.ToString();
+            }
+
             return url;
         }
 
