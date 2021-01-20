@@ -106,7 +106,7 @@ namespace OpenDirectoryDownloader
 
             OpenDirectoryIndexer openDirectoryIndexer = new OpenDirectoryIndexer(openDirectoryIndexerSettings);
 
-            SetConsoleTitle($"{new Uri(url).Host.Replace("www.", string.Empty)} - {ConsoleTitle}");
+            SetConsoleTitle($"{new Uri(openDirectoryIndexerSettings.Url).Host.Replace("www.", string.Empty)} - {ConsoleTitle}");
 
             openDirectoryIndexer.StartIndexingAsync();
             Console.WriteLine("Started indexing!");
