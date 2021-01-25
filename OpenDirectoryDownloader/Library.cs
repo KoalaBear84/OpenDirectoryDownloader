@@ -47,7 +47,7 @@ namespace OpenDirectoryDownloader
 
         public static string GetOutputFullPath(Session session, OpenDirectoryIndexerSettings openDirectoryIndexerSettings, string extension)
         {
-            string fileName = $"{openDirectoryIndexerSettings.CommandLineOptions.OutputFile}.{extension}" ?? $"{CleanUriToFilename(session.Root.Uri)}.{extension}";
+            string fileName = openDirectoryIndexerSettings.CommandLineOptions.OutputFile is not null ? $"{openDirectoryIndexerSettings.CommandLineOptions.OutputFile}.{extension}" : $"{CleanUriToFilename(session.Root.Uri)}.{extension}";
 
             string path;
 
