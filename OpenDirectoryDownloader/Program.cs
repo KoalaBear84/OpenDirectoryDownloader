@@ -104,6 +104,12 @@ namespace OpenDirectoryDownloader
                 openDirectoryIndexerSettings.Threads = 6;
             }
 
+            // Translates . and .. etc
+            if (openDirectoryIndexerSettings.CommandLineOptions.OutputFile is not null)
+            {
+                openDirectoryIndexerSettings.CommandLineOptions.OutputFile = Path.GetFullPath(openDirectoryIndexerSettings.CommandLineOptions.OutputFile);
+            }
+
             OpenDirectoryIndexer openDirectoryIndexer = new OpenDirectoryIndexer(openDirectoryIndexerSettings);
 
             SetConsoleTitle($"{new Uri(openDirectoryIndexerSettings.Url).Host.Replace("www.", string.Empty)} - {ConsoleTitle}");

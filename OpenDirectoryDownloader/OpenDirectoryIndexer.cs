@@ -29,6 +29,8 @@ namespace OpenDirectoryDownloader
 
         public static Session Session { get; set; }
 
+        public OpenDirectoryIndexerSettings OpenDirectoryIndexerSettings { get; set; }
+
         public ConcurrentQueue<WebDirectory> WebDirectoriesQueue { get; set; } = new ConcurrentQueue<WebDirectory>();
         public int RunningWebDirectoryThreads;
         public Task[] WebDirectoryProcessors;
@@ -46,7 +48,6 @@ namespace OpenDirectoryDownloader
 
         private HttpClientHandler HttpClientHandler { get; set; }
         private HttpClient HttpClient { get; set; }
-        private OpenDirectoryIndexerSettings OpenDirectoryIndexerSettings { get; set; }
         private System.Timers.Timer TimerStatistics { get; set; }
 
         private static readonly Random Jitterer = new Random();
@@ -291,38 +292,20 @@ namespace OpenDirectoryDownloader
                     {
                         if (Session.TotalFiles > 0)
                         {
-                            Logger.Info("Saving URL list to file...");
-                            Console.WriteLine("Saving URL list to file...");
+                            Logger.Info("Saving URL list to file..");
+                            Console.WriteLine("Saving URL list to file..");
 
                             try
                             {
-                                // Translates . and .. etc
-                                if (OpenDirectoryIndexerSettings.CommandLineOptions.OutputFile is not null)
-                                {
-                                    OpenDirectoryIndexerSettings.CommandLineOptions.OutputFile = Path.GetFullPath(OpenDirectoryIndexerSettings.CommandLineOptions.OutputFile);
-                                }
-
-                                string urlsFileName = OpenDirectoryIndexerSettings.CommandLineOptions.OutputFile ?? $"{Library.CleanUriToFilename(Session.Root.Uri)}.txt";
-
-                                string urlsPath;
-
-                                if (Path.IsPathFullyQualified(urlsFileName))
-                                {
-                                    urlsPath = urlsFileName;
-                                }
-                                else
-                                {
-                                    string scansPath = Library.GetScansPath();
-                                    urlsPath = Path.Combine(scansPath, urlsFileName);
-                                }
+                                string urlsPath = Library.GetOutputFullPath(Session, OpenDirectoryIndexerSettings, "txt");
 
                                 File.WriteAllLines(urlsPath, distinctUrls);
-                                Logger.Info($"Saved URL list to file: {urlsFileName}");
-                                Console.WriteLine($"Saved URL list to file: {urlsFileName}");
+                                Logger.Info($"Saved URL list to file: {urlsPath}");
+                                Console.WriteLine($"Saved URL list to file: {urlsPath}");
 
                                 if (OpenDirectoryIndexerSettings.CommandLineOptions.UploadUrls && Session.TotalFiles > 0)
                                 {
-                                    Console.WriteLine($"Uploading URLs ({FileSizeHelper.ToHumanReadable(new FileInfo(urlsPath).Length)})...");
+                                    Console.WriteLine($"Uploading URLs ({FileSizeHelper.ToHumanReadable(new FileInfo(urlsPath).Length)})..");
 
                                     bool uploadSucceeded = false;
 
@@ -384,7 +367,7 @@ namespace OpenDirectoryDownloader
                                 {
                                     WebFile biggestFile = Session.Root.AllFiles.OrderByDescending(f => f.FileSize).First();
 
-                                    Console.WriteLine($"Starting speedtest (10-25 seconds)...");
+                                    Console.WriteLine($"Starting speedtest (10-25 seconds)..");
                                     Console.WriteLine($"Test file: {FileSizeHelper.ToHumanReadable(biggestFile.FileSize)} {biggestFile.Url}");
                                     Session.SpeedtestResult = await Library.DoSpeedTestHttpAsync(HttpClient, biggestFile.Url);
 
@@ -413,7 +396,7 @@ namespace OpenDirectoryDownloader
 
                                         WebFile biggestFile = Session.Root.AllFiles.OrderByDescending(f => f.FileSize).First();
 
-                                        Console.WriteLine($"Starting speedtest (10-25 seconds)...");
+                                        Console.WriteLine($"Starting speedtest (10-25 seconds)..");
                                         Console.WriteLine($"Test file: {FileSizeHelper.ToHumanReadable(biggestFile.FileSize)} {biggestFile.Url}");
 
                                         Session.SpeedtestResult = await Library.DoSpeedTestFtpAsync(ftpClient, biggestFile.Url);
@@ -443,7 +426,7 @@ namespace OpenDirectoryDownloader
                         FtpParser.CloseAll();
                     }
 
-                    Logger.Info("Logging sessions stats...");
+                    Logger.Info("Logging sessions stats..");
                     try
                     {
                         string sessionStats = Statistics.GetSessionStats(Session, includeExtensions: true, includeBanner: true);
@@ -476,14 +459,16 @@ namespace OpenDirectoryDownloader
 
                     if (OpenDirectoryIndexerSettings.CommandLineOptions.Json)
                     {
-                        Logger.Info("Save session to JSON");
-                        Console.WriteLine("Save session to JSON");
+                        Logger.Info("Saving session to JSON..");
+                        Console.WriteLine("Saving session to JSON..");
+
+                        string jsonPath = Library.GetOutputFullPath(Session, OpenDirectoryIndexerSettings, "json");
 
                         try
                         {
-                            Library.SaveSessionJson(Session);
-                            Logger.Info($"Saved session: {Library.CleanUriToFilename(Session.Root.Uri)}.json");
-                            Console.WriteLine($"Saved session: {Library.CleanUriToFilename(Session.Root.Uri)}.json");
+                            Library.SaveSessionJson(Session, jsonPath);
+                            Logger.Info($"Saved session: {jsonPath}");
+                            Console.WriteLine($"Saved session: {jsonPath}");
                         }
                         catch (Exception ex)
                         {

@@ -45,6 +45,25 @@ namespace OpenDirectoryDownloader
             return scansPath;
         }
 
+        public static string GetOutputFullPath(Session session, OpenDirectoryIndexerSettings openDirectoryIndexerSettings, string extension)
+        {
+            string fileName = $"{openDirectoryIndexerSettings.CommandLineOptions.OutputFile}.{extension}" ?? $"{CleanUriToFilename(session.Root.Uri)}.{extension}";
+
+            string path;
+
+            if (Path.IsPathFullyQualified(fileName))
+            {
+                path = fileName;
+            }
+            else
+            {
+                string scansPath = GetScansPath();
+                path = Path.Combine(scansPath, fileName);
+            }
+
+            return path;
+        }
+
         public static bool IsBase64String(string base64)
         {
             Span<byte> buffer = new Span<byte>(new byte[base64.Length]);
@@ -88,13 +107,11 @@ namespace OpenDirectoryDownloader
             return url;
         }
 
-        public static void SaveSessionJson(Session session)
+        public static void SaveSessionJson(Session session, string filePath)
         {
             JsonSerializer jsonSerializer = new JsonSerializer();
 
-            string scansPath = GetScansPath();
-
-            using (StreamWriter streamWriter = new StreamWriter(Path.Combine(scansPath, $"{CleanUriToFilename(session.Root.Uri)}.json")))
+            using (StreamWriter streamWriter = new StreamWriter(filePath))
             {
                 using (JsonWriter jsonWriter = new JsonTextWriter(streamWriter))
                 {

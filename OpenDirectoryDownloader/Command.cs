@@ -171,9 +171,15 @@ namespace OpenDirectoryDownloader
         {
             try
             {
-                Console.WriteLine("Saving session to JSON");
-                Library.SaveSessionJson(OpenDirectoryIndexer.Session);
-                Console.WriteLine("Saved session to JSON");
+                string jsonPath = Library.GetOutputFullPath(OpenDirectoryIndexer.Session, openDirectoryIndexer.OpenDirectoryIndexerSettings, "json");
+
+                Logger.Info("Saving session to JSON..");
+                Console.WriteLine("Saving session to JSON..");
+
+                Library.SaveSessionJson(OpenDirectoryIndexer.Session, jsonPath);
+
+                Logger.Info($"Saved session to JSON: {jsonPath}");
+                Console.WriteLine($"Saved session to JSON: {jsonPath}");
             }
             catch (Exception ex)
             {
@@ -185,18 +191,16 @@ namespace OpenDirectoryDownloader
         {
             try
             {
-                Logger.Info("Saving URL list to file...");
-                Console.WriteLine("Saving URL list to file...");
+                Logger.Info("Saving URL list to file..");
+                Console.WriteLine("Saving URL list to file..");
 
                 IEnumerable<string> distinctUrls = OpenDirectoryIndexer.Session.Root.AllFileUrls.Distinct();
-                string scansPath = Library.GetScansPath();
 
-                string urlsFileName = $"{Library.CleanUriToFilename(OpenDirectoryIndexer.Session.Root.Uri)}.txt";
-                string urlsPath = Path.Combine(scansPath, urlsFileName);
+                string urlsPath = Library.GetOutputFullPath(OpenDirectoryIndexer.Session, openDirectoryIndexer.OpenDirectoryIndexerSettings, "txt");
                 File.WriteAllLines(urlsPath, distinctUrls);
-                Logger.Info($"Saved URL list to file: {urlsFileName}");
-                Console.WriteLine($"Saved URL list to file: {urlsFileName}");
 
+                Logger.Info($"Saved URL list to file: {urlsPath}");
+                Console.WriteLine($"Saved URL list to file: {urlsPath}");
             }
             catch (Exception ex)
             {
