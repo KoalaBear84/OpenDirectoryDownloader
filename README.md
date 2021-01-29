@@ -38,6 +38,7 @@ Command line parameters:
 | `-t` | `--threads` | Number of threads (default 5) |
 | `-o` | `--timeout` | Number of seconds for timeout |
 | `-q` | `--quit` | Quit after scanning (No "Press a key") |
+| `-c` | `--clipboard` | Automatically copy the Reddits stats once the scan is done |
 | `-j` | `--json` | Save JSON file |
 | `-f` | `--no-urls` | Do not save URLs file |
 | `-r` | `--no-reddit` | Do not show Reddit stats markdown |
@@ -56,7 +57,7 @@ If you want to learn more or contribute, see the following paragraphs!
 
 ### Copying on Linux
 
-When you want to copy (`C` key) the stats at the end on Linux you need to have xclip installed.
+When you want to copy (`C` key or `-c` flag) the stats at the end on Linux you need to have xclip installed.
 
 ## Docker
 

@@ -16,6 +16,9 @@ namespace OpenDirectoryDownloader
         [Option('q', "quit", Required = false, Default = false, HelpText = "Do not wait after scanning")]
         public bool Quit { get; set; }
 
+        [Option('c', "clipboard", Required = false, Default = false, HelpText = "Copy Reddit stats after scanning")]
+        public bool Clipboard { get; set; }
+
         [Option('j', "json", Required = false, Default = false, HelpText = "Save JSON file")]
         public bool Json { get; set; }
 
