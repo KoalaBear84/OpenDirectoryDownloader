@@ -19,6 +19,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using TextCopy;
 
 namespace OpenDirectoryDownloader
 {
@@ -480,14 +481,29 @@ namespace OpenDirectoryDownloader
                     Console.WriteLine("Finished indexing!");
 
                     Program.SetConsoleTitle($"✔ {Program.ConsoleTitle}");
-
+                    
+                    Boolean clipboardSuccess = false;
+                    if (OpenDirectoryIndexerSettings.CommandLineOptions.Clipboard)
+                    {
+                        try
+                        {
+                            new Clipboard().SetText(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
+                            Console.WriteLine("Copied Reddit stats to clipboard!");
+                            clipboardSuccess = true;
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Error($"Error copying stats to clipboard: {ex.Message}");
+                        }
+                    }
+                    
                     if (OpenDirectoryIndexerSettings.CommandLineOptions.Quit)
                     {
                         Command.KillApplication();
                     }
                     else
                     {
-                        Console.WriteLine("Press ESC to exit! Or C to copy to clipboard and quit!");
+                        Console.WriteLine(clipboardSuccess ? "Press ESC to exit!" : "Press ESC to exit! Or C to copy to clipboard and quit!");
                     }
                 }
                 catch (Exception ex)
