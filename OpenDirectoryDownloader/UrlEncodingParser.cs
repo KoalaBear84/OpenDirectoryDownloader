@@ -135,7 +135,7 @@ namespace OpenDirectoryDownloader
                 }
                 else
                 {
-                    query = $"{Url}?{(!string.IsNullOrWhiteSpace(query) ? $"?{query}" : string.Empty)}";
+                    query = $"{Url}{(!string.IsNullOrWhiteSpace(query) ? $"?{query}" : string.Empty)}";
                 }
             }
 
