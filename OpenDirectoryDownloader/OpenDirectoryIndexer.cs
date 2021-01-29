@@ -482,7 +482,8 @@ namespace OpenDirectoryDownloader
 
                     Program.SetConsoleTitle($"✔ {Program.ConsoleTitle}");
                     
-                    Boolean clipboardSuccess = false;
+                    bool clipboardSuccess = false;
+
                     if (OpenDirectoryIndexerSettings.CommandLineOptions.Clipboard)
                     {
                         try
