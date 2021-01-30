@@ -21,21 +21,21 @@ namespace OpenDirectoryDownloader
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public static string GetApplicationPath()
+        public static string GetCurrentWorkingDirectory()
         {
-            string appPath = AppContext.BaseDirectory;
+            string cwd = Directory.GetCurrentDirectory();
 
-            if (!appPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
+            if (!cwd.EndsWith(Path.DirectorySeparatorChar.ToString()))
             {
-                appPath += Path.DirectorySeparatorChar;
+                cwd += Path.DirectorySeparatorChar;
             }
 
-            return appPath;
+            return cwd;
         }
 
         public static string GetScansPath()
         {
-            string scansPath = $"{GetApplicationPath()}Scans";
+            string scansPath = $"{GetCurrentWorkingDirectory()}Scans";
 
             if (!Directory.Exists(scansPath))
             {
