@@ -41,20 +41,31 @@ namespace OpenDirectoryDownloader
 
             Thread.CurrentThread.Name = "Main thread";
 
+            bool stopProcessing = false;
+
             Parser.Default.ParseArguments<CommandLineOptions>(args)
                 .WithNotParsed(o =>
                 {
                     List<Error> errors = o.ToList();
 
-                    if (errors.Any())
+                    stopProcessing = errors.Any(e => e.StopsProcessing);
+
+                    if (errors.Any(e => e.Tag == ErrorType.HelpRequestedError || e.Tag == ErrorType.VersionRequestedError))
                     {
-                        foreach (Error error in errors)
-                        {
-                            Console.WriteLine($"Error command line parameter '{error.Tag}'");
-                        }
+                        return;
+                    }
+
+                    foreach (Error error in errors)
+                    {
+                        Console.WriteLine($"Error command line parameter '{error.Tag}'");
                     }
                 })
                 .WithParsed(o => CommandLineOptions = o);
+
+            if (stopProcessing)
+            {
+                return 1;
+            }
 
             if (CommandLineOptions.Threads < 1 || CommandLineOptions.Threads > 100)
             {
