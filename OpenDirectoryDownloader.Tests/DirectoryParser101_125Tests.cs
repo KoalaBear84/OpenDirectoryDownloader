@@ -282,34 +282,34 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal(4299776, webDirectory.Files[0].FileSize);
         }
 
-        /// <summary>
-        /// Url: http://24.31.171.181:81/eBooks/WoodWorking/
-        /// </summary>
-        [Fact]
-        public async Task TestDirectoryListing111aAsync()
-        {
-            WebDirectory webDirectory = await ParseHtml(GetSample());
+        ///// <summary>
+        ///// Url: http://24.31.171.181:81/eBooks/WoodWorking/
+        ///// </summary>
+        //[Fact]
+        //public async Task TestDirectoryListing111aAsync()
+        //{
+        //    WebDirectory webDirectory = await ParseHtml(GetSample());
 
-            Assert.Equal("ROOT", webDirectory.Name);
-            Assert.Equal(12, webDirectory.Subdirectories.Count);
-            Assert.Equal("2015 Asia", webDirectory.Subdirectories[0].Name);
-            Assert.Empty(webDirectory.Files);
-        }
+        //    Assert.Equal("ROOT", webDirectory.Name);
+        //    Assert.Equal(7, webDirectory.Subdirectories.Count);
+        //    Assert.Equal("Taunton's Complete Illustrated Guides", webDirectory.Subdirectories[0].Name);
+        //    Assert.Empty(webDirectory.Files);
+        //}
 
-        /// <summary>
-        /// Url: http://24.31.171.181:81/eBooks/00-NEW-UNSORTED/
-        /// </summary>
-        [Fact]
-        public async Task TestDirectoryListing111bAsync()
-        {
-            WebDirectory webDirectory = await ParseHtml(GetSample());
+        ///// <summary>
+        ///// Url: http://24.31.171.181:81/eBooks/00-NEW-UNSORTED/
+        ///// </summary>
+        //[Fact]
+        //public async Task TestDirectoryListing111bAsync()
+        //{
+        //    WebDirectory webDirectory = await ParseHtml(GetSample());
 
-            Assert.Equal("ROOT", webDirectory.Name);
-            Assert.Empty(webDirectory.Subdirectories);
-            Assert.Equal(4, webDirectory.Files.Count);
-            Assert.Equal("2018 USA.part1.rar", webDirectory.Files[0].FileName);
-            Assert.Equal(3221225472, webDirectory.Files[0].FileSize);
-        }
+        //    Assert.Equal("ROOT", webDirectory.Name);
+        //    Assert.Empty(webDirectory.Subdirectories);
+        //    Assert.Equal(4, webDirectory.Files.Count);
+        //    Assert.Equal("2018 USA.part1.rar", webDirectory.Files[0].FileName);
+        //    Assert.Equal(3221225472, webDirectory.Files[0].FileSize);
+        //}
 
         /// <summary>
         /// Url: http://jfk.hood.edu/Collection/#
