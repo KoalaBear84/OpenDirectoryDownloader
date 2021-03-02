@@ -335,10 +335,19 @@ namespace OpenDirectoryDownloader
                     }
                     else
                     {
+                        UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
+
+                        string fileName = new Uri(fullUrl).AbsolutePath;
+
+                        if (urlEncodingParser["download"] != null)
+                        {
+                            fileName = urlEncodingParser["download"];
+                        }
+
                         parsedWebDirectory.Files.Add(new WebFile
                         {
                             Url = fullUrl,
-                            FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+                            FileName = Path.GetFileName(WebUtility.UrlDecode(fileName)),
                             FileSize = FileSizeHelper.ParseFileSize(size)
                         });
                     }
@@ -1780,7 +1789,7 @@ namespace OpenDirectoryDownloader
         {
             WebDirectory parentWebDirectory = webDirectory.ParentDirectory;
 
-            for (int level = 1; level <= 4; level++)
+            for (int level = 1; level <= 8; level++)
             {
                 if (webDirectory.Uri.Segments.Length > level && parentWebDirectory != null)
                 {

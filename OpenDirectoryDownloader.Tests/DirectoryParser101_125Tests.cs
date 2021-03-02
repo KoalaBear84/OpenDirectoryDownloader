@@ -326,5 +326,36 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("change_log.txt", webDirectory.Files[0].FileName);
             Assert.Equal(-1, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: http://www.lrhmaterials.com/materials.php?dir=00-Golden_Dawn-Phoenix_Evening_Lectures%2F#%20
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing113aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Single(webDirectory.Subdirectories);
+            Assert.Equal("Transcripts", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(78, webDirectory.Files.Count);
+            Assert.Equal("5411C17 - GD-01 The Wrong Thing to Do is Nothing LE171154 (10th IAS anniversary gift ver 1).mp3", webDirectory.Files[0].FileName);
+            Assert.Equal(36717568, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://www.lrhmaterials.com/materials.php?dir=00-Golden_Dawn-Phoenix_Evening_Lectures%2FTranscripts%2F#%20
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing113bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(26, webDirectory.Files.Count);
+            Assert.Equal("5411C17 - GD-01 The Wrong Thing to Do is Nothing LE171154.doc", webDirectory.Files[0].FileName);
+            Assert.Equal(79872, webDirectory.Files[0].FileSize);
+        }
     } 
 }
