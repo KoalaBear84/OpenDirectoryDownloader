@@ -1,0 +1,125 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=iso-8859-1" />
+<title>File Repository: Arash - Superman [128]</title>
+<style type="text/css">
+body { font-family: tahoma, verdana, arial; font-size: 0.7em; color: black; padding-top: 8px; cursor: default; background-color: #fff; }
+#idx { border: 3px solid #fff; width: 500px; }
+#idx td.center { text-align: center; }
+#idx td { border-bottom: 1px solid #f0f0f0; }
+#idx img { margin-bottom: -2px; }
+#idx table { color: #606060; width: 100%; margin-top:3px; }
+#idx span.link { color: #0066DF; cursor: pointer; }
+#idx .rounded { padding: 10px 7px 10px 10px; -moz-border-radius:6px; }
+#idx .gray { background-color:#fafafa;border-bottom: 1px solid #e5e5e5; }
+#idx p { padding: 0px; margin: 0px;line-height:1.4em;}
+#idx p.left { float:left;width:60%;padding:3px;color:#606060;}
+#idx p.right {float:right;width:35%;text-align:right;color:#707070;padding:3px;}
+#idx strong { font-family: "Trebuchet MS", tahoma, arial; font-size: 1.2em; font-weight: bold; color: #202020; padding-bottom: 3px; margin: 0px; }
+#idx a:link    { color: #0066CC; }
+#idx a:visited { color: #003366; }
+#idx a:hover   { text-decoration: none; }
+#idx a:active  { color: #9DCC00; }
+a {
+	color: #0000FF;
+	text-decoration: none;
+}
+a:hover {
+	color: #FF0000;
+	text-decoration: none;
+}
+a:visited {
+	color: #0000FF;
+	text-decoration: none;
+}
+</style>
+
+<script type="text/javascript">
+<!--
+var _c1='#fefefe'; var _c2='#fafafa'; var _ppg=25; var _cpg=1; var _files=[]; var _dirs=[]; var _tpg=null; var _tsize=0; var _sort='date'; var _sdir={'type':0,'name':0,'size':0,'date':1}; var idx=null; var tbl=null;
+function _obj(s){return document.getElementById(s);}
+function _ge(n){n=n.substr(n.lastIndexOf('.')+1);return n.toLowerCase();}
+function _nf(n,p){if(p>=0){var t=Math.pow(10,p);return Math.round(n*t)/t;}}
+function _s(v,u){if(!u)u='B';if(v>1024&&u=='B')return _s(v/1024,'KB');if(v>1024&&u=='KB')return _s(v/1024,'MB');if(v>1024&&u=='MB')return _s(v/1024,'GB');return _nf(v,1)+'&nbsp;'+u;}
+function _f(name,size,date,url,rdate){_files[_files.length]={'dir':0,'name':name,'size':size,'date':date,'type':_ge(name),'url':url,'rdate':rdate,'icon':'index.php?icon='+_ge(name)};_tsize+=size;}
+function _d(name,date,url){_dirs[_dirs.length]={'dir':1,'name':name,'date':date,'url':url,'icon':'index.php?icon=dir'};}
+function _np(){_cpg++;_tbl();}
+function _pp(){_cpg--;_tbl();}
+function _sa(l,r){return(l['size']==r['size'])?0:(l['size']>r['size']?1:-1);}
+function _sb(l,r){return(l['type']==r['type'])?0:(l['type']>r['type']?1:-1);}
+function _sc(l,r){return(l['rdate']==r['rdate'])?0:(l['rdate']>r['rdate']?1:-1);}
+function _sd(l,r){var a=l['name'].toLowerCase();var b=r['name'].toLowerCase();return(a==b)?0:(a>b?1:-1);}
+function _srt(c){switch(c){case'type':_sort='type';_files.sort(_sb);if(_sdir['type'])_files.reverse();break;case'name':_sort='name';_files.sort(_sd);if(_sdir['name'])_files.reverse();break;case'size':_sort='size';_files.sort(_sa);if(_sdir['size'])_files.reverse();break;case'date':_sort='date';_files.sort(_sc);if(_sdir['date'])_files.reverse();break;}_sdir[c]=!_sdir[c];_obj('sort_type').style.fontStyle=(c=='type'?'italic':'normal');_obj('sort_name').style.fontStyle=(c=='name'?'italic':'normal');_obj('sort_size').style.fontStyle=(c=='size'?'italic':'normal');_obj('sort_date').style.fontStyle=(c=='date'?'italic':'normal');_tbl();return false;}
+
+function _head()
+{
+	if(!idx)return;
+	_tpg=Math.ceil((_files.length+_dirs.length)/_ppg);
+	idx.innerHTML='<div class="rounded gray" style="padding:5px 10px 5px 7px;color:#202020">' +
+		'<p class="left">' +
+			'<strong>Arash - Superman [128]</strong>&nbsp; (<a href="index.php?dir=1393%2FAban%2FAlbum%2FArash%20-%20Superman">Back</a>)<br />' + (_files.length+_dirs.length) + ' objects in this folder, ' + _s(_tsize) + ' total.' +
+		'</p>' +
+		'<p class="right">' +
+			'Sort: <span class="link" onmousedown="return _srt(\'name\');" id="sort_name">Name</span>, <span class="link" onmousedown="return _srt(\'type\');" id="sort_type">Type</span>, <span class="link" onmousedown="return _srt(\'size\');" id="sort_size">Size</span>, <span class="link" onmousedown="return _srt(\'date\');" id="sort_date">Date</span>' +
+		'</p>' +
+		'<div style="clear:both;"></div>' +
+	'</div><div id="idx_tbl"></div>';
+	tbl=_obj('idx_tbl');
+}
+
+function _tbl()
+{
+	var _cnt=_dirs.concat(_files);if(!tbl)return;if(_cpg>_tpg){_cpg=_tpg;return;}else if(_cpg<1){_cpg=1;return;}var a=(_cpg-1)*_ppg;var b=_cpg*_ppg;var j=0;var html='';
+	if(_tpg>1)html+='<p style="padding:5px 5px 0px 7px;color:#202020;text-align:right;"><span class="link" onmousedown="_pp();return false;">Previous</span> ('+_cpg+'/'+_tpg+') <span class="link" onmousedown="_np();return false;">Next</span></p>';
+	html+='<table cellspacing="0" cellpadding="5" border="0">';
+	for(var i=a;i<b&&i<(_files.length+_dirs.length);++i)
+	{
+		var f=_cnt[i];var rc=j++&1?_c1:_c2;
+		html+='<tr style="background-color:'+rc+'"><td><img src="'+f['icon']+'" alt="" /> &nbsp;<a href="'+f['url']+'">'+f['name']+'</a></td><td class="center" style="width:50px;">'+(f['dir']?'':_s(f['size']))+'</td><td class="center" style="width:70px;">'+f['date']+'</td></tr>';
+	}
+	tbl.innerHTML=html+'</table>';
+}
+_f('01. One Day (feat. Helena) [128].mp3',3437754,'Jun-23-18','1393/Aban/Album/Arash - Superman/Arash - Superman [128]/01.%20One%20Day%20%28feat.%20Helena%29%20%5B128%5D.mp3',1529747809);
+_f('02. SLR (feat. T-Pain) [128].mp3',2880606,'Jun-23-18','1393/Aban/Album/Arash - Superman/Arash - Superman [128]/02.%20SLR%20%28feat.%20T-Pain%29%20%5B128%5D.mp3',1529747809);
+_f('03. Tekoon Bede [128].mp3',2583005,'Jun-23-18','1393/Aban/Album/Arash - Superman/Arash - Superman [128]/03.%20Tekoon%20Bede%20%5B128%5D.mp3',1529747809);
+_f('04. Superman (feat. Nyanda) [128].mp3',3421873,'Jun-23-18','1393/Aban/Album/Arash - Superman/Arash - Superman [128]/04.%20Superman%20%28feat.%20Nyanda%29%20%5B128%5D.mp3',1529747809);
+_f('05. Ba Man Soot Bezan [128].mp3',3411830,'Jun-23-18','1393/Aban/Album/Arash - Superman/Arash - Superman [128]/05.%20Ba%20Man%20Soot%20Bezan%20%5B128%5D.mp3',1529747809);
+_f('06. She Makes Me Go (feat. Sean Paul) [128].mp3',2884398,'Jun-23-18','1393/Aban/Album/Arash - Superman/Arash - Superman [128]/06.%20She%20Makes%20Me%20Go%20%28feat.%20Sean%20Paul%29%20%5B128%5D.mp3',1529747809);
+_f('07. Doga Doga (feat. Medina) [128].mp3',3178623,'Jun-23-18','1393/Aban/Album/Arash - Superman/Arash - Superman [128]/07.%20Doga%20Doga%20%28feat.%20Medina%29%20%5B128%5D.mp3',1529747809);
+_f('08. Ma Bala [128].mp3',3095833,'Jun-23-18','1393/Aban/Album/Arash - Superman/Arash - Superman [128]/08.%20Ma%20Bala%20%5B128%5D.mp3',1529747809);
+_f('09. Delhore (feat. Nyanda) [128].mp3',3250508,'Jun-23-18','1393/Aban/Album/Arash - Superman/Arash - Superman [128]/09.%20Delhore%20%28feat.%20Nyanda%29%20%5B128%5D.mp3',1529747809);
+_f('10. Melody [128].mp3',3114221,'Jun-23-18','1393/Aban/Album/Arash - Superman/Arash - Superman [128]/10.%20Melody%20%5B128%5D.mp3',1529747809);
+_f('11. Broken Angel (feat. Helena) [128].mp3',3111337,'Jun-23-18','1393/Aban/Album/Arash - Superman/Arash - Superman [128]/11.%20Broken%20Angel%20%28feat.%20Helena%29%20%5B128%5D.mp3',1529747809);
+_f('12. Che Konam [128].mp3',2989675,'Jun-23-18','1393/Aban/Album/Arash - Superman/Arash - Superman [128]/12.%20Che%20Konam%20%5B128%5D.mp3',1529747809);
+_f('13. On Est La [128].mp3',2952895,'Jun-23-18','1393/Aban/Album/Arash - Superman/Arash - Superman [128]/13.%20On%20Est%20La%20%5B128%5D.mp3',1529747809);
+_f('14. Boro Boro (feat. Nexus) [128].mp3',2856374,'Jun-23-18','1393/Aban/Album/Arash - Superman/Arash - Superman [128]/14.%20Boro%20Boro%20%28feat.%20Nexus%29%20%5B128%5D.mp3',1529747809);
+_f('15. SLR (feat. T-Pain) (Basshunter Remix) [128].mp3',3707785,'Jun-23-18','1393/Aban/Album/Arash - Superman/Arash - Superman [128]/15.%20SLR%20%28feat.%20T-Pain%29%20%28Basshunter%20Remix%29%20%5B128%5D.mp3',1529747809);
+_f('16. One Day (feat. Helena) (Golden Star Mix) [128].mp3',2918684,'Jun-23-18','1393/Aban/Album/Arash - Superman/Arash - Superman [128]/16.%20One%20Day%20%28feat.%20Helena%29%20%28Golden%20Star%20Mix%29%20%5B128%5D.mp3',1529747808);
+_f('17. Iran Iran World Cup 2014 [128].mp3',3151455,'Jun-23-18','1393/Aban/Album/Arash - Superman/Arash - Superman [128]/17.%20Iran%20Iran%20World%20Cup%202014%20%5B128%5D.mp3',1529747808);
+
+window.onload=function()
+{
+	idx=_obj('idx'); _head(); _srt('name');
+};
+-->
+</script>
+</head>
+<body>
+	<div id="idx"><!-- do not remove --></div>
+	<div align="left"><a href="/index.html"><br />
+    <br />
+    <br />
+    </a>
+	  <table width="512" border="0">
+        <tr>
+          <td width="499"><div align="right"></div></td>
+        </tr>
+      </table>
+	  <a href="/index.html"><br />
+      <br />
+      <br />
+      </a> </div>
+</body>
+</html>

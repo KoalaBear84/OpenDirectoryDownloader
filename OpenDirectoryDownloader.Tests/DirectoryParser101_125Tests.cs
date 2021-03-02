@@ -357,5 +357,36 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("5411C17 - GD-01 The Wrong Thing to Do is Nothing LE171154.doc", webDirectory.Files[0].FileName);
             Assert.Equal(79872, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: https://149.56.222.150/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing114aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(20, webDirectory.Subdirectories.Count);
+            Assert.Equal("1393", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(5, webDirectory.Files.Count);
+            Assert.Equal("ADM.zip", webDirectory.Files[0].FileName);
+            Assert.Equal(3320114, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: https://149.56.222.150/index.php?dir=1393%2FAban%2FAlbum%2FArash%20-%20Superman%2FArash%20-%20Superman%20%5B128%5D
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing114bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(17, webDirectory.Files.Count);
+            Assert.Equal("01. One Day (feat. Helena) [128].mp3", webDirectory.Files[0].FileName);
+            Assert.Equal(3437754, webDirectory.Files[0].FileSize);
+        }
     } 
 }

@@ -156,6 +156,13 @@ namespace OpenDirectoryDownloader
                     }
                 }
 
+                WebDirectory parsedJavaScriptDrawn = await ParseJavaScriptDrawn(baseUrl, parsedWebDirectory, html);
+
+                if (parsedJavaScriptDrawn.ParsedSuccesfully && (parsedJavaScriptDrawn.Files.Any() || parsedJavaScriptDrawn.Subdirectories.Any()))
+                {
+                    return parsedJavaScriptDrawn;
+                }
+
                 IHtmlCollection<IElement> tables = htmlDocument.QuerySelectorAll("table");
 
                 if (tables.Any())
@@ -227,6 +234,42 @@ namespace OpenDirectoryDownloader
             }
 
             CheckParsedResults(parsedWebDirectory);
+
+            return parsedWebDirectory;
+        }
+
+        private static async Task<WebDirectory> ParseJavaScriptDrawn(string baseUrl, WebDirectory parsedWebDirectory, string html)
+        {
+            Regex regexDirectory = new Regex("_d\\('(?<DirectoryName>.*)','(?<Date>.*)','(?<Link>.*)'\\)");
+            Regex regexFile = new Regex("_f\\('(?<FileName>.*)',(?<FileSize>\\d*),'(?<Date>.*)','(?<Link>.*)',(?<UnixTimestamp>\\d*)\\)");
+
+            MatchCollection matchCollectionDirectories = regexDirectory.Matches(html);
+            MatchCollection matchCollectionFiles = regexFile.Matches(html);
+
+            if (matchCollectionDirectories.Any() || matchCollectionFiles.Any())
+            {
+                parsedWebDirectory.ParsedSuccesfully = true;
+
+                foreach (Match directory in matchCollectionDirectories)
+                {
+                    parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
+                    {
+                        Parser = "ParseJavaScriptDrawn",
+                        Url = baseUrl + directory.Groups["Link"].Value,
+                        Name = directory.Groups["DirectoryName"].Value
+                    });
+                }
+
+                foreach (Match file in matchCollectionFiles)
+                {
+                    parsedWebDirectory.Files.Add(new WebFile
+                    {
+                        Url = baseUrl + file.Groups["Link"].Value,
+                        FileName = file.Groups["FileName"].Value,
+                        FileSize = FileSizeHelper.ParseFileSize(file.Groups["FileSize"].Value)
+                    });
+                }
+            }
 
             return parsedWebDirectory;
         }
