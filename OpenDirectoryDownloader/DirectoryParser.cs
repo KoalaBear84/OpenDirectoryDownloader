@@ -264,8 +264,8 @@ namespace OpenDirectoryDownloader
                 {
                     parsedWebDirectory.Files.Add(new WebFile
                     {
-                        Url = baseUrl + file.Groups["Link"].Value,
-                        FileName = file.Groups["FileName"].Value,
+                        Url = baseUrl + Path.GetFileName(WebUtility.UrlDecode(file.Groups["Link"].Value)),
+                        FileName = Path.GetFileName(WebUtility.UrlDecode(file.Groups["FileName"].Value)),
                         FileSize = FileSizeHelper.ParseFileSize(file.Groups["FileSize"].Value)
                     });
                 }
