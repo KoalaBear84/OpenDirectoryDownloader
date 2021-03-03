@@ -252,11 +252,17 @@ namespace OpenDirectoryDownloader
 
                 foreach (Match directory in matchCollectionDirectories)
                 {
+                    // Remove possible file part (index.php) from url
+                    if (!string.IsNullOrWhiteSpace(Path.GetFileName(WebUtility.UrlDecode(baseUrl))))
+                    {
+                        baseUrl = new Uri(baseUrl.Replace(new Uri(baseUrl).PathAndQuery, string.Empty)).ToString();
+                    }
+
                     parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
                     {
                         Parser = "ParseJavaScriptDrawn",
-                        Url = baseUrl + directory.Groups["Link"].Value,
-                        Name = directory.Groups["DirectoryName"].Value
+                        Url = baseUrl + WebUtility.UrlDecode(Uri.UnescapeDataString(directory.Groups["Link"].Value)),
+                        Name = Uri.UnescapeDataString(directory.Groups["DirectoryName"].Value)
                     });
                 }
 
@@ -264,8 +270,8 @@ namespace OpenDirectoryDownloader
                 {
                     parsedWebDirectory.Files.Add(new WebFile
                     {
-                        Url = baseUrl + Path.GetFileName(WebUtility.UrlDecode(file.Groups["Link"].Value)),
-                        FileName = Path.GetFileName(WebUtility.UrlDecode(file.Groups["FileName"].Value)),
+                        Url = baseUrl + Path.GetFileName(WebUtility.UrlDecode(Uri.UnescapeDataString(file.Groups["Link"].Value))),
+                        FileName = Path.GetFileName(WebUtility.UrlDecode(Uri.UnescapeDataString(file.Groups["FileName"].Value))),
                         FileSize = FileSizeHelper.ParseFileSize(file.Groups["FileSize"].Value)
                     });
                 }
