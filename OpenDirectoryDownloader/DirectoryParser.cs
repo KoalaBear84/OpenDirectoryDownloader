@@ -65,34 +65,34 @@ namespace OpenDirectoryDownloader
                     return await BlitzfilesTechParser.ParseIndex(httpClient, webDirectory);
                 }
 
-                if (htmlDocument.QuerySelector("script[src*=\"goindex-theme-acrou\"]") != null)
+                if (htmlDocument.QuerySelector("script[src*=\"goindex-theme-acrou\" i]") != null)
                 {
                     return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
                 }
 
-                if (htmlDocument.QuerySelector("script[src*=\"Bhadoo-Drive-Index\"]") != null ||
-                    htmlDocument.QuerySelector("script[src*=\"/AjmalShajahan97/goindex\"]") != null ||
-                    htmlDocument.QuerySelector("script[src*=\"/LeeluPradhan/G-Index\"]") != null ||
-                    htmlDocument.QuerySelector("script[src*=\"/K-E-N-W-A-Y/GD-Index-Dark\"]") != null ||
-                    htmlDocument.QuerySelector("script[src*=\"/ParveenBhadooOfficial/BhadooJS\"]") != null ||
-                    htmlDocument.QuerySelector("script[src*=\"/goIndex-theme-nexmoe\"]") != null)
+                if (htmlDocument.QuerySelector("script[src*=\"Bhadoo-Drive-Index\" i]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/AjmalShajahan97/goindex\" i]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/LeeluPradhan/G-Index\" i]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/K-E-N-W-A-Y/GD-Index-Dark\" i]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/ParveenBhadooOfficial/BhadooJS\" i]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/goIndex-theme-nexmoe\" i]") != null)
                 {
                     return await BhadooIndexParser.ParseIndex(httpClient, webDirectory);
                 }
 
-                if (htmlDocument.QuerySelector("script[src*=\"gdindex\"]") != null)
+                if (htmlDocument.QuerySelector("script[src*=\"gdindex\" i]") != null)
                 {
                     return await GdIndexParser.ParseIndex(httpClient, webDirectory, html);
                 }
 
-                if (htmlDocument.QuerySelector("script[src*=\"/go2index/\"]") != null ||
-                    htmlDocument.QuerySelector("script[src*=\"/alx-xlx/goindex\"]") != null)
+                if (htmlDocument.QuerySelector("script[src*=\"/go2index/\" i]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/alx-xlx/goindex\" i]") != null)
                 {
                     return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
                 }
 
                 // goindex, goindex-drive, goindex-backup
-                if (htmlDocument.QuerySelector("script[src*=\"goindex\"]") != null)
+                if (htmlDocument.QuerySelector("script[src*=\"goindex\" i]") != null)
                 {
                     return await GoIndexParser.ParseIndex(httpClient, webDirectory);
                 }
