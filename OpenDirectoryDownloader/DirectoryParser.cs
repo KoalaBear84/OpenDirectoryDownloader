@@ -65,34 +65,34 @@ namespace OpenDirectoryDownloader
                     return await BlitzfilesTechParser.ParseIndex(httpClient, webDirectory);
                 }
 
-                if (htmlDocument.QuerySelector("script[src*=\"goindex-theme-acrou\"]") != null)
+                if (htmlDocument.QuerySelector("script[src*=\"goindex-theme-acrou\" i]") != null)
                 {
                     return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
                 }
 
-                if (htmlDocument.QuerySelector("script[src*=\"Bhadoo-Drive-Index\"]") != null ||
-                    htmlDocument.QuerySelector("script[src*=\"/AjmalShajahan97/goindex\"]") != null ||
-                    htmlDocument.QuerySelector("script[src*=\"/LeeluPradhan/G-Index\"]") != null ||
-                    htmlDocument.QuerySelector("script[src*=\"/K-E-N-W-A-Y/GD-Index-Dark\"]") != null ||
-                    htmlDocument.QuerySelector("script[src*=\"/ParveenBhadooOfficial/BhadooJS\"]") != null ||
-                    htmlDocument.QuerySelector("script[src*=\"/goIndex-theme-nexmoe\"]") != null)
+                if (htmlDocument.QuerySelector("script[src*=\"Bhadoo-Drive-Index\" i]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/AjmalShajahan97/goindex\" i]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/LeeluPradhan/G-Index\" i]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/K-E-N-W-A-Y/GD-Index-Dark\" i]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/ParveenBhadooOfficial/BhadooJS\" i]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/goIndex-theme-nexmoe\" i]") != null)
                 {
                     return await BhadooIndexParser.ParseIndex(httpClient, webDirectory);
                 }
 
-                if (htmlDocument.QuerySelector("script[src*=\"gdindex\"]") != null)
+                if (htmlDocument.QuerySelector("script[src*=\"gdindex\" i]") != null)
                 {
                     return await GdIndexParser.ParseIndex(httpClient, webDirectory, html);
                 }
 
-                if (htmlDocument.QuerySelector("script[src*=\"/go2index/\"]") != null ||
-                    htmlDocument.QuerySelector("script[src*=\"/alx-xlx/goindex\"]") != null)
+                if (htmlDocument.QuerySelector("script[src*=\"/go2index/\" i]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/alx-xlx/goindex\" i]") != null)
                 {
                     return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
                 }
 
                 // goindex, goindex-drive, goindex-backup
-                if (htmlDocument.QuerySelector("script[src*=\"goindex\"]") != null)
+                if (htmlDocument.QuerySelector("script[src*=\"goindex\" i]") != null)
                 {
                     return await GoIndexParser.ParseIndex(httpClient, webDirectory);
                 }
@@ -154,6 +154,13 @@ namespace OpenDirectoryDownloader
                     {
                         return result;
                     }
+                }
+
+                WebDirectory parsedJavaScriptDrawn = await ParseJavaScriptDrawn(baseUrl, parsedWebDirectory, html);
+
+                if (parsedJavaScriptDrawn.ParsedSuccesfully && (parsedJavaScriptDrawn.Files.Any() || parsedJavaScriptDrawn.Subdirectories.Any()))
+                {
+                    return parsedJavaScriptDrawn;
                 }
 
                 IHtmlCollection<IElement> tables = htmlDocument.QuerySelectorAll("table");
@@ -227,6 +234,48 @@ namespace OpenDirectoryDownloader
             }
 
             CheckParsedResults(parsedWebDirectory);
+
+            return parsedWebDirectory;
+        }
+
+        private static async Task<WebDirectory> ParseJavaScriptDrawn(string baseUrl, WebDirectory parsedWebDirectory, string html)
+        {
+            Regex regexDirectory = new Regex("_d\\('(?<DirectoryName>.*)','(?<Date>.*)','(?<Link>.*)'\\)");
+            Regex regexFile = new Regex("_f\\('(?<FileName>.*)',(?<FileSize>\\d*),'(?<Date>.*)','(?<Link>.*)',(?<UnixTimestamp>\\d*)\\)");
+
+            MatchCollection matchCollectionDirectories = regexDirectory.Matches(html);
+            MatchCollection matchCollectionFiles = regexFile.Matches(html);
+
+            if (matchCollectionDirectories.Any() || matchCollectionFiles.Any())
+            {
+                parsedWebDirectory.ParsedSuccesfully = true;
+
+                foreach (Match directory in matchCollectionDirectories)
+                {
+                    // Remove possible file part (index.php) from url
+                    if (!string.IsNullOrWhiteSpace(Path.GetFileName(WebUtility.UrlDecode(baseUrl))))
+                    {
+                        baseUrl = new Uri(baseUrl.Replace(new Uri(baseUrl).PathAndQuery, string.Empty)).ToString();
+                    }
+
+                    parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
+                    {
+                        Parser = "ParseJavaScriptDrawn",
+                        Url = baseUrl + WebUtility.UrlDecode(Uri.UnescapeDataString(directory.Groups["Link"].Value)),
+                        Name = Uri.UnescapeDataString(directory.Groups["DirectoryName"].Value)
+                    });
+                }
+
+                foreach (Match file in matchCollectionFiles)
+                {
+                    parsedWebDirectory.Files.Add(new WebFile
+                    {
+                        Url = baseUrl + Path.GetFileName(WebUtility.UrlDecode(Uri.UnescapeDataString(file.Groups["Link"].Value))),
+                        FileName = Path.GetFileName(WebUtility.UrlDecode(Uri.UnescapeDataString(file.Groups["FileName"].Value))),
+                        FileSize = FileSizeHelper.ParseFileSize(file.Groups["FileSize"].Value)
+                    });
+                }
+            }
 
             return parsedWebDirectory;
         }
@@ -335,10 +384,19 @@ namespace OpenDirectoryDownloader
                     }
                     else
                     {
+                        UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
+
+                        string fileName = new Uri(fullUrl).AbsolutePath;
+
+                        if (urlEncodingParser["download"] != null)
+                        {
+                            fileName = urlEncodingParser["download"];
+                        }
+
                         parsedWebDirectory.Files.Add(new WebFile
                         {
                             Url = fullUrl,
-                            FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+                            FileName = Path.GetFileName(WebUtility.UrlDecode(fileName)),
                             FileSize = FileSizeHelper.ParseFileSize(size)
                         });
                     }
@@ -1780,7 +1838,7 @@ namespace OpenDirectoryDownloader
         {
             WebDirectory parentWebDirectory = webDirectory.ParentDirectory;
 
-            for (int level = 1; level <= 4; level++)
+            for (int level = 1; level <= 8; level++)
             {
                 if (webDirectory.Uri.Segments.Length > level && parentWebDirectory != null)
                 {
