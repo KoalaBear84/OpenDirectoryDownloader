@@ -364,3 +364,12 @@ FodyWeavers.xsd
 /OpenDirectoryDownloader.GoogleDrive/OpenDirectoryDownloader.GoogleDrive.json
 # Local todo file
 /TODO.txt
+
+# VS Code workspace settings
+.vscode
+
+# Windows build folder
+OpenDirectoryDownloader-win-x64/
+
+# Scans folder
+OpenDirectoryDownloader/Scans/

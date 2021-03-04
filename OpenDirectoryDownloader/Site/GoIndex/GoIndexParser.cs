@@ -131,14 +131,14 @@ namespace OpenDirectoryDownloader.Site.GoIndex
                     { "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] }
                 })));
 
-                webDirectory.ParsedSuccesfully = httpResponseMessage.IsSuccessStatusCode;
+                webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
                 httpResponseMessage.EnsureSuccessStatusCode();
 
                 string responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
 
                 GoIndexResponse indexResponse = GoIndexResponse.FromJson(responseJson);
 
-                webDirectory.ParsedSuccesfully = indexResponse.Error == null;
+                webDirectory.ParsedSuccessfully = indexResponse.Error == null;
 
                 if (indexResponse.Error != null)
                 {

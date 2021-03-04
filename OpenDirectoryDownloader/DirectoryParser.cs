@@ -158,7 +158,7 @@ namespace OpenDirectoryDownloader
 
                 WebDirectory parsedJavaScriptDrawn = await ParseJavaScriptDrawn(baseUrl, parsedWebDirectory, html);
 
-                if (parsedJavaScriptDrawn.ParsedSuccesfully && (parsedJavaScriptDrawn.Files.Any() || parsedJavaScriptDrawn.Subdirectories.Any()))
+                if (parsedJavaScriptDrawn.ParsedSuccessfully && (parsedJavaScriptDrawn.Files.Any() || parsedJavaScriptDrawn.Subdirectories.Any()))
                 {
                     return parsedJavaScriptDrawn;
                 }
@@ -188,7 +188,7 @@ namespace OpenDirectoryDownloader
                 {
                     WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems);
 
-                    if (result.ParsedSuccesfully || result.Error)
+                    if (result.ParsedSuccessfully || result.Error)
                     {
                         return result;
                     }
@@ -200,7 +200,7 @@ namespace OpenDirectoryDownloader
                 {
                     WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems);
 
-                    if (result.ParsedSuccesfully || result.Error)
+                    if (result.ParsedSuccessfully || result.Error)
                     {
                         return result;
                     }
@@ -248,7 +248,7 @@ namespace OpenDirectoryDownloader
 
             if (matchCollectionDirectories.Any() || matchCollectionFiles.Any())
             {
-                parsedWebDirectory.ParsedSuccesfully = true;
+                parsedWebDirectory.ParsedSuccessfully = true;
 
                 foreach (Match directory in matchCollectionDirectories)
                 {
@@ -313,7 +313,7 @@ namespace OpenDirectoryDownloader
                         parsedWebDirectory.Name = newWebDirectory.Name;
                         parsedWebDirectory.Subdirectories = newWebDirectory.Subdirectories;
                         parsedWebDirectory.Url = newWebDirectory.Url;
-                        parsedWebDirectory.ParsedSuccesfully = true;
+                        parsedWebDirectory.ParsedSuccessfully = true;
                         parsedWebDirectory.Parser = "DirectoryListingModel01";
                     }
                 }
@@ -718,7 +718,7 @@ namespace OpenDirectoryDownloader
                 }
                 else
                 {
-                    webDirectoryCopy.ParsedSuccesfully = true;
+                    webDirectoryCopy.ParsedSuccessfully = true;
 
                     foreach (IElement tableRow in table.QuerySelectorAll("tbody tr"))
                     {
@@ -857,7 +857,7 @@ namespace OpenDirectoryDownloader
 
             if (!hasSeperateDirectoryAndFilesTables)
             {
-                parsedWebDirectory = results.Where(r => (r.ParsedSuccesfully || r.Error) && (r.Files.Count > 0 || r.Subdirectories.Count > 0)).OrderByDescending(r => r.HeaderCount).ThenByDescending(r => r.TotalDirectoriesIncludingUnfinished + r.TotalFiles).FirstOrDefault() ?? parsedWebDirectory;
+                parsedWebDirectory = results.Where(r => (r.ParsedSuccessfully || r.Error) && (r.Files.Count > 0 || r.Subdirectories.Count > 0)).OrderByDescending(r => r.HeaderCount).ThenByDescending(r => r.TotalDirectoriesIncludingUnfinished + r.TotalFiles).FirstOrDefault() ?? parsedWebDirectory;
             }
             else
             {
@@ -1684,7 +1684,7 @@ namespace OpenDirectoryDownloader
                         return;
                     }
 
-                    parsedWebDirectory.ParsedSuccesfully = true;
+                    parsedWebDirectory.ParsedSuccessfully = true;
 
                     bool directoryListAsp = Path.GetFileName(fullUrl) == "DirectoryList.asp" || fullUrl.Contains("DirectoryList.asp");
                     bool dirParam = urlEncodingParser["dir"] != null || urlEncodingParser["path"] != null;
