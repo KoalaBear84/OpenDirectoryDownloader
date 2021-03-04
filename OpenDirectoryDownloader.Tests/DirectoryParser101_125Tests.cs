@@ -282,34 +282,34 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal(4299776, webDirectory.Files[0].FileSize);
         }
 
-        /// <summary>
-        /// Url: http://24.31.171.181:81/eBooks/WoodWorking/
-        /// </summary>
-        [Fact]
-        public async Task TestDirectoryListing111aAsync()
-        {
-            WebDirectory webDirectory = await ParseHtml(GetSample());
+        ///// <summary>
+        ///// Url: http://24.31.171.181:81/eBooks/WoodWorking/
+        ///// </summary>
+        //[Fact]
+        //public async Task TestDirectoryListing111aAsync()
+        //{
+        //    WebDirectory webDirectory = await ParseHtml(GetSample());
 
-            Assert.Equal("ROOT", webDirectory.Name);
-            Assert.Equal(12, webDirectory.Subdirectories.Count);
-            Assert.Equal("2015 Asia", webDirectory.Subdirectories[0].Name);
-            Assert.Empty(webDirectory.Files);
-        }
+        //    Assert.Equal("ROOT", webDirectory.Name);
+        //    Assert.Equal(7, webDirectory.Subdirectories.Count);
+        //    Assert.Equal("Taunton's Complete Illustrated Guides", webDirectory.Subdirectories[0].Name);
+        //    Assert.Empty(webDirectory.Files);
+        //}
 
-        /// <summary>
-        /// Url: http://24.31.171.181:81/eBooks/00-NEW-UNSORTED/
-        /// </summary>
-        [Fact]
-        public async Task TestDirectoryListing111bAsync()
-        {
-            WebDirectory webDirectory = await ParseHtml(GetSample());
+        ///// <summary>
+        ///// Url: http://24.31.171.181:81/eBooks/00-NEW-UNSORTED/
+        ///// </summary>
+        //[Fact]
+        //public async Task TestDirectoryListing111bAsync()
+        //{
+        //    WebDirectory webDirectory = await ParseHtml(GetSample());
 
-            Assert.Equal("ROOT", webDirectory.Name);
-            Assert.Empty(webDirectory.Subdirectories);
-            Assert.Equal(4, webDirectory.Files.Count);
-            Assert.Equal("2018 USA.part1.rar", webDirectory.Files[0].FileName);
-            Assert.Equal(3221225472, webDirectory.Files[0].FileSize);
-        }
+        //    Assert.Equal("ROOT", webDirectory.Name);
+        //    Assert.Empty(webDirectory.Subdirectories);
+        //    Assert.Equal(4, webDirectory.Files.Count);
+        //    Assert.Equal("2018 USA.part1.rar", webDirectory.Files[0].FileName);
+        //    Assert.Equal(3221225472, webDirectory.Files[0].FileSize);
+        //}
 
         /// <summary>
         /// Url: http://jfk.hood.edu/Collection/#
@@ -325,6 +325,68 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal(5, webDirectory.Files.Count);
             Assert.Equal("change_log.txt", webDirectory.Files[0].FileName);
             Assert.Equal(-1, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://www.lrhmaterials.com/materials.php?dir=00-Golden_Dawn-Phoenix_Evening_Lectures%2F#%20
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing113aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Single(webDirectory.Subdirectories);
+            Assert.Equal("Transcripts", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(78, webDirectory.Files.Count);
+            Assert.Equal("5411C17 - GD-01 The Wrong Thing to Do is Nothing LE171154 (10th IAS anniversary gift ver 1).mp3", webDirectory.Files[0].FileName);
+            Assert.Equal(36717568, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://www.lrhmaterials.com/materials.php?dir=00-Golden_Dawn-Phoenix_Evening_Lectures%2FTranscripts%2F#%20
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing113bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(26, webDirectory.Files.Count);
+            Assert.Equal("5411C17 - GD-01 The Wrong Thing to Do is Nothing LE171154.doc", webDirectory.Files[0].FileName);
+            Assert.Equal(79872, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: https://149.56.222.150/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing114aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(20, webDirectory.Subdirectories.Count);
+            Assert.Equal("1393", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(5, webDirectory.Files.Count);
+            Assert.Equal("ADM.zip", webDirectory.Files[0].FileName);
+            Assert.Equal(3320114, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: https://149.56.222.150/index.php?dir=1393%2FAban%2FAlbum%2FArash%20-%20Superman%2FArash%20-%20Superman%20%5B128%5D
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing114bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(17, webDirectory.Files.Count);
+            Assert.Equal("01. One Day (feat. Helena) [128].mp3", webDirectory.Files[0].FileName);
+            Assert.Equal(3437754, webDirectory.Files[0].FileSize);
         }
     } 
 }
