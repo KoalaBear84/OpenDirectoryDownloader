@@ -252,14 +252,14 @@ namespace OpenDirectoryDownloader
                     {
                         string processorId = i.ToString();
 
-                        WebDirectoryProcessors[i - 1] = WebDirectoryProcessor(WebDirectoriesQueue, $"Processor {processorId}", IndexingTaskCTS.Token);
+                        WebDirectoryProcessors[i - 1] = WebDirectoryProcessor(WebDirectoriesQueue, $"P{processorId}", IndexingTaskCTS.Token);
                     }
 
                     for (int i = 1; i <= WebFileFileSizeProcessors.Length; i++)
                     {
                         string processorId = i.ToString();
 
-                        WebFileFileSizeProcessors[i - 1] = WebFileFileSizeProcessor(WebFilesFileSizeQueue, $"Processor {processorId}", WebDirectoryProcessors, IndexingTaskCTS.Token);
+                        WebFileFileSizeProcessors[i - 1] = WebFileFileSizeProcessor(WebFilesFileSizeQueue, $"P{processorId}", WebDirectoryProcessors, IndexingTaskCTS.Token);
                     }
 
                     await Task.WhenAll(WebDirectoryProcessors);
