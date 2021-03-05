@@ -29,7 +29,7 @@ namespace OpenDirectoryDownloader.Shared.Models
         public bool Finished { get; set; }
 
         [JsonIgnore]
-        public bool ParsedSuccesfully { get; set; }
+        public bool ParsedSuccessfully { get; set; }
 
         public ConcurrentList<WebDirectory> Subdirectories { get; set; } = new ConcurrentList<WebDirectory>();
 

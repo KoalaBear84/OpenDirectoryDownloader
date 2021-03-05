@@ -62,10 +62,10 @@ namespace OpenDirectoryDownloader
 
             foreach (KeyValuePair<int, int> statusCode in session.HttpStatusCodes.OrderBy(statusCode => statusCode.Key))
             {
-                stringBuilder.AppendLine($"{statusCode.Key}: {statusCode.Value}");
+                stringBuilder.AppendLine($"{statusCode.Key}: {statusCode.Value}"); 
             }
 
-            stringBuilder.AppendLine($"Total files: {Library.FormatWithThousands(session.Root.TotalFiles)}, Total estimated size: {FileSizeHelper.ToHumanReadable(session.Root.TotalFileSize)}");
+            stringBuilder.AppendLine($"Total files: {Library.FormatWithThousands(session.Root.TotalFiles)}, Total estimated size: { (session.Root.TotalFileSize > 0 ? FileSizeHelper.ToHumanReadable(session.Root.TotalFileSize) : "n/a") }");
             stringBuilder.AppendLine($"Total directories: {Library.FormatWithThousands(session.Root.TotalDirectories + 1)}");
             stringBuilder.AppendLine($"Total HTTP requests: {Library.FormatWithThousands(session.TotalHttpRequests)}, Total HTTP traffic: {FileSizeHelper.ToHumanReadable(session.TotalHttpTraffic)}");
 

@@ -116,14 +116,14 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Bhadoo
                     }
                     else
                     {
-                        webDirectory.ParsedSuccesfully = httpResponseMessage.IsSuccessStatusCode;
+                        webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
                         httpResponseMessage.EnsureSuccessStatusCode();
 
                         string responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
 
                         BhadooIndexResponse indexResponse = BhadooIndexResponse.FromJson(responseJson);
 
-                        webDirectory.ParsedSuccesfully = indexResponse.Data.Error == null;
+                        webDirectory.ParsedSuccessfully = indexResponse.Data.Error == null;
 
                         if (indexResponse.Data.Error?.Message == "Rate Limit Exceeded")
                         {
