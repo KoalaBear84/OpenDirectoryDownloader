@@ -100,7 +100,7 @@ namespace OpenDirectoryDownloader
                 htmlDocument.QuerySelectorAll("#sidebar").ToList().ForEach(e => e.Remove());
                 htmlDocument.QuerySelectorAll("nav").ToList().ForEach(e => e.Remove());
 
-                // The order of the checks are very important!
+                // The order of the checks is very important!
 
                 IHtmlCollection<IElement> directoryListingDotComlistItems = htmlDocument.QuerySelectorAll("#directory-listing li, .directory-listing li");
 
@@ -2066,9 +2066,9 @@ namespace OpenDirectoryDownloader
 
             headerName = headerName.ToLower();
 
-            headerName = Regex.Replace(headerName, @"[^a-zA-Z0-9\s一-龥äöüÄÖÜß]", string.Empty);
+            headerName = Regex.Replace(headerName, @"[^\u00BF-\u1FFF\u2C00-\uD7FF\w]", string.Empty);
 
-            if (headerName == "last modified" || headerName == "modified" || headerName.Contains("date") || headerName.Contains("last modification") || headerName.Contains("time") || headerName.Contains("修改时间") || headerName.Contains("修改日期"))
+            if (headerName == "last modified" || headerName == "modified" || headerName.Contains("date") || headerName.Contains("last modification") || headerName.Contains("time") || headerName.Contains("修改时间") || headerName.Contains("修改日期") || headerName.Contains("最終更新"))
             {
                 headerInfo.Type = HeaderType.Modified;
             }
@@ -2082,7 +2082,9 @@ namespace OpenDirectoryDownloader
                 headerName.Contains("taille") ||
                 // Creates a problem for a single testcase, need to find a better way
                 //headerName.Contains("größe") ||
-                headerName.Contains("大小"))
+                headerName.Contains("大小") ||
+                headerName.Contains("サイズ")
+            )
             {
                 headerInfo.Type = HeaderType.FileSize;
             }
@@ -2093,15 +2095,20 @@ namespace OpenDirectoryDownloader
             }
 
             // Check this as last one because of generic 'file' in it..
-            if (headerInfo.Type == HeaderType.Unknown &&
-                (headerName == "file" ||
-                headerName == "name" ||
-                headerName.Contains("file name") ||
-                headerName.Contains("filename") ||
-                headerName == "directory" ||
-                headerName.Contains("link") ||
-                headerName.Contains("nom") ||
-                headerName.Contains("文件")))
+            if (
+                headerInfo.Type == HeaderType.Unknown &&
+                (
+                    headerName == "file" ||
+                    headerName == "name" ||
+                    headerName.Contains("file name") ||
+                    headerName.Contains("filename") ||
+                    headerName == "directory" ||
+                    headerName.Contains("link") ||
+                    headerName.Contains("nom") ||
+                    headerName.Contains("文件") ||
+                    headerName.Contains("ファイル名")
+                )
+            )
             {
                 headerInfo.Type = HeaderType.FileName;
             }
