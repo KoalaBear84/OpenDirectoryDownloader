@@ -693,7 +693,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("AGA 6-4 Ceramic Hob Pre Oven Efficiency", webDirectory.Subdirectories[0].Name);
             Assert.Equal(8, webDirectory.Files.Count);
             Assert.Equal("Aga Elect 13amp 2 and 4 oven manual 03-07 EINS 513935 (UK).pdf", webDirectory.Files[0].FileName);
-            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+            Assert.Equal(0, webDirectory.Files[0].FileSize);
         }
 
         /// <summary>
@@ -708,7 +708,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Empty(webDirectory.Subdirectories);
             Assert.Equal(2, webDirectory.Files.Count);
             Assert.Equal("Aga Six Four electric manual11-09 EINS 513129.pdf", webDirectory.Files[0].FileName);
-            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+            Assert.Equal(0, webDirectory.Files[0].FileSize);
         }
 
         /// <summary>
