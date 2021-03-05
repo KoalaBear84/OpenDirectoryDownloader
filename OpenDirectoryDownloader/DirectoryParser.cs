@@ -65,7 +65,8 @@ namespace OpenDirectoryDownloader
                     return await BlitzfilesTechParser.ParseIndex(httpClient, webDirectory);
                 }
 
-                if (htmlDocument.QuerySelector("script[src*=\"goindex-theme-acrou\" i]") != null)
+                if (htmlDocument.QuerySelector("script[src*=\"goindex-theme-acrou\" i]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"savemydinar/esmailtv\" i]") != null)
                 {
                     return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
                 }
