@@ -611,6 +611,13 @@ namespace OpenDirectoryDownloader
                             }
                             else if (Session.Root.Uri.Host == Constants.GoogleDriveDomain)
                             {
+                                if (webDirectory.Uri.Segments.Contains("folderview"))
+                                {
+                                    UrlEncodingParser urlEncodingParser = new UrlEncodingParser(webDirectory.Url);
+
+                                    webDirectory.Url = $"https://drive.google.com/drive/folders/{urlEncodingParser["id"]}";
+                                }
+
                                 string baseUrl = webDirectory.Url;
 
                                 WebDirectory parsedWebDirectory = await GoogleDriveIndexer.IndexAsync(webDirectory);
