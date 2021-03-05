@@ -133,7 +133,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("Crystal Maps", webDirectory.Subdirectories[0].Name);
             Assert.Single(webDirectory.Files);
             Assert.Equal("Pokemon Crystal.sg1.SGM", webDirectory.Files[0].FileName);
-            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+            Assert.Equal(0, webDirectory.Files[0].FileSize);
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("Nintendo DS", webDirectory.Subdirectories[0].Name);
             Assert.Equal(7, webDirectory.Files.Count);
             Assert.Equal("Pokemon Dash.zip", webDirectory.Files[0].FileName);
-            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+            Assert.Equal(0, webDirectory.Files[0].FileSize);
         }
 
         /// <summary>

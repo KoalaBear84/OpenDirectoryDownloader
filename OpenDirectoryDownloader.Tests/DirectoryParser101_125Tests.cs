@@ -53,7 +53,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("@eaDir", webDirectory.Subdirectories[0].Name);
             Assert.Equal(57, webDirectory.Files.Count);
             Assert.Equal("2020 Force Works 002 (2020) (Digital) (Zone-Empire).cbr", webDirectory.Files[0].FileName);
-            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+            Assert.Equal(0, webDirectory.Files[0].FileSize);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Empty(webDirectory.Subdirectories);
             Assert.Equal(24, webDirectory.Files.Count);
             Assert.Equal("Amazon.cbr", webDirectory.Files[0].FileName);
-            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+            Assert.Equal(0, webDirectory.Files[0].FileSize);
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("2009-addition", webDirectory.Subdirectories[0].Name);
             Assert.Equal(5, webDirectory.Files.Count);
             Assert.Equal("change_log.txt", webDirectory.Files[0].FileName);
-            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+            Assert.Equal(0, webDirectory.Files[0].FileSize);
         }
 
         /// <summary>
