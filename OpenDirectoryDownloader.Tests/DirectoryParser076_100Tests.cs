@@ -66,7 +66,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Empty(webDirectory.Subdirectories);
             Assert.Equal(487, webDirectory.Files.Count);
             Assert.Equal("Q836 (Side A).mp3", webDirectory.Files[0].FileName);
-            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+            Assert.Equal(0, webDirectory.Files[0].FileSize);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Empty(webDirectory.Subdirectories);
             Assert.Equal(18, webDirectory.Files.Count);
             Assert.Equal("bootstrap.cerulean.min.css", webDirectory.Files[0].FileName);
-            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+            Assert.Equal(0, webDirectory.Files[0].FileSize);
         }
 
         /// <summary>
@@ -399,7 +399,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("视频", webDirectory.Subdirectories[0].Name);
             Assert.Equal(32, webDirectory.Files.Count);
             Assert.Equal("␠(1).jpg", webDirectory.Files[0].FileName);
-            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+            Assert.Equal(0, webDirectory.Files[0].FileSize);
         }
 
         /// <summary>
@@ -429,7 +429,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("Amiga", webDirectory.Subdirectories[0].Name);
             Assert.Single(webDirectory.Files);
             Assert.Equal("[All Systems-Complete].torrent", webDirectory.Files[0].FileName);
-            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+            Assert.Equal(0, webDirectory.Files[0].FileSize);
         }
 
         /// <summary>
@@ -444,7 +444,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Empty(webDirectory.Subdirectories);
             Assert.Equal(8, webDirectory.Files.Count);
             Assert.Equal("3D Boxing.zip", webDirectory.Files[0].FileName);
-            Assert.Equal(-1, webDirectory.Files[0].FileSize);
+            Assert.Equal(0, webDirectory.Files[0].FileSize);
         }
 
         // TODO:

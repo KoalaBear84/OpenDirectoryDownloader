@@ -145,14 +145,14 @@ namespace OpenDirectoryDownloader.Site.GoIndex.GdIndex
 
                 HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"{OpenDirectoryIndexer.Session.Root.Url}{Uri.EscapeDataString(webDirectory.Url.Replace(OpenDirectoryIndexer.Session.Root.Url, string.Empty).TrimEnd('/'))}/?rootId={OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_GdIndex_RootId]}", null);
 
-                webDirectory.ParsedSuccesfully = httpResponseMessage.IsSuccessStatusCode;
+                webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
                 httpResponseMessage.EnsureSuccessStatusCode();
 
                 string responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
 
                 GdIndexResponse indexResponse = GdIndexResponse.FromJson(responseJson);
 
-                webDirectory.ParsedSuccesfully = indexResponse != null;
+                webDirectory.ParsedSuccessfully = indexResponse != null;
 
                 foreach (File file in indexResponse.Files)
                 {

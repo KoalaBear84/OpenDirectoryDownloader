@@ -152,14 +152,14 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Go2Index
                             { "q", "" }
                         })));
 
-                        webDirectory.ParsedSuccesfully = httpResponseMessage.IsSuccessStatusCode;
+                        webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
                         httpResponseMessage.EnsureSuccessStatusCode();
 
                         string responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
 
                         Go2IndexResponse indexResponse = Go2IndexResponse.FromJson(responseJson);
 
-                        webDirectory.ParsedSuccesfully = indexResponse.Error == null;
+                        webDirectory.ParsedSuccessfully = indexResponse.Error == null;
 
                         if (indexResponse.Error != null)
                         {

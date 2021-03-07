@@ -49,6 +49,9 @@ namespace OpenDirectoryDownloader
         [Option("output-file", Required = false, Default = null, HelpText = "Save output files to specific base filename")]
         public string OutputFile { get; set; }
 
+        [Option("fast-scan", Required = false, Default = false, HelpText = "Only perform actions that are fast, so no HEAD requests, etc. Might result in missing file sizes")]
+        public bool FastScan { get; set; }
+
         // TODO: Future use
         //[Option('d', "download", Required = false, HelpText = "Downloads the contents (after indexing is finished)")]
         //public bool Download { get; set; }

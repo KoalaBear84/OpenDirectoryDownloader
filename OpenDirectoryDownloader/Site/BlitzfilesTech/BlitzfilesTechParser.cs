@@ -100,7 +100,7 @@ namespace OpenDirectoryDownloader.Site.BlitzfilesTech
 
                     HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(GetFolderUrl(driveHash, entryHash, pageIndex));
 
-                    webDirectory.ParsedSuccesfully = httpResponseMessage.IsSuccessStatusCode;
+                    webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
                     httpResponseMessage.EnsureSuccessStatusCode();
 
                     string responseJson = await httpResponseMessage.Content.ReadAsStringAsync();

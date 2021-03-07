@@ -62,10 +62,10 @@ namespace OpenDirectoryDownloader
 
             foreach (KeyValuePair<int, int> statusCode in session.HttpStatusCodes.OrderBy(statusCode => statusCode.Key))
             {
-                stringBuilder.AppendLine($"{statusCode.Key}: {statusCode.Value}");
+                stringBuilder.AppendLine($"{statusCode.Key}: {statusCode.Value}"); 
             }
 
-            stringBuilder.AppendLine($"Total files: {Library.FormatWithThousands(session.Root.TotalFiles)}, Total estimated size: {FileSizeHelper.ToHumanReadable(session.Root.TotalFileSize)}");
+            stringBuilder.AppendLine($"Total files: {Library.FormatWithThousands(session.Root.TotalFiles)}, Total estimated size: { (session.Root.TotalFileSize > 0 ? FileSizeHelper.ToHumanReadable(session.Root.TotalFileSize) : "n/a") }");
             stringBuilder.AppendLine($"Total directories: {Library.FormatWithThousands(session.Root.TotalDirectories + 1)}");
             stringBuilder.AppendLine($"Total HTTP requests: {Library.FormatWithThousands(session.TotalHttpRequests)}, Total HTTP traffic: {FileSizeHelper.ToHumanReadable(session.TotalHttpTraffic)}");
 
@@ -91,12 +91,18 @@ namespace OpenDirectoryDownloader
             {
                 stringBuilder.AppendLine("|**Extension (Top 5)**|**Files**|**Size**|");
 
-                foreach (KeyValuePair<string, ExtensionStats> extensionStat in extensionsStats.OrderByDescending(e => e.Value.FileSize).Take(5))
+                foreach (KeyValuePair<string, ExtensionStats> extensionStat in extensionsStats.OrderByDescending(e => {
+                    if (e.Value.FileSize > 0) {
+                        return e.Value.FileSize;
+                    } else {
+                        return e.Value.Count;
+                    }
+                }).Take(5))
                 {
-                    stringBuilder.AppendLine($"|{extensionStat.Key}|{Library.FormatWithThousands(extensionStat.Value.Count)}|{FileSizeHelper.ToHumanReadable(extensionStat.Value.FileSize)}|");
+                    stringBuilder.AppendLine($"|{extensionStat.Key}|{Library.FormatWithThousands(extensionStat.Value.Count)}|{ (extensionStat.Value.FileSize > 0 ? FileSizeHelper.ToHumanReadable(extensionStat.Value.FileSize) : "n/a")}|");
                 }
 
-                stringBuilder.AppendLine($"|**Dirs:** {Library.FormatWithThousands(session.Root.TotalDirectories + 1)} **Ext:** {Library.FormatWithThousands(extensionsStats.Count)}|**Total:** {Library.FormatWithThousands(session.TotalFiles)}|**Total:** {FileSizeHelper.ToHumanReadable(session.TotalFileSizeEstimated)}|");
+                stringBuilder.AppendLine($"|**Dirs:** {Library.FormatWithThousands(session.Root.TotalDirectories + 1)} **Ext:** {Library.FormatWithThousands(extensionsStats.Count)}|**Total:** {Library.FormatWithThousands(session.TotalFiles)}|**Total:** { (session.TotalFileSizeEstimated > 0 ? FileSizeHelper.ToHumanReadable(session.TotalFileSizeEstimated) : "n/a") }|");
             }
 
             stringBuilder.AppendLine($"|**Date (UTC):** {session.Started.ToString(Constants.DateTimeFormat)}|**Time:** {TimeSpan.FromSeconds((int)((session.Finished == DateTimeOffset.MinValue ? DateTimeOffset.UtcNow : session.Finished) - session.Started).TotalSeconds)}|{(session.SpeedtestResult != null ? $"**Speed:** {(session.SpeedtestResult.DownloadedBytes > 0 ? $"{session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)" : "Failed")}" : string.Empty)}|");
