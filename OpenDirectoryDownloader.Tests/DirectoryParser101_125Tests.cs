@@ -388,5 +388,20 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("01. One Day (feat. Helena) [128].mp3", webDirectory.Files[0].FileName);
             Assert.Equal(3437754, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: http://126.79.119.89:8181/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing115aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(12, webDirectory.Subdirectories.Count);
+            Assert.Equal(12, webDirectory.Files.Count);
+            Assert.Equal("Thumbs.db", webDirectory.Files[0].FileName);
+            Assert.Equal(26010, webDirectory.Files[0].FileSize);
+        }
     } 
 }
