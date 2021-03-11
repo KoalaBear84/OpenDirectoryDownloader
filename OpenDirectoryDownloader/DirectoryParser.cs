@@ -710,6 +710,25 @@ namespace OpenDirectoryDownloader
                 KeyValuePair<int, HeaderInfo> descriptionHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.Description);
                 int descriptionHeaderColumnIndex = descriptionHeader.Value != null ? descriptionHeader.Key : 0;
 
+                // Extra fallback
+                if (fileSizeHeaderColumnIndex != 0 && nameHeaderColumnIndex == 0)
+                {
+                    foreach (IElement tableRow in table.QuerySelectorAll("tbody tr"))
+                    {
+                        if (nameHeaderColumnIndex == 0 && tableRow.QuerySelectorAll("a").Length == 1)
+                        {
+                            foreach (IElement tableColumn in tableRow.QuerySelectorAll("td"))
+                            {
+                                if (tableColumn.QuerySelector("a") != null)
+                                {
+                                    nameHeaderColumnIndex = tableColumn.Index();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
                 if (fileSizeHeaderColumnIndex == 0 && nameHeaderColumnIndex == 0)
                 {
                     if (table.QuerySelector("a") != null)
@@ -2079,7 +2098,7 @@ namespace OpenDirectoryDownloader
                 headerInfo.Type = HeaderType.Type;
             }
 
-            if (headerName == "size" || headerName.Contains("file size") || headerName.Contains("filesize") ||
+            if (headerName.Contains("size") || headerName.Contains("file size") || headerName.Contains("filesize") ||
                 headerName.Contains("taille") ||
                 // Creates a problem for a single testcase, need to find a better way
                 //headerName.Contains("größe") ||

@@ -399,9 +399,41 @@ namespace OpenDirectoryDownloader.Tests
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(12, webDirectory.Subdirectories.Count);
+            Assert.Equal("basms", webDirectory.Subdirectories[0].Name);
             Assert.Equal(12, webDirectory.Files.Count);
             Assert.Equal("Thumbs.db", webDirectory.Files[0].FileName);
             Assert.Equal(26010, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://221.158.16.55:8080/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing116aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Single(webDirectory.Subdirectories);
+            Assert.Equal("The.Penthouse.S02E03.KOREAN.1080p.WEBRip.AAC2.0.x264-AppleTor[rartv]", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(9, webDirectory.Files.Count);
+            Assert.Equal("AnySign_Installer (1).exe", webDirectory.Files[0].FileName);
+            Assert.Equal(11514460, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://221.158.16.55:8080/The.Penthouse.S02E03.KOREAN.1080p.WEBRip.AAC2.0.x264-AppleTor[rartv]/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing116bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(3, webDirectory.Files.Count);
+            Assert.Equal("RARBG.txt", webDirectory.Files[0].FileName);
+            Assert.Equal(31, webDirectory.Files[0].FileSize);
         }
     } 
 }

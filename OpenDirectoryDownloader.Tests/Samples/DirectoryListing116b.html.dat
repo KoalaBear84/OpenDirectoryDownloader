@@ -1,0 +1,35 @@
+﻿
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Directory Contents</title>
+    <link rel="stylesheet" href="./fenixassets/css/style.css">
+    <link rel="icon" rel="shortcut icon" href="./fenixassets/fenix.ico">
+    <script src="./fenixassets/js/sorttable.js"></script>
+  </head>
+  <body>
+    <div id="container" style="background-image:url('./fenixassets/fenix.png');background-repeat:no-repeat;background-position:99% 10px;background-size:87px;">
+      <h1>Directory Contents</h1>
+      <table class="sortable" width="100%">
+        <thead>
+          <tr>
+            <th>Filename</th>
+            <th>Type</th>
+            <th>Size <small>(kb)</small></th>
+            <th>Date Modified</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="dir">
+            <td sorttable_customkey="0"><a href="../">.. <span style="color:rgba(0,0,0,.25);font-size:xx-small;">(Parent Directory)</span></a></td>
+            <td sorttable_customkey="0"><a href="../">&lt;Directory&gt;</a></td>
+            <td sorttable_customkey="0"></td>
+            <td sorttable_customkey="0"></td>
+          </tr>
+          <tr class='file'><td><a href='././RARBG.txt'>RARBG.txt</a></td><td><a href='././RARBG.txt'>Text File</a></td><td><a href='././RARBG.txt'>0.03 KB</a></td><td sorttable_customkey='1614517927004'><a href='././RARBG.txt'>Sun Feb 28 2021 22:12:07 GMT+0900 (대한민국 표준시)</a></td></tr><tr class='file'><td><a href='././The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.mp4'>The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.mp4</a></td><td><a href='././The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.mp4'>MP4 File</a></td><td><a href='././The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.mp4'>2784718.87 KB</a></td><td sorttable_customkey='1614518043370'><a href='././The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.mp4'>Sun Feb 28 2021 22:14:03 GMT+0900 (대한민국 표준시)</a></td></tr><tr class='file'><td><a href='././The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.srt'>The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.srt</a></td><td><a href='././The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.srt'>SRT File</a></td><td><a href='././The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.srt'>73.76 KB</a></td><td sorttable_customkey='1614517956612'><a href='././The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.srt'>Sun Feb 28 2021 22:12:36 GMT+0900 (대한민국 표준시)</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
