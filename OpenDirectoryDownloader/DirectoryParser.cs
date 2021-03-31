@@ -72,6 +72,7 @@ namespace OpenDirectoryDownloader
                 }
 
                 if (htmlDocument.QuerySelector("script[src*=\"Bhadoo-Drive-Index\" i]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"Google-Drive-Index\" i]") != null ||
                     htmlDocument.QuerySelector("script[src*=\"/AjmalShajahan97/goindex\" i]") != null ||
                     htmlDocument.QuerySelector("script[src*=\"/LeeluPradhan/G-Index\" i]") != null ||
                     htmlDocument.QuerySelector("script[src*=\"/K-E-N-W-A-Y/GD-Index-Dark\" i]") != null ||
