@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "OpenDirectoryDownloader": {
+      "commandName": "Project",
+      "commandLineArgs": "--threads 1 --json --upload-urls --speedtest"
+    }
+  }
+}
