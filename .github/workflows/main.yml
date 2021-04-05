@@ -157,7 +157,8 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: src
+          context: ./src
+          file: ./src/Dockerfile
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/opendirectorydownloader:latest
