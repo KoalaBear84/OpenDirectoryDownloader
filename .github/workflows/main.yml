@@ -64,13 +64,13 @@ jobs:
       run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/v}
       
     - name: Build with dotnet
-      run: dotnet build OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }}
+      run: dotnet build src/OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }}
 
     - name: Test with dotnet
-      run: dotnet test OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }}
+      run: dotnet test src/OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }}
 
     - name: Publish with dotnet
-      run: dotnet publish OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }} --framework net5.0 --runtime ${{ matrix.target }} ${{ matrix.build_args }} -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}
+      run: dotnet publish src/OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }} --framework net5.0 --runtime ${{ matrix.target }} ${{ matrix.build_args }} -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}
 
     - name: Set executable bit (linux only)
       if: ${{ matrix.os == 'ubuntu-latest' }}
