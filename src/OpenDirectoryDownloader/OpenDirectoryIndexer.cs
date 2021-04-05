@@ -961,7 +961,7 @@ namespace OpenDirectoryDownloader
 
         private static async Task<string> GetHtml(HttpResponseMessage httpResponseMessage)
         {
-            if (httpResponseMessage.Content.Headers.ContentType?.CharSet.ToLower() == "utf8" || httpResponseMessage.Content.Headers.ContentType?.CharSet == "GB1212")
+            if (httpResponseMessage.Content.Headers.ContentType?.CharSet?.ToLower() == "utf8" || httpResponseMessage.Content.Headers.ContentType?.CharSet == "GB1212")
             {
                 httpResponseMessage.Content.Headers.ContentType.CharSet = "UTF-8";
             }
