@@ -142,7 +142,7 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Go2Index
                     {
                         await RateLimiter.RateLimit();
 
-                        Logger.Warn($"Retrieving listings {(retry > 0 ? $"(retry {retry})" : string.Empty)} for {webDirectory.Uri} with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}, page {pageIndex + 1}");
+                        Logger.Warn($"Retrieving listings {(retry > 0 ? $"(retry {retry})" : string.Empty)} for {webDirectory.Uri}, page {pageIndex + 1}");
 
                         HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
                         {

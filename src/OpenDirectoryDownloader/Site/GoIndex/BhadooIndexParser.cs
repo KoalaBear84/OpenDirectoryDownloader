@@ -96,7 +96,7 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Bhadoo
 
                 do
                 {
-                    Logger.Warn($"Retrieving listings for {webDirectory.Uri} with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}, page {pageIndex + 1}");
+                    Logger.Warn($"Retrieving listings for {webDirectory.Uri}, page {pageIndex + 1}");
 
                     Dictionary<string, string> postValues = new Dictionary<string, string>
                     {

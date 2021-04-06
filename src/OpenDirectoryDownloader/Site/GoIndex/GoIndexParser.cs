@@ -126,6 +126,8 @@ namespace OpenDirectoryDownloader.Site.GoIndex
                     webDirectory.Url += "/";
                 }
 
+                Logger.Warn($"Retrieving listings for {webDirectory.Uri}");
+
                 HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
                 {
                     { "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] }

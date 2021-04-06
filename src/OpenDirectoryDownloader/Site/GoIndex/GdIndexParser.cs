@@ -143,6 +143,8 @@ namespace OpenDirectoryDownloader.Site.GoIndex.GdIndex
                     webDirectory.Url += "/";
                 }
 
+                Logger.Warn($"Retrieving listings for {webDirectory.Uri}");
+
                 HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"{OpenDirectoryIndexer.Session.Root.Url}{Uri.EscapeDataString(webDirectory.Url.Replace(OpenDirectoryIndexer.Session.Root.Url, string.Empty).TrimEnd('/'))}/?rootId={OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_GdIndex_RootId]}", null);
 
                 webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
