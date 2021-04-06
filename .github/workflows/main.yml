@@ -63,6 +63,9 @@ jobs:
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/v}
       
+    - name: Restore with dotnet
+      run: dotnet restore src/OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }}
+
     - name: Build with dotnet
       run: dotnet build src/OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }}
 
