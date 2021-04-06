@@ -130,13 +130,13 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Go2Index
                     webDirectory.Url += "/";
                 }
 
-                long pageIndex = 0;
-                string nextPageToken = null;
+                int retry = 0;
+                bool error = false;
 
                 do
                 {
-                    int retry = 0;
-                    bool error = false;
+                    long pageIndex = 0;
+                    string nextPageToken = null;
 
                     do
                     {
@@ -207,8 +207,8 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Go2Index
                                 });
                             }
                         }
-                    } while (error && retry < 5);
-                } while (!string.IsNullOrWhiteSpace(nextPageToken));
+                    } while (!string.IsNullOrWhiteSpace(nextPageToken));
+                } while (error && retry < 5);
 
                 webDirectory.Error = false;
             }
