@@ -71,6 +71,16 @@ namespace OpenDirectoryDownloader
                     return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
                 }
 
+                if (htmlDocument.QuerySelector("script[src*=\"5MayRain/goIndex-theme-nexmoe\" i]") != null)
+                {
+                    return await GoIndexParser.ParseIndex(httpClient, webDirectory);
+                }
+
+                if (htmlDocument.QuerySelector("script[src*=\"gdindex\" i]") != null)
+                {
+                    return await GdIndexParser.ParseIndex(httpClient, webDirectory, html);
+                }
+
                 if (htmlDocument.QuerySelector("script[src*=\"Bhadoo-Drive-Index\" i]") != null ||
                     htmlDocument.QuerySelector("script[src*=\"/AjmalShajahan97/goindex\" i]") != null ||
                     htmlDocument.QuerySelector("script[src*=\"/LeeluPradhan/G-Index\" i]") != null ||
@@ -82,11 +92,6 @@ namespace OpenDirectoryDownloader
                     htmlDocument.QuerySelector("script[src*=\"/goIndex-theme-nexmoe\" i]") != null)
                 {
                     return await BhadooIndexParser.ParseIndex(httpClient, webDirectory);
-                }
-
-                if (htmlDocument.QuerySelector("script[src*=\"gdindex\" i]") != null)
-                {
-                    return await GdIndexParser.ParseIndex(httpClient, webDirectory, html);
                 }
 
                 if (htmlDocument.QuerySelector("script[src*=\"/go2index/\" i]") != null ||
