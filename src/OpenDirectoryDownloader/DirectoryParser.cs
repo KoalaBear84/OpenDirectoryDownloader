@@ -77,6 +77,8 @@ namespace OpenDirectoryDownloader
                     htmlDocument.QuerySelector("script[src*=\"/K-E-N-W-A-Y/GD-Index-Dark\" i]") != null ||
                     htmlDocument.QuerySelector("script[src*=\"/ParveenBhadooOfficial/Google-Drive-Index\" i]") != null ||
                     htmlDocument.QuerySelector("script[src*=\"/ParveenBhadooOfficial/BhadooJS\" i]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/yanzai/goindex\" i]") != null ||
+                    htmlDocument.QuerySelector("script[src*=\"/RemixDev/goindex\" i]") != null ||
                     htmlDocument.QuerySelector("script[src*=\"/goIndex-theme-nexmoe\" i]") != null)
                 {
                     return await BhadooIndexParser.ParseIndex(httpClient, webDirectory);
