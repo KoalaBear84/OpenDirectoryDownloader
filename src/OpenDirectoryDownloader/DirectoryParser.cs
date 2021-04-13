@@ -207,7 +207,8 @@ namespace OpenDirectoryDownloader
 
                 listItems = htmlDocument.QuerySelectorAll("ul li");
 
-                if (listItems.Any())
+                // ul#file-list is https://www.directorylister.com/'s pseudo-list, link parsing works better here
+                if (listItems.Any() && htmlDocument.QuerySelectorAll("ul#file-list").Length == 0)
                 {
                     WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems);
 
