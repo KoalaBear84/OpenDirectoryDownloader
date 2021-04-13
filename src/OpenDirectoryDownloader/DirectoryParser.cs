@@ -188,7 +188,7 @@ namespace OpenDirectoryDownloader
                     return ParseMaterialDesignListItemsDirectoryListing(baseUrl, parsedWebDirectory, materialDesignListItems);
                 }
 
-                if (htmlDocument.Title.EndsWith("Directory Lister") && htmlDocument.QuerySelectorAll("#content ul#file-list li").Length == 2)
+                if (htmlDocument.QuerySelectorAll("#content ul#file-list li").Length == 2)
                 {
                     return ParseDirectoryListerDirectoryListing(baseUrl, parsedWebDirectory, htmlDocument);
                 }
@@ -207,8 +207,7 @@ namespace OpenDirectoryDownloader
 
                 listItems = htmlDocument.QuerySelectorAll("ul li");
 
-                // ul#file-list is https://www.directorylister.com/'s pseudo-list, link parsing works better here
-                if (listItems.Any() && htmlDocument.QuerySelectorAll("ul#file-list").Length == 0)
+                if (listItems.Any())
                 {
                     WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems);
 

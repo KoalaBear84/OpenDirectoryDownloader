@@ -1,0 +1,378 @@
+
+<!DOCTYPE html>
+
+<meta charset="utf-8">
+<meta name="description" content="Just a way for me to store music, software and roms publicly.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="icon" href="app/assets/images/favicon.light.png?id=4be061744d10326a8783">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="stylesheet" href="app/assets/app.css?id=6d85fde727004d910b13">
+
+
+
+<title>Music\Metallica\19 Albums - 23 CDs - 1983-2008\Metallica - 1984 - Jump In The Fire &bull; Visu.PUB Open File Server</title>
+
+<div id="app" v-bind:class="{ dark: darkMode }">
+    <div class="flex flex-col min-h-screen font-sans dark:bg-gray-800">
+            <header id="header" class="bg-blue-600 shadow sticky top-0 dark:bg-purple-700">
+    <div class="border-b border-blue-700 dark:border-purple-800">
+        <div class="container flex flex-wrap justify-between items-center space-x-6 mx-auto p-4 md:flex-row xl:max-w-screen-xl">
+            <a href="." class="flex items-center space-x-2 p-1" title="Visu.PUB Open File Server">
+                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="folder-tree" class="inline-block fill-current text-white w-8 h-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                    <path fill="currentColor" d="M544 32H432L400 0h-80a32 32 0 0 0-32 32v160a32 32 0 0 0 32 32h224a32 32 0 0 0 32-32V64a32 32 0 0 0-32-32zm0 288H432l-32-32h-80a32 32 0 0 0-32 32v160a32 32 0 0 0 32 32h224a32 32 0 0 0 32-32V352a32 32 0 0 0-32-32zM64 16A16 16 0 0 0 48 0H16A16 16 0 0 0 0 16v400a32 32 0 0 0 32 32h224v-64H64V160h192V96H64z"></path>
+                </svg>
+            </a>
+
+            <div class="flex-1 max-w-xl">
+                <form id="search" action="." method="get" class="group relative block bg-blue-700 rounded-full shadow-inner dark:bg-purple-800">
+    <input type="text" value="" name="search" placeholder="Search..."
+        class="bg-transparent placeholder-gray-900 text-white w-full px-10 py-2"
+        ref="searchInput" v-on:focus="$event.target.select()"
+    >
+
+    <div class="flex items-center absolute left-0 inset-y-0 ml-2 pointer-events-none">
+        <div class="flex justify-center items-center text-gray-900 text-opacity-50 w-6 h-6">
+            <i class="fas fa-search fa-fw"></i>
+        </div>
+    </div>
+
+    </form>
+            </div>
+
+            <div class="flex items-center justify-center w-6">
+                <div class="flex flex-col justify-center items-center bg-gray-900 bg-opacity-30 rounded-full cursor-pointer w-4 h-8" title="Toggle Light/Dark Mode" v-on:click="toggleTheme">
+    <div class="flex justify-center items-center bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" v-bind:class="{ '-translate-y-2': lightMode, 'translate-y-2': darkMode }">
+        <i class="fas fa-lightbulb fa-xs" v-bind:class="{ 'text-gray-600': darkMode, 'text-yellow-400': lightMode }"></i>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="border-t border-blue-500 dark:border-purple-600">
+        <div class="container flex flex-wrap justify-between items-center space-x-6 mx-auto px-4 py-1 md:flex-row xl:max-w-screen-xl">
+            <div class="flex-1 font-mono text-white text-sm tracking-tight overflow-x-auto whitespace-nowrap py-1">
+    <a href="." class="inline-block hover:underline">
+        Home
+    </a>
+
+                        / <a href="?dir=Music" class="inline-block hover:underline">Music</a>
+                    / <a href="?dir=Music\Metallica" class="inline-block hover:underline">Metallica</a>
+                    / <a href="?dir=Music\Metallica\19%20Albums%20-%2023%20CDs%20-%201983-2008" class="inline-block hover:underline">19 Albums - 23 CDs - 1983-2008</a>
+                    / <a href="?dir=Music\Metallica\19%20Albums%20-%2023%20CDs%20-%201983-2008\Metallica%20-%201984%20-%20Jump%20In%20The%20Fire" class="inline-block hover:underline">Metallica - 1984 - Jump In The Fire</a>
+            </div>
+
+                    </div>
+    </div>
+</header>
+
+    <div id="content" class="flex flex-col flex-grow container mx-auto px-4 xl:max-w-screen-xl dark:text-white">
+        <div class="my-4">
+            <div class="flex justify-between font-bold p-4">
+                <div class="flex-grow font-mono mr-2">
+                    File Name
+                </div>
+
+                <div class="font-mono text-right w-1/6 mx-2 hidden sm:block">
+                    Size
+                </div>
+
+                <div class="font-mono text-right w-1/4 ml-2 hidden sm:block">
+                    Date
+                </div>
+            </div>
+
+            <ul id="file-list">
+                <li>
+                                            <a
+    href="?dir=Music\Metallica\19%20Albums%20-%2023%20CDs%20-%201983-2008"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-100 hover:shadow dark:hover:bg-purple-700"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-level-up-alt fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            ..
+        </div>
+
+        
+        <div class="hidden whitespace-nowrap text-right mx-2 w-1/6 sm:block">
+                                —
+                    </div>
+
+        <div class="hidden whitespace-nowrap text-right truncate ml-2 w-1/4 sm:block">
+            —
+        </div>
+    </div>
+</a>
+
+                                    </li>
+
+                <li>
+                                            <a
+    href="Music\Metallica\19%20Albums%20-%2023%20CDs%20-%201983-2008\Metallica%20-%201984%20-%20Jump%20In%20The%20Fire\Metallica%20-%201984%20-%20Jump%20In%20The%20Fire%20-%20Front.jpg"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-100 hover:shadow dark:hover:bg-purple-700"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-image fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            Metallica - 1984 - Jump In The Fire - Front.jpg
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-300 hover:shadow dark:hover:bg-purple-900 group-hover:visible"
+                    v-on:click.prevent="showFileInfo('Music\\Metallica\\19\u002520Albums\u002520\u002D\u00252023\u002520CDs\u002520\u002D\u0025201983\u002D2008\\Metallica\u002520\u002D\u0025201984\u002520\u002D\u002520Jump\u002520In\u002520The\u002520Fire\\Metallica\u002520\u002D\u0025201984\u002520\u002D\u002520Jump\u002520In\u002520The\u002520Fire\u002520\u002D\u002520Front.jpg')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-nowrap text-right mx-2 w-1/6 sm:block">
+                            138.38KB
+                    </div>
+
+        <div class="hidden whitespace-nowrap text-right truncate ml-2 w-1/4 sm:block">
+            2021-04-09 21:21:00
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="Music\Metallica\19%20Albums%20-%2023%20CDs%20-%201983-2008\Metallica%20-%201984%20-%20Jump%20In%20The%20Fire\Sound%201.mp3"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-100 hover:shadow dark:hover:bg-purple-700"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-music fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            Sound 1.mp3
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-300 hover:shadow dark:hover:bg-purple-900 group-hover:visible"
+                    v-on:click.prevent="showFileInfo('Music\\Metallica\\19\u002520Albums\u002520\u002D\u00252023\u002520CDs\u002520\u002D\u0025201983\u002D2008\\Metallica\u002520\u002D\u0025201984\u002520\u002D\u002520Jump\u002520In\u002520The\u002520Fire\\Sound\u0025201.mp3')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-nowrap text-right mx-2 w-1/6 sm:block">
+                            9.07MB
+                    </div>
+
+        <div class="hidden whitespace-nowrap text-right truncate ml-2 w-1/4 sm:block">
+            2021-04-09 21:22:57
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="Music\Metallica\19%20Albums%20-%2023%20CDs%20-%201983-2008\Metallica%20-%201984%20-%20Jump%20In%20The%20Fire\Sound%202.mp3"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-100 hover:shadow dark:hover:bg-purple-700"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-music fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            Sound 2.mp3
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-300 hover:shadow dark:hover:bg-purple-900 group-hover:visible"
+                    v-on:click.prevent="showFileInfo('Music\\Metallica\\19\u002520Albums\u002520\u002D\u00252023\u002520CDs\u002520\u002D\u0025201983\u002D2008\\Metallica\u002520\u002D\u0025201984\u002520\u002D\u002520Jump\u002520In\u002520The\u002520Fire\\Sound\u0025202.mp3')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-nowrap text-right mx-2 w-1/6 sm:block">
+                            10.77MB
+                    </div>
+
+        <div class="hidden whitespace-nowrap text-right truncate ml-2 w-1/4 sm:block">
+            2021-04-09 21:23:52
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="Music\Metallica\19%20Albums%20-%2023%20CDs%20-%201983-2008\Metallica%20-%201984%20-%20Jump%20In%20The%20Fire\Sound%203.mp3"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-100 hover:shadow dark:hover:bg-purple-700"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-music fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            Sound 3.mp3
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-300 hover:shadow dark:hover:bg-purple-900 group-hover:visible"
+                    v-on:click.prevent="showFileInfo('Music\\Metallica\\19\u002520Albums\u002520\u002D\u00252023\u002520CDs\u002520\u002D\u0025201983\u002D2008\\Metallica\u002520\u002D\u0025201984\u002520\u002D\u002520Jump\u002520In\u002520The\u002520Fire\\Sound\u0025203.mp3')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-nowrap text-right mx-2 w-1/6 sm:block">
+                            4.96MB
+                    </div>
+
+        <div class="hidden whitespace-nowrap text-right truncate ml-2 w-1/4 sm:block">
+            2021-04-09 21:22:28
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="Music\Metallica\19%20Albums%20-%2023%20CDs%20-%201983-2008\Metallica%20-%201984%20-%20Jump%20In%20The%20Fire\Sound%204.mp3"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-100 hover:shadow dark:hover:bg-purple-700"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-music fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            Sound 4.mp3
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-300 hover:shadow dark:hover:bg-purple-900 group-hover:visible"
+                    v-on:click.prevent="showFileInfo('Music\\Metallica\\19\u002520Albums\u002520\u002D\u00252023\u002520CDs\u002520\u002D\u0025201983\u002D2008\\Metallica\u002520\u002D\u0025201984\u002520\u002D\u002520Jump\u002520In\u002520The\u002520Fire\\Sound\u0025204.mp3')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-nowrap text-right mx-2 w-1/6 sm:block">
+                            6.46MB
+                    </div>
+
+        <div class="hidden whitespace-nowrap text-right truncate ml-2 w-1/4 sm:block">
+            2021-04-09 21:23:48
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="Music\Metallica\19%20Albums%20-%2023%20CDs%20-%201983-2008\Metallica%20-%201984%20-%20Jump%20In%20The%20Fire\Sound%205.mp3"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-100 hover:shadow dark:hover:bg-purple-700"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-music fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            Sound 5.mp3
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-300 hover:shadow dark:hover:bg-purple-900 group-hover:visible"
+                    v-on:click.prevent="showFileInfo('Music\\Metallica\\19\u002520Albums\u002520\u002D\u00252023\u002520CDs\u002520\u002D\u0025201983\u002D2008\\Metallica\u002520\u002D\u0025201984\u002520\u002D\u002520Jump\u002520In\u002520The\u002520Fire\\Sound\u0025205.mp3')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-nowrap text-right mx-2 w-1/6 sm:block">
+                            9.68MB
+                    </div>
+
+        <div class="hidden whitespace-nowrap text-right truncate ml-2 w-1/4 sm:block">
+            2021-04-09 21:23:44
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="Music\Metallica\19%20Albums%20-%2023%20CDs%20-%201983-2008\Metallica%20-%201984%20-%20Jump%20In%20The%20Fire\Sound%206.mp3"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-100 hover:shadow dark:hover:bg-purple-700"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-music fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            Sound 6.mp3
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-300 hover:shadow dark:hover:bg-purple-900 group-hover:visible"
+                    v-on:click.prevent="showFileInfo('Music\\Metallica\\19\u002520Albums\u002520\u002D\u00252023\u002520CDs\u002520\u002D\u0025201983\u002D2008\\Metallica\u002520\u002D\u0025201984\u002520\u002D\u002520Jump\u002520In\u002520The\u002520Fire\\Sound\u0025206.mp3')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-nowrap text-right mx-2 w-1/6 sm:block">
+                            6.75MB
+                    </div>
+
+        <div class="hidden whitespace-nowrap text-right truncate ml-2 w-1/4 sm:block">
+            2021-04-09 21:23:18
+        </div>
+    </div>
+</a>
+
+                                    </li>
+            </ul>
+        </div>
+
+            </div>
+
+    <footer class="container border-t-2 border-gray-800 text-center mx-auto px-4 py-8 xl:max-w-screen-xl dark:text-white dark:border-white">
+    <div class="flex flex-col justify-center items-center">
+        <p class="mb-4">
+            Created with love by Visual917 and Powered by <a href="https://www.directorylister.com" class="underline hover:text-blue-700 dark:hover:text-purple-700">Directory Lister</a>
+        </p>
+</footer>
+
+    <div class="fixed bottom-0 left-0 right-0 pointer-events-none">
+    <div class="container flex justify-end mx-auto px-4 py-10 xl:max-w-screen-xl">
+        <button id="scroll-to-top" ref="scrollToTop"  title="Scroll to Top"
+            class="hidden flex justify-center items-center w-12 h-12 right-0 rounded-full shadow-lg bg-blue-600 text-white cursor-pointer pointer-events-auto hover:bg-blue-700 dark:bg-purple-700 dark:hover:bg-purple-800"
+            onclick="window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });"
+        >
+            <i class="fas fa-arrow-up fa-lg"></i>
+        </button>
+    </div>
+</div>
+    <file-info-modal ref="fileInfoModal"></file-info-modal>
+    </div>
+
+    <div class="fixed inset-0 flex items-center justify-center bg-gray-600 p-4 z-50" v-show="loading">
+        <i class="fas fa-spinner fa-pulse fa-5x text-white"></i>
+    </div>
+</div>
+
+<script src="app/assets/app.js?id=50186a50812ee4b40f43"></script>
