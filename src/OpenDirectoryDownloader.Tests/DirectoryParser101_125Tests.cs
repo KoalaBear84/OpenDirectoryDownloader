@@ -447,7 +447,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(3, webDirectory.Subdirectories.Count);
             Assert.Equal("Music", webDirectory.Subdirectories[0].Name);
-            Assert.Equal(1, webDirectory.Files.Count);
+            Assert.Single(webDirectory.Files);
             Assert.Equal("README.md", webDirectory.Files[0].FileName);
             Assert.Equal(303, webDirectory.Files[0].FileSize);
         }
