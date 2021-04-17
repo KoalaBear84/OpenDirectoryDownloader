@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+
+<meta charset="utf-8">
+<meta name="description" content="Just a way for me to store music, software and roms publicly.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="icon" href="app/assets/images/favicon.light.png?id=4be061744d10326a8783">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="stylesheet" href="app/assets/app.css?id=6d85fde727004d910b13">
+
+
+
+<title>Home &bull; Visu.PUB Open File Server</title>
+
+<div id="app" v-bind:class="{ dark: darkMode }">
+    <div class="flex flex-col min-h-screen font-sans dark:bg-gray-800">
+            <header id="header" class="bg-blue-600 shadow sticky top-0 dark:bg-purple-700">
+    <div class="border-b border-blue-700 dark:border-purple-800">
+        <div class="container flex flex-wrap justify-between items-center space-x-6 mx-auto p-4 md:flex-row xl:max-w-screen-xl">
+            <a href="." class="flex items-center space-x-2 p-1" title="Visu.PUB Open File Server">
+                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="folder-tree" class="inline-block fill-current text-white w-8 h-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                    <path fill="currentColor" d="M544 32H432L400 0h-80a32 32 0 0 0-32 32v160a32 32 0 0 0 32 32h224a32 32 0 0 0 32-32V64a32 32 0 0 0-32-32zm0 288H432l-32-32h-80a32 32 0 0 0-32 32v160a32 32 0 0 0 32 32h224a32 32 0 0 0 32-32V352a32 32 0 0 0-32-32zM64 16A16 16 0 0 0 48 0H16A16 16 0 0 0 0 16v400a32 32 0 0 0 32 32h224v-64H64V160h192V96H64z"></path>
+                </svg>
+            </a>
+
+            <div class="flex-1 max-w-xl">
+                <form id="search" action="." method="get" class="group relative block bg-blue-700 rounded-full shadow-inner dark:bg-purple-800">
+    <input type="text" value="" name="search" placeholder="Search..."
+        class="bg-transparent placeholder-gray-900 text-white w-full px-10 py-2"
+        ref="searchInput" v-on:focus="$event.target.select()"
+    >
+
+    <div class="flex items-center absolute left-0 inset-y-0 ml-2 pointer-events-none">
+        <div class="flex justify-center items-center text-gray-900 text-opacity-50 w-6 h-6">
+            <i class="fas fa-search fa-fw"></i>
+        </div>
+    </div>
+
+    </form>
+            </div>
+
+            <div class="flex items-center justify-center w-6">
+                <div class="flex flex-col justify-center items-center bg-gray-900 bg-opacity-30 rounded-full cursor-pointer w-4 h-8" title="Toggle Light/Dark Mode" v-on:click="toggleTheme">
+    <div class="flex justify-center items-center bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" v-bind:class="{ '-translate-y-2': lightMode, 'translate-y-2': darkMode }">
+        <i class="fas fa-lightbulb fa-xs" v-bind:class="{ 'text-gray-600': darkMode, 'text-yellow-400': lightMode }"></i>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="border-t border-blue-500 dark:border-purple-600">
+        <div class="container flex flex-wrap justify-between items-center space-x-6 mx-auto px-4 py-1 md:flex-row xl:max-w-screen-xl">
+            <div class="flex-1 font-mono text-white text-sm tracking-tight overflow-x-auto whitespace-nowrap py-1">
+    <a href="." class="inline-block hover:underline">
+        Home
+    </a>
+
+                </div>
+
+                    </div>
+    </div>
+</header>
+
+    <div id="content" class="flex flex-col flex-grow container mx-auto px-4 xl:max-w-screen-xl dark:text-white">
+        <div class="my-4">
+            <div class="flex justify-between font-bold p-4">
+                <div class="flex-grow font-mono mr-2">
+                    File Name
+                </div>
+
+                <div class="font-mono text-right w-1/6 mx-2 hidden sm:block">
+                    Size
+                </div>
+
+                <div class="font-mono text-right w-1/4 ml-2 hidden sm:block">
+                    Date
+                </div>
+            </div>
+
+            <ul id="file-list">
+                <li>
+                                    </li>
+
+                <li>
+                                            <a
+    href="?dir=Music"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-100 hover:shadow dark:hover:bg-purple-700"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-folder fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            Music
+        </div>
+
+        
+        <div class="hidden whitespace-nowrap text-right mx-2 w-1/6 sm:block">
+                                —
+                    </div>
+
+        <div class="hidden whitespace-nowrap text-right truncate ml-2 w-1/4 sm:block">
+            2021-04-11 19:12:22
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="?dir=ROMS"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-100 hover:shadow dark:hover:bg-purple-700"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-folder fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            ROMS
+        </div>
+
+        
+        <div class="hidden whitespace-nowrap text-right mx-2 w-1/6 sm:block">
+                                —
+                    </div>
+
+        <div class="hidden whitespace-nowrap text-right truncate ml-2 w-1/4 sm:block">
+            2021-04-12 16:00:46
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="?dir=Software"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-100 hover:shadow dark:hover:bg-purple-700"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fas fa-folder fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            Software
+        </div>
+
+        
+        <div class="hidden whitespace-nowrap text-right mx-2 w-1/6 sm:block">
+                                —
+                    </div>
+
+        <div class="hidden whitespace-nowrap text-right truncate ml-2 w-1/4 sm:block">
+            2021-04-11 19:17:43
+        </div>
+    </div>
+</a>
+
+                                            <a
+    href="README.md"
+    class="flex flex-col items-center rounded-lg font-mono group hover:bg-gray-100 hover:shadow dark:hover:bg-purple-700"
+>
+    <div class="flex justify-between items-center p-4 w-full">
+        <div class="pr-2">
+                            <i class="fab fa-markdown fa-fw fa-lg"></i>
+                    </div>
+
+        <div class="flex-1 truncate">
+            README.md
+        </div>
+
+                    <div class="ml-2">
+                <button
+                    title="File Info"
+                    class="flex justify-center items-center rounded-full p-2 -m-1 md:invisible hover:bg-gray-300 hover:shadow dark:hover:bg-purple-900 group-hover:visible"
+                    v-on:click.prevent="showFileInfo('README.md')"
+                >
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        
+        <div class="hidden whitespace-nowrap text-right mx-2 w-1/6 sm:block">
+                            303.00B
+                    </div>
+
+        <div class="hidden whitespace-nowrap text-right truncate ml-2 w-1/4 sm:block">
+            2021-04-11 19:31:15
+        </div>
+    </div>
+</a>
+
+                                    </li>
+            </ul>
+        </div>
+
+                    <div id="readme" class="my-4 " style="scroll-margin-top: 6rem;">
+    <div class="rounded-lg overflow-hidden shadow-md">
+        <header class="flex items-center bg-blue-600 px-4 py-3 text-white dark:bg-purple-700">
+            <i class="fas fa-book fa-lg pr-3"></i> README.md
+        </header>
+
+        <article class="bg-gray-100 rounded-b-lg px-4 py-8 sm:px-6 md:px-8 lg:px-12 dark:bg-gray-900 dark:border-0 markdown" v-pre>
+                            <p align="center">
+    <img src="logo.gif" alt="Visu.PUB" width="20%">
+   </p>
+<p align="center">
+Welcome to Visu.PUB
+</p>
+<p align="center">
+This web server is a playground for me to store music, applications and retro roms publicly.
+For any enquiries or requests, contact me on Discord: Visu#0917
+</p>
+                    </article>
+    </div>
+</div>
+            </div>
+
+    <footer class="container border-t-2 border-gray-800 text-center mx-auto px-4 py-8 xl:max-w-screen-xl dark:text-white dark:border-white">
+    <div class="flex flex-col justify-center items-center">
+        <p class="mb-4">
+            Created with love by Visual917 and Powered by <a href="https://www.directorylister.com" class="underline hover:text-blue-700 dark:hover:text-purple-700">Directory Lister</a>
+        </p>
+</footer>
+
+    <div class="fixed bottom-0 left-0 right-0 pointer-events-none">
+    <div class="container flex justify-end mx-auto px-4 py-10 xl:max-w-screen-xl">
+        <button id="scroll-to-top" ref="scrollToTop"  title="Scroll to Top"
+            class="hidden flex justify-center items-center w-12 h-12 right-0 rounded-full shadow-lg bg-blue-600 text-white cursor-pointer pointer-events-auto hover:bg-blue-700 dark:bg-purple-700 dark:hover:bg-purple-800"
+            onclick="window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });"
+        >
+            <i class="fas fa-arrow-up fa-lg"></i>
+        </button>
+    </div>
+</div>
+    <file-info-modal ref="fileInfoModal"></file-info-modal>
+    </div>
+
+    <div class="fixed inset-0 flex items-center justify-center bg-gray-600 p-4 z-50" v-show="loading">
+        <i class="fas fa-spinner fa-pulse fa-5x text-white"></i>
+    </div>
+</div>
+
+<script src="app/assets/app.js?id=50186a50812ee4b40f43"></script>

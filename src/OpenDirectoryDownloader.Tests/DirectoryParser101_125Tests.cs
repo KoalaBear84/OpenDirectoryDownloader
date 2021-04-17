@@ -435,5 +435,36 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("RARBG.txt", webDirectory.Files[0].FileName);
             Assert.Equal(31, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: http://visu.pub/visupubfileserver.php
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing117aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(3, webDirectory.Subdirectories.Count);
+            Assert.Equal("Music", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(1, webDirectory.Files.Count);
+            Assert.Equal("README.md", webDirectory.Files[0].FileName);
+            Assert.Equal(303, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://visu.pub/visupubfileserver.php?dir=Music\Metallica\19%20Albums%20-%2023%20CDs%20-%201983-2008\Metallica%20-%201984%20-%20Jump%20In%20The%20Fire
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing117bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(7, webDirectory.Files.Count);
+            Assert.Equal("Sound 2.mp3", webDirectory.Files[2].FileName);
+            Assert.Equal(11293164, webDirectory.Files[2].FileSize);
+        }
     } 
 }
