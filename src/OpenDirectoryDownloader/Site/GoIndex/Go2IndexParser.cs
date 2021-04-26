@@ -193,7 +193,7 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Go2Index
                                 {
                                     Parser = Parser,
                                     // Yes, string concatenation, do not use new Uri(webDirectory.Uri, file.Name), because things could end with a space...
-                                    Url = $"{webDirectory.Uri}{file.Name}/",
+                                    Url = $"{webDirectory.Uri}{Uri.EscapeDataString(file.Name)}/",
                                     Name = file.Name
                                 });
                             }
@@ -201,7 +201,7 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Go2Index
                             {
                                 webDirectory.Files.Add(new WebFile
                                 {
-                                    Url = new Uri(webDirectory.Uri, file.Name).ToString(),
+                                    Url = new Uri(webDirectory.Uri, Uri.EscapeDataString(file.Name)).ToString(),
                                     FileName = file.Name,
                                     FileSize = file.Size
                                 });
