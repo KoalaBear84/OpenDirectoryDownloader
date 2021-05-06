@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NLog;
 using OpenDirectoryDownloader.Models;
 using System;
@@ -9,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader.FileUpload
 {
-    public class GoFileIo : IFileUploadSite
+    public class AnonFiles : IFileUploadSite
     {
-        public string Name => "GoFile.io";
+        public string Name => "AnonFiles.com";
 
-        private readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public async Task<IFileUploadSiteFile> UploadFile(HttpClient httpClient, string path)
         {
@@ -24,30 +23,19 @@ namespace OpenDirectoryDownloader.FileUpload
             {
                 try
                 {
-                    string jsonServer = await httpClient.GetStringAsync("https://apiv2.gofile.io/getServer");
-
-                    JObject result = JObject.Parse(jsonServer);
-
-                    if (result["status"].Value<string>() == "error")
-                    {
-                        throw new Exception("GoFile.io error, probably in maintenance");
-                    }
-
-                    string server = result.SelectToken("data.server").Value<string>();
-
                     using (MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent($"Upload----{Guid.NewGuid()}"))
                     {
                         multipartFormDataContent.Add(new StreamContent(new FileStream(path, FileMode.Open)), "file", Path.GetFileName(path));
 
-                        using (HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"https://{server}.gofile.io/uploadFile", multipartFormDataContent))
+                        using (HttpResponseMessage httpResponseMessage = await httpClient.PostAsync("https://api.anonfiles.com/upload", multipartFormDataContent))
                         {
                             if (httpResponseMessage.IsSuccessStatusCode)
                             {
                                 string response = await httpResponseMessage.Content.ReadAsStringAsync();
 
-                                Logger.Debug($"Response from GoFile.io: {response}");
+                                Logger.Debug($"Response from AnonFiles.com: {response}");
 
-                                return JsonConvert.DeserializeObject<GoFileIoFile>(response);
+                                return JsonConvert.DeserializeObject<AnonFilesFile>(response);
                             }
                             else
                             {
@@ -71,23 +59,59 @@ namespace OpenDirectoryDownloader.FileUpload
         }
     }
 
-    public class GoFileIoFile : IFileUploadSiteFile
+    public class AnonFilesFile : IFileUploadSiteFile
     {
-        public string Url { get => $"https://gofile.io/?c={Data.Code}"; }
-
         [JsonProperty("status")]
-        public string Status { get; set; }
+        public bool Status { get; set; }
 
         [JsonProperty("data")]
-        public GoFileIoFileData Data { get; set; }
+        public AnonFilesFileData Data { get; set; }
+
+        public string Url { get => Data.File.Url.Short; }
     }
 
-    public class GoFileIoFileData
+    public class AnonFilesFileData
     {
-        [JsonProperty("code")]
-        public string Code { get; set; }
+        [JsonProperty("file")]
+        public AnonFilesFileDataFile File { get; set; }
+    }
 
-        [JsonProperty("removalCode")]
-        public string RemovalCode { get; set; }
+    public class AnonFilesFileDataFile
+    {
+        [JsonProperty("url")]
+        public AnonFilesFileDataFileUrl Url { get; set; }
+
+        [JsonProperty("metadata")]
+        public AnonFilesFileDataFileMetadata Metadata { get; set; }
+    }
+
+    public class AnonFilesFileDataFileUrl
+    {
+        [JsonProperty("full")]
+        public string Full { get; set; }
+
+        [JsonProperty("short")]
+        public string Short { get; set; }
+    }
+
+    public class AnonFilesFileDataFileMetadata
+    {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("size")]
+        public AnonFilesFileDataFileMetadataSize Size { get; set; }
+    }
+
+    public class AnonFilesFileDataFileMetadataSize
+    {
+        [JsonProperty("bytes")]
+        public int Bytes { get; set; }
+
+        [JsonProperty("readable")]
+        public string Readable { get; set; }
     }
 }

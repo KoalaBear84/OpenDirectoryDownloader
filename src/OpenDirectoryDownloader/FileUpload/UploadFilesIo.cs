@@ -11,11 +11,13 @@ using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader.FileUpload
 {
-    public class UploadFilesIo
+    public class UploadFilesIo : IFileUploadSite
     {
+        public string Name => "UFile.io";
+
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public static async Task<UploadFilesIoFile> UploadFile(HttpClient httpClient, string path)
+        public async Task<IFileUploadSiteFile> UploadFile(HttpClient httpClient, string path)
         {
             int retries = 0;
             int maxRetries = 5;
@@ -96,13 +98,13 @@ namespace OpenDirectoryDownloader.FileUpload
         }
     }
 
-    public class UploadFilesIoFile
+    public class UploadFilesIoFile : IFileUploadSiteFile
     {
+        [JsonProperty("url")]
+        public string Url { get; set; }
+
         [JsonProperty("id")]
         public long Id { get; set; }
-
-        [JsonProperty("url")]
-        public Uri Url { get; set; }
 
         [JsonProperty("destination")]
         public Uri Destination { get; set; }
