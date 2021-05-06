@@ -306,41 +306,36 @@ namespace OpenDirectoryDownloader
 
                                 if (OpenDirectoryIndexerSettings.CommandLineOptions.UploadUrls && Session.TotalFiles > 0)
                                 {
-                                    Console.WriteLine($"Uploading URLs ({FileSizeHelper.ToHumanReadable(new FileInfo(urlsPath).Length)})..");
-
-                                    bool uploadSucceeded = false;
-
                                     try
                                     {
-                                        GoFileIoFile uploadedFile = await GoFileIo.UploadFile(HttpClient, urlsPath);
-                                        HistoryLogger.Info($"goFile.io: {JsonConvert.SerializeObject(uploadedFile)}");
-                                        Session.UploadedUrlsUrl = uploadedFile.Url.ToString();
-                                        uploadSucceeded = true;
+                                        List<IFileUploadSite> uploadSites = new List<IFileUploadSite>()
+                                        {
+                                            new GoFileIo(),
+                                            new UploadFilesIo(),
+                                            new AnonFiles(),
+                                        };
 
-                                        Console.WriteLine($"Uploaded URLs link: {Session.UploadedUrlsUrl}");
+                                        foreach (IFileUploadSite uploadSite in uploadSites)
+                                        {
+                                            try
+                                            {
+                                                Console.WriteLine($"Uploading URLs ({FileSizeHelper.ToHumanReadable(new FileInfo(urlsPath).Length)}) with {uploadSite.Name}..");
+
+                                                IFileUploadSiteFile fileUploaderFile = await uploadSite.UploadFile(HttpClient, urlsPath);
+                                                HistoryLogger.Info($"{uploadSite.Name}: {JsonConvert.SerializeObject(fileUploaderFile)}");
+                                                Session.UploadedUrlsUrl = fileUploaderFile.Url;
+                                                Console.WriteLine($"Uploaded URLs link: {Session.UploadedUrlsUrl}");
+                                                break;
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Logger.Warn($"Error uploading URLs: {ex.Message}");
+                                            }
+                                        }
                                     }
                                     catch (Exception ex)
                                     {
                                         Logger.Warn($"Error uploading URLs: {ex.Message}");
-                                    }
-
-                                    if (!uploadSucceeded)
-                                    {
-                                        Logger.Warn($"Using fallback for uploading URLs file.");
-
-                                        try
-                                        {
-                                            UploadFilesIoFile uploadedFile = await UploadFilesIo.UploadFile(HttpClient, urlsPath);
-                                            HistoryLogger.Info($"UploadFiles.io: {JsonConvert.SerializeObject(uploadedFile)}");
-                                            Session.UploadedUrlsUrl = uploadedFile.Url.ToString();
-                                            uploadSucceeded = true;
-
-                                            Console.WriteLine($"Uploaded URLs link: {Session.UploadedUrlsUrl}");
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            Logger.Warn($"Error uploading URLs: {ex.Message}");
-                                        }
                                     }
                                 }
                             }
