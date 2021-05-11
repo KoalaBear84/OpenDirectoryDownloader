@@ -1019,9 +1019,12 @@ namespace OpenDirectoryDownloader
                 return (uri.Scheme != Constants.UriScheme.Https && uri.Scheme != Constants.UriScheme.Http && uri.Scheme != Constants.UriScheme.Ftp && uri.Scheme != Constants.UriScheme.Ftps) || uri.Host != Session.Root.Uri.Host || !SameHostAndDirectory(uri, Session.Root.Uri);
             }).ToList().ForEach(wd => webDirectory.Files.Remove(wd));
 
-            foreach (WebFile webFile in webDirectory.Files.Where(f => (f.FileSize == Constants.NoFileSize && !OpenDirectoryIndexerSettings.CommandLineOptions.FastScan) || OpenDirectoryIndexerSettings.CommandLineOptions.ExactFileSizes))
+            if (Session.Root.Uri.Scheme != Constants.UriScheme.Ftp && Session.Root.Uri.Scheme != Constants.UriScheme.Ftps)
             {
-                WebFilesFileSizeQueue.Enqueue(webFile);
+                foreach (WebFile webFile in webDirectory.Files.Where(f => (f.FileSize == Constants.NoFileSize && !OpenDirectoryIndexerSettings.CommandLineOptions.FastScan) || OpenDirectoryIndexerSettings.CommandLineOptions.ExactFileSizes))
+                {
+                    WebFilesFileSizeQueue.Enqueue(webFile);
+                }
             }
         }
 
