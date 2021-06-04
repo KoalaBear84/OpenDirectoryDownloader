@@ -717,12 +717,12 @@ namespace OpenDirectoryDownloader
 
         private bool SameHostAndDirectory(Uri baseUri, Uri checkUri)
         {
-            string checkUrlWithoutFileName = checkUri.LocalPath;
+            string checkUrlWithoutFileName = checkUri.LocalPath.Replace("index.php", string.Empty);
             string checkUrlFileName = Path.GetFileName(checkUri.ToString());
 
             if (!string.IsNullOrWhiteSpace(checkUrlFileName))
             {
-                checkUrlWithoutFileName = checkUri.LocalPath.Replace(checkUrlFileName, string.Empty);
+                checkUrlWithoutFileName = checkUrlWithoutFileName.Replace(checkUrlFileName, string.Empty);
             }
 
             string baseUrlWithoutFileName = baseUri.LocalPath;
