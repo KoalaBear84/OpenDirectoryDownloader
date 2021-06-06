@@ -134,7 +134,7 @@ namespace OpenDirectoryDownloader
 
             HttpClient.DefaultRequestHeaders.AcceptEncoding.ParseAdd("gzip, deflate, br");
 
-            if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.Username) && !string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.Password))
+            if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.Username) || !string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.Password))
             {
                 HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{OpenDirectoryIndexerSettings.Username}:{OpenDirectoryIndexerSettings.Password}")));
             }
