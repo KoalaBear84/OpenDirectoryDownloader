@@ -155,6 +155,14 @@ namespace OpenDirectoryDownloader
                     return ParseCustomDivListing(ref baseUrl, parsedWebDirectory, htmlDocument, divElements);
                 }
 
+                // Custom directory listing 2
+                IHtmlCollection<IElement> divElements2 = htmlDocument.QuerySelectorAll("div#filelist .tb-row.folder,div#filelist .tb-row.afile");
+
+                if (divElements2.Any())
+                {
+                    return ParseCustomDivListing2(ref baseUrl, parsedWebDirectory, htmlDocument, divElements2);
+                }
+
                 IHtmlCollection<IElement> pres = htmlDocument.QuerySelectorAll("pre");
 
                 if (pres.Any())
@@ -388,7 +396,7 @@ namespace OpenDirectoryDownloader
                     {
                         parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
                         {
-                            Parser = "ParseDivListing",
+                            Parser = "ParseCustomDivListing",
                             Url = fullUrl,
                             Name = link.QuerySelector("strong").TextContent.TrimEnd('/')
                         });
@@ -403,6 +411,54 @@ namespace OpenDirectoryDownloader
                         {
                             fileName = urlEncodingParser["download"];
                         }
+
+                        parsedWebDirectory.Files.Add(new WebFile
+                        {
+                            Url = fullUrl,
+                            FileName = Path.GetFileName(WebUtility.UrlDecode(fileName)),
+                            FileSize = FileSizeHelper.ParseFileSize(size)
+                        });
+                    }
+                }
+            }
+
+            CheckParsedResults(parsedWebDirectory);
+
+            return parsedWebDirectory;
+        }
+
+        private static WebDirectory ParseCustomDivListing2(ref string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> divElements)
+        {
+            foreach (IElement divElement in divElements)
+            {
+                bool isFile = divElement.ClassList.Contains("afile");
+
+                IElement link = divElement.QuerySelector("a");
+
+                if (!isFile)
+                {
+                    string linkHref = link.Attributes["data-href"].Value;
+                    link.SetAttribute("href", linkHref);
+                }
+
+                if (IsValidLink(link))
+                {
+                    Uri uri = new Uri(new Uri(baseUrl), link.Attributes["href"].Value);
+                    string fullUrl = uri.ToString();
+
+                    if (!isFile)
+                    {
+                        parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
+                        {
+                            Parser = "ParseCustomDivListing2",
+                            Url = fullUrl,
+                            Name = link.TextContent
+                        });
+                    }
+                    else
+                    {
+                        string fileName = new Uri(fullUrl).AbsolutePath;
+                        string size = divElement.QuerySelector(".sz").TextContent.Trim();
 
                         parsedWebDirectory.Files.Add(new WebFile
                         {
