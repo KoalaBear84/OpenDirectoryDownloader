@@ -93,7 +93,7 @@ namespace OpenDirectoryDownloader
                     htmlDocument.QuerySelector("script[src*=\"/sawankumar/Google-Drive-Index-III\" i]") != null ||
                     htmlDocument.QuerySelector("script[src*=\"/goIndex-theme-nexmoe\" i]") != null)
                 {
-                    return await BhadooIndexParser.ParseIndex(httpClient, webDirectory);
+                    return await BhadooIndexParser.ParseIndex(htmlDocument, httpClient, webDirectory);
                 }
 
                 if (htmlDocument.QuerySelector("script[src*=\"/go2index/\" i]") != null ||
