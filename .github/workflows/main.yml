@@ -45,7 +45,7 @@ jobs:
             build_args: --no-self-contained
             suffix: ""
           - self-contained: self-contained
-            build_args: --self-contained=true
+            build_args: --self-contained=true -p:PublishTrimmed=true
             suffix: "-self-contained"
 
     runs-on: ${{ matrix.os }}
@@ -57,7 +57,8 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.100
+        dotnet-version: '6.0.x'
+        include-prerelease: true
 
     - name: Get version info
       id: get_version
@@ -73,7 +74,7 @@ jobs:
       run: dotnet test src/OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }}
 
     - name: Publish with dotnet
-      run: dotnet publish src/OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }} --framework net5.0 --runtime ${{ matrix.target }} ${{ matrix.build_args }} -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}
+      run: dotnet publish src/OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }} --framework net6.0 --runtime ${{ matrix.target }} ${{ matrix.build_args }} -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}
 
     - name: Set executable bit (linux only)
       if: ${{ matrix.os == 'ubuntu-latest' }}
