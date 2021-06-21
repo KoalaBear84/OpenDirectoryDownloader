@@ -22,13 +22,13 @@ For builds (64-bit) for Windows, Linux and Mac, or ARM/ARM64 builds for Pi:
 
 https://github.com/KoalaBear84/OpenDirectoryDownloader/releases
 
-When using the self-contained releases you don't need to install the .NET Runtime.
+When using the self-contained releases you don't need to install the .NET (Core) Runtime.
 
 ## Prerequisites
 
-When you are NOT using the self-contained releases, you need to install the latest/current Runtime version of .NET:
+When you are NOT using the self-contained releases, you need to install the latest/current Runtime version of .NET 6:
 
-https://dotnet.microsoft.com/download/dotnet/current/runtime
+https://dotnet.microsoft.com/download/dotnet/6.0/runtime
 
 ## Usage
 
@@ -96,14 +96,14 @@ It will save the URLs files onto C:\\Scans (windows), or replace with a custom f
 
 ## Building
 
-1.  Install the newest .NET 5 SDK.
+1.  Install the newest .NET 6 SDK.
 2.  `git clone https://github.com/KoalaBear84/OpenDirectoryDownloader`
 3.  `cd OpenDirectoryDownloader/OpenDirectoryDownloader`
 4.  `dotnet build .`
-5.  `cd bin/Debug/net5.0`
+5.  `cd bin/Debug/net6.0`
 6.  `./OpenDirectoryDownloader --url "https://myopendirectory.com"`
 
-For Linux (Might not be needed since .NET 5):  
+For Linux (Might not be needed since .NET 6):  
 Then, if you need to package it into a binary, you can use [warp-packer](https://github.com/dgiagio/warp#quickstart-with-net-core)
 
 When you have cloned the code, you can also run it without the SDK. For that, download the ["Runtime"](https://dotnet.microsoft.com/download) and do "`dotnet run .`" instead of build.
