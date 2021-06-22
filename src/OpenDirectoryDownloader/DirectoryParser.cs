@@ -175,7 +175,7 @@ namespace OpenDirectoryDownloader
                     }
                 }
 
-                WebDirectory parsedJavaScriptDrawn = await ParseJavaScriptDrawn(baseUrl, parsedWebDirectory, html);
+                WebDirectory parsedJavaScriptDrawn = ParseJavaScriptDrawn(baseUrl, parsedWebDirectory, html);
 
                 if (parsedJavaScriptDrawn.ParsedSuccessfully && (parsedJavaScriptDrawn.Files.Any() || parsedJavaScriptDrawn.Subdirectories.Any()))
                 {
@@ -257,7 +257,7 @@ namespace OpenDirectoryDownloader
             return parsedWebDirectory;
         }
 
-        private static async Task<WebDirectory> ParseJavaScriptDrawn(string baseUrl, WebDirectory parsedWebDirectory, string html)
+        private static WebDirectory ParseJavaScriptDrawn(string baseUrl, WebDirectory parsedWebDirectory, string html)
         {
             Regex regexDirectory = new Regex("_d\\('(?<DirectoryName>.*)','(?<Date>.*)','(?<Link>.*)'\\)");
             Regex regexFile = new Regex("_f\\('(?<FileName>.*)',(?<FileSize>\\d*),'(?<Date>.*)','(?<Link>.*)',(?<UnixTimestamp>\\d*)\\)");
