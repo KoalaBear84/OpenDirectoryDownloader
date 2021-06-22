@@ -38,7 +38,7 @@ namespace OpenDirectoryDownloader.GoogleDrive
                     // automatically when the authorization flow completes for the first time.
                     string credPath = "token.json";
                     credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                        GoogleClientSecrets.Load(fileStream).Secrets,
+                        GoogleClientSecrets.FromStream(fileStream).Secrets,
                         Scopes,
                         "user",
                         CancellationToken.None,
