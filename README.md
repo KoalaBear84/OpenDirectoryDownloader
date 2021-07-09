@@ -117,7 +117,7 @@ You can use a many steps manual option, or the 6 steps 'Quickstart' workaround.
 Manual/customized:
 
 1.  Go to https://console.cloud.google.com/projectcreate
-2.  Fill in Project Name, like "opendirectorydownloader" or so, lease Location unchanged
+2.  Fill in Project Name, like "opendirectorydownloader" or so, leave Location unchanged
 3.  Change Project ID (optional)
 4.  Click "CREATE"
 5.  Wait a couple of seconds until the project is created and open it (click "VIEW")
