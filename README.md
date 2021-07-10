@@ -54,9 +54,13 @@ Command line parameters:
 
 ### Example
 
-1. Windows ->    `OpenDirectoryDownloader.exe --url "https://myopendirectory.com"`
+#### Windows
 
-2. Linux ->      `./OpenDirectoryDownloader -u "https://myopendirectory.com"`
+`OpenDirectoryDownloader.exe --url "https://myopendirectory.com"`
+
+#### Linux
+
+`./OpenDirectoryDownloader -u "https://myopendirectory.com"`
 
 If you want to learn more or contribute, see the following paragraphs!
 
