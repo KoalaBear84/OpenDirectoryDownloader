@@ -52,8 +52,11 @@ Command line parameters:
 |   | `--password` | Password |
 |   | `--output-file` | Output file to use for urls file |
 
-Example:  
-`OpenDirectoryDownloader.exe --url "https://myopendirectory.com"`
+### Example
+
+1. Windows ->    `OpenDirectoryDownloader.exe --url "https://myopendirectory.com"`
+
+2. Linux ->      `./OpenDirectoryDownloader -u "https://myopendirectory.com"`
 
 If you want to learn more or contribute, see the following paragraphs!
 
