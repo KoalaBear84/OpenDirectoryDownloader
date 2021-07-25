@@ -8,7 +8,7 @@ Written in C# with .NET (Core), which means it is **cross platform**!
 
 Downloading is not (yet) implemented, but is already possible when you use the resulting file into another tool (for most of the formats).
 
-Downloading with wget:  
+Downloading with [wget](https://www.gnu.org/software/wget/):  
 `wget -x -i theurlsfile.txt`
 
 Downloading with [aria2c](https://aria2.github.io/) (Does not support directory structure..):  
