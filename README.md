@@ -8,7 +8,7 @@ Written in C# with .NET (Core), which means it is **cross platform**!
 
 Downloading is not (yet) implemented, but is already possible when you use the resulting file into another tool (for most of the formats).
 
-Downloading with wget:  
+Downloading with [wget](https://www.gnu.org/software/wget/):  
 `wget -x -i theurlsfile.txt`
 
 Downloading with [aria2c](https://aria2.github.io/) (Does not support directory structure..):  
@@ -52,8 +52,15 @@ Command line parameters:
 |   | `--password` | Password |
 |   | `--output-file` | Output file to use for urls file |
 
-Example:  
+### Example
+
+#### Windows
+
 `OpenDirectoryDownloader.exe --url "https://myopendirectory.com"`
+
+#### Linux
+
+`./OpenDirectoryDownloader -u "https://myopendirectory.com"`
 
 If you want to learn more or contribute, see the following paragraphs!
 
@@ -117,7 +124,7 @@ You can use a many steps manual option, or the 6 steps 'Quickstart' workaround.
 Manual/customized:
 
 1.  Go to https://console.cloud.google.com/projectcreate
-2.  Fill in Project Name, like "opendirectorydownloader" or so, lease Location unchanged
+2.  Fill in Project Name, like "opendirectorydownloader" or so, leave Location unchanged
 3.  Change Project ID (optional)
 4.  Click "CREATE"
 5.  Wait a couple of seconds until the project is created and open it (click "VIEW")
