@@ -132,6 +132,7 @@ namespace OpenDirectoryDownloader
                 Timeout = TimeSpan.FromSeconds(OpenDirectoryIndexerSettings.Timeout)
             };
 
+            HttpClient.DefaultRequestHeaders.Accept.ParseAdd("*/*");
             HttpClient.DefaultRequestHeaders.AcceptEncoding.ParseAdd("gzip, deflate, br");
 
             if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.Username) || !string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.Password))
