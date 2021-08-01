@@ -4,12 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace OpenDirectoryDownloader
 {
     public static class Statistics
     {
+        private static readonly string VersionNumber = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
         public static Dictionary<string, ExtensionStats> GetExtensions(WebDirectory webDirectory)
         {
             Dictionary<string, ExtensionStats> extensionCount;
@@ -110,7 +113,7 @@ namespace OpenDirectoryDownloader
             if (onlyRedditStats || includeBanner)
             {
                 stringBuilder.AppendLine();
-                stringBuilder.AppendLine($"^(Created by [KoalaBear84's OpenDirectory Indexer](https://github.com/KoalaBear84/OpenDirectoryDownloader/))");
+                stringBuilder.AppendLine($"^(Created by [KoalaBear84's OpenDirectory Indexer v{VersionNumber}](https://github.com/KoalaBear84/OpenDirectoryDownloader/))");
             }
 
             return stringBuilder.ToString();

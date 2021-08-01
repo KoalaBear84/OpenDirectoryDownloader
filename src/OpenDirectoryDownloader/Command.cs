@@ -32,7 +32,7 @@ namespace OpenDirectoryDownloader
         {
             Console.WriteLine(
                 "┌─────────────────────────────────────────────────────────────────────────┐\n" +
-                $"│ KoalaBear84/OpenDirectoryDownloader {VersionNumber}{string.Empty.PadLeft(36 - VersionNumber.Length)}│\n" +
+                $"│ KoalaBear84/OpenDirectoryDownloader v{VersionNumber}{string.Empty.PadLeft(36 - VersionNumber.Length - 1)}│\n" +
                 "├─────────────────────────────────────────────────────────────────────────┤\n" +
                 "│ Press I for info (this)                                                 │\n" +
                 "│ Press S for statistics                                                  │\n" +
