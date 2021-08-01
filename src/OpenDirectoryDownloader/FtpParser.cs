@@ -105,11 +105,11 @@ namespace OpenDirectoryDownloader
                         // Should be one less than..
                         if (regex == RegexMaxThreadsSpecific01)
                         {
-                            OpenDirectoryIndexer.Session.MaxThreads = int.Parse(regexMatch.Groups["MaxThreads"].Value) - 1;
+                            OpenDirectoryIndexer.Session.MaxThreads = Math.Max(1, int.Parse(regexMatch.Groups["MaxThreads"].Value) - 1);
                         }
                         else
                         {
-                            OpenDirectoryIndexer.Session.MaxThreads = int.Parse(regexMatch.Groups["MaxThreads"].Value);
+                            OpenDirectoryIndexer.Session.MaxThreads = Math.Max(1, int.Parse(regexMatch.Groups["MaxThreads"].Value));
                         }
                     }
                     else
