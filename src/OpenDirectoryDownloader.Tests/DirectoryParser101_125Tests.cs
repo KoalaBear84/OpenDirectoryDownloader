@@ -482,7 +482,7 @@ namespace OpenDirectoryDownloader.Tests
         }
 
         /// <summary>
-        /// Url: http://107.189.4.168/6400/%E6%B8%B8%E6%88%8F/
+        /// Url: https://home.agstm.ro/music/
         /// </summary>
         [Fact]
         public async Task TestDirectoryListing119aAsync()
@@ -496,7 +496,7 @@ namespace OpenDirectoryDownloader.Tests
         }
 
         /// <summary>
-        /// Url: https://home.agstm.ro/music/
+        /// Url: https://home.agstm.ro/music/?dir=100%20Greatest%2090s%20Pop%20Classics%20%282020%29
         /// </summary>
         [Fact]
         public async Task TestDirectoryListing119bAsync()
