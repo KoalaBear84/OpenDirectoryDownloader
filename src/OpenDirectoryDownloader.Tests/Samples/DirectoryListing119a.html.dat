@@ -1,0 +1,443 @@
+
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ro" lang="ro">
+<head>
+<meta name="viewport" content="width=device-width" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+
+/* General styles */
+
+BODY {
+	background-color:#FFFFFF;
+	font-family:Verdana;
+	font-size:small;
+}
+
+A {
+	color: #000000;
+	text-decoration: none;
+}
+
+A:hover {
+	text-decoration: underline;
+}
+
+#top {
+	width:100%;
+	padding-bottom: 20px;
+}
+
+#top a span, #top a:hover, #top a span:hover{
+	color:#68a9d2;
+	font-weight:bold;
+	text-align:center;
+	font-size:large;
+}
+
+#top a {
+	display:block;
+	padding:20px 0 0 0;
+}
+
+#top span {
+	display:block;
+}
+
+div.subtitle{
+	width:80%;
+	margin: 0 auto;
+	color:#68a9d2;
+	text-align:center;
+}
+
+#frame {
+	border: 1px solid #CDD2D6;
+	text-align:left;
+	position: relative;
+	margin: 0 auto;
+	max-width:680px;
+	overflow:hidden;
+}
+
+#error {
+	max-width:450px;
+	background-color:#FFE4E1;
+	color:#000000;
+	padding:7pt;
+	position: relative;
+	margin: 10pt auto;
+	text-align:center;
+	border: 1px dotted #CDD2D6;
+}
+
+input {
+	border: 1px solid #CDD2D6;
+}
+
+.bar{
+	width:100%;
+	clear:both;
+	height:1px;
+}
+
+/* File list */
+
+table.table {
+	width:100%;
+	border-collapse: collapse;
+}
+
+table.table td{
+	padding:3px;
+}
+
+table.table tr.row.two {
+	background-color:#fcfdfe;
+}
+
+table.table tr.row.one {
+	background-color:#f8f9fa;
+}
+
+table.table tr.row td.icon {
+	width:25px;
+	padding-top:3px;
+	padding-bottom:1px;
+}
+
+table.table td.del {
+	width:25px;
+}
+
+table.table tr.row td.size {
+	width: 100px;
+	text-align: right;
+}
+
+table.table tr.row td.changed {
+	width: 150px;
+	text-align: center;
+}
+
+table.table tr.header img {
+	vertical-align:bottom;
+}
+
+table img{
+	border:0;
+}
+
+/* Info area */
+
+#info {
+	color:#000000;
+	font-family:Verdana;
+	max-width:680px;
+	position: relative;
+	margin: 0 auto;
+	text-align:center;
+	padding: 25px;
+}
+
+/* Thumbnail area */
+
+#thumb {
+	position:absolute;
+	border: 1px solid #CDD2D6;
+	background:#f8f9fa;
+	display:none;
+	padding:3px;
+}
+
+#thumb img {
+	display:block;
+}
+
+/* Login bar (at the bottom of the page) */
+#login_bar {
+	margin: 0 auto;
+	margin-top:2px;
+	max-width:680px;
+}
+
+#login_bar input.submit{
+	float:right;
+}
+
+/* Upload area */
+
+#upload {
+	margin: 0 auto;
+	margin-top:2px;
+	max-width:680px;
+}
+
+#upload #password_container {
+	margin-right:20px;
+}
+
+#upload #newdir_container, #upload #password_container {
+	float:left;
+}
+
+#upload #upload_container{
+	float:right;
+}
+
+#upload input.upload_dirname, #upload input.upload_password{
+	width:140px;
+}
+
+#upload input.upload_file{
+	font-size:small;
+}
+
+/* Breadcrumbs */
+
+div.breadcrumbs {
+	display:block;
+	padding:1px 3px;
+	color:#cccccc;
+	font-size:x-small;
+}
+
+div.breadcrumbs a{
+	display:inline-block;
+	color:#cccccc;
+	padding:2px 0;
+	font-size:small;
+}
+
+/* Login area */
+
+#login {
+	max-width:280px;
+	text-align:right;
+	margin:15px auto 50px auto;
+}
+
+#login div {
+	display:block;
+	width:100%;
+	margin-top:5px;
+}
+
+#login label{
+	width: 120px;
+	text-align: right;
+}
+
+/* Mobile interface */
+
+body.mobile #frame, body.mobile #info, body.mobile #upload {
+	max-width:none;
+}
+
+body.mobile {
+	font-size:medium;
+}
+
+body.mobile a.item {
+	display:block;
+	padding:10px 0;
+}
+
+body.mobile a.item span.size {
+	float:right;
+	margin-left:10px;
+}
+
+body.mobile table.table {
+	margin-bottom:30px;
+}
+
+body.mobile table.table tr td {
+	border-top: 1px solid #CDD2D6;
+}
+
+body.mobile table.table tr.last td {
+	border-bottom: 1px solid #CDD2D6;
+}
+
+body.mobile #top {
+	padding-bottom:3px;
+}
+
+body.mobile #top a {
+	padding-top:3px;
+}
+
+body.mobile #upload #password_container, body.mobile #upload #upload_container, body.mobile #upload #newdir_container {
+	float:none;
+	margin-top:5px;
+}
+
+body.mobile #upload input.upload_dirname, body.mobile #upload input.upload_password{
+	width:240px;
+}
+
+body.mobile #upload {
+	margin-bottom:15px;
+}
+
+</style>
+
+<!-- <meta charset="UTF-8" /> -->
+<title>Main Explorer</title>
+</head>
+<body class="mobile">
+<div id="frame">
+<div id="top">
+	<a href="?dir="><span>Main Explorer</span></a>
+</div>
+
+<!-- START: List table -->
+<table class="table">
+<tr class="row two">
+	<td class="icon"><img alt="dir" src="?img=directory" /></td>
+	<td colspan="2" class="long">
+		<a class="item" href="?dir=">..</a>
+	</td>
+</tr>
+<tr class="row one">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=100%20Greatest%2090s%20Pop%20Classics%20%282020%29" class="item dir">100 Greatest 90s Pop Classics (2020)</a>
+</td>
+</tr>
+<tr class="row two">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=70%27s%20Rock%20The%20Doors%2C%20Led%20Zeppelin%2C%20Pink%20Floyd" class="item dir">70's Rock The Doors, Led Zeppelin, Pink Floyd</a>
+</td>
+</tr>
+<tr class="row one">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=80s" class="item dir">80s</a>
+</td>
+</tr>
+<tr class="row two">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=ACDC%20-%20POWER%20UP%20%282020%29" class="item dir">ACDC - POWER UP (2020)</a>
+</td>
+</tr>
+<tr class="row one">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=best%20music" class="item dir">best music</a>
+</td>
+</tr>
+<tr class="row two">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=Best%20Of%20Disco%20Remix%20Hits" class="item dir">Best Of Disco Remix Hits</a>
+</td>
+</tr>
+<tr class="row one">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=cd_sarbeasca_veche" class="item dir">cd_sarbeasca_veche</a>
+</td>
+</tr>
+<tr class="row two">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=Club%20Hits%202020" class="item dir">Club Hits 2020</a>
+</td>
+</tr>
+<tr class="row one">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=Directia%205" class="item dir">Directia 5</a>
+</td>
+</tr>
+<tr class="row two">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=diverse" class="item dir">diverse</a>
+</td>
+</tr>
+<tr class="row one">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=Greatest%20Ever%2080s%20%282020%29" class="item dir">Greatest Ever 80s (2020)</a>
+</td>
+</tr>
+<tr class="row two">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=oldies" class="item dir">oldies</a>
+</td>
+</tr>
+<tr class="row one">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=oldies%20Happy" class="item dir">oldies Happy</a>
+</td>
+</tr>
+<tr class="row two">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=Rock%20-%20Selectii" class="item dir">Rock - Selectii</a>
+</td>
+</tr>
+<tr class="row one">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=Rock%20Classics%2060s-80s.%20Remastered%20Version" class="item dir">Rock Classics 60s-80s. Remastered Version</a>
+</td>
+</tr>
+<tr class="row two">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=sarbeasca" class="item dir">sarbeasca</a>
+</td>
+</tr>
+<tr class="row one">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=serbian" class="item dir">serbian</a>
+</td>
+</tr>
+<tr class="row two">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=srpsko" class="item dir">srpsko</a>
+</td>
+</tr>
+<tr class="row one">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=VA%20-%20Greatest%20Hits%20Ever%20%282019%29%20Mp3%20320kbps" class="item dir">VA - Greatest Hits Ever (2019) Mp3 320kbps</a>
+</td>
+</tr>
+<tr class="row two">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=VA%20-%20The%20Love%20Album%20%282020%29%20MP3" class="item dir">VA - The Love Album (2020) MP3</a>
+</td>
+</tr>
+<tr class="row one">
+<td class="icon"><img alt="dir" src="?img=directory" /></td>
+<td class="name" colspan="2">
+<a href="?dir=YU%20Pop%20Rock" class="item dir">YU Pop Rock</a>
+</td>
+</tr>
+
+</table>
+<!-- END: List table -->
+</div>
+
+<!-- START: Info area -->
+<div id="info">
+<a href="?s&amp;dir=">
+Standard view</a> | 
+<a href="?dir=">Home</a>
+</div>
+<!-- END: Info area -->
+</body>
+</html>
+

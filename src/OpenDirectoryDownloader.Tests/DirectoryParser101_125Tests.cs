@@ -468,7 +468,7 @@ namespace OpenDirectoryDownloader.Tests
         }
 
         /// <summary>
-        /// Url: view-source:http://107.189.4.168/
+        /// Url: http://107.189.4.168/
         /// </summary>
         [Fact]
         public async Task TestDirectoryListing118aAsync()
@@ -482,19 +482,32 @@ namespace OpenDirectoryDownloader.Tests
         }
 
         /// <summary>
-        /// Url: view-source:http://107.189.4.168/6400/%E6%B8%B8%E6%88%8F/
+        /// Url: http://107.189.4.168/6400/%E6%B8%B8%E6%88%8F/
         /// </summary>
         [Fact]
-        public async Task TestDirectoryListing118bAsync()
+        public async Task TestDirectoryListing119aAsync()
         {
             WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
-            Assert.Equal(2, webDirectory.Subdirectories.Count);
-            Assert.Equal("宿星Girlfriend", webDirectory.Subdirectories[0].Name);
-            Assert.Equal(4, webDirectory.Files.Count);
-            Assert.Equal("千之刃涛，桃花染之皇姬 -柳暗花明-.zip", webDirectory.Files[0].FileName);
-            Assert.Equal(5583457485, webDirectory.Files[0].FileSize);
+            Assert.Equal(21, webDirectory.Subdirectories.Count);
+            Assert.Equal("100 Greatest 90s Pop Classics (2020)", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: https://home.agstm.ro/music/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing119bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(102, webDirectory.Files.Count);
+            Assert.Equal("001. Britney Spears - ...Baby One More Time.mp3", webDirectory.Files[0].FileName);
+            Assert.Equal(8524923, webDirectory.Files[0].FileSize);
         }
     } 
 }

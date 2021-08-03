@@ -844,6 +844,11 @@ namespace OpenDirectoryDownloader
                                     string description = tableRow.QuerySelector($"td:nth-child({descriptionHeaderColumnIndex})")?.TextContent.Trim();
                                     string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim().Replace(" ", string.Empty);
 
+                                    if (size == null)
+                                    {
+                                        size = tableRow.QuerySelector(".size")?.TextContent.Trim();
+                                    }
+
                                     bool isFile =
                                         urlEncodingParser["file"] != null ||
                                         !isDirectory &&
@@ -2061,10 +2066,18 @@ namespace OpenDirectoryDownloader
                     List<int> fileSizeColumnIndex = new List<int>();
                     List<int> typeColumnIndex = new List<int>();
 
+                    int maxColums = 0;
+
                     foreach (IElement tableRow in table.QuerySelectorAll("tr"))
                     {
-                        foreach (IElement tableColumn in tableRow.QuerySelectorAll("td"))
+                        List<IElement> columns = tableRow.QuerySelectorAll("td").ToList();
+
+                        maxColums = Math.Max(maxColums, columns.Count);
+
+                        for (int i = 0; i < columns.Count; i++)
                         {
+                            IElement tableColumn = columns[i];
+
                             if (tableColumn.QuerySelector("a") != null)
                             {
                                 fileNameColumnIndex.Add(tableColumn.Index());
@@ -2090,6 +2103,7 @@ namespace OpenDirectoryDownloader
                     if (fileNameColumnIndex.Any())
                     {
                         int columnIndex = ((int)Math.Round(fileNameColumnIndex.Average())) + 1;
+                        columnIndex = Math.Min(columnIndex, maxColums);
 
                         if (!tableHeaders.ContainsKey(columnIndex))
                         {
@@ -2100,6 +2114,7 @@ namespace OpenDirectoryDownloader
                     if (dateColumnIndex.Any())
                     {
                         int columnIndex = ((int)Math.Round(dateColumnIndex.Average())) + 1;
+                        columnIndex = Math.Min(columnIndex, maxColums);
 
                         if (!tableHeaders.ContainsKey(columnIndex))
                         {
@@ -2110,6 +2125,7 @@ namespace OpenDirectoryDownloader
                     if (fileSizeColumnIndex.Any())
                     {
                         int columnIndex = ((int)Math.Round(fileSizeColumnIndex.Average())) + 1;
+                        columnIndex = Math.Min(columnIndex, maxColums);
 
                         if (!tableHeaders.ContainsKey(columnIndex))
                         {
@@ -2120,6 +2136,7 @@ namespace OpenDirectoryDownloader
                     if (typeColumnIndex.Any())
                     {
                         int columnIndex = ((int)Math.Round(typeColumnIndex.Average())) + 1;
+                        columnIndex = Math.Min(columnIndex, maxColums);
 
                         if (!tableHeaders.ContainsKey(columnIndex))
                         {
