@@ -482,7 +482,7 @@ namespace OpenDirectoryDownloader.Tests
         }
 
         /// <summary>
-        /// Url: view-source:http://107.189.4.168/6400/%E6%B8%B8%E6%88%8F/
+        /// Url: http://107.189.4.168/6400/%E6%B8%B8%E6%88%8F/
         /// </summary>
         [Fact]
         public async Task TestDirectoryListing118bAsync()
