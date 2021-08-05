@@ -783,10 +783,11 @@ namespace OpenDirectoryDownloader
 
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
+                    Logger.Warn("Yes, Curl User-Agent did the trick!");
+
                     SetRootUrl(httpResponseMessage);
 
                     html = await GetHtml(httpResponseMessage);
-                    Logger.Warn("Yes, Curl User-Agent did the trick!");
                 }
             }
 
@@ -799,10 +800,11 @@ namespace OpenDirectoryDownloader
 
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
+                    Logger.Warn("Yes, Chrome User-Agent did the trick!");
+
                     SetRootUrl(httpResponseMessage);
 
                     html = await GetHtml(httpResponseMessage);
-                    Logger.Warn("Yes, Chrome User-Agent did the trick!");
                 }
             }
 
