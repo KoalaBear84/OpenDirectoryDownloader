@@ -957,6 +957,13 @@ namespace OpenDirectoryDownloader
 
         private static async Task<string> GetHtml(HttpResponseMessage httpResponseMessage)
         {
+            FixCharSet(httpResponseMessage);
+
+            return await httpResponseMessage.Content.ReadAsStringAsync();
+        }
+
+        private static void FixCharSet(HttpResponseMessage httpResponseMessage)
+        {
             if (httpResponseMessage.Content.Headers.ContentType?.CharSet?.ToLower() == "utf8" || httpResponseMessage.Content.Headers.ContentType?.CharSet == "GB1212")
             {
                 httpResponseMessage.Content.Headers.ContentType.CharSet = "UTF-8";
@@ -966,8 +973,6 @@ namespace OpenDirectoryDownloader
             {
                 httpResponseMessage.Content.Headers.ContentType.CharSet = "Windows-1251";
             }
-
-            return await httpResponseMessage.Content.ReadAsStringAsync();
         }
 
         private void AddProcessedWebDirectory(WebDirectory webDirectory, WebDirectory parsedWebDirectory, bool processSubdirectories = true)
