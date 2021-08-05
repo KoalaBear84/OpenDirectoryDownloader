@@ -892,6 +892,11 @@ namespace OpenDirectoryDownloader
                         html = await GetHtml(httpResponseMessage);
                     }
 
+                    if (html.Length > Constants.Megabyte)
+                    {
+                        Logger.Warn($"Large response of {FileSizeHelper.ToHumanReadable(html.Length)} for {webDirectory.Url}");
+                    }
+
                     Session.TotalHttpTraffic += html.Length;
 
                     WebDirectory parsedWebDirectory = await DirectoryParser.ParseHtml(webDirectory, html, HttpClient);
