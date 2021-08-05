@@ -46,6 +46,7 @@ Command line parameters:
 | `-r` | `--no-reddit` | Do not show Reddit stats markdown |
 | `-l` | `--upload-urls` | Uploads urls file |
 | `-e` | `--exact-file-sizes` | Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server) |
+|   | `--fast-scan` | Only use sizes from HTML, not HEAD requests (Opposite of `--exact-file-sizes`) |
 | `-s` | `--speedtest` | Does a speed test after indexing |
 | `-a` | `--user-agent` | Use custom default User Agent |
 |   | `--username` | Username |
