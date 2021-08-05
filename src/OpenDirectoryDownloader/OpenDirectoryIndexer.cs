@@ -841,7 +841,7 @@ namespace OpenDirectoryDownloader
                         html = await GetHtml(httpResponseMessage);
                     }
 
-                    // UNTESTED (cannot find or down Calibre with this issue)
+                    // UNTESTED (cannot find Calibre with this issue)
                     const string calibreVersionIdentifier = "CALIBRE_VERSION = \"";
                     calibreDetected = html?.Contains(calibreVersionIdentifier) == true;
 
