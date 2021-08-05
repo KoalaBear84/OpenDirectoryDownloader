@@ -144,7 +144,7 @@ namespace OpenDirectoryDownloader
         private static double GetSpeedInMBs(IGrouping<long, KeyValuePair<long, long>> measurements, int useMiliseconds = 0)
         {
             long time = useMiliseconds == 0 ? measurements.Last().Key - measurements.First().Key : useMiliseconds;
-            double downloadedMBs = (measurements.Last().Value - measurements.First().Value) / 1024 / 1024d;
+            double downloadedMBs = (measurements.Last().Value - measurements.First().Value) / (double)Constants.Megabyte;
             return downloadedMBs / (time / 1000d);
         }
 
