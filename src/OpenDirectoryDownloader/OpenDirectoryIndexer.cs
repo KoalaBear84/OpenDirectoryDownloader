@@ -477,7 +477,7 @@ namespace OpenDirectoryDownloader
                     Console.WriteLine("Finished indexing!");
 
                     Program.SetConsoleTitle($"✔ {Program.ConsoleTitle}");
-                    
+
                     bool clipboardSuccess = false;
 
                     if (OpenDirectoryIndexerSettings.CommandLineOptions.Clipboard)
@@ -493,7 +493,7 @@ namespace OpenDirectoryDownloader
                             Logger.Error($"Error copying stats to clipboard: {ex.Message}");
                         }
                     }
-                    
+
                     if (OpenDirectoryIndexerSettings.CommandLineOptions.Quit)
                     {
                         Command.KillApplication();
@@ -765,13 +765,33 @@ namespace OpenDirectoryDownloader
                 }
             }
 
+            if (httpResponseMessage.Content?.Headers.ContentLength > 20 * Constants.Megabyte)
+            {
+                ConvertDirectoryToFile(webDirectory, httpResponseMessage);
+
+                return;
+            }
+
             string html = null;
 
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 SetRootUrl(httpResponseMessage);
 
-                html = await GetHtml(httpResponseMessage);
+                using (Stream htmlStream = await GetHtmlStream(httpResponseMessage))
+                {
+                    if (htmlStream != null)
+                    {
+                        html = await GetHtml(htmlStream);
+                    }
+                    else
+                    {
+                        Logger.Warn($"Treated {webDirectory.Url} as file instead of directory ({FileSizeHelper.ToHumanReadable(httpResponseMessage.Content.Headers.ContentLength.Value)})");
+                        ConvertDirectoryToFile(webDirectory, httpResponseMessage);
+
+                        return;
+                    }
+                }
             }
 
             if (FirstRequest && !httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.IsSuccessStatusCode && string.IsNullOrWhiteSpace(html) || html?.Contains("HTTP_USER_AGENT") == true)
@@ -787,7 +807,19 @@ namespace OpenDirectoryDownloader
 
                     SetRootUrl(httpResponseMessage);
 
-                    html = await GetHtml(httpResponseMessage);
+                    using (Stream htmlStream = await GetHtmlStream(httpResponseMessage))
+                    {
+                        if (htmlStream != null)
+                        {
+                            html = await GetHtml(htmlStream);
+                        }
+                        else
+                        {
+                            ConvertDirectoryToFile(webDirectory, httpResponseMessage);
+
+                            return;
+                        }
+                    }
                 }
             }
 
@@ -804,7 +836,19 @@ namespace OpenDirectoryDownloader
 
                     SetRootUrl(httpResponseMessage);
 
-                    html = await GetHtml(httpResponseMessage);
+                    using (Stream htmlStream = await GetHtmlStream(httpResponseMessage))
+                    {
+                        if (htmlStream != null)
+                        {
+                            html = await GetHtml(htmlStream);
+                        }
+                        else
+                        {
+                            ConvertDirectoryToFile(webDirectory, httpResponseMessage);
+
+                            return;
+                        }
+                    }
                 }
             }
 
@@ -838,7 +882,20 @@ namespace OpenDirectoryDownloader
                 {
                     if (html == null)
                     {
-                        html = await GetHtml(httpResponseMessage);
+                        using (Stream htmlStream = await GetHtmlStream(httpResponseMessage))
+                        {
+                            if (htmlStream != null)
+                            {
+                                html = await GetHtml(htmlStream);
+                            }
+                            else
+                            {
+                                Logger.Warn($"Treated {webDirectory.Url} as file instead of directory ({FileSizeHelper.ToHumanReadable(httpResponseMessage.Content.Headers.ContentLength.Value)})");
+                                ConvertDirectoryToFile(webDirectory, httpResponseMessage);
+
+                                return;
+                            }
+                        }
                     }
 
                     // UNTESTED (cannot find Calibre with this issue)
@@ -945,6 +1002,20 @@ namespace OpenDirectoryDownloader
             }
         }
 
+        private static void ConvertDirectoryToFile(WebDirectory webDirectory, HttpResponseMessage httpResponseMessage)
+        {
+            // Remove it as directory
+            webDirectory.ParentDirectory.Subdirectories.Remove(webDirectory);
+
+            // Add it as a file
+            webDirectory.ParentDirectory.Files.Add(new WebFile
+            {
+                Url = webDirectory.Url,
+                FileName = webDirectory.Name,
+                FileSize = (long)httpResponseMessage.Content.Headers.ContentLength
+            });
+        }
+
         private void SetRootUrl(HttpResponseMessage httpResponseMessage)
         {
             if (FirstRequest)
@@ -967,6 +1038,104 @@ namespace OpenDirectoryDownloader
             FixCharSet(httpResponseMessage);
 
             return await httpResponseMessage.Content.ReadAsStringAsync();
+        }
+
+        private static async Task<string> GetHtml(Stream stream)
+        {
+            using (StreamReader streamReader = new StreamReader(stream))
+            {
+                return await streamReader.ReadToEndAsync();
+            }
+        }
+
+        /// <summary>
+        /// Checks for maximum of 10% control characters, which should not be in HTML
+        /// </summary>
+        /// <param name="buffer">Buffer to check</param>
+        /// <param name="length">Length to check</param>
+        /// <returns>True if there is less than 10% control characters</returns>
+        private static bool IsHtmlMaybe(char[] buffer, int length)
+        {
+            int controlChars = buffer.Take(length).Count(c => char.IsControl(c) && c != 10 && c != 13 && c != 9);
+
+            return (100d / (buffer.Length / (double)controlChars)) < 10;
+        }
+
+        /// <summary>
+        /// Check HttpResponseMessage for HTML, as good as it can
+        /// The code below might not be perfect, streams are hard
+        /// </summary>
+        /// <param name="httpResponseMessage">The HttpResponseMessage to read from</param>
+        /// <returns>A checked stream when possible HTML, else null</returns>
+        private static async Task<Stream> GetHtmlStream(HttpResponseMessage httpResponseMessage)
+        {
+            FixCharSet(httpResponseMessage);
+
+            Encoding encoding = Encoding.ASCII;
+
+            string charSet = httpResponseMessage.Content.Headers.ContentType?.CharSet;
+
+            if (!string.IsNullOrWhiteSpace(charSet))
+            {
+                encoding = Encoding.GetEncoding(charSet);
+            }
+
+            // Don't use using tags, it will close the stream for the callee
+            MemoryStream responseStream = new MemoryStream();
+            StreamWriter streamWriter = new StreamWriter(responseStream);
+
+            using (Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync())
+            {
+                using (StreamReader streamReader = new StreamReader(stream, encoding))
+                {
+                    // Check first 10kB for any 'HTML'
+                    char[] buffer = new char[10 * Constants.Kilobyte];
+                    int readBytes = await streamReader.ReadBlockAsync(buffer, 0, buffer.Length);
+
+                    if (!buffer.Contains('<'))
+                    {
+                        return null;
+                    }
+                    else if (!IsHtmlMaybe(buffer, readBytes))
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        Regex htmlRegex = new Regex("<[a-zA-Z0-9] ?([^>]+)>", RegexOptions.IgnoreCase);
+
+                        if (!htmlRegex.Match(new string(buffer)).Success)
+                        {
+                            return null;
+                        }
+                    }
+
+                    await streamWriter.WriteAsync(buffer);
+                    await streamWriter.FlushAsync();
+
+                    buffer = new char[Constants.Kilobyte];
+
+                    do
+                    {
+                        readBytes = await streamReader.ReadBlockAsync(buffer, 0, buffer.Length);
+
+                        if (readBytes > 0)
+                        {
+                            await streamWriter.WriteAsync(buffer);
+                            await streamWriter.FlushAsync();
+                        }
+                    } while (readBytes > 0);
+
+                    streamReader.Close();
+                }
+
+                stream.Close();
+            }
+
+            await streamWriter.FlushAsync();
+            responseStream.Position = 0;
+
+            return responseStream;
         }
 
         private static void FixCharSet(HttpResponseMessage httpResponseMessage)

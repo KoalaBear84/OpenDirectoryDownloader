@@ -11,7 +11,8 @@
         public const long NoFileSize = 0;
         public const string Root = "ROOT";
         public const string Ftp_Max_Connections = "MAX_CONNECTIONS";
-        public const int Megabyte = 1024 * 1024;
+        public const int Kilobyte = 1024;
+        public const int Megabyte = 1024 * Kilobyte;
 
         public class UserAgent
         {
