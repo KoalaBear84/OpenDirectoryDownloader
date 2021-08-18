@@ -50,6 +50,9 @@ namespace OpenDirectoryDownloader.Helpers
 
             try
             {
+                if (httpResponseMessage.Content?.Headers.ContentLength == null) {
+                    throw new Exception("Missing Content-Length header!");
+                }
                 return httpResponseMessage.Content?.Headers.ContentLength;
             }
             finally

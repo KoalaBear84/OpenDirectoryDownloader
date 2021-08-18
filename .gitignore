@@ -371,5 +371,6 @@ FodyWeavers.xsd
 # Windows build folder
 OpenDirectoryDownloader-win-x64/
 
-# Scans folder
+# Scans folders
 OpenDirectoryDownloader/Scans/
+src/OpenDirectoryDownloader/Scans/
