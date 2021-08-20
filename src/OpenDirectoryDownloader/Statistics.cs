@@ -81,7 +81,7 @@ namespace OpenDirectoryDownloader
 
             if (session.Root.Url.Length < 40)
             {
-                stringBuilder.AppendLine($"|**Url:** {session.Root.Url}||{uploadedUrlsText}|");
+                stringBuilder.AppendLine($"|**Url:** [{session.Root.Url}]({session.Root.Url})||{uploadedUrlsText}|");
             }
             else
             {
