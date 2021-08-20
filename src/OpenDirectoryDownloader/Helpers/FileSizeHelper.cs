@@ -118,8 +118,9 @@ namespace OpenDirectoryDownloader.Helpers
         }
 
         private static readonly string[] sizeSuffixes = { "B", "kiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB" };
+        private static readonly string[] sizeSuffixesBit = { "b", "kib", "Mib", "Gib", "Tib", "Pib", "Eib", "Zib", "Yib" };
 
-        public static string ToHumanReadable(long size)
+        public static string ToHumanReadable(long size, bool useBits = false)
         {
             Debug.Assert(sizeSuffixes.Length > 0);
 
@@ -138,7 +139,8 @@ namespace OpenDirectoryDownloader.Helpers
                 : intPower;
             double normSize = absSize / Math.Pow(1024, iUnit);
 
-            return string.Format(formatTemplate, size < 0 ? "-" : null, normSize, sizeSuffixes[iUnit]);
+            return string.Format(formatTemplate, size < 0 ? "-" : null, normSize, (useBits ? sizeSuffixesBit : sizeSuffixes)[iUnit]);
         }
+
     }
 }
