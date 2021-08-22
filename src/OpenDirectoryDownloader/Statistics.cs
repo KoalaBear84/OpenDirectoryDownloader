@@ -110,7 +110,7 @@ namespace OpenDirectoryDownloader
 
             // stringBuilder.AppendLine($"|**Date (UTC):** {session.Started.ToString(Constants.DateTimeFormat)}|**Time:** {TimeSpan.FromSeconds((int)((session.Finished == DateTimeOffset.MinValue ? DateTimeOffset.UtcNow : session.Finished) - session.Started).TotalSeconds)}|{(session.SpeedtestResult != null ? $"**Speed:** {(session.SpeedtestResult.DownloadedBytes > 0 ? $"{session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)" : "Failed")}" : string.Empty)}|");
 
-            stringBuilder.AppendLine($"|**Date (UTC):** {session.Started.ToString(Constants.DateTimeFormat)}|**Time:** {TimeSpan.FromSeconds((int)((session.Finished == DateTimeOffset.MinValue ? DateTimeOffset.UtcNow : session.Finished) - session.Started).TotalSeconds)}|{(session.SpeedtestResult != null ? $"**Speed:** {(session.SpeedtestResult.DownloadedBytes > 0 ? $"{FileSizeHelper.ToHumanReadable(session.SpeedtestResult.MaxBytesPerSecond):F1}/s ({FileSizeHelper.ToHumanReadable(session.SpeedtestResult.MaxBytesPerSecond * 8, true):F0}/s)" : "Failed")}" : string.Empty)}|");
+            stringBuilder.AppendLine($"|**Date (UTC):** {session.Started.ToString(Constants.DateTimeFormat)}|**Time:** {TimeSpan.FromSeconds((int)((session.Finished == DateTimeOffset.MinValue ? DateTimeOffset.UtcNow : session.Finished) - session.Started).TotalSeconds)}|{(session.SpeedtestResult != null ? $"**Speed:** {(session.SpeedtestResult.DownloadedBytes > 0 ? $"{session.SpeedtestResult.MaxBytesPerSecond / (double)Constants.Megabyte :F2} MB/s ({session.SpeedtestResult.MaxBytesPerSecond / (double)Constants.Megabyte * 8 :F1} mbit)" : "Failed")}" : string.Empty)}|");
 
             if (onlyRedditStats || includeBanner)
             {
