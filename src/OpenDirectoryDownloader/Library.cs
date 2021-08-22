@@ -148,6 +148,20 @@ namespace OpenDirectoryDownloader
             return downloadedMBs / (time / 1000d);
         }
 
+        private static double GetSpeedInKBs(IGrouping<long, KeyValuePair<long, long>> measurements, int useMiliseconds = 0)
+        {
+            long time = useMiliseconds == 0 ? measurements.Last().Key - measurements.First().Key : useMiliseconds;
+            double downloadedKBs = (measurements.Last().Value - measurements.First().Value) / (double)Constants.Kilobyte;
+            return downloadedKBs / (time / 1000d);
+        }
+
+        private static long GetSpeedInBytes(IGrouping<long, KeyValuePair<long, long>> measurements, int useMiliseconds = 0)
+        {
+            long time = useMiliseconds == 0 ? measurements.Last().Key - measurements.First().Key : useMiliseconds;
+            long downloadedBytes = (measurements.Last().Value - measurements.First().Value);
+            return downloadedBytes / (time / (long)1000);
+        }
+
         public static async Task<SpeedtestResult> DoSpeedTestHttpAsync(HttpClient httpClient, string url, int seconds = 25)
         {
             Logger.Info($"Do HTTP speedtest for {url}");
@@ -230,8 +244,8 @@ namespace OpenDirectoryDownloader
                 if (previousTime / 1000 < stopwatch.ElapsedMilliseconds / 1000)
                 {
                     ClearCurrentLine();
-                    double maxMBsPerSecond = measurements.Any() ? measurements.GroupBy(m => m.Key / 1000).Max(s => GetSpeedInMBs(s, 1000)) : 0;
-                    Console.Write($"Downloaded: {FileSizeHelper.ToHumanReadable(totalBytesRead)}, Time: {stopwatch.ElapsedMilliseconds / 1000}s, Speed: {maxMBsPerSecond:F1} MB/s ({maxMBsPerSecond * 8:F0} mbit)");
+                    long maxBytesPerSecond = measurements.Any() ? measurements.GroupBy(m => m.Key / 1000).Max(s => GetSpeedInBytes(s, 1000)) : 0;
+                    Console.Write($"Downloaded: {FileSizeHelper.ToHumanReadable(totalBytesRead)}, Time: {stopwatch.ElapsedMilliseconds / 1000}s, Speed: {FileSizeHelper.ToHumanReadable(maxBytesPerSecond):F1)}/s ({FileSizeHelper.ToHumanReadable(maxBytesPerSecond * 8, true):F0}/s)");
                 }
 
                 if (stopwatch.ElapsedMilliseconds >= 10_000)
@@ -246,8 +260,8 @@ namespace OpenDirectoryDownloader
                             break;
                         }
 
-                        double maxSpeedLastSeconds = perSecond.TakeLast(3).Max(s => GetSpeedInMBs(s, 1000));
-                        double maxSpeedBefore = perSecond.Take(perSecond.Count - 3).Max(s => GetSpeedInMBs(s, 1000));
+                        double maxSpeedLastSeconds = perSecond.TakeLast(3).Max(s => GetSpeedInBytes(s, 1000));
+                        double maxSpeedBefore = perSecond.Take(perSecond.Count - 3).Max(s => GetSpeedInBytes(s, 1000));
 
                         // If no improvement in speed
                         if (maxSpeedBefore > maxSpeedLastSeconds)
@@ -271,12 +285,12 @@ namespace OpenDirectoryDownloader
             {
                 DownloadedBytes = totalBytesRead,
                 ElapsedMilliseconds = stopwatch.ElapsedMilliseconds,
-                MaxMBsPerSecond = measurements.Any() ? measurements.GroupBy(m => m.Key / 1000).Max(s => GetSpeedInMBs(s, 1000)) : 0
+                MaxBytesPerSecond = measurements.Any() ? measurements.GroupBy(m => m.Key / 1000).Max(s => GetSpeedInBytes(s, 1000)) : 0
             };
 
             if (measurements.Any())
             {
-                Logger.Info($"Downloaded: {speedtestResult.DownloadedMBs:F2} MB, Time: {speedtestResult.ElapsedMilliseconds} ms, Speed: {speedtestResult.MaxMBsPerSecond:F1} MB/s ({speedtestResult.MaxMBsPerSecond * 8:F0} mbit)");
+                Logger.Info($"Downloaded: {speedtestResult.DownloadedMBs:F2} MB, Time: {speedtestResult.ElapsedMilliseconds} ms, Speed: {FileSizeHelper.ToHumanReadable(speedtestResult.MaxBytesPerSecond):F1)}/s ({FileSizeHelper.ToHumanReadable(speedtestResult.MaxBytesPerSecond * 8, true):F0}/s)");
             }
             else
             {
