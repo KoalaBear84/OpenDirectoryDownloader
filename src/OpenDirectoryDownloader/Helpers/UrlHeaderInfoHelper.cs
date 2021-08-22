@@ -50,7 +50,10 @@ namespace OpenDirectoryDownloader.Helpers
 
             try
             {
-                if (httpResponseMessage.Content?.Headers.ContentLength == null) {
+                if (
+                    (new Uri(url)).Host == "the-eye.eu" && // workaround until we come up with a better way to fix this **without slowing down scans of ODs that don't report `Content-Length` at all for some files** (e.g. .php, .html)
+                    httpResponseMessage.Content?.Headers.ContentLength == null
+                ) {
                     throw new Exception("Missing Content-Length header!");
                 }
                 return httpResponseMessage.Content?.Headers.ContentLength;
