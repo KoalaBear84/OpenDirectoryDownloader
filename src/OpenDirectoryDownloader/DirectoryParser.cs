@@ -12,16 +12,10 @@ using OpenDirectoryDownloader.Site.GoIndex;
 using OpenDirectoryDownloader.Site.GoIndex.Bhadoo;
 using OpenDirectoryDownloader.Site.GoIndex.GdIndex;
 using OpenDirectoryDownloader.Site.GoIndex.Go2Index;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader
 {
@@ -1358,11 +1352,11 @@ namespace OpenDirectoryDownloader
 
         private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser8 = async (webDirectory, baseUrl, line) =>
         {
-            Match match = Regex.Match(line, @"<a.*<\/a>\s*(?<IsDirectory>\/?)(?<FileSize>(\d+\S+))?");
+            Match match = Regex.Match(line, @"^\s*<a.*<\/a>\s*(?<IsDirectory>\/?)(?<FileSize>(\S+))?");
 
             if (match.Success && (match.Groups["IsDirectory"].Success && !string.IsNullOrWhiteSpace(match.Groups["IsDirectory"].Value)) != match.Groups["FileSize"].Success)
             {
-                bool isFile = !string.IsNullOrWhiteSpace(match.Groups["FileSize"].Value);
+                bool isFile = !string.IsNullOrWhiteSpace(match.Groups["FileSize"].Value) && match.Groups["FileSize"].Value.Trim() != "-";
 
                 if (match.Groups["FileSize"].Value.Contains("<"))
                 {
@@ -1383,11 +1377,18 @@ namespace OpenDirectoryDownloader
 
                         if (!isFile)
                         {
+                            string directoryName = Path.GetDirectoryName(WebUtility.UrlDecode(uri.Segments.Last()));
+
+                            if (string.IsNullOrWhiteSpace(directoryName))
+                            {
+                                directoryName = WebUtility.UrlDecode(linkHref);
+                            }
+
                             webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
                             {
                                 Parser = "RegexParser8",
                                 Url = fullUrl,
-                                Name = WebUtility.UrlDecode(linkHref)
+                                Name = directoryName
                             });
                         }
                         else

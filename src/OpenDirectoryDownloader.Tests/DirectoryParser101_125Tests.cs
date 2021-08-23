@@ -525,5 +525,36 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("001. Britney Spears - ...Baby One More Time.mp3", webDirectory.Files[0].FileName);
             Assert.Equal(8524923, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: http://www.mrt.tas.gov.au/mrtdoc/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing120aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(13, webDirectory.Subdirectories.Count);
+            Assert.Equal("airborne", webDirectory.Subdirectories[0].Name);
+            Assert.Single(webDirectory.Files);
+            Assert.Equal("README", webDirectory.Files[0].FileName);
+            Assert.Equal(857, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://www.mrt.tas.gov.au/mrtdoc/airborne/alberton1989/original/AGD66/ASCII/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing120bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(5, webDirectory.Files.Count);
+            Assert.Equal("alberton.dat.zip", webDirectory.Files[0].FileName);
+            Assert.Equal(7340032, webDirectory.Files[0].FileSize);
+        }
     } 
 }
