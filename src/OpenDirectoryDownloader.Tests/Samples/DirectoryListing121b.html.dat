@@ -1,0 +1,82 @@
+
+
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="./.favicon.ico">
+        <title>daily</title>
+
+      <link rel="stylesheet" href="./.style.css">
+        <script src="./.sorttable.js"></script>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://www.duas.org/css/standard-style-01.css?h=0010"> 
+    </head>
+
+    <body>
+        <div id="container">
+			<P align="center"><img src="https://www.duas.org/images/duas_logo.png" width="140" height="35" alt="Duas.org"></a></p>
+
+            <h1>daily</h1>
+
+            <table class="sortable">
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+        <tr class='dir'>
+            <td sorttable_customkey='1'><a href='?Ramadhan_pdfs' class='name'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.. (Back)</a>
+			<td sorttable_customkey='0'><a href='./?Ramadhan_pdfs'>&lt;Directory&gt;</a></td>
+
+        </tr>
+        <tr class='file'>
+            <td sorttable_customkey='2'><a href='Ramadhan_pdfs/daily/RamadhanAllahummaHadhaShahr.pdf' class='name'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RamadhanAllahummaHadhaShahr.pdf</a>
+			<td sorttable_customkey='348871'><a href='./Ramadhan_pdfs/daily/RamadhanAllahummaHadhaShahr.pdf'>340.7 KB</a></td>
+
+        </tr>
+        <tr class='file'>
+            <td sorttable_customkey='3'><a href='Ramadhan_pdfs/daily/Ramadhan_dailysalwaat.pdf' class='name'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ramadhan_dailysalwaat.pdf</a>
+			<td sorttable_customkey='131540'><a href='./Ramadhan_pdfs/daily/Ramadhan_dailysalwaat.pdf'>128.5 KB</a></td>
+
+        </tr>
+        <tr class='file'>
+            <td sorttable_customkey='4'><a href='Ramadhan_pdfs/daily/Ramdayamartani.pdf' class='name'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ramdayamartani.pdf</a>
+			<td sorttable_customkey='349451'><a href='./Ramadhan_pdfs/daily/Ramdayamartani.pdf'>341.3 KB</a></td>
+
+        </tr>
+        <tr class='file'>
+            <td sorttable_customkey='5'><a href='Ramadhan_pdfs/daily/ram10tasbih.pdf' class='name'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram10tasbih.pdf</a>
+			<td sorttable_customkey='153456'><a href='./Ramadhan_pdfs/daily/ram10tasbih.pdf'>149.9 KB</a></td>
+
+        </tr>
+        <tr class='file'>
+            <td sorttable_customkey='6'><a href='Ramadhan_pdfs/daily/ramadhan3day.pdf' class='name'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ramadhan3day.pdf</a>
+			<td sorttable_customkey='106981'><a href='./Ramadhan_pdfs/daily/ramadhan3day.pdf'>104.5 KB</a></td>
+
+        </tr>
+        <tr class='file'>
+            <td sorttable_customkey='7'><a href='Ramadhan_pdfs/daily/ramadhan_salwat.pdf' class='name'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ramadhan_salwat.pdf</a>
+			<td sorttable_customkey='164026'><a href='./Ramadhan_pdfs/daily/ramadhan_salwat.pdf'>160.2 KB</a></td>
+
+        </tr>
+        <tr class='file'>
+            <td sorttable_customkey='8'><a href='Ramadhan_pdfs/daily/ramdayfazlik.pdf' class='name'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ramdayfazlik.pdf</a>
+			<td sorttable_customkey='81951'><a href='./Ramadhan_pdfs/daily/ramdayfazlik.pdf'>80 KB</a></td>
+
+        </tr>
+                </tbody>
+            </table>
+
+        </div>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    </body>
+</html>

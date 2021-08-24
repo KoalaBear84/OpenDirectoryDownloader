@@ -556,5 +556,40 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("alberton.dat.zip", webDirectory.Files[0].FileName);
             Assert.Equal(7340032, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: https://www.duas.org/pdfs/?Ramadhan_pdfs
+        /// 
+        /// Unfortunately doesn't get the filesizes
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing121aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(2, webDirectory.Subdirectories.Count);
+            Assert.Equal("daily", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(4, webDirectory.Files.Count);
+            Assert.Equal("Ramadhan last day dua iqbal.pdf", webDirectory.Files[0].FileName);
+            Assert.Equal(0, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: https://www.duas.org/pdfs/?Ramadhan_pdfs/daily
+        /// 
+        /// Unfortunately doesn't get the filesizes
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing121bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(7, webDirectory.Files.Count);
+            Assert.Equal("RamadhanAllahummaHadhaShahr.pdf", webDirectory.Files[0].FileName);
+            Assert.Equal(0, webDirectory.Files[0].FileSize);
+        }
     } 
 }

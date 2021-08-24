@@ -828,12 +828,12 @@ namespace OpenDirectoryDownloader
                                     UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
 
                                     IElement imageElement = tableRow.QuerySelector("img");
-                                    bool isDirectory = imageElement != null &&
+                                    bool isDirectory = tableRow.ClassList.Contains("dir") || (imageElement != null &&
                                         (
                                             (imageElement.HasAttribute("alt") && imageElement.Attributes["alt"].Value == "[DIR]") ||
                                             (imageElement.HasAttribute("src") && (Path.GetFileName(imageElement.Attributes["src"].Value).Contains("dir") || Path.GetFileName(imageElement.Attributes["src"].Value).Contains("folder"))) ||
                                             urlEncodingParser["dirname"] != null
-                                        );
+                                        ));
 
                                     string description = tableRow.QuerySelector($"td:nth-child({descriptionHeaderColumnIndex})")?.TextContent.Trim();
                                     string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim().Replace(" ", string.Empty);
@@ -889,6 +889,16 @@ namespace OpenDirectoryDownloader
                                             }
                                         }
 
+                                        if (link.ClassList.Contains("name"))
+                                        {
+                                            directoryName = link.TextContent.Trim();
+
+                                            if (directoryName.StartsWith(".."))
+                                            {
+                                                continue;
+                                            }
+                                        }
+
                                         webDirectoryCopy.Subdirectories.Add(new WebDirectory(webDirectoryCopy)
                                         {
                                             Parser = "ParseTablesDirectoryListing",
@@ -916,6 +926,11 @@ namespace OpenDirectoryDownloader
                                         if (string.IsNullOrWhiteSpace(filename))
                                         {
                                             filename = link.TextContent;
+                                        }
+
+                                        if (link.ClassList.Contains("name"))
+                                        {
+                                            filename = link.TextContent.Trim();
                                         }
 
                                         if (urlEncodingParser.Count == 0 && filename.ToLower() == "index.php")

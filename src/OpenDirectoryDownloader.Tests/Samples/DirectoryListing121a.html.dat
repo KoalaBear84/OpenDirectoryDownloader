@@ -1,0 +1,77 @@
+
+
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="./.favicon.ico">
+        <title>Ramadhan_pdfs</title>
+
+      <link rel="stylesheet" href="./.style.css">
+        <script src="./.sorttable.js"></script>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://www.duas.org/css/standard-style-01.css?h=0010"> 
+    </head>
+
+    <body>
+        <div id="container">
+			<P align="center"><img src="https://www.duas.org/images/duas_logo.png" width="140" height="35" alt="Duas.org"></a></p>
+
+            <h1>Ramadhan_pdfs</h1>
+
+            <table class="sortable">
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+        <tr class='dir'>
+            <td sorttable_customkey='1'><a href='?' class='name'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.. (Back)</a>
+			<td sorttable_customkey='0'><a href='./?'>&lt;Directory&gt;</a></td>
+
+        </tr>
+        <tr class='dir'>
+            <td sorttable_customkey='2'><a href='?Ramadhan_pdfs/daily' class='name'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;daily</a>
+			<td sorttable_customkey='0'><a href='./?Ramadhan_pdfs/daily'>&lt;Directory&gt;</a></td>
+
+        </tr>
+        <tr class='dir'>
+            <td sorttable_customkey='3'><a href='?Ramadhan_pdfs/nights' class='name'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nights</a>
+			<td sorttable_customkey='0'><a href='./?Ramadhan_pdfs/nights'>&lt;Directory&gt;</a></td>
+
+        </tr>
+        <tr class='file'>
+            <td sorttable_customkey='4'><a href='Ramadhan_pdfs/Ramadhan last day dua iqbal.pdf' class='name'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ramadhan last day dua iqbal.pdf</a>
+			<td sorttable_customkey='38790'><a href='./Ramadhan_pdfs/Ramadhan last day dua iqbal.pdf'>37.9 KB</a></td>
+
+        </tr>
+        <tr class='file'>
+            <td sorttable_customkey='5'><a href='Ramadhan_pdfs/laylatulqadrdua.pdf' class='name'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;laylatulqadrdua.pdf</a>
+			<td sorttable_customkey='47900'><a href='./Ramadhan_pdfs/laylatulqadrdua.pdf'>46.8 KB</a></td>
+
+        </tr>
+        <tr class='file'>
+            <td sorttable_customkey='6'><a href='Ramadhan_pdfs/ramaftersalaat.pdf' class='name'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ramaftersalaat.pdf</a>
+			<td sorttable_customkey='187437'><a href='./Ramadhan_pdfs/ramaftersalaat.pdf'>183 KB</a></td>
+
+        </tr>
+        <tr class='file'>
+            <td sorttable_customkey='7'><a href='Ramadhan_pdfs/ramaftersalaat2.pdf' class='name'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ramaftersalaat2.pdf</a>
+			<td sorttable_customkey='178285'><a href='./Ramadhan_pdfs/ramaftersalaat2.pdf'>174.1 KB</a></td>
+
+        </tr>
+                </tbody>
+            </table>
+
+        </div>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    </body>
+</html>
