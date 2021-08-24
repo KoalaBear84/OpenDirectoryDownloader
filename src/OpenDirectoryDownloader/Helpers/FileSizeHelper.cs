@@ -120,11 +120,16 @@ namespace OpenDirectoryDownloader.Helpers
         private static readonly string[] sizeSuffixes = { "B", "kiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB" };
         private static readonly string[] sizeSuffixesBit = { "b", "kib", "Mib", "Gib", "Tib", "Pib", "Eib", "Zib", "Yib" };
 
-        public static string ToHumanReadable(long size, bool useBits = false)
+        public static string ToHumanReadable(long? size, bool useBits = false)
         {
             Debug.Assert(sizeSuffixes.Length > 0);
 
             const string formatTemplate = "{0}{1:#.##} {2}";
+
+            if (size == null)
+            {
+                return "-";
+            }
 
             if (size == 0)
             {
