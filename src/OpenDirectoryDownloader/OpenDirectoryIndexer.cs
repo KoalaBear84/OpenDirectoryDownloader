@@ -890,7 +890,7 @@ namespace OpenDirectoryDownloader
                             }
                             else
                             {
-                                Logger.Warn($"Treated {webDirectory.Url} as file instead of directory ({FileSizeHelper.ToHumanReadable(httpResponseMessage.Content.Headers.ContentLength.Value)})");
+                                Logger.Warn($"Treated {webDirectory.Url} as file instead of directory ({FileSizeHelper.ToHumanReadable(html.Length)})");
                                 ConvertDirectoryToFile(webDirectory, httpResponseMessage);
 
                                 return;
@@ -928,7 +928,7 @@ namespace OpenDirectoryDownloader
             }
 
             Uri originalUri = new Uri(webDirectory.Url);
-            Logger.Debug($"[{name}] Finish download '{webDirectory.Url}'");
+            Logger.Debug($"[{name}] Finish download [HTTP {(int)httpResponseMessage.StatusCode}] '{webDirectory.Url}', size: {FileSizeHelper.ToHumanReadable(html?.Length)}");
 
             // Process only same site
             if (httpResponseMessage.RequestMessage.RequestUri.Host == Session.Root.Uri.Host)
@@ -1091,6 +1091,11 @@ namespace OpenDirectoryDownloader
                     // Check first 10kB for any 'HTML'
                     char[] buffer = new char[10 * Constants.Kilobyte];
                     int readBytes = await streamReader.ReadBlockAsync(buffer, 0, buffer.Length);
+
+                    if (readBytes < buffer.Length)
+                    {
+                        Array.Resize(ref buffer, readBytes);
+                    }
 
                     if (!buffer.Contains('<'))
                     {
