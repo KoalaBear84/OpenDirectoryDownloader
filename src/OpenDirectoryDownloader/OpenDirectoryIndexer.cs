@@ -526,15 +526,19 @@ namespace OpenDirectoryDownloader
 
         private void TimerStatistics_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (WebDirectoriesQueue.Any() || RunningWebDirectoryThreads > 0)
+            StringBuilder stringBuilder = new StringBuilder();
+
+            if (WebDirectoriesQueue.Any() || RunningWebDirectoryThreads > 0 || WebFilesFileSizeQueue.Any() || RunningWebFileFileSizeThreads > 0)
             {
-                Logger.Warn(Statistics.GetSessionStats(Session));
-                Logger.Warn($"Queue: {Library.FormatWithThousands(WebDirectoriesQueue.Count)}, Queue (filesizes): {Library.FormatWithThousands(WebFilesFileSizeQueue.Count)}");
+                stringBuilder.AppendLine(Statistics.GetSessionStats(Session));
+                stringBuilder.AppendLine($"Queue: {Library.FormatWithThousands(WebDirectoriesQueue.Count)} ({RunningWebDirectoryThreads}), Queue (filesizes): {Library.FormatWithThousands(WebFilesFileSizeQueue.Count)} ({RunningWebFileFileSizeThreads})");
             }
 
-            if (WebFilesFileSizeQueue.Any() || RunningWebFileFileSizeThreads > 0)
+            string statistics = stringBuilder.ToString();
+
+            if (!string.IsNullOrWhiteSpace(statistics))
             {
-                Logger.Warn($"Remaing urls to retrieve filesize: {Library.FormatWithThousands(WebFilesFileSizeQueue.Count)}");
+                Logger.Warn(statistics);
             }
         }
 
