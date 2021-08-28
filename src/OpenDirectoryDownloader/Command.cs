@@ -231,8 +231,7 @@ namespace OpenDirectoryDownloader
         private static void ShowStatistics(OpenDirectoryIndexer openDirectoryIndexer)
         {
             Console.WriteLine(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true));
-            Console.WriteLine($"Queue: {Library.FormatWithThousands(openDirectoryIndexer.WebDirectoriesQueue.Count)}, Threads: {openDirectoryIndexer.RunningWebDirectoryThreads}");
-            Console.WriteLine($"Queue (filesize): {Library.FormatWithThousands(openDirectoryIndexer.WebFilesFileSizeQueue.Count)}, Threads (filesize): {openDirectoryIndexer.RunningWebFileFileSizeThreads}");
+            Console.WriteLine($"Queue: {Library.FormatWithThousands(openDirectoryIndexer.WebDirectoriesQueue.Count)} ({openDirectoryIndexer.RunningWebDirectoryThreads}), Queue (filesizes): {Library.FormatWithThousands(openDirectoryIndexer.WebFilesFileSizeQueue.Count)} ({openDirectoryIndexer.RunningWebFileFileSizeThreads})");
         }
     }
 }
