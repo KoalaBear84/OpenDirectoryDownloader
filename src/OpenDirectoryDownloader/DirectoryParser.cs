@@ -235,13 +235,13 @@ namespace OpenDirectoryDownloader
             }
             catch (FriendlyException ex)
             {
-                Logger.Error(ex.Message);
+                Logger.Error(ex.Message, $"Exception when parsing {parsedWebDirectory.Url}");
 
                 parsedWebDirectory.Error = true;
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.Error(ex, $"Exception when parsing {parsedWebDirectory.Url}");
 
                 parsedWebDirectory.Error = true;
             }
