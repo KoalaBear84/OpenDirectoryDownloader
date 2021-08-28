@@ -972,12 +972,10 @@ namespace OpenDirectoryDownloader
 
         private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser1 = async (webDirectory, baseUrl, line) =>
         {
-            Match match = Regex.Match(line, @"(?:<img.*>\s*)+<a.*?>.*?<\/a>\S*\s*(?<Modified>\d*-(?:[a-zA-Z]*|\d*)-\d*\s*\d*:\d*(:\d*)?)?\s*(?<FileSize>\S+)(\s*(?<Description>.*))?");
+            Match match = Regex.Match(line, @"(?:<img.*>\s*)+<a.*?>.*?<\/a>\S*\s*(?<Modified>\d*-(?:[a-zA-Z]*|\d*)-\d*\s*\d*:\d*(:\d*)?)?\s*(?<FileSize>\S+)?(\s*(?<Description>.*))?");
 
             if (match.Success)
             {
-                bool isFile = IsFileSize(match.Groups["FileSize"].Value.Trim());
-
                 IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
 
                 if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") == null &&
@@ -992,6 +990,8 @@ namespace OpenDirectoryDownloader
                     {
                         Uri uri = new Uri(new Uri(baseUrl), linkHref);
                         string fullUrl = uri.ToString();
+
+                        bool isFile = IsFileSize(match.Groups["FileSize"].Value.Trim()) && parsedLine.QuerySelector("img[alt=\"[DIR]\"]") == null;
 
                         if (!isFile)
                         {
@@ -1991,6 +1991,7 @@ namespace OpenDirectoryDownloader
         private static bool IsFileSize(string value)
         {
             return value != "-" && value != "—" && value != "<Directory>";
+            //return !string.IsNullOrWhiteSpace(value) && value != "-" && value != "—" && value != "<Directory>";
         }
 
         public enum HeaderType

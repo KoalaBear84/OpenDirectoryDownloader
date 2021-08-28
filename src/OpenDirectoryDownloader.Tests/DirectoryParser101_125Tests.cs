@@ -572,7 +572,7 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("daily", webDirectory.Subdirectories[0].Name);
             Assert.Equal(4, webDirectory.Files.Count);
             Assert.Equal("Ramadhan last day dua iqbal.pdf", webDirectory.Files[0].FileName);
-            Assert.Equal(0, webDirectory.Files[0].FileSize);
+            Assert.Equal(Constants.NoFileSize, webDirectory.Files[0].FileSize);
         }
 
         /// <summary>
@@ -589,7 +589,42 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Empty(webDirectory.Subdirectories);
             Assert.Equal(7, webDirectory.Files.Count);
             Assert.Equal("RamadhanAllahummaHadhaShahr.pdf", webDirectory.Files[0].FileName);
-            Assert.Equal(0, webDirectory.Files[0].FileSize);
+            Assert.Equal(Constants.NoFileSize, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://www.columbia.edu/itc/
+        /// 
+        /// Format where not even files have filesizes..
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing122aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(75, webDirectory.Subdirectories.Count);
+            Assert.Equal("acjp", webDirectory.Subdirectories[0].Name);
+            Assert.Equal(4, webDirectory.Files.Count);
+            Assert.Equal("index-nof.html", webDirectory.Files[0].FileName);
+            Assert.Equal(Constants.NoFileSize, webDirectory.Files[0].FileSize);
+        }
+
+        /// <summary>
+        /// Url: http://www.columbia.edu/itc/acjp/ramfiles/
+        /// 
+        /// Format where not even files have filesizes..
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing122bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(52, webDirectory.Files.Count);
+            Assert.Equal("acjp_hayden01.ram", webDirectory.Files[0].FileName);
+            Assert.Equal(Constants.NoFileSize, webDirectory.Files[0].FileSize);
         }
     } 
 }
