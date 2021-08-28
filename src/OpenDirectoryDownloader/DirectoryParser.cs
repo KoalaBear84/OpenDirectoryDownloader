@@ -1772,91 +1772,97 @@ namespace OpenDirectoryDownloader
             {
                 if (IsValidLink(link))
                 {
-                    string linkHref = link.Attributes["href"].Value;
-
-                    Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                    string fullUrl = uri.ToString();
-
-                    fullUrl = StripUrl(fullUrl);
-
-                    UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
-
-                    if (uri.Segments.Length == 1 && uri.Segments.Last() == "/" && urlEncodingParser["dir"] == null && urlEncodingParser["path"] == null)
+                    try
                     {
-                        return;
-                    }
+                        string linkHref = link.Attributes["href"].Value;
+                        Uri uri = new Uri(new Uri(baseUrl), linkHref);
+                        string fullUrl = uri.ToString();
 
-                    if (baseUrl == StripUrl(fullUrl))
-                    {
-                        return;
-                    }
+                        fullUrl = StripUrl(fullUrl);
 
-                    parsedWebDirectory.ParsedSuccessfully = true;
+                        UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
 
-                    bool directoryListAsp = Path.GetFileName(fullUrl) == "DirectoryList.asp" || fullUrl.Contains("DirectoryList.asp");
-                    bool dirParam = urlEncodingParser["dir"] != null || urlEncodingParser["path"] != null;
-
-                    if (!string.IsNullOrWhiteSpace(Path.GetExtension(fullUrl)) && !directoryListAsp && !dirParam)
-                    {
-                        parsedWebDirectory.Parser = parser;
-
-                        long fileSize = Constants.NoFileSize;
-
-                        if (link.ParentElement.NodeName != "BODY")
+                        if (uri.Segments.Length == 1 && uri.Segments.Last() == "/" && urlEncodingParser["dir"] == null && urlEncodingParser["path"] == null)
                         {
-                            fileSize = FileSizeHelper.ParseFileSize(link.ParentElement?.QuerySelector(".fileSize")?.TextContent);
+                            return;
                         }
 
-                        string fileName = Path.GetFileName(WebUtility.UrlDecode(linkHref));
-                        urlEncodingParser = new UrlEncodingParser(fileName);
-
-                        // Clear token
-                        if (urlEncodingParser["token"] != null)
+                        if (baseUrl == StripUrl(fullUrl))
                         {
-                            urlEncodingParser.Remove("token");
-                            fileName = urlEncodingParser.ToString();
+                            return;
                         }
 
-                        parsedWebDirectory.Files.Add(new WebFile
-                        {
-                            Url = fullUrl,
-                            FileName = fileName,
-                            FileSize = fileSize,
-                        });
-                    }
-                    else
-                    {
-                        parsedWebDirectory.Parser = parser;
+                        parsedWebDirectory.ParsedSuccessfully = true;
 
-                        if (dirParam)
+                        bool directoryListAsp = Path.GetFileName(fullUrl) == "DirectoryList.asp" || fullUrl.Contains("DirectoryList.asp");
+                        bool dirParam = urlEncodingParser["dir"] != null || urlEncodingParser["path"] != null;
+
+                        if (!string.IsNullOrWhiteSpace(Path.GetExtension(fullUrl)) && !directoryListAsp && !dirParam)
                         {
-                            parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
+                            parsedWebDirectory.Parser = parser;
+
+                            long fileSize = Constants.NoFileSize;
+
+                            if (link.ParentElement.NodeName != "BODY")
                             {
-                                Parser = parser,
-                                Url = fullUrl,
-                                Name = urlEncodingParser["dir"] != null ?
-                                    WebUtility.UrlDecode(new Uri(parsedWebDirectory.Uri, urlEncodingParser["dir"]).Segments.Last()).TrimEnd(new char[] { '/' }) :
-                                    WebUtility.UrlDecode(new Uri(parsedWebDirectory.Uri, urlEncodingParser["path"]).Segments.Last()).TrimEnd(new char[] { '/' })
-                            });
-                        }
-                        else if (!directoryListAsp)
-                        {
-                            parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
+                                fileSize = FileSizeHelper.ParseFileSize(link.ParentElement?.QuerySelector(".fileSize")?.TextContent);
+                            }
+
+                            string fileName = Path.GetFileName(WebUtility.UrlDecode(linkHref));
+                            urlEncodingParser = new UrlEncodingParser(fileName);
+
+                            // Clear token
+                            if (urlEncodingParser["token"] != null)
                             {
-                                Parser = parser,
+                                urlEncodingParser.Remove("token");
+                                fileName = urlEncodingParser.ToString();
+                            }
+
+                            parsedWebDirectory.Files.Add(new WebFile
+                            {
                                 Url = fullUrl,
-                                Name = WebUtility.UrlDecode(uri.Segments.Last()).Trim().TrimEnd(new char[] { '/' })
+                                FileName = fileName,
+                                FileSize = fileSize,
                             });
                         }
                         else
                         {
-                            parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
+                            parsedWebDirectory.Parser = parser;
+
+                            if (dirParam)
                             {
-                                Parser = parser,
-                                Url = fullUrl,
-                                Name = link.TextContent.Trim().TrimEnd(new char[] { '/' })
-                            });
+                                parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
+                                {
+                                    Parser = parser,
+                                    Url = fullUrl,
+                                    Name = urlEncodingParser["dir"] != null ?
+                                        WebUtility.UrlDecode(new Uri(parsedWebDirectory.Uri, urlEncodingParser["dir"]).Segments.Last()).TrimEnd(new char[] { '/' }) :
+                                        WebUtility.UrlDecode(new Uri(parsedWebDirectory.Uri, urlEncodingParser["path"]).Segments.Last()).TrimEnd(new char[] { '/' })
+                                });
+                            }
+                            else if (!directoryListAsp)
+                            {
+                                parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
+                                {
+                                    Parser = parser,
+                                    Url = fullUrl,
+                                    Name = WebUtility.UrlDecode(uri.Segments.Last()).Trim().TrimEnd(new char[] { '/' })
+                                });
+                            }
+                            else
+                            {
+                                parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
+                                {
+                                    Parser = parser,
+                                    Url = fullUrl,
+                                    Name = link.TextContent.Trim().TrimEnd(new char[] { '/' })
+                                });
+                            }
                         }
+                    }
+                    catch (Exception)
+                    {
+                        // Ignore link
                     }
                 }
             }
