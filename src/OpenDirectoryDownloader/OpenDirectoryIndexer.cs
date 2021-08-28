@@ -786,7 +786,7 @@ namespace OpenDirectoryDownloader
                     }
                     else
                     {
-                        Logger.Warn($"Treated {webDirectory.Url} as file instead of directory ({FileSizeHelper.ToHumanReadable(httpResponseMessage.Content.Headers.ContentLength.Value)})");
+                        Logger.Warn($"Treated {webDirectory.Url} as file instead of directory ({FileSizeHelper.ToHumanReadable(httpResponseMessage.Content.Headers.ContentLength)})");
                         ConvertDirectoryToFile(webDirectory, httpResponseMessage);
 
                         return;
