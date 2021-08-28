@@ -82,7 +82,7 @@ namespace OpenDirectoryDownloader
                             Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{relativeUrl}'. Skipping..");
                             (context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
                         }
-                        else if ((ex.Message.Contains("401 (Unauthorized)") || ex.Message.Contains("403 (Forbidden)")) && retryCount >= 3)
+                        else if ((ex.Message.Contains("401 (Unauthorized)") || ex.Message.Contains("401 (Authorization Required)") || ex.Message.Contains("403 (Forbidden)")) && retryCount >= 3)
                         {
                             Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{relativeUrl}'. Skipping..");
                             (context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
