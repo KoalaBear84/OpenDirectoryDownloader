@@ -1012,7 +1012,7 @@ namespace OpenDirectoryDownloader
             {
                 Url = webDirectory.Url,
                 FileName = webDirectory.Name,
-                FileSize = (long)httpResponseMessage.Content.Headers.ContentLength
+                FileSize = httpResponseMessage.Content.Headers.ContentLength ?? Constants.NoFileSize
             });
         }
 
