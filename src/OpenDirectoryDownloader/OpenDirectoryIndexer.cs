@@ -1005,10 +1005,10 @@ namespace OpenDirectoryDownloader
         private static void ConvertDirectoryToFile(WebDirectory webDirectory, HttpResponseMessage httpResponseMessage)
         {
             // Remove it as directory
-            webDirectory.ParentDirectory.Subdirectories.Remove(webDirectory);
+            webDirectory.ParentDirectory?.Subdirectories.Remove(webDirectory);
 
             // Add it as a file
-            webDirectory.ParentDirectory.Files.Add(new WebFile
+            webDirectory.ParentDirectory?.Files.Add(new WebFile
             {
                 Url = webDirectory.Url,
                 FileName = webDirectory.Name,
