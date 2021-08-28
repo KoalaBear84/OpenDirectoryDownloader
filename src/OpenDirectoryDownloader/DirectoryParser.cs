@@ -1770,10 +1770,10 @@ namespace OpenDirectoryDownloader
         {
             if (link.HasAttribute("href"))
             {
-                string linkHref = link.Attributes["href"].Value;
-
                 if (IsValidLink(link))
                 {
+                    string linkHref = link.Attributes["href"].Value;
+
                     Uri uri = new Uri(new Uri(baseUrl), linkHref);
                     string fullUrl = uri.ToString();
 
