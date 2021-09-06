@@ -375,16 +375,14 @@ namespace OpenDirectoryDownloader
             foreach (IElement divElement in divElements)
             {
                 string size = divElement.QuerySelector("em").TextContent.Trim();
-
-                bool isFile = IsFileSize(size);
-
                 IElement link = divElement.QuerySelector("a");
-                string linkHref = link.Attributes["href"].Value;
-
+                
                 if (IsValidLink(link))
                 {
+                    string linkHref = link.Attributes["href"].Value;
                     Uri uri = new Uri(new Uri(baseUrl), linkHref);
                     string fullUrl = uri.ToString();
+                    bool isFile = IsFileSize(size);
 
                     if (!isFile)
                     {
@@ -473,17 +471,15 @@ namespace OpenDirectoryDownloader
         {
             foreach (IElement tableRow in htmlDocument.QuerySelectorAll("table tr"))
             {
-                string size = tableRow.QuerySelector("td:nth-child(3)").TextContent.Trim();
-
-                bool isFile = IsFileSize(size);
-
                 IElement link = tableRow.QuerySelector("a");
-                string linkHref = link.Attributes["href"].Value;
-
+                
                 if (IsValidLink(link))
                 {
+                    string linkHref = link.Attributes["href"].Value;
                     Uri uri = new Uri(new Uri(baseUrl), linkHref);
                     string fullUrl = uri.ToString();
+                    string size = tableRow.QuerySelector("td:nth-child(3)").TextContent.Trim();
+                    bool isFile = IsFileSize(size);
 
                     if (!isFile)
                     {
@@ -515,17 +511,15 @@ namespace OpenDirectoryDownloader
         {
             foreach (IElement listItem in listItems)
             {
-                string size = listItem.QuerySelector(".file-size").TextContent.Trim();
-
-                bool isFile = IsFileSize(size);
-
                 IElement link = listItem.QuerySelector("a");
-                string linkHref = link.Attributes["href"].Value;
 
                 if (IsValidLink(link))
                 {
+                    string linkHref = link.Attributes["href"].Value;
                     Uri uri = new Uri(new Uri(baseUrl), linkHref);
                     string fullUrl = uri.ToString();
+                    string size = listItem.QuerySelector(".file-size").TextContent.Trim();
+                    bool isFile = IsFileSize(size);
 
                     if (!isFile)
                     {
@@ -572,17 +566,15 @@ namespace OpenDirectoryDownloader
             {
                 if (!tableRow.ClassList.Contains("snHeading") && !tableRow.QuerySelector("td").ClassList.Contains("snDir"))
                 {
-                    string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim();
-
-                    bool isFile = IsFileSize(size) && !size.Contains("item");
-
                     IHtmlAnchorElement link = tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})")?.QuerySelector("a") as IHtmlAnchorElement;
-                    string linkHref = link?.Attributes["href"].Value;
 
                     if (IsValidLink(link))
                     {
+                        string linkHref = link?.Attributes["href"].Value;
                         Uri uri = new Uri(new Uri(baseUrl), linkHref);
                         string fullUrl = uri.ToString();
+                        string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim();
+                        bool isFile = IsFileSize(size) && !size.Contains("item");
 
                         if (!isFile)
                         {
@@ -639,17 +631,15 @@ namespace OpenDirectoryDownloader
 
                 foreach (IElement tableRow in pureTableRows)
                 {
-                    string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim();
-
-                    bool isFile = !tableRow.ClassList.Contains("dir");
-
                     IElement link = tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})")?.QuerySelector("a");
-                    string linkHref = link.TextContent;
 
                     if (IsValidLink(link))
                     {
+                        string linkHref = link.TextContent;
                         Uri uri = new Uri(new Uri(baseUrl), Uri.EscapeUriString(linkHref));
                         string fullUrl = uri.ToString();
+                        string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim();
+                        bool isFile = !tableRow.ClassList.Contains("dir");
 
                         if (!isFile)
                         {
@@ -702,23 +692,21 @@ namespace OpenDirectoryDownloader
 
             foreach (IElement tableRow in h5aiTableRows)
             {
-                string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim();
-
-                bool isFile = !string.IsNullOrWhiteSpace(size);
-                IElement image = tableRow.QuerySelector("img");
-
-                if (isFile && image != null && image.HasAttribute("alt") && image.Attributes["alt"].Value == "folder")
-                {
-                    isFile = false;
-                }
-
                 IHtmlAnchorElement link = tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})")?.QuerySelector("a") as IHtmlAnchorElement;
-                string linkHref = link?.Attributes["href"]?.Value;
 
                 if (link != null && IsValidLink(link))
                 {
+                    string linkHref = link?.Attributes["href"]?.Value;
                     Uri uri = new Uri(new Uri(baseUrl), linkHref);
                     string fullUrl = uri.ToString();
+                    string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim();
+                    bool isFile = !string.IsNullOrWhiteSpace(size);
+                    IElement image = tableRow.QuerySelector("img");
+
+                    if (isFile && image != null && image.HasAttribute("alt") && image.Attributes["alt"].Value == "folder")
+                    {
+                        isFile = false;
+                    }
 
                     if (!isFile)
                     {
@@ -984,10 +972,9 @@ namespace OpenDirectoryDownloader
                     !line.ToLower().Contains("parent directory"))
                 {
                     IElement link = parsedLine.QuerySelector("a");
-                    string linkHref = link.Attributes["href"].Value;
-
                     if (IsValidLink(link))
                     {
+                        string linkHref = link.Attributes["href"].Value;
                         Uri uri = new Uri(new Uri(baseUrl), linkHref);
                         string fullUrl = uri.ToString();
 
@@ -1033,17 +1020,16 @@ namespace OpenDirectoryDownloader
 
             if (match.Success)
             {
-                string fileSizeGroup = match.Groups["FileSize"].Value.Trim();
 
                 IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
                 IElement link = parsedLine.QuerySelector("a");
-                string linkHref = link.Attributes["href"].Value;
-
-                Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                string fullUrl = uri.ToString();
 
                 if (IsValidLink(link))
                 {
+                    string linkHref = link.Attributes["href"].Value;
+                    Uri uri = new Uri(new Uri(baseUrl), linkHref);
+                    string fullUrl = uri.ToString();
+                    string fileSizeGroup = match.Groups["FileSize"].Value.Trim();
                     bool isFile = long.TryParse(fileSizeGroup, out long fileSize);
 
                     if (!isFile && IsFileSize(fileSizeGroup))
@@ -1082,8 +1068,6 @@ namespace OpenDirectoryDownloader
 
             if (match.Success)
             {
-                bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;" && match.Groups["FileSize"].Value.Trim() != "DIR";
-
                 IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
 
                 if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") == null &&
@@ -1092,12 +1076,13 @@ namespace OpenDirectoryDownloader
                     !line.ToLower().Contains("parent directory"))
                 {
                     IElement link = parsedLine.QuerySelector("a");
-                    string linkHref = link.Attributes["href"].Value;
 
                     if (IsValidLink(link))
                     {
+                        string linkHref = link.Attributes["href"].Value;
                         Uri uri = new Uri(new Uri(baseUrl), linkHref);
                         string fullUrl = uri.ToString();
+                        bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;" && match.Groups["FileSize"].Value.Trim() != "DIR";
 
                         if (!isFile)
                         {
@@ -1149,10 +1134,10 @@ namespace OpenDirectoryDownloader
                     !line.ToLower().Contains("parent directory"))
                 {
                     IElement link = parsedLine.QuerySelector("a");
-                    string linkHref = link.Attributes["href"].Value;
 
                     if (IsValidLink(link))
                     {
+                        string linkHref = link.Attributes["href"].Value;
                         Uri uri = new Uri(new Uri(baseUrl), linkHref);
                         string fullUrl = uri.ToString();
 
@@ -1206,10 +1191,10 @@ namespace OpenDirectoryDownloader
                     !line.ToLower().Contains("parent directory"))
                 {
                     IElement link = parsedLine.QuerySelector("a");
-                    string linkHref = link.Attributes["href"].Value;
 
                     if (IsValidLink(link))
                     {
+                        string linkHref = link.Attributes["href"].Value;
                         Uri uri = new Uri(new Uri(baseUrl), linkHref);
                         string fullUrl = uri.ToString();
 
@@ -1263,10 +1248,10 @@ namespace OpenDirectoryDownloader
                     !line.ToLower().Contains("parent directory"))
                 {
                     IElement link = parsedLine.QuerySelector("a");
-                    string linkHref = link.Attributes["href"].Value;
 
                     if (IsValidLink(link))
                     {
+                        string linkHref = link.Attributes["href"].Value;
                         Uri uri = new Uri(new Uri(baseUrl), linkHref);
                         string fullUrl = uri.ToString();
 
@@ -1317,10 +1302,10 @@ namespace OpenDirectoryDownloader
                 if (parsedLine.QuerySelector("a") != null)
                 {
                     IElement link = parsedLine.QuerySelector("a");
-                    string linkHref = link.Attributes["href"].Value;
 
                     if (IsValidLink(link))
                     {
+                        string linkHref = link.Attributes["href"].Value;
                         Uri uri = new Uri(new Uri(baseUrl), linkHref);
                         string fullUrl = uri.ToString();
 
@@ -1383,10 +1368,10 @@ namespace OpenDirectoryDownloader
                 if (parsedLine.QuerySelector("a") != null)
                 {
                     IElement link = parsedLine.QuerySelector("a");
-                    string linkHref = link.Attributes["href"].Value;
 
                     if (IsValidLink(link))
                     {
+                        string linkHref = link.Attributes["href"].Value;
                         Uri uri = new Uri(new Uri(baseUrl), linkHref);
                         string fullUrl = uri.ToString();
 
@@ -1591,10 +1576,6 @@ namespace OpenDirectoryDownloader
 
                 if (link?.Attributes["href"] != null)
                 {
-                    string linkHref = link.Attributes["href"]?.Value;
-
-                    bool isFile = listItem.ClassList.Contains("file");
-
                     if (IsValidLink(link))
                     {
                         string name = string.Empty;
@@ -1630,8 +1611,10 @@ namespace OpenDirectoryDownloader
                             fileSize = listItem.Attributes["data-sort-size"].Value;
                         }
 
+                        string linkHref = link.Attributes["href"]?.Value;
                         Uri uri = new Uri(new Uri(baseUrl), linkHref);
                         string fullUrl = uri.ToString();
+                        bool isFile = listItem.ClassList.Contains("file");
 
                         if (!isFile)
                         {
@@ -1672,19 +1655,16 @@ namespace OpenDirectoryDownloader
                 tableHeaderInfos.Add(GetHeaderInfo(headerDiv));
             }
 
-            IHtmlCollection<IElement> entries = htmlDocument.QuerySelectorAll("#content ul#file-list li").Last().QuerySelectorAll("a");
+            IHtmlCollection<IElement> links = htmlDocument.QuerySelectorAll("#content ul#file-list li").Last().QuerySelectorAll("a");
 
-            foreach (IElement entry in entries)
+            foreach (IElement link in links)
             {
-                bool isFile = !entry.QuerySelector("i").ClassList.Contains("fa-folder");
-
-                //IElement link = entry.QuerySelector("a");
-                string linkHref = entry.Attributes["href"].Value;
-
-                if (IsValidLink(entry))
+                if (IsValidLink(link))
                 {
+                    string linkHref = link.Attributes["href"].Value;
                     Uri uri = new Uri(new Uri(baseUrl), linkHref);
                     string fullUrl = uri.ToString();
+                    bool isFile = !link.QuerySelector("i").ClassList.Contains("fa-folder");
                     UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
 
                     if (!isFile)
@@ -1700,10 +1680,10 @@ namespace OpenDirectoryDownloader
                     {
                         try
                         {
-                            List<IElement> divs = entry.QuerySelectorAll("div > div").ToList();
+                            List<IElement> divs = link.QuerySelectorAll("div > div").ToList();
                             // Remove file info 'column'
                             divs.RemoveAt(tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileName) + 1);
-                            string fileSize = entry.QuerySelectorAll("div > div").Skip(2).ToList()[tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileSize)].TextContent;
+                            string fileSize = link.QuerySelectorAll("div > div").Skip(2).ToList()[tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileSize)].TextContent;
 
                             parsedWebDirectory.Files.Add(new WebFile
                             {
