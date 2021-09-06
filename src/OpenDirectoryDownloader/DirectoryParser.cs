@@ -376,12 +376,11 @@ namespace OpenDirectoryDownloader
             {
                 string size = divElement.QuerySelector("em").TextContent.Trim();
                 IElement link = divElement.QuerySelector("a");
-                
+
                 if (IsValidLink(link))
                 {
-                    string linkHref = link.Attributes["href"].Value;
-                    Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                    string fullUrl = uri.ToString();
+                    ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
                     bool isFile = IsFileSize(size);
 
                     if (!isFile)
@@ -472,12 +471,11 @@ namespace OpenDirectoryDownloader
             foreach (IElement tableRow in htmlDocument.QuerySelectorAll("table tr"))
             {
                 IElement link = tableRow.QuerySelector("a");
-                
+
                 if (IsValidLink(link))
                 {
-                    string linkHref = link.Attributes["href"].Value;
-                    Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                    string fullUrl = uri.ToString();
+                    ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
                     string size = tableRow.QuerySelector("td:nth-child(3)").TextContent.Trim();
                     bool isFile = IsFileSize(size);
 
@@ -515,9 +513,8 @@ namespace OpenDirectoryDownloader
 
                 if (IsValidLink(link))
                 {
-                    string linkHref = link.Attributes["href"].Value;
-                    Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                    string fullUrl = uri.ToString();
+                    ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
                     string size = listItem.QuerySelector(".file-size").TextContent.Trim();
                     bool isFile = IsFileSize(size);
 
@@ -570,9 +567,8 @@ namespace OpenDirectoryDownloader
 
                     if (IsValidLink(link))
                     {
-                        string linkHref = link?.Attributes["href"].Value;
-                        Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                        string fullUrl = uri.ToString();
+                        ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
                         string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim();
                         bool isFile = IsFileSize(size) && !size.Contains("item");
 
@@ -694,11 +690,10 @@ namespace OpenDirectoryDownloader
             {
                 IHtmlAnchorElement link = tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})")?.QuerySelector("a") as IHtmlAnchorElement;
 
-                if (link != null && IsValidLink(link))
+                if (IsValidLink(link))
                 {
-                    string linkHref = link?.Attributes["href"]?.Value;
-                    Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                    string fullUrl = uri.ToString();
+                    ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
                     string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim();
                     bool isFile = !string.IsNullOrWhiteSpace(size);
                     IElement image = tableRow.QuerySelector("img");
@@ -807,9 +802,7 @@ namespace OpenDirectoryDownloader
                                 {
                                     addedEntry = true;
 
-                                    string linkHref = link.Attributes["href"].Value;
-                                    Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                                    string fullUrl = uri.ToString();
+                                    ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
                                     fullUrl = StripUrl(fullUrl);
 
@@ -958,6 +951,13 @@ namespace OpenDirectoryDownloader
             return parsedWebDirectory;
         }
 
+        private static void ProcessUrl(string baseUrl, IElement link, out string linkHref, out Uri uri, out string fullUrl)
+        {
+            linkHref = link.Attributes["href"]?.Value;
+            uri = new Uri(new Uri(baseUrl), linkHref);
+            fullUrl = uri.ToString();
+        }
+
         private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser1 = async (webDirectory, baseUrl, line) =>
         {
             Match match = Regex.Match(line, @"(?:<img.*>\s*)+<a.*?>.*?<\/a>\S*\s*(?<Modified>\d*-(?:[a-zA-Z]*|\d*)-\d*\s*\d*:\d*(:\d*)?)?\s*(?<FileSize>\S+)?(\s*(?<Description>.*))?");
@@ -974,9 +974,7 @@ namespace OpenDirectoryDownloader
                     IElement link = parsedLine.QuerySelector("a");
                     if (IsValidLink(link))
                     {
-                        string linkHref = link.Attributes["href"].Value;
-                        Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                        string fullUrl = uri.ToString();
+                        ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
                         bool isFile = IsFileSize(match.Groups["FileSize"].Value.Trim()) && parsedLine.QuerySelector("img[alt=\"[DIR]\"]") == null;
 
@@ -1026,9 +1024,8 @@ namespace OpenDirectoryDownloader
 
                 if (IsValidLink(link))
                 {
-                    string linkHref = link.Attributes["href"].Value;
-                    Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                    string fullUrl = uri.ToString();
+                    ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
                     string fileSizeGroup = match.Groups["FileSize"].Value.Trim();
                     bool isFile = long.TryParse(fileSizeGroup, out long fileSize);
 
@@ -1079,9 +1076,8 @@ namespace OpenDirectoryDownloader
 
                     if (IsValidLink(link))
                     {
-                        string linkHref = link.Attributes["href"].Value;
-                        Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                        string fullUrl = uri.ToString();
+                        ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
                         bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;" && match.Groups["FileSize"].Value.Trim() != "DIR";
 
                         if (!isFile)
@@ -1124,8 +1120,6 @@ namespace OpenDirectoryDownloader
 
             if (match.Success)
             {
-                bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;";
-
                 IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
 
                 if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") == null &&
@@ -1137,9 +1131,9 @@ namespace OpenDirectoryDownloader
 
                     if (IsValidLink(link))
                     {
-                        string linkHref = link.Attributes["href"].Value;
-                        Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                        string fullUrl = uri.ToString();
+                        ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
+                        bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;";
 
                         if (!isFile)
                         {
@@ -1194,9 +1188,7 @@ namespace OpenDirectoryDownloader
 
                     if (IsValidLink(link))
                     {
-                        string linkHref = link.Attributes["href"].Value;
-                        Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                        string fullUrl = uri.ToString();
+                        ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
                         if (!isFile)
                         {
@@ -1238,7 +1230,6 @@ namespace OpenDirectoryDownloader
 
             if (match.Success)
             {
-                bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;";
 
                 IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
 
@@ -1251,9 +1242,9 @@ namespace OpenDirectoryDownloader
 
                     if (IsValidLink(link))
                     {
-                        string linkHref = link.Attributes["href"].Value;
-                        Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                        string fullUrl = uri.ToString();
+                        ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
+                        bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;";
 
                         if (!isFile)
                         {
@@ -1295,7 +1286,6 @@ namespace OpenDirectoryDownloader
 
             if (match.Success)
             {
-                bool isFile = !match.Groups["FileMode"].Value.ToLower().StartsWith("d");
 
                 IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
 
@@ -1305,9 +1295,9 @@ namespace OpenDirectoryDownloader
 
                     if (IsValidLink(link))
                     {
-                        string linkHref = link.Attributes["href"].Value;
-                        Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                        string fullUrl = uri.ToString();
+                        ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
+                        bool isFile = !match.Groups["FileMode"].Value.ToLower().StartsWith("d");
 
                         if (!isFile)
                         {
@@ -1356,8 +1346,6 @@ namespace OpenDirectoryDownloader
 
             if (match.Success && (match.Groups["IsDirectory"].Success && !string.IsNullOrWhiteSpace(match.Groups["IsDirectory"].Value)) != match.Groups["FileSize"].Success)
             {
-                bool isFile = !string.IsNullOrWhiteSpace(match.Groups["FileSize"].Value) && match.Groups["FileSize"].Value.Trim() != "-";
-
                 if (match.Groups["FileSize"].Value.Contains("<"))
                 {
                     return false;
@@ -1371,9 +1359,9 @@ namespace OpenDirectoryDownloader
 
                     if (IsValidLink(link))
                     {
-                        string linkHref = link.Attributes["href"].Value;
-                        Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                        string fullUrl = uri.ToString();
+                        ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
+                        bool isFile = !string.IsNullOrWhiteSpace(match.Groups["FileSize"].Value) && match.Groups["FileSize"].Value.Trim() != "-";
 
                         if (!isFile)
                         {
@@ -1611,9 +1599,8 @@ namespace OpenDirectoryDownloader
                             fileSize = listItem.Attributes["data-sort-size"].Value;
                         }
 
-                        string linkHref = link.Attributes["href"]?.Value;
-                        Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                        string fullUrl = uri.ToString();
+                        ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+                        
                         bool isFile = listItem.ClassList.Contains("file");
 
                         if (!isFile)
@@ -1661,9 +1648,8 @@ namespace OpenDirectoryDownloader
             {
                 if (IsValidLink(link))
                 {
-                    string linkHref = link.Attributes["href"].Value;
-                    Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                    string fullUrl = uri.ToString();
+                    ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+                    
                     bool isFile = !link.QuerySelector("i").ClassList.Contains("fa-folder");
                     UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
 
@@ -1754,9 +1740,7 @@ namespace OpenDirectoryDownloader
                 {
                     try
                     {
-                        string linkHref = link.Attributes["href"].Value;
-                        Uri uri = new Uri(new Uri(baseUrl), linkHref);
-                        string fullUrl = uri.ToString();
+                        ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
                         fullUrl = StripUrl(fullUrl);
 
@@ -2224,6 +2208,11 @@ namespace OpenDirectoryDownloader
 
         private static bool IsValidLink(IElement link)
         {
+            if (link == null)
+            {
+                return false;
+            }
+
             string linkHref = link.Attributes["href"]?.Value;
 
             return
