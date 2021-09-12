@@ -46,9 +46,9 @@ namespace OpenDirectoryDownloader.Tests
             }).ToList().ForEach(wd => webDirectory.Files.Remove(wd));
         }
 
-        public static async Task<WebDirectory> ParseHtml(string html, string url = "http://localhost/")
+        public static async Task<WebDirectory> ParseHtml(string html, string url = "http://localhost/", bool checkParents = true)
         {
-            return await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = url }, html);
+            return await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = url }, html, checkParents: checkParents);
         }
     }
 }

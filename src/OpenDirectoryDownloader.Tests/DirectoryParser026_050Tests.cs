@@ -443,9 +443,9 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing40bAsync()
         {
-            WebDirectory webDirectory = await ParseHtml(GetSample());
+            WebDirectory webDirectory = await ParseHtml(GetSample(), "http://www.funreading.com.hk/primary/computer/download/");
 
-            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal("download", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
             Assert.Empty(webDirectory.Files);
         }
@@ -686,7 +686,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing48aAsync()
         {
-            WebDirectory webDirectory = await ParseHtml(GetSample());
+            WebDirectory webDirectory = await ParseHtml(GetSample(), checkParents: false);
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Single(webDirectory.Subdirectories);
@@ -702,7 +702,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing48bAsync()
         {
-            WebDirectory webDirectory = await ParseHtml(GetSample());
+            WebDirectory webDirectory = await ParseHtml(GetSample(), checkParents: false);
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);

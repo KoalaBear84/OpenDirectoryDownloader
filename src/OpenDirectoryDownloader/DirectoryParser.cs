@@ -30,7 +30,7 @@ namespace OpenDirectoryDownloader
         /// <param name="baseUrl">Base url</param>
         /// <param name="html">Html to parse</param>
         /// <returns>WebDirectory object containing current directory index</returns>
-        public static async Task<WebDirectory> ParseHtml(WebDirectory webDirectory, string html, HttpClient httpClient = null)
+        public static async Task<WebDirectory> ParseHtml(WebDirectory webDirectory, string html, HttpClient httpClient = null, bool checkParents = true)
         {
             string baseUrl = webDirectory.Url;
 
@@ -51,7 +51,7 @@ namespace OpenDirectoryDownloader
 
                 if (webDirectory.Uri.Host == "ipfs.io" || webDirectory.Uri.Host == "gateway.ipfs.io")
                 {
-                    return ParseIpfsDirectoryListing(baseUrl, parsedWebDirectory, htmlDocument);
+                    return ParseIpfsDirectoryListing(baseUrl, parsedWebDirectory, htmlDocument, checkParents);
                 }
 
                 if (webDirectory.Uri.Host == Constants.BlitzfilesTechDomain)
@@ -111,14 +111,14 @@ namespace OpenDirectoryDownloader
 
                 if (directoryListingDotComlistItems.Any())
                 {
-                    return ParseDirectoryListingDoctComDirectoryListing(baseUrl, parsedWebDirectory, directoryListingDotComlistItems);
+                    return ParseDirectoryListingDoctComDirectoryListing(baseUrl, parsedWebDirectory, directoryListingDotComlistItems, checkParents);
                 }
 
                 IHtmlCollection<IElement> h5aiTableRows = htmlDocument.QuerySelectorAll("#fallback table tr");
 
                 if (h5aiTableRows.Any())
                 {
-                    return ParseH5aiDirectoryListing(baseUrl, parsedWebDirectory, h5aiTableRows);
+                    return ParseH5aiDirectoryListing(baseUrl, parsedWebDirectory, h5aiTableRows, checkParents);
                 }
 
                 // Snif directory listing
@@ -127,7 +127,7 @@ namespace OpenDirectoryDownloader
 
                 if (snifTableRows.Any())
                 {
-                    return ParseSnifDirectoryListing(baseUrl, parsedWebDirectory, snifTableRows);
+                    return ParseSnifDirectoryListing(baseUrl, parsedWebDirectory, snifTableRows, checkParents);
                 }
 
                 // Godir - https://gitlab.com/Montessquio/godir
@@ -135,7 +135,7 @@ namespace OpenDirectoryDownloader
 
                 if (pureTableRows.Any())
                 {
-                    return ParsePureDirectoryListing(ref baseUrl, parsedWebDirectory, htmlDocument, pureTableRows);
+                    return ParsePureDirectoryListing(ref baseUrl, parsedWebDirectory, htmlDocument, pureTableRows, checkParents);
                 }
 
                 // Remove it after ParsePureDirectoryListing (.breadcrumb is used in it)
@@ -146,7 +146,7 @@ namespace OpenDirectoryDownloader
 
                 if (divElements.Any())
                 {
-                    return ParseCustomDivListing(ref baseUrl, parsedWebDirectory, htmlDocument, divElements);
+                    return ParseCustomDivListing(ref baseUrl, parsedWebDirectory, htmlDocument, divElements, checkParents);
                 }
 
                 // Custom directory listing 2
@@ -154,14 +154,14 @@ namespace OpenDirectoryDownloader
 
                 if (divElements2.Any())
                 {
-                    return ParseCustomDivListing2(ref baseUrl, parsedWebDirectory, htmlDocument, divElements2);
+                    return ParseCustomDivListing2(ref baseUrl, parsedWebDirectory, htmlDocument, divElements2, checkParents);
                 }
 
                 IHtmlCollection<IElement> pres = htmlDocument.QuerySelectorAll("pre");
 
                 if (pres.Any())
                 {
-                    WebDirectory result = await ParsePreDirectoryListing(baseUrl, parsedWebDirectory, pres);
+                    WebDirectory result = await ParsePreDirectoryListing(baseUrl, parsedWebDirectory, pres, checkParents);
 
                     if (result.Files.Any() || result.Subdirectories.Any() || result.Error)
                     {
@@ -180,26 +180,31 @@ namespace OpenDirectoryDownloader
 
                 if (tables.Any())
                 {
-                    return ParseTablesDirectoryListing(baseUrl, parsedWebDirectory, tables);
+                    WebDirectory result = ParseTablesDirectoryListing(baseUrl, parsedWebDirectory, tables, checkParents);
+
+                    if (result.Files.Any() || result.Subdirectories.Any() || result.Error)
+                    {
+                        return result;
+                    }
                 }
 
                 IHtmlCollection<IElement> materialDesignListItems = htmlDocument.QuerySelectorAll("ul.mdui-list li");
 
                 if (materialDesignListItems.Any())
                 {
-                    return ParseMaterialDesignListItemsDirectoryListing(baseUrl, parsedWebDirectory, materialDesignListItems);
+                    return ParseMaterialDesignListItemsDirectoryListing(baseUrl, parsedWebDirectory, materialDesignListItems, checkParents);
                 }
 
                 if (htmlDocument.QuerySelectorAll("#content ul#file-list li").Length == 2)
                 {
-                    return ParseDirectoryListerDirectoryListing(baseUrl, parsedWebDirectory, htmlDocument);
+                    return ParseDirectoryListerDirectoryListing(baseUrl, parsedWebDirectory, htmlDocument, checkParents);
                 }
 
                 IHtmlCollection<IElement> listItems = htmlDocument.QuerySelectorAll(".list-group li");
 
                 if (listItems.Any())
                 {
-                    WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems);
+                    WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems, checkParents);
 
                     if (result.ParsedSuccessfully || result.Error)
                     {
@@ -211,7 +216,7 @@ namespace OpenDirectoryDownloader
 
                 if (listItems.Any())
                 {
-                    WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems);
+                    WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems, checkParents);
 
                     if (result.ParsedSuccessfully || result.Error)
                     {
@@ -224,12 +229,12 @@ namespace OpenDirectoryDownloader
 
                 if (links.Any())
                 {
-                    parsedWebDirectory = ParseLinksDirectoryListing(baseUrl, parsedWebDirectory, links);
+                    parsedWebDirectory = ParseLinksDirectoryListing(baseUrl, parsedWebDirectory, links, checkParents);
                 }
 
                 parsedWebDirectory = await ParseDirectoryListingModel01(baseUrl, parsedWebDirectory, htmlDocument, httpClient);
 
-                CheckParsedResults(parsedWebDirectory);
+                CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
                 return parsedWebDirectory;
             }
@@ -246,7 +251,7 @@ namespace OpenDirectoryDownloader
                 parsedWebDirectory.Error = true;
             }
 
-            CheckParsedResults(parsedWebDirectory);
+            CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
             return parsedWebDirectory;
         }
@@ -370,7 +375,7 @@ namespace OpenDirectoryDownloader
             return webDirectory;
         }
 
-        private static WebDirectory ParseCustomDivListing(ref string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> divElements)
+        private static WebDirectory ParseCustomDivListing(ref string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> divElements, bool checkParents)
         {
             foreach (IElement divElement in divElements)
             {
@@ -413,12 +418,12 @@ namespace OpenDirectoryDownloader
                 }
             }
 
-            CheckParsedResults(parsedWebDirectory);
+            CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
             return parsedWebDirectory;
         }
 
-        private static WebDirectory ParseCustomDivListing2(ref string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> divElements)
+        private static WebDirectory ParseCustomDivListing2(ref string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> divElements, bool checkParents)
         {
             foreach (IElement divElement in divElements)
             {
@@ -461,12 +466,12 @@ namespace OpenDirectoryDownloader
                 }
             }
 
-            CheckParsedResults(parsedWebDirectory);
+            CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
             return parsedWebDirectory;
         }
 
-        private static WebDirectory ParseIpfsDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument)
+        private static WebDirectory ParseIpfsDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, bool checkParents)
         {
             foreach (IElement tableRow in htmlDocument.QuerySelectorAll("table tr"))
             {
@@ -500,12 +505,12 @@ namespace OpenDirectoryDownloader
                 }
             }
 
-            CheckParsedResults(parsedWebDirectory);
+            CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
             return parsedWebDirectory;
         }
 
-        private static WebDirectory ParseDirectoryListingDoctComDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> listItems)
+        private static WebDirectory ParseDirectoryListingDoctComDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> listItems, bool checkParents)
         {
             foreach (IElement listItem in listItems)
             {
@@ -542,12 +547,12 @@ namespace OpenDirectoryDownloader
                 }
             }
 
-            CheckParsedResults(parsedWebDirectory);
+            CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
             return parsedWebDirectory;
         }
 
-        private static WebDirectory ParseSnifDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> snifTableRows)
+        private static WebDirectory ParseSnifDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> snifTableRows, bool checkParents)
         {
             IElement table = snifTableRows.First().Parent("table");
 
@@ -594,12 +599,12 @@ namespace OpenDirectoryDownloader
                 }
             }
 
-            CheckParsedResults(parsedWebDirectory);
+            CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
             return parsedWebDirectory;
         }
 
-        private static WebDirectory ParsePureDirectoryListing(ref string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> pureTableRows)
+        private static WebDirectory ParsePureDirectoryListing(ref string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> pureTableRows, bool checkParents)
         {
             string urlFromBreadcrumbs = Uri.EscapeUriString(string.Join("/", htmlDocument.QuerySelectorAll(".breadcrumbs_main .breadcrumb").Where(b => !b.ClassList.Contains("smaller")).Select(b => b.TextContent)) + "/");
 
@@ -669,12 +674,12 @@ namespace OpenDirectoryDownloader
                 Logger.Error($"Directory listing returns different directory than requested! Expected: {urlFromBaseUrl}, Actual: {urlFromBreadcrumbs}");
             }
 
-            CheckParsedResults(parsedWebDirectory);
+            CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
             return parsedWebDirectory;
         }
 
-        private static WebDirectory ParseH5aiDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> h5aiTableRows)
+        private static WebDirectory ParseH5aiDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> h5aiTableRows, bool checkParents)
         {
             IElement table = h5aiTableRows.First().Parent("table");
 
@@ -724,12 +729,12 @@ namespace OpenDirectoryDownloader
                 }
             }
 
-            CheckParsedResults(parsedWebDirectory);
+            CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
             return parsedWebDirectory;
         }
 
-        private static WebDirectory ParseTablesDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> tables)
+        private static WebDirectory ParseTablesDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> tables, bool checkParents)
         {
             // Dirty solution..
             bool hasSeperateDirectoryAndFilesTables = false;
@@ -776,7 +781,7 @@ namespace OpenDirectoryDownloader
                 {
                     if (table.QuerySelector("a") != null)
                     {
-                        webDirectoryCopy = ParseLinksDirectoryListing(baseUrl, webDirectoryCopy, table.QuerySelectorAll("a"));
+                        webDirectoryCopy = ParseLinksDirectoryListing(baseUrl, webDirectoryCopy, table.QuerySelectorAll("a"), checkParents);
                     }
                 }
                 else
@@ -946,7 +951,7 @@ namespace OpenDirectoryDownloader
                 parsedWebDirectory.Files = new ConcurrentList<WebFile>(results.SelectMany(r => r.Files));
             }
 
-            CheckParsedResults(parsedWebDirectory);
+            CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
             return parsedWebDirectory;
         }
@@ -1404,7 +1409,7 @@ namespace OpenDirectoryDownloader
             return match.Success;
         };
 
-        private static async Task<WebDirectory> ParsePreDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> pres)
+        private static async Task<WebDirectory> ParsePreDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> pres, bool checkParents)
         {
             List<Func<WebDirectory, string, string, Task<bool>>> regexFuncs = new List<Func<WebDirectory, string, string, Task<bool>>>
             {
@@ -1437,12 +1442,12 @@ namespace OpenDirectoryDownloader
                 }
             }
 
-            CheckParsedResults(parsedWebDirectory);
+            CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
             return parsedWebDirectory;
         }
 
-        private static WebDirectory ParseMaterialDesignListItemsDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> listItems)
+        private static WebDirectory ParseMaterialDesignListItemsDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> listItems, bool checkParents)
         {
             int nameIndex = -1;
             int sizeIndex = -1;
@@ -1625,12 +1630,12 @@ namespace OpenDirectoryDownloader
                 }
             }
 
-            CheckParsedResults(parsedWebDirectory);
+            CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
             return parsedWebDirectory;
         }
 
-        private static WebDirectory ParseDirectoryListerDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument)
+        private static WebDirectory ParseDirectoryListerDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, bool checkParents)
         {
             parsedWebDirectory.Parser = "ParseDirectoryListerDirectoryListing";
             List<HeaderInfo> tableHeaderInfos = new List<HeaderInfo>();
@@ -1686,12 +1691,12 @@ namespace OpenDirectoryDownloader
                 }
             }
 
-            CheckParsedResults(parsedWebDirectory);
+            CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
             return parsedWebDirectory;
         }
 
-        private static WebDirectory ParseListItemsDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> listItems)
+        private static WebDirectory ParseListItemsDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> listItems, bool checkParents)
         {
             bool firstLink = true;
 
@@ -1715,19 +1720,19 @@ namespace OpenDirectoryDownloader
                 }
             }
 
-            CheckParsedResults(parsedWebDirectory);
+            CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
             return parsedWebDirectory;
         }
 
-        private static WebDirectory ParseLinksDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> links)
+        private static WebDirectory ParseLinksDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> links, bool checkParents)
         {
             foreach (IElement link in links)
             {
                 ProcessLink(baseUrl, parsedWebDirectory, link, "ParseLinksDirectoryListing");
             }
 
-            CheckParsedResults(parsedWebDirectory);
+            CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
             return parsedWebDirectory;
         }
@@ -1832,7 +1837,7 @@ namespace OpenDirectoryDownloader
             }
         }
 
-        public static void CheckParsedResults(WebDirectory webDirectory)
+        public static void CheckParsedResults(WebDirectory webDirectory, string baseUrl, bool checkParents)
         {
             if (!webDirectory.Subdirectories.Any() && !webDirectory.Files.Any())
             {
@@ -1844,9 +1849,41 @@ namespace OpenDirectoryDownloader
                 webDirectorySub.Url = StripUrl(webDirectorySub.Url);
             }
 
+            if (checkParents)
+            {
+                CheckParents(webDirectory, baseUrl);
+            }
+
             CleanFragments(webDirectory);
 
             CheckSymlinks(webDirectory);
+        }
+
+        private static void CheckParents(WebDirectory webDirectory, string baseUrl)
+        {
+            webDirectory.Subdirectories.Where(d =>
+            {
+                Uri uri = new Uri(d.Url);
+
+                if (uri.Host == Constants.GoogleDriveDomain || uri.Host == Constants.BlitzfilesTechDomain)
+                {
+                    return false;
+                }
+
+                return (uri.Scheme != Constants.UriScheme.Https && uri.Scheme != Constants.UriScheme.Http && uri.Scheme != Constants.UriScheme.Ftp && uri.Scheme != Constants.UriScheme.Ftps) || uri.Host != new Uri(baseUrl).Host || !SameHostAndDirectoryDirectory(new Uri(baseUrl), uri);
+            }).ToList().ForEach(wd => webDirectory.Subdirectories.Remove(wd));
+
+            webDirectory.Files.Where(f =>
+            {
+                Uri uri = new Uri(f.Url);
+
+                if (uri.Host == Constants.GoogleDriveDomain || uri.Host == Constants.BlitzfilesTechDomain)
+                {
+                    return false;
+                }
+
+                return (uri.Scheme != Constants.UriScheme.Https && uri.Scheme != Constants.UriScheme.Http && uri.Scheme != Constants.UriScheme.Ftp && uri.Scheme != Constants.UriScheme.Ftps) || uri.Host != new Uri(baseUrl).Host || !SameHostAndDirectoryFile(uri, new Uri(baseUrl));
+            }).ToList().ForEach(wd => webDirectory.Files.Remove(wd));
         }
 
         private static void CleanFragments(WebDirectory webDirectory)
@@ -1951,6 +1988,40 @@ namespace OpenDirectoryDownloader
             }
 
             return false;
+        }
+
+        public static bool SameHostAndDirectoryFile(Uri baseUri, Uri checkUri)
+        {
+            string checkUrlWithoutFileName = checkUri.LocalPath;
+            checkUrlWithoutFileName = checkUrlWithoutFileName.Replace("index.php", string.Empty);
+            checkUrlWithoutFileName = checkUrlWithoutFileName.Replace("DirectoryList.asp", string.Empty);
+            string checkUrlFileName = Path.GetFileName(checkUri.ToString());
+
+            if (!string.IsNullOrWhiteSpace(checkUrlFileName))
+            {
+                checkUrlWithoutFileName = checkUrlWithoutFileName.Replace(checkUrlFileName, string.Empty);
+            }
+
+            string baseUrlWithoutFileName = baseUri.LocalPath;
+            string baseUrlFileName = Path.GetFileName(baseUri.ToString());
+
+            if (!string.IsNullOrWhiteSpace(baseUrlFileName))
+            {
+                baseUrlWithoutFileName = baseUri.LocalPath.Replace(baseUrlFileName, string.Empty);
+            }
+
+            return baseUri.ToString() == checkUri.ToString() || (baseUri.Host == checkUri.Host && (
+                checkUri.LocalPath.StartsWith(baseUri.LocalPath) ||
+                checkUri.LocalPath.StartsWith(baseUrlWithoutFileName) ||
+                baseUri.LocalPath.StartsWith(checkUrlWithoutFileName)
+            ));
+        }
+
+        public static bool SameHostAndDirectoryDirectory(Uri baseUri, Uri checkUri)
+        {
+            return baseUri.ToString() == checkUri.ToString() || (baseUri.Host == checkUri.Host && 
+                checkUri.LocalPath.StartsWith(baseUri.LocalPath)
+            );
         }
 
         /// <summary>

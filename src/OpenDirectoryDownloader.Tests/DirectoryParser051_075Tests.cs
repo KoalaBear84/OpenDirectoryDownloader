@@ -637,7 +637,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing72aAsync()
         {
-            WebDirectory webDirectory = await ParseHtml(GetSample());
+            WebDirectory webDirectory = await ParseHtml(GetSample(), checkParents: false);
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Equal(9, webDirectory.Subdirectories.Count);
@@ -653,7 +653,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing72bAsync()
         {
-            WebDirectory webDirectory = await ParseHtml(GetSample());
+            WebDirectory webDirectory = await ParseHtml(GetSample(), checkParents: false);
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Single(webDirectory.Subdirectories);

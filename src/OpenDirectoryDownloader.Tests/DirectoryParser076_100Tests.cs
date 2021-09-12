@@ -45,7 +45,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing76aAsync()
         {
-            WebDirectory webDirectory = await ParseHtml(GetSample());
+            WebDirectory webDirectory = await ParseHtml(GetSample(), checkParents: false);
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -60,7 +60,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing77aAsync()
         {
-            WebDirectory webDirectory = await ParseHtml(GetSample());
+            WebDirectory webDirectory = await ParseHtml(GetSample(), checkParents: false);
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -214,7 +214,7 @@ namespace OpenDirectoryDownloader.Tests
         [Fact]
         public async Task TestDirectoryListing83aAsync()
         {
-            WebDirectory webDirectory = await ParseHtml(GetSample());
+            WebDirectory webDirectory = await ParseHtml(GetSample(), checkParents: false);
 
             Assert.Equal("ROOT", webDirectory.Name);
             Assert.Empty(webDirectory.Subdirectories);
@@ -411,7 +411,7 @@ namespace OpenDirectoryDownloader.Tests
             WebDirectory webDirectory = await ParseHtml(GetSample());
 
             Assert.Equal("ROOT", webDirectory.Name);
-            Assert.Equal(4, webDirectory.Subdirectories.Count);
+            Assert.Equal(3, webDirectory.Subdirectories.Count);
             Assert.Equal("本子", webDirectory.Subdirectories[0].Name);
             Assert.Empty(webDirectory.Files);
         }

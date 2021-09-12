@@ -626,5 +626,20 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("acjp_hayden01.ram", webDirectory.Files[0].FileName);
             Assert.Equal(Constants.NoFileSize, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: http://www.diggerhistory.info/images/uniforms4/
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing123aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(588, webDirectory.Files.Count);
+            Assert.Equal("101-engr.jpg", webDirectory.Files[0].FileName);
+            Assert.Equal(Constants.NoFileSize, webDirectory.Files[0].FileSize);
+        }
     } 
 }

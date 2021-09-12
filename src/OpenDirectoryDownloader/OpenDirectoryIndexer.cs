@@ -531,7 +531,7 @@ namespace OpenDirectoryDownloader
             if (WebDirectoriesQueue.Any() || RunningWebDirectoryThreads > 0 || WebFilesFileSizeQueue.Any() || RunningWebFileFileSizeThreads > 0)
             {
                 stringBuilder.AppendLine(Statistics.GetSessionStats(Session));
-                stringBuilder.AppendLine($"Queue: {Library.FormatWithThousands(WebDirectoriesQueue.Count)} ({RunningWebDirectoryThreads}), Queue (filesizes): {Library.FormatWithThousands(WebFilesFileSizeQueue.Count)} ({RunningWebFileFileSizeThreads})");
+                stringBuilder.AppendLine($"Queue: {Library.FormatWithThousands(WebDirectoriesQueue.Count)} ({RunningWebDirectoryThreads} threads), Queue (filesizes): {Library.FormatWithThousands(WebFilesFileSizeQueue.Count)} ({RunningWebFileFileSizeThreads} threads)");
             }
 
             string statistics = stringBuilder.ToString();
@@ -605,7 +605,7 @@ namespace OpenDirectoryDownloader
 
                                 if (parsedWebDirectory != null)
                                 {
-                                    DirectoryParser.CheckParsedResults(parsedWebDirectory);
+                                    DirectoryParser.CheckParsedResults(parsedWebDirectory, Session.Root.Uri.ToString(), true);
                                     AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
                                 }
                             }
@@ -627,7 +627,7 @@ namespace OpenDirectoryDownloader
                             }
                             else
                             {
-                                if (Session.Root.Uri.Host == Constants.BlitzfilesTechDomain || SameHostAndDirectory(Session.Root.Uri, webDirectory.Uri))
+                                if (Session.Root.Uri.Host == Constants.BlitzfilesTechDomain || DirectoryParser.SameHostAndDirectoryFile(Session.Root.Uri, webDirectory.Uri))
                                 {
                                     Logger.Debug($"[{name}] Start download '{webDirectory.Url}'");
                                     Session.TotalHttpRequests++;
@@ -718,31 +718,6 @@ namespace OpenDirectoryDownloader
             while (!cancellationToken.IsCancellationRequested && (!queue.IsEmpty || RunningWebDirectoryThreads > 0) && !maxConnections);
 
             Logger.Debug($"Finished [{name}]");
-        }
-
-        private bool SameHostAndDirectory(Uri baseUri, Uri checkUri)
-        {
-            string checkUrlWithoutFileName = checkUri.LocalPath.Replace("index.php", string.Empty);
-            string checkUrlFileName = Path.GetFileName(checkUri.ToString());
-
-            if (!string.IsNullOrWhiteSpace(checkUrlFileName))
-            {
-                checkUrlWithoutFileName = checkUrlWithoutFileName.Replace(checkUrlFileName, string.Empty);
-            }
-
-            string baseUrlWithoutFileName = baseUri.LocalPath;
-            string baseUrlFileName = Path.GetFileName(baseUri.ToString());
-
-            if (!string.IsNullOrWhiteSpace(baseUrlFileName))
-            {
-                baseUrlWithoutFileName = baseUri.LocalPath.Replace(baseUrlFileName, string.Empty);
-            }
-
-            return baseUri.ToString() == checkUri.ToString() || (baseUri.Host == checkUri.Host && (
-                checkUri.LocalPath.StartsWith(baseUri.LocalPath) ||
-                checkUri.LocalPath.StartsWith(baseUrlWithoutFileName) ||
-                baseUri.LocalPath.StartsWith(checkUrlWithoutFileName)
-            ));
         }
 
         private async Task ProcessWebDirectoryAsync(string name, WebDirectory webDirectory, CancellationTokenSource cancellationTokenSource)
@@ -1177,7 +1152,7 @@ namespace OpenDirectoryDownloader
                 {
                     if (!Session.ProcessedUrls.Contains(subdirectory.Url))
                     {
-                        if (subdirectory.Uri.Host != Constants.GoogleDriveDomain && subdirectory.Uri.Host != Constants.BlitzfilesTechDomain && !SameHostAndDirectory(Session.Root.Uri, subdirectory.Uri))
+                        if (subdirectory.Uri.Host != Constants.GoogleDriveDomain && subdirectory.Uri.Host != Constants.BlitzfilesTechDomain && !DirectoryParser.SameHostAndDirectoryFile(Session.Root.Uri, subdirectory.Uri))
                         {
                             Logger.Debug($"Removed subdirectory {subdirectory.Uri} from parsed webdirectory because it is not the same host");
                         }
@@ -1197,18 +1172,6 @@ namespace OpenDirectoryDownloader
             {
                 Session.UrlsWithErrors.Add(webDirectory.Url);
             }
-
-            webDirectory.Files.Where(f =>
-            {
-                Uri uri = new Uri(f.Url);
-
-                if (uri.Host == Constants.GoogleDriveDomain || uri.Host == Constants.BlitzfilesTechDomain)
-                {
-                    return false;
-                }
-
-                return (uri.Scheme != Constants.UriScheme.Https && uri.Scheme != Constants.UriScheme.Http && uri.Scheme != Constants.UriScheme.Ftp && uri.Scheme != Constants.UriScheme.Ftps) || uri.Host != Session.Root.Uri.Host || !SameHostAndDirectory(uri, Session.Root.Uri);
-            }).ToList().ForEach(wd => webDirectory.Files.Remove(wd));
 
             if (Session.Root.Uri.Scheme != Constants.UriScheme.Ftp && Session.Root.Uri.Scheme != Constants.UriScheme.Ftps)
             {
