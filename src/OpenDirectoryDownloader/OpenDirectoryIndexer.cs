@@ -89,7 +89,7 @@ namespace OpenDirectoryDownloader
                         }
                         else if (retryCount <= 4)
                         {
-                            Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+                            Logger.Warn($"[{context["Processor"]}] Error {GetExceptionWithInner(ex)} retrieving on try {retryCount} for url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
                         }
                         else
                         {
@@ -106,7 +106,7 @@ namespace OpenDirectoryDownloader
                     {
                         if (retryCount <= 4)
                         {
-                            Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+                            Logger.Warn($"[{context["Processor"]}] Error {GetExceptionWithInner(ex)} retrieving on try {retryCount} for url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
                         }
                         else
                         {
@@ -116,6 +116,20 @@ namespace OpenDirectoryDownloader
                     }
                 }
             );
+
+        private static string GetExceptionWithInner(Exception ex)
+        {
+            string errorMessage = ex.Message;
+            Exception exInner = ex;
+
+            while (exInner.InnerException != null)
+            {
+                errorMessage += $"{Environment.NewLine} -> {exInner.InnerException.Message}";
+                exInner = exInner.InnerException;
+            }
+
+            return errorMessage;
+        }
 
         public OpenDirectoryIndexer(OpenDirectoryIndexerSettings openDirectoryIndexerSettings)
         {
