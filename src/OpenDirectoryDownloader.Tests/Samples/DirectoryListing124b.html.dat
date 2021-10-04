@@ -1,0 +1,305 @@
+
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>bin/pc/Emulators - RHC</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" integrity="sha384-tKLJeE1ALTUwtXlaGjJYM3sejfssWdAaWR2s97axw4xkiAdMzQjtOjgcyw0Y50KU" crossorigin="anonymous">
+</head>
+
+<body>
+    Contents of  <a href="../../../index.shtml">&lt;root&gt;</a> / <a href="../../index.shtml">bin</a> / <a href="../index.shtml">pc</a> / Emulators /
+
+    <table valign="top" class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Size</th>
+            <th scope="col">Date</th>
+            <th scope="col">Details</th>
+        </tr>
+        </thead>
+        <tbody>
+    
+        <tr>
+            <td colspan="4">
+                <i class="bi bi-folder"></i>
+                <a href="../index.shtml">..</a> (parent directory)
+            </td>
+        </tr>
+    
+
+    
+
+    
+        <tr>
+            <td>
+                <i class="bi bi-file-earmark"></i> SPECTACULATOR80.ZIP
+                <a href="SPECTACULATOR80.ZIP">[Download]</a>
+                
+                    <a href=".extracted/SPECTACULATOR80.ZIP/index.shtml">[Contents]</a>
+                    
+                
+                
+            </td>
+            <td>
+                4.8 MB<br>
+                <small>(4,789,380 bytes)</small>
+            </td>
+            <td>2021-08-01T18:20:39+00:00</td>
+            <td>
+                <small>
+                    Type (guessed): application/zip<br>
+                    <small>ERROR:[gzip: Unknown compression format] (Zip archive data, at least v2.0 to extract)
+</small></br>
+                    MD5: bd6d68925fb4aeec83c72ce788dab207<br>
+                    SHA1: 20a1cd28d878de4a67bd75265575c0861c85e422<br>
+                </small>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>
+                <i class="bi bi-file-earmark"></i> SPIN061.zip
+                <a href="SPIN061.zip">[Download]</a>
+                
+                    <a href=".extracted/SPIN061.zip/index.shtml">[Contents]</a>
+                    
+                
+                
+            </td>
+            <td>
+                1.4 MB<br>
+                <small>(1,431,568 bytes)</small>
+            </td>
+            <td>2021-08-01T18:20:39+00:00</td>
+            <td>
+                <small>
+                    Type (guessed): application/zip<br>
+                    <small>ERROR:[gzip: Unknown compression format] (Zip archive data, at least v2.0 to extract)
+</small></br>
+                    MD5: f7d89adb8bc090d21aa6c1b64dc7e4d0<br>
+                    SHA1: ce0508168c3f85e5d27a3bca03b86f4b1eb200ea<br>
+                </small>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>
+                <i class="bi bi-file-earmark"></i> SpecEmu28-b101009.zip
+                <a href="SpecEmu28-b101009.zip">[Download]</a>
+                
+                    <a href=".extracted/SpecEmu28-b101009.zip/index.shtml">[Contents]</a>
+                    
+                
+                
+            </td>
+            <td>
+                475.2 kB<br>
+                <small>(475,196 bytes)</small>
+            </td>
+            <td>2021-08-01T18:20:33+00:00</td>
+            <td>
+                <small>
+                    Type (guessed): application/zip<br>
+                    <small>ERROR:[gzip: Unknown compression format] (Zip archive data, at least v2.0 to extract)
+</small></br>
+                    MD5: 45d14ba1d48cc673ba07912650a07258<br>
+                    SHA1: 1623ab1bab98617f3ad34af87df3e8f384720406<br>
+                </small>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>
+                <i class="bi bi-file-earmark"></i> ZXSpin_07i.zip
+                <a href="ZXSpin_07i.zip">[Download]</a>
+                
+                    <a href=".extracted/ZXSpin_07i.zip/index.shtml">[Contents]</a>
+                    
+                
+                
+            </td>
+            <td>
+                1.9 MB<br>
+                <small>(1,882,729 bytes)</small>
+            </td>
+            <td>2021-08-01T18:20:38+00:00</td>
+            <td>
+                <small>
+                    Type (guessed): application/zip<br>
+                    <small>ERROR:[gzip: Unknown compression format] (Zip archive data, at least v1.0 to extract)
+</small></br>
+                    MD5: 44dbe20db96eee0669a847a7a9e30760<br>
+                    SHA1: 3a1e7216e4d6b8591bff0ca6a280dd7112aff938<br>
+                </small>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>
+                <i class="bi bi-file-earmark"></i> amic_emu.jar
+                <a href="amic_emu.jar">[Download]</a>
+                
+                    <a href=".extracted/amic_emu.jar/index.shtml">[Contents]</a>
+                    
+                
+                
+            </td>
+            <td>
+                56.2 kB<br>
+                <small>(56,153 bytes)</small>
+            </td>
+            <td>2021-08-01T18:20:39+00:00</td>
+            <td>
+                <small>
+                    Type (guessed): application/java-archive<br>
+                    <small>ERROR:[gzip: Unknown compression format] (Java archive data (JAR))
+</small></br>
+                    MD5: ac0bbcf91e9d634a869805a9070ed1db<br>
+                    SHA1: eb6532cf50f22186600520fed402ecac58c547ce<br>
+                </small>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>
+                <i class="bi bi-file-earmark"></i> fuse-hc.zip
+                <a href="fuse-hc.zip">[Download]</a>
+                
+                    <a href=".extracted/fuse-hc.zip/index.shtml">[Contents]</a>
+                    
+                
+                
+            </td>
+            <td>
+                4.1 MB<br>
+                <small>(4,125,342 bytes)</small>
+            </td>
+            <td>2021-08-01T18:20:39+00:00</td>
+            <td>
+                <small>
+                    Type (guessed): application/zip<br>
+                    <small>ERROR:[gzip: Unknown compression format] (Zip archive data, at least v2.0 to extract)
+</small></br>
+                    MD5: 549887e8270bea262f007d77bdbfb3b0<br>
+                    SHA1: 5b4e5be2014dad7b1b7187641e8e9e6300a0ea48<br>
+                </small>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>
+                <i class="bi bi-file-earmark"></i> fuse-hc2000-hacks.7z
+                <a href="fuse-hc2000-hacks.7z">[Download]</a>
+                
+                    <a href=".extracted/fuse-hc2000-hacks.7z/index.shtml">[Contents]</a>
+                    
+                
+                
+            </td>
+            <td>
+                3.2 MB<br>
+                <small>(3,243,455 bytes)</small>
+            </td>
+            <td>2021-08-01T18:20:37+00:00</td>
+            <td>
+                <small>
+                    Type (guessed): application/x-7z-compressed<br>
+                    <small>7-zip archive data, version 0.3
+</small></br>
+                    MD5: 0f3f78ebb91c5304766d8fd4b61415d7<br>
+                    SHA1: 98639c96132597d3ae13d3c2e5a8e1f6e4acd7b2<br>
+                </small>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>
+                <i class="bi bi-file-earmark"></i> warsp251.zip
+                <a href="warsp251.zip">[Download]</a>
+                
+                    <a href=".extracted/warsp251.zip/index.shtml">[Contents]</a>
+                    
+                
+                
+            </td>
+            <td>
+                797.4 kB<br>
+                <small>(797,442 bytes)</small>
+            </td>
+            <td>2021-08-01T18:20:39+00:00</td>
+            <td>
+                <small>
+                    Type (guessed): application/zip<br>
+                    <small>ERROR:[gzip: Unknown compression format] (Zip archive data, at least v2.0 to extract)
+</small></br>
+                    MD5: f9cae8e87abecab7ef1784b451974f8d<br>
+                    SHA1: 810c86e4c15baefbabf466aa4aa1de6c856f1725<br>
+                </small>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>
+                <i class="bi bi-file-earmark"></i> z80-305.zip
+                <a href="z80-305.zip">[Download]</a>
+                
+                    <a href=".extracted/z80-305.zip/index.shtml">[Contents]</a>
+                    
+                
+                
+            </td>
+            <td>
+                249.9 kB<br>
+                <small>(249,904 bytes)</small>
+            </td>
+            <td>2021-08-01T18:20:33+00:00</td>
+            <td>
+                <small>
+                    Type (guessed): application/zip<br>
+                    <small>ERROR:[gzip: Unknown compression format] (Zip archive data, at least v2.0 to extract)
+</small></br>
+                    MD5: f144dc1a184f286f03de998f758ad85c<br>
+                    SHA1: 60c3ab3f0a603508b55758011cec14fc338b4415<br>
+                </small>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>
+                <i class="bi bi-file-earmark"></i> z80.zip
+                <a href="z80.zip">[Download]</a>
+                
+                    <a href=".extracted/z80.zip/index.shtml">[Contents]</a>
+                    
+                
+                
+            </td>
+            <td>
+                1.3 MB<br>
+                <small>(1,256,668 bytes)</small>
+            </td>
+            <td>2021-08-01T18:20:35+00:00</td>
+            <td>
+                <small>
+                    Type (guessed): application/zip<br>
+                    <small>ERROR:[gzip: Unknown compression format] (Zip archive data, at least v1.0 to extract)
+</small></br>
+                    MD5: 99b4b7b0d922ae23deb9d1d67e163afe<br>
+                    SHA1: 4c66f22b39c2df46507e5a335b0789da1d09b645<br>
+                </small>
+            </td>
+        </tr>
+    
+        </tbody>
+    </table>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

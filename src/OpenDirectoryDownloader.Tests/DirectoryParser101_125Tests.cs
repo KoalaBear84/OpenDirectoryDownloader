@@ -641,5 +641,34 @@ namespace OpenDirectoryDownloader.Tests
             Assert.Equal("101-engr.jpg", webDirectory.Files[0].FileName);
             Assert.Equal(Constants.NoFileSize, webDirectory.Files[0].FileSize);
         }
+
+        /// <summary>
+        /// Url: https://rhc14.grey-panther.net/index.shtml
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing124aAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Equal(4, webDirectory.Subdirectories.Count);
+            Assert.Equal("bin", webDirectory.Subdirectories[0].Name);
+            Assert.Empty(webDirectory.Files);
+        }
+
+        /// <summary>
+        /// Url: https://rhc14.grey-panther.net/bin/pc/Emulators/index.shtml
+        /// </summary>
+        [Fact]
+        public async Task TestDirectoryListing124bAsync()
+        {
+            WebDirectory webDirectory = await ParseHtml(GetSample());
+
+            Assert.Equal("ROOT", webDirectory.Name);
+            Assert.Empty(webDirectory.Subdirectories);
+            Assert.Equal(10, webDirectory.Files.Count);
+            Assert.Equal("SPECTACULATOR80.ZIP", webDirectory.Files[0].FileName);
+            Assert.Equal(4789380, webDirectory.Files[0].FileSize);
+        }
     } 
 }

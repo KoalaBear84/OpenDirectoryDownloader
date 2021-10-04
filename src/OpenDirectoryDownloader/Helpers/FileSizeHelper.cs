@@ -25,6 +25,7 @@ namespace OpenDirectoryDownloader.Helpers
             new string[] { "YB", "Y", "YIB", "YO" }
         };
         private static readonly Regex AlphaNumericRegex = new Regex("[^a-zA-Z0-9 .,]");
+        private static readonly Regex BytesRegex = new Regex("\\((?<FileSize>(\\d*,?)+)bytes\\)");
 
         public static long ParseFileSize(string value, int kbValue = 1024, bool throwException = false, bool onlyChecking = false)
         {
@@ -35,6 +36,13 @@ namespace OpenDirectoryDownloader.Helpers
 
             // Strip HTML
             value = Regex.Replace(value, "<.*?>", string.Empty);
+
+            Match bytesRegexMatch = BytesRegex.Match(value);
+
+            if (bytesRegexMatch.Success)
+            {
+                return long.Parse(bytesRegexMatch.Groups["FileSize"].Value.Replace(",", string.Empty));
+            }
 
             value = AlphaNumericRegex.Replace(value, string.Empty);
 

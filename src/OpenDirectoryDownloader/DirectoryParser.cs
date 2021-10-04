@@ -817,10 +817,11 @@ namespace OpenDirectoryDownloader
 
                                     fullUrl = StripUrl(fullUrl);
 
+                                    bool hasFolderIcon = tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex}) i.bi-folder") != null;
                                     UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
 
                                     IElement imageElement = tableRow.QuerySelector("img");
-                                    bool isDirectory = tableRow.ClassList.Contains("dir") || (imageElement != null &&
+                                    bool isDirectory = hasFolderIcon || tableRow.ClassList.Contains("dir") || (imageElement != null &&
                                         (
                                             (imageElement.HasAttribute("alt") && imageElement.Attributes["alt"].Value == "[DIR]") ||
                                             (imageElement.HasAttribute("src") && (Path.GetFileName(imageElement.Attributes["src"].Value).Contains("dir") || Path.GetFileName(imageElement.Attributes["src"].Value).Contains("folder"))) ||
@@ -864,7 +865,7 @@ namespace OpenDirectoryDownloader
                                             directoryName = link.TextContent.Trim();
                                         }
 
-                                        if (urlEncodingParser["dirname"] != null)
+                                        if (urlEncodingParser["dirname"] != null || hasFolderIcon)
                                         {
                                             directoryName = link.TextContent.Trim();
                                         }
@@ -1996,11 +1997,19 @@ namespace OpenDirectoryDownloader
             return false;
         }
 
+        public static string ReplaceCommonDefaultFilenames(string input)
+        {
+            input = input.Replace("index.shtml", string.Empty);
+            input = input.Replace("index.php", string.Empty);
+            input = input.Replace("DirectoryList.asp", string.Empty);
+
+            return input;
+        }
+
         public static bool SameHostAndDirectoryFile(Uri baseUri, Uri checkUri)
         {
             string checkUrlWithoutFileName = checkUri.LocalPath;
-            checkUrlWithoutFileName = checkUrlWithoutFileName.Replace("index.php", string.Empty);
-            checkUrlWithoutFileName = checkUrlWithoutFileName.Replace("DirectoryList.asp", string.Empty);
+            checkUrlWithoutFileName = ReplaceCommonDefaultFilenames(checkUrlWithoutFileName);
             string checkUrlFileName = Path.GetFileName(checkUri.ToString());
 
             if (!string.IsNullOrWhiteSpace(checkUrlFileName))
@@ -2025,9 +2034,17 @@ namespace OpenDirectoryDownloader
 
         public static bool SameHostAndDirectoryDirectory(Uri baseUri, Uri checkUri)
         {
-            return baseUri.ToString() == checkUri.ToString() || (baseUri.Host == checkUri.Host && 
-                checkUri.LocalPath.StartsWith(baseUri.LocalPath)
-            );
+            if (baseUri.ToString() == checkUri.ToString())
+            {
+                return true;
+            }
+
+            if (baseUri.Host != checkUri.Host)
+            {
+                return false;
+            }
+
+            return ReplaceCommonDefaultFilenames(checkUri.LocalPath).StartsWith(ReplaceCommonDefaultFilenames(baseUri.LocalPath));
         }
 
         /// <summary>
