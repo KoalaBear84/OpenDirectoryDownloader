@@ -52,7 +52,7 @@ Command line parameters:
 |   | `--username` | Username |
 |   | `--password` | Password |
 |   | `--output-file` | Output file to use for urls file |
-|   | `--proxy-address` | Proxy Address, like "socks5://127.0.0.1:9050" (needed for .onion) |
+|   | `--proxy-address` | Proxy address, like "socks5://127.0.0.1:9050" (needed for .onion) |
 |   | `--proxy-username` | Proxy username |
 |   | `--proxy-password` | Proxy password |
 
@@ -90,7 +90,9 @@ It will save the URLs files onto C:\\Scans (windows), or replace with a custom f
 
 1. Make sure the Tor is running on your machine
 2. Use the correct proxy address notation, default for Tor is: "socks5://127.0.0.1:9050"
-3. Start it with --proxy-address parameter: `OpenDirectoryDownloader.exe --url "http://*.onion/" --proxy-address "socks5://127.0.0.1:9050"`
+3. Start it with `--proxy-address` parameter
+
+`OpenDirectoryDownloader.exe --url "http://*.onion/" --proxy-address "socks5://127.0.0.1:9050"`
 
 ## Getting the code
 
