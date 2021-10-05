@@ -141,6 +141,21 @@ namespace OpenDirectoryDownloader
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli
             };
 
+            if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.CommandLineOptions.ProxyAddress))
+            {
+                WebProxy webProxy = new WebProxy
+                {
+                    Address = new Uri(OpenDirectoryIndexerSettings.CommandLineOptions.ProxyAddress),
+                };
+
+                if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.CommandLineOptions.ProxyUsername) || !string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.CommandLineOptions.ProxyPassword))
+                {
+                    webProxy.Credentials = new NetworkCredential(OpenDirectoryIndexerSettings.CommandLineOptions.ProxyUsername, OpenDirectoryIndexerSettings.CommandLineOptions.ProxyPassword);
+                }
+
+                HttpClientHandler.Proxy = webProxy;
+            }
+
             HttpClient = new HttpClient(HttpClientHandler)
             {
                 Timeout = TimeSpan.FromSeconds(OpenDirectoryIndexerSettings.Timeout)

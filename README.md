@@ -52,6 +52,9 @@ Command line parameters:
 |   | `--username` | Username |
 |   | `--password` | Password |
 |   | `--output-file` | Output file to use for urls file |
+|   | `--proxy-address` | Proxy Address, like "socks5://127.0.0.1:9050" (needed for .onion) |
+|   | `--proxy-username` | Proxy username |
+|   | `--proxy-password` | Proxy password |
 
 ### Example
 
@@ -61,7 +64,7 @@ Command line parameters:
 
 #### Linux
 
-`./OpenDirectoryDownloader -u "https://myopendirectory.com"`
+`./OpenDirectoryDownloader --url "https://myopendirectory.com"`
 
 If you want to learn more or contribute, see the following paragraphs!
 
@@ -82,6 +85,12 @@ Run it like:
 It will save the URLs files onto C:\\Scans (windows), or replace with a custom folder on other OS-ses.
 
 \* You can also run it without `-v c:/scans:/app/Scans` if you don't want to save the results on your host.
+
+## Onion / Tor support
+
+1. Make sure the Tor is running on your machine
+2. Use the correct proxy address notation, default for Tor is: "socks5://127.0.0.1:9050"
+3. Start it with --proxy-address parameter: `OpenDirectoryDownloader.exe --url "http://*.onion/" --proxy-address "socks5://127.0.0.1:9050"`
 
 ## Getting the code
 

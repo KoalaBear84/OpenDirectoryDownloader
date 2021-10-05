@@ -52,6 +52,15 @@ namespace OpenDirectoryDownloader
         [Option("fast-scan", Required = false, Default = false, HelpText = "Only perform actions that are fast, so no HEAD requests, etc. Might result in missing file sizes")]
         public bool FastScan { get; set; }
 
+        [Option("proxy-address", Required = false, Default = "", HelpText = "Proxy address, like: socks5://127.0.0.1:9050")]
+        public string ProxyAddress { get; set; }
+
+        [Option("proxy-username", Required = false, Default = "", HelpText = "Proxy username")]
+        public string ProxyUsername { get; set; }
+
+        [Option("proxy-password", Required = false, Default = "", HelpText = "Proxy password")]
+        public string ProxyPassword { get; set; }
+
         // TODO: Future use
         //[Option('d', "download", Required = false, HelpText = "Downloads the contents (after indexing is finished)")]
         //public bool Download { get; set; }
