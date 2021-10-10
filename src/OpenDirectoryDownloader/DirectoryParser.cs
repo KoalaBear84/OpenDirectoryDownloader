@@ -242,6 +242,11 @@ namespace OpenDirectoryDownloader
 
                 CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
+                if (parsedWebDirectory.Subdirectories.Count == 0 && parsedWebDirectory.Files.Count == 0 && htmlDocument.QuerySelector("noscript") != null)
+                {
+                    Logger.Warn("No directories and files found, but did find a <noscript> tag, probably a JavaScript challenge in there which is unsupported");
+                }
+
                 return parsedWebDirectory;
             }
             catch (FriendlyException ex)
