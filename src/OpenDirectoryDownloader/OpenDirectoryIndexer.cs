@@ -4,6 +4,7 @@ using OpenDirectoryDownloader.Calibre;
 using OpenDirectoryDownloader.FileUpload;
 using OpenDirectoryDownloader.GoogleDrive;
 using OpenDirectoryDownloader.Helpers;
+using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared.Models;
 using Polly;
 using Polly.Retry;

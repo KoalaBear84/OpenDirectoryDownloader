@@ -1,6 +1,6 @@
 ﻿using CommandLine;
 
-namespace OpenDirectoryDownloader
+namespace OpenDirectoryDownloader.Models
 {
     public class CommandLineOptions
     {
