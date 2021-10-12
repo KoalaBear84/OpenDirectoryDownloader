@@ -1867,8 +1867,87 @@ namespace OpenDirectoryDownloader
             }
 
             CleanFragments(webDirectory);
+            
+            CleanDynamicEntries(webDirectory);
 
             CheckSymlinks(webDirectory);
+        }
+
+        /// <summary>
+        /// Remove common linux folders
+        /// </summary>
+        /// <param name="webDirectory">Directory to clean</param>
+        private static void CleanDynamicEntries(WebDirectory webDirectory)
+        {
+            webDirectory.Files.Where(f => f.FileName == "core").ToList().ForEach(f => webDirectory.Files.Remove(f));
+
+            if (webDirectory.Name == "dev")
+            {
+                if (webDirectory.Subdirectories.Any(subdir => subdir.Name == "bus" || subdir.Name == "cpu" || subdir.Name == "disk"))
+                {
+                    webDirectory.Subdirectories.Clear();
+                    webDirectory.Files.Clear();
+                }
+            }
+
+            if (webDirectory.Name == "lib")
+            {
+                if (webDirectory.Subdirectories.Any(subdir => subdir.Name == "firmware" || subdir.Name == "modules"))
+                {
+                    webDirectory.Subdirectories.Clear();
+                    webDirectory.Files.Clear();
+                }
+            }
+
+            if (webDirectory.Name == "proc")
+            {
+                if (webDirectory.Subdirectories.Any(subdir => subdir.Name.All(char.IsDigit)))
+                {
+                    webDirectory.Subdirectories.Clear();
+                    webDirectory.Files.Clear();
+                }
+            }
+
+            if (webDirectory.Name == "run")
+            {
+                if (webDirectory.Subdirectories.Any(subdir => subdir.Name == "sudo" || subdir.Name == "user"))
+                {
+                    webDirectory.Subdirectories.Clear();
+                    webDirectory.Files.Clear();
+                }
+            }
+
+            if (webDirectory.Name == "snap")
+            {
+                if (webDirectory.Subdirectories.Any(subdir => subdir.Name == "bin"))
+                {
+                    webDirectory.Subdirectories.Clear();
+                    webDirectory.Files.Clear();
+                }
+            }
+
+            if (webDirectory.Name == "sys")
+            {
+                if (webDirectory.Subdirectories.Any(subdir => subdir.Name == "dev" || subdir.Name == "kernel"))
+                {
+                    webDirectory.Subdirectories.Clear();
+                    webDirectory.Files.Clear();
+                }
+            }
+
+            if (webDirectory.Name == "usr")
+            {
+                webDirectory.Subdirectories.Where(d => new List<string> { "bin", "include", "lib", "lib32", "share", "src" }.Contains(d.Name)).ToList().ForEach(wd => webDirectory.Subdirectories.Remove(wd));
+            }
+
+            if (webDirectory.Name == "var")
+            {
+                if (webDirectory.Subdirectories.Any(subdir => subdir.Name == "lib" || subdir.Name == "run"))
+                {
+                    webDirectory.Subdirectories.Clear();
+                    webDirectory.Files.Clear();
+                }
+            }
         }
 
         private static void CheckParents(WebDirectory webDirectory, string baseUrl)
@@ -1895,7 +1974,7 @@ namespace OpenDirectoryDownloader
                 }
 
                 return (uri.Scheme != Constants.UriScheme.Https && uri.Scheme != Constants.UriScheme.Http && uri.Scheme != Constants.UriScheme.Ftp && uri.Scheme != Constants.UriScheme.Ftps) || uri.Host != new Uri(baseUrl).Host || !SameHostAndDirectoryFile(uri, new Uri(baseUrl));
-            }).ToList().ForEach(wd => webDirectory.Files.Remove(wd));
+            }).ToList().ForEach(f => webDirectory.Files.Remove(f));
         }
 
         private static void CleanFragments(WebDirectory webDirectory)
