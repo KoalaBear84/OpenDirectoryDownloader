@@ -766,6 +766,12 @@ namespace OpenDirectoryDownloader
 
             HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
 
+            if (httpResponseMessage.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
+            {
+                Logger.Error("Cloudflare protection is not supported");
+                return;
+            }
+
             if (httpResponseMessage.StatusCode == HttpStatusCode.Moved || httpResponseMessage.StatusCode == HttpStatusCode.MovedPermanently)
             {
                 if (httpResponseMessage.Headers.Location != null)
