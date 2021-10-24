@@ -18,7 +18,7 @@ namespace OpenDirectoryDownloader
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public static string ConsoleTitle { get; set; }
-        private static CommandLineOptions CommandLineOptions { get; set; }
+        private static OpenDirectoryDownloader.Models.CommandLineOptions CommandLineOptions { get; set; }
 
         static async Task<int> Main(string[] args)
         {
@@ -48,7 +48,7 @@ namespace OpenDirectoryDownloader
                 with.HelpWriter = Console.Error;
                 with.AutoVersion = true;
             }); // use custom parser settings
-            parser.ParseArguments<CommandLineOptions>(args)
+            parser.ParseArguments<OpenDirectoryDownloader.Models.CommandLineOptions>(args)
             // Parser.Default.ParseArguments<CommandLineOptions>(args)
                 .WithNotParsed(o =>
                 {

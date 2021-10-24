@@ -34,27 +34,28 @@ https://dotnet.microsoft.com/download/dotnet/6.0/runtime
 
 Command line parameters:
 
-| Short | Long | Description |
-| --- | --- | --- |
-| `-u` | `--url` | Url to scan |
-| `-t` | `--threads` | Number of threads (default 5) |
-| `-o` | `--timeout` | Number of seconds for timeout |
-| `-q` | `--quit` | Quit after scanning (No "Press a key") |
-| `-c` | `--clipboard` | Automatically copy the Reddits stats once the scan is done |
-| `-j` | `--json` | Save JSON file |
-| `-f` | `--no-urls` | Do not save URLs file |
-| `-r` | `--no-reddit` | Do not show Reddit stats markdown |
-| `-l` | `--upload-urls` | Uploads urls file |
-| `-e` | `--exact-file-sizes` | Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server) |
-|   | `--fast-scan` | Only use sizes from HTML, not HEAD requests (Opposite of `--exact-file-sizes`) |
-| `-s` | `--speedtest` | Does a speed test after indexing |
-| `-a` | `--user-agent` | Use custom default User Agent |
-|   | `--username` | Username |
-|   | `--password` | Password |
-|   | `--output-file` | Output file to use for urls file |
-|   | `--proxy-address` | Proxy address, like "socks5://127.0.0.1:9050" (needed for .onion) |
-|   | `--proxy-username` | Proxy username |
-|   | `--proxy-password` | Proxy password |
+| Short | Long                 | Description                                                                                                                                                                                                                   |
+| ----- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-u`  | `--url`              | Url to scan                                                                                                                                                                                                                   |
+| `-t`  | `--threads`          | Number of threads (default 5)                                                                                                                                                                                                 |
+| `-o`  | `--timeout`          | Number of seconds for timeout                                                                                                                                                                                                 |
+| `-q`  | `--quit`             | Quit after scanning (No "Press a key")                                                                                                                                                                                        |
+| `-c`  | `--clipboard`        | Automatically copy the Reddits stats once the scan is done                                                                                                                                                                    |
+| `-j`  | `--json`             | Save JSON file                                                                                                                                                                                                                |
+| `-f`  | `--no-urls`          | Do not save URLs file                                                                                                                                                                                                         |
+| `-r`  | `--no-reddit`        | Do not show Reddit stats markdown                                                                                                                                                                                             |
+| `-l`  | `--upload-urls`      | Uploads urls file                                                                                                                                                                                                             |
+| `-e`  | `--exact-file-sizes` | Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server)                                                                                                                                |
+|       | `--fast-scan`        | Only use sizes from HTML, not HEAD requests (Opposite of `--exact-file-sizes`)                                                                                                                                                |
+| `-s`  | `--speedtest`        | Does a speed test after indexing                                                                                                                                                                                              |
+| `-a`  | `--user-agent`       | Use custom default User Agent                                                                                                                                                                                                 |
+|       | `--username`         | Username                                                                                                                                                                                                                      |
+|       | `--password`         | Password                                                                                                                                                                                                                      |
+| `-H`  | `--header`           | Supply a custom header to use for each HTTP request. Can be used multiple times for multiple headers. See below for more info. |
+|       | `--output-file`      | Output file to use for urls file                                                                                                                                                                                              |
+|       | `--proxy-address`    | Proxy address, like "socks5://127.0.0.1:9050" (needed for .onion)                                                                                                                                                             |
+|       | `--proxy-username`   | Proxy username                                                                                                                                                                                                                |
+|       | `--proxy-password`   | Proxy password                                                                                                                                                                                                                |
 
 ### Example
 
@@ -67,6 +68,25 @@ Command line parameters:
 `./OpenDirectoryDownloader --url "https://myopendirectory.com"`
 
 If you want to learn more or contribute, see the following paragraphs!
+
+### Custom Headers
+
+Headers need to be provided in the following format:  
+```
+<Header Name>: <Header Value>
+```
+There should be only a single `:` and no `;` in the header string. **This syntax is compatible with e.g. cURL, so that you can copy the headers from a cURL command and re-use them with OpenDirectoryDownloader**.  
+
+This means you can easily "fake" a browser request:  
+
+1. On the page/site you want to index, open your browsers dev tools (`F12` or `CTRL` + `SHIFT` + `i`)
+2. Go to the `Network` tab
+3. Reload the page
+4. Right-click on the first request/item in the network tab and select `Copy > Copy as cURL (bash)` (might be called differently, depending on your browser)
+5. The copied command ends with lots of headers (`-H '<something>' -H '<something else>'`). Copy only this part of the command and append it to your OpenDirectoryDownloader command, like so: `OpenDirectoryDownloader --url "https://myopendirectory.com" -H 'header-name-1: header-value-1' -H 'header-name-2: header-value-2' ...`  
+   You can of course also use other options with this or omit the `--url` option to use the prompt instead.
+
+Setting some options like `--username` or `--user-agent` might override some headers, as explicit options take precedence. Option order does **not** matter (this applies to OpenDirectoryDownloader in general).  
 
 ### Copying on Linux
 
