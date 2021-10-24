@@ -43,7 +43,11 @@ namespace OpenDirectoryDownloader
 
             bool stopProcessing = false;
 
-            var parser = new Parser(with => with.AllowMultiInstance = true); // use custom parser settings
+            var parser = new Parser(with => {
+                with.AllowMultiInstance = true;
+                with.HelpWriter = Console.Error;
+                with.AutoVersion = true;
+            }); // use custom parser settings
             parser.ParseArguments<CommandLineOptions>(args)
             // Parser.Default.ParseArguments<CommandLineOptions>(args)
                 .WithNotParsed(o =>
