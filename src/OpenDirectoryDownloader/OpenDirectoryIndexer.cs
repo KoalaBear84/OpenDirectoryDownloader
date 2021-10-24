@@ -768,8 +768,18 @@ namespace OpenDirectoryDownloader
 
             if (httpResponseMessage.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
             {
-                Logger.Error("Cloudflare protection is not supported");
-                return;
+                if (OpenDirectoryIndexerSettings.CommandLineOptions.NoBrowser)
+                {
+                    Logger.Error("Cloudflare protection detected, --no-browser option active, cannot continue!");
+                    return;
+                }
+
+                Logger.Warn("Cloudflare protection detected, trying to launch browser. Solve protection yourself, indexing will start automatically!");
+
+                BrowserContext browserContext = new BrowserContext(OpenDirectoryIndexerSettings.Url, HttpClientHandler.CookieContainer);
+                await browserContext.DoAsync();
+
+                httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
             }
 
             if (httpResponseMessage.StatusCode == HttpStatusCode.Moved || httpResponseMessage.StatusCode == HttpStatusCode.MovedPermanently)
