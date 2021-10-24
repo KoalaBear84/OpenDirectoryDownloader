@@ -136,10 +136,12 @@ namespace OpenDirectoryDownloader
         {
             OpenDirectoryIndexerSettings = openDirectoryIndexerSettings;
 
+            var cookieContainer = new CookieContainer();
             HttpClientHandler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true,
-                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli,
+                CookieContainer = cookieContainer
             };
 
             if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.CommandLineOptions.ProxyAddress))
