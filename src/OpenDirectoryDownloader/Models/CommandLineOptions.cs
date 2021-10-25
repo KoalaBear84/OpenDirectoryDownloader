@@ -1,4 +1,5 @@
 ﻿using CommandLine;
+using System.Collections.Generic;
 
 namespace OpenDirectoryDownloader.Models
 {
@@ -60,6 +61,9 @@ namespace OpenDirectoryDownloader.Models
 
         [Option("proxy-password", Required = false, Default = "", HelpText = "Proxy password")]
         public string ProxyPassword { get; set; }
+        
+        [Option('H', "header", Required = false, Default = null, HelpText = "Provide a custom header to use for any HTTP request while indexing. Option can be used multiple times for multiple headers.")]
+        public IEnumerable<string> Header { get; set; }
 
         // TODO: Future use
         //[Option('d', "download", Required = false, HelpText = "Downloads the contents (after indexing is finished)")]

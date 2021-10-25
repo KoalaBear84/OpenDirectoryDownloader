@@ -18,7 +18,7 @@ namespace OpenDirectoryDownloader
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public static string ConsoleTitle { get; set; }
-        private static CommandLineOptions CommandLineOptions { get; set; }
+        private static OpenDirectoryDownloader.Models.CommandLineOptions CommandLineOptions { get; set; }
 
         static async Task<int> Main(string[] args)
         {
@@ -43,7 +43,13 @@ namespace OpenDirectoryDownloader
 
             bool stopProcessing = false;
 
-            Parser.Default.ParseArguments<CommandLineOptions>(args)
+            var parser = new Parser(with => {
+                with.AllowMultiInstance = true;
+                with.HelpWriter = Console.Error;
+                with.AutoVersion = true;
+            }); // use custom parser settings
+            parser.ParseArguments<OpenDirectoryDownloader.Models.CommandLineOptions>(args)
+            // Parser.Default.ParseArguments<CommandLineOptions>(args)
                 .WithNotParsed(o =>
                 {
                     List<Error> errors = o.ToList();
@@ -67,6 +73,17 @@ namespace OpenDirectoryDownloader
                 return 1;
             }
 
+            // check if `CommandLineOptions` were successfully parsed with NOP (lazily evaluated, throws potential exceptions on first access)
+            try
+            {
+                if (CommandLineOptions.Equals(CommandLineOptions));
+            }
+            catch (System.Exception)
+            {
+                Console.WriteLine("Couldn't parse CLI parameters!");
+                return 1;
+            }
+            
             if (CommandLineOptions.Threads < 1 || CommandLineOptions.Threads > 100)
             {
                 Console.WriteLine("Threads must be between 1 and 100");
