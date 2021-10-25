@@ -39,10 +39,14 @@ namespace OpenDirectoryDownloader
             {
                 CancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(60));
 
-                Logger.Info($"Downloading browser...");
+                BrowserFetcher browserFetcher = new BrowserFetcher();
 
-                RevisionInfo revisionInfo = await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
-                Logger.Info($"Downloaded browser. Downloaded: {revisionInfo.Downloaded}, Platform: {revisionInfo.Platform}, Revision: {revisionInfo.Revision}");
+                if (!browserFetcher.LocalRevisions().Contains(BrowserFetcher.DefaultChromiumRevision))
+                {
+                    Logger.Warn($"Downloading browser... First time it can take a while, depending on your internet connection.");
+                    RevisionInfo revisionInfo = await browserFetcher.DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
+                    Logger.Warn($"Downloaded browser. Downloaded: {revisionInfo.Downloaded}, Platform: {revisionInfo.Platform}, Revision: {revisionInfo.Revision}, Path: {revisionInfo.FolderPath}");
+                }
 
                 Logger.Debug($"Creating browser...");
 
