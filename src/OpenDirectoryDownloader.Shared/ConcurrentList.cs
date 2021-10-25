@@ -69,7 +69,7 @@ namespace OpenDirectoryDownloader.Shared
 
             try
             {
-                var newCount = _count + 1;
+                int newCount = _count + 1;
                 EnsureCapacity(newCount);
                 _arr[_count] = item;
                 _count = newCount;
@@ -91,8 +91,8 @@ namespace OpenDirectoryDownloader.Shared
 
             try
             {
-                var arr = items as T[] ?? items.ToArray();
-                var newCount = _count + arr.Length;
+                T[] arr = items as T[] ?? items.ToArray();
+                int newCount = _count + arr.Length;
                 EnsureCapacity(newCount);
                 Array.Copy(arr, 0, _arr, _count, arr.Length);
                 _count = newCount;
@@ -124,7 +124,7 @@ namespace OpenDirectoryDownloader.Shared
                 }
             }
 
-            var newLength = Math.Max(doubled, capacity);
+            int newLength = Math.Max(doubled, capacity);
             Array.Resize(ref _arr, newLength);
         }
 
@@ -134,7 +134,7 @@ namespace OpenDirectoryDownloader.Shared
 
             try
             {
-                var i = IndexOfInternal(item);
+                int i = IndexOfInternal(item);
 
                 if (i == -1)
                 {
@@ -215,7 +215,7 @@ namespace OpenDirectoryDownloader.Shared
 
                 try
                 {
-                    var newCount = _count + 1;
+                    int newCount = _count + 1;
                     EnsureCapacity(newCount);
 
                     // shift everything right by one, starting at index

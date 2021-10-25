@@ -136,7 +136,8 @@ namespace OpenDirectoryDownloader
         {
             OpenDirectoryIndexerSettings = openDirectoryIndexerSettings;
 
-            var cookieContainer = new CookieContainer();
+            CookieContainer cookieContainer = new CookieContainer();
+
             HttpClientHandler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true,
@@ -167,42 +168,47 @@ namespace OpenDirectoryDownloader
             HttpClient.DefaultRequestHeaders.Accept.ParseAdd("*/*");
             HttpClient.DefaultRequestHeaders.AcceptEncoding.ParseAdd("gzip, deflate, br");
 
-
-            // add headers to the `DefaultRequestHeaders` and cookies to the CookieContainer
             foreach (string customHeader in OpenDirectoryIndexerSettings.CommandLineOptions.Header)
             {
-
-                if (!customHeader.Contains(':')) {
-                    Console.Error.WriteLine($"Invalid header specified: '{customHeader}' should contain the header name and value, separated by a colon (:). Header will be ignored.");
+                if (!customHeader.Contains(':'))
+                {
+                    Logger.Warn($"Invalid header specified: '{customHeader}' should contain the header name and value, separated by a colon (:). Header will be ignored.");
                     continue;
                 }
 
                 string[] splitHeader = customHeader.Split(':');
                 splitHeader[1] = splitHeader[1].TrimStart();
-                if (splitHeader.Length != 2) {
-                    Console.Error.WriteLine($"Invalid header specified: '{customHeader}' should only contain a single colon (:), for separating header name and value. Header will be ignored.");
+
+                if (splitHeader.Length != 2)
+                {
+                    Logger.Warn($"Invalid header specified: '{customHeader}' should only contain a single colon (:), for separating header name and value. Header will be ignored.");
                     continue;
                 }
 
-                if (splitHeader[0].ToString().ToLower() == "cookie") {
+                if (splitHeader[0].ToString().ToLower() == "cookie")
+                {
                     string[] cookies = splitHeader[1].Split(';');
+
                     foreach (string cookie in cookies)
                     {
                         string[] splitCookie = cookie.Split('=');
-                        if (splitCookie.Length != 2) {
-                            Console.Error.WriteLine($"Invalid cookie found: '{cookie}' should contain a cookie name and value, separated by '='. Cookie will be ignored.");
+
+                        if (splitCookie.Length != 2)
+                        {
+                            Logger.Warn($"Invalid cookie found: '{cookie}' should contain a cookie name and value, separated by '='. Cookie will be ignored.");
                             continue;
                         }
-                        Console.WriteLine($"Adding cookie: name={splitCookie[0]}, value={splitCookie[1]}");
+
+                        Logger.Warn($"Adding cookie: name={splitCookie[0]}, value={splitCookie[1]}");
                         cookieContainer.Add(new Uri(OpenDirectoryIndexerSettings.Url), new Cookie(splitCookie[0], splitCookie[1]));
                     }
-                } else {
+                }
+                else
+                {
                     HttpClient.DefaultRequestHeaders.Add(splitHeader[0], splitHeader[1]);
                 }
-
             }
 
-            //!!! Any option provided as a flag (like auth) should use the flag value instead of the header (in case of overlap)
             if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.Username) || !string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.Password))
             {
                 HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{OpenDirectoryIndexerSettings.Username}:{OpenDirectoryIndexerSettings.Password}")));

@@ -92,7 +92,7 @@ namespace OpenDirectoryDownloader
 
                 string[] pairs = query.Split('&', ';');
 
-                foreach (var pair in pairs)
+                foreach (string pair in pairs)
                 {
                     int index2 = pair.IndexOf('=');
 

@@ -1,6 +1,7 @@
 using CommandLine;
 using NLog;
 using NLog.Config;
+using OpenDirectoryDownloader.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,7 +19,7 @@ namespace OpenDirectoryDownloader
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public static string ConsoleTitle { get; set; }
-        private static OpenDirectoryDownloader.Models.CommandLineOptions CommandLineOptions { get; set; }
+        private static CommandLineOptions CommandLineOptions { get; set; }
 
         static async Task<int> Main(string[] args)
         {
@@ -43,13 +44,12 @@ namespace OpenDirectoryDownloader
 
             bool stopProcessing = false;
 
-            var parser = new Parser(with => {
+            Parser parser = new Parser(with => {
                 with.AllowMultiInstance = true;
                 with.HelpWriter = Console.Error;
-                with.AutoVersion = true;
-            }); // use custom parser settings
-            parser.ParseArguments<OpenDirectoryDownloader.Models.CommandLineOptions>(args)
-            // Parser.Default.ParseArguments<CommandLineOptions>(args)
+            });
+
+            parser.ParseArguments<CommandLineOptions>(args)
                 .WithNotParsed(o =>
                 {
                     List<Error> errors = o.ToList();
@@ -73,17 +73,6 @@ namespace OpenDirectoryDownloader
                 return 1;
             }
 
-            // check if `CommandLineOptions` were successfully parsed with NOP (lazily evaluated, throws potential exceptions on first access)
-            try
-            {
-                if (CommandLineOptions.Equals(CommandLineOptions));
-            }
-            catch (System.Exception)
-            {
-                Console.WriteLine("Couldn't parse CLI parameters!");
-                return 1;
-            }
-            
             if (CommandLineOptions.Threads < 1 || CommandLineOptions.Threads > 100)
             {
                 Console.WriteLine("Threads must be between 1 and 100");

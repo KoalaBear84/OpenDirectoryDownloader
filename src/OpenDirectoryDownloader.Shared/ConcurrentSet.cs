@@ -84,7 +84,7 @@ namespace Roslyn.Utilities
         {
             if (values != null)
             {
-                foreach (var v in values)
+                foreach (T v in values)
                 {
                     Add(v);
                 }
@@ -98,7 +98,7 @@ namespace Roslyn.Utilities
         /// <returns>true if the value was removed successfully; otherwise false.</returns>
         public bool Remove(T value)
         {
-            return _dictionary.TryRemove(value, out var b);
+            return _dictionary.TryRemove(value, out byte b);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Roslyn.Utilities
             // PERF: Do not use dictionary.Keys here because that creates a snapshot
             // of the collection resulting in a List<T> allocation. Instead, use the
             // KeyValuePair enumerator and pick off the Key part.
-            foreach (var kvp in _dictionary)
+            foreach (KeyValuePair<T, byte> kvp in _dictionary)
             {
                 yield return kvp.Key;
             }
