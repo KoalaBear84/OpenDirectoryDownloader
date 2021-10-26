@@ -173,7 +173,7 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Go2Index
                                 error = true;
                                 retry++;
                                 RateLimiter.AddDelay(TimeSpan.FromSeconds(5));
-                                Logger.Warn($"Error processing {Parser}, will be retried, for URL: {webDirectory.Url}");
+                                Logger.Warn($"Rate Limit with {Parser}, will be retried, for URL: {webDirectory.Url}");
                                 continue;
                             }
                             else
@@ -207,6 +207,9 @@ namespace OpenDirectoryDownloader.Site.GoIndex.Go2Index
                                 });
                             }
                         }
+
+                        retry = 0;
+                        error = false;
                     } while (!string.IsNullOrWhiteSpace(nextPageToken));
                 } while (error && retry < 5);
 
