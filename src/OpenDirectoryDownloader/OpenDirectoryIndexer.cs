@@ -812,18 +812,23 @@ namespace OpenDirectoryDownloader
 
             if (httpResponseMessage.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
             {
-                if (OpenDirectoryIndexerSettings.CommandLineOptions.NoBrowser)
+                string cloudflareHtml = await GetHtml(httpResponseMessage);
+
+                if (Regex.IsMatch(cloudflareHtml, @"<form class=""challenge-form[^>]*>([\s\S]*?)<\/form>"))
                 {
-                    Logger.Error("Cloudflare protection detected, --no-browser option active, cannot continue!");
-                    return;
+                    if (OpenDirectoryIndexerSettings.CommandLineOptions.NoBrowser)
+                    {
+                        Logger.Error("Cloudflare protection detected, --no-browser option active, cannot continue!");
+                        return;
+                    }
+
+                    Logger.Warn("Cloudflare protection detected, trying to launch browser. Solve protection yourself, indexing will start automatically!");
+
+                    BrowserContext browserContext = new BrowserContext(OpenDirectoryIndexerSettings.Url, HttpClientHandler.CookieContainer);
+                    await browserContext.DoAsync();
+
+                    httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
                 }
-
-                Logger.Warn("Cloudflare protection detected, trying to launch browser. Solve protection yourself, indexing will start automatically!");
-
-                BrowserContext browserContext = new BrowserContext(OpenDirectoryIndexerSettings.Url, HttpClientHandler.CookieContainer);
-                await browserContext.DoAsync();
-
-                httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
             }
 
             if (httpResponseMessage.StatusCode == HttpStatusCode.Moved || httpResponseMessage.StatusCode == HttpStatusCode.MovedPermanently)
