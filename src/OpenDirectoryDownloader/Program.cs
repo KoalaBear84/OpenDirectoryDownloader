@@ -118,6 +118,16 @@ namespace OpenDirectoryDownloader
             openDirectoryIndexerSettings.Username = openDirectoryIndexerSettings.CommandLineOptions.Username;
             openDirectoryIndexerSettings.Password = openDirectoryIndexerSettings.CommandLineOptions.Password;
 
+            if (string.IsNullOrEmpty(openDirectoryIndexerSettings.Username) && string.IsNullOrEmpty(openDirectoryIndexerSettings.Password))
+            {
+                if (Library.GetUriCredentials(new Uri(url), out string username, out string password))
+                {
+                    Console.WriteLine($"Using username '{username}' and password '{password}'");
+                    openDirectoryIndexerSettings.Username = username;
+                    openDirectoryIndexerSettings.Password = password;
+                }
+            }
+
             // FTP
             if (openDirectoryIndexerSettings.Url?.StartsWith(Constants.UriScheme.Ftp) == true || openDirectoryIndexerSettings.Url?.StartsWith(Constants.UriScheme.Ftps) == true)
             {

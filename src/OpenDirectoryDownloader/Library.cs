@@ -341,5 +341,22 @@ namespace OpenDirectoryDownloader
 
             return null;
         }
+
+        public static bool GetUriCredentials(Uri uri, out string username, out string password)
+        {
+            username = null;
+            password = null;
+
+            if (uri.UserInfo?.Contains(':') == true)
+            {
+                string[] splitted = uri.UserInfo.Split(':');
+
+                username = WebUtility.UrlDecode(splitted.First());
+                password = WebUtility.UrlDecode(splitted.Last());
+                return true;
+            }
+
+            return false;
+        }
     }
 }
