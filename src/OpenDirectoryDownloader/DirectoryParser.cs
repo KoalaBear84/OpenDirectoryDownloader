@@ -76,11 +76,6 @@ public static class DirectoryParser
 				return await GoIndexParser.ParseIndex(httpClient, webDirectory);
 			}
 
-			if (htmlDocument.QuerySelector("script[src*=\"gdindex\" i]") != null)
-			{
-				return await GdIndexParser.ParseIndex(httpClient, webDirectory, html);
-			}
-
 			if (htmlDocument.QuerySelector("script[src*=\"Bhadoo-Drive-Index\" i]") != null ||
 				htmlDocument.QuerySelector("script[src*=\"/AjmalShajahan97/goindex\" i]") != null ||
 				htmlDocument.QuerySelector("script[src*=\"/LeeluPradhan/G-Index\" i]") != null ||
@@ -91,7 +86,9 @@ public static class DirectoryParser
 				htmlDocument.QuerySelector("script[src*=\"/RemixDev/goindex\" i]") != null ||
 				htmlDocument.QuerySelector("script[src*=\"/Virusia/Fia-Terminal\" i]") != null ||
 				htmlDocument.QuerySelector("script[src*=\"/sawankumar/Google-Drive-Index-III\" i]") != null ||
-				htmlDocument.QuerySelector("script[src*=\"/goIndex-theme-nexmoe\" i]") != null)
+				htmlDocument.QuerySelector("script[src*=\"/goIndex-theme-nexmoe\" i]") != null ||
+                htmlDocument.QuerySelector("script[src*=\"/cheems/GDIndex\" i]") != null ||
+                htmlDocument.QuerySelector("script[src*=\"/cheems/goindex-extended\" i]") != null)
 			{
 				return await BhadooIndexParser.ParseIndex(htmlDocument, httpClient, webDirectory);
 			}
@@ -108,7 +105,12 @@ public static class DirectoryParser
 				return await GoIndexParser.ParseIndex(httpClient, webDirectory);
 			}
 
-			htmlDocument.QuerySelectorAll("#sidebar").ToList().ForEach(e => e.Remove());
+            if (htmlDocument.QuerySelector("script[src*=\"gdindex\" i]") != null)
+            {
+                return await GdIndexParser.ParseIndex(httpClient, webDirectory, html);
+            }
+            
+            htmlDocument.QuerySelectorAll("#sidebar").ToList().ForEach(e => e.Remove());
 			htmlDocument.QuerySelectorAll("nav").ToList().ForEach(e => e.Remove());
 
 			// The order of the checks is very important!
