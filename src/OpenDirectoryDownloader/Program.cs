@@ -15,157 +15,158 @@ using System.Xml;
 
 namespace OpenDirectoryDownloader
 {
-    class Program
-    {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        public static string ConsoleTitle { get; set; }
-        private static CommandLineOptions CommandLineOptions { get; set; }
+	class Program
+	{
+		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+		public static string ConsoleTitle { get; set; }
+		private static CommandLineOptions CommandLineOptions { get; set; }
 
-        static async Task<int> Main(string[] args)
-        {
-            SetConsoleTitle("OpenDirectoryDownloader");
+		static async Task<int> Main(string[] args)
+		{
+			SetConsoleTitle("OpenDirectoryDownloader");
 
-            Console.OutputEncoding = Encoding.UTF8;
+			Console.OutputEncoding = Encoding.UTF8;
 
-            Stream nlogConfigFile = Library.GetEmbeddedResourceStream(Assembly.GetEntryAssembly(), "NLog.config");
+			Stream nlogConfigFile = Library.GetEmbeddedResourceStream(Assembly.GetEntryAssembly(), "NLog.config");
 
-            if (nlogConfigFile != null)
-            {
-                XmlReader xmlReader = XmlReader.Create(nlogConfigFile);
-                LogManager.Configuration = new XmlLoggingConfiguration(xmlReader, null);
-            }
+			if (nlogConfigFile != null)
+			{
+				XmlReader xmlReader = XmlReader.Create(nlogConfigFile);
+				LogManager.Configuration = new XmlLoggingConfiguration(xmlReader, null);
+			}
 
-            Process currentProcess = Process.GetCurrentProcess();
+			Process currentProcess = Process.GetCurrentProcess();
 
-            Console.WriteLine($"Started with PID {currentProcess.Id}");
-            Logger.Info($"Started with PID {currentProcess.Id}");
+			Console.WriteLine($"Started with PID {currentProcess.Id}");
+			Logger.Info($"Started with PID {currentProcess.Id}");
 
-            Thread.CurrentThread.Name = "Main thread";
+			Thread.CurrentThread.Name = "Main thread";
 
-            bool stopProcessing = false;
+			bool stopProcessing = false;
 
-            Parser parser = new Parser(with => {
-                with.AllowMultiInstance = true;
-                with.HelpWriter = Console.Error;
-            });
+			Parser parser = new Parser(with =>
+			{
+				with.AllowMultiInstance = true;
+				with.HelpWriter = Console.Error;
+			});
 
-            parser.ParseArguments<CommandLineOptions>(args)
-                .WithNotParsed(o =>
-                {
-                    List<Error> errors = o.ToList();
+			parser.ParseArguments<CommandLineOptions>(args)
+				.WithNotParsed(o =>
+				{
+					List<Error> errors = o.ToList();
 
-                    stopProcessing = errors.Any(e => e.StopsProcessing);
+					stopProcessing = errors.Any(e => e.StopsProcessing);
 
-                    if (errors.Any(e => e.Tag == ErrorType.HelpRequestedError || e.Tag == ErrorType.VersionRequestedError))
-                    {
-                        return;
-                    }
+					if (errors.Any(e => e.Tag == ErrorType.HelpRequestedError || e.Tag == ErrorType.VersionRequestedError))
+					{
+						return;
+					}
 
-                    foreach (Error error in errors)
-                    {
-                        Console.WriteLine($"Error command line parameter '{error.Tag}'");
-                    }
-                })
-                .WithParsed(o => CommandLineOptions = o);
+					foreach (Error error in errors)
+					{
+						Console.WriteLine($"Error command line parameter '{error.Tag}'");
+					}
+				})
+				.WithParsed(o => CommandLineOptions = o);
 
-            if (stopProcessing)
-            {
-                return 1;
-            }
+			if (stopProcessing)
+			{
+				return 1;
+			}
 
-            if (CommandLineOptions.Threads < 1 || CommandLineOptions.Threads > 100)
-            {
-                Console.WriteLine("Threads must be between 1 and 100");
-                return 1;
-            }
+			if (CommandLineOptions.Threads < 1 || CommandLineOptions.Threads > 100)
+			{
+				Console.WriteLine("Threads must be between 1 and 100");
+				return 1;
+			}
 
-            string url = CommandLineOptions.Url;
+			string url = CommandLineOptions.Url;
 
-            if (string.IsNullOrWhiteSpace(url))
-            {
-                Console.WriteLine("Which URL do you want to index?");
-                url = Console.ReadLine();
-            }
+			if (string.IsNullOrWhiteSpace(url))
+			{
+				Console.WriteLine("Which URL do you want to index?");
+				url = Console.ReadLine();
+			}
 
-            // Wait until this ticket is closed: https://github.com/dotnet/corefx/pull/37050
-            //AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2Support", true);
+			// Wait until this ticket is closed: https://github.com/dotnet/corefx/pull/37050
+			//AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2Support", true);
 
-            OpenDirectoryIndexerSettings openDirectoryIndexerSettings = new OpenDirectoryIndexerSettings
-            {
-                CommandLineOptions = CommandLineOptions
-            };
+			OpenDirectoryIndexerSettings openDirectoryIndexerSettings = new OpenDirectoryIndexerSettings
+			{
+				CommandLineOptions = CommandLineOptions
+			};
 
-            if (File.Exists(url))
-            {
-                openDirectoryIndexerSettings.FileName = url;
-            }
-            else
-            {
-                Console.WriteLine($"URL specified: {url}");
+			if (File.Exists(url))
+			{
+				openDirectoryIndexerSettings.FileName = url;
+			}
+			else
+			{
+				Console.WriteLine($"URL specified: {url}");
 
-                string newUrl = Library.FixUrl(url);
+				string newUrl = Library.FixUrl(url);
 
-                if (newUrl != url)
-                {
-                    Console.WriteLine($"URL fixed    : {newUrl}");
-                }
+				if (newUrl != url)
+				{
+					Console.WriteLine($"URL fixed    : {newUrl}");
+				}
 
-                openDirectoryIndexerSettings.Url = newUrl;
-            }
+				openDirectoryIndexerSettings.Url = newUrl;
+			}
 
-            openDirectoryIndexerSettings.Threads = openDirectoryIndexerSettings.CommandLineOptions.Threads;
-            openDirectoryIndexerSettings.Timeout = openDirectoryIndexerSettings.CommandLineOptions.Timeout;
-            openDirectoryIndexerSettings.Username = openDirectoryIndexerSettings.CommandLineOptions.Username;
-            openDirectoryIndexerSettings.Password = openDirectoryIndexerSettings.CommandLineOptions.Password;
+			openDirectoryIndexerSettings.Threads = openDirectoryIndexerSettings.CommandLineOptions.Threads;
+			openDirectoryIndexerSettings.Timeout = openDirectoryIndexerSettings.CommandLineOptions.Timeout;
+			openDirectoryIndexerSettings.Username = openDirectoryIndexerSettings.CommandLineOptions.Username;
+			openDirectoryIndexerSettings.Password = openDirectoryIndexerSettings.CommandLineOptions.Password;
 
-            if (string.IsNullOrEmpty(openDirectoryIndexerSettings.Username) && string.IsNullOrEmpty(openDirectoryIndexerSettings.Password))
-            {
-                if (Library.GetUriCredentials(new Uri(url), out string username, out string password))
-                {
-                    Console.WriteLine($"Using username '{username}' and password '{password}'");
-                    openDirectoryIndexerSettings.Username = username;
-                    openDirectoryIndexerSettings.Password = password;
-                }
-            }
+			if (string.IsNullOrEmpty(openDirectoryIndexerSettings.Username) && string.IsNullOrEmpty(openDirectoryIndexerSettings.Password))
+			{
+				if (Library.GetUriCredentials(new Uri(url), out string username, out string password))
+				{
+					Console.WriteLine($"Using username '{username}' and password '{password}'");
+					openDirectoryIndexerSettings.Username = username;
+					openDirectoryIndexerSettings.Password = password;
+				}
+			}
 
-            // FTP
-            if (openDirectoryIndexerSettings.Url?.StartsWith(Constants.UriScheme.Ftp) == true || openDirectoryIndexerSettings.Url?.StartsWith(Constants.UriScheme.Ftps) == true)
-            {
-                openDirectoryIndexerSettings.Threads = 6;
-            }
+			// FTP
+			if (openDirectoryIndexerSettings.Url?.StartsWith(Constants.UriScheme.Ftp) == true || openDirectoryIndexerSettings.Url?.StartsWith(Constants.UriScheme.Ftps) == true)
+			{
+				openDirectoryIndexerSettings.Threads = 6;
+			}
 
-            // Translates . and .. etc
-            if (openDirectoryIndexerSettings.CommandLineOptions.OutputFile is not null)
-            {
-                openDirectoryIndexerSettings.CommandLineOptions.OutputFile = Path.GetFullPath(openDirectoryIndexerSettings.CommandLineOptions.OutputFile);
-            }
+			// Translates . and .. etc
+			if (openDirectoryIndexerSettings.CommandLineOptions.OutputFile is not null)
+			{
+				openDirectoryIndexerSettings.CommandLineOptions.OutputFile = Path.GetFullPath(openDirectoryIndexerSettings.CommandLineOptions.OutputFile);
+			}
 
-            OpenDirectoryIndexer openDirectoryIndexer = new OpenDirectoryIndexer(openDirectoryIndexerSettings);
+			OpenDirectoryIndexer openDirectoryIndexer = new OpenDirectoryIndexer(openDirectoryIndexerSettings);
 
-            SetConsoleTitle($"{new Uri(openDirectoryIndexerSettings.Url).Host.Replace("www.", string.Empty)} - {ConsoleTitle}");
+			SetConsoleTitle($"{new Uri(openDirectoryIndexerSettings.Url).Host.Replace("www.", string.Empty)} - {ConsoleTitle}");
 
-            openDirectoryIndexer.StartIndexingAsync();
-            Console.WriteLine("Started indexing!");
+			openDirectoryIndexer.StartIndexingAsync();
+			Console.WriteLine("Started indexing!");
 
-            Command.ShowInfoAndCommands();
-            Command.ProcessConsoleInput(openDirectoryIndexer);
+			Command.ShowInfoAndCommands();
+			Command.ProcessConsoleInput(openDirectoryIndexer);
 
-            await openDirectoryIndexer.IndexingTask;
+			await openDirectoryIndexer.IndexingTask;
 
-            if (!CommandLineOptions.Quit)
-            {
-                Console.WriteLine("Press ESC to exit");
-                Console.ReadKey();
-            }
+			if (!CommandLineOptions.Quit)
+			{
+				Console.WriteLine("Press ESC to exit");
+				Console.ReadKey();
+			}
 
-            return 0;
-        }
+			return 0;
+		}
 
-        public static void SetConsoleTitle(string title)
-        {
-            ConsoleTitle = title;
+		public static void SetConsoleTitle(string title)
+		{
+			ConsoleTitle = title;
 
-            Console.Title = title;
-        }
-    }
+			Console.Title = title;
+		}
+	}
 }
