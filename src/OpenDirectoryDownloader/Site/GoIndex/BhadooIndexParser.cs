@@ -22,9 +22,10 @@ public static class BhadooIndexParser
 {
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private const string FolderMimeType = "application/vnd.google-apps.folder";
-	const string Parser = "BhadooIndex";
-	static readonly RateLimiter RateLimiter = new RateLimiter(1, TimeSpan.FromSeconds(1));
-	static Engine JintEngine { get; set; }
+	private const string Parser = "BhadooIndex";
+	private static readonly RateLimiter RateLimiter = new RateLimiter(1, TimeSpan.FromSeconds(1));
+
+	private static Engine JintEngine { get; set; }
 
 	public static async Task<WebDirectory> ParseIndex(IHtmlDocument htmlDocument, HttpClient httpClient, WebDirectory webDirectory)
 	{
