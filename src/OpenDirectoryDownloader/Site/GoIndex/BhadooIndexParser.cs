@@ -130,6 +130,7 @@ public static class BhadooIndexParser
 			long pageIndex = 0;
 			string nextPageToken = string.Empty;
 			int errors = 0;
+			int maxRetries = 10;
 
 			do
 			{
@@ -208,7 +209,7 @@ public static class BhadooIndexParser
 					}
 				}
 
-				if (errors >= 5)
+				if (errors >= maxRetries)
 				{
 					throw new FriendlyException($"Error retrieving directory listing for {webDirectory.Uri}");
 				}

@@ -131,6 +131,7 @@ public static class Go2IndexParser
 			}
 
 			int retry = 0;
+			int maxRetries = 10;
 			bool error = false;
 
 			do
@@ -211,7 +212,7 @@ public static class Go2IndexParser
 					retry = 0;
 					error = false;
 				} while (!string.IsNullOrWhiteSpace(nextPageToken));
-			} while (error && retry < 5);
+			} while (error && retry < maxRetries);
 
 			webDirectory.Error = false;
 		}
