@@ -10,7 +10,7 @@ namespace OpenDirectoryDownloader.Helpers
     public static class FileSizeHelper
     {
         public static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        
+
         // Parse a file size.
         private static readonly string[][] SizeSuffixes =
         {

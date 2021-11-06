@@ -137,7 +137,7 @@ namespace OpenDirectoryDownloader.Site.GoIndex.GdIndex
             try
             {
                 await RateLimiter.RateLimit();
-                
+
                 if (!webDirectory.Url.EndsWith("/"))
                 {
                     webDirectory.Url += "/";

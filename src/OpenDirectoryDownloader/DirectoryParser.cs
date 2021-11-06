@@ -1617,7 +1617,7 @@ namespace OpenDirectoryDownloader
                         }
 
                         ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
-                        
+
                         bool isFile = listItem.ClassList.Contains("file");
 
                         if (!isFile)
@@ -1666,7 +1666,7 @@ namespace OpenDirectoryDownloader
                 if (IsValidLink(link))
                 {
                     ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
-                    
+
                     bool isFile = !link.QuerySelector("i").ClassList.Contains("fa-folder");
                     UrlEncodingParser urlEncodingParser = new UrlEncodingParser(fullUrl);
 
@@ -1867,7 +1867,7 @@ namespace OpenDirectoryDownloader
             }
 
             CleanFragments(webDirectory);
-            
+
             CleanDynamicEntries(webDirectory);
 
             CheckSymlinks(webDirectory);

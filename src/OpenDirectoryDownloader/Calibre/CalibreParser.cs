@@ -20,7 +20,7 @@ namespace OpenDirectoryDownloader.Calibre
             if (versionString.Contains('/'))
             {
                 string[] splitted = versionString.Split('/');
-                
+
                 return Version.Parse(splitted.Last());
             }
 
@@ -105,7 +105,7 @@ namespace OpenDirectoryDownloader.Calibre
                     {
                         // NOT async, else it will continue with the rest of the code..
                         // TODO: Need a nice fix which respects MaxDegreeOfParallelism
-                        
+
                         //rateLimiter.RateLimit().Wait();
                         GetBookInfo(httpClient, calibreRootUri, library, libraryWebDirectory, book);
 
