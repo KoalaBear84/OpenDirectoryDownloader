@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace OpenDirectoryDownloader
+namespace OpenDirectoryDownloader;
+
+[Serializable]
+internal class SilentException : Exception
 {
-	[Serializable]
-	internal class SilentException : Exception
-	{
-	}
 }

@@ -125,7 +125,9 @@ dotnet_style_qualification_for_field = false:suggestion
 dotnet_style_qualification_for_method = false:suggestion
 #prefer properties not to be prefaced with this. or Me. in Visual Basic
 dotnet_style_qualification_for_property = false:suggestion
-csharp_prefer_simple_using_statement=true:warning
+csharp_prefer_simple_using_statement=false:warning
+
+csharp_style_namespace_declarations = file_scoped:warning
 
 [*.{cs,vb}]
 indent_style=tab

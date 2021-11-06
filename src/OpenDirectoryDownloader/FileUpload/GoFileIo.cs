@@ -7,87 +7,86 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace OpenDirectoryDownloader.FileUpload
+namespace OpenDirectoryDownloader.FileUpload;
+
+public class GoFileIo : IFileUploadSite
 {
-	public class GoFileIo : IFileUploadSite
+	public string Name => "GoFile.io";
+
+	private readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+	public async Task<IFileUploadSiteFile> UploadFile(HttpClient httpClient, string path)
 	{
-		public string Name => "GoFile.io";
+		int retries = 0;
+		int maxRetries = 5;
 
-		private readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
-		public async Task<IFileUploadSiteFile> UploadFile(HttpClient httpClient, string path)
+		while (retries < maxRetries)
 		{
-			int retries = 0;
-			int maxRetries = 5;
-
-			while (retries < maxRetries)
+			try
 			{
-				try
+				string jsonServer = await httpClient.GetStringAsync("https://apiv2.gofile.io/getServer");
+
+				JObject result = JObject.Parse(jsonServer);
+
+				if (result["status"].Value<string>() == "error")
 				{
-					string jsonServer = await httpClient.GetStringAsync("https://apiv2.gofile.io/getServer");
+					throw new Exception("GoFile.io error, probably in maintenance");
+				}
 
-					JObject result = JObject.Parse(jsonServer);
+				string server = result.SelectToken("data.server").Value<string>();
 
-					if (result["status"].Value<string>() == "error")
+				using (MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent($"Upload----{Guid.NewGuid()}"))
+				{
+					multipartFormDataContent.Add(new StreamContent(new FileStream(path, FileMode.Open)), "file", Path.GetFileName(path));
+
+					using (HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"https://{server}.gofile.io/uploadFile", multipartFormDataContent))
 					{
-						throw new Exception("GoFile.io error, probably in maintenance");
-					}
-
-					string server = result.SelectToken("data.server").Value<string>();
-
-					using (MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent($"Upload----{Guid.NewGuid()}"))
-					{
-						multipartFormDataContent.Add(new StreamContent(new FileStream(path, FileMode.Open)), "file", Path.GetFileName(path));
-
-						using (HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"https://{server}.gofile.io/uploadFile", multipartFormDataContent))
+						if (httpResponseMessage.IsSuccessStatusCode)
 						{
-							if (httpResponseMessage.IsSuccessStatusCode)
-							{
-								string response = await httpResponseMessage.Content.ReadAsStringAsync();
+							string response = await httpResponseMessage.Content.ReadAsStringAsync();
 
-								Logger.Debug($"Response from GoFile.io: {response}");
+							Logger.Debug($"Response from GoFile.io: {response}");
 
-								return JsonConvert.DeserializeObject<GoFileIoFile>(response);
-							}
-							else
-							{
-								Logger.Error($"Error uploading file... Retry in 5 seconds!!!");
-								await Task.Delay(TimeSpan.FromSeconds(5));
-							}
+							return JsonConvert.DeserializeObject<GoFileIoFile>(response);
+						}
+						else
+						{
+							Logger.Error($"Error uploading file... Retry in 5 seconds!!!");
+							await Task.Delay(TimeSpan.FromSeconds(5));
 						}
 					}
+				}
 
-					retries++;
-				}
-				catch (Exception)
-				{
-					retries++;
-					Logger.Error($"Error uploading file... Retry in 5 seconds!!!");
-					await Task.Delay(TimeSpan.FromSeconds(5));
-				}
+				retries++;
 			}
-
-			throw new FriendlyException("Error uploading URLs");
+			catch (Exception)
+			{
+				retries++;
+				Logger.Error($"Error uploading file... Retry in 5 seconds!!!");
+				await Task.Delay(TimeSpan.FromSeconds(5));
+			}
 		}
+
+		throw new FriendlyException("Error uploading URLs");
 	}
+}
 
-	public class GoFileIoFile : IFileUploadSiteFile
-	{
-		public string Url { get => $"https://gofile.io/?c={Data.Code}"; }
+public class GoFileIoFile : IFileUploadSiteFile
+{
+	public string Url => $"https://gofile.io/?c={Data.Code}";
 
-		[JsonProperty("status")]
-		public string Status { get; set; }
+	[JsonProperty("status")]
+	public string Status { get; set; }
 
-		[JsonProperty("data")]
-		public GoFileIoFileData Data { get; set; }
-	}
+	[JsonProperty("data")]
+	public GoFileIoFileData Data { get; set; }
+}
 
-	public class GoFileIoFileData
-	{
-		[JsonProperty("code")]
-		public string Code { get; set; }
+public class GoFileIoFileData
+{
+	[JsonProperty("code")]
+	public string Code { get; set; }
 
-		[JsonProperty("removalCode")]
-		public string RemovalCode { get; set; }
-	}
+	[JsonProperty("removalCode")]
+	public string RemovalCode { get; set; }
 }

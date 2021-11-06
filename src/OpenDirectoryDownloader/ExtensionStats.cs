@@ -1,8 +1,7 @@
-﻿namespace OpenDirectoryDownloader
+﻿namespace OpenDirectoryDownloader;
+
+public class ExtensionStats
 {
-	public class ExtensionStats
-	{
-		public int Count { get; set; }
-		public long FileSize { get; set; }
-	}
+	public int Count { get; set; }
+	public long FileSize { get; set; }
 }
