@@ -39,7 +39,6 @@ public static class BhadooIndexParser
 
 				Console.WriteLine("Check if password is needed (unsupported currently)...");
 				Logger.Info("Check if password is needed (unsupported currently)...");
-				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] = "@ttu001";
 
 				Dictionary<string, string> postValues = new Dictionary<string, string>
 				{
@@ -219,7 +218,7 @@ public static class BhadooIndexParser
 									{
 										Parser = Parser,
 										// Yes, string concatenation, do not use new Uri(webDirectory.Uri, file.Name), because things could end with a space...
-										Url = $"{webDirectory.Uri}{file.Name}/",
+										Url = $"{webDirectory.Uri}{file.Name.Replace("#", "%23")}/",
 										Name = file.Name
 									});
 								}
