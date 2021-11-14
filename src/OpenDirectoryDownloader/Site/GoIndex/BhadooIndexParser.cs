@@ -116,7 +116,7 @@ public static class BhadooIndexParser
 
 				if (Obfuscated)
 				{
-					Func<string, string> atob = str => Encoding.UTF8.GetString(Convert.FromBase64String(str));
+					Func<string, string> atob = str => Encoding.ASCII.GetString(Convert.FromBase64String(str));
 					JintEngine.SetValue("atob", atob);
 
 					JintEngine.Execute(functions.FirstOrDefault(f => f.Name == "gdidecode").Body);
