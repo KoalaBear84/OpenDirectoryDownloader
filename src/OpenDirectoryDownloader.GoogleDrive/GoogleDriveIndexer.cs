@@ -24,6 +24,7 @@ public static class GoogleDriveIndexer
 	static readonly DriveService DriveService;
 	static readonly string ApplicationName = "OpenDirectoryDownloader";
 	const string FolderMimeType = "application/vnd.google-apps.folder";
+	const string ShortcutMimeType = "application/vnd.google-apps.shortcut";
 	static readonly RateLimiter RateLimiter = new RateLimiter(900, TimeSpan.FromSeconds(100), 0.9d);
 
 	static GoogleDriveIndexer()
@@ -84,20 +85,23 @@ public static class GoogleDriveIndexer
 					listRequest.PageSize = 1000;
 					listRequest.Q = $"'{folderId}' in parents";
 					listRequest.PageToken = nextPageToken;
-					listRequest.Fields = "nextPageToken, files(id, name, mimeType, size)";
+					listRequest.Fields = "nextPageToken, files(id, name, mimeType, size, shortcutDetails)";
 					listRequest.IncludeItemsFromAllDrives = true;
 					listRequest.SupportsAllDrives = true;
 					Google.Apis.Drive.v3.Data.FileList fileList = await listRequest.ExecuteAsync();
 
-					foreach (Google.Apis.Drive.v3.Data.File file in fileList.Files.OrderByDescending(f => f.MimeType == FolderMimeType).ThenBy(f => f.Name))
+					foreach (Google.Apis.Drive.v3.Data.File file in fileList.Files.OrderByDescending(f => f.MimeType == FolderMimeType || f.MimeType == ShortcutMimeType).ThenBy(f => f.Name))
 					{
-						bool isFile = file.MimeType != FolderMimeType;
+						string mimeType = file.ShortcutDetails?.TargetMimeType ?? file.MimeType;
+						string id = file.ShortcutDetails?.TargetId ?? file.Id;
+
+						bool isFile = mimeType != FolderMimeType;
 
 						if (!isFile)
 						{
 							webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
 							{
-								Url = $"https://drive.google.com/drive/folders/{file.Id}",
+								Url = $"https://drive.google.com/drive/folders/{id}",
 								Name = file.Name
 							});
 						}
@@ -105,7 +109,7 @@ public static class GoogleDriveIndexer
 						{
 							webDirectory.Files.Add(new WebFile
 							{
-								Url = $"https://drive.google.com/uc?export=download&id={file.Id}",
+								Url = $"https://drive.google.com/uc?export=download&id={id}",
 								FileName = file.Name,
 								FileSize = file.Size ?? 0
 							});
