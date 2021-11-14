@@ -26,6 +26,7 @@ public static class BhadooIndexParser
 	private static readonly RateLimiter RateLimiter = new RateLimiter(1, TimeSpan.FromSeconds(1));
 
 	private static Engine JintEngine { get; set; }
+	private static bool Obfuscated { get; set; }
 
 	public static async Task<WebDirectory> ParseIndex(IHtmlDocument htmlDocument, HttpClient httpClient, WebDirectory webDirectory)
 	{
@@ -41,12 +42,13 @@ public static class BhadooIndexParser
 				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] = "@ttu001";
 
 				Dictionary<string, string> postValues = new Dictionary<string, string>
-					{
-						{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
-						{ "page_token", string.Empty },
-						{ "page_index", "0" },
-						{ "q", "" }
-					};
+				{
+					{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
+					{ "page_token", string.Empty },
+					{ "page_index", "0" },
+					{ "q", "" }
+				};
+
 				HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, webDirectory.Uri) { Content = new FormUrlEncodedContent(postValues) };
 				HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
@@ -96,17 +98,42 @@ public static class BhadooIndexParser
 		{
 			if (JintEngine == null)
 			{
-				IHtmlScriptElement appJsScript = htmlDocument.Scripts.FirstOrDefault(s => s.Source?.Contains("app.js") == true || s.Source?.Contains("app.min.js") == true);
-				string appJsSource = await httpClient.GetStringAsync(appJsScript.Source);
+				IHtmlScriptElement appJsScript = htmlDocument.Scripts.FirstOrDefault(s =>
+					s.Source?.Contains("app.js") == true ||
+					s.Source?.Contains("app.min.js") == true ||
+					s.Source?.Contains("app.obf.js") == true ||
+					s.Source?.Contains("app.obf.min.js") == true
+				);
+
+				Obfuscated = appJsScript.Source.Contains("obf.");
+
+				string appJsSource = await httpClient.GetStringAsync(appJsScript.Source.Replace("obf.", string.Empty));
 				List<JavaScriptHelper.Function> functions = JavaScriptHelper.Parse(appJsSource);
-				JavaScriptHelper.Function readFunction = functions.FirstOrDefault(f => f.Name == "read");
 
 				JintEngine = new Engine();
-				JintEngine.Execute(readFunction.Body);
+
+				JintEngine.Execute(functions.FirstOrDefault(f => f.Name == "read").Body);
+
+				if (Obfuscated)
+				{
+					Func<string, string> atob = str => Encoding.UTF8.GetString(Convert.FromBase64String(str));
+					JintEngine.SetValue("atob", atob);
+
+					JintEngine.Execute(functions.FirstOrDefault(f => f.Name == "gdidecode").Body);
+				}
 			}
 
 			JsValue jsValue = JintEngine.Invoke("read", responseString);
-			responseJson = Encoding.UTF8.GetString(Convert.FromBase64String(jsValue.ToString()));
+
+			if (Obfuscated)
+			{
+				jsValue = JintEngine.Invoke("gdidecode", jsValue.ToString());
+				responseJson = jsValue.ToString();
+			}
+			else
+			{
+				responseJson = Encoding.UTF8.GetString(Convert.FromBase64String(jsValue.ToString()));
+			}
 		}
 
 		return responseJson;
@@ -137,11 +164,12 @@ public static class BhadooIndexParser
 				Logger.Warn($"Retrieving listings for {webDirectory.Uri}, page {pageIndex + 1}");
 
 				Dictionary<string, string> postValues = new Dictionary<string, string>
-					{
-						{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
-						{ "page_token", nextPageToken },
-						{ "page_index", pageIndex.ToString() }
-					};
+				{
+					{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
+					{ "page_token", nextPageToken },
+					{ "page_index", pageIndex.ToString() }
+				};
+
 				HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, webDirectory.Uri) { Content = new FormUrlEncodedContent(postValues) };
 				HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 

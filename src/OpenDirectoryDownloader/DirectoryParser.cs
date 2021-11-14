@@ -88,7 +88,8 @@ public static class DirectoryParser
 				htmlDocument.QuerySelector("script[src*=\"/sawankumar/Google-Drive-Index-III\" i]") != null ||
 				htmlDocument.QuerySelector("script[src*=\"/goIndex-theme-nexmoe\" i]") != null ||
                 htmlDocument.QuerySelector("script[src*=\"/cheems/GDIndex\" i]") != null ||
-                htmlDocument.QuerySelector("script[src*=\"/cheems/goindex-extended\" i]") != null)
+                htmlDocument.QuerySelector("script[src*=\"/cheems/goindex-extended\" i]") != null ||
+                htmlDocument.QuerySelector("script[src*=\"/@googledrive/index\" i]") != null)
 			{
 				return await BhadooIndexParser.ParseIndex(htmlDocument, httpClient, webDirectory);
 			}

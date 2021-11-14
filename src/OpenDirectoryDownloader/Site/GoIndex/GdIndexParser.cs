@@ -63,12 +63,12 @@ public static class GdIndexParser
 						Logger.Info($"Using password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}");
 
 						httpResponseMessage = await httpClient.PostAsync($"{webDirectory.Uri}?rootId={rootId}", new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
-							{
-								{ "page_index", 0 },
-								{ "page_token", null },
-								{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
-								{ "q", "" }
-							})));
+						{
+							{ "page_index", 0 },
+							{ "page_token", null },
+							{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
+							{ "q", "" }
+						})));
 
 						if (httpResponseMessage.IsSuccessStatusCode)
 						{
