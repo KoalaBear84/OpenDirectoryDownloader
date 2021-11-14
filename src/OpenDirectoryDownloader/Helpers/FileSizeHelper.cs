@@ -14,7 +14,7 @@ public static class FileSizeHelper
 	// Parse a file size.
 	private static readonly string[][] SizeSuffixes =
 	{
-			new string[] { "BYTES", "B", "OCTETS", "OCTET" },
+			new string[] { "BYTES", "BYTE", "B", "OCTETS", "OCTET" },
 			new string[] { "KB", "K", "KIB", "KO" },
 			new string[] { "MB", "M", "MIB", "MO" },
 			new string[] { "GB", "G", "GIB", "GO" },

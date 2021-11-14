@@ -18,6 +18,7 @@ public class FileSizeHelperTests
 	[Fact]
 	public void Test01()
 	{
+		Assert.Equal(114, FileSizeHelper.ParseFileSize("114 Byte"));
 		Assert.Equal(1234567, FileSizeHelper.ParseFileSize("1234567 bytes"));
 		Assert.Equal(KB, FileSizeHelper.ParseFileSize("1 kB"));
 		Assert.Equal(KB, FileSizeHelper.ParseFileSize("1 kiB"));

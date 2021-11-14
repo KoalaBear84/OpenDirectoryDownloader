@@ -670,4 +670,34 @@ public class DirectoryParser101_125Tests : DirectoryParserTests
 		Assert.Equal("SPECTACULATOR80.ZIP", webDirectory.Files[0].FileName);
 		Assert.Equal(4789380, webDirectory.Files[0].FileSize);
 	}
+
+	/// <summary>
+	/// Url: https://www.peak-system.com/produktcd/
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing125aAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Equal("ROOT", webDirectory.Name);
+		Assert.Equal(7, webDirectory.Subdirectories.Count);
+		Assert.Equal("Catalogs", webDirectory.Subdirectories[0].Name);
+		Assert.Empty(webDirectory.Files);
+	}
+
+	/// <summary>
+	/// Url: https://www.peak-system.com/produktcd/?dir=./Develop
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing125bAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Equal("ROOT", webDirectory.Name);
+		Assert.Equal(2, webDirectory.Subdirectories.Count);
+		Assert.Equal("Microcontroller hardware", webDirectory.Subdirectories[0].Name);
+		Assert.Single(webDirectory.Files);
+		Assert.Equal("PEAK-System_EULA_for free of charge software_files.txt", webDirectory.Files[0].FileName);
+		Assert.Equal(6144, webDirectory.Files[0].FileSize);
+	}
 }
