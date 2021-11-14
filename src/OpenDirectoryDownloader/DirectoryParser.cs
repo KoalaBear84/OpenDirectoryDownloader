@@ -87,9 +87,9 @@ public static class DirectoryParser
 				htmlDocument.QuerySelector("script[src*=\"/Virusia/Fia-Terminal\" i]") != null ||
 				htmlDocument.QuerySelector("script[src*=\"/sawankumar/Google-Drive-Index-III\" i]") != null ||
 				htmlDocument.QuerySelector("script[src*=\"/goIndex-theme-nexmoe\" i]") != null ||
-                htmlDocument.QuerySelector("script[src*=\"/cheems/GDIndex\" i]") != null ||
-                htmlDocument.QuerySelector("script[src*=\"/cheems/goindex-extended\" i]") != null ||
-                htmlDocument.QuerySelector("script[src*=\"/@googledrive/index\" i]") != null)
+				htmlDocument.QuerySelector("script[src*=\"/cheems/GDIndex\" i]") != null ||
+				htmlDocument.QuerySelector("script[src*=\"/cheems/goindex-extended\" i]") != null ||
+				htmlDocument.QuerySelector("script[src*=\"/@googledrive/index\" i]") != null)
 			{
 				return await BhadooIndexParser.ParseIndex(htmlDocument, httpClient, webDirectory);
 			}
@@ -106,12 +106,12 @@ public static class DirectoryParser
 				return await GoIndexParser.ParseIndex(httpClient, webDirectory);
 			}
 
-            if (htmlDocument.QuerySelector("script[src*=\"gdindex\" i]") != null)
-            {
-                return await GdIndexParser.ParseIndex(httpClient, webDirectory, html);
-            }
-            
-            htmlDocument.QuerySelectorAll("#sidebar").ToList().ForEach(e => e.Remove());
+			if (htmlDocument.QuerySelector("script[src*=\"gdindex\" i]") != null)
+			{
+				return await GdIndexParser.ParseIndex(httpClient, webDirectory, html);
+			}
+
+			htmlDocument.QuerySelectorAll("#sidebar").ToList().ForEach(e => e.Remove());
 			htmlDocument.QuerySelectorAll("nav").ToList().ForEach(e => e.Remove());
 
 			// The order of the checks is very important!
@@ -185,6 +185,18 @@ public static class DirectoryParser
 				return parsedJavaScriptDrawn;
 			}
 
+			IHtmlCollection<IElement> listItems = htmlDocument.QuerySelectorAll("ul#root li");
+
+			if (listItems.Any())
+			{
+				WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems, checkParents);
+
+				if (result.ParsedSuccessfully || result.Error)
+				{
+					return result;
+				}
+			}
+
 			IHtmlCollection<IElement> tables = htmlDocument.QuerySelectorAll("table");
 
 			if (tables.Any())
@@ -209,7 +221,7 @@ public static class DirectoryParser
 				return ParseDirectoryListerDirectoryListing(baseUrl, parsedWebDirectory, htmlDocument, checkParents);
 			}
 
-			IHtmlCollection<IElement> listItems = htmlDocument.QuerySelectorAll(".list-group li");
+			listItems = htmlDocument.QuerySelectorAll(".list-group li");
 
 			if (listItems.Any())
 			{
@@ -287,13 +299,17 @@ public static class DirectoryParser
 				// Remove possible file part (index.php) from url
 				if (!string.IsNullOrWhiteSpace(Path.GetFileName(WebUtility.UrlDecode(baseUrl))))
 				{
-					baseUrl = new Uri(baseUrl.Replace(new Uri(baseUrl).PathAndQuery, string.Empty)).ToString();
+					UrlEncodingParser urlEncodingParser = new UrlEncodingParser(baseUrl);
+					urlEncodingParser.AllKeys.ToList().ForEach(key => urlEncodingParser.Remove(key));
+					baseUrl = urlEncodingParser.ToString();
+
+					baseUrl = new Uri(baseUrl.Replace(Path.GetFileName(new Uri(baseUrl).AbsolutePath), string.Empty)).ToString();
 				}
 
 				parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
 				{
 					Parser = "ParseJavaScriptDrawn",
-					Url = baseUrl + WebUtility.UrlDecode(Uri.UnescapeDataString(directory.Groups["Link"].Value)),
+					Url = baseUrl + directory.Groups["Link"].Value,
 					Name = Uri.UnescapeDataString(directory.Groups["DirectoryName"].Value)
 				});
 			}
@@ -1107,8 +1123,8 @@ public static class DirectoryParser
 							Parser = "RegexParser3",
 							Url = fullUrl,
 							Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last())),
-								//Description = match.Groups["Description"].Value.Trim()
-							});
+							//Description = match.Groups["Description"].Value.Trim()
+						});
 					}
 					else
 					{
@@ -1119,8 +1135,8 @@ public static class DirectoryParser
 								Url = fullUrl,
 								FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
 								FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
-									//Description = match.Groups["Description"].Value.Trim()
-								});
+								//Description = match.Groups["Description"].Value.Trim()
+							});
 						}
 						catch (Exception ex)
 						{
@@ -1162,8 +1178,8 @@ public static class DirectoryParser
 							Parser = "RegexParser4",
 							Url = fullUrl,
 							Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last())),
-								//Description = match.Groups["Description"].Value.Trim()
-							});
+							//Description = match.Groups["Description"].Value.Trim()
+						});
 					}
 					else
 					{
@@ -1174,8 +1190,8 @@ public static class DirectoryParser
 								Url = fullUrl,
 								FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
 								FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
-									//Description = match.Groups["Description"].Value.Trim()
-								});
+								//Description = match.Groups["Description"].Value.Trim()
+							});
 						}
 						catch (Exception ex)
 						{
@@ -1217,8 +1233,8 @@ public static class DirectoryParser
 							Parser = "RegexParser5",
 							Url = fullUrl,
 							Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last())),
-								//Description = match.Groups["Description"].Value.Trim()
-							});
+							//Description = match.Groups["Description"].Value.Trim()
+						});
 					}
 					else
 					{
@@ -1229,8 +1245,8 @@ public static class DirectoryParser
 								Url = fullUrl,
 								FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
 								FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
-									//Description = match.Groups["Description"].Value.Trim()
-								});
+								//Description = match.Groups["Description"].Value.Trim()
+							});
 						}
 						catch (Exception ex)
 						{
@@ -1273,8 +1289,8 @@ public static class DirectoryParser
 							Parser = "RegexParser6",
 							Url = fullUrl,
 							Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last())),
-								//Description = match.Groups["Description"].Value.Trim()
-							});
+							//Description = match.Groups["Description"].Value.Trim()
+						});
 					}
 					else
 					{
@@ -1285,8 +1301,8 @@ public static class DirectoryParser
 								Url = fullUrl,
 								FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
 								FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
-									//Description = match.Groups["Description"].Value.Trim()
-								});
+								//Description = match.Groups["Description"].Value.Trim()
+							});
 						}
 						catch (Exception ex)
 						{
@@ -1336,9 +1352,9 @@ public static class DirectoryParser
 
 							if (fileSize.StartsWith("-"))
 							{
-									// If filesize is negative, it will be 4GB minus the amount of bytes (without the - sign),
-									// but this will only work for when it is between 2 and 4 GB, so skip it
-									fileSize = string.Empty;
+								// If filesize is negative, it will be 4GB minus the amount of bytes (without the - sign),
+								// but this will only work for when it is between 2 and 4 GB, so skip it
+								fileSize = string.Empty;
 							}
 
 							webDirectory.Files.Add(new WebFile
@@ -1715,6 +1731,8 @@ public static class DirectoryParser
 	{
 		bool firstLink = true;
 
+		Regex regex = new Regex(@"Size: (?<Size>\d+(\.\d+)? \S+)");
+
 		foreach (IElement listItem in listItems)
 		{
 			if (firstLink)
@@ -1731,7 +1749,16 @@ public static class DirectoryParser
 
 			if (link != null)
 			{
-				ProcessLink(baseUrl, parsedWebDirectory, link, "ParseListItemsDirectoryListing");
+				Match regexMatch = regex.Match(listItem.TextContent);
+
+				if (regexMatch.Success)
+				{
+					ProcessLink(baseUrl, parsedWebDirectory, link, "ParseListItemsDirectoryListing", regexMatch.Groups["Size"].Value);
+				}
+				else
+				{
+					ProcessLink(baseUrl, parsedWebDirectory, link, "ParseListItemsDirectoryListing");
+				}
 			}
 		}
 
@@ -1752,7 +1779,7 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static void ProcessLink(string baseUrl, WebDirectory parsedWebDirectory, IElement link, string parser)
+	private static void ProcessLink(string baseUrl, WebDirectory parsedWebDirectory, IElement link, string parser, string sizeHint = null)
 	{
 		if (link.HasAttribute("href"))
 		{
@@ -1790,6 +1817,11 @@ public static class DirectoryParser
 						if (link.ParentElement.NodeName != "BODY")
 						{
 							fileSize = FileSizeHelper.ParseFileSize(link.ParentElement?.QuerySelector(".fileSize")?.TextContent);
+						}
+
+						if (sizeHint != null)
+						{
+							fileSize = FileSizeHelper.ParseFileSize(sizeHint);
 						}
 
 						string fileName = Path.GetFileName(WebUtility.UrlDecode(linkHref));
