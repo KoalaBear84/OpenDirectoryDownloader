@@ -24,7 +24,7 @@ public static class BhadooIndexParser
 	private const string FolderMimeType = "application/vnd.google-apps.folder";
 	private const string Parser = "BhadooIndex";
 	private static readonly RateLimiter RateLimiter = new RateLimiter(1, TimeSpan.FromSeconds(1));
-
+	private static readonly object DecodeResponseLock = new object();
 	private static Engine JintEngine { get; set; }
 	private static bool Obfuscated { get; set; }
 
@@ -96,43 +96,46 @@ public static class BhadooIndexParser
 		}
 		else
 		{
-			if (JintEngine == null)
+			lock (DecodeResponseLock)
 			{
-				IHtmlScriptElement appJsScript = htmlDocument.Scripts.FirstOrDefault(s =>
-					s.Source?.Contains("app.js") == true ||
-					s.Source?.Contains("app.min.js") == true ||
-					s.Source?.Contains("app.obf.js") == true ||
-					s.Source?.Contains("app.obf.min.js") == true
-				);
+				if (JintEngine == null)
+				{
+					IHtmlScriptElement appJsScript = htmlDocument.Scripts.FirstOrDefault(s =>
+						s.Source?.Contains("app.js") == true ||
+						s.Source?.Contains("app.min.js") == true ||
+						s.Source?.Contains("app.obf.js") == true ||
+						s.Source?.Contains("app.obf.min.js") == true
+					);
 
-				Obfuscated = appJsScript.Source.Contains("obf.");
+					Obfuscated = appJsScript.Source.Contains("obf.");
 
-				string appJsSource = await httpClient.GetStringAsync(appJsScript.Source.Replace("obf.", string.Empty));
-				List<JavaScriptHelper.Function> functions = JavaScriptHelper.Parse(appJsSource);
+					string appJsSource = httpClient.GetStringAsync(appJsScript.Source.Replace("obf.", string.Empty)).GetAwaiter().GetResult();
+					List<JavaScriptHelper.Function> functions = JavaScriptHelper.Parse(appJsSource);
 
-				JintEngine = new Engine();
+					JintEngine = new Engine();
 
-				JintEngine.Execute(functions.FirstOrDefault(f => f.Name == "read").Body);
+					JintEngine.Execute(functions.FirstOrDefault(f => f.Name == "read").Body);
+
+					if (Obfuscated)
+					{
+						Func<string, string> atob = str => Encoding.ASCII.GetString(Convert.FromBase64String(str));
+						JintEngine.SetValue("atob", atob);
+
+						JintEngine.Execute(functions.FirstOrDefault(f => f.Name == "gdidecode").Body);
+					}
+				}
+
+				JsValue jsValue = JintEngine.Invoke("read", responseString);
 
 				if (Obfuscated)
 				{
-					Func<string, string> atob = str => Encoding.ASCII.GetString(Convert.FromBase64String(str));
-					JintEngine.SetValue("atob", atob);
-
-					JintEngine.Execute(functions.FirstOrDefault(f => f.Name == "gdidecode").Body);
+					jsValue = JintEngine.Invoke("gdidecode", jsValue.ToString());
+					responseJson = jsValue.ToString();
 				}
-			}
-
-			JsValue jsValue = JintEngine.Invoke("read", responseString);
-
-			if (Obfuscated)
-			{
-				jsValue = JintEngine.Invoke("gdidecode", jsValue.ToString());
-				responseJson = jsValue.ToString();
-			}
-			else
-			{
-				responseJson = Encoding.UTF8.GetString(Convert.FromBase64String(jsValue.ToString()));
+				else
+				{
+					responseJson = Encoding.UTF8.GetString(Convert.FromBase64String(jsValue.ToString()));
+				}
 			}
 		}
 
@@ -177,63 +180,74 @@ public static class BhadooIndexParser
 				{
 					Logger.Warn("Directory listing retrieval error (HTTP Error), waiting 10 seconds..");
 					errors++;
+					RateLimiter.AddDelay(TimeSpan.FromSeconds(10));
 					await Task.Delay(TimeSpan.FromSeconds(10));
-					await RateLimiter.RateLimit();
 				}
 				else
 				{
 					webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
 					httpResponseMessage.EnsureSuccessStatusCode();
 
-					string responseJson = await DecodeResponse(htmlDocument, httpClient, httpResponseMessage);
-
-					BhadooIndexResponse indexResponse = BhadooIndexResponse.FromJson(responseJson);
-
-					webDirectory.ParsedSuccessfully = indexResponse.Data.Error == null;
-
-					if (indexResponse.Data.Error?.Message == "Rate Limit Exceeded")
+					try
 					{
-						Logger.Warn("Rate limit exceeded, waiting 10 seconds..");
-						errors++;
-						await Task.Delay(TimeSpan.FromSeconds(10));
-					}
-					else
-					{
-						if (indexResponse.Data.Files == null)
+						string responseJson = await DecodeResponse(htmlDocument, httpClient, httpResponseMessage);
+
+						BhadooIndexResponse indexResponse = BhadooIndexResponse.FromJson(responseJson);
+
+						webDirectory.ParsedSuccessfully = indexResponse.Data.Error == null;
+
+						if (indexResponse.Data.Error?.Message == "Rate Limit Exceeded")
 						{
-							Logger.Warn("Directory listing retrieval error (Files null), waiting 10 seconds..");
+							Logger.Warn("Rate limit exceeded, waiting 10 seconds..");
 							errors++;
+							RateLimiter.AddDelay(TimeSpan.FromSeconds(10));
 							await Task.Delay(TimeSpan.FromSeconds(10));
 						}
 						else
 						{
-							errors = 0;
-							nextPageToken = indexResponse.NextPageToken;
-							pageIndex = indexResponse.CurPageIndex + 1;
-
-							foreach (File file in indexResponse.Data.Files)
+							if (indexResponse.Data.Files == null)
 							{
-								if (file.MimeType == FolderMimeType)
+								Logger.Warn("Directory listing retrieval error (Files null), waiting 10 seconds..");
+								errors++;
+								await Task.Delay(TimeSpan.FromSeconds(10));
+							}
+							else
+							{
+								errors = 0;
+								nextPageToken = indexResponse.NextPageToken;
+								pageIndex = indexResponse.CurPageIndex + 1;
+
+								foreach (File file in indexResponse.Data.Files)
 								{
-									webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+									if (file.MimeType == FolderMimeType)
 									{
-										Parser = Parser,
-										// Yes, string concatenation, do not use new Uri(webDirectory.Uri, file.Name), because things could end with a space...
-										Url = $"{webDirectory.Uri}{GetSafeName(file.Name)}/",
-										Name = file.Name
-									});
-								}
-								else
-								{
-									webDirectory.Files.Add(new WebFile
+										webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+										{
+											Parser = Parser,
+											// Yes, string concatenation, do not use new Uri(webDirectory.Uri, file.Name), because things could end with a space...
+											Url = $"{webDirectory.Uri}{GetSafeName(file.Name)}/",
+											Name = file.Name
+										});
+									}
+									else
 									{
-										Url = new Uri(webDirectory.Uri, GetSafeName(file.Name)).ToString(),
-										FileName = file.Name,
-										FileSize = file.Size
-									});
+										webDirectory.Files.Add(new WebFile
+										{
+											Url = new Uri(webDirectory.Uri, GetSafeName(file.Name)).ToString(),
+											FileName = file.Name,
+											FileSize = file.Size
+										});
+									}
 								}
 							}
 						}
+					}
+					catch (Exception ex)
+					{
+						Logger.Warn("Error decoding response, waiting 10 seconds..");
+						errors++;
+						RateLimiter.AddDelay(TimeSpan.FromSeconds(10));
+						await Task.Delay(TimeSpan.FromSeconds(10));
 					}
 				}
 
