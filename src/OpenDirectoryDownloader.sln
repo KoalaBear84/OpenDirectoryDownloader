@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28407.52
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31710.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenDirectoryDownloader", "OpenDirectoryDownloader\OpenDirectoryDownloader.csproj", "{A49A2E04-B420-4537-8751-9F68DF5D95D2}"
 EndProject
@@ -10,6 +10,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenDirectoryDownloader.GoogleDrive", "OpenDirectoryDownloader.GoogleDrive\OpenDirectoryDownloader.GoogleDrive.csproj", "{2597909A-6ABF-4E12-9ED8-D397C7491074}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenDirectoryDownloader.Shared", "OpenDirectoryDownloader.Shared\OpenDirectoryDownloader.Shared.csproj", "{91094D09-A834-4513-A857-44C569C56BA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D9202343-A25F-4BD5-9AC2-F15574F06F6D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -9,192 +9,191 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OpenDirectoryDownloader.Calibre
+namespace OpenDirectoryDownloader.Calibre;
+
+public static class CalibreParser
 {
-    public static class CalibreParser
-    {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public static Version ParseVersion(string versionString)
-        {
-            if (versionString.Contains('/'))
-            {
-                string[] splitted = versionString.Split('/');
-                
-                return Version.Parse(splitted.Last());
-            }
+	public static Version ParseVersion(string versionString)
+	{
+		if (versionString.Contains('/'))
+		{
+			string[] splitted = versionString.Split('/');
 
-            if (versionString.Contains(' '))
-            {
-                string[] splitted = versionString.Split(' ');
+			return Version.Parse(splitted.Last());
+		}
 
-                return Version.Parse(splitted.Last());
-            }
+		if (versionString.Contains(' '))
+		{
+			string[] splitted = versionString.Split(' ');
 
-            return Version.Parse(versionString);
-        }
+			return Version.Parse(splitted.Last());
+		}
 
-        public static async Task ParseCalibre(HttpClient httpClient, Uri calibreRootUri, WebDirectory webDirectory, Version version, CancellationToken cancellationToken)
-        {
-            try
-            {
-                Console.WriteLine("Retrieving libraries...");
-                Logger.Info("Retrieving libraries...");
+		return Version.Parse(versionString);
+	}
 
-                if (version.Major < 3)
-                {
-                    Console.WriteLine($"Calibre {version} is not supported..");
-                    return;
-                }
+	public static async Task ParseCalibre(HttpClient httpClient, Uri calibreRootUri, WebDirectory webDirectory, Version version, CancellationToken cancellationToken)
+	{
+		try
+		{
+			Console.WriteLine("Retrieving libraries...");
+			Logger.Info("Retrieving libraries...");
 
-                HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(new Uri(calibreRootUri, "./interface-data/update"), cancellationToken);
-                httpResponseMessage.EnsureSuccessStatusCode();
+			if (version.Major < 3)
+			{
+				Console.WriteLine($"Calibre {version} is not supported..");
+				return;
+			}
 
-                string updateResultJson = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
+			HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(new Uri(calibreRootUri, "./interface-data/update"), cancellationToken);
+			httpResponseMessage.EnsureSuccessStatusCode();
 
-                CalibreUpdate.CalibreUpdate calibreUpdate = CalibreUpdate.CalibreUpdate.FromJson(updateResultJson);
+			string updateResultJson = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
 
-                Console.WriteLine($"Retrieved {calibreUpdate.LibraryMap.Count} libraries");
-                Logger.Info($"Retrieved {calibreUpdate.LibraryMap.Count} libraries");
+			CalibreUpdate.CalibreUpdate calibreUpdate = CalibreUpdate.CalibreUpdate.FromJson(updateResultJson);
 
-                foreach (KeyValuePair<string, string> library in calibreUpdate.LibraryMap)
-                {
-                    Console.WriteLine($"Retrieving metadata of books for library {library.Value}...");
-                    Logger.Info($"Retrieving metadata of books for library {library.Value}...");
+			Console.WriteLine($"Retrieved {calibreUpdate.LibraryMap.Count} libraries");
+			Logger.Info($"Retrieved {calibreUpdate.LibraryMap.Count} libraries");
 
-                    WebDirectory libraryWebDirectory = new WebDirectory(webDirectory)
-                    {
-                        Url = $"{calibreRootUri}/#library_id={library.Key}&panel=book_list",
-                        Name = library.Value,
-                        Parser = "Calibre"
-                    };
+			foreach (KeyValuePair<string, string> library in calibreUpdate.LibraryMap)
+			{
+				Console.WriteLine($"Retrieving metadata of books for library {library.Value}...");
+				Logger.Info($"Retrieving metadata of books for library {library.Value}...");
 
-                    webDirectory.Subdirectories.Add(libraryWebDirectory);
+				WebDirectory libraryWebDirectory = new WebDirectory(webDirectory)
+				{
+					Url = $"{calibreRootUri}/#library_id={library.Key}&panel=book_list",
+					Name = library.Value,
+					Parser = "Calibre"
+				};
 
-                    Uri libraryMetadataUri = new Uri(calibreRootUri, $"./interface-data/books-init?library_id={library.Key}&num=999999999");
+				webDirectory.Subdirectories.Add(libraryWebDirectory);
 
-                    httpResponseMessage = await httpClient.GetAsync(libraryMetadataUri, cancellationToken);
-                    httpResponseMessage.EnsureSuccessStatusCode();
+				Uri libraryMetadataUri = new Uri(calibreRootUri, $"./interface-data/books-init?library_id={library.Key}&num=999999999");
 
-                    string libraryResultJson = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
+				httpResponseMessage = await httpClient.GetAsync(libraryMetadataUri, cancellationToken);
+				httpResponseMessage.EnsureSuccessStatusCode();
+
+				string libraryResultJson = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
 
 
-                    libraryWebDirectory.Files.Add(new WebFile
-                    {
-                        FileName = "LibraryMetadata.json",
-                        FileSize = libraryResultJson.Length,
-                        Url = libraryMetadataUri.ToString()
-                    });
+				libraryWebDirectory.Files.Add(new WebFile
+				{
+					FileName = "LibraryMetadata.json",
+					FileSize = libraryResultJson.Length,
+					Url = libraryMetadataUri.ToString()
+				});
 
-                    CalibreResult.CalibreResult libraryResult = CalibreResult.CalibreResult.FromJson(libraryResultJson);
+				CalibreResult.CalibreResult libraryResult = CalibreResult.CalibreResult.FromJson(libraryResultJson);
 
-                    Console.WriteLine($"Retrieved metadata of {libraryResult.Metadata.Count} books for library {library.Value}");
-                    Logger.Info($"Retrieved metadata of {libraryResult.Metadata.Count} books for library {library.Value}");
+				Console.WriteLine($"Retrieved metadata of {libraryResult.Metadata.Count} books for library {library.Value}");
+				Logger.Info($"Retrieved metadata of {libraryResult.Metadata.Count} books for library {library.Value}");
 
-                    Console.WriteLine($"Parsing info of {libraryResult.Metadata.Count} books for library {library.Value}...");
-                    Logger.Info($"Parsing info of {libraryResult.Metadata.Count} books for library {library.Value}...");
+				Console.WriteLine($"Parsing info of {libraryResult.Metadata.Count} books for library {library.Value}...");
+				Logger.Info($"Parsing info of {libraryResult.Metadata.Count} books for library {library.Value}...");
 
-                    int booksToIndex = libraryResult.Metadata.Count;
-                    int booksIndexed = 0;
+				int booksToIndex = libraryResult.Metadata.Count;
+				int booksIndexed = 0;
 
-                    Stopwatch stopwatch = Stopwatch.StartNew();
+				Stopwatch stopwatch = Stopwatch.StartNew();
 
-                    //RateLimiter rateLimiter = new RateLimiter(100, TimeSpan.FromSeconds(30));
+				//RateLimiter rateLimiter = new RateLimiter(100, TimeSpan.FromSeconds(30));
 
-                    Parallel.ForEach(libraryResult.Metadata.AsParallel().AsOrdered(), new ParallelOptions { MaxDegreeOfParallelism = 100 }, (book) =>
-                    {
-                        // NOT async, else it will continue with the rest of the code..
-                        // TODO: Need a nice fix which respects MaxDegreeOfParallelism
-                        
-                        //rateLimiter.RateLimit().Wait();
-                        GetBookInfo(httpClient, calibreRootUri, library, libraryWebDirectory, book);
+				Parallel.ForEach(libraryResult.Metadata.AsParallel().AsOrdered(), new ParallelOptions { MaxDegreeOfParallelism = 100 }, (book) =>
+				{
+						// NOT async, else it will continue with the rest of the code..
+						// TODO: Need a nice fix which respects MaxDegreeOfParallelism
 
-                        int newBooksIndexed = Interlocked.Increment(ref booksIndexed);
+						//rateLimiter.RateLimit().Wait();
+						GetBookInfo(httpClient, calibreRootUri, library, libraryWebDirectory, book);
 
-                        if (newBooksIndexed % 100 == 0 && stopwatch.Elapsed > TimeSpan.FromSeconds(5))
-                        {
-                            Logger.Warn($"Parsing books at {100 * ((decimal)newBooksIndexed / booksToIndex):F1}% ({newBooksIndexed}/{booksToIndex})");
-                            stopwatch.Restart();
-                        }
-                    });
+					int newBooksIndexed = Interlocked.Increment(ref booksIndexed);
 
-                    Console.WriteLine($"Parsed info of {libraryResult.Metadata.Count} books for library {library.Value}");
-                    Logger.Info($"Parsed info of {libraryResult.Metadata.Count} books for library {library.Value}");
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex, "Error parsing Calibre");
-                webDirectory.Error = true;
-            }
-        }
+					if (newBooksIndexed % 100 == 0 && stopwatch.Elapsed > TimeSpan.FromSeconds(5))
+					{
+						Logger.Warn($"Parsing books at {100 * ((decimal)newBooksIndexed / booksToIndex):F1}% ({newBooksIndexed}/{booksToIndex})");
+						stopwatch.Restart();
+					}
+				});
 
-        private static void GetBookInfo(HttpClient httpClient, Uri calibreRootUri, KeyValuePair<string, string> library, WebDirectory libraryWebDirectory, KeyValuePair<string, CalibreResult.Metadatum> book)
-        {
-            Logger.Debug($"Retrieving info for book [{book.Key}]: {book.Value.Title}...");
+				Console.WriteLine($"Parsed info of {libraryResult.Metadata.Count} books for library {library.Value}");
+				Logger.Info($"Parsed info of {libraryResult.Metadata.Count} books for library {library.Value}");
+			}
+		}
+		catch (Exception ex)
+		{
+			Logger.Error(ex, "Error parsing Calibre");
+			webDirectory.Error = true;
+		}
+	}
 
-            WebDirectory bookWebDirectory = new WebDirectory(libraryWebDirectory)
-            {
-                Url = new Uri(calibreRootUri, $"./#book_id={book.Key}&library_id={library.Key}&panel=book_list").ToString(),
-                Name = book.Value.Title,
-                Parser = "Calibre"
-            };
+	private static void GetBookInfo(HttpClient httpClient, Uri calibreRootUri, KeyValuePair<string, string> library, WebDirectory libraryWebDirectory, KeyValuePair<string, CalibreResult.Metadatum> book)
+	{
+		Logger.Debug($"Retrieving info for book [{book.Key}]: {book.Value.Title}...");
 
-            try
-            {
-                string coverUrl = new Uri(calibreRootUri, $"./get/cover/{book.Key}/{library.Key}").ToString();
+		WebDirectory bookWebDirectory = new WebDirectory(libraryWebDirectory)
+		{
+			Url = new Uri(calibreRootUri, $"./#book_id={book.Key}&library_id={library.Key}&panel=book_list").ToString(),
+			Name = book.Value.Title,
+			Parser = "Calibre"
+		};
 
-                // Not anymore, makes not much sence and costs a ton of time
-                //MediaTypeHeaderValue contentTypeHeader = await UrlHeaderInfoHelper.GetContentTypeAsync(httpClient, coverUrl);
+		try
+		{
+			string coverUrl = new Uri(calibreRootUri, $"./get/cover/{book.Key}/{library.Key}").ToString();
 
-                //string coverFileName = "cover";
+			// Not anymore, makes not much sence and costs a ton of time
+			//MediaTypeHeaderValue contentTypeHeader = await UrlHeaderInfoHelper.GetContentTypeAsync(httpClient, coverUrl);
 
-                //if (contentTypeHeader != null)
-                //{
-                //    switch (contentTypeHeader.MediaType)
-                //    {
-                //        case "image/jpeg":
-                //            coverFileName += ".jpg";
-                //            break;
-                //        default:
-                //            coverFileName += ".unknown";
-                //            break;
-                //    }
-                //}
+			//string coverFileName = "cover";
 
-                //bookWebDirectory.Files.Add(new WebFile
-                //{
-                //    Url = coverUrl,
-                //    FileName = coverFileName,
-                //    FileSize = await UrlHeaderInfoHelper.GetUrlFileSizeAsync(httpClient, coverUrl) ?? 0
-                //});
+			//if (contentTypeHeader != null)
+			//{
+			//    switch (contentTypeHeader.MediaType)
+			//    {
+			//        case "image/jpeg":
+			//            coverFileName += ".jpg";
+			//            break;
+			//        default:
+			//            coverFileName += ".unknown";
+			//            break;
+			//    }
+			//}
 
-                bookWebDirectory.Files.Add(new WebFile
-                {
-                    Url = coverUrl,
-                    FileName = "cover.jpg",
-                    FileSize = 0
-                });
+			//bookWebDirectory.Files.Add(new WebFile
+			//{
+			//    Url = coverUrl,
+			//    FileName = coverFileName,
+			//    FileSize = await UrlHeaderInfoHelper.GetUrlFileSizeAsync(httpClient, coverUrl) ?? 0
+			//});
 
-                foreach (string format in book.Value.Formats)
-                {
-                    bookWebDirectory.Files.Add(new WebFile
-                    {
-                        Url = new Uri(calibreRootUri, $"./get/{format.ToUpper()}/{book.Key}/{library.Key}").ToString(),
-                        FileName = $"{PathHelper.GetValidPath(book.Value.Title)} - {PathHelper.GetValidPath(book.Value.AuthorSort)}.{format.ToLower()}",
-                        FileSize = book.Value.FormatSizes.ContainsKey(format) ? book.Value.FormatSizes[format] : 0
-                    });
-                }
+			bookWebDirectory.Files.Add(new WebFile
+			{
+				Url = coverUrl,
+				FileName = "cover.jpg",
+				FileSize = 0
+			});
 
-                libraryWebDirectory.Subdirectories.Add(bookWebDirectory);
+			foreach (string format in book.Value.Formats)
+			{
+				bookWebDirectory.Files.Add(new WebFile
+				{
+					Url = new Uri(calibreRootUri, $"./get/{format.ToUpper()}/{book.Key}/{library.Key}").ToString(),
+					FileName = $"{PathHelper.GetValidPath(book.Value.Title)} - {PathHelper.GetValidPath(book.Value.AuthorSort)}.{format.ToLower()}",
+					FileSize = book.Value.FormatSizes.ContainsKey(format) ? book.Value.FormatSizes[format] : 0
+				});
+			}
 
-                Logger.Debug($"Retrieved info for book [{book.Key}]: {book.Value.Title}");
-            }
-            catch (Exception ex)
-            {
-                Logger.Debug(ex, $"Error processing book {book.Key}");
-                bookWebDirectory.Error = true;
-            }
-        }
-    }
+			libraryWebDirectory.Subdirectories.Add(bookWebDirectory);
+
+			Logger.Debug($"Retrieved info for book [{book.Key}]: {book.Value.Title}");
+		}
+		catch (Exception ex)
+		{
+			Logger.Debug(ex, $"Error processing book {book.Key}");
+			bookWebDirectory.Error = true;
+		}
+	}
 }

@@ -2,18 +2,18 @@
 using AngleSharp.Html.Parser;
 using Xunit;
 
-namespace OpenDirectoryDownloader.Tests
+namespace OpenDirectoryDownloader.Tests;
+
+public class AngleSharpTests
 {
-    public class AngleSharpTests
-    {
-        /// <summary>
-        /// Test 1
-        /// </summary>
-        /// <returns>Nothing</returns>
-        [Fact]
-        public async System.Threading.Tasks.Task Test01Async()
-        {
-            string html = @"<table>
+	/// <summary>
+	/// Test 1
+	/// </summary>
+	/// <returns>Nothing</returns>
+	[Fact]
+	public async System.Threading.Tasks.Task Test01Async()
+	{
+		string html = @"<table>
   <thead>
     <tr>
       <th>Month</th>
@@ -37,10 +37,9 @@ namespace OpenDirectoryDownloader.Tests
     </tr>
   </tfoot>
 </table>";
-            HtmlParser htmlParser = new HtmlParser();
-            IHtmlDocument htmlDocument = await htmlParser.ParseDocumentAsync(html);
+		HtmlParser htmlParser = new HtmlParser();
+		IHtmlDocument htmlDocument = await htmlParser.ParseDocumentAsync(html);
 
-            Assert.Equal("TABLE", htmlDocument.QuerySelector("tbody tr").Parent("table").TagName);
-        }
-    }
+		Assert.Equal("TABLE", htmlDocument.QuerySelector("tbody tr").Parent("table").TagName);
+	}
 }

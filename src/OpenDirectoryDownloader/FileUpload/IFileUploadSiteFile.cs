@@ -1,7 +1,6 @@
-﻿namespace OpenDirectoryDownloader.FileUpload
+﻿namespace OpenDirectoryDownloader.FileUpload;
+
+public interface IFileUploadSiteFile
 {
-    public interface IFileUploadSiteFile
-    {
-        string Url { get; }
-    }
+	string Url { get; }
 }
