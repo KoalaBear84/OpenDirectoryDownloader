@@ -68,7 +68,6 @@ public static class BhadooIndexParser
 		}
 		catch (Exception ex)
 		{
-			RateLimiter.AddDelay(TimeSpan.FromSeconds(5));
 			Logger.Error(ex, $"Error parsing {Parser} for URL: {webDirectory.Url}");
 			webDirectory.Error = true;
 
@@ -144,13 +143,15 @@ public static class BhadooIndexParser
 
 	private static async Task<WebDirectory> ScanAsync(IHtmlDocument htmlDocument, HttpClient httpClient, WebDirectory webDirectory)
 	{
-		Logger.Debug($"Retrieving listings for {webDirectory.Uri} with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}");
-
 		webDirectory.Parser = Parser;
 
 		try
 		{
-			await RateLimiter.RateLimit();
+			Polly.Retry.AsyncRetryPolicy asyncRetryPolicy = Library.GetAsyncRetryPolicy((ex, waitTimeSpan, retry, pollyContext) =>
+			{
+				Logger.Warn($"Error retrieving directory listing for {webDirectory.Uri}, waiting {waitTimeSpan.TotalSeconds} seconds.. Error: {ex.Message}");
+				RateLimiter.AddDelay(waitTimeSpan);
+			}, 8);
 
 			if (!webDirectory.Url.EndsWith("/"))
 			{
@@ -159,32 +160,25 @@ public static class BhadooIndexParser
 
 			long pageIndex = 0;
 			string nextPageToken = string.Empty;
-			int errors = 0;
-			int maxRetries = 10;
 
 			do
 			{
-				Logger.Warn($"Retrieving listings for {webDirectory.Uri}, page {pageIndex + 1}");
-
-				Dictionary<string, string> postValues = new Dictionary<string, string>
+				await asyncRetryPolicy.ExecuteAndCaptureAsync(async () =>
 				{
-					{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
-					{ "page_token", nextPageToken },
-					{ "page_index", pageIndex.ToString() }
-				};
+					await RateLimiter.RateLimit();
 
-				HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, webDirectory.Uri) { Content = new FormUrlEncodedContent(postValues) };
-				HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
+					Logger.Warn($"Retrieving listings for {webDirectory.Uri.PathAndQuery}, page {pageIndex + 1}{(!string.IsNullOrWhiteSpace(OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]) ? $" with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}" : string.Empty)}");
 
-				if (!httpResponseMessage.IsSuccessStatusCode)
-				{
-					Logger.Warn("Directory listing retrieval error (HTTP Error), waiting 10 seconds..");
-					errors++;
-					RateLimiter.AddDelay(TimeSpan.FromSeconds(10));
-					await Task.Delay(TimeSpan.FromSeconds(10));
-				}
-				else
-				{
+					Dictionary<string, string> postValues = new Dictionary<string, string>
+					{
+						{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
+						{ "page_token", nextPageToken },
+						{ "page_index", pageIndex.ToString() }
+					};
+
+					HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, webDirectory.Uri) { Content = new FormUrlEncodedContent(postValues) };
+					HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
+
 					webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
 					httpResponseMessage.EnsureSuccessStatusCode();
 
@@ -198,22 +192,16 @@ public static class BhadooIndexParser
 
 						if (indexResponse.Data.Error?.Message == "Rate Limit Exceeded")
 						{
-							Logger.Warn("Rate limit exceeded, waiting 10 seconds..");
-							errors++;
-							RateLimiter.AddDelay(TimeSpan.FromSeconds(10));
-							await Task.Delay(TimeSpan.FromSeconds(10));
+							throw new Exception("Rate limit exceeded");
 						}
 						else
 						{
 							if (indexResponse.Data.Files == null)
 							{
-								Logger.Warn("Directory listing retrieval error (Files null), waiting 10 seconds..");
-								errors++;
-								await Task.Delay(TimeSpan.FromSeconds(10));
+								throw new Exception("Directory listing retrieval error (Files null)");
 							}
 							else
 							{
-								errors = 0;
 								nextPageToken = indexResponse.NextPageToken;
 								pageIndex = indexResponse.CurPageIndex + 1;
 
@@ -244,23 +232,14 @@ public static class BhadooIndexParser
 					}
 					catch (Exception ex)
 					{
-						Logger.Warn("Error decoding response, waiting 10 seconds..");
-						errors++;
-						RateLimiter.AddDelay(TimeSpan.FromSeconds(10));
-						await Task.Delay(TimeSpan.FromSeconds(10));
+						throw new Exception($"Retrieving listings for {webDirectory.Uri.PathAndQuery}, page {pageIndex + 1}. Error: {ex.Message}");
 					}
-				}
-
-				if (errors >= maxRetries)
-				{
-					throw new FriendlyException($"Error retrieving directory listing for {webDirectory.Uri}");
-				}
-			} while (!string.IsNullOrWhiteSpace(nextPageToken) || errors > 0);
+				});
+			} while (!string.IsNullOrWhiteSpace(nextPageToken));
 		}
 		catch (Exception ex)
 		{
-			RateLimiter.AddDelay(TimeSpan.FromSeconds(5));
-			Logger.Error(ex, $"Error processing {Parser} for URL: {webDirectory.Url}");
+			Logger.Error(ex, $"Error retrieving directory listing for {webDirectory.Url}");
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;

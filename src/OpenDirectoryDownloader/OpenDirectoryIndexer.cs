@@ -80,12 +80,12 @@ public class OpenDirectoryIndexer
 					}
 					else if (ex.Message.Contains("404 (Not Found)") || ex.Message == "No such host is known.")
 					{
-						Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{relativeUrl}'. Skipping..");
+						Logger.Warn($"[{context["Processor"]}] Error \'{ex.Message}\' retrieving on try {retryCount} for url '{relativeUrl}'. Skipping..");
 						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
 					}
 					else if ((ex.Message.Contains("401 (Unauthorized)") || ex.Message.Contains("401 (Authorization Required)") || ex.Message.Contains("403 (Forbidden)")) && retryCount >= 3)
 					{
-						Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{relativeUrl}'. Skipping..");
+						Logger.Warn($"[{context["Processor"]}] Error \'{ex.Message}\' retrieving on try {retryCount} for url '{relativeUrl}'. Skipping..");
 						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
 					}
 					else if (retryCount <= 4)
@@ -711,11 +711,11 @@ public class OpenDirectoryIndexer
 								cancellationTokenSource.CancelAfter(TimeSpan.FromMinutes(5));
 
 								Context pollyContext = new Context
-									{
-										{ "Processor", name },
-										{ "WebDirectory", webDirectory },
-										{ "CancellationTokenSource", cancellationTokenSource }
-									};
+								{
+									{ "Processor", name },
+									{ "WebDirectory", webDirectory },
+									{ "CancellationTokenSource", cancellationTokenSource }
+								};
 
 								await RetryPolicy.ExecuteAsync(async (context, token) => { await ProcessWebDirectoryAsync(name, webDirectory, cancellationTokenSource); }, pollyContext, cancellationTokenSource.Token);
 							}

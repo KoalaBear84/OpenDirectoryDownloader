@@ -130,59 +130,65 @@ public static class GdIndexParser
 
 	private static async Task<WebDirectory> ScanIndexAsync(HttpClient httpClient, WebDirectory webDirectory)
 	{
-		Logger.Debug($"Retrieving listings for {webDirectory.Uri} with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}");
-
 		webDirectory.Parser = Parser;
 
 		try
 		{
-			await RateLimiter.RateLimit();
-
-			if (!webDirectory.Url.EndsWith("/"))
+			Polly.Retry.AsyncRetryPolicy asyncRetryPolicy = Library.GetAsyncRetryPolicy((ex, waitTimeSpan, retry, pollyContext) =>
 			{
-				webDirectory.Url += "/";
-			}
+				Logger.Warn($"Error retrieving directory listing for {webDirectory.Uri}, waiting {waitTimeSpan.TotalSeconds} seconds.. Error: {ex.Message}");
+				RateLimiter.AddDelay(waitTimeSpan);
+			}, 8);
 
-			Logger.Warn($"Retrieving listings for {webDirectory.Uri}");
-
-			HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"{OpenDirectoryIndexer.Session.Root.Url}{Uri.EscapeDataString(webDirectory.Url.Replace(OpenDirectoryIndexer.Session.Root.Url, string.Empty).TrimEnd('/'))}/?rootId={OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_GdIndex_RootId]}", null);
-
-			webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
-			httpResponseMessage.EnsureSuccessStatusCode();
-
-			string responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
-
-			GdIndexResponse indexResponse = GdIndexResponse.FromJson(responseJson);
-
-			webDirectory.ParsedSuccessfully = indexResponse != null;
-
-			foreach (File file in indexResponse.Files)
+			await asyncRetryPolicy.ExecuteAndCaptureAsync(async () =>
 			{
-				if (file.MimeType == FolderMimeType)
+				await RateLimiter.RateLimit();
+
+				if (!webDirectory.Url.EndsWith("/"))
 				{
-					webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
-					{
-						Parser = Parser,
-						// Yes, string concatenation, do not use new Uri(webDirectory.Uri, file.Name), because things could end with a space...
-						Url = $"{webDirectory.Uri}{file.Name}/",
-						Name = file.Name
-					});
+					webDirectory.Url += "/";
 				}
-				else
+
+				Logger.Warn($"Retrieving listings for {webDirectory.Uri}");
+
+				HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"{OpenDirectoryIndexer.Session.Root.Url}{Uri.EscapeDataString(webDirectory.Url.Replace(OpenDirectoryIndexer.Session.Root.Url, string.Empty).TrimEnd('/'))}/?rootId={OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_GdIndex_RootId]}", null);
+
+				webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
+				httpResponseMessage.EnsureSuccessStatusCode();
+
+				string responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
+
+				GdIndexResponse indexResponse = GdIndexResponse.FromJson(responseJson);
+
+				webDirectory.ParsedSuccessfully = indexResponse != null;
+
+				foreach (File file in indexResponse.Files)
 				{
-					webDirectory.Files.Add(new WebFile
+					if (file.MimeType == FolderMimeType)
 					{
-						Url = new Uri(webDirectory.Uri, file.Name).ToString(),
-						FileName = file.Name,
-						FileSize = file.Size
-					});
+						webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+						{
+							Parser = Parser,
+							// Yes, string concatenation, do not use new Uri(webDirectory.Uri, file.Name), because things could end with a space...
+							Url = $"{webDirectory.Uri}{file.Name}/",
+							Name = file.Name
+						});
+					}
+					else
+					{
+						webDirectory.Files.Add(new WebFile
+						{
+							Url = new Uri(webDirectory.Uri, file.Name).ToString(),
+							FileName = file.Name,
+							FileSize = file.Size
+						});
+					}
 				}
-			}
+			});
 		}
 		catch (Exception ex)
 		{
-			RateLimiter.AddDelay(TimeSpan.FromSeconds(5));
-			Logger.Error(ex, $"Error processing {Parser} for URL: {webDirectory.Url}");
+			Logger.Error(ex, $"Error retrieving directory listing for {webDirectory.Url}");
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;
@@ -195,6 +201,6 @@ public static class GdIndexParser
 			//throw;
 		}
 
-		return webDirectory;
+		return webDirectory; 
 	}
 }

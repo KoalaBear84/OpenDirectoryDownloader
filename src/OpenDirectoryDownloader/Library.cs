@@ -4,6 +4,8 @@ using NLog;
 using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
+using Polly;
+using Polly.Retry;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -357,5 +359,15 @@ public class Library
 		}
 
 		return false;
+	}
+
+	public static AsyncRetryPolicy GetAsyncRetryPolicy(Action<Exception, TimeSpan, int, Context> onRetry, int maxRetries = 4)
+	{
+		return Policy
+			.Handle<Exception>()
+			.WaitAndRetryAsync(maxRetries,
+				sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Min(16, Math.Pow(2, retryAttempt))),
+				onRetry: onRetry
+			);
 	}
 }

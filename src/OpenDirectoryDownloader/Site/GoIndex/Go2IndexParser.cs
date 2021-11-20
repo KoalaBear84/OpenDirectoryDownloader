@@ -31,12 +31,12 @@ public static class Go2IndexParser
 				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] = null;
 
 				HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
-					{
-						{ "page_index", 0 },
-						{ "page_token", null },
-						{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
-						{ "q", "" }
-					})));
+				{
+					{ "page_index", 0 },
+					{ "page_token", null },
+					{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
+					{ "q", "" }
+				})));
 
 				Go2IndexResponse indexResponse = null;
 
@@ -56,12 +56,12 @@ public static class Go2IndexParser
 						Logger.Info($"Using password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}");
 
 						httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
-							{
-								{ "page_index", 0 },
-								{ "page_token", null },
-								{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
-								{ "q", "" }
-							})));
+						{
+							{ "page_index", 0 },
+							{ "page_token", null },
+							{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
+							{ "q", "" }
+						})));
 
 						if (httpResponseMessage.IsSuccessStatusCode)
 						{
@@ -119,39 +119,39 @@ public static class Go2IndexParser
 
 	private static async Task<WebDirectory> ScanIndexAsync(HttpClient httpClient, WebDirectory webDirectory)
 	{
-		Logger.Debug($"Retrieving listings for {webDirectory.Uri} with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}");
-
 		webDirectory.Parser = Parser;
 
 		try
 		{
+			Polly.Retry.AsyncRetryPolicy asyncRetryPolicy = Library.GetAsyncRetryPolicy((ex, waitTimeSpan, retry, pollyContext) =>
+			{
+				Logger.Warn($"Error retrieving directory listing for {webDirectory.Uri}, waiting {waitTimeSpan.TotalSeconds} seconds.. Error: {ex.Message}");
+				RateLimiter.AddDelay(waitTimeSpan);
+			}, 8);
+
 			if (!webDirectory.Url.EndsWith("/"))
 			{
 				webDirectory.Url += "/";
 			}
 
-			int retry = 0;
-			int maxRetries = 10;
-			bool error = false;
+			long pageIndex = 0;
+			string nextPageToken = null;
 
 			do
 			{
-				long pageIndex = 0;
-				string nextPageToken = null;
-
-				do
+				await asyncRetryPolicy.ExecuteAndCaptureAsync(async () =>
 				{
 					await RateLimiter.RateLimit();
 
-					Logger.Warn($"Retrieving listings {(retry > 0 ? $"(retry {retry})" : string.Empty)} for {webDirectory.Uri}, page {pageIndex + 1}");
-
+					Logger.Warn($"Retrieving listings for {webDirectory.Uri.PathAndQuery}, page {pageIndex + 1}{(!string.IsNullOrWhiteSpace(OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]) ? $" with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}" : string.Empty)}"); 
+					
 					HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
-						{
-							{ "page_index", pageIndex },
-							{ "page_token", nextPageToken },
-							{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
-							{ "q", "" }
-						})));
+					{
+						{ "page_index", pageIndex },
+						{ "page_token", nextPageToken },
+						{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
+						{ "q", "" }
+					})));
 
 					webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
 					httpResponseMessage.EnsureSuccessStatusCode();
@@ -171,15 +171,11 @@ public static class Go2IndexParser
 					{
 						if (indexResponse.Data.Error?.Message == "Rate Limit Exceeded")
 						{
-							error = true;
-							retry++;
-							RateLimiter.AddDelay(TimeSpan.FromSeconds(5));
-							Logger.Warn($"Rate Limit with {Parser}, will be retried, for URL: {webDirectory.Url}");
-							continue;
+							throw new Exception("Rate limit exceeded");
 						}
 						else
 						{
-							throw new Exception($"{indexResponse.Data.Error?.Code} | {indexResponse.Data.Error?.Message}");
+							throw new Exception($"Error in response: {indexResponse.Data.Error?.Code} | {indexResponse.Data.Error?.Message}");
 						}
 					}
 
@@ -208,18 +204,12 @@ public static class Go2IndexParser
 							});
 						}
 					}
-
-					retry = 0;
-					error = false;
-				} while (!string.IsNullOrWhiteSpace(nextPageToken));
-			} while (error && retry < maxRetries);
-
-			webDirectory.Error = false;
+				});
+			} while (!string.IsNullOrWhiteSpace(nextPageToken));
 		}
 		catch (Exception ex)
 		{
-			RateLimiter.AddDelay(TimeSpan.FromSeconds(5));
-			Logger.Error(ex, $"Error processing {Parser}, will be retried, for URL: {webDirectory.Url}");
+			Logger.Error(ex, $"Error retrieving directory listing for {webDirectory.Url}");
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;
@@ -232,6 +222,6 @@ public static class Go2IndexParser
 			//throw;
 		}
 
-		return webDirectory;
+		return webDirectory; 
 	}
 }
