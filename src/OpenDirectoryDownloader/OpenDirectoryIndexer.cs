@@ -827,7 +827,12 @@ public class OpenDirectoryIndexer
                 BrowserContext browserContext = new BrowserContext(OpenDirectoryIndexerSettings.Url, HttpClientHandler.CookieContainer);
                 await browserContext.DoAsync();
 
-                httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
+				Logger.Warn("UserAgent forced to Chrome because of Cloudflare");
+
+				HttpClient.DefaultRequestHeaders.UserAgent.Clear();
+				HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
+				
+				httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
             }
         }
 
