@@ -26,8 +26,11 @@ public class CommandLineOptions
 	[Option('f', "no-urls", Required = false, Default = false, HelpText = "Do not save URLs file")]
 	public bool NoUrls { get; set; }
 
-	[Option('r', "no-reddit", Required = false, Default = false, HelpText = "Do not show Reddit stats markdown")]
-	public bool NoReddit { get; set; }
+    [Option("no-browser", Required = false, Default = false, HelpText = "Do not launch browser (for cloudflare etc.)")]
+    public bool NoBrowser { get; set; }
+
+    [Option('r', "no-reddit", Required = false, Default = false, HelpText = "Do not show Reddit stats markdown")]
+    public bool NoReddit { get; set; }
 
 	[Option('e', "exact-file-sizes", Required = false, Default = false, HelpText = "Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server)")]
 	public bool ExactFileSizes { get; set; }

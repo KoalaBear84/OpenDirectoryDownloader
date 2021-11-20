@@ -812,19 +812,44 @@ public class OpenDirectoryIndexer
 
 		HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
 
-		if (httpResponseMessage.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
-		{
-			Logger.Error("Cloudflare protection is not supported");
-			return;
-		}
+        if (httpResponseMessage.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
+        {
+            string cloudflareHtml = await GetHtml(httpResponseMessage);
 
-		if (httpResponseMessage.StatusCode == HttpStatusCode.Moved || httpResponseMessage.StatusCode == HttpStatusCode.MovedPermanently)
-		{
-			if (httpResponseMessage.Headers.Location != null)
-			{
-				httpResponseMessage = await HttpClient.GetAsync(httpResponseMessage.Headers.Location, cancellationTokenSource.Token);
+            if (Regex.IsMatch(cloudflareHtml, @"<form class=""challenge-form[^>]*>([\s\S]*?)<\/form>"))
+            {
+                if (OpenDirectoryIndexerSettings.CommandLineOptions.NoBrowser)
+                {
+                    Logger.Error("Cloudflare protection detected, --no-browser option active, cannot continue!");
+                    return;
+                }
+
+                Logger.Warn("Cloudflare protection detected, trying to launch browser. Solve protection yourself, indexing will start automatically!");
+
+                BrowserContext browserContext = new BrowserContext(OpenDirectoryIndexerSettings.Url, HttpClientHandler.CookieContainer);
+				bool cloudFlareOK = await browserContext.DoAsync();
+
+				if (cloudFlareOK)
+				{
+					Logger.Warn("Cloudflare OK!");
+				}
+			
+				Logger.Warn("User agent forced to Chrome because of Cloudflare");
+
+				HttpClient.DefaultRequestHeaders.UserAgent.Clear();
+				HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
+
+				httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
 			}
 		}
+
+        if (httpResponseMessage.StatusCode == HttpStatusCode.Moved || httpResponseMessage.StatusCode == HttpStatusCode.MovedPermanently)
+        {
+            if (httpResponseMessage.Headers.Location != null)
+            {
+                httpResponseMessage = await HttpClient.GetAsync(httpResponseMessage.Headers.Location, cancellationTokenSource.Token);
+            }
+        }
 
 		if (httpResponseMessage.Content?.Headers.ContentLength > 20 * Constants.Megabyte)
 		{
