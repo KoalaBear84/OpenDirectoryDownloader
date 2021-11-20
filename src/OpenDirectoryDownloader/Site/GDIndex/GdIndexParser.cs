@@ -4,23 +4,36 @@ using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace OpenDirectoryDownloader.Site.GoIndex;
+namespace OpenDirectoryDownloader.Site.GDIndex.GdIndex;
 
-public static class GoIndexParser
+public static class GdIndexParser
 {
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private const string FolderMimeType = "application/vnd.google-apps.folder";
-	private const string Parser = "GoIndex";
+	private static readonly Regex RootIdRegex = new Regex(@"default_root_id: '(?<RootId>.*?)'");
+	private const string Parser = "GdIndex";
 	private static readonly RateLimiter RateLimiter = new RateLimiter(1, TimeSpan.FromSeconds(1));
 
-	public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory)
+	public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory, string html)
 	{
 		try
 		{
+			string rootId = string.Empty;
+
+			if (OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_GdIndex_RootId))
+			{
+				rootId = OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_GdIndex_RootId];
+			}
+			else
+			{
+				rootId = GetRootId(html);
+				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_GdIndex_RootId] = rootId;
+			}
+
 			if (!OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_Password))
 			{
 				Console.WriteLine($"{Parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.");
@@ -28,21 +41,18 @@ public static class GoIndexParser
 
 				Console.WriteLine("Check if password is needed...");
 				Logger.Info("Check if password is needed...");
-				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] = "null";
+				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] = null;
 
-				HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
-				{
-					{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] }
-				})));
+				HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"{webDirectory.Uri}?rootId={rootId}", null);
 
-				GoIndexResponse indexResponse = null;
+				GdIndexResponse indexResponse = null;
 
 				if (httpResponseMessage.IsSuccessStatusCode)
 				{
 					string responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
-					indexResponse = GoIndexResponse.FromJson(responseJson);
+					indexResponse = GdIndexResponse.FromJson(responseJson);
 
-					if (indexResponse.Error?.Code == (int)HttpStatusCode.Unauthorized)
+					if (indexResponse == null)
 					{
 						Console.WriteLine("Directory is password protected, please enter password:");
 						Logger.Info("Directory is password protected, please enter password.");
@@ -52,36 +62,34 @@ public static class GoIndexParser
 						Console.WriteLine($"Using password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}");
 						Logger.Info($"Using password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}");
 
-						httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
+						httpResponseMessage = await httpClient.PostAsync($"{webDirectory.Uri}?rootId={rootId}", new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
 						{
-							{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] }
+							{ "page_index", 0 },
+							{ "page_token", null },
+							{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
+							{ "q", "" }
 						})));
 
 						if (httpResponseMessage.IsSuccessStatusCode)
 						{
 							responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
-							indexResponse = GoIndexResponse.FromJson(responseJson);
+							indexResponse = GdIndexResponse.FromJson(responseJson);
 						}
 					}
 				}
 
-				if (indexResponse is null)
+				if (indexResponse != null)
 				{
-					Logger.Error("Error. Invalid response. Stopping.");
+					Console.WriteLine("Password OK!");
+					Logger.Info("Password OK!");
+
+					webDirectory = await ScanIndexAsync(httpClient, webDirectory);
 				}
 				else
 				{
-					if (indexResponse.Error == null)
-					{
-						Logger.Warn("Password OK!");
-
-						webDirectory = await ScanIndexAsync(httpClient, webDirectory);
-					}
-					else
-					{
-						OpenDirectoryIndexer.Session.Parameters.Remove(Constants.Parameters_Password);
-						Logger.Error($"Error. Code: {indexResponse.Error.Code}, Message: {indexResponse.Error.Message}. Stopping.");
-					}
+					OpenDirectoryIndexer.Session.Parameters.Remove(Constants.Parameters_Password);
+					Console.WriteLine($"Error. Stopping.");
+					Logger.Error($"Error. Stopping.");
 				}
 			}
 			else
@@ -91,6 +99,7 @@ public static class GoIndexParser
 		}
 		catch (Exception ex)
 		{
+			RateLimiter.AddDelay(TimeSpan.FromSeconds(5));
 			Logger.Error(ex, $"Error parsing {Parser} for URL: {webDirectory.Url}");
 			webDirectory.Error = true;
 
@@ -105,6 +114,18 @@ public static class GoIndexParser
 		}
 
 		return webDirectory;
+	}
+
+	private static string GetRootId(string html)
+	{
+		Match rootIdRegexMatch = RootIdRegex.Match(html);
+
+		if (!rootIdRegexMatch.Success)
+		{
+			return "root";
+		}
+
+		return rootIdRegexMatch.Groups["RootId"].Value;
 	}
 
 	private static async Task<WebDirectory> ScanIndexAsync(HttpClient httpClient, WebDirectory webDirectory)
@@ -128,26 +149,18 @@ public static class GoIndexParser
 					webDirectory.Url += "/";
 				}
 
-				Logger.Warn($"Retrieving listings for {webDirectory.Uri.PathAndQuery}{(!string.IsNullOrWhiteSpace(OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]) ? $" with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}" : string.Empty)}");
+				Logger.Warn($"Retrieving listings for {webDirectory.Uri}");
 
-				HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
-				{
-					{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] }
-				})));
+				HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"{OpenDirectoryIndexer.Session.Root.Url}{Uri.EscapeDataString(webDirectory.Url.Replace(OpenDirectoryIndexer.Session.Root.Url, string.Empty).TrimEnd('/'))}/?rootId={OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_GdIndex_RootId]}", null);
 
 				webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
 				httpResponseMessage.EnsureSuccessStatusCode();
 
 				string responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
 
-				GoIndexResponse indexResponse = GoIndexResponse.FromJson(responseJson);
+				GdIndexResponse indexResponse = GdIndexResponse.FromJson(responseJson);
 
-				webDirectory.ParsedSuccessfully = indexResponse.Error == null;
-
-				if (indexResponse.Error != null)
-				{
-					throw new Exception($"Error in response: {indexResponse.Error.Code} | {indexResponse.Error.Message}");
-				}
+				webDirectory.ParsedSuccessfully = indexResponse != null;
 
 				foreach (File file in indexResponse.Files)
 				{

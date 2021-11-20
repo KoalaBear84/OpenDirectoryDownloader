@@ -8,7 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace OpenDirectoryDownloader.Site.GoIndex.Go2Index;
+namespace OpenDirectoryDownloader.Site.GDIndex.Go2Index;
 
 public static class Go2IndexParser
 {
@@ -143,8 +143,8 @@ public static class Go2IndexParser
 				{
 					await RateLimiter.RateLimit();
 
-					Logger.Warn($"Retrieving listings for {webDirectory.Uri.PathAndQuery}, page {pageIndex + 1}{(!string.IsNullOrWhiteSpace(OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]) ? $" with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}" : string.Empty)}"); 
-					
+					Logger.Warn($"Retrieving listings for {webDirectory.Uri.PathAndQuery}, page {pageIndex + 1}{(!string.IsNullOrWhiteSpace(OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]) ? $" with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}" : string.Empty)}");
+
 					HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
 					{
 						{ "page_index", pageIndex },
@@ -222,6 +222,6 @@ public static class Go2IndexParser
 			//throw;
 		}
 
-		return webDirectory; 
+		return webDirectory;
 	}
 }

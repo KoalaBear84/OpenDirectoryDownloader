@@ -6,6 +6,8 @@ using OpenDirectoryDownloader.GoogleDrive;
 using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared.Models;
+using OpenDirectoryDownloader.Site.GDIndex;
+using OpenDirectoryDownloader.Site.GDIndex.GdIndex;
 using Polly;
 using Polly.Retry;
 using System;
@@ -798,7 +800,7 @@ public class OpenDirectoryIndexer
 	{
 		if (Session.Parameters.ContainsKey(Constants.Parameters_GdIndex_RootId))
 		{
-			await Site.GoIndex.GdIndex.GdIndexParser.ParseIndex(HttpClient, webDirectory, string.Empty);
+			await GdIndexParser.ParseIndex(HttpClient, webDirectory, string.Empty);
 			return;
 		}
 

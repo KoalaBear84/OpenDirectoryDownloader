@@ -6,7 +6,7 @@
 //
 //    var bhadooIndexResponse = BhadooIndexResponse.FromJson(jsonString);
 
-namespace OpenDirectoryDownloader.Site.GoIndex.Bhadoo
+namespace OpenDirectoryDownloader.Site.GDIndex.Bhadoo
 {
     using System;
     using System.Collections.Generic;

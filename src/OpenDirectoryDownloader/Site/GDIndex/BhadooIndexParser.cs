@@ -3,7 +3,6 @@ using Jint;
 using Jint.Native;
 using NLog;
 using OpenDirectoryDownloader.Helpers;
-using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using System;
@@ -13,7 +12,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenDirectoryDownloader.Site.GoIndex.Bhadoo;
+namespace OpenDirectoryDownloader.Site.GDIndex.Bhadoo;
 
 /// <summary>
 /// Similar to GoIndex

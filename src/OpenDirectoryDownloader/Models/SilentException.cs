@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenDirectoryDownloader;
+namespace OpenDirectoryDownloader.Models;
 
 [Serializable]
 internal class SilentException : Exception

@@ -4,9 +4,9 @@
 //
 //    using QuickType;
 //
-//    var goIndexResponse = GoIndexResponse.FromJson(jsonString);
+//    var go2IndexResponse = Go2IndexResponse.FromJson(jsonString);
 
-namespace OpenDirectoryDownloader.Site.GoIndex
+namespace OpenDirectoryDownloader.Site.GDIndex.Go2Index
 {
     using System;
     using System.Collections.Generic;
@@ -15,22 +15,29 @@ namespace OpenDirectoryDownloader.Site.GoIndex
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
-    public partial class GoIndexResponse
+    public partial class Go2IndexResponse
     {
+        [JsonProperty("nextPageToken")]
+        public string NextPageToken { get; set; }
+
+        [JsonProperty("curPageIndex")]
+        public int CurPageIndex { get; set; }
+
+        [JsonProperty("data")]
+        public Data Data { get; set; }
+
         [JsonProperty("error")]
         public Error Error { get; set; }
-
-        [JsonProperty("files")]
-        public List<File> Files { get; set; }
     }
 
-    public partial class Error
+    public partial class Data
     {
-        [JsonProperty("code")]
-        public long Code { get; set; }
+        [JsonProperty("files")]
+        public List<File> Files { get; set; }
 
-        [JsonProperty("message")]
-        public string Message { get; set; }
+        // Needed for alx-xlx/goindex
+        [JsonProperty("error")]
+        public Error Error { get; set; }
     }
 
     public partial class File
@@ -47,18 +54,27 @@ namespace OpenDirectoryDownloader.Site.GoIndex
         [JsonProperty("modifiedTime")]
         public DateTimeOffset ModifiedTime { get; set; }
 
-        [JsonProperty("size")]
+        [JsonProperty("size", NullValueHandling = NullValueHandling.Ignore)]
         public long Size { get; set; }
     }
 
-    public partial class GoIndexResponse
+    public partial class Error
     {
-        public static GoIndexResponse FromJson(string json) => JsonConvert.DeserializeObject<GoIndexResponse>(json, Converter.Settings);
+        [JsonProperty("code")]
+        public int Code { get; set; }
+
+        [JsonProperty("message")]
+        public string Message { get; set; }
+    }
+
+    public partial class Go2IndexResponse
+    {
+        public static Go2IndexResponse FromJson(string json) => JsonConvert.DeserializeObject<Go2IndexResponse>(json, Converter.Settings);
     }
 
     public static class Serialize
     {
-        public static string ToJson(this GoIndexResponse self) => JsonConvert.SerializeObject(self, Converter.Settings);
+        public static string ToJson(this Go2IndexResponse self) => JsonConvert.SerializeObject(self, Converter.Settings);
     }
 
     internal static class Converter

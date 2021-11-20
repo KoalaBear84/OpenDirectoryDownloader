@@ -4,9 +4,9 @@
 //
 //    using QuickType;
 //
-//    var gdIndexResponse = GdIndexResponse.FromJson(jsonString);
+//    var goIndexResponse = GoIndexResponse.FromJson(jsonString);
 
-namespace OpenDirectoryDownloader.Site.GoIndex.GdIndex
+namespace OpenDirectoryDownloader.Site.GDIndex.GoIndex
 {
     using System;
     using System.Collections.Generic;
@@ -15,10 +15,22 @@ namespace OpenDirectoryDownloader.Site.GoIndex.GdIndex
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
-    public partial class GdIndexResponse
+    public partial class GoIndexResponse
     {
+        [JsonProperty("error")]
+        public Error Error { get; set; }
+
         [JsonProperty("files")]
         public List<File> Files { get; set; }
+    }
+
+    public partial class Error
+    {
+        [JsonProperty("code")]
+        public long Code { get; set; }
+
+        [JsonProperty("message")]
+        public string Message { get; set; }
     }
 
     public partial class File
@@ -35,18 +47,18 @@ namespace OpenDirectoryDownloader.Site.GoIndex.GdIndex
         [JsonProperty("modifiedTime")]
         public DateTimeOffset ModifiedTime { get; set; }
 
-        [JsonProperty("size", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("size")]
         public long Size { get; set; }
     }
 
-    public partial class GdIndexResponse
+    public partial class GoIndexResponse
     {
-        public static GdIndexResponse FromJson(string json) => JsonConvert.DeserializeObject<GdIndexResponse>(json, Converter.Settings);
+        public static GoIndexResponse FromJson(string json) => JsonConvert.DeserializeObject<GoIndexResponse>(json, Converter.Settings);
     }
 
     public static class Serialize
     {
-        public static string ToJson(this GdIndexResponse self) => JsonConvert.SerializeObject(self, Converter.Settings);
+        public static string ToJson(this GoIndexResponse self) => JsonConvert.SerializeObject(self, Converter.Settings);
     }
 
     internal static class Converter
