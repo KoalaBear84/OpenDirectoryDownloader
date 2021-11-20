@@ -825,16 +825,21 @@ public class OpenDirectoryIndexer
                 Logger.Warn("Cloudflare protection detected, trying to launch browser. Solve protection yourself, indexing will start automatically!");
 
                 BrowserContext browserContext = new BrowserContext(OpenDirectoryIndexerSettings.Url, HttpClientHandler.CookieContainer);
-                await browserContext.DoAsync();
+				bool cloudFlareOK = await browserContext.DoAsync();
 
-				Logger.Warn("UserAgent forced to Chrome because of Cloudflare");
+				if (cloudFlareOK)
+				{
+					Logger.Warn("Cloudflare OK!");
+				}
+			
+				Logger.Warn("User agent forced to Chrome because of Cloudflare");
 
 				HttpClient.DefaultRequestHeaders.UserAgent.Clear();
 				HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
-				
+
 				httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
-            }
-        }
+			}
+		}
 
         if (httpResponseMessage.StatusCode == HttpStatusCode.Moved || httpResponseMessage.StatusCode == HttpStatusCode.MovedPermanently)
         {

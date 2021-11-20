@@ -33,7 +33,7 @@ public class BrowserContext
 		DebugInfo = debugInfo;
 	}
 
-	public async Task DoAsync()
+	public async Task<bool> DoAsync()
 	{
 		try
 		{
@@ -129,6 +129,8 @@ public class BrowserContext
 			await Browser.CloseAsync();
 			Logger.Debug("Closed browser");
 		}
+
+		return OK;
 	}
 
 	private void Browser_Closed(object sender, EventArgs e)
