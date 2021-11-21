@@ -27,5 +27,7 @@ public class Session
 	public List<string> UrlsWithErrors { get; set; } = new List<string>();
 	[JsonIgnore]
 	public ConcurrentSet<string> ProcessedUrls { get; set; } = new ConcurrentSet<string>();
+	[JsonIgnore]
+	public bool GDIndex { get; set; }
 	public SpeedtestResult SpeedtestResult { get; set; }
 }

@@ -22,6 +22,8 @@ public static class GoIndexParser
 	{
 		try
 		{
+			OpenDirectoryIndexer.Session.GDIndex = true;
+
 			if (!OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_Password))
 			{
 				Console.WriteLine($"{Parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.");
@@ -29,7 +31,7 @@ public static class GoIndexParser
 
 				Console.WriteLine("Check if password is needed...");
 				Logger.Info("Check if password is needed...");
-				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] = "null";
+				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] = "";
 
 				HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
 				{

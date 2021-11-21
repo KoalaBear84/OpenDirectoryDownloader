@@ -21,6 +21,8 @@ public static class Go2IndexParser
 	{
 		try
 		{
+			OpenDirectoryIndexer.Session.GDIndex = true;
+
 			if (!OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_Password))
 			{
 				Console.WriteLine($"{Parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.");

@@ -66,8 +66,8 @@ public class OpenDirectoryIndexer
 
 				if (ex is SilentException)
 				{
-						// Silence
-					}
+					// Silence
+				}
 				else if (ex is HttpRequestException httpRequestException)
 				{
 					if (ex.Message.Contains("503 (Service Temporarily Unavailable)") || ex.Message.Contains("503 (Service Unavailable)") || ex.Message.Contains("429 (Too Many Requests)"))
@@ -78,7 +78,7 @@ public class OpenDirectoryIndexer
 					{
 						Logger.Warn($"[{context["Processor"]}] Rate limited? (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
 					}
-					else if (ex.Message.Contains("404 (Not Found)") || ex.Message == "No such host is known.")
+					else if (!Session.GDIndex && (ex.Message.Contains("404 (Not Found)") || ex.Message == "No such host is known."))
 					{
 						Logger.Warn($"[{context["Processor"]}] Error \'{ex.Message}\' retrieving on try {retryCount} for url '{relativeUrl}'. Skipping..");
 						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
@@ -90,7 +90,7 @@ public class OpenDirectoryIndexer
 					}
 					else if (retryCount <= 4)
 					{
-						Logger.Warn($"[{context["Processor"]}] Error {GetExceptionWithInner(ex)} retrieving on try {retryCount} for url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+						Logger.Warn($"[{context["Processor"]}] Error \'{GetExceptionWithInner(ex)}\' retrieving on try {retryCount} for url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
 					}
 					else
 					{
@@ -107,7 +107,7 @@ public class OpenDirectoryIndexer
 				{
 					if (retryCount <= 4)
 					{
-						Logger.Warn($"[{context["Processor"]}] Error {GetExceptionWithInner(ex)} retrieving on try {retryCount} for url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+						Logger.Warn($"[{context["Processor"]}] Error \'{GetExceptionWithInner(ex)}\' retrieving on try {retryCount} for url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
 					}
 					else
 					{
@@ -310,15 +310,15 @@ public class OpenDirectoryIndexer
 				{
 					SetParentDirectories(Session.Root);
 
-						// TODO: Add unfinished items to queue, very complicated, we need to ALSO fill the ParentDirectory...
-						//// With filter predicate, with selection function
-						//var flatList = nodes.Flatten(n => n.IsDeleted == false, n => n.Children);
-						//var directoriesToDo = Session.Root.Subdirectories.Flatten(null, wd => wd.Subdirectories).Where(wd => !wd.Finished);
-					}
+					// TODO: Add unfinished items to queue, very complicated, we need to ALSO fill the ParentDirectory...
+					//// With filter predicate, with selection function
+					//var flatList = nodes.Flatten(n => n.IsDeleted == false, n => n.Children);
+					//var directoriesToDo = Session.Root.Subdirectories.Flatten(null, wd => wd.Subdirectories).Where(wd => !wd.Finished);
+				}
 				else
 				{
-						// Add root
-						WebDirectoriesQueue.Enqueue(Session.Root);
+					// Add root
+					WebDirectoriesQueue.Enqueue(Session.Root);
 				}
 
 				IndexingTaskCTS = new CancellationTokenSource();
@@ -449,8 +449,8 @@ public class OpenDirectoryIndexer
 							}
 							catch (Exception ex)
 							{
-									// Give empty speedtest, so it will be reported as Failed
-									Session.SpeedtestResult = new Shared.SpeedtestResult();
+								// Give empty speedtest, so it will be reported as Failed
+								Session.SpeedtestResult = new Shared.SpeedtestResult();
 								Logger.Error(ex, "Speedtest failed");
 							}
 						}
@@ -484,8 +484,8 @@ public class OpenDirectoryIndexer
 							}
 							catch (Exception ex)
 							{
-									// Give empty speedtest, so it will be reported as Failed
-									Session.SpeedtestResult = new Shared.SpeedtestResult();
+								// Give empty speedtest, so it will be reported as Failed
+								Session.SpeedtestResult = new Shared.SpeedtestResult();
 								Logger.Error(ex, "Speedtest failed");
 							}
 						}
@@ -507,8 +507,8 @@ public class OpenDirectoryIndexer
 
 					if (!OpenDirectoryIndexerSettings.CommandLineOptions.NoReddit)
 					{
-							// Also log to screen, when saving links or JSON fails and the logs keep filling by other sessions, this will be saved
-							Console.WriteLine(sessionStats);
+						// Also log to screen, when saving links or JSON fails and the logs keep filling by other sessions, this will be saved
+						Console.WriteLine(sessionStats);
 					}
 				}
 				catch (Exception ex)
@@ -810,28 +810,28 @@ public class OpenDirectoryIndexer
 
 		HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
 
-        if (httpResponseMessage.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
-        {
-            string cloudflareHtml = await GetHtml(httpResponseMessage);
+		if (httpResponseMessage.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
+		{
+			string cloudflareHtml = await GetHtml(httpResponseMessage);
 
-            if (Regex.IsMatch(cloudflareHtml, @"<form class=""challenge-form[^>]*>([\s\S]*?)<\/form>"))
-            {
-                if (OpenDirectoryIndexerSettings.CommandLineOptions.NoBrowser)
-                {
-                    Logger.Error("Cloudflare protection detected, --no-browser option active, cannot continue!");
-                    return;
-                }
+			if (Regex.IsMatch(cloudflareHtml, @"<form class=""challenge-form[^>]*>([\s\S]*?)<\/form>"))
+			{
+				if (OpenDirectoryIndexerSettings.CommandLineOptions.NoBrowser)
+				{
+					Logger.Error("Cloudflare protection detected, --no-browser option active, cannot continue!");
+					return;
+				}
 
-                Logger.Warn("Cloudflare protection detected, trying to launch browser. Solve protection yourself, indexing will start automatically!");
+				Logger.Warn("Cloudflare protection detected, trying to launch browser. Solve protection yourself, indexing will start automatically!");
 
-                BrowserContext browserContext = new BrowserContext(OpenDirectoryIndexerSettings.Url, HttpClientHandler.CookieContainer);
+				BrowserContext browserContext = new BrowserContext(OpenDirectoryIndexerSettings.Url, HttpClientHandler.CookieContainer);
 				bool cloudFlareOK = await browserContext.DoAsync();
 
 				if (cloudFlareOK)
 				{
 					Logger.Warn("Cloudflare OK!");
 				}
-			
+
 				Logger.Warn("User agent forced to Chrome because of Cloudflare");
 
 				HttpClient.DefaultRequestHeaders.UserAgent.Clear();
@@ -841,13 +841,13 @@ public class OpenDirectoryIndexer
 			}
 		}
 
-        if (httpResponseMessage.StatusCode == HttpStatusCode.Moved || httpResponseMessage.StatusCode == HttpStatusCode.MovedPermanently)
-        {
-            if (httpResponseMessage.Headers.Location != null)
-            {
-                httpResponseMessage = await HttpClient.GetAsync(httpResponseMessage.Headers.Location, cancellationTokenSource.Token);
-            }
-        }
+		if (httpResponseMessage.StatusCode == HttpStatusCode.Moved || httpResponseMessage.StatusCode == HttpStatusCode.MovedPermanently)
+		{
+			if (httpResponseMessage.Headers.Location != null)
+			{
+				httpResponseMessage = await HttpClient.GetAsync(httpResponseMessage.Headers.Location, cancellationTokenSource.Token);
+			}
+		}
 
 		if (httpResponseMessage.Content?.Headers.ContentLength > 20 * Constants.Megabyte)
 		{

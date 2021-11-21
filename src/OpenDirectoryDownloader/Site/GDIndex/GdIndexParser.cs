@@ -22,6 +22,8 @@ public static class GdIndexParser
 	{
 		try
 		{
+			OpenDirectoryIndexer.Session.GDIndex = true;
+
 			string rootId = string.Empty;
 
 			if (OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_GdIndex_RootId))
