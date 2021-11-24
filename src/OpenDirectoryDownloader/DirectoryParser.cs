@@ -159,11 +159,19 @@ public static class DirectoryParser
 			}
 
 			// Custom directory listing 2
-			IHtmlCollection<IElement> divElements2 = htmlDocument.QuerySelectorAll("div#filelist .tb-row.folder,div#filelist .tb-row.afile");
+			divElements = htmlDocument.QuerySelectorAll("div#filelist .tb-row.folder,div#filelist .tb-row.afile");
 
-			if (divElements2.Any())
+			if (divElements.Any())
 			{
-				return ParseCustomDivListing2(ref baseUrl, parsedWebDirectory, htmlDocument, divElements2, checkParents);
+				return ParseCustomDivListing2(ref baseUrl, parsedWebDirectory, htmlDocument, divElements, checkParents);
+			}
+
+			// HFS
+			divElements = htmlDocument.QuerySelectorAll("div#files .item");
+
+			if (divElements.Any())
+			{
+				return ParseHfsListing(ref baseUrl, parsedWebDirectory, htmlDocument, divElements, checkParents);
 			}
 
 			IHtmlCollection<IElement> pres = htmlDocument.QuerySelectorAll("pre");
@@ -486,6 +494,47 @@ public static class DirectoryParser
 					string fileName = new Uri(fullUrl).AbsolutePath;
 					string size = divElement.QuerySelector(".sz").TextContent.Trim();
 
+					parsedWebDirectory.Files.Add(new WebFile
+					{
+						Url = fullUrl,
+						FileName = Path.GetFileName(WebUtility.UrlDecode(fileName)),
+						FileSize = FileSizeHelper.ParseFileSize(size)
+					});
+				}
+			}
+		}
+
+		CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
+
+		return parsedWebDirectory;
+	}
+
+	private static WebDirectory ParseHfsListing(ref string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> divElements, bool checkParents)
+	{
+		foreach (IElement divElement in divElements)
+		{
+			IElement link = divElement.QuerySelector("a");
+
+			if (IsValidLink(link))
+			{
+				ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
+				bool isFile = !divElement.ClassList.Contains("item-type-folder");
+
+				if (!isFile)
+				{
+					parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
+					{
+						Parser = "ParseHfsListing",
+						Url = fullUrl,
+						Name = WebUtility.UrlDecode(uri.Segments.Last()).Trim().TrimEnd(new char[] { '/' })
+					});
+				}
+				else
+				{
+					string fileName = new Uri(fullUrl).AbsolutePath;
+					string size = divElement.QuerySelector(".item-size").TextContent.Trim();
+					
 					parsedWebDirectory.Files.Add(new WebFile
 					{
 						Url = fullUrl,
