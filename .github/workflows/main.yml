@@ -79,11 +79,11 @@ jobs:
     - name: Set executable bit (linux only)
       if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
-        chmod +x ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}/OpenDirectoryDownloader
+        chmod +x ./OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}/OpenDirectoryDownloader
 
     - name: Zipping
       run: |
-        7z a OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}.zip ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}/*
+        7z a OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}.zip ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}/*
         # 7z is installed in all environments and supports unix permissions while compressing (but not while decompressing!)
 
     - name: Upload artifact for docker job (linux-x64 normal only)
@@ -92,7 +92,7 @@ jobs:
       with:
         name: linux-x64
         path: |
-          OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}.zip
+          OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}.zip
           src/Dockerfile
 
     - name: Upload artifacts
@@ -100,7 +100,7 @@ jobs:
       with:
         name: all-artifacts
         path: |
-          OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}.zip
+          OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}.zip
 
 
   release:
@@ -142,7 +142,7 @@ jobs:
       - name: Decompress artifact linux-x64
         uses: TonyBogdanov/zip@1.0
         with:
-            args: unzip -qq ./OpenDirectoryDownloader-linux-x64.zip -d ./app
+            args: unzip -qq ./OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}--linux-x64.zip -d ./app
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
