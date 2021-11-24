@@ -115,6 +115,7 @@ public class Command
 						Task.Delay(10).Wait();
 						continue;
 					}
+					
 					ConsoleKey keyPressed = Console.ReadKey(intercept: true).Key;
 					//Console.WriteLine($"Pressed (Console.ReadKey(): {keyPressed}");
 
