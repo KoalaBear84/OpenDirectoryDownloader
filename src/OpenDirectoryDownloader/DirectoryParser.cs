@@ -1950,7 +1950,10 @@ public static class DirectoryParser
 			CheckParents(webDirectory, baseUrl);
 		}
 
-		CleanFragments(webDirectory);
+		if (webDirectory.Uri.Scheme != Constants.UriScheme.Ftp && webDirectory.Uri.Scheme != Constants.UriScheme.Ftps)
+		{
+			CleanFragments(webDirectory);
+		}
 
 		CleanDynamicEntries(webDirectory);
 

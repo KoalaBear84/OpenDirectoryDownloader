@@ -78,19 +78,19 @@ public class FtpParser
 	private static bool IsMaxThreads(FtpCommandException ftpCommandException)
 	{
 		List<Regex> regexes = new List<Regex>
-			{
-				RegexMaxThreadsSpecific01,
-				RegexMaxThreadsSpecific02,
-				RegexMaxThreadsSpecific03,
-				RegexMaxThreadsSpecific04,
+		{
+			RegexMaxThreadsSpecific01,
+			RegexMaxThreadsSpecific02,
+			RegexMaxThreadsSpecific03,
+			RegexMaxThreadsSpecific04,
 
-                // General needs to be check the latest
-                RegexMaxThreadsGeneral01,
-				RegexMaxThreadsGeneral02,
-				RegexMaxThreadsGeneral03,
-				RegexMaxThreadsGeneral05,
-				RegexMaxThreadsGeneral06
-			};
+            // General needs to be check the latest
+            RegexMaxThreadsGeneral01,
+			RegexMaxThreadsGeneral02,
+			RegexMaxThreadsGeneral03,
+			RegexMaxThreadsGeneral05,
+			RegexMaxThreadsGeneral06
+		};
 
 		foreach (Regex regex in regexes)
 		{
@@ -144,11 +144,11 @@ public class FtpParser
 		cancellationTokenSource.CancelAfter(TimeSpan.FromMinutes(5));
 
 		Context pollyContext = new Context
-			{
-				{ "Processor", processor },
-				{ "WebDirectory", webDirectory },
-				{ "CancellationTokenSource", cancellationTokenSource }
-			};
+		{
+			{ "Processor", processor },
+			{ "WebDirectory", webDirectory },
+			{ "CancellationTokenSource", cancellationTokenSource }
+		};
 
 		return (await RetryPolicyNew.ExecuteAndCaptureAsync(async (context, token) => { return await ParseFtpInnerAsync(processor, webDirectory, username, password, cancellationTokenSource.Token); }, pollyContext, cancellationTokenSource.Token)).Result;
 	}
@@ -248,11 +248,11 @@ public class FtpParser
 		string processor = "Initalize";
 
 		Context pollyContext = new Context
-			{
-				{ "Processor", processor },
-				{ "WebDirectory", webDirectory },
-				{ "CancellationTokenSource", cancellationTokenSource }
-			};
+		{
+			{ "Processor", processor },
+			{ "WebDirectory", webDirectory },
+			{ "CancellationTokenSource", cancellationTokenSource }
+		};
 
 		return (await RetryPolicyNew.ExecuteAndCaptureAsync(async (context, token) => { return await GetFtpServerInfoInnerAsync(webDirectory, username, password, cancellationTokenSource.Token); }, pollyContext, cancellationTokenSource.Token)).Result;
 	}
