@@ -74,7 +74,7 @@ jobs:
       run: dotnet test src/OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }}
 
     - name: Publish with dotnet
-      run: dotnet publish src/OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }} --framework net6.0 --runtime ${{ matrix.target }} ${{ matrix.build_args }} -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}
+      run: dotnet publish src/OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }} --framework net6.0 --runtime ${{ matrix.target }} ${{ matrix.build_args }} -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}
 
     - name: Set executable bit (linux only)
       if: ${{ matrix.os == 'ubuntu-latest' }}
@@ -83,7 +83,7 @@ jobs:
 
     - name: Zipping
       run: |
-        7z a OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}.zip ./OpenDirectoryDownloader-${{ matrix.target }}${{ matrix.suffix }}/*
+        7z a OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}.zip ./OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}/*
         # 7z is installed in all environments and supports unix permissions while compressing (but not while decompressing!)
 
     - name: Upload artifact for docker job (linux-x64 normal only)
@@ -142,7 +142,7 @@ jobs:
       - name: Decompress artifact linux-x64
         uses: TonyBogdanov/zip@1.0
         with:
-            args: unzip -qq ./OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}--linux-x64.zip -d ./app
+            args: unzip -qq ./OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-linux-x64.zip -d ./app
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
