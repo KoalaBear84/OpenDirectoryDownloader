@@ -2,6 +2,7 @@
 using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -88,7 +89,7 @@ public class Command
 						case 'c':
 							if (OpenDirectoryIndexer.Session.Finished != DateTimeOffset.MinValue)
 							{
-								new Clipboard().SetText(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
+								SetClipboard(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
 								KillApplication();
 							}
 							break;
@@ -133,7 +134,7 @@ public class Command
 							{
 								try
 								{
-									new Clipboard().SetText(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
+									SetClipboard(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
 								}
 								catch (Exception ex)
 								{
@@ -234,4 +235,38 @@ public class Command
 		Console.WriteLine(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true));
 		Console.WriteLine($"Queue: {Library.FormatWithThousands(openDirectoryIndexer.WebDirectoriesQueue.Count)} ({openDirectoryIndexer.RunningWebDirectoryThreads} threads), Queue (filesizes): {Library.FormatWithThousands(openDirectoryIndexer.WebFilesFileSizeQueue.Count)} ({openDirectoryIndexer.RunningWebFileFileSizeThreads} threads)");
 	}
+	/// <summary>
+	/// Sets to clipboard to the suplied string.
+	/// Attempts in order:
+	///	The builtin Clipboard.SetText() method, works on Windows and linux X11 (using xclip)
+	/// wl-copy, works on linux with wayland wlroots (sway and many others)
+	/// </summary>
+	/// <param name="value">String to set the clipboard to.</param>
+	private static void SetClipboard(string value)
+	{
+		if (value == null)
+			throw new ArgumentNullException("Attempt to set clipboard with null");
+
+		try
+		{
+			new Clipboard().SetText(value);
+			return;
+		}
+		catch { }
+		try
+		{
+			Process clipboardExecutable = new Process();
+			clipboardExecutable.StartInfo = new ProcessStartInfo // Creates the process
+			{
+				RedirectStandardInput = true,
+				FileName = @"wl-copy",
+			};
+			clipboardExecutable.Start();
+			clipboardExecutable.StandardInput.Write(value);
+			clipboardExecutable.StandardInput.Close();
+			return;
+		}
+		catch { }
+	}
+
 }
