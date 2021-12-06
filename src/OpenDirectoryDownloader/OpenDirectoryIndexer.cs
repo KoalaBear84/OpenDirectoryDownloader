@@ -68,6 +68,10 @@ public class OpenDirectoryIndexer
 				{
 					// Silence
 				}
+				else if (ex is SoftRateLimitException)
+				{
+					Logger.Warn($"[{context["Processor"]}] Rate limited (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+				}
 				else if (ex is HttpRequestException httpRequestException)
 				{
 					if (ex.Message.Contains("503 (Service Temporarily Unavailable)") || ex.Message.Contains("503 (Service Unavailable)") || ex.Message.Contains("429 (Too Many Requests)"))
@@ -1008,6 +1012,12 @@ public class OpenDirectoryIndexer
 
 		if (httpResponseMessage.IsSuccessStatusCode && webDirectory.Url != httpResponseMessage.RequestMessage.RequestUri.ToString())
 		{
+			// Soft rate limit
+			if (httpResponseMessage.RequestMessage.RequestUri.ToString().EndsWith("overload.html"))
+			{
+				throw new SoftRateLimitException();
+			}
+
 			webDirectory.Url = httpResponseMessage.RequestMessage.RequestUri.ToString();
 		}
 
