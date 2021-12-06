@@ -685,7 +685,7 @@ public static class DirectoryParser
 
 	private static WebDirectory ParsePureDirectoryListing(ref string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> pureTableRows, bool checkParents)
 	{
-		string urlFromBreadcrumbs = Uri.EscapeUriString(string.Join("/", htmlDocument.QuerySelectorAll(".breadcrumbs_main .breadcrumb").Where(b => !b.ClassList.Contains("smaller")).Select(b => b.TextContent)) + "/");
+		string urlFromBreadcrumbs = Uri.EscapeDataString(string.Join("/", htmlDocument.QuerySelectorAll(".breadcrumbs_main .breadcrumb").Where(b => !b.ClassList.Contains("smaller")).Select(b => b.TextContent)) + "/");
 
 		// Remove possible file part (index.html) from url
 		if (!string.IsNullOrWhiteSpace(Path.GetFileName(WebUtility.UrlDecode(baseUrl))))
@@ -697,7 +697,7 @@ public static class DirectoryParser
 		string urlFromBaseUrl = baseUrl.Remove(0, new Uri(baseUrl).Scheme.Length + new Uri(baseUrl).Host.Length + 3).Replace("/.", "/");
 		urlFromBaseUrl = urlFromBaseUrl.Replace("%23", "#");
 
-		if (urlFromBreadcrumbs == urlFromBaseUrl || urlFromBreadcrumbs == Uri.EscapeUriString(urlFromBaseUrl))
+		if (urlFromBreadcrumbs == urlFromBaseUrl || urlFromBreadcrumbs == Uri.EscapeDataString(urlFromBaseUrl))
 		{
 			IElement table = pureTableRows.First().Parent("table");
 
@@ -716,7 +716,7 @@ public static class DirectoryParser
 				if (IsValidLink(link))
 				{
 					string linkHref = link.TextContent;
-					Uri uri = new Uri(new Uri(baseUrl), Uri.EscapeUriString(linkHref));
+					Uri uri = new Uri(new Uri(baseUrl), Uri.EscapeDataString(linkHref));
 					string fullUrl = uri.ToString();
 					string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim();
 					bool isFile = !tableRow.ClassList.Contains("dir");

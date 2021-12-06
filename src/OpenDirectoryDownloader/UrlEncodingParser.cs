@@ -121,7 +121,7 @@ public class UrlEncodingParser : NameValueCollection
 
 			foreach (string val in values)
 			{
-				query += $"{key}={Uri.EscapeUriString(val)}&";
+				query += $"{key}={Uri.EscapeDataString(val)}&";
 			}
 		}
 
