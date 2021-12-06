@@ -389,8 +389,8 @@ public class OpenDirectoryIndexer
 								{
 									List<IFileUploadSite> uploadSites = new List<IFileUploadSite>()
 									{
-											new UploadFilesIo(),
 											new GoFileIo(),
+											new UploadFilesIo(),
 											new AnonFiles(),
 									};
 
