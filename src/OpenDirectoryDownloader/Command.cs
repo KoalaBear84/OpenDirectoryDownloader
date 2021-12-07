@@ -253,32 +253,35 @@ public class Command
 		try
 		{
 			new Clipboard().SetText(value);
-			
+
 			return;
 		}
 		catch
 		{
 		}
 
-		try
+		if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
 		{
-			Process clipboardExecutable = new Process
+			try
 			{
-				StartInfo = new ProcessStartInfo
+				Process clipboardExecutable = new Process
 				{
-					RedirectStandardInput = true,
-					FileName = @"wl-copy",
-				}
-			};
-			
-			clipboardExecutable.Start();
-			clipboardExecutable.StandardInput.Write(value);
-			clipboardExecutable.StandardInput.Close();
-			
-			return;
-		}
-		catch
-		{
+					StartInfo = new ProcessStartInfo
+					{
+						RedirectStandardInput = true,
+						FileName = @"wl-copy",
+					}
+				};
+
+				clipboardExecutable.Start();
+				clipboardExecutable.StandardInput.Write(value);
+				clipboardExecutable.StandardInput.Close();
+
+				return;
+			}
+			catch
+			{
+			}
 		}
 	}
 }
