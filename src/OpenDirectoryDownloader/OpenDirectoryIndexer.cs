@@ -389,6 +389,7 @@ public class OpenDirectoryIndexer
 								{
 									List<IFileUploadSite> uploadSites = new List<IFileUploadSite>()
 									{
+										new Pixeldrain(),
 										new ZippyShare(),
 										new GoFileIo(),
 										new UploadFilesIo(),

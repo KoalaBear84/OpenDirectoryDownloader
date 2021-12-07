@@ -37,10 +37,10 @@ public class UploadFilesIo : IFileUploadSite
 
 					// Create session
 					Dictionary<string, string> postValuesCreateSession = new Dictionary<string, string>
-						{
-							{ "csrf_test_name", csrfToken },
-							{ "file_size", new FileInfo(path).Length.ToString() }
-						};
+					{
+						{ "csrf_test_name", csrfToken },
+						{ "file_size", new FileInfo(path).Length.ToString() }
+					};
 
 					HttpRequestMessage httpRequestMessageCreateSession = new HttpRequestMessage(HttpMethod.Post, "https://up.ufile.io/v1/upload/create_session") { Content = new FormUrlEncodedContent(postValuesCreateSession) };
 					HttpResponseMessage httpResponseMessageCreateSession = await httpClient.SendAsync(httpRequestMessageCreateSession);
@@ -69,14 +69,14 @@ public class UploadFilesIo : IFileUploadSite
 
 					// Finalise
 					Dictionary<string, string> postValuesFinalise = new Dictionary<string, string>
-						{
-							{ "csrf_test_name", csrfToken },
-							{ "fuid", fileId },
-							{ "file_name", Path.GetFileName(path) },
-							{ "file_type", Path.GetExtension(path) },
-							{ "total_chunks", "1" },
-							{ "session_id", sessionId },
-						};
+					{
+						{ "csrf_test_name", csrfToken },
+						{ "fuid", fileId },
+						{ "file_name", Path.GetFileName(path) },
+						{ "file_type", Path.GetExtension(path) },
+						{ "total_chunks", "1" },
+						{ "session_id", sessionId },
+					};
 
 					HttpRequestMessage httpRequestMessageFinalise = new HttpRequestMessage(HttpMethod.Post, "https://up.ufile.io/v1/upload/finalise") { Content = new FormUrlEncodedContent(postValuesFinalise) };
 					HttpResponseMessage httpResponseMessageFinalise = await httpClient.SendAsync(httpRequestMessageFinalise);
