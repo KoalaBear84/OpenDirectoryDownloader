@@ -134,6 +134,10 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Get version info
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/v}
+
       - name: Download artifact linux-x64
         uses: actions/download-artifact@v2
         with:
