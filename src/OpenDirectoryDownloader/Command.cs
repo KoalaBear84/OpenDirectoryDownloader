@@ -116,7 +116,7 @@ public class Command
 						Task.Delay(10).Wait();
 						continue;
 					}
-					
+
 					ConsoleKey keyPressed = Console.ReadKey(intercept: true).Key;
 					//Console.WriteLine($"Pressed (Console.ReadKey(): {keyPressed}");
 
@@ -235,6 +235,7 @@ public class Command
 		Console.WriteLine(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true));
 		Console.WriteLine($"Queue: {Library.FormatWithThousands(openDirectoryIndexer.WebDirectoriesQueue.Count)} ({openDirectoryIndexer.RunningWebDirectoryThreads} threads), Queue (filesizes): {Library.FormatWithThousands(openDirectoryIndexer.WebFilesFileSizeQueue.Count)} ({openDirectoryIndexer.RunningWebFileFileSizeThreads} threads)");
 	}
+
 	/// <summary>
 	/// Sets to clipboard to the suplied string.
 	/// Attempts in order:
@@ -245,28 +246,39 @@ public class Command
 	private static void SetClipboard(string value)
 	{
 		if (value == null)
+		{
 			throw new ArgumentNullException("Attempt to set clipboard with null");
+		}
 
 		try
 		{
 			new Clipboard().SetText(value);
+			
 			return;
 		}
-		catch { }
+		catch
+		{
+		}
+
 		try
 		{
-			Process clipboardExecutable = new Process();
-			clipboardExecutable.StartInfo = new ProcessStartInfo // Creates the process
+			Process clipboardExecutable = new Process
 			{
-				RedirectStandardInput = true,
-				FileName = @"wl-copy",
+				StartInfo = new ProcessStartInfo
+				{
+					RedirectStandardInput = true,
+					FileName = @"wl-copy",
+				}
 			};
+			
 			clipboardExecutable.Start();
 			clipboardExecutable.StandardInput.Write(value);
 			clipboardExecutable.StandardInput.Close();
+			
 			return;
 		}
-		catch { }
+		catch
+		{
+		}
 	}
-
 }
