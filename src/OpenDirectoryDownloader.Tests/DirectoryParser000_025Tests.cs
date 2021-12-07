@@ -388,7 +388,7 @@ public class DirectoryParser000_025Tests : DirectoryParserTests
 	[Fact]
 	public async Task TestDirectoryListing13bAsync()
 	{
-		WebDirectory webDirectory = await ParseHtml(GetSample(), "https://thetrove.net/Assets/D&D%20Homebrew/index.html");
+		WebDirectory webDirectory = await ParseHtml(GetSample(), "https://thetrove.net/Assets/D&D Homebrew/index.html");
 
 		Assert.Equal(string.Empty, webDirectory.Name);
 		Assert.Equal(9, webDirectory.Subdirectories.Count);
@@ -405,7 +405,7 @@ public class DirectoryParser000_025Tests : DirectoryParserTests
 	[Fact]
 	public async Task TestDirectoryListing13cAsync()
 	{
-		WebDirectory webDirectory = await ParseHtml(GetSample(), "https://thetrove.net/Assets/Map%20Assets/2010-Fantasy/Fantasy/BearSkin%20Rug%20+%20Probonos%20hanging%20antelope/index.html");
+		WebDirectory webDirectory = await ParseHtml(GetSample(), "https://thetrove.net/Assets/Map Assets/2010-Fantasy/Fantasy/BearSkin Rug + Probonos hanging antelope/index.html");
 
 		Assert.Equal(string.Empty, webDirectory.Name);
 		Assert.Empty(webDirectory.Subdirectories);
