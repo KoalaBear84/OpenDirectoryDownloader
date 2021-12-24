@@ -17,7 +17,7 @@ namespace OpenDirectoryDownloader.Site.GDIndex.Bhadoo
 
     public partial class BhadooIndexResponse
     {
-        [JsonProperty("nextPageToken")]
+		[JsonProperty("nextPageToken")]
         public string NextPageToken { get; set; }
 
         [JsonProperty("curPageIndex")]
@@ -25,7 +25,19 @@ namespace OpenDirectoryDownloader.Site.GDIndex.Bhadoo
 
         [JsonProperty("data")]
         public Data Data { get; set; }
+
+        [JsonProperty("error")]
+        public Error Error { get; set; }
     }
+
+	public partial class Error
+	{
+		[JsonProperty("code")]
+		public int Code { get; set; }
+
+		[JsonProperty("message")]
+		public string Message { get; set; }
+	}
 
     public partial class Data
     {

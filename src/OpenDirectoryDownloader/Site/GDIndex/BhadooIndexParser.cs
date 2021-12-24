@@ -59,6 +59,13 @@ public static class BhadooIndexParser
 
 					BhadooIndexResponse response = BhadooIndexResponse.FromJson(responseJson);
 
+					if (response.Error != null)
+					{
+						string errorMessage = $"Error {response.Error.Code}, '{response.Error.Message}' retrieving for URL: {webDirectory.Url}";
+						Logger.Error(errorMessage);
+						throw new Exception(errorMessage);
+					}
+
 					webDirectory = await ScanAsync(htmlDocument, httpClient, webDirectory);
 				}
 			}
@@ -189,11 +196,18 @@ public static class BhadooIndexParser
 
 						BhadooIndexResponse indexResponse = BhadooIndexResponse.FromJson(responseJson);
 
-						webDirectory.ParsedSuccessfully = indexResponse.Data.Error == null;
+						webDirectory.ParsedSuccessfully = indexResponse.Data?.Error == null && indexResponse.Error == null;
 
-						if (indexResponse.Data.Error?.Message == "Rate Limit Exceeded")
+						if (indexResponse.Data?.Error?.Message == "Rate Limit Exceeded")
 						{
 							throw new Exception("Rate limit exceeded");
+						}
+						else if (indexResponse.Error != null)
+						{
+							webDirectory.Error = true;
+							string errorMessage = $"Error {indexResponse.Error.Code}, '{indexResponse.Error.Message}' retrieving for URL: {webDirectory.Url}";
+							Logger.Error(errorMessage);
+							throw new Exception(errorMessage);
 						}
 						else
 						{
