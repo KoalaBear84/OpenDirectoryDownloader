@@ -693,14 +693,16 @@ public class OpenDirectoryIndexer
 						{
 							if (webDirectory.Uri.Segments.Contains("folderview"))
 							{
-								UrlEncodingParser urlEncodingParser = new UrlEncodingParser(webDirectory.Url);
+								UrlEncodingParser urlEncodingParserFolderView = new UrlEncodingParser(webDirectory.Url);
 
-								webDirectory.Url = $"https://drive.google.com/drive/folders/{urlEncodingParser["id"]}";
+								webDirectory.Url = $"https://drive.google.com/drive/folders/{urlEncodingParserFolderView["id"]}";
 							}
 
 							string baseUrl = webDirectory.Url;
 
-							WebDirectory parsedWebDirectory = await GoogleDriveIndexer.IndexAsync(webDirectory);
+							UrlEncodingParser urlEncodingParserResourceKey = new UrlEncodingParser(baseUrl);
+
+							WebDirectory parsedWebDirectory = await GoogleDriveIndexer.IndexAsync(webDirectory, urlEncodingParserResourceKey["resourcekey"]);
 							parsedWebDirectory.Url = baseUrl;
 
 							AddProcessedWebDirectory(webDirectory, parsedWebDirectory);

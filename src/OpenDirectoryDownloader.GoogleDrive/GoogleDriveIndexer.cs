@@ -63,7 +63,7 @@ public static class GoogleDriveIndexer
 		}
 	}
 
-	public static async Task<WebDirectory> IndexAsync(WebDirectory webDirectory)
+	public static async Task<WebDirectory> IndexAsync(WebDirectory webDirectory, string resourceKey)
 	{
 		webDirectory.StartTime = DateTimeOffset.UtcNow;
 		string nextPageToken = string.Empty;
@@ -81,11 +81,23 @@ public static class GoogleDriveIndexer
 
 					Logger.Debug($"Started Google Drive Request for Folder {folderId}");
 
+					if (!string.IsNullOrWhiteSpace(resourceKey))
+					{
+						DriveService.HttpClient.DefaultRequestHeaders.Add("X-Goog-Drive-Resource-Keys", $"{folderId}/{resourceKey}");
+					}
+					else
+					{
+						if (DriveService.HttpClient.DefaultRequestHeaders.Contains("X-Goog-Drive-Resource-Keys"))
+						{
+							DriveService.HttpClient.DefaultRequestHeaders.Remove("X-Goog-Drive-Resource-Keys");
+						}
+					}
+
 					FilesResource.ListRequest listRequest = DriveService.Files.List();
 					listRequest.PageSize = 1000;
 					listRequest.Q = $"'{folderId}' in parents";
 					listRequest.PageToken = nextPageToken;
-					listRequest.Fields = "nextPageToken, files(id, name, mimeType, size, shortcutDetails)";
+					listRequest.Fields = "nextPageToken, files(id, name, mimeType, size, shortcutDetails, resourceKey)";
 					listRequest.IncludeItemsFromAllDrives = true;
 					listRequest.SupportsAllDrives = true;
 					Google.Apis.Drive.v3.Data.FileList fileList = await listRequest.ExecuteAsync();
@@ -99,17 +111,31 @@ public static class GoogleDriveIndexer
 
 						if (!isFile)
 						{
+							string url = $"https://drive.google.com/drive/folders/{id}";
+
+							if (!string.IsNullOrEmpty(file.ResourceKey))
+							{
+								url += $"?resourcekey={file.ResourceKey}";
+							}
+
 							webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
 							{
-								Url = $"https://drive.google.com/drive/folders/{id}",
+								Url = url,
 								Name = file.Name
 							});
 						}
 						else
 						{
+							string url = $"https://drive.google.com/uc?export=download&id={id}";
+
+							if (!string.IsNullOrEmpty(file.ResourceKey))
+							{
+								url += $"&resourcekey={file.ResourceKey}";
+							}
+
 							webDirectory.Files.Add(new WebFile
 							{
-								Url = $"https://drive.google.com/uc?export=download&id={id}",
+								Url = url,
 								FileName = file.Name,
 								FileSize = file.Size ?? 0
 							});
