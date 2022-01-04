@@ -816,9 +816,18 @@ public class OpenDirectoryIndexer
 			HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(OpenDirectoryIndexerSettings.CommandLineOptions.UserAgent);
 		}
 
-		HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
+		HttpResponseMessage httpResponseMessage = null;
 
-		if (httpResponseMessage.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
+		try
+		{
+			httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
+		}
+		catch (Exception ex)
+		{
+			Logger.Error(ex, $"Error retrieving directory listing for {webDirectory.Url}");
+		}
+
+		if (httpResponseMessage?.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
 		{
 			string cloudflareHtml = await GetHtml(httpResponseMessage);
 
@@ -849,7 +858,7 @@ public class OpenDirectoryIndexer
 			}
 		}
 
-		if (httpResponseMessage.StatusCode == HttpStatusCode.Moved || httpResponseMessage.StatusCode == HttpStatusCode.MovedPermanently)
+		if (httpResponseMessage?.StatusCode == HttpStatusCode.Moved || httpResponseMessage?.StatusCode == HttpStatusCode.MovedPermanently)
 		{
 			if (httpResponseMessage.Headers.Location != null)
 			{
@@ -857,7 +866,7 @@ public class OpenDirectoryIndexer
 			}
 		}
 
-		if (httpResponseMessage.Content?.Headers.ContentLength > 20 * Constants.Megabyte)
+		if (httpResponseMessage?.Content?.Headers.ContentLength > 20 * Constants.Megabyte)
 		{
 			ConvertDirectoryToFile(webDirectory, httpResponseMessage);
 
@@ -866,7 +875,7 @@ public class OpenDirectoryIndexer
 
 		string html = null;
 
-		if (httpResponseMessage.IsSuccessStatusCode)
+		if (httpResponseMessage?.IsSuccessStatusCode == true)
 		{
 			SetRootUrl(httpResponseMessage);
 
@@ -886,7 +895,7 @@ public class OpenDirectoryIndexer
 			}
 		}
 
-		if (FirstRequest && !httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.IsSuccessStatusCode && string.IsNullOrWhiteSpace(html) || html?.Contains("HTTP_USER_AGENT") == true)
+		if (FirstRequest && (httpResponseMessage == null || !httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.IsSuccessStatusCode) && string.IsNullOrWhiteSpace(html) || html?.Contains("HTTP_USER_AGENT") == true)
 		{
 			Logger.Warn("First request fails, using Curl fallback User-Agent");
 			HttpClient.DefaultRequestHeaders.UserAgent.Clear();
@@ -915,7 +924,7 @@ public class OpenDirectoryIndexer
 			}
 		}
 
-		if (FirstRequest && !httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.IsSuccessStatusCode && string.IsNullOrWhiteSpace(html))
+		if (FirstRequest && (httpResponseMessage == null || !httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.IsSuccessStatusCode) && string.IsNullOrWhiteSpace(html))
 		{
 			Logger.Warn("First request fails, using Chrome fallback User-Agent");
 			HttpClient.DefaultRequestHeaders.UserAgent.Clear();
