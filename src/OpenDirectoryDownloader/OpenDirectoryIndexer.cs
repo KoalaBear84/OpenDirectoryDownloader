@@ -1243,7 +1243,9 @@ public class OpenDirectoryIndexer
 
 	private static void FixCharSet(HttpResponseMessage httpResponseMessage)
 	{
-		if (httpResponseMessage.Content.Headers.ContentType?.CharSet?.ToLower() == "utf8" || httpResponseMessage.Content.Headers.ContentType?.CharSet == "GB1212")
+		if (httpResponseMessage.Content.Headers.ContentType?.CharSet?.ToLower() == "utf8" ||
+			httpResponseMessage.Content.Headers.ContentType?.CharSet?.ToLower() == "\"utf-8\"" ||
+			httpResponseMessage.Content.Headers.ContentType?.CharSet == "GB1212")
 		{
 			httpResponseMessage.Content.Headers.ContentType.CharSet = "UTF-8";
 		}
