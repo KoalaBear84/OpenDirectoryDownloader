@@ -1,5 +1,6 @@
 using FluentFTP;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NLog;
 using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Shared;
@@ -15,6 +16,7 @@ using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader;
@@ -369,5 +371,50 @@ public class Library
 				sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Min(16, Math.Pow(2, retryAttempt))),
 				onRetry: onRetry
 			);
+	}
+
+	public static async Task<string> GetSourceMapUrlFromJavaScriptAsync(HttpClient httpClient, string url)
+	{
+		HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(url);
+
+		if (!httpResponseMessage.IsSuccessStatusCode)
+		{
+			return null;
+		}
+
+		string javaScript = await httpResponseMessage.Content.ReadAsStringAsync();
+
+		Regex regex = new Regex(@"\/\/# sourceMappingURL=(?<SourceMapUrl>.*)");
+
+		Match regexMatch = regex.Match(javaScript);
+
+		if (!regexMatch.Success)
+		{
+			return null;
+		}
+
+		return regexMatch.Groups["SourceMapUrl"].Value;
+	}
+
+	private static async IAsyncEnumerable<string> GetSourcesFromSourceMapAsync(HttpClient httpClient, string sourceUrl)
+	{
+		using (Stream httpStream = await httpClient.GetStreamAsync(sourceUrl))
+		{
+			using (StreamReader streamReader = new StreamReader(httpStream))
+			{
+				using (JsonReader jsonReader = new JsonTextReader(streamReader))
+				{
+					JObject jObject = JObject.Load(jsonReader);
+
+					if (jObject.TryGetValue("sources", out JToken sources))
+					{
+						foreach (JToken source in sources)
+						{
+							yield return source.Value<string>();
+						}
+					}
+				}
+			}
+		}
 	}
 }
