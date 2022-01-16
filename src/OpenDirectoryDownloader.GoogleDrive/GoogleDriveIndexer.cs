@@ -177,6 +177,7 @@ public static class GoogleDriveIndexer
 				if (retries == maxRetries)
 				{
 					Logger.Error($"Skip {webDirectory.Url} because of {maxRetries} consecutive errors on : {ex.Message}");
+					webDirectory.Error = true;
 					return webDirectory;
 				}
 			}
