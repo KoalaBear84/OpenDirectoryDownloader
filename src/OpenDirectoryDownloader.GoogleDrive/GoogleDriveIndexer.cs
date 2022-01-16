@@ -161,6 +161,7 @@ public static class GoogleDriveIndexer
 			}
 			catch (GoogleApiException ex)
 			{
+				RateLimiter.AddDelay(TimeSpan.FromSeconds(5));
 				rateLimitException = ex.Error?.Message == "User rate limit exceeded.";
 
 				if (rateLimitException)
