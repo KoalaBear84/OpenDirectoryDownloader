@@ -14,7 +14,7 @@ public class DirectoryParser101_125Tests : DirectoryParserTests
 	[Fact]
 	public async Task TestDirectoryListing101aAsync()
 	{
-		WebDirectory webDirectory = await ParseHtml(GetSample(), "https://thetrove.net/Books/Dungeons%20&%20Dragons/5th%20Edition%20(5e)/3rd%20Party/The%20Deck%20of%20Many/Deck%20of%20Many%20-%20Animated%20Spells%20Master%20V.02%20[Mar%202019]/");
+		WebDirectory webDirectory = await ParseHtml(GetSample(), "https://thetrove.net/Books/Dungeons & Dragons/5th Edition (5e)/3rd Party/The Deck of Many/Deck of Many - Animated Spells Master V.02 [Mar 2019]/");
 
 		Assert.Equal("Deck of Many - Animated Spells Master V.02 [Mar 2019]", webDirectory.Name);
 		Assert.Equal(2, webDirectory.Subdirectories.Count);
