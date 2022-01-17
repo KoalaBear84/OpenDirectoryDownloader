@@ -8,6 +8,7 @@ using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using OpenDirectoryDownloader.Site.BlitzfilesTech;
+using OpenDirectoryDownloader.Site.GDIndex;
 using OpenDirectoryDownloader.Site.GDIndex.Bhadoo;
 using OpenDirectoryDownloader.Site.GDIndex.GdIndex;
 using OpenDirectoryDownloader.Site.GDIndex.Go2Index;
@@ -65,50 +66,46 @@ public static class DirectoryParser
 				return await BlitzfilesTechParser.ParseIndex(httpClient, webDirectory);
 			}
 
-			if (htmlDocument.QuerySelector("script[src*=\"goindex-theme-acrou\" i]") != null ||
-				htmlDocument.QuerySelector("script[src*=\"savemydinar/esmailtv\" i]") != null)
+			foreach (IHtmlScriptElement script in htmlDocument.Scripts.Where(s => s.Source is not null))
 			{
-				return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
-			}
+				string googleDriveIndexType = GoogleDriveIndexMapping.GetGoogleDriveIndexType(script.Source);
 
-			if (htmlDocument.QuerySelector("script[src*=\"5MayRain/goIndex-theme-nexmoe\" i]") != null)
-			{
-				return await GoIndexParser.ParseIndex(httpClient, webDirectory);
-			}
+				if (googleDriveIndexType is null && script.Source.ToLower().Contains("app.min.js"))
+				{
+					Logger.Warn($"Checking/downloading javascript for sourcemaps: {script.Source}");
 
-			if (htmlDocument.QuerySelector("script[src*=\"Bhadoo-Drive-Index\" i]") != null ||
-				htmlDocument.QuerySelector("script[src*=\"/AjmalShajahan97/goindex\" i]") != null ||
-				htmlDocument.QuerySelector("script[src*=\"/LeeluPradhan/G-Index\" i]") != null ||
-				htmlDocument.QuerySelector("script[src*=\"/K-E-N-W-A-Y/GD-Index-Dark\" i]") != null ||
-				htmlDocument.QuerySelector("script[src*=\"/ParveenBhadooOfficial/Google-Drive-Index\" i]") != null ||
-				htmlDocument.QuerySelector("script[src*=\"/ParveenBhadooOfficial/BhadooJS\" i]") != null ||
-				htmlDocument.QuerySelector("script[src*=\"/yanzai/goindex\" i]") != null ||
-				htmlDocument.QuerySelector("script[src*=\"/RemixDev/goindex\" i]") != null ||
-				htmlDocument.QuerySelector("script[src*=\"/Virusia/Fia-Terminal\" i]") != null ||
-				htmlDocument.QuerySelector("script[src*=\"/sawankumar/Google-Drive-Index-III\" i]") != null ||
-				htmlDocument.QuerySelector("script[src*=\"/goIndex-theme-nexmoe\" i]") != null ||
-				htmlDocument.QuerySelector("script[src*=\"/cheems/GDIndex\" i]") != null ||
-				htmlDocument.QuerySelector("script[src*=\"/cheems/goindex-extended\" i]") != null ||
-				htmlDocument.QuerySelector("script[src*=\"/@googledrive/index\" i]") != null)
-			{
-				return await BhadooIndexParser.ParseIndex(htmlDocument, httpClient, webDirectory);
-			}
+					string sourceMapUrl = await Library.GetSourceMapUrlFromJavaScriptAsync(httpClient, script.Source);
 
-			if (htmlDocument.QuerySelector("script[src*=\"/go2index/\" i]") != null ||
-				htmlDocument.QuerySelector("script[src*=\"/alx-xlx/goindex\" i]") != null)
-			{
-				return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
-			}
+					if (!string.IsNullOrWhiteSpace(sourceMapUrl))
+					{
+						string fullSourceMapUrl = new Uri(new Uri(script.Source), sourceMapUrl).ToString();
+						Logger.Warn($"Checking/downloading sourcemap for known Google Drive index: {fullSourceMapUrl}");
 
-			// goindex, goindex-drive, goindex-backup
-			if (htmlDocument.QuerySelector("script[src*=\"goindex\" i]") != null)
-			{
-				return await GoIndexParser.ParseIndex(httpClient, webDirectory);
-			}
+						IAsyncEnumerable<string> sources = Library.GetSourcesFromSourceMapAsync(httpClient, fullSourceMapUrl);
 
-			if (htmlDocument.QuerySelector("script[src*=\"gdindex\" i]") != null)
-			{
-				return await GdIndexParser.ParseIndex(httpClient, webDirectory, html);
+						await foreach (string source in sources)
+						{
+							googleDriveIndexType = GoogleDriveIndexMapping.GetGoogleDriveIndexType(source);
+
+							if (googleDriveIndexType is not null)
+							{
+								break;
+							}
+						}
+					}
+				}
+
+				switch (googleDriveIndexType)
+				{
+					case GoogleDriveIndexMapping.BhadooIndex:
+						return await BhadooIndexParser.ParseIndex(htmlDocument, httpClient, webDirectory);
+					case GoogleDriveIndexMapping.GoIndex:
+						return await GoIndexParser.ParseIndex(httpClient, webDirectory);
+					case GoogleDriveIndexMapping.Go2Index:
+						return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
+					case GoogleDriveIndexMapping.GdIndex:
+						return await GdIndexParser.ParseIndex(httpClient, webDirectory, html);
+				}
 			}
 
 			htmlDocument.QuerySelectorAll("#sidebar").ToList().ForEach(e => e.Remove());

@@ -396,7 +396,7 @@ public class Library
 		return regexMatch.Groups["SourceMapUrl"].Value;
 	}
 
-	private static async IAsyncEnumerable<string> GetSourcesFromSourceMapAsync(HttpClient httpClient, string sourceUrl)
+	public static async IAsyncEnumerable<string> GetSourcesFromSourceMapAsync(HttpClient httpClient, string sourceUrl)
 	{
 		using (Stream httpStream = await httpClient.GetStreamAsync(sourceUrl))
 		{
