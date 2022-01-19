@@ -22,22 +22,29 @@ public class BrowserContext
 	private Page Page { get; set; }
 	private CookieContainer CookieContainer { get; }
 	public bool DebugInfo { get; }
+	public TimeSpan Timeout { get; set; }
 	private string Url { get; }
 	private CancellationTokenSource CancellationTokenSource { get; set; } = new CancellationTokenSource();
 	private bool OK { get; set; }
 
-	public BrowserContext(string url, CookieContainer cookieContainer, bool debugInfo = false)
+	public BrowserContext(string url, CookieContainer cookieContainer, bool debugInfo = false, TimeSpan timeout = default)
 	{
 		Url = url;
 		CookieContainer = cookieContainer;
 		DebugInfo = debugInfo;
+		Timeout = timeout;
 	}
 
 	public async Task<bool> DoAsync()
 	{
 		try
 		{
-			CancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(60));
+			if (Timeout == default)
+			{
+				Timeout = TimeSpan.FromMinutes(1);
+			}
+
+			CancellationTokenSource.CancelAfter(Timeout);
 
 			BrowserFetcher browserFetcher = new BrowserFetcher();
 
