@@ -833,6 +833,26 @@ public class OpenDirectoryIndexer
 
 			if (Regex.IsMatch(cloudflareHtml, @"<form class=""challenge-form[^>]*>([\s\S]*?)<\/form>"))
 			{
+				if (!HttpClient.DefaultRequestHeaders.UserAgent.Any())
+				{
+					HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
+					httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
+				}
+			}
+		}
+
+		if (httpResponseMessage?.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
+		{
+			string cloudflareHtml = await GetHtml(httpResponseMessage);
+
+			if (Regex.IsMatch(cloudflareHtml, @"<form class=""challenge-form[^>]*>([\s\S]*?)<\/form>"))
+			{
+				if (!HttpClient.DefaultRequestHeaders.UserAgent.Any())
+				{
+					HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
+					httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
+				}
+
 				if (OpenDirectoryIndexerSettings.CommandLineOptions.NoBrowser)
 				{
 					Logger.Error("Cloudflare protection detected, --no-browser option active, cannot continue!");
@@ -951,6 +971,11 @@ public class OpenDirectoryIndexer
 					}
 				}
 			}
+		}
+
+		if (httpResponseMessage is null)
+		{
+			throw new Exception($"Error retrieving directory listing for {webDirectory.Url}");
 		}
 
 		if (!HttpClient.DefaultRequestHeaders.Contains("Referer"))
