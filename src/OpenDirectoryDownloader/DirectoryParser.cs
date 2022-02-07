@@ -66,45 +66,47 @@ public static class DirectoryParser
 				return await BlitzfilesTechParser.ParseIndex(httpClient, webDirectory);
 			}
 
-			foreach (IHtmlScriptElement script in htmlDocument.Scripts.Where(s => s.Source is not null))
+			if (httpClient is not null)
 			{
-				string googleDriveIndexType = GoogleDriveIndexMapping.GetGoogleDriveIndexType(script.Source);
-
-				if (googleDriveIndexType is null && script.Source.ToLower().Contains("app.min.js"))
+				foreach (IHtmlScriptElement script in htmlDocument.Scripts.Where(s => s.Source is not null))
 				{
-					Logger.Warn($"Checking/downloading javascript for sourcemaps: {script.Source}");
+					string googleDriveIndexType = GoogleDriveIndexMapping.GetGoogleDriveIndexType(script.Source);
 
-					string sourceMapUrl = await Library.GetSourceMapUrlFromJavaScriptAsync(httpClient, script.Source);
-
-					if (!string.IsNullOrWhiteSpace(sourceMapUrl))
+					if (googleDriveIndexType is null && script.Source.ToLower().Contains("app.min.js"))
 					{
-						string fullSourceMapUrl = new Uri(new Uri(script.Source), sourceMapUrl).ToString();
-						Logger.Warn($"Checking/downloading sourcemap for known Google Drive index: {fullSourceMapUrl}");
+						Logger.Warn($"Checking/downloading javascript for sourcemaps: {script.Source}");
+						string sourceMapUrl = await Library.GetSourceMapUrlFromJavaScriptAsync(httpClient, script.Source);
 
-						IAsyncEnumerable<string> sources = Library.GetSourcesFromSourceMapAsync(httpClient, fullSourceMapUrl);
-
-						await foreach (string source in sources)
+						if (!string.IsNullOrWhiteSpace(sourceMapUrl))
 						{
-							googleDriveIndexType = GoogleDriveIndexMapping.GetGoogleDriveIndexType(source);
+							string fullSourceMapUrl = new Uri(new Uri(script.Source), sourceMapUrl).ToString();
+							Logger.Warn($"Checking/downloading sourcemap for known Google Drive index: {fullSourceMapUrl}");
 
-							if (googleDriveIndexType is not null)
+							IAsyncEnumerable<string> sources = Library.GetSourcesFromSourceMapAsync(httpClient, fullSourceMapUrl);
+
+							await foreach (string source in sources)
 							{
-								break;
+								googleDriveIndexType = GoogleDriveIndexMapping.GetGoogleDriveIndexType(source);
+
+								if (googleDriveIndexType is not null)
+								{
+									break;
+								}
 							}
 						}
 					}
-				}
 
-				switch (googleDriveIndexType)
-				{
-					case GoogleDriveIndexMapping.BhadooIndex:
-						return await BhadooIndexParser.ParseIndex(htmlDocument, httpClient, webDirectory);
-					case GoogleDriveIndexMapping.GoIndex:
-						return await GoIndexParser.ParseIndex(httpClient, webDirectory);
-					case GoogleDriveIndexMapping.Go2Index:
-						return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
-					case GoogleDriveIndexMapping.GdIndex:
-						return await GdIndexParser.ParseIndex(httpClient, webDirectory, html);
+					switch (googleDriveIndexType)
+					{
+						case GoogleDriveIndexMapping.BhadooIndex:
+							return await BhadooIndexParser.ParseIndex(htmlDocument, httpClient, webDirectory);
+						case GoogleDriveIndexMapping.GoIndex:
+							return await GoIndexParser.ParseIndex(httpClient, webDirectory);
+						case GoogleDriveIndexMapping.Go2Index:
+							return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
+						case GoogleDriveIndexMapping.GdIndex:
+							return await GdIndexParser.ParseIndex(httpClient, webDirectory, html);
+					}
 				}
 			}
 
