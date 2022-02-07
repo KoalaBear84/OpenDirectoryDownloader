@@ -121,7 +121,7 @@ class Program
 
 		if (string.IsNullOrEmpty(openDirectoryIndexerSettings.Username) && string.IsNullOrEmpty(openDirectoryIndexerSettings.Password))
 		{
-			if (Library.GetUriCredentials(new Uri(url), out string username, out string password))
+			if (Library.GetUriCredentials(new Uri(openDirectoryIndexerSettings.Url), out string username, out string password))
 			{
 				Console.WriteLine($"Using username '{username}' and password '{password}'");
 				openDirectoryIndexerSettings.Username = username;
