@@ -54,6 +54,12 @@ public class OpenDirectoryIndexer
 
 	private static readonly Random Jitterer = new Random();
 
+	private static List<string> KnownErrorPaths = new List<string>()
+	{
+		"cgi-bin/",
+		"lost%2Bfound/"
+	};
+
 	private readonly AsyncRetryPolicy RetryPolicy = Policy
 		.Handle<Exception>()
 		.WaitAndRetryAsync(100,
@@ -74,38 +80,40 @@ public class OpenDirectoryIndexer
 				}
 				else if (ex is HttpRequestException httpRequestException)
 				{
-					if (ex.Message.Contains("503 (Service Temporarily Unavailable)") || ex.Message.Contains("503 (Service Unavailable)") || ex.Message.Contains("429 (Too Many Requests)"))
+					int httpStatusCode = (int)httpRequestException.StatusCode;
+
+					if (KnownErrorPaths.Contains(webDirectory.Uri.Segments.LastOrDefault()))
 					{
-						Logger.Warn($"[{context["Processor"]}] Rate limited (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Cancelling known error on try {retryCount} for url '{relativeUrl}'.");
+						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
+					}
+					else if (httpRequestException.StatusCode == HttpStatusCode.ServiceUnavailable || httpRequestException.StatusCode == HttpStatusCode.TooManyRequests)
+					{
+						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Rate limited (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
 					}
 					else if (ex.Message.Contains("No connection could be made because the target machine actively refused it."))
 					{
-						Logger.Warn($"[{context["Processor"]}] Rate limited? (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Rate limited? (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
 					}
-					else if (!Session.GDIndex && (ex.Message.Contains("404 (Not Found)") || ex.Message == "No such host is known."))
+					else if (!Session.GDIndex && (httpRequestException.StatusCode == HttpStatusCode.NotFound || ex.Message == "No such host is known."))
 					{
-						Logger.Warn($"[{context["Processor"]}] Error \'{ex.Message}\' retrieving on try {retryCount} for url '{relativeUrl}'. Skipping..");
+						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Error \'{ex.Message}\' retrieving on try {retryCount} for url '{relativeUrl}'. Skipping..");
 						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
 					}
-					else if ((ex.Message.Contains("401 (Unauthorized)") || ex.Message.Contains("401 (Authorization Required)") || ex.Message.Contains("403 (Forbidden)")) && retryCount >= 3)
+					else if ((httpRequestException.StatusCode == HttpStatusCode.Forbidden || httpRequestException.StatusCode == HttpStatusCode.Unauthorized) && retryCount >= 3)
 					{
-						Logger.Warn($"[{context["Processor"]}] Error \'{ex.Message}\' retrieving on try {retryCount} for url '{relativeUrl}'. Skipping..");
+						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Error \'{ex.Message}\' retrieving on try {retryCount} for url '{relativeUrl}'. Skipping..");
 						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
 					}
 					else if (retryCount <= 4)
 					{
-						Logger.Warn($"[{context["Processor"]}] Error \'{GetExceptionWithInner(ex)}\' retrieving on try {retryCount} for url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Error \'{GetExceptionWithInner(ex)}\' retrieving on try {retryCount} for url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
 					}
 					else
 					{
-						Logger.Warn($"[{context["Processor"]}] Cancelling on try {retryCount} for url '{relativeUrl}'.");
+						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Cancelling on try {retryCount} for url '{relativeUrl}'.");
 						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
 					}
-				}
-				else if (webDirectory.Uri.Segments.LastOrDefault() == "cgi-bin/")
-				{
-					Logger.Warn($"[{context["Processor"]}] Cancelling on try {retryCount} for url '{relativeUrl}'.");
-					(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
 				}
 				else
 				{
