@@ -638,6 +638,12 @@ public class OpenDirectoryIndexer
 
 		do
 		{
+			if (RunningWebDirectoryThreads + 1 > Session.MaxThreads)
+			{
+				Logger.Info($"Stopped thread because it's there are more threads ({RunningWebDirectoryThreads + 1}) running than wanted ({Session.MaxThreads})");
+				break;
+			}
+
 			Interlocked.Increment(ref RunningWebDirectoryThreads);
 
 			if (queue.TryDequeue(out WebDirectory webDirectory))

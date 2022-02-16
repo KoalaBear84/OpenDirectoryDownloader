@@ -96,6 +96,15 @@ public static class DirectoryParser
 						}
 					}
 
+					if (googleDriveIndexType is not null)
+					{
+						if (OpenDirectoryIndexer.Session.MaxThreads != 1)
+						{
+							OpenDirectoryIndexer.Session.MaxThreads = 1;
+							Logger.Warn($"Reduce threads to 1 because of Google Drive index");
+						}
+					}
+
 					switch (googleDriveIndexType)
 					{
 						case GoogleDriveIndexMapping.BhadooIndex:
@@ -533,7 +542,7 @@ public static class DirectoryParser
 				{
 					string fileName = new Uri(fullUrl).AbsolutePath;
 					string size = divElement.QuerySelector(".item-size").TextContent.Trim();
-					
+
 					parsedWebDirectory.Files.Add(new WebFile
 					{
 						Url = fullUrl,
