@@ -1,8 +1,9 @@
-﻿using AngleSharp.Html.Dom;
+using AngleSharp.Html.Dom;
+using Esprima;
+using Esprima.Ast;
 using Jint;
 using Jint.Native;
 using NLog;
-using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using System;
@@ -117,18 +118,25 @@ public static class BhadooIndexParser
 					Obfuscated = appJsScript.Source.Contains("obf.");
 
 					string appJsSource = httpClient.GetStringAsync(appJsScript.Source.Replace("obf.", string.Empty)).GetAwaiter().GetResult();
-					List<JavaScriptHelper.Function> functions = JavaScriptHelper.Parse(appJsSource);
+
+					JavaScriptParser javaScriptParser = new JavaScriptParser(appJsSource);
+					Script program = javaScriptParser.ParseScript();
+					IEnumerable<FunctionDeclaration> javaScriptFunctions = program.ChildNodes.OfType<FunctionDeclaration>();
+					FunctionDeclaration readFunctionDeclaration = javaScriptFunctions.FirstOrDefault(f => f.ChildNodes.OfType<Identifier>().Any(i => i.Name == "read"));
+					string readFunction = appJsSource.Substring(readFunctionDeclaration.Range.Start, readFunctionDeclaration.Range.End - readFunctionDeclaration.Range.Start);
 
 					JintEngine = new Engine();
 
-					JintEngine.Execute(functions.FirstOrDefault(f => f.Name == "read").Body);
+					JintEngine.Execute(readFunction);
 
 					if (Obfuscated)
 					{
 						Func<string, string> atob = str => Encoding.Latin1.GetString(Convert.FromBase64String(str));
 						JintEngine.SetValue("atob", atob);
 
-						JintEngine.Execute(functions.FirstOrDefault(f => f.Name == "gdidecode").Body);
+						FunctionDeclaration gdidecodeFunctionDeclaration = javaScriptFunctions.FirstOrDefault(f => f.ChildNodes.OfType<Identifier>().Any(i => i.Name == "gdidecode"));
+						string gdidecodeFunction = appJsSource.Substring(gdidecodeFunctionDeclaration.Range.Start, gdidecodeFunctionDeclaration.Range.End - gdidecodeFunctionDeclaration.Range.Start);
+						JintEngine.Execute(gdidecodeFunction);
 					}
 				}
 
