@@ -849,6 +849,24 @@ public class OpenDirectoryIndexer
 			}
 		}
 
+		if (httpResponseMessage?.StatusCode == HttpStatusCode.ServiceUnavailable && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
+		{
+			if (OpenDirectoryIndexerSettings.CommandLineOptions.NoBrowser)
+			{
+				Logger.Error("Cloudflare protection detected, --no-browser option active, cannot continue!");
+				return;
+			}
+
+			bool cloudflareOK = await OpenCloudflareBrowser();
+
+			if (!cloudflareOK)
+			{
+				Logger.Error("Cloudflare failed!");
+
+				return;
+			}
+		}
+
 		if (httpResponseMessage?.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
 		{
 			string cloudflareHtml = await GetHtml(httpResponseMessage);
