@@ -1,4 +1,4 @@
-using AngleSharp.Html.Dom;
+﻿using AngleSharp.Html.Dom;
 using Esprima;
 using Esprima.Ast;
 using Jint;
@@ -110,6 +110,15 @@ public static class BhadooIndexParser
 				{
 					IHtmlScriptElement appJsScript = htmlDocument.Scripts.FirstOrDefault(s =>
 						s.Source?.Contains("app.js") == true ||
+						s.Source?.Contains("app-multiple-drives.js") == true ||
+						s.Source?.Contains("app-multiple-drives.min.js") == true ||
+						s.Source?.Contains("app-multiple-drives.obf.js") == true ||
+						s.Source?.Contains("app-read-only.js") == true ||
+						s.Source?.Contains("app-read-only.min.js") == true ||
+						s.Source?.Contains("app-read-only.obf.js") == true ||
+						s.Source?.Contains("app-super-api.js") == true ||
+						s.Source?.Contains("app-super-api.min.js") == true ||
+						s.Source?.Contains("app-super-api.obf.js") == true ||
 						s.Source?.Contains("app.min.js") == true ||
 						s.Source?.Contains("app.obf.js") == true ||
 						s.Source?.Contains("app.obf.min.js") == true
