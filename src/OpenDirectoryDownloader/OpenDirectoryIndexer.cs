@@ -867,20 +867,12 @@ public class OpenDirectoryIndexer
 					return;
 				}
 
-				Logger.Warn("Cloudflare protection detected, trying to launch browser. Solve protection yourself, indexing will start automatically!");
+				bool cloudflareOK = await OpenCloudflareBrowser();
 
-				BrowserContext browserContext = new BrowserContext(OpenDirectoryIndexerSettings.Url, HttpClientHandler.CookieContainer);
-				bool cloudFlareOK = await browserContext.DoAsync();
-
-				if (cloudFlareOK)
+				if (!cloudflareOK)
 				{
-					Logger.Warn("Cloudflare OK!");
+					Logger.Error("Cloudflare failed!");
 				}
-
-				Logger.Warn("User agent forced to Chrome because of Cloudflare");
-
-				HttpClient.DefaultRequestHeaders.UserAgent.Clear();
-				HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
 
 				httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
 			}
@@ -1140,6 +1132,26 @@ public class OpenDirectoryIndexer
 			Logger.Warn($"[{name}] Skipped result of '{webDirectory.Url}' which points to '{httpResponseMessage.RequestMessage.RequestUri}'");
 			Session.Skipped++;
 		}
+	}
+
+	private async Task<bool> OpenCloudflareBrowser()
+	{
+		Logger.Warn("Cloudflare protection detected, trying to launch browser. Solve protection yourself, indexing will start automatically!");
+
+		BrowserContext browserContext = new BrowserContext(OpenDirectoryIndexerSettings.Url, HttpClientHandler.CookieContainer);
+		bool cloudFlareOK = await browserContext.DoAsync();
+
+		if (cloudFlareOK)
+		{
+			Logger.Warn("Cloudflare OK!");
+
+			Logger.Warn("User agent forced to Chrome because of Cloudflare");
+
+			HttpClient.DefaultRequestHeaders.UserAgent.Clear();
+			HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
+		}
+
+		return cloudFlareOK;
 	}
 
 	private static void ConvertDirectoryToFile(WebDirectory webDirectory, HttpResponseMessage httpResponseMessage)
