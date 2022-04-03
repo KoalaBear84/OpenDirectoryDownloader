@@ -997,6 +997,37 @@ public class OpenDirectoryIndexer
 			}
 		}
 
+		if (FirstRequest && (httpResponseMessage == null || !httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.IsSuccessStatusCode) && string.IsNullOrWhiteSpace(html))
+		{
+			Logger.Warn("First request fails, using Chrome fallback User-Agent");
+			HttpClient.DefaultRequestHeaders.UserAgent.Clear();
+			HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
+			HttpClient.DefaultRequestHeaders.Accept.ParseAdd("text/html");
+			HttpClient.DefaultRequestHeaders.AcceptLanguage.ParseAdd("en-US,en;q=0.9,nl;q=0.8");
+			httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
+
+			if (httpResponseMessage.IsSuccessStatusCode)
+			{
+				Logger.Warn("Yes, Chrome User-Agent (with extra headers) did the trick!");
+
+				SetRootUrl(httpResponseMessage);
+
+				using (Stream htmlStream = await GetHtmlStream(httpResponseMessage))
+				{
+					if (htmlStream != null)
+					{
+						html = await GetHtml(htmlStream);
+					}
+					else
+					{
+						ConvertDirectoryToFile(webDirectory, httpResponseMessage);
+
+						return;
+					}
+				}
+			}
+		}
+
 		if (httpResponseMessage is null)
 		{
 			throw new Exception($"Error retrieving directory listing for {webDirectory.Url}");
