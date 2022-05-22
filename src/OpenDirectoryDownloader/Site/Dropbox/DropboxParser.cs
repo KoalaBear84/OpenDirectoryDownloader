@@ -15,7 +15,7 @@ namespace OpenDirectoryDownloader.Site.Dropbox;
 public static class DropboxParser
 {
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-	private static readonly Regex UrlRegex = new Regex(@"\/sh\/(?<LinkKey>[^\/]*)\/(?<SecureHash>[^\/?]*)(?:\/(?<SubPath>[^?]*))");
+	private static readonly Regex UrlRegex = new Regex(@"\/sh\/(?<LinkKey>[^\/]*)\/(?<SecureHash>[^\/?]*)(?:\/(?<SubPath>[^?]*))?");
 	private static readonly Regex PrefetchListingRegex = new Regex(@"window\[""__REGISTER_SHARED_LINK_FOLDER_PRELOAD_HANDLER""\]\.responseReceived\((?<PrefetchListing>"".*)\)\s?}\);");
 	private const string Parser = "Dropbox";
 	public const string Parameters_CSRFToken = "CSRFTOKEN";
@@ -58,6 +58,7 @@ public static class DropboxParser
 			}
 
 			HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(webDirectory.Uri);
+			httpResponseMessage.EnsureSuccessStatusCode();
 
 			CookieContainer cookieContainer = new CookieContainer();
 
@@ -116,6 +117,8 @@ public static class DropboxParser
 
 						HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://www.dropbox.com/list_shared_link_folder_entries") { Content = new FormUrlEncodedContent(postValues) };
 						httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
+
+						httpResponseMessage.EnsureSuccessStatusCode();
 
 						string response = await httpResponseMessage.Content.ReadAsStringAsync();
 
