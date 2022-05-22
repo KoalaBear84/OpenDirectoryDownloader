@@ -4,6 +4,7 @@ public class Constants
 {
 	public const string GoogleDriveDomain = "drive.google.com";
 	public const string BlitzfilesTechDomain = "blitzfiles.tech";
+	public const string DropboxDomain = "www.dropbox.com";
 
 	public const string GoFileIoDomain = "gofile.io";
 	public const string Parameters_GdIndex_RootId = "GDINDEX_ROOTID";

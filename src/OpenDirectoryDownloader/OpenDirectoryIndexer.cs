@@ -379,6 +379,7 @@ public class OpenDirectoryIndexer
 				if (!OpenDirectoryIndexerSettings.CommandLineOptions.NoUrls &&
 					Session.Root.Uri.Host != Constants.GoogleDriveDomain &&
 					Session.Root.Uri.Host != Constants.BlitzfilesTechDomain &&
+					Session.Root.Uri.Host != Constants.DropboxDomain &&
 					Session.Root.Uri.Host != Constants.GoFileIoDomain &&
 					Session.Root.Uri.Host != Constants.MediafireDomain &&
 					Session.Root.Uri.Host != Constants.PixeldrainDomain)
@@ -450,6 +451,7 @@ public class OpenDirectoryIndexer
 				if (OpenDirectoryIndexerSettings.CommandLineOptions.Speedtest &&
 					Session.Root.Uri.Host != Constants.GoogleDriveDomain &&
 					Session.Root.Uri.Host != Constants.BlitzfilesTechDomain &&
+					Session.Root.Uri.Host != Constants.DropboxDomain &&
 					Session.Root.Uri.Host != Constants.GoFileIoDomain &&
 					Session.Root.Uri.Host != Constants.MediafireDomain &&
 					Session.Root.Uri.Host != Constants.PixeldrainDomain)
@@ -733,7 +735,9 @@ public class OpenDirectoryIndexer
 						}
 						else
 						{
-							if (Session.Root.Uri.Host == Constants.BlitzfilesTechDomain || DirectoryParser.SameHostAndDirectoryFile(Session.Root.Uri, webDirectory.Uri))
+							if (Session.Root.Uri.Host == Constants.BlitzfilesTechDomain ||
+								Session.Root.Uri.Host == Constants.DropboxDomain ||
+								DirectoryParser.SameHostAndDirectoryFile(Session.Root.Uri, webDirectory.Uri))
 							{
 								Logger.Debug($"[{name}] Start download '{webDirectory.Url}'");
 								Session.TotalHttpRequests++;
@@ -1392,7 +1396,10 @@ public class OpenDirectoryIndexer
 			{
 				if (!Session.ProcessedUrls.Contains(subdirectory.Url))
 				{
-					if (subdirectory.Uri.Host != Constants.GoogleDriveDomain && subdirectory.Uri.Host != Constants.BlitzfilesTechDomain && !DirectoryParser.SameHostAndDirectoryFile(Session.Root.Uri, subdirectory.Uri))
+					if (subdirectory.Uri.Host != Constants.GoogleDriveDomain &&
+						subdirectory.Uri.Host != Constants.BlitzfilesTechDomain &&
+						subdirectory.Uri.Host != Constants.DropboxDomain &&
+						!DirectoryParser.SameHostAndDirectoryFile(Session.Root.Uri, subdirectory.Uri))
 					{
 						Logger.Debug($"Removed subdirectory {subdirectory.Uri} from parsed webdirectory because it is not the same host");
 					}

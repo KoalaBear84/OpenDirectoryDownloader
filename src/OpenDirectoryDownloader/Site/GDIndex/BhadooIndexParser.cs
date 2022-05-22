@@ -132,7 +132,7 @@ public static class BhadooIndexParser
 					Script program = javaScriptParser.ParseScript();
 					IEnumerable<FunctionDeclaration> javaScriptFunctions = program.ChildNodes.OfType<FunctionDeclaration>();
 					FunctionDeclaration readFunctionDeclaration = javaScriptFunctions.FirstOrDefault(f => f.ChildNodes.OfType<Identifier>().Any(i => i.Name == "read"));
-					string readFunction = appJsSource.Substring(readFunctionDeclaration.Range.Start, readFunctionDeclaration.Range.End - readFunctionDeclaration.Range.Start);
+					string readFunction = appJsSource[readFunctionDeclaration.Range.Start..readFunctionDeclaration.Range.End];
 
 					JintEngine = new Engine();
 
@@ -144,7 +144,7 @@ public static class BhadooIndexParser
 						JintEngine.SetValue("atob", atob);
 
 						FunctionDeclaration gdidecodeFunctionDeclaration = javaScriptFunctions.FirstOrDefault(f => f.ChildNodes.OfType<Identifier>().Any(i => i.Name == "gdidecode"));
-						string gdidecodeFunction = appJsSource.Substring(gdidecodeFunctionDeclaration.Range.Start, gdidecodeFunctionDeclaration.Range.End - gdidecodeFunctionDeclaration.Range.Start);
+						string gdidecodeFunction = appJsSource[gdidecodeFunctionDeclaration.Range.Start..gdidecodeFunctionDeclaration.Range.End];
 						JintEngine.Execute(gdidecodeFunction);
 					}
 				}

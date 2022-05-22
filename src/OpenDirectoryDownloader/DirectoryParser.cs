@@ -8,6 +8,7 @@ using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using OpenDirectoryDownloader.Site.BlitzfilesTech;
+using OpenDirectoryDownloader.Site.Dropbox;
 using OpenDirectoryDownloader.Site.GDIndex;
 using OpenDirectoryDownloader.Site.GDIndex.Bhadoo;
 using OpenDirectoryDownloader.Site.GDIndex.GdIndex;
@@ -67,6 +68,11 @@ public static class DirectoryParser
 			if (webDirectory.Uri.Host == Constants.BlitzfilesTechDomain)
 			{
 				return await BlitzfilesTechParser.ParseIndex(httpClient, webDirectory);
+			}
+
+			if (webDirectory.Uri.Host == Constants.DropboxDomain)
+			{
+				return await DropboxParser.ParseIndex(httpClient, webDirectory);
 			}
 
 			if (webDirectory.Uri.Host == Constants.GoFileIoDomain)
