@@ -11,6 +11,7 @@ public static class MediafireParser
 {
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private static readonly Regex FolderIdRegex = new Regex(@"\/folder\/(?<FolderId>[^/]*)(?:\/?.*)?");
+	private static readonly Regex FolderIdRegex2 = new Regex(@"\/\?(?<FolderId>[^/]*)(?:\/?.*)?");
 	private const string Parser = "Mediafire";
 	private const string StatusSuccess = "Success";
 	private const string ApiBaseAddress = "https://www.mediafire.com/api/1.4";
@@ -43,12 +44,19 @@ public static class MediafireParser
 	{
 		Match folderIdRegexMatch = FolderIdRegex.Match(webDirectory.Url);
 
-		if (!folderIdRegexMatch.Success)
+		if (folderIdRegexMatch.Success)
 		{
-			throw new Exception("Error getting folder id");
+			return folderIdRegexMatch.Groups["FolderId"].Value;
 		}
 
-		return folderIdRegexMatch.Groups["FolderId"].Value;
+		Match folderIdRegex2Match = FolderIdRegex2.Match(webDirectory.Url);
+
+		if (folderIdRegex2Match.Success)
+		{
+			return folderIdRegex2Match.Groups["FolderId"].Value;
+		}
+
+		throw new Exception("Error getting folder id");
 	}
 
 	private static async Task<WebDirectory> ScanAsync(HttpClient httpClient, WebDirectory webDirectory)
