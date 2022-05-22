@@ -4,10 +4,15 @@ public class Constants
 {
 	public const string GoogleDriveDomain = "drive.google.com";
 	public const string BlitzfilesTechDomain = "blitzfiles.tech";
+
+	public const string GoFileIoDomain = "gofile.io";
+	public const string Parameters_GdIndex_RootId = "GDINDEX_ROOTID";
+	public const string Parameters_GoFileIOAccountToken = "GOFILE_ACCOUNTTOKEN";
+
 	public const string DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 	public const string Parameters_Password = "PASSWORD";
-	public const string Parameters_GdIndex_RootId = "GdIndex_RootId";
 	public const string Parameters_FtpEncryptionMode = "FtpEncryptionMode";
+
 	public const long NoFileSize = 0;
 	public const string Root = "ROOT";
 	public const string Ftp_Max_Connections = "MAX_CONNECTIONS";

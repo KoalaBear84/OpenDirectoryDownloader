@@ -376,7 +376,10 @@ public class OpenDirectoryIndexer
 
 				Console.WriteLine(Statistics.GetSessionStats(Session, onlyRedditStats: true, includeExtensions: true));
 
-				if (!OpenDirectoryIndexerSettings.CommandLineOptions.NoUrls && Session.Root.Uri.Host != Constants.GoogleDriveDomain && Session.Root.Uri.Host != Constants.BlitzfilesTechDomain)
+				if (!OpenDirectoryIndexerSettings.CommandLineOptions.NoUrls &&
+					Session.Root.Uri.Host != Constants.GoogleDriveDomain &&
+					Session.Root.Uri.Host != Constants.BlitzfilesTechDomain &&
+					Session.Root.Uri.Host != Constants.GoFileIoDomain)
 				{
 					if (Session.TotalFiles > 0)
 					{
@@ -442,7 +445,10 @@ public class OpenDirectoryIndexer
 
 				distinctUrls = null;
 
-				if (OpenDirectoryIndexerSettings.CommandLineOptions.Speedtest && Session.Root.Uri.Host != Constants.GoogleDriveDomain && Session.Root.Uri.Host != Constants.BlitzfilesTechDomain)
+				if (OpenDirectoryIndexerSettings.CommandLineOptions.Speedtest &&
+					Session.Root.Uri.Host != Constants.GoogleDriveDomain &&
+					Session.Root.Uri.Host != Constants.BlitzfilesTechDomain &&
+					Session.Root.Uri.Host != Constants.GoFileIoDomain)
 				{
 					if (Session.TotalFiles > 0)
 					{
