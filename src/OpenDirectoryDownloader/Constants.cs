@@ -11,6 +11,8 @@ public class Constants
 
 	public const string PixeldrainDomain = "pixeldrain.com";
 
+	public const string MediafireDomain = "www.mediafire.com";
+
 	public const string DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 	public const string Parameters_Password = "PASSWORD";
 	public const string Parameters_FtpEncryptionMode = "FtpEncryptionMode";

@@ -380,6 +380,7 @@ public class OpenDirectoryIndexer
 					Session.Root.Uri.Host != Constants.GoogleDriveDomain &&
 					Session.Root.Uri.Host != Constants.BlitzfilesTechDomain &&
 					Session.Root.Uri.Host != Constants.GoFileIoDomain &&
+					Session.Root.Uri.Host != Constants.MediafireDomain &&
 					Session.Root.Uri.Host != Constants.PixeldrainDomain)
 				{
 					if (Session.TotalFiles > 0)
@@ -450,6 +451,7 @@ public class OpenDirectoryIndexer
 					Session.Root.Uri.Host != Constants.GoogleDriveDomain &&
 					Session.Root.Uri.Host != Constants.BlitzfilesTechDomain &&
 					Session.Root.Uri.Host != Constants.GoFileIoDomain &&
+					Session.Root.Uri.Host != Constants.MediafireDomain &&
 					Session.Root.Uri.Host != Constants.PixeldrainDomain)
 				{
 					if (Session.TotalFiles > 0)

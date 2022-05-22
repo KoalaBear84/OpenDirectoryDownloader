@@ -14,6 +14,7 @@ using OpenDirectoryDownloader.Site.GDIndex.GdIndex;
 using OpenDirectoryDownloader.Site.GDIndex.Go2Index;
 using OpenDirectoryDownloader.Site.GDIndex.GoIndex;
 using OpenDirectoryDownloader.Site.GoFileIO;
+using OpenDirectoryDownloader.Site.Mediafire;
 using OpenDirectoryDownloader.Site.Pixeldrain;
 using System;
 using System.Collections.Generic;
@@ -76,6 +77,11 @@ public static class DirectoryParser
 			if (webDirectory.Uri.Host == Constants.PixeldrainDomain)
 			{
 				return await PixeldrainParser.ParseIndex(httpClient, webDirectory, html);
+			}
+
+			if (webDirectory.Uri.Host == Constants.MediafireDomain)
+			{
+				return await MediafireParser.ParseIndex(httpClient, webDirectory);
 			}
 
 			if (httpClient is not null)
