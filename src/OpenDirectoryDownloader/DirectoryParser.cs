@@ -14,6 +14,7 @@ using OpenDirectoryDownloader.Site.GDIndex.GdIndex;
 using OpenDirectoryDownloader.Site.GDIndex.Go2Index;
 using OpenDirectoryDownloader.Site.GDIndex.GoIndex;
 using OpenDirectoryDownloader.Site.GoFileIO;
+using OpenDirectoryDownloader.Site.Pixeldrain;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -70,6 +71,11 @@ public static class DirectoryParser
 			if (webDirectory.Uri.Host == Constants.GoFileIoDomain)
 			{
 				return await GoFileIOParser.ParseIndex(httpClient, webDirectory);
+			}
+
+			if (webDirectory.Uri.Host == Constants.PixeldrainDomain)
+			{
+				return await PixeldrainParser.ParseIndex(httpClient, webDirectory, html);
 			}
 
 			if (httpClient is not null)

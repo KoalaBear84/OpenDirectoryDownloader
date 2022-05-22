@@ -379,7 +379,8 @@ public class OpenDirectoryIndexer
 				if (!OpenDirectoryIndexerSettings.CommandLineOptions.NoUrls &&
 					Session.Root.Uri.Host != Constants.GoogleDriveDomain &&
 					Session.Root.Uri.Host != Constants.BlitzfilesTechDomain &&
-					Session.Root.Uri.Host != Constants.GoFileIoDomain)
+					Session.Root.Uri.Host != Constants.GoFileIoDomain &&
+					Session.Root.Uri.Host != Constants.PixeldrainDomain)
 				{
 					if (Session.TotalFiles > 0)
 					{
@@ -448,7 +449,8 @@ public class OpenDirectoryIndexer
 				if (OpenDirectoryIndexerSettings.CommandLineOptions.Speedtest &&
 					Session.Root.Uri.Host != Constants.GoogleDriveDomain &&
 					Session.Root.Uri.Host != Constants.BlitzfilesTechDomain &&
-					Session.Root.Uri.Host != Constants.GoFileIoDomain)
+					Session.Root.Uri.Host != Constants.GoFileIoDomain &&
+					Session.Root.Uri.Host != Constants.PixeldrainDomain)
 				{
 					if (Session.TotalFiles > 0)
 					{

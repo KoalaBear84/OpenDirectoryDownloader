@@ -9,6 +9,8 @@ public class Constants
 	public const string Parameters_GdIndex_RootId = "GDINDEX_ROOTID";
 	public const string Parameters_GoFileIOAccountToken = "GOFILE_ACCOUNTTOKEN";
 
+	public const string PixeldrainDomain = "pixeldrain.com";
+
 	public const string DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 	public const string Parameters_Password = "PASSWORD";
 	public const string Parameters_FtpEncryptionMode = "FtpEncryptionMode";

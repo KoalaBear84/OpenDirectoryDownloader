@@ -7,9 +7,6 @@ using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader.Site.GoFileIO;
 
-/// <summary>
-/// Similar to GoFile.IO
-/// </summary>
 public static class GoFileIOParser
 {
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
