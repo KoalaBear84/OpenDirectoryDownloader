@@ -117,6 +117,6 @@ public static class PixeldrainParser
 			//throw;
 		}
 
-		return webDirectory;
+		return await Task.FromResult(webDirectory);
 	}
 }
