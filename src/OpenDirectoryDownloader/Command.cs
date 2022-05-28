@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System.Net;
 using TextCopy;
 
 namespace OpenDirectoryDownloader;
@@ -196,8 +197,7 @@ public class Command
 			Logger.Info("Saving URL list to file..");
 			Console.WriteLine("Saving URL list to file..");
 
-			IEnumerable<string> distinctUrls = OpenDirectoryIndexer.Session.Root.AllFileUrls.Distinct();
-
+			IEnumerable<string> distinctUrls = OpenDirectoryIndexer.Session.Root.AllFileUrls.Distinct().Select(i => WebUtility.UrlDecode(i));
 			string urlsPath = Library.GetOutputFullPath(OpenDirectoryIndexer.Session, openDirectoryIndexer.OpenDirectoryIndexerSettings, "txt");
 			File.WriteAllLines(urlsPath, distinctUrls);
 

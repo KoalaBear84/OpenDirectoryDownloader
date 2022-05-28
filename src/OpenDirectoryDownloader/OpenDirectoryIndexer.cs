@@ -367,7 +367,7 @@ public class OpenDirectoryIndexer
 				Session.TotalFiles = Session.Root.TotalFiles;
 				Session.TotalFileSizeEstimated = Session.Root.TotalFileSize;
 
-				IEnumerable<string> distinctUrls = Session.Root.AllFileUrls.Distinct();
+				IEnumerable<string> distinctUrls = Session.Root.AllFileUrls.Distinct().Select(i => WebUtility.UrlDecode(i));
 
 				if (Session.TotalFiles != distinctUrls.Count())
 				{
@@ -392,8 +392,8 @@ public class OpenDirectoryIndexer
 						try
 						{
 							string urlsPath = Library.GetOutputFullPath(Session, OpenDirectoryIndexerSettings, "txt");
-
 							File.WriteAllLines(urlsPath, distinctUrls);
+
 							Logger.Info($"Saved URL list to file: {urlsPath}");
 							Console.WriteLine($"Saved URL list to file: {urlsPath}");
 
