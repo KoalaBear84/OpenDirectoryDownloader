@@ -17,6 +17,8 @@ public class Constants
 	public const string DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 	public const string Parameters_Password = "PASSWORD";
 	public const string Parameters_FtpEncryptionMode = "FtpEncryptionMode";
+	
+	public const string GoogleDriveIndexType = "GOOGLEDRIVEINDEXTYPE";
 
 	public const long NoFileSize = 0;
 	public const string Root = "ROOT";

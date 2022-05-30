@@ -1,6 +1,8 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
+using Esprima;
+using Esprima.Ast;
 using Newtonsoft.Json;
 using NLog;
 using OpenDirectoryDownloader.Helpers;
@@ -90,11 +92,13 @@ public static class DirectoryParser
 				return await MediafireParser.ParseIndex(httpClient, webDirectory);
 			}
 
-			if (httpClient is not null)
+			if (httpClient is not null && !OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.GoogleDriveIndexType))
 			{
+				string googleDriveIndexType = null;
+
 				foreach (IHtmlScriptElement script in htmlDocument.Scripts.Where(s => s.Source is not null))
 				{
-					string googleDriveIndexType = GoogleDriveIndexMapping.GetGoogleDriveIndexType(script.Source);
+					googleDriveIndexType = GoogleDriveIndexMapping.GetGoogleDriveIndexType(script.Source);
 
 					if (googleDriveIndexType is null && script.Source.ToLower().Contains("app.min.js"))
 					{
@@ -120,26 +124,49 @@ public static class DirectoryParser
 						}
 					}
 
-					if (googleDriveIndexType is not null)
+					if (googleDriveIndexType is null && script.Source.ToLower().Contains("app.js"))
 					{
-						if (OpenDirectoryIndexer.Session.MaxThreads != 1)
+						string appJsSource = await httpClient.GetStringAsync(script.Source);
+
+						JavaScriptParser javaScriptParser = new JavaScriptParser(appJsSource);
+						Script program = javaScriptParser.ParseScript();
+						IEnumerable<FunctionDeclaration> javaScriptFunctions = program.ChildNodes.OfType<FunctionDeclaration>();
+						FunctionDeclaration gdidecodeFunctionDeclaration = javaScriptFunctions.FirstOrDefault(f => f.ChildNodes.OfType<Identifier>().Any(i => i.Name == "gdidecode"));
+
+						if (gdidecodeFunctionDeclaration is not null)
 						{
-							OpenDirectoryIndexer.Session.MaxThreads = 1;
-							Logger.Warn($"Reduce threads to 1 because of Google Drive index");
+							googleDriveIndexType = GoogleDriveIndexMapping.BhadooIndex;
+							break;
 						}
 					}
+				}
 
-					switch (googleDriveIndexType)
+				if (googleDriveIndexType is not null)
+				{
+					OpenDirectoryIndexer.Session.Parameters[Constants.GoogleDriveIndexType] = googleDriveIndexType;
+					
+					if (OpenDirectoryIndexer.Session.MaxThreads != 1)
 					{
-						case GoogleDriveIndexMapping.BhadooIndex:
-							return await BhadooIndexParser.ParseIndex(htmlDocument, httpClient, webDirectory);
-						case GoogleDriveIndexMapping.GoIndex:
-							return await GoIndexParser.ParseIndex(httpClient, webDirectory);
-						case GoogleDriveIndexMapping.Go2Index:
-							return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
-						case GoogleDriveIndexMapping.GdIndex:
-							return await GdIndexParser.ParseIndex(httpClient, webDirectory, html);
+						OpenDirectoryIndexer.Session.MaxThreads = 1;
+						Logger.Warn($"Reduce threads to 1 because of Google Drive index");
 					}
+				}
+			}
+
+			if (OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.GoogleDriveIndexType))
+			{
+				string googleDriveIndexType = OpenDirectoryIndexer.Session.Parameters[Constants.GoogleDriveIndexType];
+
+				switch (googleDriveIndexType)
+				{
+					case GoogleDriveIndexMapping.BhadooIndex:
+						return await BhadooIndexParser.ParseIndex(htmlDocument, httpClient, webDirectory);
+					case GoogleDriveIndexMapping.GoIndex:
+						return await GoIndexParser.ParseIndex(httpClient, webDirectory);
+					case GoogleDriveIndexMapping.Go2Index:
+						return await Go2IndexParser.ParseIndex(httpClient, webDirectory);
+					case GoogleDriveIndexMapping.GdIndex:
+						return await GdIndexParser.ParseIndex(httpClient, webDirectory, html);
 				}
 			}
 
