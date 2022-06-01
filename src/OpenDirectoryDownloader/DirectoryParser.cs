@@ -139,6 +139,11 @@ public static class DirectoryParser
 							break;
 						}
 					}
+				
+					if (googleDriveIndexType is not null)
+					{
+						break;
+					}
 				}
 
 				if (googleDriveIndexType is not null)
