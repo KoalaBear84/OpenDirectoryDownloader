@@ -126,7 +126,14 @@ public static class DirectoryParser
 
 					if (googleDriveIndexType is null && script.Source.ToLower().Contains("app.js"))
 					{
-						string appJsSource = await httpClient.GetStringAsync(script.Source);
+						string scriptUrl = script.Source;
+
+						if (Uri.IsWellFormedUriString(scriptUrl, UriKind.Relative))
+						{
+							scriptUrl = (new Uri(OpenDirectoryIndexer.Session.Root.Uri, scriptUrl)).ToString();
+						}
+
+						string appJsSource = await httpClient.GetStringAsync(scriptUrl);
 
 						JavaScriptParser javaScriptParser = new JavaScriptParser(appJsSource);
 						Script program = javaScriptParser.ParseScript();
