@@ -165,7 +165,7 @@ public static class DirectoryParser
 				}
 			}
 
-			if (OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.GoogleDriveIndexType))
+			if (OpenDirectoryIndexer.Session is not null && OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.GoogleDriveIndexType))
 			{
 				string googleDriveIndexType = OpenDirectoryIndexer.Session.Parameters[Constants.GoogleDriveIndexType];
 
