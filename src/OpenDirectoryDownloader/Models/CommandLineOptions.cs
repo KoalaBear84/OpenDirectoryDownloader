@@ -14,6 +14,9 @@ public class CommandLineOptions
 	[Option('o', "timeout", Required = false, Default = 100, HelpText = "Number of seconds for timeout")]
 	public int Timeout { get; set; }
 
+	[Option('w', "wait", Required = false, Default = 0, HelpText = "Number of seconds to wait between calls (when single threaded is too fast..)")]
+	public int WaitSecondsBetweenCalls { get; set; }
+
 	[Option('q', "quit", Required = false, Default = false, HelpText = "Do not wait after scanning")]
 	public bool Quit { get; set; }
 

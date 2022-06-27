@@ -822,7 +822,14 @@ public class OpenDirectoryIndexer
 			}
 			else
 			{
-				await Task.Delay(TimeSpan.FromMilliseconds(10), cancellationToken);
+				if (OpenDirectoryIndexerSettings.CommandLineOptions.WaitSecondsBetweenCalls > 0)
+				{
+					await Task.Delay(TimeSpan.FromSeconds(OpenDirectoryIndexerSettings.CommandLineOptions.WaitSecondsBetweenCalls), cancellationToken);
+				}
+				else
+				{
+					await Task.Delay(TimeSpan.FromMilliseconds(10), cancellationToken);
+				}
 			}
 		}
 		while (!cancellationToken.IsCancellationRequested && (!queue.IsEmpty || RunningWebDirectoryThreads > 0) && !maxConnections);
