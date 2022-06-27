@@ -55,9 +55,9 @@ class Program
 			{
 				List<Error> errors = o.ToList();
 
-				stopProcessing = errors.Any(e => e.StopsProcessing);
+				stopProcessing = errors.Any(e => e.StopsProcessing || e.Tag == ErrorType.UnknownOptionError);
 
-				if (errors.Any(e => e.Tag == ErrorType.HelpRequestedError || e.Tag == ErrorType.VersionRequestedError))
+				if (errors.Any(e => e.Tag == ErrorType.HelpRequestedError || e.Tag == ErrorType.VersionRequestedError || e.Tag == ErrorType.UnknownOptionError))
 				{
 					return;
 				}
