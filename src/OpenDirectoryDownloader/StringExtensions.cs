@@ -34,7 +34,7 @@ public static class StringExtensions
 			throw new ArgumentException("until: Failed to find an instance of the last anchor");
 		}
 
-		string subString = @this.Substring(startIndex, endIndex - startIndex);
+		string subString = @this[startIndex..endIndex];
 
 		return subString;
 	}

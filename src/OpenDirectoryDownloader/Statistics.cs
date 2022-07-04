@@ -85,7 +85,7 @@ public static class Statistics
 		}
 		else
 		{
-			stringBuilder.AppendLine($"|**Url:** {$"[{session.Root.Url.Substring(0, 38)}...]({session.Root.Url})"}||{uploadedUrlsText}|");
+			stringBuilder.AppendLine($"|**Url:** {$"[{session.Root.Url[..38]}...]({session.Root.Url})"}||{uploadedUrlsText}|");
 		}
 
 		stringBuilder.AppendLine("|:-|-:|-:|");

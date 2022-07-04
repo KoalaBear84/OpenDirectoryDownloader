@@ -86,7 +86,7 @@ public class UrlEncodingParser : NameValueCollection
 			{
 				if (query.Length >= index + 1)
 				{
-					query = query.Substring(index + 1);
+					query = query[(index + 1)..];
 				}
 			}
 
@@ -98,7 +98,7 @@ public class UrlEncodingParser : NameValueCollection
 
 				if (index2 > 0)
 				{
-					Add(pair.Substring(0, index2), pair.Substring(index2 + 1));
+					Add(pair[..index2], pair[(index2 + 1)..]);
 				}
 			}
 		}
@@ -131,7 +131,7 @@ public class UrlEncodingParser : NameValueCollection
 		{
 			if (Url.Contains("?"))
 			{
-				query = Url.Substring(0, Url.IndexOf('?')) + (!string.IsNullOrWhiteSpace(query) ? $"?{query}" : string.Empty);
+				query = Url[..Url.IndexOf('?')] + (!string.IsNullOrWhiteSpace(query) ? $"?{query}" : string.Empty);
 			}
 			else
 			{

@@ -80,6 +80,12 @@ class Program
 			return 1;
 		}
 
+		if (CommandLineOptions.Threads > 1 || CommandLineOptions.WaitSecondsBetweenCalls > 0)
+		{
+			Logger.Warn("Using a wait time with more than 1 thread isn't recommended as it will still have multiple threads running.");
+			return 1;
+		}
+
 		string url = CommandLineOptions.Url;
 
 		if (string.IsNullOrWhiteSpace(url))
