@@ -46,8 +46,8 @@ public class FtpParser
 					if (IsMaxThreads(ftpCommandException))
 					{
 						Logger.Warn($"[{context["Processor"]}] Maximum connections reached: {ftpCommandException.Message}");
-							// Stop this thread nicely
-							webDirectory.CancellationReason = Constants.Ftp_Max_Connections;
+						// Stop this thread nicely
+						webDirectory.CancellationReason = Constants.Ftp_Max_Connections;
 						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
 						return;
 					}
@@ -211,7 +211,7 @@ public class FtpParser
 			Uri uri = new Uri(new Uri(webDirectory.Url), item.FullName);
 			string fullUrl = uri.ToString();
 
-			if (item.Type == FtpFileSystemObjectType.File)
+			if (item.Type == FtpObjectType.File)
 			{
 				webDirectory.Files.Add(new WebFile
 				{
@@ -220,8 +220,7 @@ public class FtpParser
 					FileSize = item.Size
 				});
 			}
-
-			if (item.Type == FtpFileSystemObjectType.Directory)
+			else if (item.Type == FtpObjectType.Directory)
 			{
 				if (webDirectory.Url != fullUrl)
 				{
