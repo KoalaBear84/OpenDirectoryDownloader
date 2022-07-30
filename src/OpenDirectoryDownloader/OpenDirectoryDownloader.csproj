@@ -24,7 +24,7 @@
     <PackageReference Include="AngleSharp" Version="0.17.1" />
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="FluentFTP" Version="39.0.0" />
-    <PackageReference Include="Jint" Version="3.0.0-beta-2032" />
+    <PackageReference Include="Jint" Version="3.0.0-beta-2039" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NLog" Version="5.0.1" />
     <PackageReference Include="Polly" Version="7.2.3" />
