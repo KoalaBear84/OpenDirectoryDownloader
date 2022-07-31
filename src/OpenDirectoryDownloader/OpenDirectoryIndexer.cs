@@ -1153,10 +1153,7 @@ public class OpenDirectoryIndexer
 
 			if (httpResponseMessage.IsSuccessStatusCode)
 			{
-				if (html == null)
-				{
-					html = await GetHtml(httpResponseMessage);
-				}
+				html ??= await GetHtml(httpResponseMessage);
 
 				if (html.Length > Constants.Megabyte)
 				{

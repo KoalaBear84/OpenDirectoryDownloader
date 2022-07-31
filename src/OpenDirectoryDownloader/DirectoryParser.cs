@@ -975,10 +975,7 @@ public static class DirectoryParser
 								string description = tableRow.QuerySelector($"td:nth-child({descriptionHeaderColumnIndex})")?.TextContent.Trim();
 								string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim().Replace(" ", string.Empty);
 
-								if (size == null)
-								{
-									size = tableRow.QuerySelector(".size")?.TextContent.Trim();
-								}
+								size ??= tableRow.QuerySelector(".size")?.TextContent.Trim();
 
 								bool isFile =
 									urlEncodingParser["file"] != null ||
@@ -2330,11 +2327,7 @@ public static class DirectoryParser
 			headers = null;
 		}
 
-		if (headers == null)
-		{
-			// snif directory listing
-			headers = table.QuerySelector(".snHeading")?.QuerySelectorAll("td");
-		}
+		headers ??= table.QuerySelector(".snHeading")?.QuerySelectorAll("td");
 
 		if (headers == null || headers.Length == 0)
 		{
