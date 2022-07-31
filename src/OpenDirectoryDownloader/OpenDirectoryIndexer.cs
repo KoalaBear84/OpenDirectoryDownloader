@@ -54,7 +54,7 @@ public class OpenDirectoryIndexer
 
 	private static readonly Random Jitterer = new Random();
 
-	private static List<string> KnownErrorPaths = new List<string>()
+	private static readonly List<string> KnownErrorPaths = new List<string>()
 	{
 		"cgi-bin/",
 		"lost%2Bfound/"
@@ -367,7 +367,8 @@ public class OpenDirectoryIndexer
 				Session.TotalFiles = Session.Root.TotalFiles;
 				Session.TotalFileSizeEstimated = Session.Root.TotalFileSize;
 
-				IEnumerable<string> distinctUrls = Session.Root.AllFileUrls.Distinct().Select(i => WebUtility.UrlDecode(i));
+				// Replaced WebUtility.UrlDecode with Uri.UnescapeDataString because of issues with Google Drive alternatives (+ sign)
+				IEnumerable<string> distinctUrls = Session.Root.AllFileUrls.Distinct().Select(i => Uri.UnescapeDataString(i));
 
 				if (Session.TotalFiles != distinctUrls.Count())
 				{
