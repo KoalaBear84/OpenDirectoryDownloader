@@ -89,7 +89,7 @@ public static class DropboxParser
 				string htmlJavascriptString = prefetchListingRegexMatch.Groups["PrefetchListing"].Value;
 				JavaScriptParser javaScriptParser = new JavaScriptParser(htmlJavascriptString);
 				Script program = javaScriptParser.ParseScript();
-				string decodedJson = (program.Body[0].ChildNodes[0] as Literal).StringValue;
+				string decodedJson = (program.Body[0].ChildNodes.First() as Literal).StringValue;
 
 				Match urlRegexMatch = UrlRegex.Match(webDirectory.Uri.ToString());
 				bool takedownActive = false;
