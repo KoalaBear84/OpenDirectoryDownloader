@@ -43,7 +43,7 @@ public static class DirectoryParser
 	/// <param name="baseUrl">Base url</param>
 	/// <param name="html">Html to parse</param>
 	/// <returns>WebDirectory object containing current directory index</returns>
-	public static async Task<WebDirectory> ParseHtml(WebDirectory webDirectory, string html, HttpClient httpClient = null, bool checkParents = true)
+	public static async Task<WebDirectory> ParseHtml(WebDirectory webDirectory, string html, HttpClient httpClient = null, HttpResponseMessage httpResponseMessage = null, bool checkParents = true)
 	{
 		string baseUrl = webDirectory.Url;
 
@@ -74,7 +74,7 @@ public static class DirectoryParser
 
 			if (webDirectory.Uri.Host == Constants.DropboxDomain)
 			{
-				return await DropboxParser.ParseIndex(httpClient, webDirectory);
+				return await DropboxParser.ParseIndex(httpClient, webDirectory, html, httpResponseMessage);
 			}
 
 			if (webDirectory.Uri.Host == Constants.GoFileIoDomain)

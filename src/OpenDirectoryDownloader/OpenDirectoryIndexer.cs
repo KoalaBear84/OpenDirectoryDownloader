@@ -1164,7 +1164,7 @@ public class OpenDirectoryIndexer
 
 				Session.TotalHttpTraffic += html.Length;
 
-				WebDirectory parsedWebDirectory = await DirectoryParser.ParseHtml(webDirectory, html, HttpClient);
+				WebDirectory parsedWebDirectory = await DirectoryParser.ParseHtml(webDirectory, html, HttpClient, httpResponseMessage);
 				bool processSubdirectories = parsedWebDirectory.Parser != "DirectoryListingModel01";
 				AddProcessedWebDirectory(webDirectory, parsedWebDirectory, processSubdirectories);
 			}

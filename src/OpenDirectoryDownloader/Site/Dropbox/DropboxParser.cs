@@ -20,11 +20,11 @@ public static class DropboxParser
 	private const string Parser = "Dropbox";
 	public const string Parameters_CSRFToken = "CSRFTOKEN";
 
-	public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory)
+	public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory, string html, HttpResponseMessage httpResponseMessage)
 	{
 		try
 		{
-			webDirectory = await ScanAsync(httpClient, webDirectory);
+			webDirectory = await ScanAsync(httpClient, webDirectory, html, httpResponseMessage);
 		}
 		catch (Exception ex)
 		{
@@ -44,7 +44,7 @@ public static class DropboxParser
 		return webDirectory;
 	}
 
-	private static async Task<WebDirectory> ScanAsync(HttpClient httpClient, WebDirectory webDirectory)
+	private static async Task<WebDirectory> ScanAsync(HttpClient httpClient, WebDirectory webDirectory, string html, HttpResponseMessage httpResponseMessage)
 	{
 		Logger.Debug($"Retrieving listings for {webDirectory.Uri}");
 
@@ -57,30 +57,7 @@ public static class DropboxParser
 				httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
 			}
 
-			HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(webDirectory.Uri);
-			httpResponseMessage.EnsureSuccessStatusCode();
-
-			CookieContainer cookieContainer = new CookieContainer();
-
-			if (httpResponseMessage.Headers.Contains("Set-Cookie"))
-			{
-				foreach (string cookieHeader in httpResponseMessage.Headers.GetValues("Set-Cookie"))
-				{
-					cookieContainer.SetCookies(webDirectory.Uri, cookieHeader);
-				}
-
-				if (!OpenDirectoryIndexer.Session.Parameters.ContainsKey(Parameters_CSRFToken))
-				{
-					Cookie cookie = cookieContainer.GetCookies(webDirectory.Uri).FirstOrDefault(c => c.Name == "__Host-js_csrf");
-
-					if (cookie is not null)
-					{
-						OpenDirectoryIndexer.Session.Parameters[Parameters_CSRFToken] = cookie.Value;
-					}
-				}
-			}
-
-			string html = await httpResponseMessage.Content.ReadAsStringAsync();
+			GetCsrfToken(webDirectory, httpResponseMessage);
 
 			Match prefetchListingRegexMatch = PrefetchListingRegex.Match(html);
 
@@ -107,7 +84,7 @@ public static class DropboxParser
 						Dictionary<string, string> postValues = new Dictionary<string, string>
 						{
 							{ "is_xhr", "true" },
-							{ "t", OpenDirectoryIndexer.Session.Parameters[Parameters_CSRFToken] },
+							{ "t", OpenDirectoryIndexer.Session.Parameters.ContainsKey(Parameters_CSRFToken) ? OpenDirectoryIndexer.Session.Parameters[Parameters_CSRFToken] : string.Empty },
 							{ "link_key", urlRegexMatch.Groups["LinkKey"].Value },
 							{ "link_type", "s" },
 							{ "secure_hash", urlRegexMatch.Groups["SecureHash"].Value },
@@ -177,5 +154,29 @@ public static class DropboxParser
 		}
 
 		return webDirectory;
+	}
+
+	private static void GetCsrfToken(WebDirectory webDirectory, HttpResponseMessage httpResponseMessage)
+	{
+		if (httpResponseMessage.Headers.Contains("Set-Cookie"))
+		{
+			CookieContainer cookieContainer = new CookieContainer();
+
+			foreach (string cookieHeader in httpResponseMessage.Headers.GetValues("Set-Cookie"))
+			{
+				cookieContainer.SetCookies(webDirectory.Uri, cookieHeader);
+			}
+
+			if (!OpenDirectoryIndexer.Session.Parameters.ContainsKey(Parameters_CSRFToken))
+			{
+				Cookie cookie = cookieContainer.GetCookies(webDirectory.Uri).FirstOrDefault(c => c.Name == "__Host-js_csrf");
+
+				if (cookie is not null)
+				{
+					Logger.Warn($"CSRF Token found on {webDirectory.Uri}");
+					OpenDirectoryIndexer.Session.Parameters[Parameters_CSRFToken] = cookie.Value;
+				}
+			}
+		}
 	}
 }
