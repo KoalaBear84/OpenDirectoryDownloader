@@ -6,6 +6,7 @@ using OpenDirectoryDownloader.GoogleDrive;
 using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared.Models;
+using OpenDirectoryDownloader.Site.AmazonS3;
 using Polly;
 using Polly.Retry;
 using System;
@@ -450,71 +451,70 @@ public class OpenDirectoryIndexer
 				distinctUrls = null;
 
 				if (OpenDirectoryIndexerSettings.CommandLineOptions.Speedtest &&
+					Session.TotalFiles > 0 &&
 					Session.Root.Uri.Host != Constants.GoogleDriveDomain &&
+					!Session.Root.Uri.Host.EndsWith(Constants.AmazonS3Domain) &&
 					Session.Root.Uri.Host != Constants.BlitzfilesTechDomain &&
 					Session.Root.Uri.Host != Constants.DropboxDomain &&
 					Session.Root.Uri.Host != Constants.GoFileIoDomain &&
 					Session.Root.Uri.Host != Constants.MediafireDomain &&
 					Session.Root.Uri.Host != Constants.PixeldrainDomain)
 				{
-					if (Session.TotalFiles > 0)
+					if (Session.Root.Uri.Scheme == Constants.UriScheme.Http || Session.Root.Uri.Scheme == Constants.UriScheme.Https)
 					{
-						if (Session.Root.Uri.Scheme == Constants.UriScheme.Http || Session.Root.Uri.Scheme == Constants.UriScheme.Https)
+						try
 						{
-							try
+							WebFile biggestFile = Session.Root.AllFiles.OrderByDescending(f => f.FileSize).First();
+
+							Console.WriteLine($"Starting speedtest (10-25 seconds)..");
+							Console.WriteLine($"Test file: {FileSizeHelper.ToHumanReadable(biggestFile.FileSize)} {biggestFile.Url}");
+							Session.SpeedtestResult = await Library.DoSpeedTestHttpAsync(HttpClient, biggestFile.Url);
+
+							if (Session.SpeedtestResult != null)
 							{
+								Console.WriteLine($"Finished speedtest. Downloaded: {FileSizeHelper.ToHumanReadable(Session.SpeedtestResult.DownloadedBytes)}, Time: {Session.SpeedtestResult.ElapsedMilliseconds / 1000:F1} s, Speed: {Session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({Session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)");
+							}
+						}
+						catch (Exception ex)
+						{
+							// Give empty speedtest, so it will be reported as Failed
+							Session.SpeedtestResult = new Shared.SpeedtestResult();
+							Logger.Error(ex, "Speedtest failed");
+						}
+					}
+					else if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftp || Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
+					{
+						try
+						{
+							FluentFTP.FtpClient ftpClient = FtpParser.FtpClients.FirstOrDefault(c => c.Value.IsConnected).Value;
+
+							FtpParser.CloseAll(exceptFtpClient: ftpClient);
+
+							if (ftpClient != null)
+							{
+
 								WebFile biggestFile = Session.Root.AllFiles.OrderByDescending(f => f.FileSize).First();
 
 								Console.WriteLine($"Starting speedtest (10-25 seconds)..");
 								Console.WriteLine($"Test file: {FileSizeHelper.ToHumanReadable(biggestFile.FileSize)} {biggestFile.Url}");
-								Session.SpeedtestResult = await Library.DoSpeedTestHttpAsync(HttpClient, biggestFile.Url);
+
+								Session.SpeedtestResult = await Library.DoSpeedTestFtpAsync(ftpClient, biggestFile.Url);
 
 								if (Session.SpeedtestResult != null)
 								{
 									Console.WriteLine($"Finished speedtest. Downloaded: {FileSizeHelper.ToHumanReadable(Session.SpeedtestResult.DownloadedBytes)}, Time: {Session.SpeedtestResult.ElapsedMilliseconds / 1000:F1} s, Speed: {Session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({Session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)");
 								}
 							}
-							catch (Exception ex)
+							else
 							{
-								// Give empty speedtest, so it will be reported as Failed
-								Session.SpeedtestResult = new Shared.SpeedtestResult();
-								Logger.Error(ex, "Speedtest failed");
+								Console.WriteLine($"Cannot do speedtest because there is no connected FTP client anymore");
 							}
 						}
-						else if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftp || Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
+						catch (Exception ex)
 						{
-							try
-							{
-								FluentFTP.FtpClient ftpClient = FtpParser.FtpClients.FirstOrDefault(c => c.Value.IsConnected).Value;
-
-								FtpParser.CloseAll(exceptFtpClient: ftpClient);
-
-								if (ftpClient != null)
-								{
-
-									WebFile biggestFile = Session.Root.AllFiles.OrderByDescending(f => f.FileSize).First();
-
-									Console.WriteLine($"Starting speedtest (10-25 seconds)..");
-									Console.WriteLine($"Test file: {FileSizeHelper.ToHumanReadable(biggestFile.FileSize)} {biggestFile.Url}");
-
-									Session.SpeedtestResult = await Library.DoSpeedTestFtpAsync(ftpClient, biggestFile.Url);
-
-									if (Session.SpeedtestResult != null)
-									{
-										Console.WriteLine($"Finished speedtest. Downloaded: {FileSizeHelper.ToHumanReadable(Session.SpeedtestResult.DownloadedBytes)}, Time: {Session.SpeedtestResult.ElapsedMilliseconds / 1000:F1} s, Speed: {Session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({Session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)");
-									}
-								}
-								else
-								{
-									Console.WriteLine($"Cannot do speedtest because there is no connected FTP client anymore");
-								}
-							}
-							catch (Exception ex)
-							{
-								// Give empty speedtest, so it will be reported as Failed
-								Session.SpeedtestResult = new Shared.SpeedtestResult();
-								Logger.Error(ex, "Speedtest failed");
-							}
+							// Give empty speedtest, so it will be reported as Failed
+							Session.SpeedtestResult = new Shared.SpeedtestResult();
+							Logger.Error(ex, "Speedtest failed");
 						}
 					}
 				}
@@ -738,6 +738,8 @@ public class OpenDirectoryIndexer
 						{
 							if (Session.Root.Uri.Host == Constants.BlitzfilesTechDomain ||
 								Session.Root.Uri.Host == Constants.DropboxDomain ||
+								Session.Root.Uri.Host == Constants.AmazonS3Domain ||
+								Session.Root.Uri.Host.Contains(Constants.AmazonS3Domain) ||
 								DirectoryParser.SameHostAndDirectoryFile(Session.Root.Uri, webDirectory.Uri))
 							{
 								Logger.Debug($"[{name}] Start download '{webDirectory.Url}'");
@@ -861,6 +863,13 @@ public class OpenDirectoryIndexer
 		catch (Exception ex)
 		{
 			Logger.Error(ex, $"Error retrieving directory listing for {webDirectory.Url}");
+		}
+
+		if (httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "amazons3")
+		{
+			WebDirectory parsedWebDirectory = await AmazonS3Parser.ParseIndex(HttpClient, webDirectory);
+			AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
+			return;
 		}
 
 		if (httpResponseMessage?.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
@@ -1404,6 +1413,7 @@ public class OpenDirectoryIndexer
 					if (subdirectory.Uri.Host != Constants.GoogleDriveDomain &&
 						subdirectory.Uri.Host != Constants.BlitzfilesTechDomain &&
 						subdirectory.Uri.Host != Constants.DropboxDomain &&
+						subdirectory.Uri.Host != Constants.AmazonS3Domain &&
 						!DirectoryParser.SameHostAndDirectoryFile(Session.Root.Uri, subdirectory.Uri))
 					{
 						Logger.Debug($"Removed subdirectory {subdirectory.Uri} from parsed webdirectory because it is not the same host");
