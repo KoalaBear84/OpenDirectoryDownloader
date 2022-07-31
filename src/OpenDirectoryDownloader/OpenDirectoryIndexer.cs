@@ -953,7 +953,6 @@ public class OpenDirectoryIndexer
 				}
 				else
 				{
-					Logger.Warn($"Treated {webDirectory.Url} as file instead of directory ({FileSizeHelper.ToHumanReadable(httpResponseMessage.Content.Headers.ContentLength)})");
 					ConvertDirectoryToFile(webDirectory, httpResponseMessage);
 
 					return;
@@ -1093,7 +1092,6 @@ public class OpenDirectoryIndexer
 						}
 						else
 						{
-							Logger.Warn($"Treated {webDirectory.Url} as file instead of directory ({FileSizeHelper.ToHumanReadable(html.Length)})");
 							ConvertDirectoryToFile(webDirectory, httpResponseMessage);
 
 							return;
@@ -1230,6 +1228,8 @@ public class OpenDirectoryIndexer
 
 	private static void ConvertDirectoryToFile(WebDirectory webDirectory, HttpResponseMessage httpResponseMessage)
 	{
+		Logger.Warn($"Treated {webDirectory.Url} as file instead of directory ({FileSizeHelper.ToHumanReadable(httpResponseMessage.Content.Headers.ContentLength)})");
+
 		// Remove it as directory
 		webDirectory.ParentDirectory?.Subdirectories.Remove(webDirectory);
 
