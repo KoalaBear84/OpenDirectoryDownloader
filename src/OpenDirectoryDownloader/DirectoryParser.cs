@@ -60,13 +60,6 @@ public static class DirectoryParser
 
 		try
 		{
-			IHtmlDocument htmlDocument = await HtmlParser.ParseDocumentAsync(html);
-
-			if (webDirectory.Uri.Host == "ipfs.io" || webDirectory.Uri.Host == "gateway.ipfs.io")
-			{
-				return ParseIpfsDirectoryListing(baseUrl, parsedWebDirectory, htmlDocument, checkParents);
-			}
-
 			if (webDirectory.Uri.Host == Constants.BlitzfilesTechDomain)
 			{
 				return await BlitzfilesTechParser.ParseIndex(httpClient, webDirectory);
@@ -90,6 +83,13 @@ public static class DirectoryParser
 			if (webDirectory.Uri.Host == Constants.MediafireDomain)
 			{
 				return await MediafireParser.ParseIndex(httpClient, webDirectory);
+			}
+
+			IHtmlDocument htmlDocument = await HtmlParser.ParseDocumentAsync(html);
+
+			if (webDirectory.Uri.Host == "ipfs.io" || webDirectory.Uri.Host == "gateway.ipfs.io")
+			{
+				return ParseIpfsDirectoryListing(baseUrl, parsedWebDirectory, htmlDocument, checkParents);
 			}
 
 			if (httpClient is not null && !OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.GoogleDriveIndexType))
