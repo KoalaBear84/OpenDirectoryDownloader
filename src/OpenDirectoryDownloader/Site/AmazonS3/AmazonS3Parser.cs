@@ -60,13 +60,22 @@ public static class AmazonS3Parser
 
 			do
 			{
-				HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(GetUrl(bucketName, prefix, nextMarker));
+				string url = GetUrl(bucketName, prefix, nextMarker);
+				HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(url);
 
 				httpResponseMessage.EnsureSuccessStatusCode();
 
-				// https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html
-				XmlSerializer xmlSerializer = new XmlSerializer(typeof(AmazonS3Result));
-				AmazonS3Result result = (AmazonS3Result)xmlSerializer.Deserialize(await httpResponseMessage.Content.ReadAsStreamAsync());
+				AmazonS3Result result;
+
+				using (TextReader textReader = new StreamReader(await httpResponseMessage.Content.ReadAsStreamAsync()))
+				{
+					using (XmlTextReader xmlTextReader = new XmlTextReader(textReader))
+					{
+						xmlTextReader.Namespaces = false;
+						XmlSerializer xmlSerializer = new XmlSerializer(typeof(AmazonS3Result));
+						result = (AmazonS3Result)xmlSerializer.Deserialize(xmlTextReader);
+					}
+				}
 
 				isTruncated = result.IsTruncated;
 				nextMarker = result.NextMarker;

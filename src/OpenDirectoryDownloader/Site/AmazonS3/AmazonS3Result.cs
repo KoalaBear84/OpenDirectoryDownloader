@@ -4,7 +4,10 @@ using System.Xml.Serialization;
 
 namespace OpenDirectoryDownloader.Site.AmazonS3;
 
-[XmlRoot(Namespace = "http://s3.amazonaws.com/doc/2006-03-01/", ElementName = "ListBucketResult")]
+/// <summary>
+/// https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html
+/// </summary>
+[XmlRoot(ElementName = "ListBucketResult")]
 public class AmazonS3Result
 {
 	[XmlElement("Name")]
