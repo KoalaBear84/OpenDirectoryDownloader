@@ -1,5 +1,4 @@
-﻿using AngleSharp.Dom;
-using NLog;
+﻿using NLog;
 using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.IO;
@@ -123,11 +122,11 @@ public static class AmazonS3Parser
 
 	private static string GetUrl(string bucketName, string prefix, string nextMarker)
 	{
-		string url = $"https://{bucketName}.{Constants.AmazonS3Domain}/?delimiter=%2F&prefix={WebUtility.UrlDecode(prefix)}";
+		string url = $"https://{bucketName}.{Constants.AmazonS3Domain}/?delimiter=%2F&prefix={WebUtility.UrlEncode(prefix)}";
 
 		if (!string.IsNullOrEmpty(nextMarker))
 		{
-			url += $"&marker={WebUtility.UrlDecode(nextMarker)}";
+			url += $"&marker={WebUtility.UrlEncode(nextMarker)}";
 		}
 
 		return url;
