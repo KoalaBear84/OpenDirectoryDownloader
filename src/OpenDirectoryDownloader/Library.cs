@@ -126,7 +126,7 @@ public class Library
 
 	public static string CleanUriToFilename(Uri uri)
 	{
-		return PathHelper.GetValidPath(WebUtility.UrlDecode(uri.ToString()));
+		return PathHelper.GetValidPath(Uri.UnescapeDataString(uri.ToString()));
 	}
 
 	public static Session LoadSessionJson(string fileName)
