@@ -7,6 +7,7 @@ using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared.Models;
 using OpenDirectoryDownloader.Site.AmazonS3;
+using OpenDirectoryDownloader.Site.GitHub;
 using Polly;
 using Polly.Retry;
 using System;
@@ -382,6 +383,7 @@ public class OpenDirectoryIndexer
 					Session.Root.Uri.Host != Constants.GoogleDriveDomain &&
 					Session.Root.Uri.Host != Constants.BlitzfilesTechDomain &&
 					Session.Root.Uri.Host != Constants.DropboxDomain &&
+					Session.Root.Uri.Host != Constants.GitHubDomain &&
 					Session.Root.Uri.Host != Constants.GoFileIoDomain &&
 					Session.Root.Uri.Host != Constants.MediafireDomain &&
 					Session.Root.Uri.Host != Constants.PixeldrainDomain)
@@ -457,6 +459,7 @@ public class OpenDirectoryIndexer
 					Session.Root.Uri.Host != Constants.BlitzfilesTechDomain &&
 					Session.Root.Uri.Host != Constants.DropboxDomain &&
 					Session.Root.Uri.Host != Constants.GoFileIoDomain &&
+					Session.Root.Uri.Host != Constants.GitHubDomain &&
 					Session.Root.Uri.Host != Constants.MediafireDomain &&
 					Session.Root.Uri.Host != Constants.PixeldrainDomain)
 				{
@@ -736,10 +739,10 @@ public class OpenDirectoryIndexer
 						}
 						else
 						{
-							if (Session.Root.Uri.Host == Constants.BlitzfilesTechDomain ||
+							if (Session.Root.Uri.Host.EndsWith(Constants.AmazonS3Domain) ||
+								Session.Root.Uri.Host.EndsWith(Constants.GitHubDomain) ||
+								Session.Root.Uri.Host == Constants.BlitzfilesTechDomain ||
 								Session.Root.Uri.Host == Constants.DropboxDomain ||
-								Session.Root.Uri.Host == Constants.AmazonS3Domain ||
-								Session.Root.Uri.Host.Contains(Constants.AmazonS3Domain) ||
 								DirectoryParser.SameHostAndDirectoryFile(Session.Root.Uri, webDirectory.Uri))
 							{
 								Logger.Debug($"[{name}] Start download '{webDirectory.Url}'");
@@ -845,6 +848,13 @@ public class OpenDirectoryIndexer
 		if (Session.Parameters.ContainsKey(Constants.Parameters_GdIndex_RootId))
 		{
 			await Site.GDIndex.GdIndex.GdIndexParser.ParseIndex(HttpClient, webDirectory, string.Empty);
+			return;
+		}
+
+		if (webDirectory.Uri.Host == Constants.GitHubApiDomain)
+		{
+			WebDirectory parsedWebDirectory = await GitHubParser.ParseIndex(HttpClient, webDirectory);
+			AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
 			return;
 		}
 
@@ -1378,6 +1388,10 @@ public class OpenDirectoryIndexer
 		return responseStream;
 	}
 
+	/// <summary>
+	/// Check and fix some common bad charsets
+	/// </summary>
+	/// <param name="httpResponseMessage">Fixed charset</param>
 	private static void FixCharSet(HttpResponseMessage httpResponseMessage)
 	{
 		if (httpResponseMessage.Content.Headers.ContentType?.CharSet?.ToLower() == "utf8" ||
@@ -1410,10 +1424,11 @@ public class OpenDirectoryIndexer
 			{
 				if (!Session.ProcessedUrls.Contains(subdirectory.Url))
 				{
-					if (subdirectory.Uri.Host != Constants.GoogleDriveDomain &&
+					if (subdirectory.Uri.Host != Constants.AmazonS3Domain &&
 						subdirectory.Uri.Host != Constants.BlitzfilesTechDomain &&
 						subdirectory.Uri.Host != Constants.DropboxDomain &&
-						subdirectory.Uri.Host != Constants.AmazonS3Domain &&
+						!subdirectory.Uri.Host.EndsWith(Constants.GitHubDomain) &&
+						subdirectory.Uri.Host != Constants.GoogleDriveDomain &&
 						!DirectoryParser.SameHostAndDirectoryFile(Session.Root.Uri, subdirectory.Uri))
 					{
 						Logger.Debug($"Removed subdirectory {subdirectory.Uri} from parsed webdirectory because it is not the same host");

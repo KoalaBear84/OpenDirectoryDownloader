@@ -16,6 +16,7 @@ using OpenDirectoryDownloader.Site.GDIndex.Bhadoo;
 using OpenDirectoryDownloader.Site.GDIndex.GdIndex;
 using OpenDirectoryDownloader.Site.GDIndex.Go2Index;
 using OpenDirectoryDownloader.Site.GDIndex.GoIndex;
+using OpenDirectoryDownloader.Site.GitHub;
 using OpenDirectoryDownloader.Site.GoFileIO;
 using OpenDirectoryDownloader.Site.Mediafire;
 using OpenDirectoryDownloader.Site.Pixeldrain;
@@ -70,19 +71,24 @@ public static class DirectoryParser
 				return await DropboxParser.ParseIndex(httpClient, webDirectory, html, httpResponseMessage);
 			}
 
+			if (webDirectory.Uri.Host == Constants.GitHubDomain || webDirectory.Uri.Host == Constants.GitHubApiDomain)
+			{
+				return await GitHubParser.ParseIndex(httpClient, webDirectory);
+			}
+
 			if (webDirectory.Uri.Host == Constants.GoFileIoDomain)
 			{
 				return await GoFileIOParser.ParseIndex(httpClient, webDirectory);
 			}
 
-			if (webDirectory.Uri.Host == Constants.PixeldrainDomain)
-			{
-				return await PixeldrainParser.ParseIndex(httpClient, webDirectory, html);
-			}
-
 			if (webDirectory.Uri.Host == Constants.MediafireDomain)
 			{
 				return await MediafireParser.ParseIndex(httpClient, webDirectory);
+			}
+
+			if (webDirectory.Uri.Host == Constants.PixeldrainDomain)
+			{
+				return await PixeldrainParser.ParseIndex(httpClient, webDirectory, html);
 			}
 
 			IHtmlDocument htmlDocument = await HtmlParser.ParseDocumentAsync(html);
