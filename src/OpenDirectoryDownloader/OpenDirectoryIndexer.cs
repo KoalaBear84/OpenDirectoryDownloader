@@ -32,6 +32,7 @@ public class OpenDirectoryIndexer
 	private static readonly Logger HistoryLogger = LogManager.GetLogger("historyFile");
 
 	public static Session Session { get; set; }
+	public static bool ShowStatistics { get; set; } = true;
 
 	public OpenDirectoryIndexerSettings OpenDirectoryIndexerSettings { get; set; }
 
@@ -268,6 +269,17 @@ public class OpenDirectoryIndexer
 		if (Session.Root.Uri.Host == Constants.GoogleDriveDomain)
 		{
 			Logger.Warn("Google Drive scanning is limited to 9 directories per second!");
+		}
+
+		if (Session.Root.Uri.Host == Constants.GitHubDomain)
+		{
+			Logger.Warn("GitHub scanning has a very low rate limiting of 60 directories/requests per hour!");
+
+			if (Session.MaxThreads != 1)
+			{
+				Session.MaxThreads = 1;
+				Logger.Warn($"Reduce threads to 1 because of GitHub");
+			}
 		}
 
 		if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftp || Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
@@ -588,7 +600,7 @@ public class OpenDirectoryIndexer
 				{
 					try
 					{
-						new Clipboard().SetText(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
+						new Clipboard().SetText(Statistics.GetSessionStats(Session, includeExtensions: true, onlyRedditStats: true));
 						Console.WriteLine("Copied Reddit stats to clipboard!");
 						clipboardSuccess = true;
 					}
@@ -630,6 +642,11 @@ public class OpenDirectoryIndexer
 
 	private void TimerStatistics_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
 	{
+		if (!ShowStatistics)
+		{
+			return;
+		}
+
 		StringBuilder stringBuilder = new StringBuilder();
 
 		if (WebDirectoriesQueue.Any() || RunningWebDirectoryThreads > 0 || WebFilesFileSizeQueue.Any() || RunningWebFileFileSizeThreads > 0)
@@ -851,7 +868,7 @@ public class OpenDirectoryIndexer
 			return;
 		}
 
-		if (webDirectory.Uri.Host == Constants.GitHubApiDomain)
+		if (webDirectory.Uri.Host is Constants.GitHubDomain or Constants.GitHubApiDomain)
 		{
 			WebDirectory parsedWebDirectory = await GitHubParser.ParseIndex(HttpClient, webDirectory);
 			AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
