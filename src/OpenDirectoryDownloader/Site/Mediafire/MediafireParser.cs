@@ -69,25 +69,35 @@ public static class MediafireParser
 		{
 			string folderId = GetFolderId(webDirectory);
 
-			Logger.Warn($"Retrieving listings for {webDirectory.Uri}");
-
 			foreach (string listingType in new string[2] { "folders", "files" })
 			{
-				HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(GetApiListingUrl(folderId, listingType));
+				bool moreChunks = false;
+				int chunkNumber = 1;
 
-				webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
-				httpResponseMessage.EnsureSuccessStatusCode();
-
-				string responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
-
-				MediafireResult indexResponse = MediafireResult.FromJson(responseJson);
-
-				if (indexResponse.Response.Result != StatusSuccess)
+				do
 				{
-					throw new Exception($"Error retrieving listing for {webDirectory.Uri}. Error: {indexResponse.Response.Result}");
-				}
+					Logger.Warn($"Retrieving {listingType} listing for {webDirectory.Uri}, page {chunkNumber}");
 
-				ProcessListing(webDirectory, indexResponse);
+					HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(GetApiListingUrl(folderId, listingType, chunkNumber));
+
+					webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
+					httpResponseMessage.EnsureSuccessStatusCode();
+
+					string responseJson = await httpResponseMessage.Content.ReadAsStringAsync();
+
+					MediafireResult indexResponse = MediafireResult.FromJson(responseJson);
+
+					// Nice boolean value Mediafire..
+					moreChunks = indexResponse.Response.FolderContent.MoreChunks == "yes";
+
+					if (indexResponse.Response.Result != StatusSuccess)
+					{
+						throw new Exception($"Error retrieving {listingType} listing for {webDirectory.Uri}, page {chunkNumber}. Error: {indexResponse.Response.Result}");
+					}
+
+					ProcessListing(webDirectory, indexResponse);
+					chunkNumber++;
+				} while (moreChunks);
 			}
 		}
 		catch (Exception ex)
@@ -138,5 +148,5 @@ public static class MediafireParser
 	}
 
 	private static string GetFolderUrl(string folderId) => $"https://www.mediafire.com/folder/{folderId}";
-	private static string GetApiListingUrl(string folderId, string type, int chunk = 1) => $"{ApiBaseAddress}/folder/get_content.php?content_type={type}&filter=all&order_by=name&order_direction=asc&chunk={chunk}&version=1.5&folder_key={folderId}&response_format=json";
+	private static string GetApiListingUrl(string folderId, string type, int chunkNumber = 1) => $"{ApiBaseAddress}/folder/get_content.php?content_type={type}&filter=all&order_by=name&order_direction=asc&chunk={chunkNumber}&version=1.5&folder_key={folderId}&response_format=json";
 }
