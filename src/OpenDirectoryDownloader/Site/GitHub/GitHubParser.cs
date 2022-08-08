@@ -142,55 +142,53 @@ public static class GitHubParser
 
 		try
 		{
-			// TODO: Add paging if needed
-			bool hasNextPage = false;
+			// There is NO paging available. Probably also not needed, but still..
 
-			do
+			string sha = CurrentCommitSha;
+
+			if (webDirectory.Uri.Segments.Length == 7)
 			{
-				//https://api.github.com/repos/KoalaBear84/OpenDirectoryDownloader/git/trees/39a621f7664d439e0617256f0364483c86646d4f
+				sha = webDirectory.Uri.Segments.Last();
+			}
 
-				string url = $"{GetApiUrl(Owner, Repository)}/git/trees/{CurrentCommitSha}";
+			// Setting recursive to any value returns more than current limit (100.000)
+			string url = $"{GetApiUrl(Owner, Repository)}/git/trees/{sha}?recursive=true";
 
-				if (webDirectory.Uri.Segments.Length == 7)
+			HttpResponseMessage httpResponseMessage = await DoRequest(httpClient, url);
+
+			httpResponseMessage.EnsureSuccessStatusCode();
+
+			string json = await httpResponseMessage.Content.ReadAsStringAsync();
+
+			GitHubResult gitHubResult = GitHubResult.FromJson(json);
+
+			Logger.Warn($"GitHub response is truncated with {gitHubResult.Tree.Length} items, sadly there is no paging available..");
+
+			foreach (Tree treeItem in gitHubResult.Tree)
+			{
+				// Like directories
+				if (treeItem.Type == "tree")
 				{
-					string treeSha = webDirectory.Uri.Segments.Last();
-					url = $"{GetApiUrl(Owner, Repository)}/git/trees/{treeSha}";
+					webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+					{
+						Parser = Parser,
+						// Use real URL
+						Url = treeItem.Url,
+						Name = treeItem.Path
+					});
 				}
-
-				HttpResponseMessage httpResponseMessage = await DoRequest(httpClient, url);
-
-				httpResponseMessage.EnsureSuccessStatusCode();
-
-				string json = await httpResponseMessage.Content.ReadAsStringAsync();
-
-				GitHubResult gitHubResult = GitHubResult.FromJson(json);
-
-				foreach (Tree treeItem in gitHubResult.Tree)
+				else
+				// Like files
 				{
-					// Like directories
-					if (treeItem.Type == "tree")
+					webDirectory.Files.Add(new WebFile
 					{
-						webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
-						{
-							Parser = Parser,
-							// Use real URL
-							Url = treeItem.Url,
-							Name = treeItem.Path
-						});
-					}
-					else
-					// Like files
-					{
-						webDirectory.Files.Add(new WebFile
-						{
-							// Use real URL
-							Url = treeItem.Url,
-							FileName = treeItem.Path,
-							FileSize = treeItem.Size
-						});
-					}
+						// Use real URL
+						Url = treeItem.Url,
+						FileName = treeItem.Path,
+						FileSize = treeItem.Size
+					});
 				}
-			} while (hasNextPage);
+			}
 		}
 		catch (Exception ex)
 		{
