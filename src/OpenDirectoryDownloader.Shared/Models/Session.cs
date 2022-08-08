@@ -2,6 +2,7 @@
 using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace OpenDirectoryDownloader.Shared.Models;
 
@@ -10,6 +11,7 @@ public class Session
 	public WebDirectory Root { get; set; }
 	public DateTimeOffset Started { get; set; } = DateTimeOffset.MinValue;
 	public DateTimeOffset Finished { get; set; } = DateTimeOffset.MinValue;
+	public string Version { get; set; } = Assembly.GetEntryAssembly().GetName().Version?.ToString();
 	public Dictionary<int, int> HttpStatusCodes { get; set; } = new Dictionary<int, int>();
 	public Dictionary<string, string> Parameters { get; set; } = new Dictionary<string, string>();
 	public string Description { get; set; }
