@@ -26,6 +26,7 @@ public class Session
 	[JsonIgnore]
 	public bool StopLogging { get; set; }
 	public string UploadedUrlsUrl { get; set; }
+	public string UploadedUrlsResponse { get; set; }
 	public List<string> UrlsWithErrors { get; set; } = new List<string>();
 	[JsonIgnore]
 	public ConcurrentSet<string> ProcessedUrls { get; set; } = new ConcurrentSet<string>();

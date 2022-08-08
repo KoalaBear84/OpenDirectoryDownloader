@@ -55,6 +55,8 @@ public class ZippyShare : IFileUploadSite
 						if (httpResponseMessage.IsSuccessStatusCode)
 						{
 							string response = await httpResponseMessage.Content.ReadAsStringAsync();
+							OpenDirectoryIndexer.Session.UploadedUrlsResponse = response;
+
 							Logger.Debug($"Response from {Name}: {response}");
 
 							IHtmlDocument htmlDocument = await HtmlParser.ParseDocumentAsync(response);

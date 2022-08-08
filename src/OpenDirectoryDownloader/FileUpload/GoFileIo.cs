@@ -44,8 +44,9 @@ public class GoFileIo : IFileUploadSite
 						if (httpResponseMessage.IsSuccessStatusCode)
 						{
 							string response = await httpResponseMessage.Content.ReadAsStringAsync();
+							OpenDirectoryIndexer.Session.UploadedUrlsResponse = response;
 
-							Logger.Debug($"Response from GoFile.io: {response}");
+							Logger.Debug($"Response from {Name}: {response}");
 
 							return JsonConvert.DeserializeObject<GoFileIoFile>(response);
 						}

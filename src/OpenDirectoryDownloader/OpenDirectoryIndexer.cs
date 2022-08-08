@@ -433,7 +433,8 @@ public class OpenDirectoryIndexer
 											Console.WriteLine($"Uploading URLs ({FileSizeHelper.ToHumanReadable(new FileInfo(urlsPath).Length)}) with {uploadSite.Name}..");
 
 											IFileUploadSiteFile fileUploaderFile = await uploadSite.UploadFile(HttpClient, urlsPath);
-											HistoryLogger.Info($"{uploadSite.Name}: {JsonConvert.SerializeObject(fileUploaderFile)}");
+											HistoryLogger.Info($"{uploadSite.Name} URL: {JsonConvert.SerializeObject(fileUploaderFile)}");
+											HistoryLogger.Info($"{uploadSite.Name} full reponse: {Session.UploadedUrlsResponse}");
 											Session.UploadedUrlsUrl = fileUploaderFile.Url;
 											Console.WriteLine($"Uploaded URLs link: {Session.UploadedUrlsUrl}");
 											break;

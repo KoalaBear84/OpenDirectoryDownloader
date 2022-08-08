@@ -81,7 +81,10 @@ public class UploadFilesIo : IFileUploadSite
 					HttpRequestMessage httpRequestMessageFinalise = new HttpRequestMessage(HttpMethod.Post, "https://up.ufile.io/v1/upload/finalise") { Content = new FormUrlEncodedContent(postValuesFinalise) };
 					HttpResponseMessage httpResponseMessageFinalise = await httpClient.SendAsync(httpRequestMessageFinalise);
 
-					return JsonConvert.DeserializeObject<UploadFilesIoFile>(await httpResponseMessageFinalise.Content.ReadAsStringAsync());
+					string response = await httpResponseMessageFinalise.Content.ReadAsStringAsync();
+					OpenDirectoryIndexer.Session.UploadedUrlsResponse = response;
+
+					return JsonConvert.DeserializeObject<UploadFilesIoFile>(response);
 				}
 
 				retries++;
