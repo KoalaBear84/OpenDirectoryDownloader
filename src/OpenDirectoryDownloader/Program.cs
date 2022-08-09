@@ -1,7 +1,7 @@
 using CommandLine;
 using NLog;
 using NLog.Config;
-using OpenDirectoryDownloader.Models;
+using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

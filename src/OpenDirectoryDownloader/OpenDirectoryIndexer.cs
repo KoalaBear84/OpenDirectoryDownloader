@@ -270,7 +270,8 @@ public class OpenDirectoryIndexer
 					Name = Constants.Root,
 					Url = OpenDirectoryIndexerSettings.Url
 				},
-				MaxThreads = OpenDirectoryIndexerSettings.Threads
+				MaxThreads = OpenDirectoryIndexerSettings.Threads,
+				CommandLineOptions = OpenDirectoryIndexerSettings.CommandLineOptions
 			};
 		}
 

@@ -14,6 +14,7 @@ public class Session
 	public string Version { get; set; } = Assembly.GetEntryAssembly().GetName().Version?.ToString();
 	public Dictionary<int, int> HttpStatusCodes { get; set; } = new Dictionary<int, int>();
 	public Dictionary<string, string> Parameters { get; set; } = new Dictionary<string, string>();
+	public CommandLineOptions CommandLineOptions { get; set; } = new CommandLineOptions();
 	public string Description { get; set; }
 	public long TotalHttpTraffic { get; set; }
 	public int TotalHttpRequests { get; set; }
