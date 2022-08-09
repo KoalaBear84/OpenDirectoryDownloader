@@ -98,6 +98,12 @@ public class OpenDirectoryIndexer
 					{
 						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Rate limited (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
 					}
+					else if (httpRequestException.StatusCode == HttpStatusCode.LoopDetected)
+					{
+						// It could be that a Retry-After header is returned, which should be the seconds of time to wait, but this could be as high as 14.400 which is 4 hours!
+						// But a request will probably be successful after just a couple of seconds
+						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Rate limited / out of capacity (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+					}
 					else if (ex.Message.Contains("No connection could be made because the target machine actively refused it."))
 					{
 						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Rate limited? (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
