@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace OpenDirectoryDownloader.Site.GDIndex;
 
@@ -15,7 +14,7 @@ public class GoogleDriveIndexMapping
 		public void Add(TKey key, TValue value) => Add(new KeyValuePair<TKey, TValue>(key, value));
 	}
 
-	public static KeyValueList<string, string> SiteMapping = new KeyValueList<string, string>
+	public static KeyValueList<string, string> SiteMapping = new()
 	{
 		// Order is important!
 		{ "goindex-theme-acrou", Go2Index },

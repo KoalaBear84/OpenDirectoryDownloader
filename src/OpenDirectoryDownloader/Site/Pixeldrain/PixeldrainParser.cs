@@ -12,8 +12,8 @@ namespace OpenDirectoryDownloader.Site.Pixeldrain;
 public static class PixeldrainParser
 {
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-	private static readonly Regex ListingTypeRegex = new Regex(@".*\/(?<ListingType>.*)\/.*");
-	private static readonly Regex ListingRegex = new Regex(@"window\.viewer_data = (?<Listing>.*);");
+	private static readonly Regex ListingTypeRegex = new(@".*\/(?<ListingType>.*)\/.*");
+	private static readonly Regex ListingRegex = new(@"window\.viewer_data = (?<Listing>.*);");
 	private const string Parser = "Pixeldrain";
 	private const string ListingTypeFile = "u";
 	private const string ListingTypeList = "l";

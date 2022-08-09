@@ -10,8 +10,8 @@ namespace OpenDirectoryDownloader.Site.Mediafire;
 public static class MediafireParser
 {
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-	private static readonly Regex FolderIdRegex = new Regex(@"\/folder\/(?<FolderId>[^/]*)(?:\/?.*)?");
-	private static readonly Regex FolderIdRegex2 = new Regex(@"\/\?(?<FolderId>[^/]*)(?:\/?.*)?");
+	private static readonly Regex FolderIdRegex = new(@"\/folder\/(?<FolderId>[^/]*)(?:\/?.*)?");
+	private static readonly Regex FolderIdRegex2 = new(@"\/\?(?<FolderId>[^/]*)(?:\/?.*)?");
 	private const string Parser = "Mediafire";
 	private const string StatusSuccess = "Success";
 	private const string ApiBaseAddress = "https://www.mediafire.com/api/1.4";

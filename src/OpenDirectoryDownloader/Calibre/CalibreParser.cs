@@ -62,7 +62,7 @@ public static class CalibreParser
 				Console.WriteLine($"Retrieving metadata of books for library {library.Value}...");
 				Logger.Info($"Retrieving metadata of books for library {library.Value}...");
 
-				WebDirectory libraryWebDirectory = new WebDirectory(webDirectory)
+				WebDirectory libraryWebDirectory = new(webDirectory)
 				{
 					Url = $"{calibreRootUri}/#library_id={library.Key}&panel=book_list",
 					Name = library.Value,
@@ -71,7 +71,7 @@ public static class CalibreParser
 
 				webDirectory.Subdirectories.Add(libraryWebDirectory);
 
-				Uri libraryMetadataUri = new Uri(calibreRootUri, $"./interface-data/books-init?library_id={library.Key}&num=999999999");
+				Uri libraryMetadataUri = new(calibreRootUri, $"./interface-data/books-init?library_id={library.Key}&num=999999999");
 
 				httpResponseMessage = await httpClient.GetAsync(libraryMetadataUri, cancellationToken);
 				httpResponseMessage.EnsureSuccessStatusCode();
@@ -103,11 +103,11 @@ public static class CalibreParser
 
 				Parallel.ForEach(libraryResult.Metadata.AsParallel().AsOrdered(), new ParallelOptions { MaxDegreeOfParallelism = 100 }, (book) =>
 				{
-						// NOT async, else it will continue with the rest of the code..
-						// TODO: Need a nice fix which respects MaxDegreeOfParallelism
+					// NOT async, else it will continue with the rest of the code..
+					// TODO: Need a nice fix which respects MaxDegreeOfParallelism
 
-						//rateLimiter.RateLimit().Wait();
-						GetBookInfo(httpClient, calibreRootUri, library, libraryWebDirectory, book);
+					//rateLimiter.RateLimit().Wait();
+					GetBookInfo(httpClient, calibreRootUri, library, libraryWebDirectory, book);
 
 					int newBooksIndexed = Interlocked.Increment(ref booksIndexed);
 
@@ -133,7 +133,7 @@ public static class CalibreParser
 	{
 		Logger.Debug($"Retrieving info for book [{book.Key}]: {book.Value.Title}...");
 
-		WebDirectory bookWebDirectory = new WebDirectory(libraryWebDirectory)
+		WebDirectory bookWebDirectory = new(libraryWebDirectory)
 		{
 			Url = new Uri(calibreRootUri, $"./#book_id={book.Key}&library_id={library.Key}&panel=book_list").ToString(),
 			Name = book.Value.Title,

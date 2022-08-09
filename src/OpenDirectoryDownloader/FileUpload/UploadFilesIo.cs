@@ -36,13 +36,13 @@ public class UploadFilesIo : IFileUploadSite
 					string sessionId = regexMatchSessionId.Groups["SessionId"].Value;
 
 					// Create session
-					Dictionary<string, string> postValuesCreateSession = new Dictionary<string, string>
+					Dictionary<string, string> postValuesCreateSession = new()
 					{
 						{ "csrf_test_name", csrfToken },
 						{ "file_size", new FileInfo(path).Length.ToString() }
 					};
 
-					HttpRequestMessage httpRequestMessageCreateSession = new HttpRequestMessage(HttpMethod.Post, "https://up.ufile.io/v1/upload/create_session") { Content = new FormUrlEncodedContent(postValuesCreateSession) };
+					HttpRequestMessage httpRequestMessageCreateSession = new(HttpMethod.Post, "https://up.ufile.io/v1/upload/create_session") { Content = new FormUrlEncodedContent(postValuesCreateSession) };
 					HttpResponseMessage httpResponseMessageCreateSession = await httpClient.SendAsync(httpRequestMessageCreateSession);
 
 					JObject resultCreateSession = JObject.Parse(await httpResponseMessageCreateSession.Content.ReadAsStringAsync());
@@ -55,7 +55,7 @@ public class UploadFilesIo : IFileUploadSite
 					}
 
 					// Post file
-					using (MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent($"Upload----{Guid.NewGuid()}"))
+					using (MultipartFormDataContent multipartFormDataContent = new($"Upload----{Guid.NewGuid()}"))
 					{
 						multipartFormDataContent.Add(new StringContent("1"), "chunk_index");
 						multipartFormDataContent.Add(new StringContent(fileId), "fuid");
@@ -68,7 +68,7 @@ public class UploadFilesIo : IFileUploadSite
 					}
 
 					// Finalise
-					Dictionary<string, string> postValuesFinalise = new Dictionary<string, string>
+					Dictionary<string, string> postValuesFinalise = new()
 					{
 						{ "csrf_test_name", csrfToken },
 						{ "fuid", fileId },
@@ -78,7 +78,7 @@ public class UploadFilesIo : IFileUploadSite
 						{ "session_id", sessionId },
 					};
 
-					HttpRequestMessage httpRequestMessageFinalise = new HttpRequestMessage(HttpMethod.Post, "https://up.ufile.io/v1/upload/finalise") { Content = new FormUrlEncodedContent(postValuesFinalise) };
+					HttpRequestMessage httpRequestMessageFinalise = new(HttpMethod.Post, "https://up.ufile.io/v1/upload/finalise") { Content = new FormUrlEncodedContent(postValuesFinalise) };
 					HttpResponseMessage httpResponseMessageFinalise = await httpClient.SendAsync(httpRequestMessageFinalise);
 
 					string response = await httpResponseMessageFinalise.Content.ReadAsStringAsync();

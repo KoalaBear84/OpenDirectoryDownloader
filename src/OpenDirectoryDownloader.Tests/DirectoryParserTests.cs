@@ -11,7 +11,7 @@ namespace OpenDirectoryDownloader.Tests;
 
 public class DirectoryParserTests
 {
-	private static readonly Regex TestMethodRegex = new Regex(@"<Test(\w+)Async>");
+	private static readonly Regex TestMethodRegex = new(@"<Test(\w+)Async>");
 
 	public static string GetSample()
 	{
@@ -23,7 +23,7 @@ public class DirectoryParserTests
 
 	public static void CleanWebDirectory(WebDirectory webDirectory, Uri testedUri)
 	{
-		List<WebDirectory> newWebDirectories = new List<WebDirectory>();
+		List<WebDirectory> newWebDirectories = new();
 
 		foreach (WebDirectory subdirectory in webDirectory.Subdirectories)
 		{
@@ -41,7 +41,7 @@ public class DirectoryParserTests
 
 		webDirectory.Files.Where(f =>
 		{
-			Uri uri = new Uri(f.Url);
+			Uri uri = new(f.Url);
 			return (uri.Scheme != "https" && uri.Scheme != "http" && uri.Scheme != "ftp") || (uri.Host != testedUri.Host || !uri.LocalPath.StartsWith(testedUri.LocalPath));
 		}).ToList().ForEach(wd => webDirectory.Files.Remove(wd));
 	}

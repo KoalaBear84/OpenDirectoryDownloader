@@ -15,13 +15,13 @@ using System.Xml;
 
 namespace OpenDirectoryDownloader;
 
-class Program
+public class Program
 {
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	public static string ConsoleTitle { get; set; }
 	private static CommandLineOptions CommandLineOptions { get; set; }
 
-	static async Task<int> Main(string[] args)
+	public static async Task<int> Main(string[] args)
 	{
 		SetConsoleTitle("OpenDirectoryDownloader");
 
@@ -44,7 +44,7 @@ class Program
 
 		bool stopProcessing = false;
 
-		Parser parser = new Parser(with =>
+		Parser parser = new(with =>
 		{
 			with.AllowMultiInstance = true;
 			with.HelpWriter = Console.Error;
@@ -97,7 +97,7 @@ class Program
 		// Wait until this ticket is closed: https://github.com/dotnet/corefx/pull/37050
 		//AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2Support", true);
 
-		OpenDirectoryIndexerSettings openDirectoryIndexerSettings = new OpenDirectoryIndexerSettings
+		OpenDirectoryIndexerSettings openDirectoryIndexerSettings = new()
 		{
 			CommandLineOptions = CommandLineOptions
 		};
@@ -147,7 +147,7 @@ class Program
 			openDirectoryIndexerSettings.CommandLineOptions.OutputFile = Path.GetFullPath(openDirectoryIndexerSettings.CommandLineOptions.OutputFile);
 		}
 
-		OpenDirectoryIndexer openDirectoryIndexer = new OpenDirectoryIndexer(openDirectoryIndexerSettings);
+		OpenDirectoryIndexer openDirectoryIndexer = new(openDirectoryIndexerSettings);
 
 		SetConsoleTitle($"{new Uri(openDirectoryIndexerSettings.Url).Host.Replace("www.", string.Empty)} - {ConsoleTitle}");
 

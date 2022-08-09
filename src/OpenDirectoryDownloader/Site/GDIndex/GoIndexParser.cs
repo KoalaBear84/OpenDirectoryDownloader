@@ -16,7 +16,7 @@ public static class GoIndexParser
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private const string FolderMimeType = "application/vnd.google-apps.folder";
 	private const string Parser = "GoIndex";
-	private static readonly RateLimiter RateLimiter = new RateLimiter(1, TimeSpan.FromSeconds(1));
+	private static readonly RateLimiter RateLimiter = new(1, TimeSpan.FromSeconds(1));
 
 	public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory)
 	{

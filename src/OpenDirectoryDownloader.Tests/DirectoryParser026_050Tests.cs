@@ -104,7 +104,7 @@ public class DirectoryParser026_050Tests : DirectoryParserTests
 	[Fact]
 	public async Task TestDirectoryListing29aAsync()
 	{
-		Uri uri = new Uri("https://files.sq10.net/music/vaporwave/list/");
+		Uri uri = new("https://files.sq10.net/music/vaporwave/list/");
 		WebDirectory webDirectory = await ParseHtml(GetSample(), uri.ToString());
 		CleanWebDirectory(webDirectory, uri);
 
@@ -120,7 +120,7 @@ public class DirectoryParser026_050Tests : DirectoryParserTests
 	[Fact]
 	public async Task TestDirectoryListing29bAsync()
 	{
-		Uri uri = new Uri("https://files.sq10.net/music/vaporwave/list/WASTED%20NIGHTS/WASTED%20NIGHTS%20-%20SEAMS%20EP/");
+		Uri uri = new("https://files.sq10.net/music/vaporwave/list/WASTED%20NIGHTS/WASTED%20NIGHTS%20-%20SEAMS%20EP/");
 		WebDirectory webDirectory = await ParseHtml(GetSample(), uri.ToString());
 		CleanWebDirectory(webDirectory, uri);
 

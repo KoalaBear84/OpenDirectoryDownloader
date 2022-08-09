@@ -14,9 +14,9 @@ namespace OpenDirectoryDownloader.Site.BlitzfilesTech;
 public static class BlitzfilesTechParser
 {
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-	private static readonly Regex DriveHashRegex = new Regex(@"\/drive\/s\/(?<DriveHash>.*)");
-	const string Parser = "BlitzfilesTech";
-	static readonly RateLimiter RateLimiter = new RateLimiter(1, TimeSpan.FromSeconds(1));
+	private static readonly Regex DriveHashRegex = new(@"\/drive\/s\/(?<DriveHash>.*)");
+	private const string Parser = "BlitzfilesTech";
+	private static readonly RateLimiter RateLimiter = new(1, TimeSpan.FromSeconds(1));
 
 	public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory)
 	{

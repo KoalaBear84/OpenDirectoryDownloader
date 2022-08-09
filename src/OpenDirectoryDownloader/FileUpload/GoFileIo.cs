@@ -35,7 +35,7 @@ public class GoFileIo : IFileUploadSite
 
 				string server = result.SelectToken("data.server").Value<string>();
 
-				using (MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent($"Upload----{Guid.NewGuid()}"))
+				using (MultipartFormDataContent multipartFormDataContent = new($"Upload----{Guid.NewGuid()}"))
 				{
 					multipartFormDataContent.Add(new StreamContent(new FileStream(path, FileMode.Open)), "file", Path.GetFileName(path));
 

@@ -23,8 +23,8 @@ public static class BhadooIndexParser
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private const string FolderMimeType = "application/vnd.google-apps.folder";
 	private const string Parser = "BhadooIndex";
-	private static readonly RateLimiter RateLimiter = new RateLimiter(1, TimeSpan.FromSeconds(1));
-	private static readonly object DecodeResponseLock = new object();
+	private static readonly RateLimiter RateLimiter = new(1, TimeSpan.FromSeconds(1));
+	private static readonly object DecodeResponseLock = new();
 	private static Engine JintEngine { get; set; }
 	private static bool Obfuscated { get; set; }
 
@@ -43,7 +43,7 @@ public static class BhadooIndexParser
 				Logger.Info("Check if password is needed (unsupported currently)...");
 				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] = string.Empty;
 
-				Dictionary<string, string> postValues = new Dictionary<string, string>
+				Dictionary<string, string> postValues = new()
 				{
 					{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
 					{ "page_token", string.Empty },
@@ -51,7 +51,7 @@ public static class BhadooIndexParser
 					{ "q", "" }
 				};
 
-				HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, webDirectory.Uri) { Content = new FormUrlEncodedContent(postValues) };
+				HttpRequestMessage httpRequestMessage = new(HttpMethod.Post, webDirectory.Uri) { Content = new FormUrlEncodedContent(postValues) };
 				HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
 				if (httpResponseMessage.IsSuccessStatusCode)
@@ -128,7 +128,7 @@ public static class BhadooIndexParser
 
 					string appJsSource = httpClient.GetStringAsync(appJsScript.Source.Replace("obf.", string.Empty)).GetAwaiter().GetResult();
 
-					JavaScriptParser javaScriptParser = new JavaScriptParser(appJsSource);
+					JavaScriptParser javaScriptParser = new(appJsSource);
 					Script program = javaScriptParser.ParseScript();
 					IEnumerable<FunctionDeclaration> javaScriptFunctions = program.ChildNodes.OfType<FunctionDeclaration>();
 					FunctionDeclaration readFunctionDeclaration = javaScriptFunctions.FirstOrDefault(f => f.ChildNodes.OfType<Identifier>().Any(i => i.Name == "read"));
@@ -194,14 +194,14 @@ public static class BhadooIndexParser
 
 					Logger.Warn($"Retrieving listings for {webDirectory.Uri.PathAndQuery}, page {pageIndex + 1}{(!string.IsNullOrWhiteSpace(OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]) ? $" with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}" : string.Empty)}");
 
-					Dictionary<string, string> postValues = new Dictionary<string, string>
+					Dictionary<string, string> postValues = new()
 					{
 						{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] },
 						{ "page_token", nextPageToken },
 						{ "page_index", pageIndex.ToString() }
 					};
 
-					HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, webDirectory.Uri) { Content = new FormUrlEncodedContent(postValues) };
+					HttpRequestMessage httpRequestMessage = new(HttpMethod.Post, webDirectory.Uri) { Content = new FormUrlEncodedContent(postValues) };
 					HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
 					webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;

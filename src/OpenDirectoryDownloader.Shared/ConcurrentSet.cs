@@ -98,7 +98,7 @@ public sealed class ConcurrentSet<T> : ICollection<T>
 	/// <returns>true if the value was removed successfully; otherwise false.</returns>
 	public bool Remove(T value)
 	{
-		return _dictionary.TryRemove(value, out byte b);
+		return _dictionary.TryRemove(value, out _);
 	}
 
 	/// <summary>

@@ -22,7 +22,7 @@ public static class StringExtensions
 
 		if (startIndex < fromLength)
 		{
-			throw new ArgumentException("from: Failed to find an instance of the first anchor");
+			throw new ArgumentException($"{nameof(from)}: Failed to find an instance of the first anchor");
 		}
 
 		int endIndex = !string.IsNullOrEmpty(until)
@@ -31,7 +31,7 @@ public static class StringExtensions
 
 		if (endIndex < 0)
 		{
-			throw new ArgumentException("until: Failed to find an instance of the last anchor");
+			throw new ArgumentException($"{nameof(until)}: Failed to find an instance of the last anchor");
 		}
 
 		string subString = @this[startIndex..endIndex];

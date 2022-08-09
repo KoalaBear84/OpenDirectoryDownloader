@@ -42,14 +42,14 @@ public static class Statistics
 
 	public static string GetSessionStats(Session session, bool includeExtensions = false, bool includeFullExtensions = false, bool onlyRedditStats = false, bool includeBanner = false)
 	{
-		Dictionary<string, ExtensionStats> extensionsStats = new Dictionary<string, ExtensionStats>();
+		Dictionary<string, ExtensionStats> extensionsStats = new();
 
 		if (includeExtensions || includeFullExtensions)
 		{
 			extensionsStats = GetExtensions(session.Root);
 		}
 
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new();
 
 		if (includeFullExtensions)
 		{

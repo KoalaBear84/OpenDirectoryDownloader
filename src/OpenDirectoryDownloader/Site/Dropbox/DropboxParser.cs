@@ -15,8 +15,8 @@ namespace OpenDirectoryDownloader.Site.Dropbox;
 public static class DropboxParser
 {
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-	private static readonly Regex UrlRegex = new Regex(@"\/sh\/(?<LinkKey>[^\/]*)\/(?<SecureHash>[^\/?]*)(?:\/(?<SubPath>[^?]*))?");
-	private static readonly Regex PrefetchListingRegex = new Regex(@"window\[""__REGISTER_SHARED_LINK_FOLDER_PRELOAD_HANDLER""\]\.responseReceived\((?<PrefetchListing>"".*)\)\s?}\);");
+	private static readonly Regex UrlRegex = new(@"\/sh\/(?<LinkKey>[^\/]*)\/(?<SecureHash>[^\/?]*)(?:\/(?<SubPath>[^?]*))?");
+	private static readonly Regex PrefetchListingRegex = new(@"window\[""__REGISTER_SHARED_LINK_FOLDER_PRELOAD_HANDLER""\]\.responseReceived\((?<PrefetchListing>"".*)\)\s?}\);");
 	private const string Parser = "Dropbox";
 	public const string Parameters_CSRFToken = "CSRFTOKEN";
 
@@ -64,7 +64,7 @@ public static class DropboxParser
 			if (prefetchListingRegexMatch.Success)
 			{
 				string htmlJavascriptString = prefetchListingRegexMatch.Groups["PrefetchListing"].Value;
-				JavaScriptParser javaScriptParser = new JavaScriptParser(htmlJavascriptString);
+				JavaScriptParser javaScriptParser = new(htmlJavascriptString);
 				Script program = javaScriptParser.ParseScript();
 				string decodedJson = (program.Body[0].ChildNodes.First() as Literal).StringValue;
 
@@ -74,14 +74,14 @@ public static class DropboxParser
 				DropboxResult dropboxResult = DropboxResult.FromJson(decodedJson);
 				takedownActive = takedownActive || dropboxResult.TakedownRequestType is not null;
 
-				List<Entry> entries = new List<Entry>();
+				List<Entry> entries = new();
 				entries.AddRange(dropboxResult.Entries);
 
 				if (dropboxResult.HasMoreEntries)
 				{
 					do
 					{
-						Dictionary<string, string> postValues = new Dictionary<string, string>
+						Dictionary<string, string> postValues = new()
 						{
 							{ "is_xhr", "true" },
 							{ "t", OpenDirectoryIndexer.Session.Parameters.ContainsKey(Parameters_CSRFToken) ? OpenDirectoryIndexer.Session.Parameters[Parameters_CSRFToken] : string.Empty },
@@ -92,7 +92,7 @@ public static class DropboxParser
 							{ "voucher", dropboxResult.NextRequestVoucher }
 						};
 
-						HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://www.dropbox.com/list_shared_link_folder_entries") { Content = new FormUrlEncodedContent(postValues) };
+						HttpRequestMessage httpRequestMessage = new(HttpMethod.Post, "https://www.dropbox.com/list_shared_link_folder_entries") { Content = new FormUrlEncodedContent(postValues) };
 						httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
 						httpResponseMessage.EnsureSuccessStatusCode();
@@ -160,7 +160,7 @@ public static class DropboxParser
 	{
 		if (httpResponseMessage.Headers.Contains("Set-Cookie"))
 		{
-			CookieContainer cookieContainer = new CookieContainer();
+			CookieContainer cookieContainer = new();
 
 			foreach (string cookieHeader in httpResponseMessage.Headers.GetValues("Set-Cookie"))
 			{

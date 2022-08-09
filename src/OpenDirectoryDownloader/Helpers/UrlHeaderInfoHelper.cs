@@ -25,8 +25,8 @@ public static class UrlHeaderInfoHelper
 	{
 		try
 		{
-			Context pollyContext = new Context
-				{
+			Context pollyContext = new()
+			{
 					{ "Url", url }
 				};
 
@@ -70,8 +70,8 @@ public static class UrlHeaderInfoHelper
 	{
 		try
 		{
-			Context pollyContext = new Context
-				{
+			Context pollyContext = new()
+			{
 					{ "Url", url }
 				};
 
@@ -97,8 +97,8 @@ public static class UrlHeaderInfoHelper
 	{
 		try
 		{
-			Context pollyContext = new Context
-				{
+			Context pollyContext = new()
+			{
 					{ "Url", url }
 				};
 

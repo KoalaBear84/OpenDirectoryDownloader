@@ -247,7 +247,7 @@ public class Command
 	{
 		if (value == null)
 		{
-			throw new ArgumentNullException("Attempt to set clipboard with null");
+			throw new ArgumentNullException(nameof(value), "Attempt to set clipboard with null");
 		}
 
 		try
@@ -264,7 +264,7 @@ public class Command
 		{
 			try
 			{
-				Process clipboardExecutable = new Process
+				Process clipboardExecutable = new()
 				{
 					StartInfo = new ProcessStartInfo
 					{

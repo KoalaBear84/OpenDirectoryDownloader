@@ -20,12 +20,12 @@ public static class GoogleDriveIndexer
 
 	// If modifying these scopes, delete your previously saved credentials
 	// at ~/.credentials/drive-dotnet-quickstart.json
-	static readonly string[] Scopes = { DriveService.Scope.DriveMetadataReadonly };
-	static readonly DriveService DriveService;
-	static readonly string ApplicationName = "OpenDirectoryDownloader";
-	const string FolderMimeType = "application/vnd.google-apps.folder";
-	const string ShortcutMimeType = "application/vnd.google-apps.shortcut";
-	static readonly RateLimiter RateLimiter = new RateLimiter(900, TimeSpan.FromSeconds(100), 0.9d);
+	private static readonly string[] Scopes = { DriveService.Scope.DriveMetadataReadonly };
+	private static readonly DriveService DriveService;
+	private static readonly string ApplicationName = "OpenDirectoryDownloader";
+	private const string FolderMimeType = "application/vnd.google-apps.folder";
+	private const string ShortcutMimeType = "application/vnd.google-apps.shortcut";
+	private static readonly RateLimiter RateLimiter = new(900, TimeSpan.FromSeconds(100), 0.9d);
 
 	static GoogleDriveIndexer()
 	{
@@ -33,7 +33,7 @@ public static class GoogleDriveIndexer
 		{
 			UserCredential credential;
 
-			using (FileStream fileStream = new FileStream("OpenDirectoryDownloader.GoogleDrive.json", FileMode.Open, FileAccess.Read))
+			using (FileStream fileStream = new("OpenDirectoryDownloader.GoogleDrive.json", FileMode.Open, FileAccess.Read))
 			{
 				// The file token.json stores the user's access and refresh tokens, and is created
 				// automatically when the authorization flow completes for the first time.

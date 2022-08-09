@@ -18,19 +18,19 @@ public class FtpParser
 {
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-	private static readonly Regex RegexMaxThreadsSpecific01 = new Regex(@"Too many connections \((?<MaxThreads>\d*)\) from this IP");
-	private static readonly Regex RegexMaxThreadsSpecific02 = new Regex(@"Sorry, the maximum number of clients \((?<MaxThreads>\d*)\) from your host are already connected.");
-	private static readonly Regex RegexMaxThreadsSpecific03 = new Regex(@"Sorry, your system may not connect more than (?<MaxThreads>\d*) times.");
-	private static readonly Regex RegexMaxThreadsSpecific04 = new Regex(@"Not logged in, only (?<MaxThreads>\d*) sessions from same IP allowed concurrently.");
+	private static readonly Regex RegexMaxThreadsSpecific01 = new(@"Too many connections \((?<MaxThreads>\d*)\) from this IP");
+	private static readonly Regex RegexMaxThreadsSpecific02 = new(@"Sorry, the maximum number of clients \((?<MaxThreads>\d*)\) from your host are already connected.");
+	private static readonly Regex RegexMaxThreadsSpecific03 = new(@"Sorry, your system may not connect more than (?<MaxThreads>\d*) times.");
+	private static readonly Regex RegexMaxThreadsSpecific04 = new(@"Not logged in, only (?<MaxThreads>\d*) sessions from same IP allowed concurrently.");
 
-	private static readonly Regex RegexMaxThreadsGeneral01 = new Regex(@"Too many connections");
-	private static readonly Regex RegexMaxThreadsGeneral02 = new Regex(@"There are too many connections from your internet address.");
-	private static readonly Regex RegexMaxThreadsGeneral03 = new Regex(@"No more connections allowed from your IP.");
-	private static readonly Regex RegexMaxThreadsGeneral04 = new Regex(@"There are too many connected users, please try later.");
-	private static readonly Regex RegexMaxThreadsGeneral05 = new Regex(@"Too many users logged in for this account.*");
-	private static readonly Regex RegexMaxThreadsGeneral06 = new Regex(@"Sorry, the maximum number of clients \(\d*\) for this user are already connected.");
+	private static readonly Regex RegexMaxThreadsGeneral01 = new(@"Too many connections");
+	private static readonly Regex RegexMaxThreadsGeneral02 = new(@"There are too many connections from your internet address.");
+	private static readonly Regex RegexMaxThreadsGeneral03 = new(@"No more connections allowed from your IP.");
+	private static readonly Regex RegexMaxThreadsGeneral04 = new(@"There are too many connected users, please try later.");
+	private static readonly Regex RegexMaxThreadsGeneral05 = new(@"Too many users logged in for this account.*");
+	private static readonly Regex RegexMaxThreadsGeneral06 = new(@"Sorry, the maximum number of clients \(\d*\) for this user are already connected.");
 
-	private static readonly Random Jitterer = new Random();
+	private static readonly Random Jitterer = new();
 	private static readonly AsyncRetryPolicy RetryPolicyNew = Policy
 		.Handle<Exception>()
 		.WaitAndRetryAsync(100,
@@ -77,7 +77,7 @@ public class FtpParser
 
 	private static bool IsMaxThreads(FtpCommandException ftpCommandException)
 	{
-		List<Regex> regexes = new List<Regex>
+		List<Regex> regexes = new()
 		{
 			RegexMaxThreadsSpecific01,
 			RegexMaxThreadsSpecific02,
@@ -139,11 +139,11 @@ public class FtpParser
 
 	public static async Task<WebDirectory> ParseFtpAsync(string processor, WebDirectory webDirectory, string username, string password)
 	{
-		CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+		CancellationTokenSource cancellationTokenSource = new();
 
 		cancellationTokenSource.CancelAfter(TimeSpan.FromMinutes(5));
 
-		Context pollyContext = new Context
+		Context pollyContext = new()
 		{
 			{ "Processor", processor },
 			{ "WebDirectory", webDirectory },
@@ -173,10 +173,9 @@ public class FtpParser
 				DataConnectionConnectTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
 				DataConnectionReadTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
 				ReadTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
-				EncryptionMode = OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_FtpEncryptionMode) ? Enum.Parse<FtpEncryptionMode>(OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_FtpEncryptionMode]) : FtpEncryptionMode.None
+				EncryptionMode = OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_FtpEncryptionMode) ? Enum.Parse<FtpEncryptionMode>(OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_FtpEncryptionMode]) : FtpEncryptionMode.None,
+				ValidateAnyCertificate = true
 			};
-
-			FtpClients[processor].ValidateAnyCertificate = true;
 
 			try
 			{
@@ -208,7 +207,7 @@ public class FtpParser
 				continue;
 			}
 
-			Uri uri = new Uri(new Uri(webDirectory.Url), item.FullName);
+			Uri uri = new(new Uri(webDirectory.Url), item.FullName);
 			string fullUrl = uri.ToString();
 
 			if (item.Type == FtpObjectType.File)
@@ -240,13 +239,13 @@ public class FtpParser
 
 	public static async Task<string> GetFtpServerInfo(WebDirectory webDirectory, string username, string password)
 	{
-		CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+		CancellationTokenSource cancellationTokenSource = new();
 
 		cancellationTokenSource.CancelAfter(TimeSpan.FromMinutes(5));
 
 		string processor = "Initalize";
 
-		Context pollyContext = new Context
+		Context pollyContext = new()
 		{
 			{ "Processor", processor },
 			{ "WebDirectory", webDirectory },
@@ -273,12 +272,12 @@ public class FtpParser
 			{
 				Logger.Warn($"Try FTP(S) connection with EncryptionMode {ftpEncryptionMode}");
 
-				FtpClient ftpClient = new FtpClient(webDirectory.Uri.Host, webDirectory.Uri.Port, username, password)
+				FtpClient ftpClient = new(webDirectory.Uri.Host, webDirectory.Uri.Port, username, password)
 				{
-					EncryptionMode = ftpEncryptionMode
+					EncryptionMode = ftpEncryptionMode,
+					ValidateAnyCertificate = true
 				};
 
-				ftpClient.ValidateAnyCertificate = true;
 				await ftpClient.ConnectAsync(cancellationToken);
 
 				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_FtpEncryptionMode] = ftpEncryptionMode.ToString();

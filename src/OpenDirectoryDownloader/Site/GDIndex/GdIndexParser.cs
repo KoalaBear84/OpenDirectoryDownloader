@@ -14,9 +14,9 @@ public static class GdIndexParser
 {
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private const string FolderMimeType = "application/vnd.google-apps.folder";
-	private static readonly Regex RootIdRegex = new Regex(@"default_root_id: '(?<RootId>.*?)'");
+	private static readonly Regex RootIdRegex = new(@"default_root_id: '(?<RootId>.*?)'");
 	private const string Parser = "GdIndex";
-	private static readonly RateLimiter RateLimiter = new RateLimiter(1, TimeSpan.FromSeconds(1));
+	private static readonly RateLimiter RateLimiter = new(1, TimeSpan.FromSeconds(1));
 
 	public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory, string html)
 	{

@@ -39,8 +39,8 @@ public class OpenDirectoryIndexer
 	public ConcurrentQueue<WebDirectory> WebDirectoriesQueue { get; set; } = new ConcurrentQueue<WebDirectory>();
 	public int RunningWebDirectoryThreads;
 	public Task[] WebDirectoryProcessors;
-	public Dictionary<string, WebDirectory> WebDirectoryProcessorInfo = new Dictionary<string, WebDirectory>();
-	public readonly object WebDirectoryProcessorInfoLock = new object();
+	public Dictionary<string, WebDirectory> WebDirectoryProcessorInfo = new();
+	public readonly object WebDirectoryProcessorInfoLock = new();
 
 	public ConcurrentQueue<WebFile> WebFilesFileSizeQueue { get; set; } = new ConcurrentQueue<WebFile>();
 	public int RunningWebFileFileSizeThreads;
@@ -58,9 +58,9 @@ public class OpenDirectoryIndexer
 
 	private System.Timers.Timer TimerStatistics { get; set; }
 
-	private static readonly Random Jitterer = new Random();
+	private static readonly Random Jitterer = new();
 
-	private static readonly List<string> KnownErrorPaths = new List<string>()
+	private static readonly List<string> KnownErrorPaths = new()
 	{
 		"cgi-bin/",
 		"lost%2Bfound/"
@@ -167,7 +167,7 @@ public class OpenDirectoryIndexer
 	{
 		OpenDirectoryIndexerSettings = openDirectoryIndexerSettings;
 
-		CookieContainer cookieContainer = new CookieContainer();
+		CookieContainer cookieContainer = new();
 
 		HttpClientHandler = new HttpClientHandler
 		{
@@ -178,7 +178,7 @@ public class OpenDirectoryIndexer
 
 		if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.CommandLineOptions.ProxyAddress))
 		{
-			WebProxy webProxy = new WebProxy
+			WebProxy webProxy = new()
 			{
 				Address = new Uri(OpenDirectoryIndexerSettings.CommandLineOptions.ProxyAddress),
 			};
@@ -309,7 +309,7 @@ public class OpenDirectoryIndexer
 				{
 					Logger.Warn("Using default port (990) for FTPS");
 
-					UriBuilder uriBuilder = new UriBuilder(Session.Root.Uri)
+					UriBuilder uriBuilder = new(Session.Root.Uri)
 					{
 						Port = 990
 					};
@@ -441,7 +441,7 @@ public class OpenDirectoryIndexer
 							{
 								try
 								{
-									List<IFileUploadSite> uploadSites = new List<IFileUploadSite>()
+									List<IFileUploadSite> uploadSites = new()
 									{
 										new Pixeldrain(),
 										new ZippyShare(),
@@ -672,7 +672,7 @@ public class OpenDirectoryIndexer
 			return;
 		}
 
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new();
 
 		if (WebDirectoriesQueue.Any() || RunningWebDirectoryThreads > 0 || WebFilesFileSizeQueue.Any() || RunningWebFileFileSizeThreads > 0)
 		{
@@ -772,14 +772,14 @@ public class OpenDirectoryIndexer
 						{
 							if (webDirectory.Uri.Segments.Contains("folderview"))
 							{
-								UrlEncodingParser urlEncodingParserFolderView = new UrlEncodingParser(webDirectory.Url);
+								UrlEncodingParser urlEncodingParserFolderView = new(webDirectory.Url);
 
 								webDirectory.Url = $"https://drive.google.com/drive/folders/{urlEncodingParserFolderView["id"]}";
 							}
 
 							string baseUrl = webDirectory.Url;
 
-							UrlEncodingParser urlEncodingParserResourceKey = new UrlEncodingParser(baseUrl);
+							UrlEncodingParser urlEncodingParserResourceKey = new(baseUrl);
 
 							WebDirectory parsedWebDirectory = await GoogleDriveIndexer.IndexAsync(webDirectory, urlEncodingParserResourceKey["resourcekey"]);
 							parsedWebDirectory.Url = baseUrl;
@@ -797,11 +797,11 @@ public class OpenDirectoryIndexer
 								Logger.Debug($"[{name}] Start download '{webDirectory.Url}'");
 								Session.TotalHttpRequests++;
 
-								CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+								CancellationTokenSource cancellationTokenSource = new();
 
 								cancellationTokenSource.CancelAfter(TimeSpan.FromMinutes(5));
 
-								Context pollyContext = new Context
+								Context pollyContext = new()
 								{
 									{ "Processor", name },
 									{ "WebDirectory", webDirectory },
@@ -1151,7 +1151,7 @@ public class OpenDirectoryIndexer
 		{
 			FirstRequest = false;
 
-			List<string> serverHeaders = new List<string>();
+			List<string> serverHeaders = new();
 
 			if (httpResponseMessage.Headers.Contains("Server"))
 			{
@@ -1219,7 +1219,7 @@ public class OpenDirectoryIndexer
 			webDirectory.Url = httpResponseMessage.RequestMessage.RequestUri.ToString();
 		}
 
-		Uri originalUri = new Uri(webDirectory.Url);
+		Uri originalUri = new(webDirectory.Url);
 		Logger.Debug($"[{name}] Finish download [HTTP {(int)httpResponseMessage.StatusCode}] '{webDirectory.Url}', size: {FileSizeHelper.ToHumanReadable(html?.Length)}");
 
 		// Process only same site
@@ -1309,7 +1309,7 @@ public class OpenDirectoryIndexer
 	{
 		Logger.Warn("Cloudflare protection detected, trying to launch browser. Solve protection yourself, indexing will start automatically!");
 
-		BrowserContext browserContext = new BrowserContext(HttpClientHandler.CookieContainer, cloudFlare: true);
+		BrowserContext browserContext = new(HttpClientHandler.CookieContainer, cloudFlare: true);
 		bool cloudFlareOK = await browserContext.DoCloudFlareAsync(OpenDirectoryIndexerSettings.Url);
 
 		if (cloudFlareOK)
@@ -1367,7 +1367,7 @@ public class OpenDirectoryIndexer
 
 	private static async Task<string> GetHtml(Stream stream)
 	{
-		using (StreamReader streamReader = new StreamReader(stream))
+		using (StreamReader streamReader = new(stream))
 		{
 			return await streamReader.ReadToEndAsync();
 		}
@@ -1406,12 +1406,12 @@ public class OpenDirectoryIndexer
 		}
 
 		// Don't use using tags, it will close the stream for the callee
-		MemoryStream responseStream = new MemoryStream();
-		StreamWriter streamWriter = new StreamWriter(responseStream);
+		MemoryStream responseStream = new();
+		StreamWriter streamWriter = new(responseStream);
 
 		using (Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync())
 		{
-			using (StreamReader streamReader = new StreamReader(stream, encoding))
+			using (StreamReader streamReader = new(stream, encoding))
 			{
 				// Check first 10kB for any 'HTML'
 				char[] buffer = new char[10 * Constants.Kilobyte];
@@ -1432,7 +1432,7 @@ public class OpenDirectoryIndexer
 				}
 				else
 				{
-					Regex htmlRegex = new Regex("<[a-zA-Z0-9] ?([^>]+)>", RegexOptions.IgnoreCase);
+					Regex htmlRegex = new("<[a-zA-Z0-9] ?([^>]+)>", RegexOptions.IgnoreCase);
 
 					if (!htmlRegex.Match(new string(buffer)).Success)
 					{

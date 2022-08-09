@@ -385,7 +385,7 @@ public class BrowserContext: IDisposable
 
 		if (e.Response.Headers.ContainsKey(SetCookieHeader))
 		{
-			Uri uri = new Uri(e.Response.Url);
+			Uri uri = new(e.Response.Url);
 			string baseUrl = $"{uri.Scheme}://{uri.Host}";
 
 			string cookies = e.Response.Headers["set-cookie"];

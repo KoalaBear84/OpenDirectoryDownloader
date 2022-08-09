@@ -23,7 +23,7 @@ public class AnonFiles : IFileUploadSite
 		{
 			try
 			{
-				using (MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent($"Upload----{Guid.NewGuid()}"))
+				using (MultipartFormDataContent multipartFormDataContent = new($"Upload----{Guid.NewGuid()}"))
 				{
 					multipartFormDataContent.Add(new StreamContent(new FileStream(path, FileMode.Open)), "file", Path.GetFileName(path));
 

@@ -24,8 +24,8 @@ public static class FileSizeHelper
 			new string[] { "ZB", "Z", "ZIB", "ZO" },
 			new string[] { "YB", "Y", "YIB", "YO" }
 		};
-	private static readonly Regex AlphaNumericRegex = new Regex("[^a-zA-Z0-9 .,]");
-	private static readonly Regex BytesRegex = new Regex("\\((?<FileSize>(\\d*,?)+)bytes\\)");
+	private static readonly Regex AlphaNumericRegex = new("[^a-zA-Z0-9 .,]");
+	private static readonly Regex BytesRegex = new("\\((?<FileSize>(\\d*,?)+)bytes\\)");
 
 	public static long ParseFileSize(string value, int kbValue = 1024, bool throwException = false, bool onlyChecking = false)
 	{

@@ -129,7 +129,7 @@ public class UrlEncodingParser : NameValueCollection
 
 		if (!string.IsNullOrEmpty(Url))
 		{
-			if (Url.Contains("?"))
+			if (Url.Contains('?'))
 			{
 				query = Url[..Url.IndexOf('?')] + (!string.IsNullOrWhiteSpace(query) ? $"?{query}" : string.Empty);
 			}

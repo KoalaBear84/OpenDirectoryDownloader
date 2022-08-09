@@ -37,7 +37,7 @@ public class AngleSharpTests
     </tr>
   </tfoot>
 </table>";
-		HtmlParser htmlParser = new HtmlParser();
+		HtmlParser htmlParser = new();
 		IHtmlDocument htmlDocument = await htmlParser.ParseDocumentAsync(html);
 
 		Assert.Equal("TABLE", htmlDocument.QuerySelector("tbody tr").Parent("table").TagName);

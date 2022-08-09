@@ -13,7 +13,7 @@ namespace OpenDirectoryDownloader.Shared;
 /// <typeparam name="T"></typeparam>
 public class ConcurrentList<T> : IList<T>, IDisposable
 {
-	private ReaderWriterLockSlim _lock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
+	private ReaderWriterLockSlim _lock = new(LockRecursionPolicy.SupportsRecursion);
 	private int _count = 0;
 
 	public int Count

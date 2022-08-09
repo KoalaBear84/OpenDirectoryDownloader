@@ -16,10 +16,10 @@ public class ZippyShare : IFileUploadSite
 	public string Name => "Zippyshare.com";
 
 	private readonly Logger Logger = LogManager.GetCurrentClassLogger();
-	private static readonly HtmlParser HtmlParser = new HtmlParser();
+	private static readonly HtmlParser HtmlParser = new();
 
-	private static Regex UploadIdRegex = new Regex(@"var uploadId = '(?<UploadId>[A-Z0-9]*)';");
-	private static Regex ServerRegex = new Regex(@"var server = '(?<Server>www\d*)';");
+	private static Regex UploadIdRegex = new(@"var uploadId = '(?<UploadId>[A-Z0-9]*)';");
+	private static Regex ServerRegex = new(@"var server = '(?<Server>www\d*)';");
 
 	public async Task<IFileUploadSiteFile> UploadFile(HttpClient httpClient, string path)
 	{
@@ -43,7 +43,7 @@ public class ZippyShare : IFileUploadSite
 				string uploadId = uploadIdMatch.Groups["UploadId"].Value;
 				string server = serverMatch.Groups["Server"].Value;
 
-				using (MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent($"Upload----{Guid.NewGuid()}"))
+				using (MultipartFormDataContent multipartFormDataContent = new($"Upload----{Guid.NewGuid()}"))
 				{
 					multipartFormDataContent.Add(new StringContent("on"), "terms");
 					multipartFormDataContent.Add(new StringContent("on"), "private");

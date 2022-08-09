@@ -70,7 +70,7 @@ public class Library
 
 	public static bool IsBase64String(string base64)
 	{
-		Span<byte> buffer = new Span<byte>(new byte[base64.Length]);
+		Span<byte> buffer = new(new byte[base64.Length]);
 		return Convert.TryFromBase64String(base64, buffer, out _);
 	}
 
@@ -89,7 +89,7 @@ public class Library
 			url = $"http://{url}";
 		}
 
-		Uri uri = new Uri(url);
+		Uri uri = new(url);
 
 		if (!url.EndsWith("/") && string.IsNullOrWhiteSpace(Path.GetFileName(WebUtility.UrlDecode(uri.AbsolutePath))) && string.IsNullOrWhiteSpace(uri.Query))
 		{
@@ -98,7 +98,7 @@ public class Library
 
 		if (uri.Host == Constants.GoogleDriveDomain)
 		{
-			UrlEncodingParser urlEncodingParser = new UrlEncodingParser(url);
+			UrlEncodingParser urlEncodingParser = new(url);
 
 			if (urlEncodingParser.AllKeys.Contains("usp"))
 			{
@@ -113,9 +113,9 @@ public class Library
 
 	public static void SaveSessionJson(Session session, string filePath)
 	{
-		JsonSerializer jsonSerializer = new JsonSerializer();
+		JsonSerializer jsonSerializer = new();
 
-		using (StreamWriter streamWriter = new StreamWriter(filePath))
+		using (StreamWriter streamWriter = new(filePath))
 		{
 			using (JsonWriter jsonWriter = new JsonTextWriter(streamWriter))
 			{
@@ -131,7 +131,7 @@ public class Library
 
 	public static Session LoadSessionJson(string fileName)
 	{
-		using (StreamReader streamReader = new StreamReader(fileName))
+		using (StreamReader streamReader = new(fileName))
 		{
 			using (JsonReader jsonReader = new JsonTextReader(streamReader))
 			{
@@ -143,20 +143,6 @@ public class Library
 	public static string FormatWithThousands(object value)
 	{
 		return string.Format("{0:#,0}", value);
-	}
-
-	private static double GetSpeedInMBs(IGrouping<long, KeyValuePair<long, long>> measurements, int useMiliseconds = 0)
-	{
-		long time = useMiliseconds == 0 ? measurements.Last().Key - measurements.First().Key : useMiliseconds;
-		double downloadedMBs = (measurements.Last().Value - measurements.First().Value) / (double)Constants.Megabyte;
-		return downloadedMBs / (time / 1000d);
-	}
-
-	private static double GetSpeedInKBs(IGrouping<long, KeyValuePair<long, long>> measurements, int useMiliseconds = 0)
-	{
-		long time = useMiliseconds == 0 ? measurements.Last().Key - measurements.First().Key : useMiliseconds;
-		double downloadedKBs = (measurements.Last().Value - measurements.First().Value) / (double)Constants.Kilobyte;
-		return downloadedKBs / (time / 1000d);
 	}
 
 	private static long GetSpeedInBytes(IGrouping<long, KeyValuePair<long, long>> measurements, int useMiliseconds = 0)
@@ -215,7 +201,7 @@ public class Library
 	{
 		Logger.Info($"Do FTP speedtest for {url}");
 
-		Uri uri = new Uri(url);
+		Uri uri = new(url);
 		#pragma warning disable CS0618 // Discussion about `OpenRead` https://github.com/robinrodricks/FluentFTP/issues/841
 		using (Stream stream = ftpClient.OpenRead(uri.LocalPath))
 		#pragma warning restore CS0618
@@ -236,7 +222,7 @@ public class Library
 		byte[] buffer = new byte[2048];
 		int bytesRead;
 
-		List<KeyValuePair<long, long>> measurements = new List<KeyValuePair<long, long>>(10_000);
+		List<KeyValuePair<long, long>> measurements = new(10_000);
 		long previousTime = 0;
 
 		while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
@@ -286,7 +272,7 @@ public class Library
 
 		stopwatch.Stop();
 
-		SpeedtestResult speedtestResult = new SpeedtestResult
+		SpeedtestResult speedtestResult = new()
 		{
 			DownloadedBytes = totalBytesRead,
 			ElapsedMilliseconds = stopwatch.ElapsedMilliseconds,
@@ -385,7 +371,7 @@ public class Library
 
 		string javaScript = await httpResponseMessage.Content.ReadAsStringAsync();
 
-		Regex regex = new Regex(@"\/\/# sourceMappingURL=(?<SourceMapUrl>.*)");
+		Regex regex = new(@"\/\/# sourceMappingURL=(?<SourceMapUrl>.*)");
 
 		Match regexMatch = regex.Match(javaScript);
 
@@ -401,7 +387,7 @@ public class Library
 	{
 		using (Stream httpStream = await httpClient.GetStreamAsync(sourceUrl))
 		{
-			using (StreamReader streamReader = new StreamReader(httpStream))
+			using (StreamReader streamReader = new(httpStream))
 			{
 				using (JsonReader jsonReader = new JsonTextReader(streamReader))
 				{

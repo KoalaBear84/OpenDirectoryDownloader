@@ -10,7 +10,7 @@ namespace OpenDirectoryDownloader.Site.GoFileIO;
 public static class GoFileIOParser
 {
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-	private static readonly Regex FolderHashRegex = new Regex(@".*?\/d\/(?<FolderHash>.*)");
+	private static readonly Regex FolderHashRegex = new(@".*?\/d\/(?<FolderHash>.*)");
 	private const string Parser = "GoFileIO";
 	private const string StatusOK = "ok";
 	private const string ApiBaseAddress = "https://api.gofile.io";

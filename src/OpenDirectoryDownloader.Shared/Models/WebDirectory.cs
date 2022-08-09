@@ -20,7 +20,7 @@ public class WebDirectory
 	public string Url { get; set; }
 
 	[JsonIgnore]
-	public Uri Uri => new Uri(Url);
+	public Uri Uri => new(Url);
 
 	public string Name { get; set; }
 
