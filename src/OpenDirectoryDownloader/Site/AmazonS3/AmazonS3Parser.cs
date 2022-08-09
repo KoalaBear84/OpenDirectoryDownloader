@@ -16,15 +16,15 @@ public static class AmazonS3Parser
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private const string Parser = "AmazonS3";
 
-	public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory)
+	public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory, bool hasHeader)
 	{
 		try
 		{
-			UrlEncodingParser urlEncodingParser = new UrlEncodingParser(webDirectory.Url);
+			UrlEncodingParser urlEncodingParser = new(webDirectory.Url);
 
 			string prefix = urlEncodingParser.AllKeys.Contains("prefix") ? urlEncodingParser["prefix"] : string.Empty;
 
-			webDirectory = await ScanAsync(httpClient, webDirectory, prefix);
+			webDirectory = await ScanAsync(httpClient, webDirectory, prefix, hasHeader);
 		}
 		catch (Exception ex)
 		{
@@ -44,7 +44,7 @@ public static class AmazonS3Parser
 		return webDirectory;
 	}
 
-	private static async Task<WebDirectory> ScanAsync(HttpClient httpClient, WebDirectory webDirectory, string prefix)
+	private static async Task<WebDirectory> ScanAsync(HttpClient httpClient, WebDirectory webDirectory, string prefix, bool hasHeader)
 	{
 		Logger.Debug($"Retrieving listings for {webDirectory.Uri}");
 
@@ -59,7 +59,7 @@ public static class AmazonS3Parser
 
 			do
 			{
-				string url = GetUrl(bucketName, prefix, nextMarker);
+				string url = GetUrl(bucketName, prefix, nextMarker, hasHeader);
 				HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(url);
 
 				httpResponseMessage.EnsureSuccessStatusCode();
@@ -68,10 +68,10 @@ public static class AmazonS3Parser
 
 				using (TextReader textReader = new StreamReader(await httpResponseMessage.Content.ReadAsStreamAsync()))
 				{
-					using (XmlTextReader xmlTextReader = new XmlTextReader(textReader))
+					using (XmlTextReader xmlTextReader = new(textReader))
 					{
 						xmlTextReader.Namespaces = false;
-						XmlSerializer xmlSerializer = new XmlSerializer(typeof(AmazonS3Result));
+						XmlSerializer xmlSerializer = new(typeof(AmazonS3Result));
 						result = (AmazonS3Result)xmlSerializer.Deserialize(xmlTextReader);
 					}
 				}
@@ -85,7 +85,7 @@ public static class AmazonS3Parser
 					webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
 					{
 						Parser = Parser,
-						Url = GetUrl(bucketName, commonPrefix.Prefix, nextMarker),
+						Url = GetUrl(bucketName, commonPrefix.Prefix, nextMarker, hasHeader),
 						Name = commonPrefix.Prefix
 					});
 				}
@@ -95,7 +95,7 @@ public static class AmazonS3Parser
 				{
 					webDirectory.Files.Add(new WebFile
 					{
-						Url = $"https://{bucketName}.{Constants.AmazonS3Domain}/{content.Key}",
+						Url = GetFileUrl(bucketName, hasHeader, content.Key),
 						FileName = Path.GetFileName(content.Key),
 						FileSize = content.Size
 					});
@@ -120,9 +120,18 @@ public static class AmazonS3Parser
 		return webDirectory;
 	}
 
-	private static string GetUrl(string bucketName, string prefix, string nextMarker)
+	private static string GetFileUrl(string bucketName, bool amazons3header, string contentKey)
 	{
-		string url = $"https://{bucketName}.{Constants.AmazonS3Domain}/?delimiter=%2F&prefix={WebUtility.UrlEncode(prefix)}";
+		string domain = GetDomain(bucketName, amazons3header);
+
+		return $"https://{domain}/{contentKey}";
+	}
+
+	private static string GetUrl(string bucketName, string prefix, string nextMarker, bool amazons3header)
+	{
+		string domain = GetDomain(bucketName, amazons3header);
+
+		string url = $"https://{domain}/?delimiter=/&prefix={prefix}";
 
 		if (!string.IsNullOrEmpty(nextMarker))
 		{
@@ -130,5 +139,17 @@ public static class AmazonS3Parser
 		}
 
 		return url;
+	}
+
+	private static string GetDomain(string bucketName, bool amazons3header)
+	{
+		string domain = $"{bucketName}.{Constants.AmazonS3Domain}";
+
+		if (!amazons3header)
+		{
+			domain = bucketName;
+		}
+
+		return domain;
 	}
 }

@@ -931,9 +931,21 @@ public class OpenDirectoryIndexer
 
 		if (httpResponseMessage?.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "amazons3")
 		{
-			WebDirectory parsedWebDirectory = await AmazonS3Parser.ParseIndex(HttpClient, webDirectory);
+			WebDirectory parsedWebDirectory = await AmazonS3Parser.ParseIndex(HttpClient, webDirectory, hasHeader: true);
 			AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
 			return;
+		}
+
+		if (httpResponseMessage?.Content.Headers.ContentType?.MediaType == "application/xml")
+		{
+			string xml = await GetHtml(httpResponseMessage);
+
+			if (xml.Contains("ListBucketResult"))
+			{
+				WebDirectory parsedWebDirectory = await AmazonS3Parser.ParseIndex(HttpClient, webDirectory, hasHeader: false);
+				AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
+				return;
+			}
 		}
 
 		if (httpResponseMessage?.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
