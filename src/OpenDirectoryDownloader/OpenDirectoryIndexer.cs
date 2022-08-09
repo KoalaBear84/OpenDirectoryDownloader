@@ -362,14 +362,14 @@ public class OpenDirectoryIndexer
 
 				for (int i = 1; i <= WebDirectoryProcessors.Length; i++)
 				{
-					string processorId = i.ToString();
+					string processorId = i.ToString().PadLeft(WebDirectoryProcessors.Length.ToString().Length, '0');
 
 					WebDirectoryProcessors[i - 1] = WebDirectoryProcessor(WebDirectoriesQueue, $"P{processorId}", IndexingTaskCTS.Token);
 				}
 
 				for (int i = 1; i <= WebFileFileSizeProcessors.Length; i++)
 				{
-					string processorId = i.ToString();
+					string processorId = i.ToString().PadLeft(WebFileFileSizeProcessors.Length.ToString().Length, '0');
 
 					WebFileFileSizeProcessors[i - 1] = WebFileFileSizeProcessor(WebFilesFileSizeQueue, $"P{processorId}", WebDirectoryProcessors, IndexingTaskCTS.Token);
 				}
