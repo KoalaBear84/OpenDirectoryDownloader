@@ -50,6 +50,7 @@ public class OpenDirectoryIndexer
 	public Task IndexingTask { get; set; }
 
 	private bool FirstRequest { get; set; } = true;
+	private static bool RateLimited { get; set; }
 
 	private HttpClientHandler HttpClientHandler { get; set; }
 	private HttpClient HttpClient { get; set; }
@@ -97,16 +98,19 @@ public class OpenDirectoryIndexer
 					else if (httpRequestException.StatusCode == HttpStatusCode.ServiceUnavailable || httpRequestException.StatusCode == HttpStatusCode.TooManyRequests)
 					{
 						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Rate limited (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+						RateLimited = true;
 					}
 					else if (httpRequestException.StatusCode == HttpStatusCode.LoopDetected)
 					{
 						// It could be that a Retry-After header is returned, which should be the seconds of time to wait, but this could be as high as 14.400 which is 4 hours!
 						// But a request will probably be successful after just a couple of seconds
 						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Rate limited / out of capacity (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+						RateLimited = true;
 					}
 					else if (ex.Message.Contains("No connection could be made because the target machine actively refused it."))
 					{
 						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Rate limited? (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+						RateLimited = true;
 					}
 					else if (!Session.GDIndex && (httpRequestException.StatusCode == HttpStatusCode.NotFound || ex.Message == "No such host is known."))
 					{
@@ -683,10 +687,16 @@ public class OpenDirectoryIndexer
 
 		do
 		{
-			if (RunningWebDirectoryThreads + 1 > Session.MaxThreads)
+			if (RateLimited && RunningWebDirectoryThreads + 1 > 5)
 			{
-				Logger.Info($"Stopped thread because it's there are more threads ({RunningWebDirectoryThreads + 1}) running than wanted ({Session.MaxThreads})");
+				Logger.Warn($"Stopped thread because of rate limiting");
 				break;
+			} else if (RunningWebDirectoryThreads + 1 > Session.MaxThreads)
+			{
+				// Don't hog the CPU when queue < threads
+				//Logger.Info($"Pausing thread because it's there are more threads ({RunningWebDirectoryThreads + 1}) running than wanted ({Session.MaxThreads})");
+				await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
+				continue;
 			}
 
 			Interlocked.Increment(ref RunningWebDirectoryThreads);
