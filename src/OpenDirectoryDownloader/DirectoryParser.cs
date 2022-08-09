@@ -20,6 +20,7 @@ using OpenDirectoryDownloader.Site.GitHub;
 using OpenDirectoryDownloader.Site.GoFileIO;
 using OpenDirectoryDownloader.Site.Mediafire;
 using OpenDirectoryDownloader.Site.Pixeldrain;
+using PuppeteerSharp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -44,7 +45,7 @@ public static class DirectoryParser
 	/// <param name="baseUrl">Base url</param>
 	/// <param name="html">Html to parse</param>
 	/// <returns>WebDirectory object containing current directory index</returns>
-	public static async Task<WebDirectory> ParseHtml(WebDirectory webDirectory, string html, HttpClient httpClient = null, HttpResponseMessage httpResponseMessage = null, bool checkParents = true)
+	public static async Task<WebDirectory> ParseHtml(WebDirectory webDirectory, string html, HttpClient httpClient = null, HttpClientHandler httpClientHandler = null, HttpResponseMessage httpResponseMessage = null, bool checkParents = true)
 	{
 		string baseUrl = webDirectory.Url;
 
@@ -152,7 +153,7 @@ public static class DirectoryParser
 							break;
 						}
 					}
-				
+
 					if (googleDriveIndexType is not null)
 					{
 						break;
@@ -162,11 +163,11 @@ public static class DirectoryParser
 				if (googleDriveIndexType is not null)
 				{
 					OpenDirectoryIndexer.Session.Parameters[Constants.GoogleDriveIndexType] = googleDriveIndexType;
-					
+
 					if (OpenDirectoryIndexer.Session.MaxThreads != 1)
 					{
-						OpenDirectoryIndexer.Session.MaxThreads = 1;
 						Logger.Warn($"Reduce threads to 1 because of Google Drive index");
+						OpenDirectoryIndexer.Session.MaxThreads = 1;
 					}
 				}
 			}
@@ -345,6 +346,49 @@ public static class DirectoryParser
 			if (parsedWebDirectory.Subdirectories.Count == 0 && parsedWebDirectory.Files.Count == 0 && htmlDocument.QuerySelector("noscript") != null)
 			{
 				Logger.Warn("No directories and files found, but did find a <noscript> tag, probably a JavaScript challenge in there which is unsupported");
+
+				if (!OpenDirectoryIndexer.Session.CommandLineOptions.NoBrowser && httpClient is not null)
+				{
+					if (OpenDirectoryIndexer.Session.MaxThreads != 1)
+					{
+						Logger.Warn($"Reduce threads to 1 because of possible Browser JavaScript");
+						OpenDirectoryIndexer.Session.MaxThreads = 1;
+					}
+
+					if (OpenDirectoryIndexer.BrowserContext is null)
+					{
+						Logger.Warn($"Starting Browser..");
+						OpenDirectoryIndexer.BrowserContext = new(httpClientHandler.CookieContainer);
+						await OpenDirectoryIndexer.BrowserContext.InitializeAsync();
+						Logger.Warn($"Started Browser");
+					}
+
+					Logger.Warn($"Retrieving HTML through Browser..");
+					string browserHtml = await OpenDirectoryIndexer.BrowserContext.GetHtml(webDirectory.Url);
+					Logger.Warn($"Retrieved HTML through Browser");
+
+					// Transfer cookies to HttpClient, so hopefully the following requests can be done with the help of cookies
+					CookieParam[] cookieParams = await OpenDirectoryIndexer.BrowserContext.GetCookiesAsync();
+
+					foreach (CookieParam cookieParam in cookieParams)
+					{
+						httpClientHandler.CookieContainer.Add(new Cookie
+						{
+							Name = cookieParam.Name,
+							Domain = cookieParam.Domain,
+							Path = cookieParam.Path,
+							Expires = Library.UnixTimestampToDateTime((long)cookieParam.Expires),
+							HttpOnly = cookieParam.HttpOnly ?? false,
+							Value = cookieParam.Value,
+							Secure = cookieParam.Secure ?? false
+						});
+					}
+
+					if (browserHtml != html)
+					{
+						return await ParseHtml(webDirectory, browserHtml, httpClient, httpClientHandler);
+					}
+				}
 			}
 
 			return parsedWebDirectory;

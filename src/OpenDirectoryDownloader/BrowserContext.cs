@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader;
 
-public class BrowserContext
+public class BrowserContext: IDisposable
 {
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -21,21 +21,32 @@ public class BrowserContext
 	private Browser Browser { get; set; }
 	private Page Page { get; set; }
 	private CookieContainer CookieContainer { get; }
+	public bool CloudFlare { get; }
 	public bool DebugInfo { get; }
 	public TimeSpan Timeout { get; set; }
-	private string Url { get; }
 	private CancellationTokenSource CancellationTokenSource { get; set; } = new CancellationTokenSource();
 	private bool OK { get; set; }
 
-	public BrowserContext(string url, CookieContainer cookieContainer, bool debugInfo = false, TimeSpan timeout = default)
+	public BrowserContext(CookieContainer cookieContainer, bool cloudFlare = false, bool debugInfo = false, TimeSpan timeout = default)
 	{
-		Url = url;
 		CookieContainer = cookieContainer;
+		CloudFlare = cloudFlare;
 		DebugInfo = debugInfo;
 		Timeout = timeout;
 	}
 
-	public async Task<bool> DoAsync()
+	~BrowserContext()
+	{
+		Dispose();
+	}
+
+	public void Dispose()
+	{
+		Page?.Dispose();
+		Browser?.Dispose();
+	}
+
+	public async Task<bool> DoCloudFlareAsync(string url)
 	{
 		try
 		{
@@ -46,76 +57,16 @@ public class BrowserContext
 
 			CancellationTokenSource.CancelAfter(Timeout);
 
-			BrowserFetcher browserFetcher = new BrowserFetcher();
+			await InitializeAsync();
 
-			if (!browserFetcher.LocalRevisions().Contains(BrowserFetcher.DefaultChromiumRevision))
-			{
-				Logger.Warn($"Downloading browser... First time it can take a while, depending on your internet connection.");
-				RevisionInfo revisionInfo = await browserFetcher.DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
-				Logger.Warn($"Downloaded browser. Downloaded: {revisionInfo.Downloaded}, Platform: {revisionInfo.Platform}, Revision: {revisionInfo.Revision}, Path: {revisionInfo.FolderPath}");
-			}
+			Stopwatch stopwatch = Stopwatch.StartNew();
 
-			Logger.Debug($"Creating browser...");
+			Logger.Debug($"Navigating to {url}..");
 
-			PuppeteerExtra puppeteerExtra = new PuppeteerExtra();
+			await Page.GoToAsync(url);
+			await Task.Delay(TimeSpan.FromSeconds(60), CancellationTokenSource.Token);
 
-			// Use stealth plugin (needed for Cloudflare / hCaptcha)
-			puppeteerExtra.Use(new StealthPlugin());
-
-			using (Browser = await puppeteerExtra.LaunchAsync(new LaunchOptions
-			{
-				Headless = false,
-				Args = new[] { "--no-sandbox", "--disable-setuid-sandbox", $"--user-agent=\"{Constants.UserAgent.Chrome}\"" },
-				DefaultViewport = null,
-				IgnoreHTTPSErrors = true
-			}))
-			{
-				Logger.Info($"Started browser with PID {Browser.Process.Id}");
-
-				Browser.Closed += Browser_Closed;
-				Browser.Disconnected += Browser_Disconnected;
-				Browser.TargetChanged += Browser_TargetChanged;
-				Browser.TargetCreated += Browser_TargetCreated;
-				Browser.TargetDestroyed += Browser_TargetDestroyed;
-
-				Logger.Debug($"Created browser.");
-
-				Logger.Debug($"Creating page...");
-
-				using (Page = (await Browser.PagesAsync())[0])
-				{
-					Page.Close += Page_Close;
-					Page.Console += Page_Console;
-					Page.Dialog += Page_Dialog;
-					Page.DOMContentLoaded += Page_DOMContentLoaded;
-					Page.Error += Page_Error;
-					Page.FrameAttached += Page_FrameAttached;
-					Page.FrameDetached += Page_FrameDetached;
-					Page.FrameNavigated += Page_FrameNavigated;
-					Page.Load += Page_Load;
-					Page.Metrics += Page_Metrics;
-					Page.PageError += Page_PageError;
-					Page.Popup += Page_Popup;
-					Page.Request += Page_Request;
-					Page.RequestFailed += Page_RequestFailed;
-					Page.RequestFinished += Page_RequestFinished;
-					Page.RequestServedFromCache += Page_RequestServedFromCache;
-					Page.Response += Page_Response;
-					Page.WorkerCreated += Page_WorkerCreated;
-					Page.WorkerDestroyed += Page_WorkerDestroyed;
-
-					Logger.Debug($"Created page.");
-
-					Stopwatch stopwatch = Stopwatch.StartNew();
-
-					Logger.Debug($"Navigating to {Url}..");
-
-					await Page.GoToAsync(Url);
-					await Task.Delay(TimeSpan.FromSeconds(60), CancellationTokenSource.Token);
-
-					Logger.Debug($"Navigation done in {stopwatch.ElapsedMilliseconds}ms");
-				}
-			}
+			Logger.Debug($"Navigation done in {stopwatch.ElapsedMilliseconds}ms");
 
 			Logger.Debug("Finished with browser!");
 		}
@@ -138,6 +89,123 @@ public class BrowserContext
 		}
 
 		return OK;
+	}
+
+	public async Task InitializeAsync()
+	{
+		try
+		{
+			BrowserFetcher browserFetcher = new();
+
+			if (!browserFetcher.LocalRevisions().Contains(BrowserFetcher.DefaultChromiumRevision))
+			{
+				Logger.Warn($"Downloading browser... First time it can take a while, depending on your internet connection.");
+				RevisionInfo revisionInfo = await browserFetcher.DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
+				Logger.Warn($"Downloaded browser. Downloaded: {revisionInfo.Downloaded}, Platform: {revisionInfo.Platform}, Revision: {revisionInfo.Revision}, Path: {revisionInfo.FolderPath}");
+			}
+
+			Logger.Debug($"Creating browser...");
+
+			PuppeteerExtra puppeteerExtra = new();
+
+			// Use stealth plugin (needed for Cloudflare / hCaptcha)
+			puppeteerExtra.Use(new StealthPlugin());
+
+			Browser = await puppeteerExtra.LaunchAsync(new LaunchOptions
+			{
+				Headless = false,
+				Args = new[] { "--no-sandbox", "--disable-setuid-sandbox", $"--user-agent=\"{Constants.UserAgent.Chrome}\"" },
+				DefaultViewport = null,
+				IgnoreHTTPSErrors = true
+			});
+
+			Logger.Info($"Started browser with PID {Browser.Process.Id}");
+
+			Browser.Closed += Browser_Closed;
+			Browser.Disconnected += Browser_Disconnected;
+			Browser.TargetChanged += Browser_TargetChanged;
+			Browser.TargetCreated += Browser_TargetCreated;
+			Browser.TargetDestroyed += Browser_TargetDestroyed;
+
+			Logger.Debug($"Created browser.");
+
+			Logger.Debug($"Creating page...");
+
+			Page = (await Browser.PagesAsync())[0];
+
+			Page.Close += Page_Close;
+			Page.Console += Page_Console;
+			Page.Dialog += Page_Dialog;
+			Page.DOMContentLoaded += Page_DOMContentLoaded;
+			Page.Error += Page_Error;
+			Page.FrameAttached += Page_FrameAttached;
+			Page.FrameDetached += Page_FrameDetached;
+			Page.FrameNavigated += Page_FrameNavigated;
+			Page.Load += Page_Load;
+			Page.Metrics += Page_Metrics;
+			Page.PageError += Page_PageError;
+			Page.Popup += Page_Popup;
+			Page.Request += Page_Request;
+			Page.RequestFailed += Page_RequestFailed;
+			Page.RequestFinished += Page_RequestFinished;
+			Page.RequestServedFromCache += Page_RequestServedFromCache;
+			Page.Response += Page_Response;
+			Page.WorkerCreated += Page_WorkerCreated;
+			Page.WorkerDestroyed += Page_WorkerDestroyed;
+
+			Logger.Debug($"Created page.");
+		}
+		catch (Exception ex)
+		{
+			Logger.Error(ex, "Error with initializing browser");
+			throw;
+		}
+	}
+
+	public async Task<CookieParam[]> GetCookiesAsync() => await Page.GetCookiesAsync();
+
+	public async Task<string> GetHtml(string url)
+	{
+		try
+		{
+			if (Timeout == default)
+			{
+				Timeout = TimeSpan.FromMinutes(1);
+			}
+
+			CancellationTokenSource.CancelAfter(Timeout);
+
+			Stopwatch stopwatch = Stopwatch.StartNew();
+
+			Logger.Debug($"Navigating to {url}..");
+
+			NavigationOptions navigationOptions = new()
+			{
+				Timeout = (int)Timeout.TotalMilliseconds,
+				WaitUntil = new[] { WaitUntilNavigation.DOMContentLoaded }
+			};
+
+			await Page.GoToAsync(url, navigationOptions);
+			Logger.Debug($"Navigation done in {stopwatch.ElapsedMilliseconds}ms");
+
+			string html = await Page.GetContentAsync();
+
+			return html;
+		}
+		catch (OperationCanceledException ex)
+		{
+			if (!OK)
+			{
+				Logger.Error(ex, "Timeout in navigating to URL");
+			}
+		}
+		catch (Exception ex)
+		{
+			Logger.Error(ex, "Error with browser");
+			throw;
+		}
+
+		return null;
 	}
 
 	private void Browser_Closed(object sender, EventArgs e)
@@ -332,17 +400,21 @@ public class BrowserContext
 			if (theCookie != null)
 			{
 				CookieContainer.SetCookies(new Uri(baseUrl), theCookie);
-				Cookie cloudflareClearance = CookieContainer.GetCookies(new Uri(baseUrl)).FirstOrDefault(c => c.Name == CloudflareClearanceKey);
 
-				if (cloudflareClearance != null)
+				if (CloudFlare)
 				{
-					if (DebugInfo)
-					{
-						Console.WriteLine($"Cloudflare clearance cookie found: {cloudflareClearance.Value}");
-					}
+					Cookie cloudflareClearance = CookieContainer.GetCookies(new Uri(baseUrl)).FirstOrDefault(c => c.Name == CloudflareClearanceKey);
 
-					OK = true;
-					CancellationTokenSource.Cancel();
+					if (cloudflareClearance != null)
+					{
+						if (DebugInfo)
+						{
+							Console.WriteLine($"Cloudflare clearance cookie found: {cloudflareClearance.Value}");
+						}
+
+						OK = true;
+						CancellationTokenSource.Cancel();
+					}
 				}
 			}
 		}

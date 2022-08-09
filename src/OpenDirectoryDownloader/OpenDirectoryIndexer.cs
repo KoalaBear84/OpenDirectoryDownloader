@@ -54,6 +54,8 @@ public class OpenDirectoryIndexer
 
 	private HttpClientHandler HttpClientHandler { get; set; }
 	private HttpClient HttpClient { get; set; }
+	public static BrowserContext BrowserContext { get; set; }
+
 	private System.Timers.Timer TimerStatistics { get; set; }
 
 	private static readonly Random Jitterer = new Random();
@@ -382,6 +384,13 @@ public class OpenDirectoryIndexer
 				Console.WriteLine("Finshed indexing");
 				Logger.Info("Finshed indexing");
 
+				if (BrowserContext is not null)
+				{
+					Logger.Warn($"Closing Browser");
+					BrowserContext.Dispose();
+					BrowserContext = null;
+				}
+
 				if (WebFilesFileSizeQueue.Any())
 				{
 					TimerStatistics.Interval = TimeSpan.FromSeconds(5).TotalMilliseconds;
@@ -691,7 +700,8 @@ public class OpenDirectoryIndexer
 			{
 				Logger.Warn($"Stopped thread because of rate limiting");
 				break;
-			} else if (RunningWebDirectoryThreads + 1 > Session.MaxThreads)
+			}
+			else if (RunningWebDirectoryThreads + 1 > Session.MaxThreads)
 			{
 				// Don't hog the CPU when queue < threads
 				//Logger.Info($"Pausing thread because it's there are more threads ({RunningWebDirectoryThreads + 1}) running than wanted ({Session.MaxThreads})");
@@ -1223,7 +1233,21 @@ public class OpenDirectoryIndexer
 
 				Session.TotalHttpTraffic += html.Length;
 
-				WebDirectory parsedWebDirectory = await DirectoryParser.ParseHtml(webDirectory, html, HttpClient, httpResponseMessage);
+				WebDirectory parsedWebDirectory = await DirectoryParser.ParseHtml(webDirectory, html, HttpClient, HttpClientHandler, httpResponseMessage);
+
+				if (BrowserContext is not null && (parsedWebDirectory.Subdirectories.Any() || parsedWebDirectory.Files.Any()))
+				{
+					Logger.Warn($"Closing Browser because of successful repsonse");
+					BrowserContext.Dispose();
+					BrowserContext = null;
+
+					if (Session.MaxThreads != Session.CommandLineOptions.Threads)
+					{
+						Logger.Warn($"Increasing threads back to {Session.CommandLineOptions.Threads} because of successful response");
+						Session.MaxThreads = Session.CommandLineOptions.Threads;
+					}
+				}
+
 				bool processSubdirectories = parsedWebDirectory.Parser != "DirectoryListingModel01";
 				AddProcessedWebDirectory(webDirectory, parsedWebDirectory, processSubdirectories);
 			}
@@ -1273,8 +1297,8 @@ public class OpenDirectoryIndexer
 	{
 		Logger.Warn("Cloudflare protection detected, trying to launch browser. Solve protection yourself, indexing will start automatically!");
 
-		BrowserContext browserContext = new BrowserContext(OpenDirectoryIndexerSettings.Url, HttpClientHandler.CookieContainer);
-		bool cloudFlareOK = await browserContext.DoAsync();
+		BrowserContext browserContext = new BrowserContext(HttpClientHandler.CookieContainer, cloudFlare: true);
+		bool cloudFlareOK = await browserContext.DoCloudFlareAsync(OpenDirectoryIndexerSettings.Url);
 
 		if (cloudFlareOK)
 		{
