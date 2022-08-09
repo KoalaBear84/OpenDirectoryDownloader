@@ -909,7 +909,7 @@ public class OpenDirectoryIndexer
 		{
 			httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
 		}
-		catch (TaskCanceledException ex) when (ex.InnerException is TimeoutException)
+		catch (TaskCanceledException)// when (ex.InnerException is TimeoutException)
 		{
 			// Retry
 			throw;
