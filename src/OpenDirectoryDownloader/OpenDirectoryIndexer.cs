@@ -81,6 +81,10 @@ public class OpenDirectoryIndexer
 				{
 					Logger.Warn($"[{context["Processor"]}] Rate limited (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
 				}
+				else if (retryCount <= 4 && ex is TaskCanceledException taskCanceledException && taskCanceledException.InnerException is TimeoutException timeoutException)
+				{
+					Logger.Warn($"[{context["Processor"]}] Timeout (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+				}
 				else if (ex is HttpRequestException httpRequestException)
 				{
 					int httpStatusCode = (int)httpRequestException.StatusCode;
@@ -887,6 +891,11 @@ public class OpenDirectoryIndexer
 		try
 		{
 			httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
+		}
+		catch (TaskCanceledException ex) when (ex.InnerException is TimeoutException)
+		{
+			// Retry
+			throw;
 		}
 		catch (Exception ex)
 		{
