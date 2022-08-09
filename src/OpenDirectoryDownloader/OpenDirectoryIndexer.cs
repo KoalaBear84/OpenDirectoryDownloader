@@ -909,7 +909,7 @@ public class OpenDirectoryIndexer
 			Logger.Error(ex, $"Error retrieving directory listing for {webDirectory.Url}");
 		}
 
-		if (httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "amazons3")
+		if (httpResponseMessage?.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "amazons3")
 		{
 			WebDirectory parsedWebDirectory = await AmazonS3Parser.ParseIndex(HttpClient, webDirectory);
 			AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
