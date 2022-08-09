@@ -94,6 +94,12 @@ Setting some options like `--username` or `--user-agent` might override some hea
 
 When you want to copy (`C` key or `-c` flag) the stats at the end on Linux you need to have xclip installed.
 
+### Linux distros
+
+On some distros you need extra dependencies. For Alpine: https://docs.microsoft.com/en-us/dotnet/core/install/linux-alpine
+
+For others see: https://docs.microsoft.com/en-us/dotnet/core/install/linux
+
 ## Cloudflare
 
 *EXPERIMANTAL!! READ THIS FIRST!*
