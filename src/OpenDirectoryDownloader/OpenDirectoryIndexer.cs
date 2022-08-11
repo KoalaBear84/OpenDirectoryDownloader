@@ -909,7 +909,7 @@ public class OpenDirectoryIndexer
 
 		if (webDirectory.Uri.Host is Constants.GitHubDomain or Constants.GitHubApiDomain)
 		{
-			WebDirectory parsedWebDirectory = await GitHubParser.ParseIndex(HttpClient, webDirectory);
+			WebDirectory parsedWebDirectory = await GitHubParser.ParseIndex(HttpClient, webDirectory, Session.CommandLineOptions.GitHubToken);
 			AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
 			return;
 		}

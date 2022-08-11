@@ -53,6 +53,9 @@ public class CommandLineOptions
 	[Option("password", Required = false, Default = "", HelpText = "Password")]
 	public string Password { get; set; }
 
+	[Option("github-token", Required = false, Default = "", HelpText = "GitHub token")]
+	public string GitHubToken { get; set; }
+
 	[Option("output-file", Required = false, Default = null, HelpText = "Save output files to specific base filename")]
 	public string OutputFile { get; set; }
 

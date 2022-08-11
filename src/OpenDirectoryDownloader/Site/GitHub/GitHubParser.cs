@@ -21,7 +21,7 @@ public static class GitHubParser
 	private static string DefaultBranch { get; set; }
 	private static string CurrentCommitSha { get; set; }
 
-	public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory)
+	public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory, string token = null)
 	{
 		try
 		{
@@ -38,7 +38,14 @@ public static class GitHubParser
 				webDirectory.Url = $"https://{Constants.GitHubDomain}/{Uri.EscapeDataString(Owner)}/{Uri.EscapeDataString(Repository)}/";
 
 				httpClient.DefaultRequestHeaders.Clear();
+				httpClient.DefaultRequestHeaders.Accept.ParseAdd("application/vnd.github+json");
 				httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("OpenDirectoryDownloader");
+
+				if (!string.IsNullOrWhiteSpace(token))
+				{
+					Logger.Warn($"Using provided GitHub token for higher rate limits");
+					httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", token);
+				}
 
 				Logger.Warn("Retrieving default branch");
 				HttpResponseMessage httpResponseMessage = await DoRequest(httpClient, GetApiUrl(Owner, Repository));
@@ -107,6 +114,11 @@ public static class GitHubParser
 				Logger.Warn($"RateLimit remaining: {GetHeader(httpResponseMessage.Headers, "X-RateLimit-Remaining")}/{GetHeader(httpResponseMessage.Headers, "X-RateLimit-Limit")}");
 			}
 
+			if (httpResponseMessage.StatusCode == HttpStatusCode.Unauthorized)
+			{
+				throw new CancelException($"Bad GitHub token");
+			}
+
 			if (!httpResponseMessage.IsSuccessStatusCode)
 			{
 				if (httpResponseMessage.Headers.Contains("X-RateLimit-Reset"))
@@ -125,7 +137,7 @@ public static class GitHubParser
 
 					resetDateTime = currentDate + rateLimitTimeSpan;
 
-					Logger.Warn($"Rate limited, waiting until {resetDateTime.ToLocalTime().ToString(Constants.DateTimeFormat)}..");
+					Logger.Warn($"Rate limited, waiting until {resetDateTime.ToLocalTime().ToString(Constants.DateTimeFormat)}.. Increase rate limits by using a token: https://github.com/settings/tokens/new (no scopes required)");
 
 					OpenDirectoryIndexer.ShowStatistics = false;
 					await Task.Delay(rateLimitTimeSpan);

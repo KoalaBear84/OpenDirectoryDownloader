@@ -52,6 +52,7 @@ Command line parameters:
 | `-a`  | `--user-agent`       | Use custom default User Agent                                                                                                                                                                                                 |
 |       | `--username`         | Username                                                                                                                                                                                                                      |
 |       | `--password`         | Password                                                                                                                                                                                                                      |
+|       | `--github-token`     | GitHub Token                                                                                                                                                                                                                  |
 | `-H`  | `--header`           | Supply a custom header to use for each HTTP request. Can be used multiple times for multiple headers. See below for more info.                                                                                                |
 |       | `--output-file`      | Output file to use for urls file                                                                                                                                                                                              |
 |       | `--proxy-address`    | Proxy address, like "socks5://127.0.0.1:9050" (needed for .onion)                                                                                                                                                             |
@@ -113,6 +114,16 @@ Cloudflare does somehow detect that it is not the normal Chromium/Chrome browser
 Sometimes it fails and pops up a browser for every request, and also kills it almost immediately when Cloudflare sees that there is no problem with the session. If this happens, kill the indexer!
 
 If anybody have more info how to get Cloudflare to work better, let me know!
+
+## GitHub
+
+By default GitHub has a rate limit of 60 request per hour. You can increase this limit to 5000 per hour by creating a (personal) token:
+
+1. Go to https://github.com/settings/tokens/new
+2. Add a name like "OpenDirectoryDownloader"
+3. You don't have to select any scopes!
+4. Click "Generate token"
+5. Start OpenDirectoryDownloader with --githubtoken <TOKEN>
 
 ## Docker
 
