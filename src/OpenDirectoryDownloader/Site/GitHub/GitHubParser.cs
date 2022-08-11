@@ -162,7 +162,10 @@ public static class GitHubParser
 
 			GitHubResult gitHubResult = GitHubResult.FromJson(json);
 
-			Logger.Warn($"GitHub response is truncated with {gitHubResult.Tree.Length} items, sadly there is no paging available..");
+			if (gitHubResult.Truncated)
+			{
+				Logger.Warn($"GitHub response is truncated with {gitHubResult.Tree.Length} items, sadly there is no paging available..");
+			}
 
 			foreach (Tree treeItem in gitHubResult.Tree)
 			{
@@ -183,6 +186,7 @@ public static class GitHubParser
 					webDirectory.Files.Add(new WebFile
 					{
 						// Use real URL
+						// TODO: Use https://raw.githubusercontent.com/{Owner}/{Repo}/{sha}/{Path}
 						Url = treeItem.Url,
 						FileName = treeItem.Path,
 						FileSize = treeItem.Size
