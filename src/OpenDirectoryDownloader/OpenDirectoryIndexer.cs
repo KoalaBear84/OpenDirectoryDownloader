@@ -910,7 +910,7 @@ public class OpenDirectoryIndexer
 		if (webDirectory.Uri.Host is Constants.GitHubDomain or Constants.GitHubApiDomain)
 		{
 			WebDirectory parsedWebDirectory = await GitHubParser.ParseIndex(HttpClient, webDirectory, Session.CommandLineOptions.GitHubToken);
-			AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
+			AddProcessedWebDirectory(webDirectory, parsedWebDirectory, processSubdirectories: false);
 			return;
 		}
 
@@ -1514,7 +1514,6 @@ public class OpenDirectoryIndexer
 					if (subdirectory.Uri.Host != Constants.AmazonS3Domain &&
 						subdirectory.Uri.Host != Constants.BlitzfilesTechDomain &&
 						subdirectory.Uri.Host != Constants.DropboxDomain &&
-						!subdirectory.Uri.Host.EndsWith(Constants.GitHubDomain) &&
 						subdirectory.Uri.Host != Constants.GoogleDriveDomain &&
 						!DirectoryParser.SameHostAndDirectoryFile(Session.Root.Uri, subdirectory.Uri))
 					{

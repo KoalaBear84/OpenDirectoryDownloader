@@ -117,7 +117,7 @@ If anybody have more info how to get Cloudflare to work better, let me know!
 
 ## GitHub
 
-By default GitHub has a rate limit of 60 request per hour. You can increase this limit to 5000 per hour by creating a (personal) token:
+By default GitHub has a rate limit of 60 request per hour, which is enough for 20 repositories with less than 100.000 items. You can increase this limit to 5000 per hour by creating a (personal) token:
 
 1. Go to https://github.com/settings/tokens/new
 2. Add a name like "OpenDirectoryDownloader"

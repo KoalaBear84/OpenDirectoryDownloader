@@ -186,26 +186,42 @@ public static class GitHubParser
 				Logger.Warn($"GitHub response is truncated with {gitHubResult.Tree.Length} items, sadly there is no paging available..");
 			}
 
-			string path = webDirectory.ParentDirectory is not null ? $"{webDirectory.Name}/" : string.Empty;
+			WebDirectory currentWebDirectory = webDirectory;
 
+			// Yes, this code is a little complicated, but it works..
 			foreach (Tree treeItem in gitHubResult.Tree)
 			{
+				WebDirectory parentWebDirectory = currentWebDirectory;
+
 				// Like directories
 				if (treeItem.Type == "tree")
 				{
-					webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+					while (parentWebDirectory.ParentDirectory is not null && !treeItem.Path.StartsWith(parentWebDirectory.Name))
+					{
+						parentWebDirectory = parentWebDirectory.ParentDirectory;
+					}
+
+					WebDirectory newWebDirectory = new WebDirectory(parentWebDirectory)
 					{
 						Parser = Parser,
 						Url = treeItem.Url,
 						Name = treeItem.Path
-					});
+					};
+
+					parentWebDirectory.Subdirectories.Add(newWebDirectory);
+					currentWebDirectory = newWebDirectory;
 				}
 				else
 				// Like files
 				{
-					string fileName = new Uri(new Uri($"https://raw.githubusercontent.com/{Uri.EscapeDataString(Owner)}/{Uri.EscapeDataString(Repository)}/"), Path.Combine(CurrentCommitSha, path, treeItem.Path)).ToString();
+					while (parentWebDirectory.ParentDirectory is not null && !Path.GetDirectoryName(treeItem.Path).Replace("\\", "/").StartsWith(parentWebDirectory.Name))
+					{
+						parentWebDirectory = parentWebDirectory.ParentDirectory;
+					}
 
-					webDirectory.Files.Add(new WebFile
+					string fileName = new Uri(new Uri($"https://raw.githubusercontent.com/{Uri.EscapeDataString(Owner)}/{Uri.EscapeDataString(Repository)}/"), Path.Combine(CurrentCommitSha, treeItem.Path)).ToString();
+
+					parentWebDirectory.Files.Add(new WebFile
 					{
 						Url = fileName,
 						FileName = treeItem.Path,
