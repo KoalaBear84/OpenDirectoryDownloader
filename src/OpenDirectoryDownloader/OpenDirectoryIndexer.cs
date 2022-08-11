@@ -873,21 +873,24 @@ public class OpenDirectoryIndexer
 
 			Interlocked.Decrement(ref RunningWebDirectoryThreads);
 
-			// Needed, because of the TryDequeue, no waiting in ConcurrentQueue!
-			if (queue.IsEmpty)
+			if (RunningWebDirectoryThreads > 0)
 			{
-				// Don't hog the CPU when queue < threads
-				await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
-			}
-			else
-			{
-				if (OpenDirectoryIndexerSettings.CommandLineOptions.WaitSecondsBetweenCalls > 0)
+				// Needed, because of the TryDequeue, no waiting in ConcurrentQueue!
+				if (queue.IsEmpty)
 				{
-					await Task.Delay(TimeSpan.FromSeconds(OpenDirectoryIndexerSettings.CommandLineOptions.WaitSecondsBetweenCalls), cancellationToken);
+					// Don't hog the CPU when queue < threads
+					await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
 				}
 				else
 				{
-					await Task.Delay(TimeSpan.FromMilliseconds(10), cancellationToken);
+					if (OpenDirectoryIndexerSettings.CommandLineOptions.WaitSecondsBetweenCalls > 0)
+					{
+						await Task.Delay(TimeSpan.FromSeconds(OpenDirectoryIndexerSettings.CommandLineOptions.WaitSecondsBetweenCalls), cancellationToken);
+					}
+					else
+					{
+						await Task.Delay(TimeSpan.FromMilliseconds(10), cancellationToken);
+					}
 				}
 			}
 		}
