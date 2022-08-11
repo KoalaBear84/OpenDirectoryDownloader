@@ -3,7 +3,7 @@ using NLog;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared.Models;
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -35,6 +35,8 @@ public static class GitHubParser
 				Owner = webDirectory.Uri.Segments[1].TrimEnd('/');
 				Repository = webDirectory.Uri.Segments[2].TrimEnd('/');
 
+				webDirectory.Url = $"https://{Constants.GitHubDomain}/{Uri.EscapeDataString(Owner)}/{Uri.EscapeDataString(Repository)}/";
+
 				httpClient.DefaultRequestHeaders.Clear();
 				httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("OpenDirectoryDownloader");
 
@@ -49,6 +51,8 @@ public static class GitHubParser
 					throw new Exception("Invalid default branch");
 				}
 
+				Logger.Warn($"Default branch: {DefaultBranch}");
+
 				Logger.Warn("Retrieving last commit SHA");
 
 				httpResponseMessage = await DoRequest(httpClient, $"{GetApiUrl(Owner, Repository)}/branches/{DefaultBranch}");
@@ -60,6 +64,8 @@ public static class GitHubParser
 				{
 					throw new Exception("Empty repository");
 				}
+
+				Logger.Warn($"Last commit SHA: {CurrentCommitSha}");
 			}
 
 			webDirectory = await ScanAsync(httpClient, webDirectory);
@@ -168,6 +174,8 @@ public static class GitHubParser
 				Logger.Warn($"GitHub response is truncated with {gitHubResult.Tree.Length} items, sadly there is no paging available..");
 			}
 
+			string path = webDirectory.ParentDirectory is not null ? $"{webDirectory.Name}/" : string.Empty;
+
 			foreach (Tree treeItem in gitHubResult.Tree)
 			{
 				// Like directories
@@ -176,7 +184,6 @@ public static class GitHubParser
 					webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
 					{
 						Parser = Parser,
-						// Use real URL
 						Url = treeItem.Url,
 						Name = treeItem.Path
 					});
@@ -184,11 +191,11 @@ public static class GitHubParser
 				else
 				// Like files
 				{
+					string fileName = new Uri(new Uri($"https://raw.githubusercontent.com/{Uri.EscapeDataString(Owner)}/{Uri.EscapeDataString(Repository)}/"), Path.Combine(CurrentCommitSha, path, treeItem.Path)).ToString();
+
 					webDirectory.Files.Add(new WebFile
 					{
-						// Use real URL
-						// TODO: Use https://raw.githubusercontent.com/{Owner}/{Repo}/{sha}/{Path}
-						Url = treeItem.Url,
+						Url = fileName,
 						FileName = treeItem.Path,
 						FileSize = treeItem.Size
 					});

@@ -424,7 +424,6 @@ public class OpenDirectoryIndexer
 					Session.Root.Uri.Host != Constants.GoogleDriveDomain &&
 					Session.Root.Uri.Host != Constants.BlitzfilesTechDomain &&
 					Session.Root.Uri.Host != Constants.DropboxDomain &&
-					Session.Root.Uri.Host != Constants.GitHubDomain &&
 					Session.Root.Uri.Host != Constants.GoFileIoDomain &&
 					Session.Root.Uri.Host != Constants.MediafireDomain &&
 					Session.Root.Uri.Host != Constants.PixeldrainDomain)
