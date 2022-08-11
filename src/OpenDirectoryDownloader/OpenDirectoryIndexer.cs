@@ -562,6 +562,10 @@ public class OpenDirectoryIndexer
 						}
 					}
 				}
+				else
+				{
+					Logger.Warn("Speedtest skipped because of general service");
+				}
 
 				if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftp || Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
 				{
