@@ -76,7 +76,12 @@ public class OpenDirectoryIndexer
 
 				string relativeUrl = webDirectory.Uri.PathAndQuery;
 
-				if (ex is SilentException)
+				if (ex is CancelException)
+				{
+					Logger.Warn($"[{context["Processor"]}] Cancelling: {ex.Message}");
+					(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
+				}
+				else if (ex is SilentException)
 				{
 					// Silence
 				}

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using NLog;
+using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ public static class GitHubParser
 			{
 				if (webDirectory.Uri.Segments.Length < 3)
 				{
-					throw new Exception("Invalid GitHub url");
+					throw new CancelException("Invalid GitHub url");
 				}
 
 				Owner = webDirectory.Uri.Segments[1].TrimEnd('/');
