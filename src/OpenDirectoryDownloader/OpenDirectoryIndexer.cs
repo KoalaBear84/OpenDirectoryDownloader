@@ -411,7 +411,7 @@ public class OpenDirectoryIndexer
 				Session.TotalFileSizeEstimated = Session.Root.TotalFileSize;
 
 				// Replaced WebUtility.UrlDecode with Uri.UnescapeDataString because of issues with Google Drive alternatives (+ sign)
-				IEnumerable<string> distinctUrls = Session.Root.AllFileUrls.Distinct().Select(i => Uri.UnescapeDataString(i));
+				IEnumerable<string> distinctUrls = Session.Root.AllFileUrls.Distinct().Select(x => Uri.UnescapeDataString(x)).OrderBy(x => x, NaturalSortStringComparer.InvariantCulture);
 
 				if (Session.TotalFiles != distinctUrls.Count())
 				{
@@ -596,7 +596,7 @@ public class OpenDirectoryIndexer
 					Logger.Info("URLs with errors:");
 					Console.WriteLine("URLs with errors:");
 
-					foreach (string urlWithError in Session.UrlsWithErrors.OrderBy(u => u))
+					foreach (string urlWithError in Session.UrlsWithErrors.OrderBy(u => u, NaturalSortStringComparer.InvariantCulture))
 					{
 						Logger.Info(urlWithError);
 						Console.WriteLine(urlWithError);
