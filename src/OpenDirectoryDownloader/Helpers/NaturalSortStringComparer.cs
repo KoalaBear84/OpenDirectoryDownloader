@@ -37,8 +37,8 @@ public class NaturalSortStringComparer : IComparer<string>
 			// If they're both numbers, compare the value
 			if (xSegments.CurrentIsNumber && ySegments.CurrentIsNumber)
 			{
-				long xValue = long.Parse(xSegments.Current);
-				long yValue = long.Parse(ySegments.Current);
+				_ = long.TryParse(xSegments.Current, out long xValue);
+				_ = long.TryParse(ySegments.Current, out long yValue);
 				cmp = xValue.CompareTo(yValue);
 				
 				if (cmp != 0)
