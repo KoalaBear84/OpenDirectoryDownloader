@@ -219,7 +219,7 @@ public class OpenDirectoryIndexer
 
 			if (headerName.ToLower() == "cookie")
 			{
-				string[] cookies = splitHeader[1].Split(';');
+				string[] cookies = headerValue.Split(';').Where(c => !String.IsNullOrWhiteSpace(c)).ToArray();
 
 				foreach (string cookie in cookies)
 				{
