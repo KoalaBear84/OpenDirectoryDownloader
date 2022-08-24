@@ -213,15 +213,11 @@ public class OpenDirectoryIndexer
 			}
 
 			string[] splitHeader = customHeader.Split(':');
-			splitHeader[1] = splitHeader[1].TrimStart();
 
-			if (splitHeader.Length != 2)
-			{
-				Logger.Warn($"Invalid header specified: '{customHeader}' should only contain a single colon (:), for separating header name and value. Header will be ignored.");
-				continue;
-			}
+			string headerName = splitHeader[0].TrimStart();
+			string headerValue = String.Join(":", splitHeader.Skip(1)).TrimStart();
 
-			if (splitHeader[0].ToString().ToLower() == "cookie")
+			if (headerName.ToLower() == "cookie")
 			{
 				string[] cookies = splitHeader[1].Split(';');
 
@@ -241,7 +237,7 @@ public class OpenDirectoryIndexer
 			}
 			else
 			{
-				HttpClient.DefaultRequestHeaders.Add(splitHeader[0], splitHeader[1]);
+				HttpClient.DefaultRequestHeaders.Add(headerName, headerValue);
 			}
 		}
 
