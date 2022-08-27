@@ -139,6 +139,15 @@ It will save the URLs files onto C:\\Scans (windows), or replace with a custom f
 
 \* You can also run it without `-v c:/scans:/app/Scans` if you don't want to save the results on your host.
 
+## Google Colab / Jupyter Notebook
+
+1. Open https://colab.research.google.com/github/KoalaBear84/OpenDirectoryDownloader/blob/master/OpenDirectoryDownloader.ipynb
+2. Run step 1 to setup the environment and install the latest OpenDirectoryDownloader
+3. Fill in the Url
+4. Run step 2
+5. Wait until indexing is completed
+6. Urls file can be found in Scans folder (see Folder icon on the left sidebar)
+
 ## Onion / Tor support
 
 1. Make sure the Tor is running on your machine
