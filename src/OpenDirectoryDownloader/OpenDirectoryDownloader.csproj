@@ -23,10 +23,10 @@
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.17.1" />
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
-    <PackageReference Include="FluentFTP" Version="39.2.1" />
-    <PackageReference Include="Jint" Version="3.0.0-beta-2039" />
+    <PackageReference Include="FluentFTP" Version="39.4.0" />
+    <PackageReference Include="Jint" Version="3.0.0-beta-2040" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="NLog" Version="5.0.1" />
+    <PackageReference Include="NLog" Version="5.0.2" />
     <PackageReference Include="Polly" Version="7.2.3" />
     <PackageReference Include="PuppeteerExtraSharp" Version="1.3.2" />
     <PackageReference Include="PuppeteerSharp" Version="7.1.0" />
