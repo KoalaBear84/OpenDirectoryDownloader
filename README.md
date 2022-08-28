@@ -78,7 +78,7 @@ Headers need to be provided in the following format:
 ```
 <Header Name>: <Header Value>
 ```
-There should be only a single `:` and no `;` in the header string. **This syntax is compatible with e.g. cURL, so that you can copy the headers from a cURL command and re-use them with OpenDirectoryDownloader**.  
+ **This syntax is compatible with e.g. cURL, so that you can copy the headers from a cURL command and re-use them with OpenDirectoryDownloader**.  
 
 This means you can easily "fake" a browser request:  
 
