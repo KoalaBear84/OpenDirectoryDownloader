@@ -128,8 +128,8 @@ public static class BhadooIndexParser
 
 					string appJsSource = httpClient.GetStringAsync(appJsScript.Source.Replace("obf.", string.Empty)).GetAwaiter().GetResult();
 
-					JavaScriptParser javaScriptParser = new(appJsSource);
-					Script program = javaScriptParser.ParseScript();
+					JavaScriptParser javaScriptParser = new();
+					Script program = javaScriptParser.ParseScript(appJsSource);
 					IEnumerable<FunctionDeclaration> javaScriptFunctions = program.ChildNodes.OfType<FunctionDeclaration>();
 					FunctionDeclaration readFunctionDeclaration = javaScriptFunctions.FirstOrDefault(f => f.ChildNodes.OfType<Identifier>().Any(i => i.Name == "read"));
 					string readFunction = appJsSource[readFunctionDeclaration.Range.Start..readFunctionDeclaration.Range.End];

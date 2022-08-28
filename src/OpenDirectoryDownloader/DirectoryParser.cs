@@ -142,8 +142,8 @@ public static class DirectoryParser
 
 						string appJsSource = await httpClient.GetStringAsync(scriptUrl);
 
-						JavaScriptParser javaScriptParser = new(appJsSource);
-						Script program = javaScriptParser.ParseScript();
+						JavaScriptParser javaScriptParser = new();
+						Script program = javaScriptParser.ParseScript(appJsSource);
 						IEnumerable<FunctionDeclaration> javaScriptFunctions = program.ChildNodes.OfType<FunctionDeclaration>();
 						FunctionDeclaration gdidecodeFunctionDeclaration = javaScriptFunctions.FirstOrDefault(f => f.ChildNodes.OfType<Identifier>().Any(i => i.Name == "gdidecode"));
 
