@@ -702,7 +702,7 @@ public class OpenDirectoryIndexer
 		{
 			if (RateLimited && RunningWebDirectoryThreads + 1 > 5)
 			{
-				Logger.Warn($"Stopped thread because of rate limiting");
+				Logger.Warn($"Decrease threads because of rate limiting");
 				break;
 			}
 			else if (RunningWebDirectoryThreads + 1 > Session.MaxThreads)
