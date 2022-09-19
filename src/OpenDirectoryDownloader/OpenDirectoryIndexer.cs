@@ -220,11 +220,11 @@ public class OpenDirectoryIndexer
 			string[] splitHeader = customHeader.Split(':');
 
 			string headerName = splitHeader[0].TrimStart();
-			string headerValue = String.Join(":", splitHeader.Skip(1)).TrimStart();
+			string headerValue = string.Join(":", splitHeader.Skip(1)).TrimStart();
 
 			if (headerName.ToLower() == "cookie")
 			{
-				string[] cookies = headerValue.Split(';').Where(c => !String.IsNullOrWhiteSpace(c)).ToArray();
+				string[] cookies = headerValue.Split(';').Where(c => !string.IsNullOrWhiteSpace(c)).ToArray();
 
 				foreach (string cookie in cookies)
 				{
@@ -531,7 +531,7 @@ public class OpenDirectoryIndexer
 					{
 						try
 						{
-							FluentFTP.FtpClient ftpClient = FtpParser.FtpClients.FirstOrDefault(c => c.Value.IsConnected).Value;
+							FluentFTP.AsyncFtpClient ftpClient = FtpParser.FtpClients.FirstOrDefault(c => c.Value.IsConnected).Value;
 
 							FtpParser.CloseAll(exceptFtpClient: ftpClient);
 
@@ -758,7 +758,7 @@ public class OpenDirectoryIndexer
 
 								try
 								{
-									await FtpParser.FtpClients[name].DisconnectAsync(cancellationToken);
+									await FtpParser.FtpClients[name].Disconnect(cancellationToken);
 
 									lock (FtpParser.FtpClients)
 									{

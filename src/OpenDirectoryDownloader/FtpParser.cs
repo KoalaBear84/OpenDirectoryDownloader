@@ -135,7 +135,7 @@ public class FtpParser
 		return false;
 	}
 
-	public static Dictionary<string, FtpClient> FtpClients { get; set; } = new Dictionary<string, FtpClient>();
+	public static Dictionary<string, AsyncFtpClient> FtpClients { get; set; } = new Dictionary<string, AsyncFtpClient>();
 
 	public static async Task<WebDirectory> ParseFtpAsync(string processor, WebDirectory webDirectory, string username, string password)
 	{
@@ -167,19 +167,25 @@ public class FtpParser
 
 			Logger.Warn($"[{processor}] Connecting to FTP...");
 
-			FtpClients[processor] = new FtpClient(webDirectory.Uri.Host, webDirectory.Uri.Port, username, password)
+			int timeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds;
+
+			FtpClients[processor] = new AsyncFtpClient(webDirectory.Uri.Host, webDirectory.Uri.Port)
 			{
-				ConnectTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
-				DataConnectionConnectTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
-				DataConnectionReadTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
-				ReadTimeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
-				EncryptionMode = OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_FtpEncryptionMode) ? Enum.Parse<FtpEncryptionMode>(OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_FtpEncryptionMode]) : FtpEncryptionMode.None,
-				ValidateAnyCertificate = true
+				Credentials = new NetworkCredential(username, password),
+				Config = new FtpConfig
+				{
+					ConnectTimeout = timeout,
+					DataConnectionConnectTimeout = timeout,
+					DataConnectionReadTimeout = timeout,
+					ReadTimeout = timeout * 2,
+					EncryptionMode = OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_FtpEncryptionMode) ? Enum.Parse<FtpEncryptionMode>(OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_FtpEncryptionMode]) : FtpEncryptionMode.None,
+					ValidateAnyCertificate = true
+				}
 			};
 
 			try
 			{
-				await FtpClients[processor].ConnectAsync(cancellationToken);
+				await FtpClients[processor].Connect(cancellationToken);
 
 				if (!FtpClients[processor].IsConnected)
 				{
@@ -199,7 +205,7 @@ public class FtpParser
 
 		Logger.Debug($"Started retrieving {relativeUrl}...");
 
-		foreach (FtpListItem item in FtpClients[processor].GetListing(relativeUrl))
+		foreach (FtpListItem item in await FtpClients[processor].GetListing(relativeUrl, cancellationToken))
 		{
 			// Some strange FTP servers.. Give parent directoryies back..
 			if (item.Name == "/" || item.FullName == webDirectory.Uri.LocalPath || !item.FullName.StartsWith(webDirectory.Uri.LocalPath))
@@ -272,23 +278,33 @@ public class FtpParser
 			{
 				Logger.Warn($"Try FTP(S) connection with EncryptionMode {ftpEncryptionMode}");
 
-				FtpClient ftpClient = new(webDirectory.Uri.Host, webDirectory.Uri.Port, username, password)
+				int timeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds; 
+				
+				AsyncFtpClient ftpClient = new AsyncFtpClient(webDirectory.Uri.Host, webDirectory.Uri.Port)
 				{
-					EncryptionMode = ftpEncryptionMode,
-					ValidateAnyCertificate = true
-				};
-
-				await ftpClient.ConnectAsync(cancellationToken);
+					Credentials = new NetworkCredential(username, password),
+					Config = new FtpConfig
+					{
+						ConnectTimeout = timeout,
+						DataConnectionConnectTimeout = timeout,
+						DataConnectionReadTimeout = timeout,
+						ReadTimeout = timeout * 2,
+						EncryptionMode = ftpEncryptionMode,
+						ValidateAnyCertificate = true
+					}
+				}; 
+				
+				await ftpClient.Connect(cancellationToken);
 
 				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_FtpEncryptionMode] = ftpEncryptionMode.ToString();
 
 				FtpReply connectReply = ftpClient.LastReply;
 
-				FtpReply helpReply = await ftpClient.ExecuteAsync("HELP", cancellationToken);
-				FtpReply statusReply = await ftpClient.ExecuteAsync("STAT", cancellationToken);
-				FtpReply systemReply = await ftpClient.ExecuteAsync("SYST", cancellationToken);
+				FtpReply helpReply = await ftpClient.Execute("HELP", cancellationToken);
+				FtpReply statusReply = await ftpClient.Execute("STAT", cancellationToken);
+				FtpReply systemReply = await ftpClient.Execute("SYST", cancellationToken);
 
-				await ftpClient.DisconnectAsync(cancellationToken);
+				await ftpClient.Disconnect(cancellationToken);
 
 				return
 					$"Connect Respones: {connectReply.InfoMessages}{Environment.NewLine}" +
@@ -314,15 +330,15 @@ public class FtpParser
 		return null;
 	}
 
-	public static async void CloseAll(FtpClient exceptFtpClient = null)
+	public static async void CloseAll(AsyncFtpClient exceptFtpClient = null)
 	{
-		foreach (KeyValuePair<string, FtpClient> keyValuePair in FtpClients)
+		foreach (KeyValuePair<string, AsyncFtpClient> keyValuePair in FtpClients)
 		{
-			FtpClient ftpClient = keyValuePair.Value;
+			AsyncFtpClient ftpClient = keyValuePair.Value;
 
 			if (exceptFtpClient is null || ftpClient != exceptFtpClient)
 			{
-				await ftpClient.DisconnectAsync();
+				await ftpClient.Disconnect();
 			}
 		}
 	}

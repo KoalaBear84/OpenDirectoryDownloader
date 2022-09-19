@@ -197,14 +197,13 @@ public class Library
 		}
 	}
 
-	public static async Task<SpeedtestResult> DoSpeedTestFtpAsync(FtpClient ftpClient, string url, int seconds = 25)
+	public static async Task<SpeedtestResult> DoSpeedTestFtpAsync(AsyncFtpClient ftpClient, string url, int seconds = 25)
 	{
 		Logger.Info($"Do FTP speedtest for {url}");
 
 		Uri uri = new(url);
-		#pragma warning disable CS0618 // Discussion about `OpenRead` https://github.com/robinrodricks/FluentFTP/issues/841
-		using (Stream stream = ftpClient.OpenRead(uri.LocalPath))
-		#pragma warning restore CS0618
+		
+		using (Stream stream = await ftpClient.OpenRead(uri.LocalPath))
 		{
 			SpeedtestResult speedtestResult = SpeedtestFromStream(stream, seconds);
 
