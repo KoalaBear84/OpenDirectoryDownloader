@@ -7,6 +7,7 @@ using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared.Models;
 using OpenDirectoryDownloader.Site.AmazonS3;
+using OpenDirectoryDownloader.Site.CrushFtp;
 using OpenDirectoryDownloader.Site.GitHub;
 using Polly;
 using Polly.Retry;
@@ -55,6 +56,7 @@ public class OpenDirectoryIndexer
 	private HttpClientHandler HttpClientHandler { get; set; }
 	private HttpClient HttpClient { get; set; }
 	public static BrowserContext BrowserContext { get; set; }
+	public static CookieContainer CookieContainer { get; set; } = new();
 
 	private System.Timers.Timer TimerStatistics { get; set; }
 
@@ -177,13 +179,11 @@ public class OpenDirectoryIndexer
 	{
 		OpenDirectoryIndexerSettings = openDirectoryIndexerSettings;
 
-		CookieContainer cookieContainer = new();
-
 		HttpClientHandler = new HttpClientHandler
 		{
 			ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true,
 			AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli,
-			CookieContainer = cookieContainer
+			CookieContainer = CookieContainer
 		};
 
 		if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.CommandLineOptions.ProxyAddress))
@@ -237,7 +237,7 @@ public class OpenDirectoryIndexer
 					}
 
 					Logger.Warn($"Adding cookie: name={splitCookie[0]}, value={splitCookie[1]}");
-					cookieContainer.Add(new Uri(OpenDirectoryIndexerSettings.Url), new Cookie(splitCookie[0], splitCookie[1]));
+					CookieContainer.Add(new Uri(OpenDirectoryIndexerSettings.Url), new Cookie(splitCookie[0], splitCookie[1]));
 				}
 			}
 			else
@@ -960,6 +960,13 @@ public class OpenDirectoryIndexer
 			}
 		}
 
+		if (httpResponseMessage?.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "crushftp")
+		{
+			WebDirectory parsedWebDirectory = await CrushFtpParser.ParseIndex(HttpClient, webDirectory);
+			AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
+			return;
+		}
+
 		if (httpResponseMessage?.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
 		{
 			string cloudflareHtml = await GetHtml(httpResponseMessage);
@@ -1050,6 +1057,12 @@ public class OpenDirectoryIndexer
 				}
 				else
 				{
+					// CrushFTP when rate limiting / blocking
+					if (httpResponseMessage.ReasonPhrase == "BANNED")
+					{
+						return;
+					}
+
 					ConvertDirectoryToFile(webDirectory, httpResponseMessage);
 
 					return;

@@ -12,6 +12,8 @@ public class RateLimiter
 	private readonly double TimeBetweenCalls;
 	private DateTimeOffset LastRequest = DateTimeOffset.UtcNow;
 	private object LockObject { get; set; } = new object();
+	public int MaxRequestsPerTimeSpan { get; }
+	public TimeSpan TimeSpan { get; }
 
 	/// <summary>
 	/// Creates a new instance of rate limiter
@@ -22,6 +24,8 @@ public class RateLimiter
 	public RateLimiter(int maxRequestsPerTimeSpan, TimeSpan timeSpan, double margin = 0.95d)
 	{
 		TimeBetweenCalls = timeSpan.TotalSeconds / maxRequestsPerTimeSpan / margin;
+		MaxRequestsPerTimeSpan = maxRequestsPerTimeSpan;
+		TimeSpan = timeSpan;
 	}
 
 	/// <summary>
