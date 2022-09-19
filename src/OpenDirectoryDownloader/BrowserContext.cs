@@ -44,6 +44,8 @@ public class BrowserContext: IDisposable
 	{
 		Page?.Dispose();
 		Browser?.Dispose();
+		CancellationTokenSource.Dispose();
+		GC.SuppressFinalize(this);
 	}
 
 	public async Task<bool> DoCloudFlareAsync(string url)
