@@ -95,7 +95,7 @@ public class OpenDirectoryIndexer
 				}
 				else if (ex is HttpRequestException httpRequestException)
 				{
-					int httpStatusCode = (int)httpRequestException.StatusCode;
+					int httpStatusCode = (int)(httpRequestException.StatusCode ?? 0);
 
 					if (KnownErrorPaths.Contains(webDirectory.Uri.Segments.LastOrDefault()))
 					{
@@ -122,6 +122,11 @@ public class OpenDirectoryIndexer
 					else if (!Session.GDIndex && (httpRequestException.StatusCode == HttpStatusCode.NotFound || ex.Message == "No such host is known."))
 					{
 						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Error \'{ex.Message}\' retrieving on try {retryCount} for url '{relativeUrl}'. Skipping..");
+						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
+					}
+					else if (httpRequestException.StatusCode is null && ex.InnerException?.Message == "The requested name is valid, but no data of the requested type was found.")
+					{
+						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Domain does not exist? Possible DNS issue. Skipping..");
 						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
 					}
 					else if ((httpRequestException.StatusCode == HttpStatusCode.Forbidden || httpRequestException.StatusCode == HttpStatusCode.Unauthorized) && retryCount >= 3)
