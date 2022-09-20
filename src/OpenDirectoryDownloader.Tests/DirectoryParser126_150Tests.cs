@@ -65,4 +65,37 @@ public class DirectoryParser126_150Tests : DirectoryParserTests
 		Assert.Equal("paint.zip", webDirectory.Files[0].FileName);
 		Assert.Equal(5530, webDirectory.Files[0].FileSize);
 	}
+
+	/// <summary>
+	/// Url: http://www.manuals.cornpone.net/
+	/// https://sourceforge.net/projects/dir-list/
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing128aAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Equal("ROOT", webDirectory.Name);
+		Assert.Equal(7, webDirectory.Subdirectories.Count);
+		Assert.Equal(".well-known", webDirectory.Subdirectories[0].Name);
+		Assert.Single(webDirectory.Files);
+		Assert.Equal("robots.txt", webDirectory.Files[0].FileName);
+		Assert.Equal(-1, webDirectory.Files[0].FileSize);
+	}
+
+	/// <summary>
+	/// Url: http://www.manuals.cornpone.net/index.php?folder=Q3J5c3RhbCBSYWRpbw==
+	/// https://sourceforge.net/projects/dir-list/
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing128bAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Equal("ROOT", webDirectory.Name);
+		Assert.Empty(webDirectory.Subdirectories);
+		Assert.Equal(28, webDirectory.Files.Count);
+		Assert.Equal("101+ Crystal Radio Circuits.pdf", webDirectory.Files[0].FileName);
+		Assert.Equal(-1, webDirectory.Files[0].FileSize);
+	}
 }

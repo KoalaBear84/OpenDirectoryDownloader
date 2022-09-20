@@ -287,7 +287,14 @@ public static class DirectoryParser
 
 			if (tables.Any())
 			{
-				WebDirectory result = ParseTablesDirectoryListing(baseUrl, parsedWebDirectory, tables, checkParents);
+				WebDirectory result = ParseDirLIST(baseUrl, parsedWebDirectory, htmlDocument, tables);
+
+				if (result.ParsedSuccessfully)
+				{
+					return result;
+				}
+
+				result = ParseTablesDirectoryListing(baseUrl, parsedWebDirectory, tables, checkParents);
 
 				if (result.Files.Any() || result.Subdirectories.Any() || result.Error)
 				{
@@ -407,6 +414,74 @@ public static class DirectoryParser
 		}
 
 		CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
+
+		return parsedWebDirectory;
+	}
+
+	private static WebDirectory ParseDirLIST(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> tables)
+	{
+		if (htmlDocument.Title.StartsWith("dirLIST - Index of:"))
+		{
+			List<IElement> dirListTables = tables.Where(t => t.GetAttribute("width") == "725").ToList();
+
+			if (dirListTables.Any(t => t.TextContent.Contains("No files or folders in this directory")))
+			{
+				parsedWebDirectory.Parser = "ParseDirLIST";
+				parsedWebDirectory.ParsedSuccessfully = true;
+				return parsedWebDirectory;
+			}
+
+			if (dirListTables.Count >= 3)
+			{
+				parsedWebDirectory.ParsedSuccessfully = true;
+
+				IHtmlCollection<IElement> entries = dirListTables[3].QuerySelectorAll("td.folder_bg, td.file_bg1, td.file_bg2");
+
+				foreach (IElement entry in entries)
+				{
+					IHtmlAnchorElement link = entry.QuerySelector("a") as IHtmlAnchorElement;
+
+					bool isDirectory = entry.Matches("td.folder_bg");
+
+					if (link is not null)
+					{
+						ProcessUrl(baseUrl, link, out _, out _, out string fullUrl);
+
+						if (isDirectory)
+						{
+							UrlEncodingParser urlEncodingParser = new(fullUrl);
+
+							string directoryName;
+
+							if (Library.IsBase64String(urlEncodingParser["folder"]))
+							{
+								directoryName = Encoding.UTF8.GetString(Convert.FromBase64String(urlEncodingParser["folder"]));
+							}
+							else
+							{
+								directoryName = link.TextContent.Trim();
+							}
+
+							parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
+							{
+								Parser = "ParseDirLIST",
+								Url = fullUrl,
+								Name = directoryName
+							});
+						}
+						else
+						{
+							parsedWebDirectory.Files.Add(new WebFile
+							{
+								Url = fullUrl,
+								FileName = Path.GetFileName(WebUtility.UrlDecode(fullUrl)),
+								FileSize = Constants.NoFileSize
+							});
+						}
+					}
+				}
+			}
+		}
 
 		return parsedWebDirectory;
 	}

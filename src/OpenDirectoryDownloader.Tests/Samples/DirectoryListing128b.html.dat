@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0069)http://www.manuals.cornpone.net/index.php?folder=Q3J5c3RhbCBSYWRpbw== -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>dirLIST - Index of: home/Crystal Radio/</title>
+<style type="text/css">
+<!--
+body,td,th {font-family: Tahoma, Verdana;font-size: 10pt;}
+a:link {text-decoration: none;color: #006699;}
+a:visited {text-decoration: none;color: #006699;}
+a:hover {text-decoration: underline;color: #006699;}
+a:active {text-decoration: none;color: #006699;}
+a.sort:link{text-decoration: underline;color: #FFFFFF;}
+a.sort:visited{text-decoration: underline;color: #FFFFFF;}
+a.sort:hover{text-decoration: underline;color: #FFFFFF;}
+a.sort:active{text-decoration: none;color: #FFFFFF;}
+.top_row {color: #FFFFFF;font-weight: bold;font-size: 14px;background-color: #006699;}
+.folder_bg {background-color: #CCCCCC;}
+.file_bg1 {background-color: #E8F8FF;}
+.file_bg2 {background-color: #B9E9FF;}.table_border {border: 1px dashed #666666;}
+.path_font {font-family: "Courier New", Courier, monospace;}
+.banned_font {font-size: 9px;}
+.error {border-top-width: 2px;border-bottom-width: 2px;border-top-style: solid;border-bottom-style: solid;border-top-color: #FF666A;border-bottom-color: #FF666A;}
+#color_scheme {cursor:pointer;}
+.option_style {font-family: Verdana, Tahoma;font-size: 11px;}
+.language_selection {height: 22px;	width: 182px;background-color:#E8F8FF;	border: 1px dashed #666666;}
+.selected_lang {background-color:#B9E9FF;}
+#file_edit_box {position:absolute;width: 150px;display:none;}
+-->
+</style>
+<script type="text/javascript">
+var images_paths = [];
+var thumb_counter = 0;
+
+function display_thumbs() {
+	more_thumbs = true;
+	
+	while(more_thumbs){
+		thumb = document.getElementById('img_thumb_'+thumb_counter);
+		if(document.getElementById('img_thumb_'+thumb_counter) != null){
+			images_paths.push(thumb.getAttribute('link_att'));
+			get_thumb(thumb_counter);
+			thumb_counter++;
+		}
+		else
+			more_thumbs = false;
+	}
+}
+
+function get_thumb(id) 
+{
+	var xhr;
+	try	{ xhr = new XMLHttpRequest();}
+	catch(e)
+	{
+		try
+		{
+			xhr = new ActiveXObject("Msxml12.XMLHTTP");
+		}
+		catch(e)
+		{
+			try
+			{
+				xhr = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch(e)
+			{
+				alert("Your browser does not support AJAX!");
+				return false;
+			}
+		}
+	}
+	xhr.onreadystatechange = function()
+	{
+		if(xhr.readyState == 4)
+		{
+			document.getElementById('img_thumb_'+id).setAttribute('src', 'dirLIST_files/thumb_gen.php?image_path='+document.getElementById('img_thumb_'+id).getAttribute('link_att'));
+		}
+	}
+	xhr.open("GET", "dirLIST_files/thumb_gen.php?image_path="+images_paths[id], true);
+	xhr.send(null);
+}
+</script>
+<script type="text/javascript">
+function change_color_scheme(id)
+{
+	window.location = 'dirLIST_files/chng_clschm.php?folder=Q3J5c3RhbCBSYWRpbw==&id='+id;
+}
+
+function set_language()
+{
+	window.location = 'dirLIST_files/set_language.php?folder=Q3J5c3RhbCBSYWRpbw==&lang_id='+document.getElementById('language_selection').value;
+}
+</script>
+<style>@media print {#ghostery-tracker-tally {display:none !important}}</style></head>
+<body onload="display_thumbs();">
+<p>
+<!-- Output basic HTML code -done -->
+</p><table width="725" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td>Index of: <a href="http://www.manuals.cornpone.net/index.php">home</a>/<a href="http://www.manuals.cornpone.net/index.php?folder=Q3J5c3RhbCBSYWRpbw==">Crystal Radio</a>/</td></tr></tbody></table><br>
+<table width="725" border="0" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td width="320" rowspan="2" valign="top">            <table class="table_border" width="320" border="0" cellpadding="2" cellspacing="2">
+                <tbody><tr>
+                    <td height="27" class="top_row">Key</td>
+                    <td width="50" align="center">Folder</td>
+                    <td class="folder_bg" width="25">&nbsp;</td>
+                    <td width="30" align="center">File</td>
+                    <td class="file_bg1" width="25">&nbsp;</td>
+                    <td width="11" align="center">|</td>
+                    <td class="file_bg2" width="25">&nbsp;</td>
+                </tr>
+            </tbody></table>
+        	<br>            <a href="http://www.manuals.cornpone.net/index.php?folder=Q3J5c3RhbCBSYWRpbw==#" onclick="if(document.getElementById(&#39;statistics&#39;).style.display == &#39;none&#39;){ document.getElementById(&#39;statistics&#39;).style.display = &#39;block&#39;; } else { document.getElementById(&#39;statistics&#39;).style.display = &#39;none&#39;; }">Show/hide statistics<br></a>
+            <div id="statistics" style="display:none">
+                <br><table width="320" border="0" cellpadding="5" class="table_border">
+                    <tbody><tr>
+                        <td width="95" class="top_row">Total folders</td>
+                        <td>0, consuming: 0.0 KB</td>
+                    </tr>
+                    <tr>
+                        <td width="95" class="top_row">Total files</td>
+                        <td>28, consuming: 90.74 MB</td>
+                    </tr>
+                    <tr>
+                        <td width="95" class="top_row">Combined</td>
+                        <td>28, consuming: 90.74 MB</td>
+                    </tr>
+                </tbody></table><br>
+            </div>        </td>
+        
+        <td width="222" rowspan="2" align="center" valign="top">
+        
+            <table width="175" border="0" cellpadding="2" cellspacing="2" class="table_border">
+                                        <tbody><tr>
+                    <td height="27" align="center" class="file_bg2"><a href="http://www.manuals.cornpone.net/dirLIST_files/change_view.php?folder=Q3J5c3RhbCBSYWRpbw==">Switch to list view</a></td>
+                    </tr>
+					                                        <tr>
+                    <td height="27" align="center" class="file_bg2"><a href="http://www.manuals.cornpone.net/index.php?folder=Q3J5c3RhbCBSYWRpbw==#" onclick="window.open(&#39;dirLIST_files/gallery.php?folder=Q3J5c3RhbCBSYWRpbw==&#39;, null, &#39;scrollbars = 0, status = 1, height = 650, width = 750, resizable = 1, location = 0&#39;)">Launch Gallery</a></td>
+                    </tr>
+					                                </tbody></table>
+        </td>
+        
+		        <td width="184" height="40" align="right" valign="top">
+                <table width="182" border="0" cellpadding="2" cellspacing="2" class="table_border">
+                    <tbody><tr>
+                        <td id="color_scheme" width="24" height="27" bgcolor="#006699" onclick="change_color_scheme(0);">&nbsp;</td>
+                        <td id="color_scheme" width="24" bgcolor="#840000" onclick="change_color_scheme(1);">&nbsp;</td>
+                        <td id="color_scheme" width="24" bgcolor="#005300" onclick="change_color_scheme(2);">&nbsp;</td>
+                        <td id="color_scheme" width="24" bgcolor="#FFE500" onclick="change_color_scheme(3);">&nbsp;</td>
+                        <td id="color_scheme" width="24" bgcolor="#995100" onclick="change_color_scheme(4);">&nbsp;</td>
+                        <td id="color_scheme" width="24" bgcolor="#333333" onclick="change_color_scheme(5);">&nbsp;</td>
+                    </tr>
+                </tbody></table>
+        </td>	    </tr><tr>
+	  <td align="right" valign="top">
+      <select name="language_selection" id="language_selection" onchange="set_language()" class="language_selection">
+        <option selected="selected">Select Language...</option>
+        <option class="option_style selected_lang" value="0">English</option>
+        <option class="option_style" value="1">French</option>
+        <option class="option_style" value="2">German</option>
+        <option class="option_style" value="3">Spanish</option>
+      </select>
+      </td>
+	</tr>
+    </tbody></table>
+
+<table width="725" border="0" cellspacing="5" cellpadding="5">
+    <tbody><tr>
+    	<td width="414" class="top_row"><a class="sort" href="http://www.manuals.cornpone.net/dirLIST_files/sort.php?by=name&amp;folder=Q3J5c3RhbCBSYWRpbw==">Name</a></td>
+    	<td width="128" class="top_row"><a class="sort" href="http://www.manuals.cornpone.net/dirLIST_files/sort.php?by=size&amp;folder=Q3J5c3RhbCBSYWRpbw==">Size</a></td>
+    	<td width="128" class="top_row"><a class="sort" href="http://www.manuals.cornpone.net/dirLIST_files/sort.php?by=date&amp;folder=Q3J5c3RhbCBSYWRpbw==">Date Uploaded</a></td>
+  </tr>
+</tbody></table>
+<table width="725" border="0" cellspacing="5" cellpadding="5"><tbody><tr><td class="file_bg1 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/101%2B%20Crystal%20Radio%20Circuits.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg2 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/50229509_2077436639001512_2039351116109447168_n.jpg" target="_blank"><img id="img_thumb_0" link_att=".%2FCrystal%20Radio%2F50229509_2077436639001512_2039351116109447168_n.jpg" src="./DirectoryListing128b.html_files/thumb_gen.php" border="0"></a></td>
+<td class="file_bg1 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/50264313_2077405989004577_3397018629454168064_n.jpg" target="_blank"><img id="img_thumb_1" link_att=".%2FCrystal%20Radio%2F50264313_2077405989004577_3397018629454168064_n.jpg" src="./DirectoryListing128b.html_files/thumb_gen(1).php" border="0"></a></td>
+<td class="file_bg2 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/all-about-crystal-radios.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg1 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/apparatus.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+</tr><tr><td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/101%2B%20Crystal%20Radio%20Circuits.pdf">101+ Crystal Ra<br>dio Circuits.pd<br>f<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/50229509_2077436639001512_2039351116109447168_n.jpg">50229509_207743<br>6639001512_2039<br>351116109447168<br>_n.jpg<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/50264313_2077405989004577_3397018629454168064_n.jpg">50264313_207740<br>5989004577_3397<br>018629454168064<br>_n.jpg<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/all-about-crystal-radios.pdf">all-about-cryst<br>al-radios.pdf<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/apparatus.pdf">apparatus.pdf<br></a></td>
+</tr><tr><td class="file_bg2 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Armstrong%20Crystal%20Radio.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg1 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Boys-Book-Of-Crystal-Sets.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg2 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Crystal-Receiving-Sets-Jones.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg1 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Crystal%20Receivers%20for%20Broadcast%20Reception%20-%20Harris%201922.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg2 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/detectors.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+</tr><tr><td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Armstrong%20Crystal%20Radio.pdf">Armstrong Cryst<br>al Radio.pdf<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Boys-Book-Of-Crystal-Sets.pdf">Boys-Book-Of-Cr<br>ystal-Sets.pdf<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Crystal-Receiving-Sets-Jones.pdf">Crystal-Receivi<br>ng-Sets-Jones.p<br>df<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Crystal%20Receivers%20for%20Broadcast%20Reception%20-%20Harris%201922.pdf">Crystal Receive<br>rs for Broadcas<br>t Reception - H<br>arris 1922.pdf<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/detectors.pdf">detectors.pdf<br></a></td>
+</tr><tr><td class="file_bg1 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Detector%20voltage%20multiplier.jpg" target="_blank"><img id="img_thumb_2" link_att=".%2FCrystal%20Radio%2FDetector%2520voltage%2520multiplier.jpg" src="./DirectoryListing128b.html_files/thumb_gen(2).php" border="0"></a></td>
+<td class="file_bg2 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/DX_Crystal_Radio.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg1 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Experimental%20Crystal%20Set%20Receivers.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg2 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Foxhole%20Radios%20AND%20Crystal%20Radios.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg1 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/handbook01.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+</tr><tr><td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Detector%20voltage%20multiplier.jpg">Detector voltag<br>e multiplier.jp<br>g<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/DX_Crystal_Radio.pdf">DX_Crystal_Radi<br>o.pdf<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Experimental%20Crystal%20Set%20Receivers.pdf">Experimental Cr<br>ystal Set Recei<br>vers.pdf<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Foxhole%20Radios%20AND%20Crystal%20Radios.pdf">Foxhole Radios <br>AND Crystal Rad<br>ios.pdf<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/handbook01.pdf">handbook01.pdf<br></a></td>
+</tr><tr><td class="file_bg2 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/HB-5.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg1 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Heathkit%20Crystal%20Radio.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg2 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/highpower.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg1 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/High_Performance_Crystal_Radios_for_electronics_club_v2_hires.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg2 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Lamphouse%20Crystal%20Sets.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+</tr><tr><td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/HB-5.pdf">HB-5.pdf<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Heathkit%20Crystal%20Radio.pdf">Heathkit Crysta<br>l Radio.pdf<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/highpower.pdf">highpower.pdf<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/High_Performance_Crystal_Radios_for_electronics_club_v2_hires.pdf">High_Performanc<br>e_Crystal_Radio<br>s_for_electroni<br>cs_club_v2_hire<br>s.pdf<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Lamphouse%20Crystal%20Sets.pdf">Lamphouse Cryst<br>al Sets.pdf<br></a></td>
+</tr><tr><td class="file_bg1 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/oatmeal.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg2 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/pw_xtal_experimenters_hdbk.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg1 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/radio-galena.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg2 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Shortwave%20Listening%20With%20A%20Crystal%20Set.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg1 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/supersensitive.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+</tr><tr><td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/oatmeal.pdf">oatmeal.pdf<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/pw_xtal_experimenters_hdbk.pdf">pw_xtal_experim<br>enters_hdbk.pdf<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/radio-galena.pdf">radio-galena.pd<br>f<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/Shortwave%20Listening%20With%20A%20Crystal%20Set.pdf">Shortwave Liste<br>ning With A Cry<br>stal Set.pdf<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/supersensitive.pdf">supersensitive.<br>pdf<br></a></td>
+</tr><tr><td class="file_bg2 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/the_book_of_radio_1922.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg1 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/ultra.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td class="file_bg2 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/vario.pdf"><img border="0" src="./DirectoryListing128b.html_files/pdf.png"></a></td>
+<td></td><td></td></tr><tr><td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/the_book_of_radio_1922.pdf">the_book_of_rad<br>io_1922.pdf<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/ultra.pdf">ultra.pdf<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/Crystal%20Radio/vario.pdf">vario.pdf<br></a></td>
+<td></td><td></td></tr></tbody></table><br>This page loaded in 0.001 seconds<br>
+<!-- Output basic HTMl code -->
+<div style="width:725px; text-align:center">
+<form>
+  <input type="button" value="Go back!" onclick="history.back()">
+</form>
+</div>
+
+
+<!-- Output basic HTMl code -done --></body></html>

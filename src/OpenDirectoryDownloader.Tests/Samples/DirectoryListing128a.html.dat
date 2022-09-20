@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0032)http://www.manuals.cornpone.net/ -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>dirLIST - Index of: home/</title>
+<style type="text/css">
+<!--
+body,td,th {font-family: Tahoma, Verdana;font-size: 10pt;}
+a:link {text-decoration: none;color: #006699;}
+a:visited {text-decoration: none;color: #006699;}
+a:hover {text-decoration: underline;color: #006699;}
+a:active {text-decoration: none;color: #006699;}
+a.sort:link{text-decoration: underline;color: #FFFFFF;}
+a.sort:visited{text-decoration: underline;color: #FFFFFF;}
+a.sort:hover{text-decoration: underline;color: #FFFFFF;}
+a.sort:active{text-decoration: none;color: #FFFFFF;}
+.top_row {color: #FFFFFF;font-weight: bold;font-size: 14px;background-color: #006699;}
+.folder_bg {background-color: #CCCCCC;}
+.file_bg1 {background-color: #E8F8FF;}
+.file_bg2 {background-color: #B9E9FF;}.table_border {border: 1px dashed #666666;}
+.path_font {font-family: "Courier New", Courier, monospace;}
+.banned_font {font-size: 9px;}
+.error {border-top-width: 2px;border-bottom-width: 2px;border-top-style: solid;border-bottom-style: solid;border-top-color: #FF666A;border-bottom-color: #FF666A;}
+#color_scheme {cursor:pointer;}
+.option_style {font-family: Verdana, Tahoma;font-size: 11px;}
+.language_selection {height: 22px;	width: 182px;background-color:#E8F8FF;	border: 1px dashed #666666;}
+.selected_lang {background-color:#B9E9FF;}
+#file_edit_box {position:absolute;width: 150px;display:none;}
+-->
+</style>
+<script type="text/javascript">
+var images_paths = [];
+var thumb_counter = 0;
+
+function display_thumbs() {
+	more_thumbs = true;
+	
+	while(more_thumbs){
+		thumb = document.getElementById('img_thumb_'+thumb_counter);
+		if(document.getElementById('img_thumb_'+thumb_counter) != null){
+			images_paths.push(thumb.getAttribute('link_att'));
+			get_thumb(thumb_counter);
+			thumb_counter++;
+		}
+		else
+			more_thumbs = false;
+	}
+}
+
+function get_thumb(id) 
+{
+	var xhr;
+	try	{ xhr = new XMLHttpRequest();}
+	catch(e)
+	{
+		try
+		{
+			xhr = new ActiveXObject("Msxml12.XMLHTTP");
+		}
+		catch(e)
+		{
+			try
+			{
+				xhr = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch(e)
+			{
+				alert("Your browser does not support AJAX!");
+				return false;
+			}
+		}
+	}
+	xhr.onreadystatechange = function()
+	{
+		if(xhr.readyState == 4)
+		{
+			document.getElementById('img_thumb_'+id).setAttribute('src', 'dirLIST_files/thumb_gen.php?image_path='+document.getElementById('img_thumb_'+id).getAttribute('link_att'));
+		}
+	}
+	xhr.open("GET", "dirLIST_files/thumb_gen.php?image_path="+images_paths[id], true);
+	xhr.send(null);
+}
+</script>
+<script type="text/javascript">
+function change_color_scheme(id)
+{
+	window.location = 'dirLIST_files/chng_clschm.php?folder=&id='+id;
+}
+
+function set_language()
+{
+	window.location = 'dirLIST_files/set_language.php?folder=&lang_id='+document.getElementById('language_selection').value;
+}
+</script>
+<style>@media print {#ghostery-tracker-tally {display:none !important}}</style></head>
+<body onload="display_thumbs();">
+<p>
+<!-- Output basic HTML code -done -->
+</p><table width="725" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td>Index of: <a href="http://www.manuals.cornpone.net/index.php">home</a>/</td></tr></tbody></table><br>
+<table width="725" border="0" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td width="320" rowspan="2" valign="top">            <table class="table_border" width="320" border="0" cellpadding="2" cellspacing="2">
+                <tbody><tr>
+                    <td height="27" class="top_row">Key</td>
+                    <td width="50" align="center">Folder</td>
+                    <td class="folder_bg" width="25">&nbsp;</td>
+                    <td width="30" align="center">File</td>
+                    <td class="file_bg1" width="25">&nbsp;</td>
+                    <td width="11" align="center">|</td>
+                    <td class="file_bg2" width="25">&nbsp;</td>
+                </tr>
+            </tbody></table>
+        	<br>            <a href="http://www.manuals.cornpone.net/#" onclick="if(document.getElementById(&#39;statistics&#39;).style.display == &#39;none&#39;){ document.getElementById(&#39;statistics&#39;).style.display = &#39;block&#39;; } else { document.getElementById(&#39;statistics&#39;).style.display = &#39;none&#39;; }">Show/hide statistics<br></a>
+            <div id="statistics" style="display:none">
+                <br><table width="320" border="0" cellpadding="5" class="table_border">
+                    <tbody><tr>
+                        <td width="95" class="top_row">Total folders</td>
+                        <td>7, consuming: 0.0 KB</td>
+                    </tr>
+                    <tr>
+                        <td width="95" class="top_row">Total files</td>
+                        <td>1, consuming: 0.0 KB</td>
+                    </tr>
+                    <tr>
+                        <td width="95" class="top_row">Combined</td>
+                        <td>8, consuming: 0.0 KB</td>
+                    </tr>
+                </tbody></table><br>
+            </div>        </td>
+        
+        <td width="222" rowspan="2" align="center" valign="top">
+        
+            <table width="175" border="0" cellpadding="2" cellspacing="2" class="table_border">
+                                        <tbody><tr>
+                    <td height="27" align="center" class="file_bg2"><a href="http://www.manuals.cornpone.net/dirLIST_files/change_view.php?folder=">Switch to list view</a></td>
+                    </tr>
+					                                                    </tbody></table>
+        </td>
+        
+		        <td width="184" height="40" align="right" valign="top">
+                <table width="182" border="0" cellpadding="2" cellspacing="2" class="table_border">
+                    <tbody><tr>
+                        <td id="color_scheme" width="24" height="27" bgcolor="#006699" onclick="change_color_scheme(0);">&nbsp;</td>
+                        <td id="color_scheme" width="24" bgcolor="#840000" onclick="change_color_scheme(1);">&nbsp;</td>
+                        <td id="color_scheme" width="24" bgcolor="#005300" onclick="change_color_scheme(2);">&nbsp;</td>
+                        <td id="color_scheme" width="24" bgcolor="#FFE500" onclick="change_color_scheme(3);">&nbsp;</td>
+                        <td id="color_scheme" width="24" bgcolor="#995100" onclick="change_color_scheme(4);">&nbsp;</td>
+                        <td id="color_scheme" width="24" bgcolor="#333333" onclick="change_color_scheme(5);">&nbsp;</td>
+                    </tr>
+                </tbody></table>
+        </td>	    </tr><tr>
+	  <td align="right" valign="top">
+      <select name="language_selection" id="language_selection" onchange="set_language()" class="language_selection">
+        <option selected="selected">Select Language...</option>
+        <option class="option_style selected_lang" value="0">English</option>
+        <option class="option_style" value="1">French</option>
+        <option class="option_style" value="2">German</option>
+        <option class="option_style" value="3">Spanish</option>
+      </select>
+      </td>
+	</tr>
+    </tbody></table>
+
+<table width="725" border="0" cellspacing="5" cellpadding="5">
+    <tbody><tr>
+    	<td width="414" class="top_row"><a class="sort" href="http://www.manuals.cornpone.net/dirLIST_files/sort.php?by=name&amp;folder=">Name</a></td>
+    	<td width="128" class="top_row"><a class="sort" href="http://www.manuals.cornpone.net/dirLIST_files/sort.php?by=size&amp;folder=">Size</a></td>
+    	<td width="128" class="top_row"><a class="sort" href="http://www.manuals.cornpone.net/dirLIST_files/sort.php?by=date&amp;folder=">Date Uploaded</a></td>
+  </tr>
+</tbody></table>
+<table width="725" border="0" cellspacing="5" cellpadding="5"><tbody><tr><td class="folder_bg table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/index.php?folder=LndlbGwta25vd24="><img border="0" src="./DirectoryListing128a.html_files/folder.png"></a></td>
+<td class="folder_bg table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/index.php?folder=Q3J5c3RhbCBSYWRpbw=="><img border="0" src="./DirectoryListing128a.html_files/folder.png"></a></td>
+<td class="folder_bg table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/index.php?folder=SGVhdGhraXQ="><img border="0" src="./DirectoryListing128a.html_files/folder.png"></a></td>
+<td class="folder_bg table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/index.php?folder=TmF0aW9uYWw="><img border="0" src="./DirectoryListing128a.html_files/folder.png"></a></td>
+<td class="folder_bg table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/index.php?folder=UmVhbGlzdGlj"><img border="0" src="./DirectoryListing128a.html_files/folder.png"></a></td>
+</tr><tr><td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/index.php?folder=LndlbGwta25vd24=">.well-known<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/index.php?folder=Q3J5c3RhbCBSYWRpbw==">Crystal Radio<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/index.php?folder=SGVhdGhraXQ=">Heathkit<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/index.php?folder=TmF0aW9uYWw=">National<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/index.php?folder=UmVhbGlzdGlj">Realistic<br></a></td>
+</tr><tr><td class="folder_bg table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/index.php?folder=U2VjcmV0IENC"><img border="0" src="./DirectoryListing128a.html_files/folder.png"></a></td>
+<td class="folder_bg table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/index.php?folder=WmVuaXRo"><img border="0" src="./DirectoryListing128a.html_files/folder.png"></a></td>
+<td class="file_bg1 table_border" width="128" height="140" align="center" valign="middle"><a href="http://www.manuals.cornpone.net/robots.txt"><img border="0" src="./DirectoryListing128a.html_files/txt.png"></a></td>
+<td></td><td></td></tr><tr><td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/index.php?folder=U2VjcmV0IENC">Secret CB<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/index.php?folder=WmVuaXRo">Zenith<br></a></td>
+<td height="30" align="center" valign="top"><a href="http://www.manuals.cornpone.net/robots.txt">robots.txt<br></a></td>
+<td></td><td></td></tr></tbody></table><br>This page loaded in 0.001 seconds<br>
+<!-- Output basic HTMl code -->
+<div style="width:725px; text-align:center">
+<form>
+  <input type="button" value="Go back!" onclick="history.back()">
+</form>
+</div>
+
+
+<!-- Output basic HTMl code -done --></body></html>
