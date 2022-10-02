@@ -155,7 +155,7 @@ public class Command
 							SaveSession(openDirectoryIndexer);
 							break;
 						case ConsoleKey.U:
-							SaveSessionText(openDirectoryIndexer);
+							SaveUrls(openDirectoryIndexer);
 							break;
 						default:
 							break;
@@ -190,7 +190,7 @@ public class Command
 		}
 	}
 
-	private static void SaveSessionText(OpenDirectoryIndexer openDirectoryIndexer)
+	private static void SaveUrls(OpenDirectoryIndexer openDirectoryIndexer)
 	{
 		try
 		{
