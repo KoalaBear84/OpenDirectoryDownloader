@@ -86,11 +86,11 @@ jobs:
         7z a OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}.zip ./OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}/*
         # 7z is installed in all environments and supports unix permissions while compressing (but not while decompressing!)
 
-    - name: Upload artifact for docker job (linux-x64 normal only)
-      if: ${{ matrix.target == 'linux-x64' && matrix.self-contained == 'normal' }}
+    - name: Upload artifact for docker job (linux only)
+      if: ${{ matrix.os == 'ubuntu-latest' && matrix.self-contained == 'normal' }}
       uses: actions/upload-artifact@v2
       with:
-        name: linux-x64
+        name: ${{ matrix.target }}
         path: |
           OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}.zip
           src/Dockerfile
@@ -132,22 +132,63 @@ jobs:
 
   docker:
     needs: build
+
+    strategy:
+      matrix:
+        target: 
+          - linux-x64
+          - linux-arm
+          - linux-arm64
+        include:
+          - target: linux-x64
+            platform: linux/amd64
+          - target: linux-arm
+            platform: linux/arm/v7
+          - target: linux-arm64
+            platform: linux/arm64
+
     runs-on: ubuntu-latest
     steps:
       - name: Get version info
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/v}
 
-      - name: Download artifact linux-x64
+      - name: Download artifact 
         uses: actions/download-artifact@v2
         with:
-          name: linux-x64
+          name: ${{ matrix.target }}
 
-      - name: Decompress artifact linux-x64
+      - name: Decompress artifact
         uses: TonyBogdanov/zip@1.0
         with:
-            args: unzip -qq ./OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-linux-x64.zip -d ./app
+            args: unzip -qq ./OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}.zip -d ./app
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./src/Dockerfile
+          platforms: ${{ matrix.platform }}
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/opendirectorydownloader:${{ matrix.target }}
+
+  combine:
+    needs: docker
+    runs-on: ubuntu-latest
+    steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -160,14 +201,13 @@ jobs:
       - name: Get tag info
         id: tag_info
         run: echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
-          
-      - name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./src/Dockerfile
-          push: true
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/opendirectorydownloader:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/opendirectorydownloader:${{ steps.tag_info.outputs.SOURCE_TAG }}
+
+      - name: Combine images
+        run: >
+          docker buildx imagetools create
+          -t ${{ secrets.DOCKERHUB_USERNAME }}/opendirectorydownloader:latest
+          -t ${{ secrets.DOCKERHUB_USERNAME }}/opendirectorydownloader:${{ steps.tag_info.outputs.SOURCE_TAG }}
+          ${{ secrets.DOCKERHUB_USERNAME }}/opendirectorydownloader:linux-x64
+          ${{ secrets.DOCKERHUB_USERNAME }}/opendirectorydownloader:linux-arm
+          ${{ secrets.DOCKERHUB_USERNAME }}/opendirectorydownloader:linux-arm64
+
