@@ -208,6 +208,7 @@ public class OpenDirectoryIndexer
 
 		HttpClient.DefaultRequestHeaders.Accept.ParseAdd("*/*");
 		HttpClient.DefaultRequestHeaders.AcceptEncoding.ParseAdd("gzip, deflate, br");
+		HttpClient.DefaultRequestHeaders.AcceptLanguage.ParseAdd("en-US,en;q=0.9,nl;q=0.8");
 
 		foreach (string customHeader in OpenDirectoryIndexerSettings.CommandLineOptions.Header)
 		{
