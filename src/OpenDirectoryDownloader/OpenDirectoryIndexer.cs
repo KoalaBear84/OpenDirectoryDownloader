@@ -1069,6 +1069,28 @@ public class OpenDirectoryIndexer
 					return;
 				}
 			}
+
+			if (html.Contains("document.cookie"))
+			{
+				Regex cookieRegex = new("document\\.cookie\\s?=\\s?\"(?<Cookie>.*?)\"");
+				Match cookieRegexMatch = cookieRegex.Match(html);
+
+				if (cookieRegexMatch.Success)
+				{
+					HttpClientHandler.CookieContainer.SetCookies(webDirectory.Uri, cookieRegexMatch.Groups["Cookie"].Value);
+
+					// Retrieve/retry content again with added cookies
+					httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
+
+					using (Stream htmlStream = await GetHtmlStream(httpResponseMessage))
+					{
+						if (htmlStream != null)
+						{
+							html = await GetHtml(htmlStream);
+						}
+					}
+				}
+			}
 		}
 
 		if (FirstRequest && (httpResponseMessage == null || !httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.IsSuccessStatusCode) && string.IsNullOrWhiteSpace(html) || html?.Contains("HTTP_USER_AGENT") == true)
@@ -1131,7 +1153,7 @@ public class OpenDirectoryIndexer
 
 		if (FirstRequest && (httpResponseMessage == null || !httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.IsSuccessStatusCode) && string.IsNullOrWhiteSpace(html))
 		{
-			Logger.Warn("First request fails, using Chrome fallback User-Agent");
+			Logger.Warn("First request fails, using Chrome fallback User-Agent (with extra headers)");
 			HttpClient.DefaultRequestHeaders.UserAgent.Clear();
 			HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
 			HttpClient.DefaultRequestHeaders.Accept.ParseAdd("text/html");
