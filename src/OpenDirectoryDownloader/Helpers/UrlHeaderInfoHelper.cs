@@ -1,5 +1,4 @@
-﻿using NLog;
-using Polly;
+﻿using Polly;
 using Polly.Retry;
 using System;
 using System.Net.Http;
@@ -10,14 +9,13 @@ namespace OpenDirectoryDownloader.Helpers;
 
 public static class UrlHeaderInfoHelper
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private static readonly AsyncRetryPolicy RetryPolicy = Policy
 		.Handle<Exception>()
 		.WaitAndRetryAsync(4,
 			sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
 			onRetry: (ex, span, retryCount, context) =>
 			{
-				Logger.Warn($"Error {ex.Message} retrieving on try {retryCount} for url '{context["Url"]}'. Waiting {span.TotalSeconds} seconds.");
+				Program.Logger.Warning("Error {error} retrieving on try {retryCount} for url '{url}'. Waiting {waitTime:F0} seconds.", ex.Message, retryCount, context["Url"], span.TotalSeconds);
 			}
 		);
 
@@ -27,14 +25,14 @@ public static class UrlHeaderInfoHelper
 		{
 			Context pollyContext = new()
 			{
-					{ "Url", url }
-				};
+				{ "Url", url }
+			};
 
 			return (await RetryPolicy.ExecuteAndCaptureAsync(ctx => GetUrlFileSizeInnerAsync(httpClient, url), pollyContext)).Result;
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error retrieving filesize for Url: '{url}'");
+			Program.Logger.Error(ex, "Error retrieving filesize for Url: '{url}'", url);
 
 			return null;
 		}
@@ -72,14 +70,14 @@ public static class UrlHeaderInfoHelper
 		{
 			Context pollyContext = new()
 			{
-					{ "Url", url }
-				};
+				{ "Url", url }
+			};
 
 			return (await RetryPolicy.ExecuteAndCaptureAsync(ctx => GetUrlFileSizeByDownloadingInnerAsync(httpClient, url), pollyContext)).Result;
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error retrieving filesize for Url: '{url}'");
+			Program.Logger.Error(ex, "Error retrieving filesize for Url: '{url}'", url);
 
 			return null;
 		}
@@ -99,14 +97,14 @@ public static class UrlHeaderInfoHelper
 		{
 			Context pollyContext = new()
 			{
-					{ "Url", url }
-				};
+				{ "Url", url }
+			};
 
 			return (await RetryPolicy.ExecuteAndCaptureAsync(ctx => GetContentTypeInnerAsync(httpClient, url), pollyContext)).Result;
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error retrieving filesize for Url: '{url}'");
+			Program.Logger.Error(ex, "Error retrieving filesize for Url: '{url}'", url);
 
 			return null;
 		}

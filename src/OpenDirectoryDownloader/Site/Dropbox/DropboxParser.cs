@@ -1,6 +1,5 @@
 ﻿using Esprima;
 using Esprima.Ast;
-using NLog;
 using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,6 @@ namespace OpenDirectoryDownloader.Site.Dropbox;
 
 public static class DropboxParser
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private static readonly Regex UrlRegex = new(@"\/sh\/(?<LinkKey>[^\/]*)\/(?<SecureHash>[^\/?]*)(?:\/(?<SubPath>[^?]*))?");
 	private static readonly Regex PrefetchListingRegex = new(@"window\[""__REGISTER_SHARED_LINK_FOLDER_PRELOAD_HANDLER""\]\.responseReceived\((?<PrefetchListing>"".*)\)\s?}\);");
 	private const string Parser = "Dropbox";
@@ -28,7 +26,7 @@ public static class DropboxParser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error parsing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error parsing {parser} for '{url}'", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;
@@ -46,7 +44,7 @@ public static class DropboxParser
 
 	private static async Task<WebDirectory> ScanAsync(HttpClient httpClient, WebDirectory webDirectory, string html, HttpResponseMessage httpResponseMessage)
 	{
-		Logger.Debug($"Retrieving listings for {webDirectory.Uri}");
+		Program.Logger.Debug("Retrieving listings for '{url}'", webDirectory.Uri);
 
 		webDirectory.Parser = Parser;
 
@@ -130,7 +128,7 @@ public static class DropboxParser
 
 				if (takedownActive)
 				{
-					Logger.Warn("Some entries are not provided because of DCMA/takedown.");
+					Program.Logger.Warning("Some entries are not provided because of DCMA/takedown.");
 				}
 			}
 			else
@@ -140,7 +138,7 @@ public static class DropboxParser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error processing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error processing {parser} for '{url}'", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;
@@ -173,7 +171,7 @@ public static class DropboxParser
 
 				if (cookie is not null)
 				{
-					Logger.Warn($"CSRF Token found on {webDirectory.Uri}");
+					Program.Logger.Warning($"CSRF Token found on {webDirectory.Uri}");
 					OpenDirectoryIndexer.Session.Parameters[Parameters_CSRFToken] = cookie.Value;
 				}
 			}

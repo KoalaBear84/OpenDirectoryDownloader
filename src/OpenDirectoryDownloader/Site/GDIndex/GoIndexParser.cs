@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
-using NLog;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
-using OpenDirectoryDownloader.Site.GDIndex.GoIndex;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -13,7 +11,6 @@ namespace OpenDirectoryDownloader.Site.GDIndex.GoIndex;
 
 public static class GoIndexParser
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private const string FolderMimeType = "application/vnd.google-apps.folder";
 	private const string Parser = "GoIndex";
 	private static readonly RateLimiter RateLimiter = new(1, TimeSpan.FromSeconds(1));
@@ -27,10 +24,10 @@ public static class GoIndexParser
 			if (!OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_Password))
 			{
 				Console.WriteLine($"{Parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.");
-				Logger.Info($"{Parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.");
+				Program.Logger.Information("{parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.", Parser);
 
 				Console.WriteLine("Check if password is needed...");
-				Logger.Info("Check if password is needed...");
+				Program.Logger.Information("Check if password is needed...");
 				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] = "";
 
 				HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
@@ -48,12 +45,12 @@ public static class GoIndexParser
 					if (indexResponse.Error?.Code == (int)HttpStatusCode.Unauthorized)
 					{
 						Console.WriteLine("Directory is password protected, please enter password:");
-						Logger.Info("Directory is password protected, please enter password.");
+						Program.Logger.Information("Directory is password protected, please enter password.");
 
 						OpenDirectoryIndexer.Session.Parameters["GoIndex_Password"] = Console.ReadLine();
 
 						Console.WriteLine($"Using password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}");
-						Logger.Info($"Using password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}");
+						Program.Logger.Information("Using password: {password}", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]);
 
 						httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
 						{
@@ -70,20 +67,20 @@ public static class GoIndexParser
 
 				if (indexResponse is null)
 				{
-					Logger.Error("Error. Invalid response. Stopping.");
+					Program.Logger.Error("Error. Invalid response. Stopping.");
 				}
 				else
 				{
 					if (indexResponse.Error == null)
 					{
-						Logger.Warn("Password OK!");
+						Program.Logger.Warning("Password OK!");
 
 						webDirectory = await ScanIndexAsync(httpClient, webDirectory);
 					}
 					else
 					{
 						OpenDirectoryIndexer.Session.Parameters.Remove(Constants.Parameters_Password);
-						Logger.Error($"Error. Code: {indexResponse.Error.Code}, Message: {indexResponse.Error.Message}. Stopping.");
+						Program.Logger.Error("Error. Code: {errorCode}, Message: {errorMessage}. Stopping.", indexResponse.Error.Code, indexResponse.Error.Message);
 					}
 				}
 			}
@@ -94,7 +91,7 @@ public static class GoIndexParser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error parsing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error parsing {parser} for {url}", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;
@@ -118,7 +115,7 @@ public static class GoIndexParser
 		{
 			Polly.Retry.AsyncRetryPolicy asyncRetryPolicy = Library.GetAsyncRetryPolicy((ex, waitTimeSpan, retry, pollyContext) =>
 			{
-				Logger.Warn($"Error retrieving directory listing for {webDirectory.Uri}, waiting {waitTimeSpan.TotalSeconds} seconds.. Error: {ex.Message}");
+				Program.Logger.Warning("Error retrieving directory listing for {url}, waiting {waiTime:F0} seconds.. Error: {error}", webDirectory.Uri, waitTimeSpan.TotalSeconds, ex.Message);
 				RateLimiter.AddDelay(waitTimeSpan);
 			}, 8);
 
@@ -131,7 +128,7 @@ public static class GoIndexParser
 					webDirectory.Url += "/";
 				}
 
-				Logger.Warn($"Retrieving listings for {webDirectory.Uri.PathAndQuery}{(!string.IsNullOrWhiteSpace(OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]) ? $" with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}" : string.Empty)}");
+				Program.Logger.Warning("Retrieving listings for {relativeUrl} with password: {password}", webDirectory.Uri.PathAndQuery, OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]);
 
 				HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
 				{
@@ -178,7 +175,7 @@ public static class GoIndexParser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error retrieving directory listing for {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error retrieving directory listing for {url}", webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;

@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using NLog;
 using OpenDirectoryDownloader.Calibre;
 using OpenDirectoryDownloader.FileUpload;
 using OpenDirectoryDownloader.GoogleDrive;
@@ -29,9 +28,6 @@ namespace OpenDirectoryDownloader;
 
 public class OpenDirectoryIndexer
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-	private static readonly Logger HistoryLogger = LogManager.GetLogger("historyFile");
-
 	public static Session Session { get; set; }
 	public static bool ShowStatistics { get; set; } = true;
 
@@ -68,6 +64,8 @@ public class OpenDirectoryIndexer
 		"lost%2Bfound/"
 	};
 
+	private GoogleDriveIndexer GoogleDriveIndexer { get; set; }
+
 	private readonly AsyncRetryPolicy RetryPolicy = Policy
 		.Handle<Exception>()
 		.WaitAndRetryAsync(100,
@@ -75,12 +73,14 @@ public class OpenDirectoryIndexer
 			onRetry: (ex, span, retryCount, context) =>
 			{
 				WebDirectory webDirectory = context["WebDirectory"] as WebDirectory;
+				string threadName = (string)context["Thread"];
+				double waitTime = span.TotalSeconds;
 
 				string relativeUrl = webDirectory.Uri.PathAndQuery;
 
 				if (ex is CancelException)
 				{
-					Logger.Warn($"[{context["Processor"]}] Cancelling: {ex.Message}");
+					Program.Logger.Warning("[{thread}] Cancelling: {error}", threadName, ex.Message);
 					(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
 				}
 				else if (ex is SilentException)
@@ -89,11 +89,11 @@ public class OpenDirectoryIndexer
 				}
 				else if (ex is SoftRateLimitException)
 				{
-					Logger.Warn($"[{context["Processor"]}] Rate limited (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+					Program.Logger.Warning("[{thread}] Rate limited (try {retryCount}). Url '{relativeUrl}'. Waiting {waitTime:F0} seconds.", threadName, retryCount, relativeUrl, waitTime);
 				}
 				else if (retryCount <= 4 && ex is TaskCanceledException taskCanceledException && taskCanceledException.InnerException is TimeoutException timeoutException)
 				{
-					Logger.Warn($"[{context["Processor"]}] Timeout (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+					Program.Logger.Warning("[{thread}] Timeout (try {retryCount}). Url '{relativeUrl}'. Waiting {waitTime:F0} seconds.", threadName, retryCount, relativeUrl, waitTime);
 				}
 				else if (ex is HttpRequestException httpRequestException)
 				{
@@ -101,48 +101,48 @@ public class OpenDirectoryIndexer
 
 					if (KnownErrorPaths.Contains(webDirectory.Uri.Segments.LastOrDefault()))
 					{
-						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Cancelling known error on try {retryCount} for url '{relativeUrl}'.");
+						Program.Logger.Warning("[{thread}] HTTP {httpStatusCode}. Cancelling known error on try {retryCount} for url '{relativeUrl}'.", threadName, httpStatusCode, retryCount, relativeUrl);
 						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
 					}
 					else if (httpRequestException.StatusCode == HttpStatusCode.ServiceUnavailable || httpRequestException.StatusCode == HttpStatusCode.TooManyRequests)
 					{
-						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Rate limited (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+						Program.Logger.Warning("[{thread}] HTTP {httpStatusCode}. Rate limited (try {retryCount}). Url '{relativeUrl}'. Waiting {waitTime:F0} seconds.", threadName, httpStatusCode, retryCount, relativeUrl, waitTime);
 						RateLimited = true;
 					}
 					else if (httpRequestException.StatusCode == HttpStatusCode.LoopDetected)
 					{
 						// It could be that a Retry-After header is returned, which should be the seconds of time to wait, but this could be as high as 14.400 which is 4 hours!
 						// But a request will probably be successful after just a couple of seconds
-						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Rate limited / out of capacity (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+						Program.Logger.Warning("[{thread}] HTTP {httpStatusCode}. Rate limited / out of capacity (try {retryCount}). Url '{relativeUrl}'. Waiting {waitTime:F0} seconds.", threadName, httpStatusCode, retryCount, relativeUrl, waitTime);
 						RateLimited = true;
 					}
 					else if (ex.Message.Contains("No connection could be made because the target machine actively refused it."))
 					{
-						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Rate limited? (try {retryCount}). Url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+						Program.Logger.Warning("[{thread}] HTTP {httpStatusCode}. Rate limited? (try {retryCount}). Url '{relativeUrl}'. Waiting {waitTime:F0} seconds.", threadName, httpStatusCode, retryCount, relativeUrl, waitTime);
 						RateLimited = true;
 					}
 					else if (!Session.GDIndex && (httpRequestException.StatusCode == HttpStatusCode.NotFound || ex.Message == "No such host is known."))
 					{
-						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Error \'{ex.Message}\' retrieving on try {retryCount} for url '{relativeUrl}'. Skipping..");
+						Program.Logger.Warning("[{thread}] HTTP {httpStatusCode}. Error '{error}' (try {retryCount}). Url '{relativeUrl}'. Waiting {waitTime:F0} seconds.", threadName, httpStatusCode, ex.Message, retryCount, relativeUrl, waitTime);
 						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
 					}
 					else if (httpRequestException.StatusCode is null && ex.InnerException?.Message == "The requested name is valid, but no data of the requested type was found.")
 					{
-						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Domain does not exist? Possible DNS issue. Skipping..");
+						Program.Logger.Warning("[{thread}] HTTP {httpStatusCode}. Domain does not exist? Possible DNS issue. Skipping..", threadName, httpStatusCode);
 						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
 					}
 					else if ((httpRequestException.StatusCode == HttpStatusCode.Forbidden || httpRequestException.StatusCode == HttpStatusCode.Unauthorized) && retryCount >= 3)
 					{
-						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Error \'{ex.Message}\' retrieving on try {retryCount} for url '{relativeUrl}'. Skipping..");
+						Program.Logger.Warning("[{thread}] HTTP {httpStatusCode}. Error '{error}' retrieving on try {retryCount}) for '{relativeUrl}'. Skipping..", threadName, httpStatusCode, ex.Message, retryCount, relativeUrl);
 						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
 					}
 					else if (retryCount <= 4)
 					{
-						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Error \'{GetExceptionWithInner(ex)}\' retrieving on try {retryCount} for url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+						Program.Logger.Warning("[{thread}] HTTP {httpStatusCode}. Error '{error}' retrieving on try {retryCount}) for '{relativeUrl}'. Waiting {waitTime:F0} seconds.", threadName, httpStatusCode, GetExceptionWithInner(ex), retryCount, relativeUrl, waitTime);
 					}
 					else
 					{
-						Logger.Warn($"[{context["Processor"]}] HTTP {httpStatusCode}. Cancelling on try {retryCount} for url '{relativeUrl}'.");
+						Program.Logger.Warning("[{thread}] HTTP {httpStatusCode}. Cancelling on try {retryCount} for url '{relativeUrl}'.", threadName, httpStatusCode, retryCount, relativeUrl);
 						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
 					}
 				}
@@ -150,11 +150,11 @@ public class OpenDirectoryIndexer
 				{
 					if (retryCount <= 4)
 					{
-						Logger.Warn($"[{context["Processor"]}] Error \'{GetExceptionWithInner(ex)}\' retrieving on try {retryCount} for url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+						Program.Logger.Warning("[{thread}] Error '{error}' retrieving on try {retryCount} for url '{relativeUrl}'. Waiting {waitTime:F0} seconds.", threadName, GetExceptionWithInner(ex), retryCount, relativeUrl, waitTime);
 					}
 					else
 					{
-						Logger.Warn($"[{context["Processor"]}] Cancelling on try {retryCount} for url '{relativeUrl}'.");
+						Program.Logger.Warning("[{thread}] Cancelling on try {retryCount} for url '{relativeUrl}'.", threadName, retryCount, relativeUrl);
 						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
 					}
 				}
@@ -214,7 +214,7 @@ public class OpenDirectoryIndexer
 		{
 			if (!customHeader.Contains(':'))
 			{
-				Logger.Warn($"Invalid header specified: '{customHeader}' should contain the header name and value, separated by a colon (:). Header will be ignored.");
+				Program.Logger.Warning("Invalid header specified: '{customHeader}' should contain the header name and value, separated by a colon (:). Header will be ignored.", customHeader);
 				continue;
 			}
 
@@ -223,7 +223,7 @@ public class OpenDirectoryIndexer
 			string headerName = splitHeader[0].TrimStart();
 			string headerValue = string.Join(":", splitHeader.Skip(1)).TrimStart();
 
-			if (headerName.ToLower() == "cookie")
+			if (headerName.ToLowerInvariant() == "cookie")
 			{
 				string[] cookies = headerValue.Split(';').Where(c => !string.IsNullOrWhiteSpace(c)).ToArray();
 
@@ -233,11 +233,11 @@ public class OpenDirectoryIndexer
 
 					if (splitCookie.Length != 2)
 					{
-						Logger.Warn($"Invalid cookie found: '{cookie}' should contain a cookie name and value, separated by '='. Cookie will be ignored.");
+						Program.Logger.Warning("Invalid cookie found: '{cookie}' should contain a cookie name and value, separated by '='. Cookie will be ignored.", cookie);
 						continue;
 					}
 
-					Logger.Warn($"Adding cookie: name={splitCookie[0]}, value={splitCookie[1]}");
+					Program.Logger.Warning("Adding cookie: name={name}, value={value}", splitCookie[0], splitCookie[1]);
 					CookieContainer.Add(new Uri(OpenDirectoryIndexerSettings.Url), new Cookie(splitCookie[0], splitCookie[1]));
 				}
 			}
@@ -292,29 +292,29 @@ public class OpenDirectoryIndexer
 
 		if (Session.Root.Uri.Host == Constants.GoogleDriveDomain)
 		{
-			Logger.Warn("Google Drive scanning is limited to 9 directories per second!");
+			Program.Logger.Warning("{indexer} scanning is limited to {directoriesPerSecond} directories per second!", "Google Drive", 9);
 		}
 
 		if (Session.Root.Uri.Host == Constants.GitHubDomain)
 		{
-			Logger.Warn("GitHub scanning has a very low rate limiting of 60 directories/requests per hour!");
+			Program.Logger.Warning("{indexer} scanning has a very low rate limiting of {requestsPerHour} directories/requests per hour!", "GitHub", 60);
 
 			if (Session.MaxThreads != 1)
 			{
 				Session.MaxThreads = 1;
-				Logger.Warn($"Reduce threads to 1 because of GitHub");
+				Program.Logger.Warning("Reduce threads to {threadCount} because of {indexert}", 1, "GitHub");
 			}
 		}
 
 		if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftp || Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
 		{
-			Logger.Warn("Retrieving FTP(S) software!");
+			Program.Logger.Warning("Retrieving FTP(S) software!");
 
 			if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
 			{
 				if (Session.Root.Uri.Port == -1)
 				{
-					Logger.Warn("Using default port (990) for FTPS");
+					Program.Logger.Warning("Using default port (990) for FTPS");
 
 					UriBuilder uriBuilder = new(Session.Root.Uri)
 					{
@@ -339,7 +339,7 @@ public class OpenDirectoryIndexer
 				Session.Description = $"FTP INFO{Environment.NewLine}{serverInfo}";
 			}
 
-			Logger.Warn(serverInfo);
+			Program.Logger.Warning(serverInfo);
 		}
 
 		TimerStatistics = new System.Timers.Timer
@@ -389,11 +389,11 @@ public class OpenDirectoryIndexer
 
 				await Task.WhenAll(WebDirectoryProcessors);
 				Console.WriteLine("Finshed indexing");
-				Logger.Info("Finshed indexing");
+				Program.Logger.Information("Finshed indexing");
 
 				if (BrowserContext is not null)
 				{
-					Logger.Warn($"Closing Browser");
+					Program.Logger.Warning($"Closing Browser");
 					BrowserContext.Dispose();
 					BrowserContext = null;
 				}
@@ -417,7 +417,7 @@ public class OpenDirectoryIndexer
 
 				if (Session.TotalFiles != distinctUrls.Count())
 				{
-					Logger.Error($"Indexed files and unique files is not the same, please check results. Found a total of {Session.TotalFiles} files resulting in {distinctUrls.Count()} urls");
+					Program.Logger.Warning("Indexed files and unique files is not the same, please check results. Found a total of {totalUrls} files resulting in {distinctUrls} urls", Session.TotalFiles, distinctUrls.Count());
 				}
 
 				Console.WriteLine(Statistics.GetSessionStats(Session, onlyRedditStats: true, includeExtensions: true));
@@ -432,7 +432,7 @@ public class OpenDirectoryIndexer
 				{
 					if (Session.TotalFiles > 0)
 					{
-						Logger.Info("Saving URL list to file..");
+						Program.Logger.Information("Saving URL list to file..");
 						Console.WriteLine("Saving URL list to file..");
 
 						try
@@ -440,7 +440,7 @@ public class OpenDirectoryIndexer
 							string urlsPath = Library.GetOutputFullPath(Session, OpenDirectoryIndexerSettings, "txt");
 							File.WriteAllLines(urlsPath, distinctUrls);
 
-							Logger.Info($"Saved URL list to file: {urlsPath}");
+							Program.Logger.Information("Saved URL list to file: {path}", urlsPath);
 							Console.WriteLine($"Saved URL list to file: {urlsPath}");
 
 							if (OpenDirectoryIndexerSettings.CommandLineOptions.UploadUrls && Session.TotalFiles > 0)
@@ -463,32 +463,32 @@ public class OpenDirectoryIndexer
 											Console.WriteLine($"Uploading URLs ({FileSizeHelper.ToHumanReadable(new FileInfo(urlsPath).Length)}) with {uploadSite.Name}..");
 
 											IFileUploadSiteFile fileUploaderFile = await uploadSite.UploadFile(HttpClient, urlsPath);
-											HistoryLogger.Info($"{uploadSite.Name} URL: {JsonConvert.SerializeObject(fileUploaderFile)}");
-											HistoryLogger.Info($"{uploadSite.Name} full reponse: {Session.UploadedUrlsResponse}");
+											Program.HistoryLogger.Information("{siteName} URL: {url}", uploadSite.Name, JsonConvert.SerializeObject(fileUploaderFile));
+											Program.HistoryLogger.Information("{siteName} full response: {response}", uploadSite.Name, Session.UploadedUrlsResponse);
 											Session.UploadedUrlsUrl = fileUploaderFile.Url;
 											Console.WriteLine($"Uploaded URLs link: {Session.UploadedUrlsUrl}");
 											break;
 										}
 										catch (Exception ex)
 										{
-											Logger.Warn($"Error uploading URLs: {ex.Message}");
+											Program.Logger.Warning("Error uploading URLs: {error}", ex.Message);
 										}
 									}
 								}
 								catch (Exception ex)
 								{
-									Logger.Warn($"Error uploading URLs: {ex.Message}");
+									Program.Logger.Warning("Error uploading URLs: {error}", ex.Message);
 								}
 							}
 						}
 						catch (Exception ex)
 						{
-							Logger.Error(ex);
+							Program.Logger.Error(ex, "Error saving or uploading URLs file: {error}", ex.Message);
 						}
 					}
 					else
 					{
-						Logger.Info("No URLs to save");
+						Program.Logger.Information("No URLs to save");
 						Console.WriteLine("No URLs to save");
 					}
 				}
@@ -525,7 +525,7 @@ public class OpenDirectoryIndexer
 						{
 							// Give empty speedtest, so it will be reported as Failed
 							Session.SpeedtestResult = new Shared.SpeedtestResult();
-							Logger.Error(ex, "Speedtest failed");
+							Program.Logger.Error(ex, "Speedtest failed");
 						}
 					}
 					else if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftp || Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
@@ -560,13 +560,13 @@ public class OpenDirectoryIndexer
 						{
 							// Give empty speedtest, so it will be reported as Failed
 							Session.SpeedtestResult = new Shared.SpeedtestResult();
-							Logger.Error(ex, "Speedtest failed");
+							Program.Logger.Error(ex, "Speedtest failed");
 						}
 					}
 				}
 				else
 				{
-					Logger.Warn("Speedtest skipped because of general service");
+					Program.Logger.Warning("Speedtest skipped because of general service or disabled through command line");
 				}
 
 				if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftp || Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
@@ -574,13 +574,13 @@ public class OpenDirectoryIndexer
 					FtpParser.CloseAll();
 				}
 
-				Logger.Info("Logging sessions stats..");
+				Program.Logger.Information("Logging sessions stats..");
 				try
 				{
 					string sessionStats = Statistics.GetSessionStats(Session, includeExtensions: true, includeBanner: true);
-					Logger.Info(sessionStats);
-					HistoryLogger.Info(sessionStats);
-					Logger.Info("Logged sessions stats");
+					Program.Logger.Information(sessionStats);
+					//HistoryProgram.Log.Information(sessionStats);
+					Program.Logger.Information("Logged sessions stats");
 
 					if (!OpenDirectoryIndexerSettings.CommandLineOptions.NoReddit)
 					{
@@ -590,24 +590,24 @@ public class OpenDirectoryIndexer
 				}
 				catch (Exception ex)
 				{
-					Logger.Error(ex);
+					Program.Logger.Error(ex, "Error logging session stats");
 				}
 
 				if (Session.UrlsWithErrors.Any())
 				{
-					Logger.Info("URLs with errors:");
+					Program.Logger.Information("URLs with errors:");
 					Console.WriteLine("URLs with errors:");
 
 					foreach (string urlWithError in Session.UrlsWithErrors.OrderBy(u => u, NaturalSortStringComparer.InvariantCulture))
 					{
-						Logger.Info(urlWithError);
+						Program.Logger.Information(urlWithError);
 						Console.WriteLine(urlWithError);
 					}
 				}
 
 				if (OpenDirectoryIndexerSettings.CommandLineOptions.Json)
 				{
-					Logger.Info("Saving session to JSON..");
+					Program.Logger.Information("Saving session to JSON..");
 					Console.WriteLine("Saving session to JSON..");
 
 					string jsonPath = Library.GetOutputFullPath(Session, OpenDirectoryIndexerSettings, "json");
@@ -615,16 +615,16 @@ public class OpenDirectoryIndexer
 					try
 					{
 						Library.SaveSessionJson(Session, jsonPath);
-						Logger.Info($"Saved session: {jsonPath}");
+						Program.Logger.Information("Saved session: {path}", jsonPath);
 						Console.WriteLine($"Saved session: {jsonPath}");
 					}
 					catch (Exception ex)
 					{
-						Logger.Error(ex);
+						Program.Logger.Error(ex, "Error saving session to JSON");
 					}
 				}
 
-				Logger.Info("Finished indexing!");
+				Program.Logger.Information("Finished indexing!");
 				Console.WriteLine("Finished indexing!");
 
 				Program.SetConsoleTitle($"✔ {Program.ConsoleTitle}");
@@ -641,7 +641,7 @@ public class OpenDirectoryIndexer
 					}
 					catch (Exception ex)
 					{
-						Logger.Error($"Error copying stats to clipboard: {ex.Message}");
+						Program.Logger.Error("Error copying stats to clipboard: {error}", ex.Message);
 					}
 				}
 
@@ -656,7 +656,7 @@ public class OpenDirectoryIndexer
 			}
 			catch (Exception ex)
 			{
-				Logger.Error(ex);
+				Program.Logger.Error(ex, "Error in indexing task");
 			}
 		});
 	}
@@ -694,13 +694,13 @@ public class OpenDirectoryIndexer
 
 		if (!string.IsNullOrWhiteSpace(statistics))
 		{
-			Logger.Warn(statistics);
+			Program.Logger.Warning(statistics);
 		}
 	}
 
-	private async Task WebDirectoryProcessor(ConcurrentQueue<WebDirectory> queue, string name, CancellationToken cancellationToken)
+	private async Task WebDirectoryProcessor(ConcurrentQueue<WebDirectory> queue, string threadName, CancellationToken cancellationToken)
 	{
-		Logger.Debug($"Start [{name}]");
+		Program.Logger.Debug("[{thread}] Start", threadName);
 
 		bool maxConnections = false;
 
@@ -708,13 +708,13 @@ public class OpenDirectoryIndexer
 		{
 			if (RateLimited && RunningWebDirectoryThreads + 1 > 5)
 			{
-				Logger.Warn($"Decrease threads because of rate limiting");
+				Program.Logger.Warning($"Decrease threads because of rate limiting");
 				break;
 			}
 			else if (RunningWebDirectoryThreads + 1 > Session.MaxThreads)
 			{
 				// Don't hog the CPU when queue < threads
-				//Logger.Info($"Pausing thread because it's there are more threads ({RunningWebDirectoryThreads + 1}) running than wanted ({Session.MaxThreads})");
+				//Program.Log.Information($"Pausing thread because it's there are more threads ({RunningWebDirectoryThreads + 1}) running than wanted ({Session.MaxThreads})");
 				await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
 				continue;
 			}
@@ -727,7 +727,7 @@ public class OpenDirectoryIndexer
 				{
 					lock (WebDirectoryProcessorInfoLock)
 					{
-						WebDirectoryProcessorInfo[name] = webDirectory;
+						WebDirectoryProcessorInfo[threadName] = webDirectory;
 					}
 
 					if (!Session.ProcessedUrls.Contains(webDirectory.Url))
@@ -735,11 +735,11 @@ public class OpenDirectoryIndexer
 						Session.ProcessedUrls.Add(webDirectory.Url);
 						webDirectory.StartTime = DateTimeOffset.UtcNow;
 
-						Logger.Info($"[{name}] Begin processing {webDirectory.Url}");
+						Program.Logger.Information("[{thread}] Begin processing {url}", threadName, webDirectory.Url);
 
 						if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftp || Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
 						{
-							WebDirectory parsedWebDirectory = await FtpParser.ParseFtpAsync(name, webDirectory, OpenDirectoryIndexerSettings.Username, OpenDirectoryIndexerSettings.Password);
+							WebDirectory parsedWebDirectory = await FtpParser.ParseFtpAsync(threadName, webDirectory, OpenDirectoryIndexerSettings.Username, OpenDirectoryIndexerSettings.Password);
 
 							if (webDirectory?.CancellationReason == Constants.Ftp_Max_Connections)
 							{
@@ -759,16 +759,16 @@ public class OpenDirectoryIndexer
 
 								try
 								{
-									await FtpParser.FtpClients[name].Disconnect(cancellationToken);
+									await FtpParser.FtpClients[threadName].Disconnect(cancellationToken);
 
 									lock (FtpParser.FtpClients)
 									{
-										FtpParser.FtpClients.Remove(name);
+										FtpParser.FtpClients.Remove(threadName);
 									}
 								}
 								catch (Exception exFtpDisconnect)
 								{
-									Logger.Error(exFtpDisconnect, "Error disconnecting FTP connection.");
+									Program.Logger.Error(exFtpDisconnect, "Error disconnecting FTP connection.");
 								}
 							}
 
@@ -791,6 +791,8 @@ public class OpenDirectoryIndexer
 
 							UrlEncodingParser urlEncodingParserResourceKey = new(baseUrl);
 
+							GoogleDriveIndexer ??= new(Program.Logger);
+
 							WebDirectory parsedWebDirectory = await GoogleDriveIndexer.IndexAsync(webDirectory, urlEncodingParserResourceKey["resourcekey"]);
 							parsedWebDirectory.Url = baseUrl;
 
@@ -804,7 +806,7 @@ public class OpenDirectoryIndexer
 								Session.Root.Uri.Host == Constants.DropboxDomain ||
 								DirectoryParser.SameHostAndDirectoryFile(Session.Root.Uri, webDirectory.Uri))
 							{
-								Logger.Debug($"[{name}] Start download '{webDirectory.Url}'");
+								Program.Logger.Debug("[{thread}] Start download '{url}'", threadName, webDirectory.Url);
 								Session.TotalHttpRequests++;
 
 								CancellationTokenSource cancellationTokenSource = new();
@@ -813,26 +815,26 @@ public class OpenDirectoryIndexer
 
 								Context pollyContext = new()
 								{
-									{ "Processor", name },
+									{ "Thread", threadName },
 									{ "WebDirectory", webDirectory },
 									{ "CancellationTokenSource", cancellationTokenSource }
 								};
 
-								await RetryPolicy.ExecuteAsync(async (context, token) => { await ProcessWebDirectoryAsync(name, webDirectory, cancellationTokenSource); }, pollyContext, cancellationTokenSource.Token);
+								await RetryPolicy.ExecuteAsync(async (context, token) => { await ProcessWebDirectoryAsync(threadName, webDirectory, cancellationTokenSource); }, pollyContext, cancellationTokenSource.Token);
 							}
 							else
 							{
-								Logger.Warn($"[{name}] Skipped result of '{webDirectory.Url}' because it is not the same host or path");
+								Program.Logger.Warning("[{thread}] Skipped result of '{url}' because it is not the same host or path", threadName, webDirectory.Url);
 
 								Session.Skipped++;
 							}
 						}
 
-						Logger.Info($"[{name}] Finished processing {webDirectory.Url}");
+						Program.Logger.Information("[{thread}] Finished processing {url}", threadName, webDirectory.Url);
 					}
 					else
 					{
-						//Logger.Warn($"[{name}] Skip, already processed: {webDirectory.Uri}");
+						//Program.Log.Warning("[{thread}] Skip, already processed: {url}", threadName, webDirectory.Uri);
 					}
 				}
 				catch (Exception ex)
@@ -849,24 +851,24 @@ public class OpenDirectoryIndexer
 
 						if (webDirectory.ParentDirectory?.Url != null)
 						{
-							Logger.Error($"Skipped processing Url: '{webDirectory.Url}' from parent '{webDirectory.ParentDirectory.Url}'");
+							Program.Logger.Error("Skipped processing Url: '{url}' from parent '{parentUrl}'", webDirectory.Url, webDirectory.ParentDirectory.Url);
 						}
 						else
 						{
-							Logger.Error($"Skipped processing Url: '{webDirectory.Url}'");
+							Program.Logger.Error("Skipped processing Url: '{url}'", webDirectory.Url);
 							Session.Root.Error = true;
 						}
 					}
 					else
 					{
-						Logger.Error(ex, $"Error processing Url: '{webDirectory.Url}' from parent '{webDirectory.ParentDirectory?.Url}'");
+						Program.Logger.Error(ex, "Error processing Url: '{url}' from parent '{parentUrl}'", webDirectory.Url, webDirectory.ParentDirectory?.Url);
 					}
 				}
 				finally
 				{
 					lock (WebDirectoryProcessorInfoLock)
 					{
-						WebDirectoryProcessorInfo.Remove(name);
+						WebDirectoryProcessorInfo.Remove(threadName);
 					}
 
 					if (string.IsNullOrWhiteSpace(webDirectory.CancellationReason))
@@ -902,10 +904,10 @@ public class OpenDirectoryIndexer
 		}
 		while (!cancellationToken.IsCancellationRequested && (!queue.IsEmpty || RunningWebDirectoryThreads > 0) && !maxConnections);
 
-		Logger.Debug($"Finished [{name}]");
+		Program.Logger.Debug("[{thread}] Finished", threadName);
 	}
 
-	private async Task ProcessWebDirectoryAsync(string name, WebDirectory webDirectory, CancellationTokenSource cancellationTokenSource)
+	private async Task ProcessWebDirectoryAsync(string threadName, WebDirectory webDirectory, CancellationTokenSource cancellationTokenSource)
 	{
 		if (Session.Parameters.ContainsKey(Constants.Parameters_GdIndex_RootId))
 		{
@@ -939,10 +941,10 @@ public class OpenDirectoryIndexer
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error retrieving directory listing for {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error retrieving directory listing for {url}", webDirectory.Url);
 		}
 
-		if (httpResponseMessage?.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "amazons3")
+		if (httpResponseMessage?.Headers.Server.FirstOrDefault()?.Product.Name.ToLowerInvariant() == "amazons3")
 		{
 			WebDirectory parsedWebDirectory = await AmazonS3Parser.ParseIndex(HttpClient, webDirectory, hasHeader: true);
 			AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
@@ -961,14 +963,14 @@ public class OpenDirectoryIndexer
 			}
 		}
 
-		if (httpResponseMessage?.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "crushftp")
+		if (httpResponseMessage?.Headers.Server.FirstOrDefault()?.Product.Name.ToLowerInvariant() == "crushftp")
 		{
 			WebDirectory parsedWebDirectory = await CrushFtpParser.ParseIndex(HttpClient, webDirectory);
 			AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
 			return;
 		}
 
-		if (httpResponseMessage?.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
+		if (httpResponseMessage?.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLowerInvariant() == "cloudflare")
 		{
 			string cloudflareHtml = await GetHtml(httpResponseMessage);
 
@@ -982,11 +984,11 @@ public class OpenDirectoryIndexer
 			}
 		}
 
-		if (httpResponseMessage?.StatusCode == HttpStatusCode.ServiceUnavailable && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
+		if (httpResponseMessage?.StatusCode == HttpStatusCode.ServiceUnavailable && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLowerInvariant() == "cloudflare")
 		{
 			if (OpenDirectoryIndexerSettings.CommandLineOptions.NoBrowser)
 			{
-				Logger.Error("Cloudflare protection detected, --no-browser option active, cannot continue!");
+				Program.Logger.Error("Cloudflare protection detected, --no-browser option active, cannot continue!");
 				return;
 			}
 
@@ -994,13 +996,13 @@ public class OpenDirectoryIndexer
 
 			if (!cloudflareOK)
 			{
-				Logger.Error("Cloudflare failed!");
+				Program.Logger.Error("Cloudflare failed!");
 
 				return;
 			}
 		}
 
-		if (httpResponseMessage?.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLower() == "cloudflare")
+		if (httpResponseMessage?.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLowerInvariant() == "cloudflare")
 		{
 			string cloudflareHtml = await GetHtml(httpResponseMessage);
 
@@ -1014,7 +1016,7 @@ public class OpenDirectoryIndexer
 
 				if (OpenDirectoryIndexerSettings.CommandLineOptions.NoBrowser)
 				{
-					Logger.Error("Cloudflare protection detected, --no-browser option active, cannot continue!");
+					Program.Logger.Error("Cloudflare protection detected, --no-browser option active, cannot continue!");
 					return;
 				}
 
@@ -1022,7 +1024,7 @@ public class OpenDirectoryIndexer
 
 				if (!cloudflareOK)
 				{
-					Logger.Error("Cloudflare failed!");
+					Program.Logger.Error("Cloudflare failed!");
 				}
 
 				httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
@@ -1095,14 +1097,14 @@ public class OpenDirectoryIndexer
 
 		if (FirstRequest && (httpResponseMessage == null || !httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.IsSuccessStatusCode) && string.IsNullOrWhiteSpace(html) || html?.Contains("HTTP_USER_AGENT") == true)
 		{
-			Logger.Warn("First request fails, using Curl fallback User-Agent");
+			Program.Logger.Warning("First request fails, using Curl fallback User-Agent");
 			HttpClient.DefaultRequestHeaders.UserAgent.Clear();
 			HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Curl);
 			httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
 
 			if (httpResponseMessage.IsSuccessStatusCode)
 			{
-				Logger.Warn("Yes, Curl User-Agent did the trick!");
+				Program.Logger.Warning("Yes, Curl User-Agent did the trick!");
 
 				SetRootUrl(httpResponseMessage);
 
@@ -1124,14 +1126,14 @@ public class OpenDirectoryIndexer
 
 		if (FirstRequest && (httpResponseMessage == null || !httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.IsSuccessStatusCode) && string.IsNullOrWhiteSpace(html))
 		{
-			Logger.Warn("First request fails, using Chrome fallback User-Agent");
+			Program.Logger.Warning("First request fails, using Chrome fallback User-Agent");
 			HttpClient.DefaultRequestHeaders.UserAgent.Clear();
 			HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
 			httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
 
 			if (httpResponseMessage.IsSuccessStatusCode)
 			{
-				Logger.Warn("Yes, Chrome User-Agent did the trick!");
+				Program.Logger.Warning("Yes, Chrome User-Agent did the trick!");
 
 				SetRootUrl(httpResponseMessage);
 
@@ -1153,7 +1155,7 @@ public class OpenDirectoryIndexer
 
 		if (FirstRequest && (httpResponseMessage == null || !httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.IsSuccessStatusCode) && string.IsNullOrWhiteSpace(html))
 		{
-			Logger.Warn("First request fails, using Chrome fallback User-Agent (with extra headers)");
+			Program.Logger.Warning("First request fails, using Chrome fallback User-Agent (with extra headers)");
 			HttpClient.DefaultRequestHeaders.UserAgent.Clear();
 			HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
 			HttpClient.DefaultRequestHeaders.Accept.ParseAdd("text/html");
@@ -1162,7 +1164,7 @@ public class OpenDirectoryIndexer
 
 			if (httpResponseMessage.IsSuccessStatusCode)
 			{
-				Logger.Warn("Yes, Chrome User-Agent (with extra headers) did the trick!");
+				Program.Logger.Warning("Yes, Chrome User-Agent (with extra headers) did the trick!");
 
 				SetRootUrl(httpResponseMessage);
 
@@ -1249,7 +1251,7 @@ public class OpenDirectoryIndexer
 			Version calibreVersion = CalibreParser.ParseVersion(calibreVersionString);
 
 			Console.WriteLine($"Calibre {calibreVersion} detected! I will index it at max 100 books per 30 seconds, else it will break Calibre...");
-			Logger.Info($"Calibre {calibreVersion} detected! I will index it at max 100 books per 30 seconds, else it will break Calibre...");
+			Program.Logger.Information("Calibre {calibreVersion} detected! I will index it at max 100 books per 30 seconds, else it will break Calibre...", calibreVersion);
 
 			await CalibreParser.ParseCalibre(HttpClient, httpResponseMessage.RequestMessage.RequestUri, webDirectory, calibreVersion, cancellationTokenSource.Token);
 
@@ -1268,7 +1270,7 @@ public class OpenDirectoryIndexer
 		}
 
 		Uri originalUri = new(webDirectory.Url);
-		Logger.Debug($"[{name}] Finish download [HTTP {(int)httpResponseMessage.StatusCode}] '{webDirectory.Url}', size: {FileSizeHelper.ToHumanReadable(html?.Length)}");
+		Program.Logger.Debug("[{thread}] Finish download [HTTP {httpcode}] '{url}', size: {length}", threadName, httpResponseMessage.StatusCode, webDirectory.Url, FileSizeHelper.ToHumanReadable(html?.Length));
 
 		// Process only same site
 		if (httpResponseMessage.RequestMessage.RequestUri.Host == Session.Root.Uri.Host)
@@ -1288,7 +1290,7 @@ public class OpenDirectoryIndexer
 
 				if (html.Length > Constants.Megabyte)
 				{
-					Logger.Warn($"Large response of {FileSizeHelper.ToHumanReadable(html.Length)} for {webDirectory.Url}");
+					Program.Logger.Warning("Large response of {length} for {url}", FileSizeHelper.ToHumanReadable(html.Length), webDirectory.Url);
 				}
 
 				Session.TotalHttpTraffic += html.Length;
@@ -1297,13 +1299,13 @@ public class OpenDirectoryIndexer
 
 				if (BrowserContext is not null && (parsedWebDirectory.Subdirectories.Any() || parsedWebDirectory.Files.Any()))
 				{
-					Logger.Warn($"Closing Browser because of successful repsonse");
+					Program.Logger.Warning($"Closing Browser because of successful repsonse");
 					BrowserContext.Dispose();
 					BrowserContext = null;
 
 					if (Session.MaxThreads != Session.CommandLineOptions.Threads)
 					{
-						Logger.Warn($"Increasing threads back to {Session.CommandLineOptions.Threads} because of successful response");
+						Program.Logger.Warning("Increasing threads back to {threads} because of successful response", Session.CommandLineOptions.Threads);
 						Session.MaxThreads = Session.CommandLineOptions.Threads;
 					}
 				}
@@ -1319,7 +1321,7 @@ public class OpenDirectoryIndexer
 					{
 						if (retryConditionHeaderValue.Date is DateTimeOffset dateTimeOffset)
 						{
-							Logger.Warn($"[{name}] Rate limited on Url '{webDirectory.Url}'. Need to wait until {retryConditionHeaderValue.Date} ({(DateTimeOffset.UtcNow - dateTimeOffset).TotalSeconds:F1}) seconds.");
+							Program.Logger.Warning("[{thread}] Rate limited on Url '{url}'. Need to wait until {untilDate} ({waitTime:F1}) seconds.", threadName, webDirectory.Url, retryConditionHeaderValue.Date, (DateTimeOffset.UtcNow - dateTimeOffset).TotalSeconds);
 							httpResponseMessage.Dispose();
 							TimeSpan rateLimitTimeSpan = DateTimeOffset.UtcNow - dateTimeOffset;
 							cancellationTokenSource.CancelAfter(rateLimitTimeSpan.Add(TimeSpan.FromMinutes(5)));
@@ -1328,7 +1330,7 @@ public class OpenDirectoryIndexer
 						}
 						else if (retryConditionHeaderValue.Delta is TimeSpan timeSpan)
 						{
-							Logger.Warn($"[{name}] Rate limited on Url '{webDirectory.Url}'. Need to wait for {timeSpan.TotalSeconds:F1} seconds ({DateTime.Now.Add(timeSpan):HH:mm:ss}).");
+							Program.Logger.Warning("[{thread}] Rate limited on Url '{url}'. Need to wait for {waitTime:F1} seconds ({untilDate:HH:mm:ss}).", threadName, webDirectory.Url, timeSpan.TotalSeconds, DateTime.Now.Add(timeSpan));
 							httpResponseMessage.Dispose();
 							cancellationTokenSource.CancelAfter(timeSpan.Add(TimeSpan.FromMinutes(5)));
 							await Task.Delay(timeSpan, cancellationTokenSource.Token);
@@ -1348,23 +1350,23 @@ public class OpenDirectoryIndexer
 		}
 		else
 		{
-			Logger.Warn($"[{name}] Skipped result of '{webDirectory.Url}' which points to '{httpResponseMessage.RequestMessage.RequestUri}'");
+			Program.Logger.Warning("[{thread}] Skipped result of '{url}' which points to '{redirectedUrl}'", threadName, webDirectory.Url, httpResponseMessage.RequestMessage.RequestUri);
 			Session.Skipped++;
 		}
 	}
 
 	private async Task<bool> OpenCloudflareBrowser()
 	{
-		Logger.Warn("Cloudflare protection detected, trying to launch browser. Solve protection yourself, indexing will start automatically!");
+		Program.Logger.Warning("Cloudflare protection detected, trying to launch browser. Solve protection yourself, indexing will start automatically!");
 
 		BrowserContext browserContext = new(HttpClientHandler.CookieContainer, cloudFlare: true);
 		bool cloudFlareOK = await browserContext.DoCloudFlareAsync(OpenDirectoryIndexerSettings.Url);
 
 		if (cloudFlareOK)
 		{
-			Logger.Warn("Cloudflare OK!");
+			Program.Logger.Warning("Cloudflare OK!");
 
-			Logger.Warn("User agent forced to Chrome because of Cloudflare");
+			Program.Logger.Warning("User agent forced to Chrome because of Cloudflare");
 
 			HttpClient.DefaultRequestHeaders.UserAgent.Clear();
 			HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
@@ -1375,7 +1377,7 @@ public class OpenDirectoryIndexer
 
 	private static void ConvertDirectoryToFile(WebDirectory webDirectory, HttpResponseMessage httpResponseMessage)
 	{
-		Logger.Warn($"Treated {webDirectory.Url} as file instead of directory ({FileSizeHelper.ToHumanReadable(httpResponseMessage.Content.Headers.ContentLength)})");
+		Program.Logger.Warning("Treated '{url}' as file instead of directory ({size})", webDirectory.Url, FileSizeHelper.ToHumanReadable(httpResponseMessage.Content.Headers.ContentLength));
 
 		// Remove it as directory
 		webDirectory.ParentDirectory?.Subdirectories.Remove(webDirectory);
@@ -1397,11 +1399,11 @@ public class OpenDirectoryIndexer
 			{
 				if (Session.Root.Uri.Host != httpResponseMessage.RequestMessage.RequestUri.Host)
 				{
-					Logger.Error($"Response is NOT from requested host ({Session.Root.Uri.Host}), but from {httpResponseMessage.RequestMessage.RequestUri.Host}, maybe retry with different user agent, see Command Line options");
+					Program.Logger.Error("Response is NOT from requested host '{badHost}', but from {goodHost}, maybe retry with different user agent, see Command Line options", Session.Root.Uri.Host, httpResponseMessage.RequestMessage.RequestUri.Host);
 				}
 
 				Session.Root.Url = httpResponseMessage.RequestMessage.RequestUri.ToString();
-				Logger.Warn($"Retrieved URL: {Session.Root.Url}");
+				Program.Logger.Warning("Retrieved URL: {url}", Session.Root.Url);
 			}
 		}
 	}
@@ -1522,8 +1524,8 @@ public class OpenDirectoryIndexer
 	/// <param name="httpResponseMessage">Fixed charset</param>
 	private static void FixCharSet(HttpResponseMessage httpResponseMessage)
 	{
-		if (httpResponseMessage.Content.Headers.ContentType?.CharSet?.ToLower() == "utf8" ||
-			httpResponseMessage.Content.Headers.ContentType?.CharSet?.ToLower() == "\"utf-8\"" ||
+		if (httpResponseMessage.Content.Headers.ContentType?.CharSet?.ToLowerInvariant() == "utf8" ||
+			httpResponseMessage.Content.Headers.ContentType?.CharSet?.ToLowerInvariant() == "\"utf-8\"" ||
 			httpResponseMessage.Content.Headers.ContentType?.CharSet == "GB1212")
 		{
 			httpResponseMessage.Content.Headers.ContentType.CharSet = "UTF-8";
@@ -1558,7 +1560,7 @@ public class OpenDirectoryIndexer
 						subdirectory.Uri.Host != Constants.GoogleDriveDomain &&
 						!DirectoryParser.SameHostAndDirectoryFile(Session.Root.Uri, subdirectory.Uri))
 					{
-						Logger.Debug($"Removed subdirectory {subdirectory.Uri} from parsed webdirectory because it is not the same host");
+						Program.Logger.Debug("Removed subdirectory '{url}' from parsed webdirectory because it is not the same host", subdirectory.Uri);
 					}
 					else
 					{
@@ -1567,7 +1569,7 @@ public class OpenDirectoryIndexer
 				}
 				else
 				{
-					//Logger.Warn($"Url '{subdirectory.Url}' already processed, skipping! Source: {webDirectory.Url}");
+					//Program.Log.Warning("Url '{url}' already processed, skipping! Source: {sourceUrl}", subdirectory.Url, webDirectory.Url);
 				}
 			}
 		}
@@ -1586,9 +1588,9 @@ public class OpenDirectoryIndexer
 		}
 	}
 
-	private async Task WebFileFileSizeProcessor(ConcurrentQueue<WebFile> queue, string name, Task[] tasks, CancellationToken cancellationToken)
+	private async Task WebFileFileSizeProcessor(ConcurrentQueue<WebFile> queue, string threadName, Task[] tasks, CancellationToken cancellationToken)
 	{
-		Logger.Debug($"Start [{name}]");
+		Program.Logger.Debug("[{thread}] Start", threadName);
 
 		do
 		{
@@ -1598,7 +1600,7 @@ public class OpenDirectoryIndexer
 			{
 				try
 				{
-					Logger.Debug($"Retrieve filesize for: {webFile.Url}");
+					Program.Logger.Debug("Retrieve filesize for: {url}", webFile.Url);
 
 					if (!OpenDirectoryIndexerSettings.DetermimeFileSizeByDownload)
 					{
@@ -1609,11 +1611,11 @@ public class OpenDirectoryIndexer
 						webFile.FileSize = (await HttpClient.GetUrlFileSizeByDownloadingAsync(webFile.Url)) ?? 0;
 					}
 
-					Logger.Debug($"Retrieved filesize for: {webFile.Url}");
+					Program.Logger.Debug("Retrieved filesize for: {url}", webFile.Url);
 				}
 				catch (Exception ex)
 				{
-					Logger.Error(ex, $"Error retrieving filesize of Url: '{webFile.Url}'");
+					Program.Logger.Error(ex, "Error retrieving filesize of Url: '{url}'", webFile.Url);
 				}
 			}
 
@@ -1632,7 +1634,7 @@ public class OpenDirectoryIndexer
 		}
 		while (!cancellationToken.IsCancellationRequested && (!queue.IsEmpty || RunningWebFileFileSizeThreads > 0 || RunningWebDirectoryThreads > 0 || !tasks.All(t => t.IsCompleted)));
 
-		Logger.Debug($"Finished [{name}]");
+		Program.Logger.Debug("[{thread}] Finished", threadName);
 	}
 }
 

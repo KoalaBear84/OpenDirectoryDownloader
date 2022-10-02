@@ -1,7 +1,6 @@
 using FluentFTP;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NLog;
 using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
@@ -23,8 +22,6 @@ namespace OpenDirectoryDownloader;
 
 public class Library
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
 	public static string GetCurrentWorkingDirectory()
 	{
 		string cwd = Directory.GetCurrentDirectory();
@@ -154,7 +151,7 @@ public class Library
 
 	public static async Task<SpeedtestResult> DoSpeedTestHttpAsync(HttpClient httpClient, string url, int seconds = 25)
 	{
-		Logger.Info($"Do HTTP speedtest for {url}");
+		Program.Logger.Information("Do HTTP speedtest for {url}", url);
 
 		HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
 
@@ -178,7 +175,7 @@ public class Library
 				retrievedUrl = httpResponseMessage.Headers.Location.ToString();
 			}
 
-			Logger.Warn($"Speedtest cancelled because it returns HTTP {(int)httpResponseMessage.StatusCode}{(retrievedUrl is not null ? $" with URL {retrievedUrl}" : string.Empty)}");
+			Program.Logger.Warning("Speedtest cancelled because it returns HTTP {httpStatusCode}{(with URL {retrievedUrl}}", (int)httpResponseMessage.StatusCode, retrievedUrl);
 			return new SpeedtestResult();
 		}
 
@@ -199,7 +196,7 @@ public class Library
 
 	public static async Task<SpeedtestResult> DoSpeedTestFtpAsync(AsyncFtpClient ftpClient, string url, int seconds = 25)
 	{
-		Logger.Info($"Do FTP speedtest for {url}");
+		Program.Logger.Information("Do FTP speedtest for {url}", url);
 
 		Uri uri = new(url);
 		
@@ -280,11 +277,11 @@ public class Library
 
 		if (measurements.Any())
 		{
-			Logger.Info($"Downloaded: {speedtestResult.DownloadedMBs:F2} MB, Time: {speedtestResult.ElapsedMilliseconds} ms, Speed: {FileSizeHelper.ToHumanReadable(speedtestResult.MaxBytesPerSecond):F1)}/s ({FileSizeHelper.ToHumanReadable(speedtestResult.MaxBytesPerSecond * 8, true):F0}/s)");
+			Program.Logger.Information("Downloaded: {downloadedMBs:F2} MB, Time: {elapsedMilliseconds} ms, Speed: {maxBytesPerSecond:F1)}/s ({maxBitsPerSecond:F0}/s)", speedtestResult.DownloadedMBs, speedtestResult.ElapsedMilliseconds, FileSizeHelper.ToHumanReadable(speedtestResult.MaxBytesPerSecond), FileSizeHelper.ToHumanReadable(speedtestResult.MaxBytesPerSecond * 8, true));
 		}
 		else
 		{
-			Logger.Warn($"Speedtest failed, nothing downloaded.");
+			Program.Logger.Warning("Speedtest failed, nothing downloaded.");
 		}
 
 		return speedtestResult;

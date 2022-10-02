@@ -1,5 +1,4 @@
-﻿using NLog;
-using OpenDirectoryDownloader.Shared;
+﻿using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Net.Http;
@@ -13,7 +12,6 @@ namespace OpenDirectoryDownloader.Site.BlitzfilesTech;
 /// </summary>
 public static class BlitzfilesTechParser
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private static readonly Regex DriveHashRegex = new(@"\/drive\/s\/(?<DriveHash>.*)");
 	private const string Parser = "BlitzfilesTech";
 	private static readonly RateLimiter RateLimiter = new(1, TimeSpan.FromSeconds(1));
@@ -27,10 +25,10 @@ public static class BlitzfilesTechParser
 			if (!OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_Password))
 			{
 				Console.WriteLine($"{Parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.");
-				Logger.Info($"{Parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.");
+				Program.Logger.Information("{parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.", Parser);
 
 				Console.WriteLine("Check if password is needed (unsupported currently)...");
-				Logger.Info("Check if password is needed (unsupported currently)...");
+				Program.Logger.Information("Check if password is needed (unsupported currently)...");
 				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] = string.Empty;
 
 				HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(GetFolderUrl(driveHash, string.Empty, 0));
@@ -51,7 +49,7 @@ public static class BlitzfilesTechParser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error parsing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error parsing {parser} for '{url}'", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;
@@ -81,7 +79,7 @@ public static class BlitzfilesTechParser
 
 	private static async Task<WebDirectory> ScanAsync(HttpClient httpClient, WebDirectory webDirectory)
 	{
-		Logger.Debug($"Retrieving listings for {webDirectory.Uri} with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}");
+		Program.Logger.Debug("Retrieving listings for '{url}' with password: {password}", webDirectory.Uri, OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]);
 
 		webDirectory.Parser = Parser;
 
@@ -96,7 +94,7 @@ public static class BlitzfilesTechParser
 
 			do
 			{
-				Logger.Warn($"Retrieving listings for {webDirectory.Uri} with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}, page {pageIndex + 1}");
+				Program.Logger.Warning("Retrieving listings for '{url}' with password: {password}, page {pageIndex + 1}", webDirectory.Uri, OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]);
 
 				HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(GetFolderUrl(driveHash, entryHash, pageIndex));
 
@@ -136,7 +134,7 @@ public static class BlitzfilesTechParser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error processing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error processing {parser} for '{url}'", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;

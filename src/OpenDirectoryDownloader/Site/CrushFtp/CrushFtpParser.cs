@@ -1,5 +1,4 @@
-﻿using NLog;
-using OpenDirectoryDownloader.Shared;
+﻿using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -12,10 +11,8 @@ namespace OpenDirectoryDownloader.Site.CrushFtp;
 
 public static class CrushFtpParser
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private const string Parser = "CrushFTP";
 	private static string Authentication;
-	//private static string Username;
 	private static string FunctionUrl;
 	private static readonly Random Random = new();
 	private static bool WarningShown = false;
@@ -27,7 +24,7 @@ public static class CrushFtpParser
 		{
 			WarningShown = true;
 
-			Logger.Warn($"CrushFTP scanning is limited to {RateLimiter.MaxRequestsPerTimeSpan} directories per {RateLimiter.TimeSpan.TotalSeconds:F1} second(s)!");
+			Program.Logger.Warning("{parser} scanning is limited to {maxRequestsPerTimeSpan} directories per {seconds:F1} second(s)!", Parser, RateLimiter.MaxRequestsPerTimeSpan, RateLimiter.TimeSpan.TotalSeconds);
 		}
 
 		try
@@ -42,7 +39,7 @@ public static class CrushFtpParser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error parsing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error parsing {parser} for URL: {url}", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			throw;
@@ -53,7 +50,7 @@ public static class CrushFtpParser
 
 	private static async Task<WebDirectory> ScanAsync(HttpClient httpClient, WebDirectory webDirectory)
 	{
-		Logger.Debug($"Retrieving listings for {webDirectory.Uri}");
+		Program.Logger.Debug("Retrieving listings for '{url}'", webDirectory.Uri);
 
 		webDirectory.Parser = Parser;
 
@@ -102,7 +99,7 @@ public static class CrushFtpParser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error processing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error processing {parser} for URL: {url}", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			throw;

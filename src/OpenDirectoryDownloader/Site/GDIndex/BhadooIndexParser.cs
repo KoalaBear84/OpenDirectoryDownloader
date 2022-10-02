@@ -3,7 +3,6 @@ using Esprima;
 using Esprima.Ast;
 using Jint;
 using Jint.Native;
-using NLog;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using System;
@@ -20,7 +19,6 @@ namespace OpenDirectoryDownloader.Site.GDIndex.Bhadoo;
 /// </summary>
 public static class BhadooIndexParser
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private const string FolderMimeType = "application/vnd.google-apps.folder";
 	private const string Parser = "BhadooIndex";
 	private static readonly RateLimiter RateLimiter = new(1, TimeSpan.FromSeconds(1));
@@ -37,10 +35,10 @@ public static class BhadooIndexParser
 			if (!OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_Password))
 			{
 				Console.WriteLine($"{Parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.");
-				Logger.Info($"{Parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.");
+				Program.Logger.Information("{parser} will always be indexed at a maximum rate of 1 per second, else you will run into problems and errors.", Parser);
 
 				Console.WriteLine("Check if password is needed (unsupported currently)...");
-				Logger.Info("Check if password is needed (unsupported currently)...");
+				Program.Logger.Information("Check if password is needed (unsupported currently)...");
 				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] = string.Empty;
 
 				Dictionary<string, string> postValues = new()
@@ -62,9 +60,8 @@ public static class BhadooIndexParser
 
 					if (response.Error != null)
 					{
-						string errorMessage = $"Error {response.Error.Code}, '{response.Error.Message}' retrieving for URL: {webDirectory.Url}";
-						Logger.Error(errorMessage);
-						throw new Exception(errorMessage);
+						Program.Logger.Error("Error {errorCode}, '{errorMessage}' retrieving for '{url}'", response.Error.Code, response.Error.Message, webDirectory.Url);
+						throw new Exception($"Error {response.Error.Code}, '{response.Error.Message}' retrieving for URL: {webDirectory.Url}");
 					}
 
 					webDirectory = await ScanAsync(htmlDocument, httpClient, webDirectory);
@@ -77,7 +74,7 @@ public static class BhadooIndexParser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error parsing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error parsing {parser} for '{url}'", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;
@@ -174,7 +171,7 @@ public static class BhadooIndexParser
 		{
 			Polly.Retry.AsyncRetryPolicy asyncRetryPolicy = Library.GetAsyncRetryPolicy((ex, waitTimeSpan, retry, pollyContext) =>
 			{
-				Logger.Warn($"Error retrieving directory listing for {webDirectory.Uri}, waiting {waitTimeSpan.TotalSeconds} seconds.. Error: {ex.Message}");
+				Program.Logger.Warning("Error retrieving directory listing for '{url}', waiting {waitTime:F0} seconds.. Error: {error}", webDirectory.Uri, waitTimeSpan.TotalSeconds, ex.Message);
 				RateLimiter.AddDelay(waitTimeSpan);
 			}, 8);
 
@@ -192,7 +189,7 @@ public static class BhadooIndexParser
 				{
 					await RateLimiter.RateLimit();
 
-					Logger.Warn($"Retrieving listings for {webDirectory.Uri.PathAndQuery}, page {pageIndex + 1}{(!string.IsNullOrWhiteSpace(OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]) ? $" with password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}" : string.Empty)}");
+					Program.Logger.Warning("Retrieving listings for {relativeUrl}, page {page} with password: {password}", webDirectory.Uri.PathAndQuery, pageIndex + 1, OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]);
 
 					Dictionary<string, string> postValues = new()
 					{
@@ -222,9 +219,8 @@ public static class BhadooIndexParser
 						else if (indexResponse.Error != null)
 						{
 							webDirectory.Error = true;
-							string errorMessage = $"Error {indexResponse.Error.Code}, '{indexResponse.Error.Message}' retrieving for URL: {webDirectory.Url}";
-							Logger.Error(errorMessage);
-							throw new Exception(errorMessage);
+							Program.Logger.Error("Error {errprCode}, '{errorMessage}' retrieving for '{url}'", indexResponse.Error.Code, indexResponse.Error.Message, webDirectory.Url);
+							throw new Exception($"Error {indexResponse.Error.Code}, '{indexResponse.Error.Message}' retrieving for URL: {webDirectory.Url}");
 						}
 						else
 						{
@@ -271,7 +267,7 @@ public static class BhadooIndexParser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error retrieving directory listing for {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error retrieving directory listing for {url}", webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;

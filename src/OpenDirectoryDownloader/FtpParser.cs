@@ -1,5 +1,4 @@
 ﻿using FluentFTP;
-using NLog;
 using OpenDirectoryDownloader.Shared.Models;
 using Polly;
 using Polly.Retry;
@@ -16,8 +15,6 @@ namespace OpenDirectoryDownloader;
 
 public class FtpParser
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
 	private static readonly Regex RegexMaxThreadsSpecific01 = new(@"Too many connections \((?<MaxThreads>\d*)\) from this IP");
 	private static readonly Regex RegexMaxThreadsSpecific02 = new(@"Sorry, the maximum number of clients \((?<MaxThreads>\d*)\) from your host are already connected.");
 	private static readonly Regex RegexMaxThreadsSpecific03 = new(@"Sorry, your system may not connect more than (?<MaxThreads>\d*) times.");
@@ -45,7 +42,7 @@ public class FtpParser
 				{
 					if (IsMaxThreads(ftpCommandException))
 					{
-						Logger.Warn($"[{context["Processor"]}] Maximum connections reached: {ftpCommandException.Message}");
+						Program.Logger.Warning("[{thread}] Maximum connections reached: {message}", context["Thread"], ftpCommandException.Message);
 						// Stop this thread nicely
 						webDirectory.CancellationReason = Constants.Ftp_Max_Connections;
 						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
@@ -55,7 +52,7 @@ public class FtpParser
 
 				if (ex is FtpAuthenticationException ftpAuthenticationException)
 				{
-					Logger.Error($"[{context["Processor"]}] Error {ftpAuthenticationException.CompletionCode} {ftpAuthenticationException.Message} retrieving on try {retryCount} for url '{relativeUrl}'. Stopping.");
+					Program.Logger.Error("[{thread}] Error {completionCode} {message} retrieving on try {retryCount} for '{relativeUrl}'. Stopping.", context["Thread"], ftpAuthenticationException.CompletionCode, ftpAuthenticationException.Message, retryCount, relativeUrl);
 
 					if (ftpAuthenticationException.ResponseType == FtpResponseType.PermanentNegativeCompletion)
 					{
@@ -66,7 +63,7 @@ public class FtpParser
 
 				if (retryCount <= 4)
 				{
-					Logger.Warn($"[{context["Processor"]}] Error {ex.Message} retrieving on try {retryCount} for url '{relativeUrl}'. Waiting {span.TotalSeconds:F0} seconds.");
+					Program.Logger.Warning("[{thread}] Error {error} retrieving on try {retryCount} for '{relativeUrl}'. Waiting {waitTime:F0} seconds.", context["Thread"], ex.Message, retryCount, relativeUrl, span.TotalSeconds);
 				}
 				else
 				{
@@ -119,7 +116,7 @@ public class FtpParser
 
 				if (newThreads != OpenDirectoryIndexer.Session.MaxThreads)
 				{
-					Logger.Warn($"Max threads reduced to {OpenDirectoryIndexer.Session.MaxThreads}");
+					Program.Logger.Warning("Max threads reduced to {maxThreads}", OpenDirectoryIndexer.Session.MaxThreads);
 				}
 
 				return true;
@@ -137,7 +134,7 @@ public class FtpParser
 
 	public static Dictionary<string, AsyncFtpClient> FtpClients { get; set; } = new Dictionary<string, AsyncFtpClient>();
 
-	public static async Task<WebDirectory> ParseFtpAsync(string processor, WebDirectory webDirectory, string username, string password)
+	public static async Task<WebDirectory> ParseFtpAsync(string threadName, WebDirectory webDirectory, string username, string password)
 	{
 		CancellationTokenSource cancellationTokenSource = new();
 
@@ -145,17 +142,17 @@ public class FtpParser
 
 		Context pollyContext = new()
 		{
-			{ "Processor", processor },
+			{ "Thread", threadName },
 			{ "WebDirectory", webDirectory },
 			{ "CancellationTokenSource", cancellationTokenSource }
 		};
 
-		return (await RetryPolicyNew.ExecuteAndCaptureAsync(async (context, token) => { return await ParseFtpInnerAsync(processor, webDirectory, username, password, cancellationTokenSource.Token); }, pollyContext, cancellationTokenSource.Token)).Result;
+		return (await RetryPolicyNew.ExecuteAndCaptureAsync(async (context, token) => { return await ParseFtpInnerAsync(threadName, webDirectory, username, password, cancellationTokenSource.Token); }, pollyContext, cancellationTokenSource.Token)).Result;
 	}
 
-	private static async Task<WebDirectory> ParseFtpInnerAsync(string processor, WebDirectory webDirectory, string username, string password, CancellationToken cancellationToken)
+	private static async Task<WebDirectory> ParseFtpInnerAsync(string threadName, WebDirectory webDirectory, string username, string password, CancellationToken cancellationToken)
 	{
-		if (!FtpClients.ContainsKey(processor))
+		if (!FtpClients.ContainsKey(threadName))
 		{
 			if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password))
 			{
@@ -165,11 +162,11 @@ public class FtpParser
 				password = password1;
 			}
 
-			Logger.Warn($"[{processor}] Connecting to FTP...");
+			Program.Logger.Warning("[{thread}] Connecting to FTP...", threadName);
 
 			int timeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds;
 
-			FtpClients[processor] = new AsyncFtpClient(webDirectory.Uri.Host, webDirectory.Uri.Port)
+			FtpClients[threadName] = new AsyncFtpClient(webDirectory.Uri.Host, webDirectory.Uri.Port)
 			{
 				Credentials = new NetworkCredential(username, password),
 				Config = new FtpConfig
@@ -185,17 +182,17 @@ public class FtpParser
 
 			try
 			{
-				await FtpClients[processor].Connect(cancellationToken);
+				await FtpClients[threadName].Connect(cancellationToken);
 
-				if (!FtpClients[processor].IsConnected)
+				if (!FtpClients[threadName].IsConnected)
 				{
-					FtpClients.Remove(processor);
-					throw new Exception($"[{processor}] Error connecting to FTP");
+					FtpClients.Remove(threadName);
+					throw new Exception($"[{threadName}] Error connecting to FTP");
 				}
 			}
 			catch (Exception ex)
 			{
-				Logger.Error(ex, $"[{processor}] Error connecting to FTP");
+				Program.Logger.Error(ex, "[{thread}] Error connecting to FTP", threadName);
 				throw;
 			}
 		}
@@ -203,9 +200,9 @@ public class FtpParser
 		// TODO: If anybody knows a better way.. PR!
 		string relativeUrl = webDirectory.Uri.LocalPath + WebUtility.UrlDecode(webDirectory.Uri.Fragment);
 
-		Logger.Debug($"Started retrieving {relativeUrl}...");
+		Program.Logger.Debug("Started retrieving {url}..", relativeUrl);
 
-		foreach (FtpListItem item in await FtpClients[processor].GetListing(relativeUrl, cancellationToken))
+		foreach (FtpListItem item in await FtpClients[threadName].GetListing(relativeUrl, cancellationToken))
 		{
 			// Some strange FTP servers.. Give parent directoryies back..
 			if (item.Name == "/" || item.FullName == webDirectory.Uri.LocalPath || !item.FullName.StartsWith(webDirectory.Uri.LocalPath))
@@ -238,7 +235,7 @@ public class FtpParser
 			}
 		}
 
-		Logger.Debug($"Finished retrieving {relativeUrl}");
+		Program.Logger.Debug("Finished retrieving {relativeUrl}", relativeUrl);
 
 		return webDirectory;
 	}
@@ -249,11 +246,11 @@ public class FtpParser
 
 		cancellationTokenSource.CancelAfter(TimeSpan.FromMinutes(5));
 
-		string processor = "Initalize";
+		string threadName = "Initalize";
 
 		Context pollyContext = new()
 		{
-			{ "Processor", processor },
+			{ "Thread", threadName },
 			{ "WebDirectory", webDirectory },
 			{ "CancellationTokenSource", cancellationTokenSource }
 		};
@@ -276,7 +273,7 @@ public class FtpParser
 		{
 			try
 			{
-				Logger.Warn($"Try FTP(S) connection with EncryptionMode {ftpEncryptionMode}");
+				Program.Logger.Warning("Try FTP(S) connection with EncryptionMode {ftpEncryptionMode}", ftpEncryptionMode);
 
 				int timeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds; 
 				
@@ -323,7 +320,7 @@ public class FtpParser
 					}
 				}
 
-				Logger.Error($"FTP EncryptionMode {ftpEncryptionMode} failed: {ex.Message}");
+				Program.Logger.Error("FTP EncryptionMode {ftpEncryptionMode} failed: {error}", ftpEncryptionMode, ex.Message);
 			}
 		}
 

@@ -1,5 +1,4 @@
-﻿using NLog;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -9,8 +8,6 @@ namespace OpenDirectoryDownloader.Helpers;
 
 public static class FileSizeHelper
 {
-	public static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
 	// Parse a file size.
 	private static readonly string[][] SizeSuffixes =
 	{
@@ -77,7 +74,7 @@ public static class FileSizeHelper
 
 				if (ext_start < value.Length)
 				{
-					suffix = value[ext_start..].Trim().ToUpper();
+					suffix = value[ext_start..].Trim().ToUpperInvariant();
 				}
 				else
 				{
@@ -117,7 +114,7 @@ public static class FileSizeHelper
 			{
 				if (!onlyChecking)
 				{
-					Logger.Warn($"Cannot parse \"{value}\" as a filesize.");
+					Program.Logger.Warning("Cannot parse '{value}' as a filesize.", value);
 				}
 
 				return Constants.NoFileSize;

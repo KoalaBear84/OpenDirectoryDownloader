@@ -1,5 +1,4 @@
-﻿using NLog;
-using OpenDirectoryDownloader.Shared.Models;
+﻿using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -9,7 +8,6 @@ namespace OpenDirectoryDownloader.Site.GoFileIO;
 
 public static class GoFileIOParser
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private static readonly Regex FolderHashRegex = new(@".*?\/d\/(?<FolderHash>.*)");
 	private const string Parser = "GoFileIO";
 	private const string StatusOK = "ok";
@@ -24,7 +22,7 @@ public static class GoFileIOParser
 			if (!OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_GoFileIOAccountToken))
 			{
 				Console.WriteLine($"{Parser} creating temporary account.");
-				Logger.Info($"{Parser} creating temporary account.");
+				Program.Logger.Information("{parser} creating temporary account.", Parser);
 
 				HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"{ApiBaseAddress}/createAccount");
 
@@ -51,7 +49,7 @@ public static class GoFileIOParser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error parsing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error parsing {parser} for {url}", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;
@@ -81,7 +79,7 @@ public static class GoFileIOParser
 
 	private static async Task<WebDirectory> ScanAsync(HttpClient httpClient, WebDirectory webDirectory)
 	{
-		Logger.Debug($"Retrieving listings for {webDirectory.Uri}");
+		Program.Logger.Debug("Retrieving listings for {url}", webDirectory.Uri);
 
 		webDirectory.Parser = Parser;
 
@@ -89,7 +87,7 @@ public static class GoFileIOParser
 		{
 			string driveHash = GetDriveHash(webDirectory);
 
-			Logger.Warn($"Retrieving listings for {webDirectory.Uri}");
+			Program.Logger.Warning("Retrieving listings for {url}", webDirectory.Uri);
 
 			HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(GetApiListingUrl(driveHash, OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_GoFileIOAccountToken]));
 
@@ -129,7 +127,7 @@ public static class GoFileIOParser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error processing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error processing {parser} for {url}", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;

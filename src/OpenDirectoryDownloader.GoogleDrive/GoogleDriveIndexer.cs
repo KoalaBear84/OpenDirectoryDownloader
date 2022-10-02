@@ -3,9 +3,9 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
-using NLog;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
+using Serilog;
 using System;
 using System.IO;
 using System.Linq;
@@ -14,39 +14,40 @@ using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader.GoogleDrive;
 
-public static class GoogleDriveIndexer
+public class GoogleDriveIndexer
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
 	// If modifying these scopes, delete your previously saved credentials
 	// at ~/.credentials/drive-dotnet-quickstart.json
 	private static readonly string[] Scopes = { DriveService.Scope.DriveMetadataReadonly };
-	private static readonly DriveService DriveService;
+	private static DriveService DriveService;
 	private static readonly string ApplicationName = "OpenDirectoryDownloader";
 	private const string FolderMimeType = "application/vnd.google-apps.folder";
 	private const string ShortcutMimeType = "application/vnd.google-apps.shortcut";
 	private static readonly RateLimiter RateLimiter = new(900, TimeSpan.FromSeconds(100), 0.9d);
 
-	static GoogleDriveIndexer()
+	public ILogger Logger { get; }
+
+	public GoogleDriveIndexer(ILogger logger)
 	{
+		Logger = logger;
+
 		try
 		{
 			UserCredential credential;
 
-			using (FileStream fileStream = new("OpenDirectoryDownloader.GoogleDrive.json", FileMode.Open, FileAccess.Read))
-			{
-				// The file token.json stores the user's access and refresh tokens, and is created
-				// automatically when the authorization flow completes for the first time.
-				string credPath = "token.json";
-				credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-					GoogleClientSecrets.FromStream(fileStream).Secrets,
-					Scopes,
-					"user",
-					CancellationToken.None,
-					new FileDataStore(credPath, true)).Result;
+			using FileStream fileStream = new("OpenDirectoryDownloader.GoogleDrive.json", FileMode.Open, FileAccess.Read);
 
-				Console.WriteLine($"Credential file saved to: {credPath}");
-			}
+			// The file token.json stores the user's access and refresh tokens, and is created
+			// automatically when the authorization flow completes for the first time.
+			string credPath = "token.json";
+			credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+				GoogleClientSecrets.FromStream(fileStream).Secrets,
+				Scopes,
+				"user",
+				CancellationToken.None,
+				new FileDataStore(credPath, true)).Result;
+
+			Console.WriteLine($"Credential file saved to: {credPath}");
 
 			// Create Drive API service.
 			DriveService = new DriveService(new BaseClientService.Initializer()
@@ -63,7 +64,7 @@ public static class GoogleDriveIndexer
 		}
 	}
 
-	public static async Task<WebDirectory> IndexAsync(WebDirectory webDirectory, string resourceKey)
+	public async Task<WebDirectory> IndexAsync(WebDirectory webDirectory, string resourceKey)
 	{
 		webDirectory.StartTime = DateTimeOffset.UtcNow;
 		string nextPageToken = string.Empty;
@@ -149,7 +150,7 @@ public static class GoogleDriveIndexer
 
 				if (retries > 0)
 				{
-					Logger.Warn($"Retrieval succesful after try {retries + 1} for {webDirectory.Url}");
+					Logger.Warning("Retrieval succesful after try {retries} for {url}", retries + 1, webDirectory.Url);
 				}
 
 				if (string.IsNullOrWhiteSpace(nextPageToken))
@@ -171,19 +172,19 @@ public static class GoogleDriveIndexer
 				else
 				{
 					retries++;
-					Logger.Warn($"Google Drive error for {webDirectory.Url} on try {retries + 1}: {ex.Message}");
+					Logger.Warning("Google Drive error for {url} on try {retries}: {error}", webDirectory.Url, retries + 1, ex.Message);
 				}
 
 				if (retries == maxRetries)
 				{
-					Logger.Error($"Skip {webDirectory.Url} because of {maxRetries} consecutive errors on : {ex.Message}");
+					Logger.Error("Skip {url} because of {maxRetries} consecutive errors on : {error}", webDirectory.Url, maxRetries, ex.Message);
 					webDirectory.Error = true;
 					return webDirectory;
 				}
 			}
 		}
 
-		Logger.Debug($"Finished Google Drive Request for Folder {folderId}");
+		Logger.Debug("Finished Google Drive Request for Folder {folderId}", folderId);
 
 		return webDirectory;
 	}

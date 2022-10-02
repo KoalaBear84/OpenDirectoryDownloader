@@ -4,7 +4,6 @@ using AngleSharp.Html.Parser;
 using Esprima;
 using Esprima.Ast;
 using Newtonsoft.Json;
-using NLog;
 using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared;
@@ -36,7 +35,6 @@ namespace OpenDirectoryDownloader;
 
 public static class DirectoryParser
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private static readonly HtmlParser HtmlParser = new();
 
 	/// <summary>
@@ -107,15 +105,15 @@ public static class DirectoryParser
 				{
 					googleDriveIndexType = GoogleDriveIndexMapping.GetGoogleDriveIndexType(script.Source);
 
-					if (googleDriveIndexType is null && script.Source.ToLower().Contains("app.min.js"))
+					if (googleDriveIndexType is null && script.Source.ToLowerInvariant().Contains("app.min.js"))
 					{
-						Logger.Warn($"Checking/downloading javascript for sourcemaps: {script.Source}");
+						Program.Logger.Warning("Checking/downloading javascript for sourcemaps: {scriptUrl}", script.Source);
 						string sourceMapUrl = await Library.GetSourceMapUrlFromJavaScriptAsync(httpClient, script.Source);
 
 						if (!string.IsNullOrWhiteSpace(sourceMapUrl))
 						{
 							string fullSourceMapUrl = new Uri(new Uri(script.Source), sourceMapUrl).ToString();
-							Logger.Warn($"Checking/downloading sourcemap for known Google Drive index: {fullSourceMapUrl}");
+							Program.Logger.Warning("Checking/downloading sourcemap for known Google Drive index: {sourceMapUrl}", fullSourceMapUrl);
 
 							IAsyncEnumerable<string> sources = Library.GetSourcesFromSourceMapAsync(httpClient, fullSourceMapUrl);
 
@@ -131,7 +129,7 @@ public static class DirectoryParser
 						}
 					}
 
-					if (googleDriveIndexType is null && script.Source.ToLower().Contains("app.js"))
+					if (googleDriveIndexType is null && script.Source.ToLowerInvariant().Contains("app.js"))
 					{
 						string scriptUrl = script.Source;
 
@@ -166,7 +164,7 @@ public static class DirectoryParser
 
 					if (OpenDirectoryIndexer.Session.MaxThreads != 1)
 					{
-						Logger.Warn($"Reduce threads to 1 because of Google Drive index");
+						Program.Logger.Warning("Reduce threads to 1 because of Google Drive index");
 						OpenDirectoryIndexer.Session.MaxThreads = 1;
 					}
 				}
@@ -352,27 +350,27 @@ public static class DirectoryParser
 
 			if (parsedWebDirectory.Subdirectories.Count == 0 && parsedWebDirectory.Files.Count == 0 && htmlDocument.QuerySelector("noscript") != null)
 			{
-				Logger.Warn("No directories and files found, but did find a <noscript> tag, probably a JavaScript challenge in there which is unsupported");
+				Program.Logger.Warning("No directories and files found, but did find a <noscript> tag, probably a JavaScript challenge in there which is unsupported");
 
 				if (!OpenDirectoryIndexer.Session.CommandLineOptions.NoBrowser && httpClient is not null)
 				{
 					if (OpenDirectoryIndexer.Session.MaxThreads != 1)
 					{
-						Logger.Warn($"Reduce threads to 1 because of possible Browser JavaScript");
+						Program.Logger.Warning("Reduce threads to 1 because of possible Browser JavaScript");
 						OpenDirectoryIndexer.Session.MaxThreads = 1;
 					}
 
 					if (OpenDirectoryIndexer.BrowserContext is null)
 					{
-						Logger.Warn($"Starting Browser..");
+						Program.Logger.Warning("Starting Browser..");
 						OpenDirectoryIndexer.BrowserContext = new(httpClientHandler.CookieContainer);
 						await OpenDirectoryIndexer.BrowserContext.InitializeAsync();
-						Logger.Warn($"Started Browser");
+						Program.Logger.Warning("Started Browser");
 					}
 
-					Logger.Warn($"Retrieving HTML through Browser..");
+					Program.Logger.Warning("Retrieving HTML through Browser..");
 					string browserHtml = await OpenDirectoryIndexer.BrowserContext.GetHtml(webDirectory.Url);
-					Logger.Warn($"Retrieved HTML through Browser");
+					Program.Logger.Warning("Retrieved HTML through Browser");
 
 					// Transfer cookies to HttpClient, so hopefully the following requests can be done with the help of cookies
 					CookieParam[] cookieParams = await OpenDirectoryIndexer.BrowserContext.GetCookiesAsync();
@@ -402,13 +400,13 @@ public static class DirectoryParser
 		}
 		catch (FriendlyException ex)
 		{
-			Logger.Error(ex.Message, $"Exception when parsing {parsedWebDirectory.Url}");
+			Program.Logger.Error(ex.Message, "Exception when parsing {url}", parsedWebDirectory.Url);
 
 			parsedWebDirectory.Error = true;
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Exception when parsing {parsedWebDirectory.Url}");
+			Program.Logger.Error(ex, "Exception when parsing {url}", parsedWebDirectory.Url);
 
 			parsedWebDirectory.Error = true;
 		}
@@ -946,7 +944,7 @@ public static class DirectoryParser
 		else
 		{
 			parsedWebDirectory.Error = true;
-			Logger.Error($"Directory listing returns different directory than requested! Expected: {urlFromBaseUrl}, Actual: {urlFromBreadcrumbs}");
+			Program.Logger.Error("Directory listing returns different directory than requested! Expected: {urlFromBaseUrl}, Actual: {urlFromBreadcrumbs}", urlFromBaseUrl, urlFromBreadcrumbs);
 		}
 
 		CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
@@ -1071,7 +1069,7 @@ public static class DirectoryParser
 						tableRow.QuerySelector("th") == null &&
 						!tableRow.ClassList.Contains("snHeading") &&
 						tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})") != null &&
-						!tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})").TextContent.ToLower().Contains("parent directory") &&
+						!tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})").TextContent.ToLowerInvariant().Contains("parent directory") &&
 						tableRow.QuerySelector("table") == null)
 					{
 						bool addedEntry = false;
@@ -1192,7 +1190,7 @@ public static class DirectoryParser
 										filename = link.TextContent.Trim();
 									}
 
-									if (urlEncodingParser.Count == 0 && filename.ToLower() == "index.php")
+									if (urlEncodingParser.Count == 0 && filename.ToLowerInvariant() == "index.php")
 									{
 										continue;
 									}
@@ -1247,7 +1245,7 @@ public static class DirectoryParser
 			if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") == null &&
 				parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") == null &&
 				parsedLine.QuerySelector("a") != null &&
-				!line.ToLower().Contains("parent directory"))
+				!line.ToLowerInvariant().Contains("parent directory"))
 			{
 				IElement link = parsedLine.QuerySelector("a");
 				if (IsValidLink(link))
@@ -1280,7 +1278,7 @@ public static class DirectoryParser
 						}
 						catch (Exception ex)
 						{
-							Logger.Error(ex, $"Error parsing with RegexParser1");
+							Program.Logger.Error(ex, "Error parsing with RegexParser1");
 						}
 					}
 				}
@@ -1348,7 +1346,7 @@ public static class DirectoryParser
 			if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") == null &&
 				parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") == null &&
 				parsedLine.QuerySelector("a") != null &&
-				!line.ToLower().Contains("parent directory"))
+				!line.ToLowerInvariant().Contains("parent directory"))
 			{
 				IElement link = parsedLine.QuerySelector("a");
 
@@ -1382,7 +1380,7 @@ public static class DirectoryParser
 						}
 						catch (Exception ex)
 						{
-							Logger.Error(ex, $"Error parsing with RegexParser3");
+							Program.Logger.Error(ex, "Error parsing with RegexParser3");
 						}
 					}
 				}
@@ -1403,7 +1401,7 @@ public static class DirectoryParser
 			if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") == null &&
 				parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") == null &&
 				parsedLine.QuerySelector("a") != null &&
-				!line.ToLower().Contains("parent directory"))
+				!line.ToLowerInvariant().Contains("parent directory"))
 			{
 				IElement link = parsedLine.QuerySelector("a");
 
@@ -1437,7 +1435,7 @@ public static class DirectoryParser
 						}
 						catch (Exception ex)
 						{
-							Logger.Error(ex, $"Error parsing with RegexParser4");
+							Program.Logger.Error(ex, "Error parsing with RegexParser4");
 						}
 					}
 				}
@@ -1460,7 +1458,7 @@ public static class DirectoryParser
 			if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") == null &&
 				parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") == null &&
 				parsedLine.QuerySelector("a") != null &&
-				!line.ToLower().Contains("parent directory"))
+				!line.ToLowerInvariant().Contains("parent directory"))
 			{
 				IElement link = parsedLine.QuerySelector("a");
 
@@ -1492,7 +1490,7 @@ public static class DirectoryParser
 						}
 						catch (Exception ex)
 						{
-							Logger.Error(ex, $"Error parsing with RegexParser5");
+							Program.Logger.Error(ex, "Error parsing with RegexParser5");
 						}
 					}
 				}
@@ -1514,7 +1512,7 @@ public static class DirectoryParser
 			if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") == null &&
 				parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") == null &&
 				parsedLine.QuerySelector("a") != null &&
-				!line.ToLower().Contains("parent directory"))
+				!line.ToLowerInvariant().Contains("parent directory"))
 			{
 				IElement link = parsedLine.QuerySelector("a");
 
@@ -1548,7 +1546,7 @@ public static class DirectoryParser
 						}
 						catch (Exception ex)
 						{
-							Logger.Error(ex, $"Error parsing with RegexParser6");
+							Program.Logger.Error(ex, "Error parsing with RegexParser6");
 						}
 					}
 				}
@@ -1575,7 +1573,7 @@ public static class DirectoryParser
 				{
 					ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
-					bool isFile = !match.Groups["FileMode"].Value.ToLower().StartsWith("d");
+					bool isFile = !match.Groups["FileMode"].Value.ToLowerInvariant().StartsWith("d");
 
 					if (!isFile)
 					{
@@ -1608,7 +1606,7 @@ public static class DirectoryParser
 						}
 						catch (Exception ex)
 						{
-							Logger.Error(ex, $"Error parsing with RegexParser7");
+							Program.Logger.Error(ex, "Error parsing with RegexParser7");
 						}
 					}
 				}
@@ -1672,7 +1670,7 @@ public static class DirectoryParser
 						}
 						catch (Exception ex)
 						{
-							Logger.Error(ex, $"Error parsing with RegexParser8");
+							Program.Logger.Error(ex, "Error parsing with RegexParser8");
 						}
 					}
 				}
@@ -1958,7 +1956,7 @@ public static class DirectoryParser
 					}
 					catch (Exception ex)
 					{
-						Logger.Error(ex, $"Error parsing with ParseDirectoryListerDirectoryListing");
+						Program.Logger.Error(ex, "Error parsing with ParseDirectoryListerDirectoryListing");
 					}
 				}
 			}
@@ -2331,7 +2329,7 @@ public static class DirectoryParser
 				{
 					if (CheckDirectoryTheSame(webDirectory, parentWebDirectory))
 					{
-						Logger.Error($"Possible virtual directory or symlink detected (level {level})! SKIPPING! Url: {webDirectory.Url}");
+						Program.Logger.Error("Possible virtual directory or symlink detected (level {level})! SKIPPING! Url: {url}", level, webDirectory.Url);
 
 						webDirectory.Subdirectories = new ConcurrentList<WebDirectory>();
 						webDirectory.Files = new ConcurrentList<WebFile>();
@@ -2608,7 +2606,7 @@ public static class DirectoryParser
 			Header = headerName
 		};
 
-		headerName = headerName.ToLower();
+		headerName = headerName.ToLowerInvariant();
 
 		headerName = Regex.Replace(headerName, @"[^\u00BF-\u1FFF\u2C00-\uD7FF\w]", string.Empty);
 
@@ -2679,10 +2677,10 @@ public static class DirectoryParser
 			(link as IHtmlAnchorElement)?.Title != ".." &&
 			link.TextContent.Trim() != ".." &&
 			link.TextContent.Trim() != "." &&
-			linkHref?.ToLower().StartsWith("javascript:") == false &&
-			linkHref?.ToLower().StartsWith("mailto:") == false &&
-			link.TextContent.ToLower() != "parent directory" &&
-			link.TextContent.ToLower() != "[to parent directory]" &&
+			linkHref?.ToLowerInvariant().StartsWith("javascript:") == false &&
+			linkHref?.ToLowerInvariant().StartsWith("mailto:") == false &&
+			link.TextContent.ToLowerInvariant() != "parent directory" &&
+			link.TextContent.ToLowerInvariant() != "[to parent directory]" &&
 			link.TextContent.Trim() != "Name" &&
 			linkHref?.Contains("&expand") == false &&
 			(!new Regex(@"\?[NMSD]=?[AD]").IsMatch(linkHref) || linkHref.StartsWith("DirectoryList.asp")) &&

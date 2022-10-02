@@ -49,7 +49,7 @@ public class GoogleDriveIndexMapping
 	{
 		foreach (KeyValuePair<string, string> siteMapping in SiteMapping)
 		{
-			if (scriptUrl.ToLower().Contains(siteMapping.Key.ToLower()))
+			if (scriptUrl.ToLowerInvariant().Contains(siteMapping.Key.ToLowerInvariant()))
 			{
 				return siteMapping.Value;
 			}

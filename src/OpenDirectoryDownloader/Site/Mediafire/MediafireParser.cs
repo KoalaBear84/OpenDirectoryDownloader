@@ -1,5 +1,4 @@
-﻿using NLog;
-using OpenDirectoryDownloader.Shared.Models;
+﻿using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -9,7 +8,6 @@ namespace OpenDirectoryDownloader.Site.Mediafire;
 
 public static class MediafireParser
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private static readonly Regex FolderIdRegex = new(@"\/folder\/(?<FolderId>[^/]*)(?:\/?.*)?");
 	private static readonly Regex FolderIdRegex2 = new(@"\/\?(?<FolderId>[^/]*)(?:\/?.*)?");
 	private const string Parser = "Mediafire";
@@ -24,7 +22,7 @@ public static class MediafireParser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error parsing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error parsing {parser} for {url}", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;
@@ -61,7 +59,7 @@ public static class MediafireParser
 
 	private static async Task<WebDirectory> ScanAsync(HttpClient httpClient, WebDirectory webDirectory)
 	{
-		Logger.Debug($"Retrieving listings for {webDirectory.Uri}");
+		Program.Logger.Debug("Retrieving listings for {url}", webDirectory.Url);
 
 		webDirectory.Parser = Parser;
 
@@ -76,7 +74,7 @@ public static class MediafireParser
 
 				do
 				{
-					Logger.Warn($"Retrieving {listingType} listing for {webDirectory.Uri}, page {chunkNumber}");
+					Program.Logger.Warning("Retrieving {listingType} listing for {url}, page {page}", listingType, webDirectory.Url, chunkNumber);
 
 					HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(GetApiListingUrl(folderId, listingType, chunkNumber));
 
@@ -102,7 +100,7 @@ public static class MediafireParser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error processing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error processing {parser} for {url}", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;

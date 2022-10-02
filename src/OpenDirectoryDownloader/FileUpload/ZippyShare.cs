@@ -1,7 +1,6 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
-using NLog;
 using OpenDirectoryDownloader.Models;
 using System;
 using System.IO;
@@ -15,7 +14,6 @@ public class ZippyShare : IFileUploadSite
 {
 	public string Name => "Zippyshare.com";
 
-	private readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private static readonly HtmlParser HtmlParser = new();
 
 	private static Regex UploadIdRegex = new(@"var uploadId = '(?<UploadId>[A-Z0-9]*)';");
@@ -57,7 +55,7 @@ public class ZippyShare : IFileUploadSite
 							string response = await httpResponseMessage.Content.ReadAsStringAsync();
 							OpenDirectoryIndexer.Session.UploadedUrlsResponse = response;
 
-							Logger.Debug($"Response from {Name}: {response}");
+							Program.Logger.Debug("Response from {siteName}: {response}", Name, response);
 
 							IHtmlDocument htmlDocument = await HtmlParser.ParseDocumentAsync(response);
 							IHtmlAnchorElement link = htmlDocument.QuerySelector<IHtmlAnchorElement>("#urls a");
@@ -74,7 +72,7 @@ public class ZippyShare : IFileUploadSite
 						}
 						else
 						{
-							Logger.Error($"Error uploading file... Retry in 5 seconds!!!");
+							Program.Logger.Error("Error uploading file, retry in 5 seconds..");
 							await Task.Delay(TimeSpan.FromSeconds(5));
 						}
 					}
@@ -82,10 +80,10 @@ public class ZippyShare : IFileUploadSite
 
 				retries++;
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
 				retries++;
-				Logger.Error($"Error uploading file... Retry in 5 seconds!!!");
+				Program.Logger.Error(ex, "Error uploading file, retry in 5 seconds..");
 				await Task.Delay(TimeSpan.FromSeconds(5));
 			}
 		}

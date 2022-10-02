@@ -1,23 +1,24 @@
 using CommandLine;
-using NLog;
-using NLog.Config;
 using OpenDirectoryDownloader.Shared.Models;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 
 namespace OpenDirectoryDownloader;
 
 public class Program
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+	public static Serilog.Core.Logger Logger;
+	public static Serilog.Core.Logger HistoryLogger;
+
 	public static string ConsoleTitle { get; set; }
 	private static CommandLineOptions CommandLineOptions { get; set; }
 
@@ -27,18 +28,22 @@ public class Program
 
 		Console.OutputEncoding = Encoding.UTF8;
 
-		Stream nlogConfigFile = Library.GetEmbeddedResourceStream(Assembly.GetEntryAssembly(), "NLog.config");
+		Logger = new LoggerConfiguration()
+			.MinimumLevel.Debug()
+			.WriteTo.File("OpenDirectoryDownloader-.log", rollingInterval: RollingInterval.Day)
+			.WriteTo.Console(outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj}{NewLine}{Exception}", restrictedToMinimumLevel: LogEventLevel.Warning, theme: AnsiConsoleTheme.Code)
+			.CreateLogger();
 
-		if (nlogConfigFile != null)
-		{
-			XmlReader xmlReader = XmlReader.Create(nlogConfigFile);
-			LogManager.Configuration = new XmlLoggingConfiguration(xmlReader, null);
-		}
+		HistoryLogger = new LoggerConfiguration()
+			.MinimumLevel.Debug()
+			.WriteTo.File("OpenDirectoryDownloader-History.log")
+			.WriteTo.Console(outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj}{NewLine}{Exception}", restrictedToMinimumLevel: LogEventLevel.Warning, theme: AnsiConsoleTheme.Code)
+			.CreateLogger();
 
 		Process currentProcess = Process.GetCurrentProcess();
 
 		Console.WriteLine($"Started with PID {currentProcess.Id}");
-		Logger.Info($"Started with PID {currentProcess.Id}");
+		Logger.Information("Started with PID {processId}", currentProcess.Id);
 
 		Thread.CurrentThread.Name = "Main thread";
 
@@ -82,7 +87,7 @@ public class Program
 
 		if (CommandLineOptions.Threads > 1 && CommandLineOptions.WaitSecondsBetweenCalls > 0)
 		{
-			Logger.Warn("Using a wait time with more than 1 thread isn't recommended as it will still have multiple threads running.");
+			Logger.Information("Using a wait time with more than 1 thread isn't recommended as it will still have multiple threads running.");
 			return 1;
 		}
 

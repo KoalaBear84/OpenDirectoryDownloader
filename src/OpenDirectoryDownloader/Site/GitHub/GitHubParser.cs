@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using NLog;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared.Models;
 using System;
@@ -14,7 +13,6 @@ namespace OpenDirectoryDownloader.Site.GitHub;
 
 public static class GitHubParser
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private const string Parser = "GitHub";
 	private static string Owner { get; set; }
 	private static string Repository { get; set; }
@@ -43,11 +41,11 @@ public static class GitHubParser
 
 				if (!string.IsNullOrWhiteSpace(token))
 				{
-					Logger.Warn($"Using provided GitHub token for higher rate limits");
+					Program.Logger.Warning("Using provided GitHub token for higher rate limits");
 					httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", token);
 				}
 
-				Logger.Warn("Retrieving default branch");
+				Program.Logger.Warning("Retrieving default branch");
 				HttpResponseMessage httpResponseMessage = await DoRequest(httpClient, GetApiUrl(Owner, Repository));
 
 				string json = await httpResponseMessage.Content.ReadAsStringAsync();
@@ -58,9 +56,9 @@ public static class GitHubParser
 					throw new Exception("Invalid default branch");
 				}
 
-				Logger.Warn($"Default branch: {DefaultBranch}");
+				Program.Logger.Warning("Default branch: {defaultBranch}", DefaultBranch);
 
-				Logger.Warn("Retrieving last commit SHA");
+				Program.Logger.Warning("Retrieving last commit SHA");
 
 				httpResponseMessage = await DoRequest(httpClient, $"{GetApiUrl(Owner, Repository)}/branches/{DefaultBranch}");
 
@@ -72,14 +70,14 @@ public static class GitHubParser
 					throw new Exception("Empty repository");
 				}
 
-				Logger.Warn($"Last commit SHA: {CurrentCommitSha}");
+				Program.Logger.Warning("Last commit SHA: {commitSha}", CurrentCommitSha);
 			}
 
 			webDirectory = await ScanAsync(httpClient, webDirectory);
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error parsing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error parsing {parser} for {url}", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;
@@ -111,7 +109,7 @@ public static class GitHubParser
 
 			if (httpResponseMessage.Headers.Contains("X-RateLimit-Remaining"))
 			{
-				Logger.Warn($"RateLimit remaining: {GetHeader(httpResponseMessage.Headers, "X-RateLimit-Remaining")}/{GetHeader(httpResponseMessage.Headers, "X-RateLimit-Limit")}");
+				Program.Logger.Warning("RateLimit remaining: {rateLimitRemaining}/{rateLimitTotal}", GetHeader(httpResponseMessage.Headers, "X-RateLimit-Remaining"), GetHeader(httpResponseMessage.Headers, "X-RateLimit-Limit"));
 			}
 
 			if (httpResponseMessage.StatusCode == HttpStatusCode.Unauthorized)
@@ -137,7 +135,7 @@ public static class GitHubParser
 
 					resetDateTime = currentDate + rateLimitTimeSpan;
 
-					Logger.Warn($"Rate limited, waiting until {resetDateTime.ToLocalTime().ToString(Constants.DateTimeFormat)}.. Increase rate limits by using a token: https://github.com/settings/tokens/new (no scopes required)");
+					Program.Logger.Warning("Rate limited, waiting until {untilDate}.. Increase rate limits by using a token: https://github.com/settings/tokens/new (no scopes required)", resetDateTime.ToLocalTime().ToString(Constants.DateTimeFormat));
 
 					OpenDirectoryIndexer.ShowStatistics = false;
 					await Task.Delay(rateLimitTimeSpan);
@@ -155,7 +153,7 @@ public static class GitHubParser
 
 	private static async Task<WebDirectory> ScanAsync(HttpClient httpClient, WebDirectory webDirectory)
 	{
-		Logger.Debug($"Retrieving listings for {webDirectory.Uri}");
+		Program.Logger.Debug("Retrieving listings for {url}", webDirectory.Uri);
 
 		webDirectory.Parser = Parser;
 
@@ -183,7 +181,7 @@ public static class GitHubParser
 
 			if (gitHubResult.Truncated)
 			{
-				Logger.Warn($"GitHub response is truncated with {gitHubResult.Tree.Length} items, sadly there is no paging available..");
+				Program.Logger.Warning("GitHub response is truncated with {items} items, sadly there is no paging available..", gitHubResult.Tree.Length);
 			}
 
 			WebDirectory currentWebDirectory = webDirectory;
@@ -232,7 +230,7 @@ public static class GitHubParser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error processing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error processing {parser} for {url}", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;

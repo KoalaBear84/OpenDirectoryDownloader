@@ -1,5 +1,4 @@
-﻿using NLog;
-using OpenDirectoryDownloader.Shared.Models;
+﻿using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,7 +14,6 @@ namespace OpenDirectoryDownloader;
 
 public class Command
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private static readonly string VersionNumber = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
 	/// <summary>
@@ -52,7 +50,7 @@ public class Command
 		{
 			string message = "Console input is redirect, maybe it is run inside another host. This could mean that no input will be send/processed.";
 			Console.WriteLine(message);
-			Logger.Warn(message);
+			Program.Logger.Warning(message);
 		}
 
 		while (true)
@@ -139,7 +137,7 @@ public class Command
 								}
 								catch (Exception ex)
 								{
-									Logger.Error($"Error copying stats to clipboard: {ex.Message}");
+									Program.Logger.Error("Error copying stats to clipboard: {error}", ex.Message);
 								}
 
 								KillApplication();
@@ -164,7 +162,7 @@ public class Command
 			}
 			catch (Exception ex)
 			{
-				Logger.Error(ex, "Error processing action");
+				Program.Logger.Error(ex, "Error processing action");
 				throw;
 			}
 		}
@@ -176,17 +174,17 @@ public class Command
 		{
 			string jsonPath = Library.GetOutputFullPath(OpenDirectoryIndexer.Session, openDirectoryIndexer.OpenDirectoryIndexerSettings, "json");
 
-			Logger.Info("Saving session to JSON..");
+			Program.Logger.Information("Saving session to JSON..");
 			Console.WriteLine("Saving session to JSON..");
 
 			Library.SaveSessionJson(OpenDirectoryIndexer.Session, jsonPath);
 
-			Logger.Info($"Saved session to JSON: {jsonPath}");
+			Program.Logger.Information("Saved session to JSON: {path}", jsonPath);
 			Console.WriteLine($"Saved session to JSON: {jsonPath}");
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex);
+			Program.Logger.Error(ex, "Error saving session to JSON");
 		}
 	}
 
@@ -194,26 +192,26 @@ public class Command
 	{
 		try
 		{
-			Logger.Info("Saving URL list to file..");
+			Program.Logger.Information("Saving URL list to file..");
 			Console.WriteLine("Saving URL list to file..");
 
 			IEnumerable<string> distinctUrls = OpenDirectoryIndexer.Session.Root.AllFileUrls.Distinct().Select(i => WebUtility.UrlDecode(i));
 			string urlsPath = Library.GetOutputFullPath(OpenDirectoryIndexer.Session, openDirectoryIndexer.OpenDirectoryIndexerSettings, "txt");
 			File.WriteAllLines(urlsPath, distinctUrls);
 
-			Logger.Info($"Saved URL list to file: {urlsPath}");
+			Program.Logger.Information("Saved URL list to file: {path}", urlsPath);
 			Console.WriteLine($"Saved URL list to file: {urlsPath}");
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex);
+			Program.Logger.Error(ex, "Error saving URLs to file");
 		}
 	}
 
 	public static void KillApplication()
 	{
 		Console.WriteLine("Exiting...");
-		Logger.Info("Exiting...");
+		Program.Logger.Information("Exiting...");
 		Environment.Exit(1);
 	}
 

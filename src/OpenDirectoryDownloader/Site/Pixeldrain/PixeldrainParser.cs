@@ -1,5 +1,4 @@
-﻿using NLog;
-using OpenDirectoryDownloader.Shared.Models;
+﻿using OpenDirectoryDownloader.Shared.Models;
 using OpenDirectoryDownloader.Site.Pixeldrain.FileResult;
 using OpenDirectoryDownloader.Site.Pixeldrain.ListResult;
 using System;
@@ -11,7 +10,6 @@ namespace OpenDirectoryDownloader.Site.Pixeldrain;
 
 public static class PixeldrainParser
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private static readonly Regex ListingTypeRegex = new(@".*\/(?<ListingType>.*)\/.*");
 	private static readonly Regex ListingRegex = new(@"window\.viewer_data = (?<Listing>.*);");
 	private const string Parser = "Pixeldrain";
@@ -26,7 +24,7 @@ public static class PixeldrainParser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error parsing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error parsing {parser} for {url}", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;
@@ -44,7 +42,7 @@ public static class PixeldrainParser
 
 	private static async Task<WebDirectory> ScanAsync(HttpClient httpClient, WebDirectory webDirectory, string html)
 	{
-		Logger.Debug($"Retrieving listings for {webDirectory.Uri}");
+		Program.Logger.Debug("Retrieving listings for {url}", webDirectory.Url);
 
 		webDirectory.Parser = Parser;
 
@@ -59,7 +57,7 @@ public static class PixeldrainParser
 
 			string listingType = listingTypeRegexMatch.Groups["ListingType"].Value;
 
-			Logger.Warn($"Retrieving listings for {webDirectory.Uri}");
+			Program.Logger.Warning("Retrieving listings for {url}", webDirectory.Url);
 
 			Match listingRegexMatch = ListingRegex.Match(html);
 
@@ -104,7 +102,7 @@ public static class PixeldrainParser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error processing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error processing {parser} for {url}", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;

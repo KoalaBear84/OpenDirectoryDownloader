@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NLog;
 using OpenDirectoryDownloader.Models;
 using System;
 using System.IO;
@@ -12,8 +11,6 @@ namespace OpenDirectoryDownloader.FileUpload;
 public class GoFileIo : IFileUploadSite
 {
 	public string Name => "GoFile.io";
-
-	private readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
 	public async Task<IFileUploadSiteFile> UploadFile(HttpClient httpClient, string path)
 	{
@@ -46,13 +43,13 @@ public class GoFileIo : IFileUploadSite
 							string response = await httpResponseMessage.Content.ReadAsStringAsync();
 							OpenDirectoryIndexer.Session.UploadedUrlsResponse = response;
 
-							Logger.Debug($"Response from {Name}: {response}");
+							Program.Logger.Debug("Response from {siteName}: {response}", Name, response);
 
 							return JsonConvert.DeserializeObject<GoFileIoFile>(response);
 						}
 						else
 						{
-							Logger.Error($"Error uploading file... Retry in 5 seconds!!!");
+							Program.Logger.Error("Error uploading file, retry in 5 seconds..");
 							await Task.Delay(TimeSpan.FromSeconds(5));
 						}
 					}
@@ -60,10 +57,10 @@ public class GoFileIo : IFileUploadSite
 
 				retries++;
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
 				retries++;
-				Logger.Error($"Error uploading file... Retry in 5 seconds!!!");
+				Program.Logger.Error(ex, "Error uploading file, retry in 5 seconds..");
 				await Task.Delay(TimeSpan.FromSeconds(5));
 			}
 		}

@@ -1,5 +1,4 @@
-﻿using NLog;
-using OpenDirectoryDownloader.Shared.Models;
+﻿using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.IO;
 using System.Linq;
@@ -13,7 +12,6 @@ namespace OpenDirectoryDownloader.Site.AmazonS3;
 
 public static class AmazonS3Parser
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 	private const string Parser = "AmazonS3";
 
 	public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory, bool hasHeader)
@@ -28,7 +26,7 @@ public static class AmazonS3Parser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error parsing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error parsing {parser} for '{url}'", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;
@@ -46,7 +44,7 @@ public static class AmazonS3Parser
 
 	private static async Task<WebDirectory> ScanAsync(HttpClient httpClient, WebDirectory webDirectory, string prefix, bool hasHeader)
 	{
-		Logger.Debug($"Retrieving listings for {webDirectory.Uri}");
+		Program.Logger.Debug("Retrieving listings for '{url}'", webDirectory.Uri);
 
 		webDirectory.Parser = Parser;
 
@@ -104,7 +102,7 @@ public static class AmazonS3Parser
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, $"Error processing {Parser} for URL: {webDirectory.Url}");
+			Program.Logger.Error(ex, "Error processing {parser} for '{url}'", Parser, webDirectory.Url);
 			webDirectory.Error = true;
 
 			OpenDirectoryIndexer.Session.Errors++;

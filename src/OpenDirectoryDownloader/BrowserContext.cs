@@ -1,5 +1,4 @@
-﻿using NLog;
-using PuppeteerExtraSharp;
+﻿using PuppeteerExtraSharp;
 using PuppeteerExtraSharp.Plugins.ExtraStealth;
 using PuppeteerSharp;
 using System;
@@ -13,8 +12,6 @@ namespace OpenDirectoryDownloader;
 
 public class BrowserContext: IDisposable
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
 	private const string SetCookieHeader = "set-cookie";
 	private const string CloudflareClearanceKey = "cf_clearance";
 
@@ -63,31 +60,31 @@ public class BrowserContext: IDisposable
 
 			Stopwatch stopwatch = Stopwatch.StartNew();
 
-			Logger.Debug($"Navigating to {url}..");
+			Program.Logger.Debug("Navigating to {url}..", url);
 
 			await Page.GoToAsync(url);
 			await Task.Delay(TimeSpan.FromSeconds(60), CancellationTokenSource.Token);
 
-			Logger.Debug($"Navigation done in {stopwatch.ElapsedMilliseconds}ms");
+			Program.Logger.Debug("Navigation done in {elapsedMilliseconds}ms", stopwatch.ElapsedMilliseconds);
 
-			Logger.Debug("Finished with browser!");
+			Program.Logger.Debug("Finished with browser!");
 		}
 		catch (OperationCanceledException ex)
 		{
 			if (!OK)
 			{
-				Logger.Error(ex, "Looks like Cloudflare protection wasn't solved in time.");
+				Program.Logger.Error(ex, "Looks like Cloudflare protection wasn't solved in time.");
 			}
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, "Error with browser");
+			Program.Logger.Error(ex, "Error with browser");
 		}
 		finally
 		{
-			Logger.Debug("Closing browser");
+			Program.Logger.Debug("Closing browser");
 			await Browser.CloseAsync();
-			Logger.Debug("Closed browser");
+			Program.Logger.Debug("Closed browser");
 		}
 
 		return OK;
@@ -101,12 +98,12 @@ public class BrowserContext: IDisposable
 
 			if (!browserFetcher.LocalRevisions().Contains(BrowserFetcher.DefaultChromiumRevision))
 			{
-				Logger.Warn($"Downloading browser... First time it can take a while, depending on your internet connection.");
+				Program.Logger.Warning("Downloading browser... First time it can take a while, depending on your internet connection.");
 				RevisionInfo revisionInfo = await browserFetcher.DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
-				Logger.Warn($"Downloaded browser. Downloaded: {revisionInfo.Downloaded}, Platform: {revisionInfo.Platform}, Revision: {revisionInfo.Revision}, Path: {revisionInfo.FolderPath}");
+				Program.Logger.Warning("Downloaded browser. Downloaded: {downloaded}, Platform: {platform}, Revision: {revision}, Path: {path}", revisionInfo.Downloaded, revisionInfo.Platform, revisionInfo.Revision, revisionInfo.FolderPath);
 			}
 
-			Logger.Debug($"Creating browser...");
+			Program.Logger.Debug("Creating browser...");
 
 			PuppeteerExtra puppeteerExtra = new();
 
@@ -121,7 +118,7 @@ public class BrowserContext: IDisposable
 				IgnoreHTTPSErrors = true
 			});
 
-			Logger.Info($"Started browser with PID {Browser.Process.Id}");
+			Program.Logger.Information("Started browser with PID {processId}", Browser.Process.Id);
 
 			Browser.Closed += Browser_Closed;
 			Browser.Disconnected += Browser_Disconnected;
@@ -129,9 +126,9 @@ public class BrowserContext: IDisposable
 			Browser.TargetCreated += Browser_TargetCreated;
 			Browser.TargetDestroyed += Browser_TargetDestroyed;
 
-			Logger.Debug($"Created browser.");
+			Program.Logger.Debug("Created browser.");
 
-			Logger.Debug($"Creating page...");
+			Program.Logger.Debug("Creating page...");
 
 			Page = (await Browser.PagesAsync())[0];
 
@@ -155,11 +152,11 @@ public class BrowserContext: IDisposable
 			Page.WorkerCreated += Page_WorkerCreated;
 			Page.WorkerDestroyed += Page_WorkerDestroyed;
 
-			Logger.Debug($"Created page.");
+			Program.Logger.Debug("Created page.");
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, "Error with initializing browser");
+			Program.Logger.Error(ex, "Error with initializing browser");
 			throw;
 		}
 	}
@@ -179,7 +176,7 @@ public class BrowserContext: IDisposable
 
 			Stopwatch stopwatch = Stopwatch.StartNew();
 
-			Logger.Debug($"Navigating to {url}..");
+			Program.Logger.Debug("Navigating to {url}..", url);
 
 			NavigationOptions navigationOptions = new()
 			{
@@ -188,7 +185,7 @@ public class BrowserContext: IDisposable
 			};
 
 			await Page.GoToAsync(url, navigationOptions);
-			Logger.Debug($"Navigation done in {stopwatch.ElapsedMilliseconds}ms");
+			Program.Logger.Debug("Navigation done in {elapsedMilliseconds}ms", stopwatch.ElapsedMilliseconds);
 
 			string html = await Page.GetContentAsync();
 
@@ -198,12 +195,12 @@ public class BrowserContext: IDisposable
 		{
 			if (!OK)
 			{
-				Logger.Error(ex, "Timeout in navigating to URL");
+				Program.Logger.Error(ex, "Timeout in navigating to URL");
 			}
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, "Error with browser");
+			Program.Logger.Error(ex, "Error with browser");
 			throw;
 		}
 

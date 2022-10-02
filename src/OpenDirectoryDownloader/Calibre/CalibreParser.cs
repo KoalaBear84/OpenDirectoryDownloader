@@ -1,5 +1,4 @@
-﻿using NLog;
-using OpenDirectoryDownloader.Helpers;
+﻿using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -13,8 +12,6 @@ namespace OpenDirectoryDownloader.Calibre;
 
 public static class CalibreParser
 {
-	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
 	public static Version ParseVersion(string versionString)
 	{
 		if (versionString.Contains('/'))
@@ -39,7 +36,7 @@ public static class CalibreParser
 		try
 		{
 			Console.WriteLine("Retrieving libraries...");
-			Logger.Info("Retrieving libraries...");
+			Program.Logger.Information("Retrieving libraries...");
 
 			if (version.Major < 3)
 			{
@@ -55,12 +52,12 @@ public static class CalibreParser
 			CalibreUpdate.CalibreUpdate calibreUpdate = CalibreUpdate.CalibreUpdate.FromJson(updateResultJson);
 
 			Console.WriteLine($"Retrieved {calibreUpdate.LibraryMap.Count} libraries");
-			Logger.Info($"Retrieved {calibreUpdate.LibraryMap.Count} libraries");
+			Program.Logger.Information($"Retrieved {calibreUpdate.LibraryMap.Count} libraries");
 
 			foreach (KeyValuePair<string, string> library in calibreUpdate.LibraryMap)
 			{
 				Console.WriteLine($"Retrieving metadata of books for library {library.Value}...");
-				Logger.Info($"Retrieving metadata of books for library {library.Value}...");
+				Program.Logger.Information($"Retrieving metadata of books for library {library.Value}...");
 
 				WebDirectory libraryWebDirectory = new(webDirectory)
 				{
@@ -89,10 +86,10 @@ public static class CalibreParser
 				CalibreResult.CalibreResult libraryResult = CalibreResult.CalibreResult.FromJson(libraryResultJson);
 
 				Console.WriteLine($"Retrieved metadata of {libraryResult.Metadata.Count} books for library {library.Value}");
-				Logger.Info($"Retrieved metadata of {libraryResult.Metadata.Count} books for library {library.Value}");
+				Program.Logger.Information($"Retrieved metadata of {libraryResult.Metadata.Count} books for library {library.Value}");
 
 				Console.WriteLine($"Parsing info of {libraryResult.Metadata.Count} books for library {library.Value}...");
-				Logger.Info($"Parsing info of {libraryResult.Metadata.Count} books for library {library.Value}...");
+				Program.Logger.Information($"Parsing info of {libraryResult.Metadata.Count} books for library {library.Value}...");
 
 				int booksToIndex = libraryResult.Metadata.Count;
 				int booksIndexed = 0;
@@ -113,25 +110,25 @@ public static class CalibreParser
 
 					if (newBooksIndexed % 100 == 0 && stopwatch.Elapsed > TimeSpan.FromSeconds(5))
 					{
-						Logger.Warn($"Parsing books at {100 * ((decimal)newBooksIndexed / booksToIndex):F1}% ({newBooksIndexed}/{booksToIndex})");
+						Program.Logger.Warning($"Parsing books at {100 * ((decimal)newBooksIndexed / booksToIndex):F1}% ({newBooksIndexed}/{booksToIndex})");
 						stopwatch.Restart();
 					}
 				});
 
 				Console.WriteLine($"Parsed info of {libraryResult.Metadata.Count} books for library {library.Value}");
-				Logger.Info($"Parsed info of {libraryResult.Metadata.Count} books for library {library.Value}");
+				Program.Logger.Information($"Parsed info of {libraryResult.Metadata.Count} books for library {library.Value}");
 			}
 		}
 		catch (Exception ex)
 		{
-			Logger.Error(ex, "Error parsing Calibre");
+			Program.Logger.Error(ex, "Error parsing Calibre");
 			webDirectory.Error = true;
 		}
 	}
 
 	private static void GetBookInfo(HttpClient httpClient, Uri calibreRootUri, KeyValuePair<string, string> library, WebDirectory libraryWebDirectory, KeyValuePair<string, CalibreResult.Metadatum> book)
 	{
-		Logger.Debug($"Retrieving info for book [{book.Key}]: {book.Value.Title}...");
+		Program.Logger.Debug($"Retrieving info for book [{book.Key}]: {book.Value.Title}...");
 
 		WebDirectory bookWebDirectory = new(libraryWebDirectory)
 		{
@@ -180,19 +177,19 @@ public static class CalibreParser
 			{
 				bookWebDirectory.Files.Add(new WebFile
 				{
-					Url = new Uri(calibreRootUri, $"./get/{format.ToUpper()}/{book.Key}/{library.Key}").ToString(),
-					FileName = $"{PathHelper.GetValidPath(book.Value.Title)} - {PathHelper.GetValidPath(book.Value.AuthorSort)}.{format.ToLower()}",
+					Url = new Uri(calibreRootUri, $"./get/{format.ToUpperInvariant()}/{book.Key}/{library.Key}").ToString(),
+					FileName = $"{PathHelper.GetValidPath(book.Value.Title)} - {PathHelper.GetValidPath(book.Value.AuthorSort)}.{format.ToLowerInvariant()}",
 					FileSize = book.Value.FormatSizes.ContainsKey(format) ? book.Value.FormatSizes[format] : 0
 				});
 			}
 
 			libraryWebDirectory.Subdirectories.Add(bookWebDirectory);
 
-			Logger.Debug($"Retrieved info for book [{book.Key}]: {book.Value.Title}");
+			Program.Logger.Debug($"Retrieved info for book [{book.Key}]: {book.Value.Title}");
 		}
 		catch (Exception ex)
 		{
-			Logger.Debug(ex, $"Error processing book {book.Key}");
+			Program.Logger.Debug(ex, $"Error processing book {book.Key}");
 			bookWebDirectory.Error = true;
 		}
 	}
