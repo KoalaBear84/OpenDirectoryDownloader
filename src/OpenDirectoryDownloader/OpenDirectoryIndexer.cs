@@ -579,7 +579,7 @@ public class OpenDirectoryIndexer
 				{
 					string sessionStats = Statistics.GetSessionStats(Session, includeExtensions: true, includeBanner: true);
 					Program.Logger.Information(sessionStats);
-					//HistoryProgram.Log.Information(sessionStats);
+					Program.HistoryLogger.Information(sessionStats);
 					Program.Logger.Information("Logged sessions stats");
 
 					if (!OpenDirectoryIndexerSettings.CommandLineOptions.NoReddit)
