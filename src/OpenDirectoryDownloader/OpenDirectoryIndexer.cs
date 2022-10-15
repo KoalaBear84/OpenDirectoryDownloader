@@ -181,7 +181,7 @@ public class OpenDirectoryIndexer
 
 		HttpClientHandler = new HttpClientHandler
 		{
-			ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true,
+			ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
 			AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli,
 			CookieContainer = CookieContainer
 		};
