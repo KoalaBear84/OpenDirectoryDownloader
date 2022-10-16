@@ -1,10 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenDirectoryDownloader.Models;
-using System;
-using System.IO;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader.FileUpload;
 

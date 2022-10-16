@@ -2,11 +2,7 @@
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
 using OpenDirectoryDownloader.Models;
-using System;
-using System.IO;
-using System.Net.Http;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader.FileUpload;
 

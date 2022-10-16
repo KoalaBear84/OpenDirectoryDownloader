@@ -1,8 +1,5 @@
 ﻿using OpenDirectoryDownloader.Shared.Models;
-using System;
-using System.Net.Http;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader.Site.Mediafire;
 

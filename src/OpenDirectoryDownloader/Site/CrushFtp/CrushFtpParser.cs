@@ -1,11 +1,5 @@
 ﻿using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader.Site.CrushFtp;
 

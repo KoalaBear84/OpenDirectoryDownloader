@@ -6,6 +6,7 @@
     <RuntimeIdentifiers>win-x64;linux-x64;linux-arm;linux-arm64;osx-x64</RuntimeIdentifiers>
     <LangVersion>latest</LangVersion>
     <ApplicationIcon>Resources\Application.ico</ApplicationIcon>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 

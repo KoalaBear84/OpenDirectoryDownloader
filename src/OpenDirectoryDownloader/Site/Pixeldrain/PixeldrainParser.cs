@@ -1,10 +1,7 @@
 ﻿using OpenDirectoryDownloader.Shared.Models;
 using OpenDirectoryDownloader.Site.Pixeldrain.FileResult;
 using OpenDirectoryDownloader.Site.Pixeldrain.ListResult;
-using System;
-using System.Net.Http;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader.Site.Pixeldrain;
 

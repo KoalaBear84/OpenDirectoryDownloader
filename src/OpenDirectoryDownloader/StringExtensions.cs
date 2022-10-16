@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OpenDirectoryDownloader;
+﻿namespace OpenDirectoryDownloader;
 
 public static class StringExtensions
 {

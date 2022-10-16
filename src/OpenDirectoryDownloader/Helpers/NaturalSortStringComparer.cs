@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace OpenDirectoryDownloader.Helpers;
+﻿namespace OpenDirectoryDownloader.Helpers;
 
 public class NaturalSortStringComparer : IComparer<string>
 {
@@ -40,7 +37,7 @@ public class NaturalSortStringComparer : IComparer<string>
 				_ = long.TryParse(xSegments.Current, out long xValue);
 				_ = long.TryParse(ySegments.Current, out long yValue);
 				cmp = xValue.CompareTo(yValue);
-				
+
 				if (cmp != 0)
 				{
 					return cmp;
@@ -59,7 +56,7 @@ public class NaturalSortStringComparer : IComparer<string>
 
 			// OK, neither are number, compare the segments as text
 			cmp = xSegments.Current.CompareTo(ySegments.Current, _comparison);
-			
+
 			if (cmp != 0)
 			{
 				return cmp;
@@ -73,7 +70,7 @@ public class NaturalSortStringComparer : IComparer<string>
 		{
 			return -1;
 		}
-		
+
 		// If x is longer, it's "greater than" y
 		if (x.Length > y.Length)
 		{

@@ -1,7 +1,4 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
-
-namespace OpenDirectoryDownloader.FileUpload;
+﻿namespace OpenDirectoryDownloader.FileUpload;
 
 public interface IFileUploadSite
 {

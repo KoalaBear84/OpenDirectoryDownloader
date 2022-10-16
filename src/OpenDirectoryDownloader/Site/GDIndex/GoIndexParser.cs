@@ -1,11 +1,7 @@
 ﻿using Newtonsoft.Json;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
-using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader.Site.GDIndex.GoIndex;
 

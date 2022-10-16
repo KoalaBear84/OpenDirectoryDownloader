@@ -1,5 +1,4 @@
 ﻿using OpenDirectoryDownloader.Shared.Models;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace OpenDirectoryDownloader.Tests;

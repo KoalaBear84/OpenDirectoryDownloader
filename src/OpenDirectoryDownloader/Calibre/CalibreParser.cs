@@ -1,12 +1,6 @@
 ﻿using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Shared.Models;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader.Calibre;
 

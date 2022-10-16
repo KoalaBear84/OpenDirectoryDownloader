@@ -5,12 +5,7 @@ using Jint;
 using Jint.Native;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader.Site.GDIndex.Bhadoo;
 

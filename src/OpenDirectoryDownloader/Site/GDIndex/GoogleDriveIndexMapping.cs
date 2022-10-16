@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace OpenDirectoryDownloader.Site.GDIndex;
+﻿namespace OpenDirectoryDownloader.Site.GDIndex;
 
 public class GoogleDriveIndexMapping
 {

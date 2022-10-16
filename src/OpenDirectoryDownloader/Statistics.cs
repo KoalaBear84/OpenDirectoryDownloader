@@ -1,9 +1,5 @@
 ﻿using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Shared.Models;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -68,7 +64,7 @@ public static class Statistics
 			stringBuilder.AppendLine($"{statusCode.Key}: {statusCode.Value}");
 		}
 
-		stringBuilder.AppendLine($"Total files: {Library.FormatWithThousands(session.Root.TotalFiles)}, Total estimated size: { (session.Root.TotalFileSize > 0 ? FileSizeHelper.ToHumanReadable(session.Root.TotalFileSize) : "n/a") }");
+		stringBuilder.AppendLine($"Total files: {Library.FormatWithThousands(session.Root.TotalFiles)}, Total estimated size: {(session.Root.TotalFileSize > 0 ? FileSizeHelper.ToHumanReadable(session.Root.TotalFileSize) : "n/a")}");
 		stringBuilder.AppendLine($"Total directories: {Library.FormatWithThousands(session.Root.TotalDirectories + 1)}");
 		stringBuilder.AppendLine($"Total HTTP requests: {Library.FormatWithThousands(session.TotalHttpRequests)}, Total HTTP traffic: {FileSizeHelper.ToHumanReadable(session.TotalHttpTraffic)}");
 
@@ -106,10 +102,10 @@ public static class Statistics
 				}
 			}).Take(5))
 			{
-				stringBuilder.AppendLine($"|{extensionStat.Key}|{Library.FormatWithThousands(extensionStat.Value.Count)}|{ (extensionStat.Value.FileSize > 0 ? FileSizeHelper.ToHumanReadable(extensionStat.Value.FileSize) : "n/a")}|");
+				stringBuilder.AppendLine($"|{extensionStat.Key}|{Library.FormatWithThousands(extensionStat.Value.Count)}|{(extensionStat.Value.FileSize > 0 ? FileSizeHelper.ToHumanReadable(extensionStat.Value.FileSize) : "n/a")}|");
 			}
 
-			stringBuilder.AppendLine($"|**Dirs:** {Library.FormatWithThousands(session.Root.TotalDirectories + 1)} **Ext:** {Library.FormatWithThousands(extensionsStats.Count)}|**Total:** {Library.FormatWithThousands(session.TotalFiles)}|**Total:** { (session.TotalFileSizeEstimated > 0 ? FileSizeHelper.ToHumanReadable(session.TotalFileSizeEstimated) : "n/a") }|");
+			stringBuilder.AppendLine($"|**Dirs:** {Library.FormatWithThousands(session.Root.TotalDirectories + 1)} **Ext:** {Library.FormatWithThousands(extensionsStats.Count)}|**Total:** {Library.FormatWithThousands(session.TotalFiles)}|**Total:** {(session.TotalFileSizeEstimated > 0 ? FileSizeHelper.ToHumanReadable(session.TotalFileSizeEstimated) : "n/a")}|");
 		}
 
 		// stringBuilder.AppendLine($"|**Date (UTC):** {session.Started.ToString(Constants.DateTimeFormat)}|**Time:** {TimeSpan.FromSeconds((int)((session.Finished == DateTimeOffset.MinValue ? DateTimeOffset.UtcNow : session.Finished) - session.Started).TotalSeconds)}|{(session.SpeedtestResult != null ? $"**Speed:** {(session.SpeedtestResult.DownloadedBytes > 0 ? $"{session.SpeedtestResult.MaxMBsPerSecond:F1} MB/s ({session.SpeedtestResult.MaxMBsPerSecond * 8:F0} mbit)" : "Failed")}" : string.Empty)}|");

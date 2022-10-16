@@ -1,16 +1,12 @@
 ﻿using PuppeteerExtraSharp;
 using PuppeteerExtraSharp.Plugins.ExtraStealth;
 using PuppeteerSharp;
-using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader;
 
-public class BrowserContext: IDisposable
+public class BrowserContext : IDisposable
 {
 	private const string SetCookieHeader = "set-cookie";
 	private const string CloudflareClearanceKey = "cf_clearance";

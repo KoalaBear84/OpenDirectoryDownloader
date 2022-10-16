@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace OpenDirectoryDownloader.Shared;
+﻿namespace OpenDirectoryDownloader.Shared;
 
 /// <summary>
 /// Rate limiter

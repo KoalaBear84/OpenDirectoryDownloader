@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Roslyn.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace OpenDirectoryDownloader.Shared.Models;

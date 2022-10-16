@@ -2,14 +2,8 @@
 using OpenDirectoryDownloader.Shared.Models;
 using Polly;
 using Polly.Retry;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader;
 
@@ -275,8 +269,8 @@ public class FtpParser
 			{
 				Program.Logger.Warning("Try FTP(S) connection with EncryptionMode {ftpEncryptionMode}", ftpEncryptionMode);
 
-				int timeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds; 
-				
+				int timeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds;
+
 				AsyncFtpClient ftpClient = new AsyncFtpClient(webDirectory.Uri.Host, webDirectory.Uri.Port)
 				{
 					Credentials = new NetworkCredential(username, password),
@@ -289,8 +283,8 @@ public class FtpParser
 						EncryptionMode = ftpEncryptionMode,
 						ValidateAnyCertificate = true
 					}
-				}; 
-				
+				};
+
 				await ftpClient.Connect(cancellationToken);
 
 				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_FtpEncryptionMode] = ftpEncryptionMode.ToString();

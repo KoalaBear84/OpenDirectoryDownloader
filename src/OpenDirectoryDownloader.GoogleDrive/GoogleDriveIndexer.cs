@@ -6,11 +6,6 @@ using Google.Apis.Util.Store;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using Serilog;
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace OpenDirectoryDownloader.GoogleDrive;
 

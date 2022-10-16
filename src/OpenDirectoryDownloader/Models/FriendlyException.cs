@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OpenDirectoryDownloader.Models;
+﻿namespace OpenDirectoryDownloader.Models;
 
 public class FriendlyException : Exception
 {

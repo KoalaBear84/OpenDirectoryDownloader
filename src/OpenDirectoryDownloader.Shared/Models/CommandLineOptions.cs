@@ -1,5 +1,4 @@
 ﻿using CommandLine;
-using System.Collections.Generic;
 
 namespace OpenDirectoryDownloader.Shared.Models;
 
