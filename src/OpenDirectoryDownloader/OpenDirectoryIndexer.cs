@@ -204,6 +204,10 @@ public class OpenDirectoryIndexer
 			SocketsHttpHandler.Proxy = webProxy;
 		}
 
+		// Debugging
+		//LoggingHandler loggingHandler = new(SocketsHttpHandler);
+		//HttpClient = new HttpClient(loggingHandler)
+
 		HttpClient = new HttpClient(SocketsHttpHandler)
 		{
 			Timeout = TimeSpan.FromSeconds(OpenDirectoryIndexerSettings.Timeout)
