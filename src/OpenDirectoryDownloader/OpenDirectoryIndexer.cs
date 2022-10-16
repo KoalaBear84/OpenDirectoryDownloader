@@ -1,3 +1,4 @@
+using AngleSharp.Dom;
 using Newtonsoft.Json;
 using OpenDirectoryDownloader.Calibre;
 using OpenDirectoryDownloader.FileUpload;
@@ -188,17 +189,26 @@ public class OpenDirectoryIndexer
 				{
 					if (sslPolicyErrors.HasFlag(SslPolicyErrors.RemoteCertificateNameMismatch))
 					{
-						string urlHostname = new Uri(OpenDirectoryIndexerSettings.Url).Host;
-						string certificateHostname = new(certificate.Subject.Skip(3).ToArray());
+						string url = OpenDirectoryIndexerSettings.Url;
 
-						if (urlHostname != certificateHostname)
+						try
 						{
-							UriBuilder builder = new(OpenDirectoryIndexerSettings.Url)
-							{
-								Host = certificateHostname
-							};
+							string urlHostname = new Uri(url).Host;
+							string certificateHostname = new(certificate.Subject.Skip(3).ToArray());
 
-							Program.Logger.Warning("Correct URL might be: {Url}", builder.Uri);
+							if (urlHostname != certificateHostname)
+							{
+								UriBuilder builder = new(url)
+								{
+									Host = certificateHostname
+								};
+
+								Program.Logger.Warning("Correct URL might be: {Url}", builder.Uri);
+							}
+						}
+						catch (Exception ex)
+						{
+							Program.Logger.Warning(ex, "Error checking SSL certificate host name for {Url} from {Subject}, please report!", url, certificate.Subject);
 						}
 					}
 
