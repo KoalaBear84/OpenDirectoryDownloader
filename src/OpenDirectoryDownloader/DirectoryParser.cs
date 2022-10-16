@@ -342,12 +342,14 @@ public static class DirectoryParser
 
 			CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
-			if (parsedWebDirectory.Subdirectories.Count == 0 && parsedWebDirectory.Files.Count == 0 && htmlDocument.QuerySelector("noscript") != null)
+			if (parsedWebDirectory.Subdirectories.Count == 0 && parsedWebDirectory.Files.Count == 0 && htmlDocument.QuerySelector("noscript") != null && htmlDocument.QuerySelector("script") != null)
 			{
-				Program.Logger.Warning("No directories and files found on {url}, but did find a <noscript> tag, probably a JavaScript challenge in there which is unsupported", webDirectory.Url);
+				Program.Logger.Warning("No directories and files found on {url}, but did find a <noscript> tag, maybe a JavaScript challenge in there which is unsupported", webDirectory.Url);
 
 				if (!OpenDirectoryIndexer.Session.CommandLineOptions.NoBrowser && httpClient is not null)
 				{
+					Program.Logger.Warning("Trying to retrieve HTML through browser for {url}", webDirectory.Url);
+
 					if (OpenDirectoryIndexer.Session.MaxThreads != 1)
 					{
 						Program.Logger.Warning("Reduce threads to {threads} because of possible Browser JavaScript", 1);
