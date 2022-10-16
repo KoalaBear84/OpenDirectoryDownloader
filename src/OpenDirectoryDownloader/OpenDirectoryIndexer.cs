@@ -215,22 +215,26 @@ public class OpenDirectoryIndexer
 								}
 							}
 
-							if (!possibleDnsNames.Contains(urlHostname, StringComparer.OrdinalIgnoreCase))
+							possibleDnsNames = possibleDnsNames.Distinct().ToList();
+
+							if (!possibleDnsNames.Contains(urlHostname, StringComparer.OrdinalIgnoreCase) &&
+								!possibleDnsNames.Any(dnsName => Regex.IsMatch(urlHostname, $"^{Regex.Escape(dnsName).Replace("\\?", ".").Replace("\\*", ".*")}$"))
+							)
 							{
-								foreach (string possibleDnsName in possibleDnsNames.Where(dnsName => Uri.CheckHostName(dnsName) != UriHostNameType.Unknown))
+								foreach (string possibleDnsName in possibleDnsNames.Distinct().Where(dnsName => Uri.CheckHostName(dnsName) != UriHostNameType.Unknown))
 								{
-									UriBuilder builder = new(url)
+									UriBuilder uriBuilder = new(url)
 									{
 										Host = possibleDnsName
 									};
 
-									Program.Logger.Warning("Correct URL might be: {Url}", builder.Uri);
+									Program.Logger.Warning("Correct URL might be: {Url}", uriBuilder.Uri);
 								}
 							}
 						}
 						catch (Exception ex)
 						{
-							Program.Logger.Warning(ex, "Error checking SSL certificate host name for {Url} from {Subject}, please report!", url, certificate.Subject);
+							Program.Logger.Warning(ex, "Error checking SSL certificate host names for {Url} from {Subject}, please report!", url, certificate.Subject);
 						}
 					}
 
