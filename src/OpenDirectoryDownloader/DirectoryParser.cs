@@ -170,9 +170,9 @@ public static class DirectoryParser
 				}
 			}
 
-			if (OpenDirectoryIndexer.Session is not null && OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.GoogleDriveIndexType))
+			if (OpenDirectoryIndexer.Session is not null && OpenDirectoryIndexer.Session.Parameters.TryGetValue(Constants.GoogleDriveIndexType, out string value))
 			{
-				string googleDriveIndexType = OpenDirectoryIndexer.Session.Parameters[Constants.GoogleDriveIndexType];
+				string googleDriveIndexType = value;
 
 				switch (googleDriveIndexType)
 				{
