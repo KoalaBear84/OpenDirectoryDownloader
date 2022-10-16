@@ -18,6 +18,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Security;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -49,7 +50,7 @@ public class OpenDirectoryIndexer
 	private bool FirstRequest { get; set; } = true;
 	private static bool RateLimited { get; set; }
 
-	private HttpClientHandler HttpClientHandler { get; set; }
+	private SocketsHttpHandler SocketsHttpHandler { get; set; }
 	private HttpClient HttpClient { get; set; }
 	public static BrowserContext BrowserContext { get; set; }
 	public static CookieContainer CookieContainer { get; set; } = new();
@@ -179,9 +180,12 @@ public class OpenDirectoryIndexer
 	{
 		OpenDirectoryIndexerSettings = openDirectoryIndexerSettings;
 
-		HttpClientHandler = new HttpClientHandler
+		SocketsHttpHandler = new SocketsHttpHandler()
 		{
-			ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
+			SslOptions = new SslClientAuthenticationOptions
+			{
+				RemoteCertificateValidationCallback = delegate { return true; }
+			},
 			AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli,
 			CookieContainer = CookieContainer
 		};
@@ -198,10 +202,10 @@ public class OpenDirectoryIndexer
 				webProxy.Credentials = new NetworkCredential(OpenDirectoryIndexerSettings.CommandLineOptions.ProxyUsername, OpenDirectoryIndexerSettings.CommandLineOptions.ProxyPassword);
 			}
 
-			HttpClientHandler.Proxy = webProxy;
+			SocketsHttpHandler.Proxy = webProxy;
 		}
 
-		HttpClient = new HttpClient(HttpClientHandler)
+		HttpClient = new HttpClient(SocketsHttpHandler)
 		{
 			Timeout = TimeSpan.FromSeconds(OpenDirectoryIndexerSettings.Timeout)
 		};
@@ -1079,7 +1083,7 @@ public class OpenDirectoryIndexer
 
 				if (cookieRegexMatch.Success)
 				{
-					HttpClientHandler.CookieContainer.SetCookies(webDirectory.Uri, cookieRegexMatch.Groups["Cookie"].Value);
+					SocketsHttpHandler.CookieContainer.SetCookies(webDirectory.Uri, cookieRegexMatch.Groups["Cookie"].Value);
 
 					// Retrieve/retry content again with added cookies
 					httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
@@ -1295,7 +1299,7 @@ public class OpenDirectoryIndexer
 
 				Session.TotalHttpTraffic += html.Length;
 
-				WebDirectory parsedWebDirectory = await DirectoryParser.ParseHtml(webDirectory, html, HttpClient, HttpClientHandler, httpResponseMessage);
+				WebDirectory parsedWebDirectory = await DirectoryParser.ParseHtml(webDirectory, html, HttpClient, SocketsHttpHandler, httpResponseMessage);
 
 				if (BrowserContext is not null && (parsedWebDirectory.Subdirectories.Any() || parsedWebDirectory.Files.Any()))
 				{
@@ -1359,7 +1363,7 @@ public class OpenDirectoryIndexer
 	{
 		Program.Logger.Warning("Cloudflare protection detected, trying to launch browser. Solve protection yourself, indexing will start automatically!");
 
-		BrowserContext browserContext = new(HttpClientHandler.CookieContainer, cloudFlare: true);
+		BrowserContext browserContext = new(SocketsHttpHandler.CookieContainer, cloudFlare: true);
 		bool cloudFlareOK = await browserContext.DoCloudFlareAsync(OpenDirectoryIndexerSettings.Url);
 
 		if (cloudFlareOK)

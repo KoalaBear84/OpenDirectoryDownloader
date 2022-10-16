@@ -43,7 +43,7 @@ public static class DirectoryParser
 	/// <param name="baseUrl">Base url</param>
 	/// <param name="html">Html to parse</param>
 	/// <returns>WebDirectory object containing current directory index</returns>
-	public static async Task<WebDirectory> ParseHtml(WebDirectory webDirectory, string html, HttpClient httpClient = null, HttpClientHandler httpClientHandler = null, HttpResponseMessage httpResponseMessage = null, bool checkParents = true)
+	public static async Task<WebDirectory> ParseHtml(WebDirectory webDirectory, string html, HttpClient httpClient = null, SocketsHttpHandler socketsHttpHandler = null, HttpResponseMessage httpResponseMessage = null, bool checkParents = true)
 	{
 		string baseUrl = webDirectory.Url;
 
@@ -363,7 +363,7 @@ public static class DirectoryParser
 					if (OpenDirectoryIndexer.BrowserContext is null)
 					{
 						Program.Logger.Warning("Starting Browser..");
-						OpenDirectoryIndexer.BrowserContext = new(httpClientHandler.CookieContainer);
+						OpenDirectoryIndexer.BrowserContext = new(socketsHttpHandler.CookieContainer);
 						await OpenDirectoryIndexer.BrowserContext.InitializeAsync();
 						Program.Logger.Warning("Started Browser");
 					}
@@ -377,7 +377,7 @@ public static class DirectoryParser
 
 					foreach (CookieParam cookieParam in cookieParams)
 					{
-						httpClientHandler.CookieContainer.Add(new Cookie
+						socketsHttpHandler.CookieContainer.Add(new Cookie
 						{
 							Name = cookieParam.Name,
 							Domain = cookieParam.Domain,
@@ -391,7 +391,7 @@ public static class DirectoryParser
 
 					if (browserHtml != html)
 					{
-						return await ParseHtml(webDirectory, browserHtml, httpClient, httpClientHandler);
+						return await ParseHtml(webDirectory, browserHtml, httpClient, socketsHttpHandler);
 					}
 				}
 			}
