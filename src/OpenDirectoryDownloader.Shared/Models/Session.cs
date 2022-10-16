@@ -13,7 +13,7 @@ public class Session
 	public Dictionary<int, int> HttpStatusCodes { get; set; } = new();
 	public Dictionary<string, string> Parameters { get; set; } = new();
 	public CommandLineOptions CommandLineOptions { get; set; } = new();
-	public List<string> PossibleUrls { get; set; } = new();
+	public List<string> PossibleAlternativeUrls { get; set; } = new();
 	public string Description { get; set; }
 	public long TotalHttpTraffic { get; set; }
 	public int TotalHttpRequests { get; set; }

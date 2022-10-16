@@ -226,7 +226,7 @@ public class OpenDirectoryIndexer
 										Host = possibleDnsName
 									};
 
-									Session.PossibleUrls.Add(uriBuilder.Uri.ToString());
+									Session.PossibleAlternativeUrls.Add(uriBuilder.Uri.ToString());
 									Program.Logger.Warning("Correct URL might be: {Url}", uriBuilder.Uri);
 								}
 							}
