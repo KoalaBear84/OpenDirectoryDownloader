@@ -15,6 +15,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Security;
 using System.Security.Authentication;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using TextCopy;
@@ -183,7 +184,23 @@ public class OpenDirectoryIndexer
 		{
 			SslOptions = new SslClientAuthenticationOptions
 			{
-				RemoteCertificateValidationCallback = delegate { return true; }
+				RemoteCertificateValidationCallback = (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) =>
+				{
+					string urlHostname = new Uri(OpenDirectoryIndexerSettings.Url).Host;
+					string certificateHostname = new(certificate.Subject.Skip(3).ToArray());
+
+					if (urlHostname != certificateHostname)
+					{
+						UriBuilder builder = new(OpenDirectoryIndexerSettings.Url)
+						{
+							Host = certificateHostname
+						};
+	
+						Program.Logger.Warning("Correct URL might be: {Url}", builder.Uri);
+					}
+
+					return true;
+				}
 			},
 			AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli,
 			CookieContainer = CookieContainer
