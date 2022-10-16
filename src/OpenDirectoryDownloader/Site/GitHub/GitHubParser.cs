@@ -194,7 +194,7 @@ public static class GitHubParser
 						parentWebDirectory = parentWebDirectory.ParentDirectory;
 					}
 
-					WebDirectory newWebDirectory = new WebDirectory(parentWebDirectory)
+					WebDirectory newWebDirectory = new(parentWebDirectory)
 					{
 						Parser = Parser,
 						Url = treeItem.Url,

@@ -158,7 +158,10 @@ public class BrowserContext : IDisposable
 		}
 	}
 
-	public async Task<CookieParam[]> GetCookiesAsync() => await Page.GetCookiesAsync();
+	public async Task<CookieParam[]> GetCookiesAsync()
+	{
+		return await Page.GetCookiesAsync();
+	}
 
 	public async Task<string> GetHtml(string url)
 	{
@@ -379,19 +382,17 @@ public class BrowserContext : IDisposable
 			Console.WriteLine($"Page_Response: {e.Response.Url}.{Environment.NewLine}Headers: {string.Join(Environment.NewLine, e.Response.Headers.Select(h => $"{h.Key}: {h.Value}"))}");
 		}
 
-		if (e.Response.Headers.ContainsKey(SetCookieHeader))
+		if (e.Response.Headers.TryGetValue(SetCookieHeader, out string cookieHeader))
 		{
 			Uri uri = new(e.Response.Url);
 			string baseUrl = $"{uri.Scheme}://{uri.Host}";
 
-			string cookies = e.Response.Headers["set-cookie"];
-
 			if (DebugInfo)
 			{
-				Console.WriteLine($"Cookies: {cookies}");
+				Console.WriteLine($"Cookies: {cookieHeader}");
 			}
 
-			string theCookie = cookies.Split('\n').FirstOrDefault(cookie => cookie.StartsWith(CloudflareClearanceKey));
+			string theCookie = cookieHeader.Split('\n').FirstOrDefault(cookie => cookie.StartsWith(CloudflareClearanceKey));
 
 			if (theCookie != null)
 			{

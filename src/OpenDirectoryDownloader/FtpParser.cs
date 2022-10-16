@@ -169,7 +169,7 @@ public class FtpParser
 					DataConnectionConnectTimeout = timeout,
 					DataConnectionReadTimeout = timeout,
 					ReadTimeout = timeout * 2,
-					EncryptionMode = OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.Parameters_FtpEncryptionMode) ? Enum.Parse<FtpEncryptionMode>(OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_FtpEncryptionMode]) : FtpEncryptionMode.None,
+					EncryptionMode = OpenDirectoryIndexer.Session.Parameters.TryGetValue(Constants.Parameters_FtpEncryptionMode, out string encryptionMode) ? Enum.Parse<FtpEncryptionMode>(encryptionMode) : FtpEncryptionMode.None,
 					ValidateAnyCertificate = true
 				}
 			};
@@ -271,7 +271,7 @@ public class FtpParser
 
 				int timeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds;
 
-				AsyncFtpClient ftpClient = new AsyncFtpClient(webDirectory.Uri.Host, webDirectory.Uri.Port)
+				AsyncFtpClient ftpClient = new(webDirectory.Uri.Host, webDirectory.Uri.Port)
 				{
 					Credentials = new NetworkCredential(username, password),
 					Config = new FtpConfig
