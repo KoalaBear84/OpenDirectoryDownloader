@@ -221,7 +221,7 @@ public class OpenDirectoryIndexer
 								!possibleDnsNames.Any(dnsName => Regex.IsMatch(urlHostname, $"^{Regex.Escape(dnsName).Replace("\\?", ".").Replace("\\*", ".*")}$"))
 							)
 							{
-								foreach (string possibleDnsName in possibleDnsNames.Distinct().Where(dnsName => Uri.CheckHostName(dnsName) != UriHostNameType.Unknown))
+								foreach (string possibleDnsName in possibleDnsNames.Distinct().Where(dnsName => dnsName.Contains(".") && Uri.CheckHostName(dnsName) != UriHostNameType.Unknown))
 								{
 									UriBuilder uriBuilder = new(url)
 									{
