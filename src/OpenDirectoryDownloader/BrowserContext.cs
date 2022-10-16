@@ -3,6 +3,7 @@ using PuppeteerExtraSharp.Plugins.ExtraStealth;
 using PuppeteerSharp;
 using System.Diagnostics;
 using System.Net;
+using ErrorEventArgs = PuppeteerSharp.ErrorEventArgs;
 
 namespace OpenDirectoryDownloader;
 

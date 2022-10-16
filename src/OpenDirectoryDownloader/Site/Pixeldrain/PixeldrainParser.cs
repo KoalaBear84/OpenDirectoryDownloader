@@ -2,6 +2,7 @@
 using OpenDirectoryDownloader.Site.Pixeldrain.FileResult;
 using OpenDirectoryDownloader.Site.Pixeldrain.ListResult;
 using System.Text.RegularExpressions;
+using File = OpenDirectoryDownloader.Site.Pixeldrain.ListResult.File;
 
 namespace OpenDirectoryDownloader.Site.Pixeldrain;
 
