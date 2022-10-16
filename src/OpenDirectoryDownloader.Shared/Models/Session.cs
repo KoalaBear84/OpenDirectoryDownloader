@@ -33,5 +33,7 @@ public class Session
 	[JsonIgnore]
 	public ConcurrentSet<string> ProcessedUrls { get; set; } = new();
 	[JsonIgnore]
+	public ConcurrentSet<string> ProcessedBrowserUrls { get; set; } = new();
+	[JsonIgnore]
 	public bool GDIndex { get; set; }
 }
