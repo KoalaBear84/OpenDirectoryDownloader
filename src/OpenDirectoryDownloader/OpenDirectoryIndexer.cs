@@ -186,17 +186,20 @@ public class OpenDirectoryIndexer
 			{
 				RemoteCertificateValidationCallback = (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) =>
 				{
-					string urlHostname = new Uri(OpenDirectoryIndexerSettings.Url).Host;
-					string certificateHostname = new(certificate.Subject.Skip(3).ToArray());
-
-					if (urlHostname != certificateHostname)
+					if (sslPolicyErrors.HasFlag(SslPolicyErrors.RemoteCertificateNameMismatch))
 					{
-						UriBuilder builder = new(OpenDirectoryIndexerSettings.Url)
+						string urlHostname = new Uri(OpenDirectoryIndexerSettings.Url).Host;
+						string certificateHostname = new(certificate.Subject.Skip(3).ToArray());
+
+						if (urlHostname != certificateHostname)
 						{
-							Host = certificateHostname
-						};
-	
-						Program.Logger.Warning("Correct URL might be: {Url}", builder.Uri);
+							UriBuilder builder = new(OpenDirectoryIndexerSettings.Url)
+							{
+								Host = certificateHostname
+							};
+
+							Program.Logger.Warning("Correct URL might be: {Url}", builder.Uri);
+						}
 					}
 
 					return true;
