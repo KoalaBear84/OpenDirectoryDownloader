@@ -15,7 +15,9 @@ using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Security;
+using System.Runtime.ConstrainedExecution;
 using System.Security.Authentication;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -194,19 +196,32 @@ public class OpenDirectoryIndexer
 						try
 						{
 							string urlHostname = new Uri(url).Host;
+							List<string> possibleDnsNames = new();
+
 							Regex commonNameRegex = new("CN=(?<CommonName>[^,]+),.+");
 
-							MatchCollection commonNameMatches = commonNameRegex.Matches(certificate.Subject);
+							MatchCollection commonNameRegexMatches = commonNameRegex.Matches(certificate.Subject);
+							possibleDnsNames.AddRange(commonNameRegexMatches.Cast<Match>().Select(m => m.Groups["CommonName"].Value));
 
-							foreach (Match commonNameMatch in commonNameMatches)
+							if (certificate is X509Certificate2 x509Certificate2)
 							{
-								string certificateHostname = commonNameMatch.Groups["CommonName"].Value;
+								Regex dnsNameRegex = new("DNS Name=(?<DnsName>\\S*)");
 
-								if (urlHostname != certificateHostname)
+								foreach (X509SubjectAlternativeNameExtension x509SubjectAlternativeNameExtension in x509Certificate2.Extensions.Where(e => e is X509SubjectAlternativeNameExtension).Cast<X509SubjectAlternativeNameExtension>())
+								{
+									AsnEncodedData asnEncodedData = new(x509SubjectAlternativeNameExtension.Oid, x509SubjectAlternativeNameExtension.RawData);
+									MatchCollection dnsNameRegexMatches = dnsNameRegex.Matches(asnEncodedData.Format(true));
+									possibleDnsNames.AddRange(dnsNameRegexMatches.Cast<Match>().Select(m => m.Groups["DnsName"].Value));
+								}
+							}
+
+							if (!possibleDnsNames.Contains(urlHostname, StringComparer.OrdinalIgnoreCase))
+							{
+								foreach (string possibleDnsName in possibleDnsNames)
 								{
 									UriBuilder builder = new(url)
 									{
-										Host = certificateHostname
+										Host = possibleDnsName
 									};
 
 									Program.Logger.Warning("Correct URL might be: {Url}", builder.Uri);
