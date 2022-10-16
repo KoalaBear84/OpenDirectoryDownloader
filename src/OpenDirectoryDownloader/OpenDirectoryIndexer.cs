@@ -217,7 +217,7 @@ public class OpenDirectoryIndexer
 
 							if (!possibleDnsNames.Contains(urlHostname, StringComparer.OrdinalIgnoreCase))
 							{
-								foreach (string possibleDnsName in possibleDnsNames)
+								foreach (string possibleDnsName in possibleDnsNames.Where(dnsName => Uri.CheckHostName(dnsName) != UriHostNameType.Unknown))
 								{
 									UriBuilder builder = new(url)
 									{
