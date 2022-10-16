@@ -1928,7 +1928,8 @@ public static class DirectoryParser
 					parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
 					{
 						Parser = "ParseDirectoryListerDirectoryListing",
-						Url = fullUrl,
+						// Will fix URLs which ends in spaces etc
+						Url = uri.AbsoluteUri,
 						Name = WebUtility.UrlDecode(urlEncodingParser["dir"].Split("/").Last()),
 					});
 				}
