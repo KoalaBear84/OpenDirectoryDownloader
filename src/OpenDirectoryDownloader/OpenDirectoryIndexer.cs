@@ -49,7 +49,6 @@ public class OpenDirectoryIndexer
 
 	private SocketsHttpHandler SocketsHttpHandler { get; set; }
 	private HttpClient HttpClient { get; set; }
-	public static BrowserContext BrowserContext { get; set; }
 	public static CookieContainer CookieContainer { get; set; } = new();
 
 	private System.Timers.Timer TimerStatistics { get; set; }
@@ -220,7 +219,7 @@ public class OpenDirectoryIndexer
 								!possibleDnsNames.Any(dnsName => Regex.IsMatch(urlHostname, $"^{Regex.Escape(dnsName).Replace("\\?", ".").Replace("\\*", ".*")}$"))
 							)
 							{
-								foreach (string possibleDnsName in possibleDnsNames.Distinct().Where(dnsName => dnsName.Contains(".") && Uri.CheckHostName(dnsName) != UriHostNameType.Unknown))
+								foreach (string possibleDnsName in possibleDnsNames.Distinct().Where(dnsName => dnsName.Contains('.') && Uri.CheckHostName(dnsName) != UriHostNameType.Unknown))
 								{
 									UriBuilder uriBuilder = new(url)
 									{
@@ -453,13 +452,6 @@ public class OpenDirectoryIndexer
 				await Task.WhenAll(WebDirectoryProcessors);
 				Console.WriteLine("Finshed indexing");
 				Program.Logger.Information("Finshed indexing");
-
-				if (BrowserContext is not null)
-				{
-					Program.Logger.Warning($"Closing Browser");
-					BrowserContext.Dispose();
-					BrowserContext = null;
-				}
 
 				if (WebFilesFileSizeQueue.Any())
 				{
@@ -1360,19 +1352,6 @@ public class OpenDirectoryIndexer
 
 				WebDirectory parsedWebDirectory = await DirectoryParser.ParseHtml(webDirectory, html, HttpClient, SocketsHttpHandler, httpResponseMessage);
 
-				if (BrowserContext is not null && (parsedWebDirectory.Subdirectories.Any() || parsedWebDirectory.Files.Any()))
-				{
-					Program.Logger.Warning($"Closing Browser because of successful repsonse");
-					BrowserContext.Dispose();
-					BrowserContext = null;
-
-					if (Session.MaxThreads != Session.CommandLineOptions.Threads)
-					{
-						Program.Logger.Warning("Increasing threads back to {threads} because of successful response", Session.CommandLineOptions.Threads);
-						Session.MaxThreads = Session.CommandLineOptions.Threads;
-					}
-				}
-
 				bool processSubdirectories = parsedWebDirectory.Parser != "DirectoryListingModel01";
 				AddProcessedWebDirectory(webDirectory, parsedWebDirectory, processSubdirectories);
 			}
@@ -1422,7 +1401,7 @@ public class OpenDirectoryIndexer
 	{
 		Program.Logger.Warning("Cloudflare protection detected, trying to launch browser. Solve protection yourself, indexing will start automatically!");
 
-		BrowserContext browserContext = new(SocketsHttpHandler.CookieContainer, cloudFlare: true);
+		using BrowserContext browserContext = new(SocketsHttpHandler.CookieContainer, cloudFlare: true);
 		bool cloudFlareOK = await browserContext.DoCloudFlareAsync(OpenDirectoryIndexerSettings.Url);
 
 		if (cloudFlareOK)

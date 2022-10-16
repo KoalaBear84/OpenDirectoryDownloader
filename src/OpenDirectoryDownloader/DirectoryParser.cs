@@ -344,30 +344,27 @@ public static class DirectoryParser
 
 			if (parsedWebDirectory.Subdirectories.Count == 0 && parsedWebDirectory.Files.Count == 0 && htmlDocument.QuerySelector("noscript") != null)
 			{
-				Program.Logger.Warning("No directories and files found, but did find a <noscript> tag, probably a JavaScript challenge in there which is unsupported");
+				Program.Logger.Warning("No directories and files found on {url}, but did find a <noscript> tag, probably a JavaScript challenge in there which is unsupported", webDirectory.Url);
 
 				if (!OpenDirectoryIndexer.Session.CommandLineOptions.NoBrowser && httpClient is not null)
 				{
 					if (OpenDirectoryIndexer.Session.MaxThreads != 1)
 					{
-						Program.Logger.Warning("Reduce threads to 1 because of possible Browser JavaScript");
+						Program.Logger.Warning("Reduce threads to {threads} because of possible Browser JavaScript", 1);
 						OpenDirectoryIndexer.Session.MaxThreads = 1;
 					}
 
-					if (OpenDirectoryIndexer.BrowserContext is null)
-					{
-						Program.Logger.Warning("Starting Browser..");
-						OpenDirectoryIndexer.BrowserContext = new(socketsHttpHandler.CookieContainer);
-						await OpenDirectoryIndexer.BrowserContext.InitializeAsync();
-						Program.Logger.Warning("Started Browser");
-					}
+					Program.Logger.Warning("Starting Browser..");
+					using BrowserContext browserContext = new(socketsHttpHandler.CookieContainer);
+					await browserContext.InitializeAsync();
+					Program.Logger.Warning("Started Browser");
 
 					Program.Logger.Warning("Retrieving HTML through Browser..");
-					string browserHtml = await OpenDirectoryIndexer.BrowserContext.GetHtml(webDirectory.Url);
+					string browserHtml = await browserContext.GetHtml(webDirectory.Url);
 					Program.Logger.Warning("Retrieved HTML through Browser");
 
 					// Transfer cookies to HttpClient, so hopefully the following requests can be done with the help of cookies
-					CookieParam[] cookieParams = await OpenDirectoryIndexer.BrowserContext.GetCookiesAsync();
+					CookieParam[] cookieParams = await browserContext.GetCookiesAsync();
 
 					foreach (CookieParam cookieParam in cookieParams)
 					{
@@ -381,6 +378,12 @@ public static class DirectoryParser
 							Value = cookieParam.Value,
 							Secure = cookieParam.Secure ?? false
 						});
+					}
+
+					if (OpenDirectoryIndexer.Session.MaxThreads != OpenDirectoryIndexer.Session.CommandLineOptions.Threads)
+					{
+						Program.Logger.Warning("Increasing threads back to {threads}", OpenDirectoryIndexer.Session.CommandLineOptions.Threads);
+						OpenDirectoryIndexer.Session.MaxThreads = OpenDirectoryIndexer.Session.CommandLineOptions.Threads;
 					}
 
 					if (browserHtml != html)
