@@ -15,7 +15,6 @@ using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Security;
-using System.Runtime.ConstrainedExecution;
 using System.Security.Authentication;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -228,6 +227,7 @@ public class OpenDirectoryIndexer
 										Host = possibleDnsName
 									};
 
+									Session.PossibleUrls.Add(uriBuilder.Uri.ToString());
 									Program.Logger.Warning("Correct URL might be: {Url}", uriBuilder.Uri);
 								}
 							}
