@@ -8,10 +8,10 @@ Written in C# with .NET (Core), which means it is **cross platform**!
 
 Downloading is not (yet) implemented, but is already possible when you use the resulting file into another tool (for most of the formats).
 
-Downloading with [wget](https://www.gnu.org/software/wget/):  
+Downloading with [wget](https://www.gnu.org/software/wget/):
 `wget -x -i theurlsfile.txt`
 
-Downloading with [aria2c](https://aria2.github.io/) (Does not support directory structure..):  
+Downloading with [aria2c](https://aria2.github.io/) (Does not support directory structure..):
 `aria2c -i theurlsfile.txt`
 
 If you have improvements, supply me with a pull request! If you have a format not yet supported, please let me know.
@@ -100,6 +100,16 @@ When you want to copy (`C` key or `-c` flag) the stats at the end on Linux you n
 On some distros you need extra dependencies. For Alpine: https://docs.microsoft.com/en-us/dotnet/core/install/linux-alpine
 
 For others see: https://docs.microsoft.com/en-us/dotnet/core/install/linux
+
+## TLS errors (Windows)
+
+If you received errors like this, please apply the registry file "Enable TLS 1.3.reg" from this [site](https://www.itechtics.com/tls-1-3/).
+
+```
+System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
+ ---> System.Security.Authentication.AuthenticationException: Authentication failed because the remote party sent a TLS alert: 'ProtocolVersion'.
+ ---> System.ComponentModel.Win32Exception (0x80090326): The message received was unexpected or badly formatted.
+ ```
 
 ## Cloudflare
 
