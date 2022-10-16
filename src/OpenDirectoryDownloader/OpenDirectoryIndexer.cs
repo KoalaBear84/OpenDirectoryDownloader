@@ -14,6 +14,7 @@ using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Security;
+using System.Security.Authentication;
 using System.Text;
 using System.Text.RegularExpressions;
 using TextCopy;
@@ -91,6 +92,11 @@ public class OpenDirectoryIndexer
 				}
 				else if (ex is HttpRequestException httpRequestException)
 				{
+					if (OperatingSystem.IsWindows() && ex.InnerException is AuthenticationException)
+					{
+						Program.Logger.Warning("[{thread}] Please check readme to fix possible TLS 1.3 issue: https://github.com/KoalaBear84/OpenDirectoryDownloader/#tls-errors-windows", threadName);
+					}
+
 					int httpStatusCode = (int)(httpRequestException.StatusCode ?? 0);
 
 					if (KnownErrorPaths.Contains(webDirectory.Uri.Segments.LastOrDefault()))
