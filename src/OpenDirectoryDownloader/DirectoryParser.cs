@@ -2352,8 +2352,8 @@ public static class DirectoryParser
 			webDirectory.Subdirectories.Count == parentWebDirectory.Subdirectories.Count)
 		{
 			// TODO: If anyone knows a nice way without JsonConvert, PR!
-			if (JsonConvert.SerializeObject(parentWebDirectory.Files.Select(f => new { f.FileName, f.FileSize })) == JsonConvert.SerializeObject(webDirectory.Files.Select(f => new { f.FileName, f.FileSize })) &&
-				JsonConvert.SerializeObject(parentWebDirectory.Subdirectories.Select(d => d.Name)) == JsonConvert.SerializeObject(webDirectory.Subdirectories.Select(d => d.Name)))
+			if ((parentWebDirectory.Files.Count == 0 || (JsonConvert.SerializeObject(parentWebDirectory.Files.Select(f => new { f.FileName, f.FileSize })) == JsonConvert.SerializeObject(webDirectory.Files.Select(f => new { f.FileName, f.FileSize })))) &&
+				(parentWebDirectory.Subdirectories.Count == 0 || JsonConvert.SerializeObject(parentWebDirectory.Subdirectories.Select(d => d.Name)) == JsonConvert.SerializeObject(webDirectory.Subdirectories.Select(d => d.Name))))
 			{
 				return true;
 			}
