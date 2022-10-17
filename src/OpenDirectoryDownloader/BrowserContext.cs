@@ -13,7 +13,7 @@ public class BrowserContext : IDisposable
 	private const string CloudflareClearanceKey = "cf_clearance";
 
 	private Browser Browser { get; set; }
-	private Page Page { get; set; }
+	private IPage Page { get; set; }
 	private CookieContainer CookieContainer { get; }
 	public bool CloudFlare { get; }
 	public bool DebugInfo { get; }
