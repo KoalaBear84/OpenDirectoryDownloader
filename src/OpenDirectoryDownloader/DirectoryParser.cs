@@ -31,6 +31,8 @@ public static class DirectoryParser
 {
 	private static readonly HtmlParser HtmlParser = new();
 
+	private static readonly SemaphoreSlim SemaphoreSlimBrowser = new(1, 1);
+
 	/// <summary>
 	/// Parses Html to a WebDirectory object containing the current directory index
 	/// </summary>
@@ -351,49 +353,58 @@ public static class DirectoryParser
 				{
 					OpenDirectoryIndexer.Session.ProcessedBrowserUrls.Add(webDirectory.Url);
 
-					Program.Logger.Warning("Trying to retrieve HTML through browser for {url}", webDirectory.Url);
+					await SemaphoreSlimBrowser.WaitAsync();
 
-					if (OpenDirectoryIndexer.Session.MaxThreads != 1)
+					try
 					{
-						Program.Logger.Warning("Reduce threads to {threads} because of possible Browser JavaScript", 1);
-						OpenDirectoryIndexer.Session.MaxThreads = 1;
-					}
+						Program.Logger.Warning("Trying to retrieve HTML through browser for {url}", webDirectory.Url);
 
-					Program.Logger.Warning("Starting Browser..");
-					using BrowserContext browserContext = new(socketsHttpHandler.CookieContainer);
-					await browserContext.InitializeAsync();
-					Program.Logger.Warning("Started Browser");
-
-					Program.Logger.Warning("Retrieving HTML through Browser..");
-					string browserHtml = await browserContext.GetHtml(webDirectory.Url);
-					Program.Logger.Warning("Retrieved HTML through Browser");
-
-					// Transfer cookies to HttpClient, so hopefully the following requests can be done with the help of cookies
-					CookieParam[] cookieParams = await browserContext.GetCookiesAsync();
-
-					foreach (CookieParam cookieParam in cookieParams)
-					{
-						socketsHttpHandler.CookieContainer.Add(new Cookie
+						if (OpenDirectoryIndexer.Session.MaxThreads != 1)
 						{
-							Name = cookieParam.Name,
-							Domain = cookieParam.Domain,
-							Path = cookieParam.Path,
-							Expires = Library.UnixTimestampToDateTime((long)cookieParam.Expires),
-							HttpOnly = cookieParam.HttpOnly ?? false,
-							Value = cookieParam.Value,
-							Secure = cookieParam.Secure ?? false
-						});
-					}
+							Program.Logger.Warning("Reduce threads to {threads} because of possible Browser JavaScript", 1);
+							OpenDirectoryIndexer.Session.MaxThreads = 1;
+						}
 
-					if (OpenDirectoryIndexer.Session.MaxThreads != OpenDirectoryIndexer.Session.CommandLineOptions.Threads)
-					{
-						Program.Logger.Warning("Increasing threads back to {threads}", OpenDirectoryIndexer.Session.CommandLineOptions.Threads);
-						OpenDirectoryIndexer.Session.MaxThreads = OpenDirectoryIndexer.Session.CommandLineOptions.Threads;
-					}
+						Program.Logger.Warning("Starting Browser..");
+						using BrowserContext browserContext = new(socketsHttpHandler.CookieContainer);
+						await browserContext.InitializeAsync();
+						Program.Logger.Warning("Started Browser");
 
-					if (browserHtml != html)
+						Program.Logger.Warning("Retrieving HTML through Browser..");
+						string browserHtml = await browserContext.GetHtml(webDirectory.Url);
+						Program.Logger.Warning("Retrieved HTML through Browser");
+
+						// Transfer cookies to HttpClient, so hopefully the following requests can be done with the help of cookies
+						CookieParam[] cookieParams = await browserContext.GetCookiesAsync();
+
+						foreach (CookieParam cookieParam in cookieParams)
+						{
+							socketsHttpHandler.CookieContainer.Add(new Cookie
+							{
+								Name = cookieParam.Name,
+								Domain = cookieParam.Domain,
+								Path = cookieParam.Path,
+								Expires = Library.UnixTimestampToDateTime((long)cookieParam.Expires),
+								HttpOnly = cookieParam.HttpOnly ?? false,
+								Value = cookieParam.Value,
+								Secure = cookieParam.Secure ?? false
+							});
+						}
+
+						if (OpenDirectoryIndexer.Session.MaxThreads != OpenDirectoryIndexer.Session.CommandLineOptions.Threads)
+						{
+							Program.Logger.Warning("Increasing threads back to {threads}", OpenDirectoryIndexer.Session.CommandLineOptions.Threads);
+							OpenDirectoryIndexer.Session.MaxThreads = OpenDirectoryIndexer.Session.CommandLineOptions.Threads;
+						}
+
+						if (browserHtml != html)
+						{
+							return await ParseHtml(webDirectory, browserHtml, httpClient, socketsHttpHandler);
+						}
+					}
+					finally
 					{
-						return await ParseHtml(webDirectory, browserHtml, httpClient, socketsHttpHandler);
+						SemaphoreSlimBrowser.Release();
 					}
 				}
 			}

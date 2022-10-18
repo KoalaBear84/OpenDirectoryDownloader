@@ -20,7 +20,7 @@ public class BrowserContext : IDisposable
 	public TimeSpan Timeout { get; set; }
 	private CancellationTokenSource CancellationTokenSource { get; set; } = new CancellationTokenSource();
 	private bool OK { get; set; }
-	public static object LockBrowserFetcher = new object();
+	private static readonly SemaphoreSlim SemaphoreSlimFetcher = new(1, 1);
 
 	public BrowserContext(CookieContainer cookieContainer, bool cloudFlare = false, bool debugInfo = false, TimeSpan timeout = default)
 	{
@@ -94,14 +94,20 @@ public class BrowserContext : IDisposable
 		{
 			BrowserFetcher browserFetcher = new();
 
-			lock (LockBrowserFetcher)
+			await SemaphoreSlimFetcher.WaitAsync();
+
+			try
 			{
 				if (!browserFetcher.LocalRevisions().Contains(BrowserFetcher.DefaultChromiumRevision))
 				{
 					Program.Logger.Warning("Downloading browser... First time it can take a while, depending on your internet connection.");
-					RevisionInfo revisionInfo = browserFetcher.DownloadAsync(BrowserFetcher.DefaultChromiumRevision).Result;
+					RevisionInfo revisionInfo = await browserFetcher.DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
 					Program.Logger.Warning("Downloaded browser. Downloaded: {downloaded}, Platform: {platform}, Revision: {revision}, Path: {path}", revisionInfo.Downloaded, revisionInfo.Platform, revisionInfo.Revision, revisionInfo.FolderPath);
 				}
+			}
+			finally
+			{
+				SemaphoreSlimFetcher.Release();
 			}
 
 			Program.Logger.Debug("Creating browser...");

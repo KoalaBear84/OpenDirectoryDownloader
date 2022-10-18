@@ -12,8 +12,8 @@ public class ZippyShare : IFileUploadSite
 
 	private static readonly HtmlParser HtmlParser = new();
 
-	private static Regex UploadIdRegex = new(@"var uploadId = '(?<UploadId>[A-Z0-9]*)';");
-	private static Regex ServerRegex = new(@"var server = '(?<Server>www\d*)';");
+	private static readonly Regex UploadIdRegex = new(@"var uploadId = '(?<UploadId>[A-Z0-9]*)';");
+	private static readonly Regex ServerRegex = new(@"var server = '(?<Server>www\d*)';");
 
 	public async Task<IFileUploadSiteFile> UploadFile(HttpClient httpClient, string path)
 	{
