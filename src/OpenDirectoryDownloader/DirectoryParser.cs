@@ -344,7 +344,7 @@ public static class DirectoryParser
 
 			CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
-			if (parsedWebDirectory.Subdirectories.Count == 0 && parsedWebDirectory.Files.Count == 0 && !OpenDirectoryIndexer.Session.ProcessedBrowserUrls.Contains(webDirectory.Url) &&
+			if (parsedWebDirectory.Subdirectories.Count == 0 && parsedWebDirectory.Files.Count == 0 && !OpenDirectoryIndexer.Session?.ProcessedBrowserUrls.Contains(webDirectory.Url) == false &&
 				htmlDocument.QuerySelector("noscript") != null && htmlDocument.QuerySelector("script") != null)
 			{
 				Program.Logger.Warning("No directories and files found on {url}, but did find a <noscript> tag, maybe a JavaScript challenge in there which is unsupported", webDirectory.Url);
