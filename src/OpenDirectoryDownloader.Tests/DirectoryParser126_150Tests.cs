@@ -79,7 +79,7 @@ public class DirectoryParser126_150Tests : DirectoryParserTests
 		Assert.Equal(".well-known", webDirectory.Subdirectories[0].Name);
 		Assert.Single(webDirectory.Files);
 		Assert.Equal("robots.txt", webDirectory.Files[0].FileName);
-		Assert.Equal(-1, webDirectory.Files[0].FileSize);
+		Assert.Equal(Constants.NoFileSize, webDirectory.Files[0].FileSize);
 	}
 
 	/// <summary>
@@ -95,6 +95,72 @@ public class DirectoryParser126_150Tests : DirectoryParserTests
 		Assert.Empty(webDirectory.Subdirectories);
 		Assert.Equal(28, webDirectory.Files.Count);
 		Assert.Equal("101+ Crystal Radio Circuits.pdf", webDirectory.Files[0].FileName);
-		Assert.Equal(-1, webDirectory.Files[0].FileSize);
+		Assert.Equal(Constants.NoFileSize, webDirectory.Files[0].FileSize);
+	}
+
+	/// <summary>
+	/// Url: http://104.168.151.193/
+	/// New plain text format
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing129aAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Equal("ROOT", webDirectory.Name);
+		Assert.Single(webDirectory.Subdirectories);
+		Assert.Equal("ghostpdl", webDirectory.Subdirectories[0].Name);
+		Assert.Equal(9, webDirectory.Files.Count);
+		Assert.Equal("Easy Effortless Fix for Your Dowagers Hump!-A_hSiiLtKeU.mp4", webDirectory.Files[0].FileName);
+		Assert.Equal(14680064, webDirectory.Files[0].FileSize);
+	}
+
+	/// <summary>
+	/// Url: http://104.168.151.193/ghostpdl/
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing129bAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Equal("ROOT", webDirectory.Name);
+		Assert.Equal(31, webDirectory.Subdirectories.Count);
+		Assert.Equal(".git", webDirectory.Subdirectories[0].Name);
+		Assert.Equal(8, webDirectory.Files.Count);
+		Assert.Equal(".gitattributes", webDirectory.Files[0].FileName);
+		Assert.Equal(486, webDirectory.Files[0].FileSize);
+	}
+
+	/// <summary>
+	/// Url: http://78.203.154.250/
+	/// New plain text format
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing130aAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Equal("ROOT", webDirectory.Name);
+		Assert.Equal(310, webDirectory.Subdirectories.Count);
+		Assert.Equal("30.Rock.iNTEGRALE.FRENCH.WEB.H264-FRATERNiTY", webDirectory.Subdirectories[0].Name);
+		Assert.Equal(3, webDirectory.Files.Count);
+		Assert.Equal("Interstellar.2014.TRUEFRENCH.BRRip.x264.AC3-SVR.mkv", webDirectory.Files[0].FileName);
+		Assert.Equal(1437711157 , webDirectory.Files[0].FileSize);
+	}
+
+	/// <summary>
+	/// Url: http://78.203.154.250/30.Rock.iNTEGRALE.FRENCH.WEB.H264-FRATERNiTY/
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing130bAsync()
+	{
+		// TODO
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Equal("ROOT", webDirectory.Name);
+		Assert.Empty(webDirectory.Subdirectories);
+		Assert.Equal(139, webDirectory.Files.Count);
+		Assert.Equal("30.Rock.S01E01.FRENCH.WEB.H264-FRATERNiTY.mkv", webDirectory.Files[0].FileName);
+		Assert.Equal(183872151, webDirectory.Files[0].FileSize);
 	}
 }

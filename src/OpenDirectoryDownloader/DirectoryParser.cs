@@ -1102,11 +1102,11 @@ public static class DirectoryParser
 
 								IElement imageElement = tableRow.QuerySelector("img");
 								bool isDirectory = hasFolderIcon || tableRow.ClassList.Contains("dir") || (imageElement != null &&
-									(
-										(imageElement.HasAttribute("alt") && imageElement.Attributes["alt"].Value == "[DIR]") ||
-										(imageElement.HasAttribute("src") && (Path.GetFileName(imageElement.Attributes["src"].Value).Contains("dir") || Path.GetFileName(imageElement.Attributes["src"].Value).Contains("folder"))) ||
-										urlEncodingParser["dirname"] != null
-									));
+								(
+									(imageElement.HasAttribute("alt") && imageElement.Attributes["alt"].Value == "[DIR]") ||
+									(imageElement.HasAttribute("src") && (Path.GetFileName(imageElement.Attributes["src"].Value).Contains("dir") || Path.GetFileName(imageElement.Attributes["src"].Value).Contains("folder"))) ||
+									urlEncodingParser["dirname"] != null
+								));
 
 								string description = tableRow.QuerySelector($"td:nth-child({descriptionHeaderColumnIndex})")?.TextContent.Trim();
 								string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim().Replace(" ", string.Empty);
@@ -1575,7 +1575,6 @@ public static class DirectoryParser
 
 		if (match.Success)
 		{
-
 			IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
 
 			if (parsedLine.QuerySelector("a") != null)
@@ -1586,7 +1585,8 @@ public static class DirectoryParser
 				{
 					ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
-					bool isFile = !match.Groups["FileMode"].Value.ToLowerInvariant().StartsWith("d");
+					string fileMode = match.Groups["FileMode"].Value.ToLowerInvariant();
+					bool isFile = !fileMode.StartsWith("d") && !fileMode.StartsWith("l");
 
 					if (!isFile)
 					{
@@ -1631,7 +1631,69 @@ public static class DirectoryParser
 
 	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser8 = async (webDirectory, baseUrl, line) =>
 	{
-		Match match = Regex.Match(line, @"^\s*<a.*<\/a>\s*(?<IsDirectory>\/?)(?<FileSize>(\S+))?");
+		Match match = Regex.Match(line, @"^\s*(?<Link><a.*<\/a>)\s+(?:(?<Day>\d+)(?<Month>\D+)(?<Year>\d+))(?:\s+(?<Hour>\d+):(?<Minute>\d+))(?:\s+)?(?<FileSize>\S+)?");
+
+		if (match.Success)
+		{
+			IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+
+			if (parsedLine.QuerySelector("a") != null)
+			{
+				IElement link = parsedLine.QuerySelector("a");
+
+				if (IsValidLink(link))
+				{
+					ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
+					string fileSizeString = match.Groups["FileSize"].Value;
+					long fileSize = FileSizeHelper.ParseFileSize(fileSizeString);
+
+					bool isFile = !string.IsNullOrWhiteSpace(fileSizeString) && fileSizeString.Trim() != "-" &&
+						// This is not perfect.. Specific block sizes
+						 (fileSize is not 32768 or 65536);
+
+					if (!isFile)
+					{
+						string directoryName = Path.GetDirectoryName(WebUtility.UrlDecode(uri.Segments.Last()));
+
+						if (string.IsNullOrWhiteSpace(directoryName))
+						{
+							directoryName = WebUtility.UrlDecode(linkHref);
+						}
+
+						webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+						{
+							Parser = "RegexParser8",
+							Url = fullUrl,
+							Name = directoryName
+						});
+					}
+					else
+					{
+						try
+						{
+							webDirectory.Files.Add(new WebFile
+							{
+								Url = fullUrl,
+								FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+								FileSize = fileSize
+							});
+						}
+						catch (Exception ex)
+						{
+							Program.Logger.Error(ex, "Error parsing with RegexParser8");
+						}
+					}
+				}
+			}
+		}
+
+		return match.Success;
+	};
+
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser9 = async (webDirectory, baseUrl, line) =>
+	{
+		Match match = Regex.Match(line, @"^\s*(?<Link><a.*<\/a>)\s*(?<IsDirectory>\/?)(?<FileSize>\S+)?");
 
 		if (match.Success && (match.Groups["IsDirectory"].Success && !string.IsNullOrWhiteSpace(match.Groups["IsDirectory"].Value)) != match.Groups["FileSize"].Success)
 		{
@@ -1663,7 +1725,7 @@ public static class DirectoryParser
 
 						webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
 						{
-							Parser = "RegexParser8",
+							Parser = "RegexParser9",
 							Url = fullUrl,
 							Name = directoryName
 						});
@@ -1683,7 +1745,61 @@ public static class DirectoryParser
 						}
 						catch (Exception ex)
 						{
-							Program.Logger.Error(ex, "Error parsing with RegexParser8");
+							Program.Logger.Error(ex, "Error parsing with RegexParser9");
+						}
+					}
+				}
+			}
+		}
+
+		return match.Success;
+	};
+
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser10 = async (webDirectory, baseUrl, line) =>
+	{
+		Match match = Regex.Match(line, @"(?<Dir>[\-ld])(?<Permissions>(?:[\-r][\-w][\-xs]){1,3})\s+(?<Owner>\w+)\s+(?<Group>\w+)\s+(?<Month>\S{3})\s+(?<Day>\d+)\s+(?<Year>\d+)\s+(?<FileSize>\d+\s+?\w+)?\s+(?:[\w&;]+\s+)?(?<Link><a.*<\/a>\/?)?");
+
+		if (match.Success)
+		{
+			IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+
+			if (parsedLine.QuerySelector("a") != null)
+			{
+				IElement link = parsedLine.QuerySelector("a");
+
+				if (IsValidLink(link))
+				{
+					ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
+					string fileMode = match.Groups["Dir"].Value.ToLowerInvariant();
+
+					bool isFile = !fileMode.StartsWith("d") && !fileMode.StartsWith("l");
+
+					if (!isFile)
+					{
+						webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+						{
+							Parser = "RegexParser10",
+							Url = fullUrl,
+							Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last()))
+						});
+					}
+					else
+					{
+						try
+						{
+							string fileSize = match.Groups["FileSize"].Value;
+
+							webDirectory.Files.Add(new WebFile
+							{
+								Url = fullUrl,
+								FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+								FileSize = FileSizeHelper.ParseFileSize(fileSize)
+							});
+						}
+						catch (Exception ex)
+						{
+							Program.Logger.Error(ex, "Error parsing with RegexParser10");
 						}
 					}
 				}
@@ -1697,15 +1813,17 @@ public static class DirectoryParser
 	{
 		List<Func<WebDirectory, string, string, Task<bool>>> regexFuncs = new()
 		{
-				RegexParser1,
-				RegexParser2,
-				RegexParser3,
-				RegexParser4,
-				RegexParser5,
-				RegexParser6,
-				RegexParser7,
-				RegexParser8,
-			};
+			RegexParser1,
+			RegexParser2,
+			RegexParser3,
+			RegexParser4,
+			RegexParser5,
+			RegexParser6,
+			RegexParser7,
+			RegexParser8,
+			RegexParser9,
+			RegexParser10,
+		};
 
 		foreach (IElement pre in pres)
 		{
