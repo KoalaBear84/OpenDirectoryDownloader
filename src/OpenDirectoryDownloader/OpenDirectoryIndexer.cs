@@ -1536,7 +1536,7 @@ public class OpenDirectoryIndexer
 					}
 				}
 
-				await streamWriter.WriteAsync(buffer);
+				await streamWriter.WriteAsync(buffer, 0, buffer.Length);
 				await streamWriter.FlushAsync();
 
 				buffer = new char[Constants.Kilobyte];
@@ -1547,7 +1547,7 @@ public class OpenDirectoryIndexer
 
 					if (readBytes > 0)
 					{
-						await streamWriter.WriteAsync(buffer);
+						await streamWriter.WriteAsync(buffer, 0, readBytes);
 						await streamWriter.FlushAsync();
 					}
 				} while (readBytes > 0);
