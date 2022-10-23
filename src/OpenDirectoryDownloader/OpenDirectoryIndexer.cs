@@ -1503,7 +1503,7 @@ public class OpenDirectoryIndexer
 
 		// Don't use using tags, it will close the stream for the callee
 		MemoryStream responseStream = new();
-		StreamWriter streamWriter = new(responseStream);
+		StreamWriter streamWriter = new(responseStream, encoding);
 
 		using (Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync())
 		{
