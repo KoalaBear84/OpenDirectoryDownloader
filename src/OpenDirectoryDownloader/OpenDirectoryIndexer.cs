@@ -24,7 +24,7 @@ using TextCopy;
 
 namespace OpenDirectoryDownloader;
 
-public class OpenDirectoryIndexer
+public partial class OpenDirectoryIndexer
 {
 	public static Session Session { get; set; }
 	public static bool ShowStatistics { get; set; } = true;
@@ -186,7 +186,7 @@ public class OpenDirectoryIndexer
 		{
 			SslOptions = new SslClientAuthenticationOptions
 			{
-				RemoteCertificateValidationCallback = (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) =>
+				RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) =>
 				{
 					if (FirstRequest && sslPolicyErrors.HasFlag(SslPolicyErrors.RemoteCertificateNameMismatch))
 					{
@@ -1476,7 +1476,7 @@ public class OpenDirectoryIndexer
 	{
 		int controlChars = buffer.Take(length).Count(c => char.IsControl(c) && c != 10 && c != 13 && c != 9);
 
-		return (100d / (buffer.Length / (double)controlChars)) < 10;
+		return 100d / (buffer.Length / (double)controlChars) < 10;
 	}
 
 	/// <summary>
@@ -1528,7 +1528,7 @@ public class OpenDirectoryIndexer
 				}
 				else
 				{
-					Regex htmlRegex = new("<[a-zA-Z0-9] ?([^>]+)>", RegexOptions.IgnoreCase);
+					Regex htmlRegex = HtmlRegex();
 
 					if (!htmlRegex.Match(new string(buffer)).Success)
 					{
@@ -1559,7 +1559,7 @@ public class OpenDirectoryIndexer
 		}
 
 		await streamWriter.FlushAsync();
-		responseStream.Position = 0;
+		responseStream.Seek(0, SeekOrigin.Begin);
 
 		return responseStream;
 	}
@@ -1627,7 +1627,7 @@ public class OpenDirectoryIndexer
 
 		if (Session.Root.Uri.Scheme != Constants.UriScheme.Ftp && Session.Root.Uri.Scheme != Constants.UriScheme.Ftps)
 		{
-			foreach (WebFile webFile in webDirectory.Files.Where(f => (f.FileSize == Constants.NoFileSize && !OpenDirectoryIndexerSettings.CommandLineOptions.FastScan) || OpenDirectoryIndexerSettings.CommandLineOptions.ExactFileSizes))
+			foreach (WebFile webFile in webDirectory.Files.Where(f => f.FileSize == Constants.NoFileSize && !OpenDirectoryIndexerSettings.CommandLineOptions.FastScan || OpenDirectoryIndexerSettings.CommandLineOptions.ExactFileSizes))
 			{
 				WebFilesFileSizeQueue.Enqueue(webFile);
 			}
@@ -1650,11 +1650,11 @@ public class OpenDirectoryIndexer
 
 					if (!OpenDirectoryIndexerSettings.DetermimeFileSizeByDownload)
 					{
-						webFile.FileSize = (await HttpClient.GetUrlFileSizeAsync(webFile.Url)) ?? 0;
+						webFile.FileSize = await HttpClient.GetUrlFileSizeAsync(webFile.Url) ?? 0;
 					}
 					else
 					{
-						webFile.FileSize = (await HttpClient.GetUrlFileSizeByDownloadingAsync(webFile.Url)) ?? 0;
+						webFile.FileSize = await HttpClient.GetUrlFileSizeByDownloadingAsync(webFile.Url) ?? 0;
 					}
 
 					Program.Logger.Debug("Retrieved filesize for: {url}", webFile.Url);
@@ -1682,6 +1682,9 @@ public class OpenDirectoryIndexer
 
 		Program.Logger.Debug("[{thread}] Finished", threadName);
 	}
+
+	[GeneratedRegex("<[a-zA-Z0-9] ?([^>]+)>", RegexOptions.IgnoreCase, "en-US")]
+	private static partial Regex HtmlRegex();
 }
 
 public class OpenDirectoryIndexerSettings
