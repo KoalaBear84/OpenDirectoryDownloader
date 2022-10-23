@@ -1,6 +1,6 @@
 # Open Directory Downloader
 
-Indexes open directories listings in 100+ supported formats, including FTP(S), Google Drive, Bhadoo, GoIndex, Go2Index (alternatives), Dropbox, Mediafire, GoFile, GitHub.
+Indexes open directories listings in 130+ supported formats, including FTP(S), Google Drive, Bhadoo, GoIndex, Go2Index (alternatives), Dropbox, Mediafire, GoFile, GitHub.
 
 ![](assets/Screenshot01.png)
 
@@ -101,7 +101,7 @@ On some distros you need extra dependencies. For Alpine: https://docs.microsoft.
 
 For others see: https://docs.microsoft.com/en-us/dotnet/core/install/linux
 
-## TLS errors (Windows)
+## TLS errors (Windows 10)
 
 If you received errors like this, please apply the registry file "Enable TLS 1.3.reg" from this [site](https://www.itechtics.com/tls-1-3/).
 
