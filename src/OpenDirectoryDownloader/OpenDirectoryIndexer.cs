@@ -50,6 +50,7 @@ public class OpenDirectoryIndexer
 	private SocketsHttpHandler SocketsHttpHandler { get; set; }
 	private HttpClient HttpClient { get; set; }
 	public static CookieContainer CookieContainer { get; set; } = new();
+	private static List<EncodingInfo> EncodingInfos { get; set; } = Encoding.GetEncodings().ToList();
 
 	private System.Timers.Timer TimerStatistics { get; set; }
 
@@ -1494,7 +1495,10 @@ public class OpenDirectoryIndexer
 
 		if (!string.IsNullOrWhiteSpace(charSet))
 		{
-			encoding = Encoding.GetEncoding(charSet);
+			if (EncodingInfos.Any(e => e.Name == charSet))
+			{
+				encoding = Encoding.GetEncoding(charSet);
+			}
 		}
 
 		// Don't use using tags, it will close the stream for the callee
