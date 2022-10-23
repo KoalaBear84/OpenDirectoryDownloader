@@ -163,4 +163,36 @@ public class DirectoryParser126_150Tests : DirectoryParserTests
 		Assert.Equal("30.Rock.S01E01.FRENCH.WEB.H264-FRATERNiTY.mkv", webDirectory.Files[0].FileName);
 		Assert.Equal(183872151, webDirectory.Files[0].FileSize);
 	}
+
+	/// <summary>
+	/// Url: https://dl.malwarewatch.org/
+	/// Colspan on both thead and tbody
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing131aAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Equal("ROOT", webDirectory.Name);
+		Assert.Equal(6, webDirectory.Subdirectories.Count);
+		Assert.Equal("drivers", webDirectory.Subdirectories[0].Name);
+		Assert.Single(webDirectory.Files);
+		Assert.Equal("softwarelisting.xlsx", webDirectory.Files[0].FileName);
+		Assert.Equal(19251, webDirectory.Files[0].FileSize);
+	}
+
+	/// <summary>
+	/// Url: https://dl.malwarewatch.org/software/advanced/remote-tools/
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing131bAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Equal("ROOT", webDirectory.Name);
+		Assert.Empty(webDirectory.Subdirectories);
+		Assert.Equal(8, webDirectory.Files.Count);
+		Assert.Equal("Remote Tools 2015 (x64).zip", webDirectory.Files[0].FileName);
+		Assert.Equal(62285414, webDirectory.Files[0].FileSize);
+	}
 }

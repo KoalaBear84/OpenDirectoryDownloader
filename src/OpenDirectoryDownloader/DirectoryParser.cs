@@ -1649,7 +1649,7 @@ public static class DirectoryParser
 					long fileSize = FileSizeHelper.ParseFileSize(fileSizeString);
 
 					bool isFile = !string.IsNullOrWhiteSpace(fileSizeString) && fileSizeString.Trim() != "-" &&
-						// This is not perfect.. Specific block sizes
+						 // This is not perfect.. Specific block sizes
 						 (fileSize is not 32768 or 65536);
 
 					if (!isFile)
@@ -2720,6 +2720,31 @@ public static class DirectoryParser
 				if (tableHeaders.Any(th => th.Value.Type == HeaderType.FileName) && tableHeaders.Any(th => th.Value.Type == HeaderType.FileSize) && removeFirstRow)
 				{
 					table.QuerySelector("tr:nth-child(1)").Remove();
+				}
+			}
+
+			IElement firstRow = table.QuerySelector("tbody tr");
+
+			// Correct colspans when using in tbody
+			if (firstRow is not null)
+			{
+				List<IElement> columns = firstRow.QuerySelectorAll("td").ToList();
+
+				for (int i = 0; i < columns.Count; i++)
+				{
+					IElement tableColumn = columns[i];
+
+					if (tableColumn.HasAttribute("colspan"))
+					{
+						int colspan = int.Parse(tableColumn.GetAttribute("colspan"));
+
+						foreach (KeyValuePair<int, HeaderInfo> tableHeader in tableHeaders.Where(header => header.Key > i + colspan).ToList())
+						{
+							HeaderInfo headerInfo = tableHeaders[tableHeader.Key];
+							tableHeaders.Remove(tableHeader.Key);
+							tableHeaders.Add(tableHeader.Key - (colspan - 1), headerInfo);
+						}
+					}
 				}
 			}
 

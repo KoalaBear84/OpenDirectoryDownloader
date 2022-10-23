@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+		<title>Software Repository</title>
+
+        <meta charset="utf-8">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>      
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<meta name="theme-color" content="#2345F6">
+		
+		<meta property="og:type" content="website">
+		<meta property="og:title" content="MalwareWatch Software Repository">
+		<meta property="og:description" content="Download free software from a reliable source. The password to every archive is mysubsarethebest.">
+		<meta property="og:url" content="https://dl.malwat.ch/">
+		<meta property="og:image" content="http://dl.malwarewatch.org/theme/images/favicon.png">
+		<meta property="og:image:secure_url" content="https://dl.malwarewatch.org/theme/images/favicon.png">
+		<meta property="og:image:width" content="256">
+		<meta property="og:image:height" content="256">
+		<meta property="og:image:alt" content="MalwareWatch.org">
+
+		<link rel="shortcut icon" href="/theme/images/favicon.png"/>	
+        <link rel="stylesheet" href="/theme/css/styles.css">
+
+		<script type="text/javascript" src="/theme/js/config.js"></script>
+		<script defer type="text/javascript" src="/theme/js/check_ratelimit.js"></script>
+    </head>
+<body>
+    <div class="container">
+        <main>
+			<div class="friendly-header">
+					<div class="back-link">
+						<a href="https://malwarewatch.org"><img src="/theme/images/back.png" alt="Back" width=36px height=36px></a>
+					</div>
+			
+					<a href="/" class="logo"><img src="/theme/images/logo-software.png" class="web-logo" alt="MalwareWatch.org"></a>
+					<div class="friendly-desc">
+						<p class="web-repo">
+							Welcome! The password to every archive is <b>mysubsarethebest</b>.<br><br>
+						</p>
+						<p class="web-desc">
+							This repository contains virus-free software carefully selected by <a href="https://malwat.ch/youtube" class="blue">Enderman</a>.
+							Some installers might include OpenCandy firmly glued in by developers, so please make sure to uncheck unwanted checkboxes.
+						</p>
+
+						<div id="ratelimit-info">
+							<p class="web-desc">
+								Loading ratelimit information&hellip; <a class="blue" href="/api/v1/ratelimit_info.html">Not loading?</a>
+							</p>
+						</div>
+					</div>
+			</div>
+			
+			<hr class="separator"/>
+			
+            <header>			
+                <div class="title">
+                    <h1>
+                        <span id="file-path">
+/</span></h1><p class="breadcrumbs"><a href="/">&#x1F3E0;</a></p></div><div class="search-box"><input type="text" id="search" placeholder="Type to search&hellip;"></div></header>
+<div class="table-list"><table id="list"><thead><tr><th colspan="2"><a href="?C=N&amp;O=A">Name</a>&nbsp;<a href="?C=N&amp;O=D">&nbsp;&darr;&nbsp;</a></th><th><a href="?C=S&amp;O=A">Size</a>&nbsp;<a href="?C=S&amp;O=D">&nbsp;&darr;&nbsp;</a></th><th><a href="?C=M&amp;O=A">Date</a>&nbsp;<a href="?C=M&amp;O=D">&nbsp;&darr;&nbsp;</a></th></tr></thead>
+<tbody><tr><td colspan="2" class="link"><a href="drivers/" title="drivers">drivers/</a></td><td class="size">-</td><td class="date">June 19, 2022</td></tr>
+<tr><td colspan="2" class="link"><a href="ms-dos/" title="ms-dos">ms-dos/</a></td><td class="size">-</td><td class="date">April  6, 2022</td></tr>
+<tr><td colspan="2" class="link"><a href="multipurpose/" title="multipurpose">multipurpose/</a></td><td class="size">-</td><td class="date">August 29, 2022</td></tr>
+<tr><td colspan="2" class="link"><a href="oshalved/" title="oshalved">oshalved/</a></td><td class="size">-</td><td class="date">April  7, 2022</td></tr>
+<tr><td colspan="2" class="link"><a href="software/" title="software">software/</a></td><td class="size">-</td><td class="date">June 19, 2022</td></tr>
+<tr><td colspan="2" class="link"><a href="windows/" title="windows">windows/</a></td><td class="size">-</td><td class="date">June 27, 2022</td></tr>
+<tr><td colspan="2" class="link"><a href="softwarelisting.xlsx" title="softwarelisting.xlsx">softwarelisting.xlsx</a></td><td class="size">18.8 KiB</td><td class="date">April  9, 2022</td></tr>
+</tbody></table></div>				<hr class="separator"/>
+
+				<footer>
+					<p>
+						<b>Download responsibly!</b>
+						<br><br>
+						Report bugs & corrupted files: <a href="/cdn-cgi/l/email-protection#621007030e070c0607100f030c010a22050f030b0e4c010d0f" class="blue"><span class="__cf_email__" data-cfemail="027067636e676c6667706f636c616a42656f636b6e2c616d6f">[email&#160;protected]</span></a><br>
+						MalwareWatch.org © 2018-2022
+					</p>
+				</footer>
+			</main>
+		</div>
+	<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>
