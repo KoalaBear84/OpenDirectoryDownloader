@@ -195,4 +195,37 @@ public class DirectoryParser126_150Tests : DirectoryParserTests
 		Assert.Equal("Remote Tools 2015 (x64).zip", webDirectory.Files[0].FileName);
 		Assert.Equal(62285414, webDirectory.Files[0].FileSize);
 	}
+
+	/// <summary>
+	/// Url: https://ftp.lindin.fo/FTP%20arkiv/
+	/// HFS 2.3x
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing132aAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Equal("ROOT", webDirectory.Name);
+		Assert.Equal(36, webDirectory.Subdirectories.Count);
+		Assert.Equal("7 ar - Sendingar ur savninum hja Lindini", webDirectory.Subdirectories[0].Name);
+		Assert.Single(webDirectory.Files);
+		Assert.Equal("Fragreiding um at Downloada sendingar.txt", webDirectory.Files[0].FileName);
+		Assert.Equal(1536, webDirectory.Files[0].FileSize);
+	}
+
+	/// <summary>
+	/// Url: https://ftp.lindin.fo/FTP%20arkiv/7%20ar%20-%20Sendingar%20ur%20savninum%20hja%20Lindini/
+	/// HFS 2.3x
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing132bAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Equal("ROOT", webDirectory.Name);
+		Assert.Empty(webDirectory.Subdirectories);
+		Assert.Equal(7, webDirectory.Files.Count);
+		Assert.Equal("7ar_bonarlinjan_001123_Ellen Jorgen Mohlin.mp3", webDirectory.Files[0].FileName);
+		Assert.Equal(34812723, webDirectory.Files[0].FileSize);
+	}
 }

@@ -188,6 +188,21 @@ public static class DirectoryParser
 
 			// The order of the checks is very important!
 
+			if (htmlDocument.Title.StartsWith("HFS /"))
+			{
+				// HFS up to 2.3x
+				// document.querySelectorAll('#files tr')
+				IHtmlCollection<IElement> hfsTable = htmlDocument.QuerySelectorAll("table#files");
+
+				if (hfsTable.Any())
+				{
+					return ParseTablesDirectoryListing(baseUrl, parsedWebDirectory, hfsTable, checkParents);
+				}
+
+				// HFS 2.4+
+				// This is already handled by normal parsers
+			}
+
 			IHtmlCollection<IElement> directoryListingDotComlistItems = htmlDocument.QuerySelectorAll("#directory-listing li, .directory-listing li");
 
 			if (directoryListingDotComlistItems.Any())
@@ -2810,7 +2825,7 @@ public static class DirectoryParser
 			headerInfo.Type == HeaderType.Unknown &&
 			(
 				headerName == "file" ||
-				headerName == "name" ||
+				headerName.Contains("name") ||
 				headerName.Contains("file name") ||
 				headerName.Contains("filename") ||
 				headerName == "directory" ||

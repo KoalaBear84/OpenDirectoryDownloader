@@ -1,0 +1,427 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>HFS /FTP arkiv/</title>
+	<link rel="stylesheet" href="/?mode=section&id=style.css" type="text/css">
+    <script type="text/javascript" src="/?mode=jquery"></script>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<style class='trash-me'>
+	.onlyscript, button[onclick] { display:none; }
+	</style>
+    <script>
+    // this object will store some %symbols% in the javascript space, so that libs can read them
+    HFS = { folder:'/FTP arkiv/', number:37, paged:1 }; 
+    </script>
+	<script type="text/javascript" src="/?mode=section&id=lib.js"></script>
+</head>
+<body>
+<!-- -->
+<div id='panel'>
+    	<fieldset id='msgs'>
+		<legend><img src="/~img10"> Messages</legend>
+		<ul style='padding-left:2em'>
+		</ul>
+	</fieldset>
+
+    	<fieldset id='login'>
+		<legend><img src="/~img27"> User</legend>
+		<center>
+		<a href="~login">Login</a>
+		</center>
+	</fieldset>                                       
+
+    	<fieldset id='folder'>
+		<legend><img src="/~img8"> Folder</legend>
+
+       <div style='float:right; position:relative; top:-1em; font-weight:bold;'>
+		<a href=".."><img src="/~img14"> Up</a>
+		</div>
+
+		<div id='breadcrumbs'>
+		
+		<a href="/"  /> <img src="/~img1"> Home</a><a href="/FTP%20arkiv/" style='padding-left:1.4em;' /> &raquo; FTP arkiv</a>
+       </div>
+        
+		<div id='folder-stats'>36 folders, 1 files, 1.5 KBytes
+		</div>
+		
+		
+	</fieldset>
+
+    	<fieldset id='search'>
+		<legend><img src="/~img3"> Search</legend>
+		<form style='text-align:center'>
+			<input name='search' size='15' value="">
+			<input type='submit' value="go">
+		</form>
+		<div style='margin-top:0.5em;' class='hidden popup'>
+			<fieldset>
+				<legend>Where to search</legend>
+					<input type='radio' name='where' value='fromhere' checked='true' />  this folder and sub-folders
+					<br><input type='radio' name='where' value='here' />  this folder only
+					<br><input type='radio' name='where' value='anywhere' />  entire server
+			</fieldset>
+		</div>
+	</fieldset>
+
+    	<fieldset id='select' class='onlyscript'>
+		<legend><img src="/~img15"> Select</legend>
+		<center>
+    	<button onclick="
+            var x = $('#files .selector');
+            if (x.size() > x.filter(':checked').size())
+                x.attr('checked', true).closest('tr').addClass('selected');
+			else
+                x.attr('checked', false).closest('tr').removeClass('selected');
+			selectedChanged();
+			">All</button>
+    	<button onclick="
+            $('#files .selector').attr('checked', function(i,v){ return !v }).closest('tr').toggleClass('selected');
+			selectedChanged();
+            ">Invert</button>
+    	<button onclick='selectionMask.call(this)'>Mask</button>
+		<p style='display:none; margin-top:1em;'><span id='selected-number'>0</span> items selected</p>
+		</center>
+	</fieldset>
+
+    	
+
+    	<fieldset id='actions'>
+		<legend><img src="/~img18"> Actions</legend>
+		<center>
+		
+		
+		
+		
+		<button id='archiveBtn' onclick='if (confirm("Are you sure?")) submit({}, "/FTP%20arkiv/?mode=archive&recursive")'>Archive</button>
+		<a href="/FTP%20arkiv/?tpl=list&folders-filter=\&recursive">Get list</a>
+		</center>
+	</fieldset>
+
+    	<fieldset id='serverinfo'>
+		<legend><img src="/~img0"> Server information</legend>
+		<a href="http://www.rejetto.com/hfs/">HttpFileServer 2.3m</a>
+		<br />Server time: 2022-10-29 13:40:59
+		<br />Server uptime: (17 days) 05:13:09
+	</fieldset>
+
+
+</div>
+
+<div id='files_outer'>
+	<div style='height:1.6em;'></div>  
+	
+        <form method='post'>
+            <table id='files'>
+             
+            <th><a href="/FTP%20arkiv/?sort=n">Name</a><a href="/FTP%20arkiv/?sort=e">.extension</a>
+            <th><a href="/FTP%20arkiv/?sort=s">Size</a>
+            <th><a href="/FTP%20arkiv/?sort=t">Timestamp</a>
+            <th><a href="/FTP%20arkiv/?sort=d">Hits</a>
+            	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="7%20ar%20-%20Sendingar%20ur%20savninum%20hja%20Lindini/"  />
+		
+		
+		<a href="7%20ar%20-%20Sendingar%20ur%20savninum%20hja%20Lindini/"><img src="/~img_folder"> 7 ar - Sendingar ur savninum hja Lindini</a>
+		
+		
+<td class='nosize'>folder<td>2020-05-11 10:39:12<td>30
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="A%20Bylgjulongd/"  />
+		
+		
+		<a href="A%20Bylgjulongd/"><img src="/~img_folder"> A Bylgjulongd</a>
+		
+		
+<td class='nosize'>folder<td>2022-10-27 13:12:56<td>17040
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="A_Ferd/"  />
+		
+		
+		<a href="A_Ferd/"><img src="/~img_folder"> A_Ferd</a>
+		
+		
+<td class='nosize'>folder<td>2017-04-11 12:51:59<td>1961
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="A_veg_heim/"  />
+		
+		
+		<a href="A_veg_heim/"><img src="/~img_folder"> A_veg_heim</a>
+		
+		
+<td class='nosize'>folder<td>2022-09-17 09:57:09<td>745
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="Alpha%20%26%20Omega/"  />
+		
+		
+		<a href="Alpha%20%26%20Omega/"><img src="/~img_folder"> Alpha &amp; Omega</a>
+		
+		
+<td class='nosize'>folder<td>2011-05-26 00:20:10<td>106
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="Arma_Menniskja_Mitt/"  />
+		
+		
+		<a href="Arma_Menniskja_Mitt/"><img src="/~img_folder"> Arma_Menniskja_Mitt</a>
+		
+		
+<td class='nosize'>folder<td>2014-02-17 21:26:40<td>645
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="Bankabok_Truarinnar/"  />
+		
+		
+		<a href="Bankabok_Truarinnar/"><img src="/~img_folder"> Bankabok_Truarinnar</a>
+		
+		
+<td class='nosize'>folder<td>2009-10-20 16:48:46<td>3548
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="Barnasendingar/"  />
+		
+		
+		<a href="Barnasendingar/"><img src="/~img_folder"> Barnasendingar</a>
+		
+		
+<td class='nosize'>folder<td>2013-12-28 22:52:14<td>16
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="Blod_ur_livsins_dagbok_-_Effie_Campbell/"  />
+		
+		
+		<a href="Blod_ur_livsins_dagbok_-_Effie_Campbell/"><img src="/~img_folder"> Blod_ur_livsins_dagbok_-_Effie_Campbell</a>
+		
+		
+<td class='nosize'>folder<td>2015-02-16 22:15:06<td>1521
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="Bonarlinjan/"  />
+		
+		
+		<a href="Bonarlinjan/"><img src="/~img_folder"> Bonarlinjan</a>
+		
+		
+<td class='nosize'>folder<td>2020-08-28 21:08:58<td>1426
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="Borgin/"  />
+		
+		
+		<a href="Borgin/"><img src="/~img_folder"> Borgin</a>
+		
+		
+<td class='nosize'>folder<td>2020-04-17 14:36:26<td>1083
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="BrotUrKirkjusoguAdrennHeimamission/"  />
+		
+		
+		<a href="BrotUrKirkjusoguAdrennHeimamission/"><img src="/~img_folder"> BrotUrKirkjusoguAdrennHeimamission</a>
+		
+		
+<td class='nosize'>folder<td>2014-04-27 19:38:14<td>23
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="Com-Pass/"  />
+		
+		
+		<a href="Com-Pass/"><img src="/~img_folder"> Com-Pass</a>
+		
+		
+<td class='nosize'>folder<td>2011-08-23 19:19:02<td>34
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="Dagsins_Ord/"  />
+		
+		
+		<a href="Dagsins_Ord/"><img src="/~img_folder"> Dagsins_Ord</a>
+		
+		
+<td class='nosize'>folder<td>2010-12-04 10:57:55<td>3684
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="Explore/"  />
+		
+		
+		<a href="Explore/"><img src="/~img_folder"> Explore</a>
+		
+		
+<td class='nosize'>folder<td>2014-05-12 19:25:14<td>259
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="Gledibod/"  />
+		
+		
+		<a href="Gledibod/"><img src="/~img_folder"> Gledibod</a>
+		
+		
+<td class='nosize'>folder<td>2022-07-09 15:43:25<td>819
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="Gronlendingar/"  />
+		
+		
+		<a href="Gronlendingar/"><img src="/~img_folder"> Gronlendingar</a>
+		
+		
+<td class='nosize'>folder<td>2009-10-20 16:30:10<td>11
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="Hitabylgjan/"  />
+		
+		
+		<a href="Hitabylgjan/"><img src="/~img_folder"> Hitabylgjan</a>
+		
+		
+<td class='nosize'>folder<td>2009-10-20 16:29:52<td>37
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="I%20dyptina/"  />
+		
+		
+		<a href="I%20dyptina/"><img src="/~img_folder"> I dyptina</a>
+		
+		
+<td class='nosize'>folder<td>2009-10-20 16:29:21<td>30
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="Kreativt%20Tyskvold/"  />
+		
+		
+		<a href="Kreativt%20Tyskvold/"><img src="/~img_folder"> Kreativt Tyskvold</a>
+		
+		
+<td class='nosize'>folder<td>2022-01-26 13:31:04<td>8
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="Leygarkvold%20i%20Lindini/"  />
+		
+		
+		<a href="Leygarkvold%20i%20Lindini/"><img src="/~img_folder"> Leygarkvold i Lindini</a>
+		
+		
+<td class='nosize'>folder<td>2012-06-04 15:58:41<td>797
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="Live%20Streaming/"  />
+		
+		
+		<a href="Live%20Streaming/"><img src="/~img_folder"> Live Streaming</a>
+		
+		
+<td class='nosize'>folder<td>2017-06-27 12:43:31<td>0
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="Livid/"  />
+		
+		
+		<a href="Livid/"><img src="/~img_folder"> Livid</a>
+		
+		
+<td class='nosize'>folder<td>2022-03-18 15:24:47<td>133
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="Lovsangslotan/"  />
+		
+		
+		<a href="Lovsangslotan/"><img src="/~img_folder"> Lovsangslotan</a>
+		
+		
+<td class='nosize'>folder<td>2011-11-25 20:57:28<td>252
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="Magnetlistin/"  />
+		
+		
+		<a href="Magnetlistin/"><img src="/~img_folder"> Magnetlistin</a>
+		
+		
+<td class='nosize'>folder<td>2009-10-20 16:22:05<td>0
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="Mangt%20%26%20Hvat/"  />
+		
+		
+		<a href="Mangt%20%26%20Hvat/"><img src="/~img_folder"> Mangt &amp; Hvat</a>
+		
+		
+<td class='nosize'>folder<td>2009-10-20 16:22:04<td>24
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="Motir/"  />
+		
+		
+		<a href="Motir/"><img src="/~img_folder"> Motir</a>
+		
+		
+<td class='nosize'>folder<td>2019-08-20 10:39:22<td>160
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="Muffins/"  />
+		
+		
+		<a href="Muffins/"><img src="/~img_folder"> Muffins</a>
+		
+		
+<td class='nosize'>folder<td>2022-06-23 18:40:10<td>1786
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="Nyggj_byrjan/"  />
+		
+		
+		<a href="Nyggj_byrjan/"><img src="/~img_folder"> Nyggj_byrjan</a>
+		
+		
+<td class='nosize'>folder<td>2022-10-19 15:55:28<td>2068
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="Online/"  />
+		
+		
+		<a href="Online/"><img src="/~img_folder"> Online</a>
+		
+		
+<td class='nosize'>folder<td>2022-09-09 12:53:12<td>2029
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="Stjornuljosid%20-%20Soga/"  />
+		
+		
+		<a href="Stjornuljosid%20-%20Soga/"><img src="/~img_folder"> Stjornuljosid - Soga</a>
+		
+		
+<td class='nosize'>folder<td>2009-10-20 16:20:30<td>119
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="Studulssendingar/"  />
+		
+		
+		<a href="Studulssendingar/"><img src="/~img_folder"> Studulssendingar</a>
+		
+		
+<td class='nosize'>folder<td>2020-01-31 02:26:58<td>4
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="TheMannieShow/"  />
+		
+		
+		<a href="TheMannieShow/"><img src="/~img_folder"> TheMannieShow</a>
+		
+		
+<td class='nosize'>folder<td>2022-08-25 12:31:59<td>1311
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="Umveldi/"  />
+		
+		
+		<a href="Umveldi/"><img src="/~img_folder"> Umveldi</a>
+		
+		
+<td class='nosize'>folder<td>2013-07-01 13:18:10<td>791
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="Ymiskar%20sendingar/"  />
+		
+		
+		<a href="Ymiskar%20sendingar/"><img src="/~img_folder"> Ymiskar sendingar</a>
+		
+		
+<td class='nosize'>folder<td>2021-09-13 12:30:15<td>1036
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="Ymiskir%20tekstir/"  />
+		
+		
+		<a href="Ymiskir%20tekstir/"><img src="/~img_folder"> Ymiskir tekstir</a>
+		
+		
+<td class='nosize'>folder<td>2018-05-26 01:46:47<td>2738
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="Fragreiding%20um%20at%20Downloada%20sendingar.txt"  />
+		
+		
+		<a href="Fragreiding%20um%20at%20Downloada%20sendingar.txt"><img src="/~img42"> Fragreiding um at Downloada sendingar.txt</a>
+		
+		
+<td>1.5 KB<td>2007-06-19 17:56:11<td>129
+
+            </table>
+        </form>
+	
+</div>
+
+</body>
+</html>
+<!-- Build-time: 0.110 -->

@@ -1,0 +1,187 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>HFS /FTP arkiv/7 ar - Sendingar ur savninum hja Lindini/</title>
+	<link rel="stylesheet" href="/?mode=section&id=style.css" type="text/css">
+    <script type="text/javascript" src="/?mode=jquery"></script>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<style class='trash-me'>
+	.onlyscript, button[onclick] { display:none; }
+	</style>
+    <script>
+    // this object will store some %symbols% in the javascript space, so that libs can read them
+    HFS = { folder:'/FTP arkiv/7 ar - Sendingar ur savninum hja Lindini/', number:7, paged:1 }; 
+    </script>
+	<script type="text/javascript" src="/?mode=section&id=lib.js"></script>
+</head>
+<body>
+<!-- -->
+<div id='panel'>
+    	<fieldset id='msgs'>
+		<legend><img src="/~img10"> Messages</legend>
+		<ul style='padding-left:2em'>
+		</ul>
+	</fieldset>
+
+    	<fieldset id='login'>
+		<legend><img src="/~img27"> User</legend>
+		<center>
+		<a href="~login">Login</a>
+		</center>
+	</fieldset>                                       
+
+    	<fieldset id='folder'>
+		<legend><img src="/~img8"> Folder</legend>
+
+       <div style='float:right; position:relative; top:-1em; font-weight:bold;'>
+		<a href=".."><img src="/~img14"> Up</a>
+		</div>
+
+		<div id='breadcrumbs'>
+		
+		<a href="/"  /> <img src="/~img1"> Home</a><a href="/FTP%20arkiv/" style='padding-left:1.4em;' /> &raquo; FTP arkiv</a><a href="/FTP%20arkiv/7%20ar%20-%20Sendingar%20ur%20savninum%20hja%20Lindini/" style='padding-left:2.1em;' /> &raquo; 7 ar - Sendingar ur savninum hja Lindini</a>
+       </div>
+        
+		<div id='folder-stats'>0 folders, 7 files, 598.2 MBytes
+		</div>
+		
+		
+	</fieldset>
+
+    	<fieldset id='search'>
+		<legend><img src="/~img3"> Search</legend>
+		<form style='text-align:center'>
+			<input name='search' size='15' value="">
+			<input type='submit' value="go">
+		</form>
+		<div style='margin-top:0.5em;' class='hidden popup'>
+			<fieldset>
+				<legend>Where to search</legend>
+					<input type='radio' name='where' value='fromhere' checked='true' />  this folder and sub-folders
+					<br><input type='radio' name='where' value='here' />  this folder only
+					<br><input type='radio' name='where' value='anywhere' />  entire server
+			</fieldset>
+		</div>
+	</fieldset>
+
+    	<fieldset id='select' class='onlyscript'>
+		<legend><img src="/~img15"> Select</legend>
+		<center>
+    	<button onclick="
+            var x = $('#files .selector');
+            if (x.size() > x.filter(':checked').size())
+                x.attr('checked', true).closest('tr').addClass('selected');
+			else
+                x.attr('checked', false).closest('tr').removeClass('selected');
+			selectedChanged();
+			">All</button>
+    	<button onclick="
+            $('#files .selector').attr('checked', function(i,v){ return !v }).closest('tr').toggleClass('selected');
+			selectedChanged();
+            ">Invert</button>
+    	<button onclick='selectionMask.call(this)'>Mask</button>
+		<p style='display:none; margin-top:1em;'><span id='selected-number'>0</span> items selected</p>
+		</center>
+	</fieldset>
+
+    	
+
+    	<fieldset id='actions'>
+		<legend><img src="/~img18"> Actions</legend>
+		<center>
+		
+		
+		
+		
+		<button id='archiveBtn' onclick='if (confirm("Are you sure?")) submit({}, "/FTP%20arkiv/7%20ar%20-%20Sendingar%20ur%20savninum%20hja%20Lindini/?mode=archive&recursive")'>Archive</button>
+		<a href="/FTP%20arkiv/7%20ar%20-%20Sendingar%20ur%20savninum%20hja%20Lindini/?tpl=list&folders-filter=\&recursive">Get list</a>
+		</center>
+	</fieldset>
+
+    	<fieldset id='serverinfo'>
+		<legend><img src="/~img0"> Server information</legend>
+		<a href="http://www.rejetto.com/hfs/">HttpFileServer 2.3m</a>
+		<br />Server time: 2022-10-29 13:42:00
+		<br />Server uptime: (17 days) 05:14:11
+	</fieldset>
+
+
+</div>
+
+<div id='files_outer'>
+	<div style='height:1.6em;'></div>  
+	
+        <form method='post'>
+            <table id='files'>
+             
+            <th><a href="/FTP%20arkiv/7%20ar%20-%20Sendingar%20ur%20savninum%20hja%20Lindini/?sort=n">Name</a><a href="/FTP%20arkiv/7%20ar%20-%20Sendingar%20ur%20savninum%20hja%20Lindini/?sort=e">.extension</a>
+            <th><a href="/FTP%20arkiv/7%20ar%20-%20Sendingar%20ur%20savninum%20hja%20Lindini/?sort=s">Size</a>
+            <th><a href="/FTP%20arkiv/7%20ar%20-%20Sendingar%20ur%20savninum%20hja%20Lindini/?sort=t">Timestamp</a>
+            <th><a href="/FTP%20arkiv/7%20ar%20-%20Sendingar%20ur%20savninum%20hja%20Lindini/?sort=d">Hits</a>
+            	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="7ar_bonarlinjan_001123_Ellen%20Jorgen%20Mohlin.mp3"  />
+		
+		
+		<a href="7ar_bonarlinjan_001123_Ellen%20Jorgen%20Mohlin.mp3"><img src="/~img41"> 7ar_bonarlinjan_001123_Ellen Jorgen Mohlin.mp3</a>
+		
+		
+<td>33.2 MB<td>2007-01-26 15:22:28<td>17
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="7ar_bonarlinjan_010614_LeivurLeivsson_Jenis.mp3"  />
+		
+		
+		<a href="7ar_bonarlinjan_010614_LeivurLeivsson_Jenis.mp3"><img src="/~img41"> 7ar_bonarlinjan_010614_LeivurLeivsson_Jenis.mp3</a>
+		
+		
+<td>49.2 MB<td>2007-03-05 15:20:00<td>1
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="7ar_bonarlinjan_040318_Muslimar_ConnieDanielsen_jenis.mp3"  />
+		
+		
+		<a href="7ar_bonarlinjan_040318_Muslimar_ConnieDanielsen_jenis.mp3"><img src="/~img41"> 7ar_bonarlinjan_040318_Muslimar_ConnieDanielsen_jenis.mp3</a>
+		
+		
+<td>48.9 MB<td>2007-03-05 15:30:40<td>5
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="7ar_bonarlinjan_050428_TorbjornJacobsen_jenis.mp3"  />
+		
+		
+		<a href="7ar_bonarlinjan_050428_TorbjornJacobsen_jenis.mp3"><img src="/~img41"> 7ar_bonarlinjan_050428_TorbjornJacobsen_jenis.mp3</a>
+		
+		
+<td>76.2 MB<td>2007-03-05 15:09:22<td>3
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="7ar_gestur_i_stovuni_000415_BrittRasmussen_preben.mp3"  />
+		
+		
+		<a href="7ar_gestur_i_stovuni_000415_BrittRasmussen_preben.mp3"><img src="/~img41"> 7ar_gestur_i_stovuni_000415_BrittRasmussen_preben.mp3</a>
+		
+		
+<td>202.4 MB<td>2020-05-11 10:40:22<td>0
+	<tr class='even'><td>
+        <input type='checkbox' class='selector' name='selection' value="7ar_gestur_i_stovuni_000415_BrittRasmussen_preben.wav"  />
+		
+		
+		<a href="7ar_gestur_i_stovuni_000415_BrittRasmussen_preben.wav"><img src="/~img41"> 7ar_gestur_i_stovuni_000415_BrittRasmussen_preben.wav</a>
+		
+		
+<td>161.9 MB<td>2000-04-16 00:28:50<td>1
+	<tr class=''><td>
+        <input type='checkbox' class='selector' name='selection' value="7ar_leygarkv_i_lind_060311_JanHanvold.mp3"  />
+		
+		
+		<a href="7ar_leygarkv_i_lind_060311_JanHanvold.mp3"><img src="/~img41"> 7ar_leygarkv_i_lind_060311_JanHanvold.mp3</a>
+		
+		
+<td>26.3 MB<td>2007-02-14 11:00:23<td>3
+
+            </table>
+        </form>
+	
+</div>
+
+</body>
+</html>
+<!-- Build-time: 0.031 -->
