@@ -199,6 +199,11 @@ public static class DirectoryParser
 					return ParseTablesDirectoryListing(baseUrl, parsedWebDirectory, hfsTable, checkParents);
 				}
 
+				if (htmlDocument.QuerySelector("div#files") == null)
+				{
+					return parsedWebDirectory;
+				}
+
 				// HFS 2.4+
 				// This is already handled by normal parsers
 			}
