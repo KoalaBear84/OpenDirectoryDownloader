@@ -2767,7 +2767,7 @@ public static class DirectoryParser
 
 		headerName = Regex.Replace(headerName, @"[^\u00BF-\u1FFF\u2C00-\uD7FF\w]", string.Empty);
 
-		if (headerName == "last modified" || headerName == "modified" || headerName.Contains("date") || headerName.Contains("last modification") || headerName.Contains("time") || headerName.Contains("修改时间") || headerName.Contains("修改日期") || headerName.Contains("最終更新"))
+		if (headerName == "lastmodified" || headerName == "modified" || headerName.Contains("date") || headerName.Contains("lastmodification") || headerName.Contains("time") || headerName.Contains("修改时间") || headerName.Contains("修改日期") || headerName.Contains("最終更新"))
 		{
 			headerInfo.Type = HeaderType.Modified;
 		}
