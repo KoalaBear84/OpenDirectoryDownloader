@@ -2742,7 +2742,13 @@ public static class DirectoryParser
 						{
 							HeaderInfo headerInfo = tableHeaders[tableHeader.Key];
 							tableHeaders.Remove(tableHeader.Key);
-							tableHeaders.Add(tableHeader.Key - (colspan - 1), headerInfo);
+
+							int newKey = tableHeader.Key - (colspan - 1);
+
+							if (!tableHeaders.ContainsKey(newKey))
+							{
+								tableHeaders.Add(newKey, headerInfo);
+							}
 						}
 					}
 				}
@@ -2762,6 +2768,12 @@ public static class DirectoryParser
 		{
 			Header = headerName
 		};
+
+		// Someone thought it would be a good idea to include it in a table..
+		if (header.QuerySelector("ul") != null)
+		{
+			return headerInfo;
+		}
 
 		headerName = headerName.ToLowerInvariant();
 
