@@ -228,4 +228,35 @@ public class DirectoryParser126_150Tests : DirectoryParserTests
 		Assert.Equal("7ar_bonarlinjan_001123_Ellen Jorgen Mohlin.mp3", webDirectory.Files[0].FileName);
 		Assert.Equal(34812723, webDirectory.Files[0].FileSize);
 	}
+
+	/// <summary>
+	/// Url: http://localhost:8885/ODTest/
+	/// HFS 2.4x
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing133aAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Equal("ROOT", webDirectory.Name);
+		Assert.Equal(4, webDirectory.Subdirectories.Count);
+		Assert.Equal("¡¢£¤¥ăĄƃɔʵ̆΅ЄԆԷ اܑऌঋਕએଓஒఎಐഎඐทພ༩ဒႱᄎሓᎷᐖᚖᚸᜃភᠮℕⅨ↦", webDirectory.Subdirectories[0].Name);
+		Assert.Equal(3, webDirectory.Files.Count);
+		Assert.Equal("∌⌀②▄▣☂✄⠅⿴〄.test", webDirectory.Files[0].FileName);
+		Assert.Equal(18637, webDirectory.Files[0].FileSize);
+	}
+
+	/// <summary>
+	/// Url: http://localhost:8885/ODTest/EmptyFolder/
+	/// HFS 2.4x
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing133bAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Equal("ROOT", webDirectory.Name);
+		Assert.Empty(webDirectory.Subdirectories);
+		Assert.Empty(webDirectory.Files);
+	}
 }

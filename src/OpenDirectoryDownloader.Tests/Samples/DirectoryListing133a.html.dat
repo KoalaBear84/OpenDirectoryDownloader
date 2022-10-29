@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link rel="stylesheet" href="/~style.css" type="text/css">
+    <script type="text/javascript" src="/?mode=jquery"></script>
+    <script>
+	var HFS = { 
+		user: '', 
+		folder: '/ODTest/', 
+		sid: 'RvZpjPDn5UAAAIAq4oHmPw',
+		canChangePwd: '',
+	}
+	</script>
+	<script type="text/javascript" src="/~lib.js"></script>
+
+	<title>HFS /ODTest/</title>
+	<style class='trash-me'>
+	.onlyscript, button[onclick] { display:none; }
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+	<!-- -->
+	<script>
+	$(function(){
+        if ($('#menu-panel').css('position').indexOf('sticky') < 0) // sticky is not supported
+            setInterval(function(){ $('#wrapper').css('margin-top', $('#menu-panel').height()+5) }, 300); // leave space for the fixed panel
+    });
+</script>
+
+<div id='menu-panel'>
+	<div id="title-bar">
+		<i class="fa fa-globe"></i> HTTP File Server
+<i class="fa fa-lightbulb" id="switch-theme"></i>
+<script>
+var themes = ['light','dark']
+var themePostfix = '-theme'
+var darkOs = window.matchMedia('(prefers-color-scheme:dark)').matches
+var curTheme = localStorage['theme']
+if (!themes.includes(curTheme))
+	curTheme = themes[+darkOs]
+$('body').addClass(curTheme+themePostfix)
+$(function(){
+
+    var titleBar = $('#title-bar')
+	var h = titleBar.height()
+	var k = 'shrink'
+    window.onscroll = function(){
+        if (window.scrollY > h)
+        	titleBar.addClass(k)
+		else if (!window.scrollY)
+            titleBar.removeClass(k)
+    }
+
+    $('#switch-theme').click(()=>{
+        $('body').toggleClass(curTheme+themePostfix);
+		curTheme = themes[themes.indexOf(curTheme) ^1]
+        $('body').toggleClass(curTheme+themePostfix);
+        localStorage.setItem('theme', curTheme);
+    });
+});
+</script>
+<style>
+	#title-bar { color:white; height:1.5em; transition:height .2s ease; overflow:hidden; position: relative; top: 0.2em;font-size:120%; }
+	#title-bar.shrink { height:0; }
+	#foldercomment { clear:left; }
+	#switch-theme { color: #aaa; position: absolute; right: .5em; }
+</style>
+
+	</div>
+	<div id="menu-bar">
+		<button title="Login" onclick='showLogin()'><i class='fa fa-user'></i><span>Login</span></button>
+		<button title="Search"
+		    onclick="$('#search-panel').toggle().find(':input:first').focus()">
+			<i class='fa fa-search'></i><span>Search</span>
+		</button>
+		<button id="multiselection" title="Enable multi-selection" onclick='toggleSelection()'>
+			<i class='fa fa-check'></i>
+			<span>Selection</span>
+		</button>
+		
+		<button id="toggleTs" title="Display timestamps" onclick="toggleTs()">
+			<i class='fa fa-clock'></i>
+			<span>Toggle timestamp</span>
+		</button>
+
+		<button id='archiveBtn' title="Download selected files as a single archive" onclick='
+			ask("Download these files as a single archive?", ()=> 
+				submit({ selection: getSelectedItemsName() }, "/ODTest/?mode=archive&recursive") )'>
+			<i class="fa fa-file-archive"></i>
+			<span>Archive</span>
+		</button>
+		
+
+		<button id="sort" title="Change list order" onclick="changeSort()">
+			<i class='fa fa-sort'></i>
+			<span></span>
+		</button>
+	</div>
+
+    <div id="additional-panels">
+		<div id="search-panel" class="additional-panel closeable" style="display:none">
+	<form>
+		Search <input name="search" value="" />
+		<br><input type='radio' name='where' value='fromhere' checked='true' />  this folder and sub-folders
+		<br><input type='radio' name='where' value='here' />  this folder only
+		<br><input type='radio' name='where' value='anywhere' />  entire server
+		<button type="submit">Go</button>
+		<button onclick="return!(location='.')" style="margin-right: 0.3em;">Clear</button>
+	</form>
+</div>
+<style>
+	#search-panel [name=search] { margin: 0 0 0.3em 0.1em; }
+	#search-panel button { float:right }
+</style>
+<script>
+    $('#search-panel').submit(function(){
+        var s = $(this).find('[name=search]').val()
+        var folder = ''
+        var ps = []
+        switch ($('[name=where]:checked').val()) {
+            case 'anywhere': folder = '/'
+            case 'fromhere':
+                ps.push('search='+s)
+                break
+            case 'here':
+                if (s.indexOf('*') < 0)
+                    s = '*'+s+'*'
+                ps.push('files-filter='+s)
+                ps.push('folders-filter='+s)
+                break
+        }
+        location = folder+'?'+ps.join('&')
+        return false
+    })
+</script>
+
+		<div id="upload-panel" class="additional-panel closeable" style="display:none">
+	<div id="upload-counters">
+		Uploaded: <span id="upload-ok">0</span>
+		<span style="display:none"> - Failed: <span id="upload-ko">0</span></span>
+		- Queued: <span id="upload-q">0</span>
+	</div>
+	<div id="upload-results"></div>
+	<div id="upload-progress">
+		Uploading... <span id="progress-text"></span>
+		<progress max="1"></progress>
+	</div>
+	<button onclick="reload()"><i class="fa fa-refresh"></i> Reload page</button>
+</div>
+
+		<div id="selection-panel" class="additional-panel" style="display:none">
+			<label><span id="selected-counter">0</span> selected</label>
+			<span class="buttons">
+				<button id="select-mask"><i class="fa fa-asterisk"></i><span>Mask</span></button>
+				<button id="select-invert"><i class="fa fa-retweet"></i><span>Invert</span></button>
+				<button id="delete-selection"><i class="fa fa-trash"></i><span>Delete</span></button>
+				<button id="move-selection"><i class="fa fa-truck"></i><span>Move</span></button>
+			</span>
+		</div>
+    </div>
+</div>
+
+	<div id='folder-path'>
+	<button onclick="location.href='/' "> <i class='fa fa-home'></i></button><button onclick="location.href='/ODTest/' "> ODTest</button>
+</div>
+<div id='folder-stats'>
+	4 folders, 3 files, 19.4 KB
+</div>
+
+
+	
+	<div id='files' class="hideTs      ">
+	<div class='item item-type-folder  can-archive'>
+	<div class="item-link">
+		<a href="%C2%A1%C2%A2%C2%A3%C2%A4%C2%A5%C4%83%C4%84%C6%83%C9%94%CA%B5%CC%86%CE%85%D0%84%D4%86%D4%B7%20%D8%A7%DC%91%E0%A4%8C%E0%A6%8B%E0%A8%95%E0%AA%8F%E0%AC%93%E0%AE%92%E0%B0%8E%E0%B2%90%E0%B4%8E%E0%B6%90%E0%B8%97%E0%BA%9E%E0%BC%A9%E1%80%92%E1%82%B1%E1%84%8E%E1%88%93%E1%8E%B7%E1%90%96%E1%9A%96%E1%9A%B8%E1%9C%83%E1%9E%97%E1%A0%AE%E2%84%95%E2%85%A8%E2%86%A6/">
+			<img src="/~img_folder" />
+			¡¢£¤¥ăĄƃɔʵ̆΅ЄԆԷ اܑऌঋਕએଓஒఎಐഎඐทພ༩ဒႱᄎሓᎷᐖᚖᚸᜃភᠮℕⅨ↦
+		</a>
+	</div>
+	<div class='item-props'>
+		<span class="item-ts"><i class='fa fa-clock'></i> 2021-01-09 15:28</span>		        <button class='item-menu' title="More options"><i class="fa fa-menu"></i></button> 	</div>
+	<div class='clearer'></div>    
+	
+</div>
+<div class='item item-type-folder  can-archive'>
+	<div class="item-link">
+		<a href="EmptyFolder/">
+			<img src="/~img_folder" />
+			EmptyFolder
+		</a>
+	</div>
+	<div class='item-props'>
+		<span class="item-ts"><i class='fa fa-clock'></i> 2022-10-29 15:31</span>		        <button class='item-menu' title="More options"><i class="fa fa-menu"></i></button> 	</div>
+	<div class='clearer'></div>    
+	
+</div>
+<div class='item item-type-folder  can-archive'>
+	<div class="item-link">
+		<a href="resources/">
+			<img src="/~img_folder" />
+			resources
+		</a>
+	</div>
+	<div class='item-props'>
+		<span class="item-ts"><i class='fa fa-clock'></i> 2021-01-09 15:28</span>		        <button class='item-menu' title="More options"><i class="fa fa-menu"></i></button> 	</div>
+	<div class='clearer'></div>    
+	
+</div>
+<div class='item item-type-folder  can-archive'>
+	<div class="item-link">
+		<a href="Test/">
+			<img src="/~img_folder" />
+			Test
+		</a>
+	</div>
+	<div class='item-props'>
+		<span class="item-ts"><i class='fa fa-clock'></i> 2022-10-02 18:14</span>		        <button class='item-menu' title="More options"><i class="fa fa-menu"></i></button> 	</div>
+	<div class='clearer'></div>    
+	
+</div>
+<div class='item item-type-file  can-archive'>
+	<div class="item-link">
+		<a href="%E2%88%8C%E2%8C%80%E2%91%A1%E2%96%84%E2%96%A3%E2%98%82%E2%9C%84%E2%A0%85%E2%BF%B4%E3%80%84.test">
+			<img src="/~img37" />
+			∌⌀②▄▣☂✄⠅⿴〄.test
+		</a>
+	</div>
+	<div class='item-props'>
+		<span class="item-ts"><i class='fa fa-clock'></i> 2018-11-02 10:08</span>		<span class="item-size"><i class='fa fa-download' title="Download counter: 0"></i> 18.2 KB</span>		        <button class='item-menu' title="More options"><i class="fa fa-menu"></i></button> 	</div>
+	<div class='clearer'></div>    
+	
+</div>
+<div class='item item-type-file  can-archive'>
+	<div class="item-link">
+		<a href="asciifilename.txt">
+			<img src="/~img41" />
+			asciifilename.txt
+		</a>
+	</div>
+	<div class='item-props'>
+		<span class="item-ts"><i class='fa fa-clock'></i> 2018-11-02 10:05</span>		<span class="item-size"><i class='fa fa-download' title="Download counter: 0"></i> 0B</span>		        <button class='item-menu' title="More options"><i class="fa fa-menu"></i></button> 	</div>
+	<div class='clearer'></div>    
+	
+</div>
+<div class='item item-type-file  can-archive'>
+	<div class="item-link">
+		<a href="index.php">
+			<img src="/~img42" />
+			index.php
+		</a>
+	</div>
+	<div class='item-props'>
+		<span class="item-ts"><i class='fa fa-clock'></i> 2017-06-23 23:55</span>		<span class="item-size"><i class='fa fa-download' title="Download counter: 0"></i> 1.3 KB</span>		        <button class='item-menu' title="More options"><i class="fa fa-menu"></i></button> 	</div>
+	<div class='clearer'></div>    
+	
+</div>
+
+	</div>
+
+<div id="serverinfo">
+	<a href="http://www.rejetto.com/hfs/" title="Build-time: 0.019"><i class="fa fa-coffee"></i> Uptime: 01:05:29</a>
+</div>
+
+
+	</div>
+</body>
+</html>
