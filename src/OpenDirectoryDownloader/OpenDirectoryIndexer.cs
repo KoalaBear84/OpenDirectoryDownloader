@@ -1495,7 +1495,7 @@ public partial class OpenDirectoryIndexer
 
 		if (!string.IsNullOrWhiteSpace(charSet))
 		{
-			if (EncodingInfos.Any(e => e.Name == charSet))
+			if (EncodingInfos.Any(e => e.Name.Equals(charSet, StringComparison.InvariantCultureIgnoreCase)))
 			{
 				encoding = Encoding.GetEncoding(charSet);
 			}
