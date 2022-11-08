@@ -1,4 +1,4 @@
-﻿using PuppeteerExtraSharp;
+using PuppeteerExtraSharp;
 using PuppeteerExtraSharp.Plugins.ExtraStealth;
 using PuppeteerSharp;
 using System.Diagnostics;
@@ -41,6 +41,16 @@ public class BrowserContext : IDisposable
 		Browser?.Dispose();
 		CancellationTokenSource.Dispose();
 		GC.SuppressFinalize(this);
+	}
+
+	private void WriteDebugInfo(string message)
+	{
+		if (!DebugInfo)
+		{
+			return;
+		}
+
+		Console.WriteLine(message);
 	}
 
 	public async Task<bool> DoCloudFlareAsync(string url)
@@ -219,188 +229,119 @@ public class BrowserContext : IDisposable
 
 	private void Browser_Closed(object sender, EventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine("Browser_Closed");
-		}
+		WriteDebugInfo("Browser_Closed");
 	}
 
 	private void Browser_Disconnected(object sender, EventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine("Browser_Disconnected");
-		}
+		WriteDebugInfo("Browser_Disconnected");
 	}
 
 	private void Browser_TargetChanged(object sender, TargetChangedArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Browser_TargetChanged: {e.Target.Url}");
-		}
+		WriteDebugInfo($"Browser_TargetChanged: {e.Target.Url}");
 	}
 
 	private void Browser_TargetCreated(object sender, TargetChangedArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Browser_TargetCreated: {e.Target.Url}");
-		}
+		WriteDebugInfo($"Browser_TargetCreated: {e.Target.Url}");
 	}
 
 	private void Browser_TargetDestroyed(object sender, TargetChangedArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Browser_TargetDestroyed: {e.Target.Url}");
-		}
+		WriteDebugInfo($"Browser_TargetDestroyed: {e.Target.Url}");
 	}
 
 	private void Page_Close(object sender, EventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Page_Close");
-		}
+		WriteDebugInfo($"Page_Close");
 	}
 
 	private void Page_Console(object sender, ConsoleEventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Page_Console: {e.Message.Type}, {e.Message.Text}");
-		}
+		WriteDebugInfo($"Page_Console: {e.Message.Type}, {e.Message.Text}");
 	}
 
 	private void Page_Dialog(object sender, DialogEventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Page_Dialog: {e.Dialog.DialogType}, {e.Dialog.Message}");
-		}
+		WriteDebugInfo($"Page_Dialog: {e.Dialog.DialogType}, {e.Dialog.Message}");
 	}
 
 	private void Page_DOMContentLoaded(object sender, EventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine("Page_DOMContentLoaded");
-		}
+		WriteDebugInfo("Page_DOMContentLoaded");
 	}
 
 	private void Page_Error(object sender, ErrorEventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Page_Error: {e.Error}");
-		}
+		WriteDebugInfo($"Page_Error: {e.Error}");
 	}
 
 	private void Page_FrameAttached(object sender, FrameEventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Page_FrameAttached: {e.Frame.Name}, {e.Frame.Url}");
-		}
+		WriteDebugInfo($"Page_FrameAttached: {e.Frame.Name}, {e.Frame.Url}");
 	}
 
 	private void Page_FrameDetached(object sender, FrameEventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Page_FrameDetached: {e.Frame.Name}, {e.Frame.Url}");
-		}
+		WriteDebugInfo($"Page_FrameDetached: {e.Frame.Name}, {e.Frame.Url}");
 	}
 
 	private void Page_FrameNavigated(object sender, FrameEventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Page_FrameNavigated: {e.Frame.Name}, {e.Frame.Url}");
-		}
+		WriteDebugInfo($"Page_FrameNavigated: {e.Frame.Name}, {e.Frame.Url}");
 	}
 
 	private void Page_Load(object sender, EventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine("Page_Load");
-		}
+		WriteDebugInfo("Page_Load");
 	}
 
 	private void Page_Metrics(object sender, MetricEventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Page_Metrics: {e.Title}, {e.Metrics.Count}");
-		}
+		WriteDebugInfo($"Page_Metrics: {e.Title}, {e.Metrics.Count}");
 	}
 
 	private void Page_PageError(object sender, PageErrorEventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Page_PageError: {e.Message}");
-		}
+		WriteDebugInfo($"Page_PageError: {e.Message}");
 	}
 
 	private void Page_Popup(object sender, PopupEventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Page_Popup: {e.PopupPage.Url}");
-		}
+		WriteDebugInfo($"Page_Popup: {e.PopupPage.Url}");
 	}
 
 	private void Page_Request(object sender, RequestEventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Page_Request: [{e.Request?.Method}] {e.Request?.Url}");
-		}
+		WriteDebugInfo($"Page_Request: [{e.Request?.Method}] {e.Request?.Url}");
 	}
 
 	private void Page_RequestFailed(object sender, RequestEventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Page_RequestFailed: [{e.Request?.Method}] {e.Request?.Url}");
-		}
+		WriteDebugInfo($"Page_RequestFailed: [{e.Request?.Method}] {e.Request?.Url}");
 	}
 
 	private void Page_RequestFinished(object sender, RequestEventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Page_RequestFinished: [{e.Request?.Method}] {e.Request?.Url}");
-		}
+		WriteDebugInfo($"Page_RequestFinished: [{e.Request?.Method}] {e.Request?.Url}");
 	}
 
 	private void Page_RequestServedFromCache(object sender, RequestEventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Page_RequestServedFromCache: [{e.Request?.Method}] {e.Request?.Url}");
-		}
+		WriteDebugInfo($"Page_RequestServedFromCache: [{e.Request?.Method}] {e.Request?.Url}");
 	}
 
 	private void Page_Response(object sender, ResponseCreatedEventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Page_Response: {e.Response.Url}.{Environment.NewLine}Headers: {string.Join(Environment.NewLine, e.Response.Headers.Select(h => $"{h.Key}: {h.Value}"))}");
-		}
+		WriteDebugInfo($"Page_Response: {e.Response.Url}.{Environment.NewLine}Headers: {string.Join(Environment.NewLine, e.Response.Headers.Select(h => $"{h.Key}: {h.Value}"))}");
 
 		if (e.Response.Headers.TryGetValue(SetCookieHeader, out string cookieHeader))
 		{
 			Uri uri = new(e.Response.Url);
 			string baseUrl = $"{uri.Scheme}://{uri.Host}";
 
-			if (DebugInfo)
-			{
-				Console.WriteLine($"Cookies: {cookieHeader}");
-			}
+			WriteDebugInfo($"Cookies: {cookieHeader}");
 
 			string theCookie = cookieHeader.Split('\n').FirstOrDefault(cookie => cookie.StartsWith(CloudflareClearanceKey));
 
@@ -429,17 +370,11 @@ public class BrowserContext : IDisposable
 
 	private void Page_WorkerCreated(object sender, WorkerEventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Page_WorkerCreated: {e.Worker.Url}");
-		}
+		WriteDebugInfo($"Page_WorkerCreated: {e.Worker.Url}");
 	}
 
 	private void Page_WorkerDestroyed(object sender, WorkerEventArgs e)
 	{
-		if (DebugInfo)
-		{
-			Console.WriteLine($"Page_WorkerDestroyed: {e.Worker.Url}");
-		}
+		WriteDebugInfo($"Page_WorkerDestroyed: {e.Worker.Url}");
 	}
 }
