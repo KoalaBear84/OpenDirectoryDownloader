@@ -98,6 +98,23 @@ public class BrowserContext : IDisposable
 		return OK;
 	}
 
+	public static void AddCookiesToContainer(CookieContainer cookieContainer, CookieParam[] cookieParams)
+	{
+		foreach (CookieParam cookieParam in cookieParams)
+		{
+			cookieContainer.Add(new Cookie
+			{
+				Name = cookieParam.Name,
+				Domain = cookieParam.Domain,
+				Path = cookieParam.Path,
+				Expires = Library.UnixTimestampToDateTime((long)cookieParam.Expires),
+				HttpOnly = cookieParam.HttpOnly ?? false,
+				Value = cookieParam.Value,
+				Secure = cookieParam.Secure ?? false
+			});
+		}
+	}
+
 	public async Task InitializeAsync()
 	{
 		try

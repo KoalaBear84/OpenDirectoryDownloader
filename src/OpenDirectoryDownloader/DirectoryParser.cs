@@ -397,19 +397,7 @@ public static class DirectoryParser
 						// Transfer cookies to HttpClient, so hopefully the following requests can be done with the help of cookies
 						CookieParam[] cookieParams = await browserContext.GetCookiesAsync();
 
-						foreach (CookieParam cookieParam in cookieParams)
-						{
-							socketsHttpHandler.CookieContainer.Add(new Cookie
-							{
-								Name = cookieParam.Name,
-								Domain = cookieParam.Domain,
-								Path = cookieParam.Path,
-								Expires = Library.UnixTimestampToDateTime((long)cookieParam.Expires),
-								HttpOnly = cookieParam.HttpOnly ?? false,
-								Value = cookieParam.Value,
-								Secure = cookieParam.Secure ?? false
-							});
-						}
+						BrowserContext.AddCookiesToContainer(socketsHttpHandler.CookieContainer, cookieParams);
 
 						if (OpenDirectoryIndexer.Session.MaxThreads != OpenDirectoryIndexer.Session.CommandLineOptions.Threads)
 						{
