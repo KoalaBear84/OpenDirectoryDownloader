@@ -1062,7 +1062,7 @@ public partial class OpenDirectoryIndexer
 		{
 			string cloudflareHtml = await GetHtml(httpResponseMessage);
 
-			if (Regex.IsMatch(cloudflareHtml, @"<form class=""challenge-form[^>]*>([\s\S]*?)<\/form>"))
+			if (Regex.IsMatch(cloudflareHtml, @"<form (?:class|id)=""challenge-form[^>]*>([\s\S]*?)<\/form>"))
 			{
 				if (!HttpClient.DefaultRequestHeaders.UserAgent.Any())
 				{

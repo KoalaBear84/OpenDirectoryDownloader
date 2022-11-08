@@ -1,4 +1,4 @@
-using PuppeteerExtraSharp;
+﻿using PuppeteerExtraSharp;
 using PuppeteerExtraSharp.Plugins.ExtraStealth;
 using PuppeteerSharp;
 using System.Diagnostics;
@@ -21,6 +21,8 @@ public class BrowserContext : IDisposable
 	private CancellationTokenSource CancellationTokenSource { get; set; } = new CancellationTokenSource();
 	private bool OK { get; set; }
 	private static readonly SemaphoreSlim SemaphoreSlimFetcher = new(1, 1);
+
+	private readonly object LockCheckCloudflareCookie = new();
 
 	public BrowserContext(CookieContainer cookieContainer, bool cloudFlare = false, bool debugInfo = false, TimeSpan timeout = default)
 	{
@@ -71,6 +73,17 @@ public class BrowserContext : IDisposable
 			Program.Logger.Debug("Navigating to {url}..", url);
 
 			await Page.GoToAsync(url);
+
+			Task.Run(() =>
+			{
+				while (!CancellationTokenSource.IsCancellationRequested)
+				{
+					CheckCloudflareCookie();
+
+					Task.Delay(TimeSpan.FromSeconds(1)).Wait();
+				}
+			});
+
 			await Task.Delay(TimeSpan.FromSeconds(60), CancellationTokenSource.Token);
 
 			Program.Logger.Debug("Navigation done in {elapsedMilliseconds}ms", stopwatch.ElapsedMilliseconds);
@@ -372,10 +385,7 @@ public class BrowserContext : IDisposable
 
 					if (cloudflareClearance != null)
 					{
-						if (DebugInfo)
-						{
-							Console.WriteLine($"Cloudflare clearance cookie found: {cloudflareClearance.Value}");
-						}
+						WriteDebugInfo($"Cloudflare clearance cookie found: {cloudflareClearance.Value}");
 
 						OK = true;
 						CancellationTokenSource.Cancel();
@@ -383,6 +393,48 @@ public class BrowserContext : IDisposable
 				}
 			}
 		}
+		else
+		{
+			CheckCloudflareCookie();
+		}
+	}
+
+	private void CheckCloudflareCookie()
+	{
+		if (OK)
+		{
+			return;
+		}
+
+		Task.Run(() =>
+		{
+			lock (LockCheckCloudflareCookie)
+			{
+				WriteDebugInfo("Retrieve cookies..");
+
+				try
+				{
+					CookieParam[] cookieParams = Page.GetCookiesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+					WriteDebugInfo($"Retrieved {cookieParams.Length} cookies");
+
+					CookieParam cloudflareClearanceCookie = cookieParams.FirstOrDefault(cookie => cookie.Name.StartsWith(CloudflareClearanceKey));
+
+					if (cloudflareClearanceCookie is not null)
+					{
+						WriteDebugInfo($"Cloudflare clearance cookie found: {cloudflareClearanceCookie.Value}");
+
+						AddCookiesToContainer(CookieContainer, cookieParams);
+
+						OK = true;
+						CancellationTokenSource.Cancel();
+					}
+				}
+				catch
+				{
+					// No logging
+				}
+			}
+		});
 	}
 
 	private void Page_WorkerCreated(object sender, WorkerEventArgs e)
