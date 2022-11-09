@@ -3,6 +3,7 @@ using Esprima;
 using Esprima.Ast;
 using Jint;
 using Jint.Native;
+using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using System.Text;
@@ -171,8 +172,11 @@ public static class BhadooIndexParser
 		{
 			Polly.Retry.AsyncRetryPolicy asyncRetryPolicy = Library.GetAsyncRetryPolicy((ex, waitTimeSpan, retry, pollyContext) =>
 			{
-				Program.Logger.Warning("Error retrieving directory listing for '{url}', waiting {waitTime:F0} seconds.. Error: {error}", webDirectory.Uri, waitTimeSpan.TotalSeconds, ex.Message);
-				RateLimiter.AddDelay(waitTimeSpan);
+				if (ex is not SilentException)
+				{
+					Program.Logger.Warning("Error retrieving directory listing for '{url}', waiting {waitTime:F0} seconds.. Error: {error}", webDirectory.Uri, waitTimeSpan.TotalSeconds, ex.Message);
+					RateLimiter.AddDelay(waitTimeSpan);
+				}
 			}, 8);
 
 			if (!webDirectory.Url.EndsWith("/"))
@@ -202,6 +206,10 @@ public static class BhadooIndexParser
 					HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
 					webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
+
+					CancellationTokenSource cancellationTokenSource = new();
+					await OpenDirectoryIndexer.CheckRetryAfterAndWait("X", webDirectory, cancellationTokenSource, httpResponseMessage);
+
 					httpResponseMessage.EnsureSuccessStatusCode();
 
 					try
@@ -267,14 +275,17 @@ public static class BhadooIndexParser
 		}
 		catch (Exception ex)
 		{
-			Program.Logger.Error(ex, "Error retrieving directory listing for {url}", webDirectory.Url);
-			webDirectory.Error = true;
-
-			OpenDirectoryIndexer.Session.Errors++;
-
-			if (!OpenDirectoryIndexer.Session.UrlsWithErrors.Contains(webDirectory.Url))
+			if (ex is not SilentException)
 			{
-				OpenDirectoryIndexer.Session.UrlsWithErrors.Add(webDirectory.Url);
+				Program.Logger.Error(ex, "Error retrieving directory listing for {url}", webDirectory.Url);
+				webDirectory.Error = true;
+
+				OpenDirectoryIndexer.Session.Errors++;
+
+				if (!OpenDirectoryIndexer.Session.UrlsWithErrors.Contains(webDirectory.Url))
+				{
+					OpenDirectoryIndexer.Session.UrlsWithErrors.Add(webDirectory.Url);
+				}
 			}
 
 			//throw;

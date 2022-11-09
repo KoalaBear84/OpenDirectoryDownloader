@@ -1026,39 +1026,7 @@ public partial class OpenDirectoryIndexer
 			return;
 		}
 
-		if (httpResponseMessage?.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLowerInvariant() == "cloudflare")
-		{
-			string cloudflareHtml = await GetHtml(httpResponseMessage);
-
-			if (Regex.IsMatch(cloudflareHtml, @"<form class=""challenge-form[^>]*>([\s\S]*?)<\/form>"))
-			{
-				if (!HttpClient.DefaultRequestHeaders.UserAgent.Any())
-				{
-					HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
-					httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
-				}
-			}
-		}
-
-		if (httpResponseMessage?.StatusCode == HttpStatusCode.ServiceUnavailable && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLowerInvariant() == "cloudflare")
-		{
-			if (OpenDirectoryIndexerSettings.CommandLineOptions.NoBrowser)
-			{
-				Program.Logger.Error("Cloudflare protection detected, --no-browser option active, cannot continue!");
-				return;
-			}
-
-			bool cloudflareOK = await OpenCloudflareBrowser();
-
-			if (!cloudflareOK)
-			{
-				Program.Logger.Error("Cloudflare failed!");
-
-				return;
-			}
-		}
-
-		if (httpResponseMessage?.StatusCode == HttpStatusCode.Forbidden && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLowerInvariant() == "cloudflare")
+		if ((httpResponseMessage?.StatusCode == HttpStatusCode.ServiceUnavailable || httpResponseMessage?.StatusCode == HttpStatusCode.Forbidden) && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLowerInvariant() == "cloudflare")
 		{
 			string cloudflareHtml = await GetHtml(httpResponseMessage);
 
@@ -1358,37 +1326,9 @@ public partial class OpenDirectoryIndexer
 			}
 			else
 			{
-				if (httpResponseMessage.StatusCode == HttpStatusCode.TooManyRequests)
-				{
-					if (httpResponseMessage.Headers.RetryAfter is RetryConditionHeaderValue retryConditionHeaderValue)
-					{
-						if (retryConditionHeaderValue.Date is DateTimeOffset dateTimeOffset)
-						{
-							Program.Logger.Warning("[{thread}] Rate limited on Url '{url}'. Need to wait until {untilDate} ({waitTime:F1}) seconds.", threadName, webDirectory.Url, retryConditionHeaderValue.Date, (DateTimeOffset.UtcNow - dateTimeOffset).TotalSeconds);
-							httpResponseMessage.Dispose();
-							TimeSpan rateLimitTimeSpan = DateTimeOffset.UtcNow - dateTimeOffset;
-							cancellationTokenSource.CancelAfter(rateLimitTimeSpan.Add(TimeSpan.FromMinutes(5)));
-							await Task.Delay(rateLimitTimeSpan, cancellationTokenSource.Token);
-							throw new SilentException();
-						}
-						else if (retryConditionHeaderValue.Delta is TimeSpan timeSpan)
-						{
-							Program.Logger.Warning("[{thread}] Rate limited on Url '{url}'. Need to wait for {waitTime:F1} seconds ({untilDate:HH:mm:ss}).", threadName, webDirectory.Url, timeSpan.TotalSeconds, DateTime.Now.Add(timeSpan));
-							httpResponseMessage.Dispose();
-							cancellationTokenSource.CancelAfter(timeSpan.Add(TimeSpan.FromMinutes(5)));
-							await Task.Delay(timeSpan, cancellationTokenSource.Token);
-							throw new SilentException();
-						}
-						else
-						{
-							httpResponseMessage.EnsureSuccessStatusCode();
-						}
-					}
-				}
-				else
-				{
-					httpResponseMessage.EnsureSuccessStatusCode();
-				}
+				await CheckRetryAfterAndWait(threadName, webDirectory, cancellationTokenSource, httpResponseMessage);
+
+				httpResponseMessage.EnsureSuccessStatusCode();
 			}
 		}
 		else
@@ -1398,11 +1338,35 @@ public partial class OpenDirectoryIndexer
 		}
 	}
 
+	public static async Task CheckRetryAfterAndWait(string threadName, WebDirectory webDirectory, CancellationTokenSource cancellationTokenSource, HttpResponseMessage httpResponseMessage)
+	{
+		if (httpResponseMessage.Headers.RetryAfter is RetryConditionHeaderValue retryConditionHeaderValue)
+		{
+			if (retryConditionHeaderValue.Date is DateTimeOffset dateTimeOffset)
+			{
+				Program.Logger.Warning("[{thread}] Rate limited on Url '{url}'. Need to wait until {untilDate} ({waitTime:F1}) seconds.", threadName, webDirectory.Url, retryConditionHeaderValue.Date, (DateTimeOffset.UtcNow - dateTimeOffset).TotalSeconds);
+				httpResponseMessage.Dispose();
+				TimeSpan rateLimitTimeSpan = DateTimeOffset.UtcNow - dateTimeOffset;
+				cancellationTokenSource.CancelAfter(rateLimitTimeSpan.Add(TimeSpan.FromMinutes(5)));
+				await Task.Delay(rateLimitTimeSpan, cancellationTokenSource.Token);
+				throw new SilentException();
+			}
+			else if (retryConditionHeaderValue.Delta is TimeSpan timeSpan)
+			{
+				Program.Logger.Warning("[{thread}] Rate limited on Url '{url}'. Need to wait for {waitTime:F1} seconds ({untilDate:HH:mm:ss}).", threadName, webDirectory.Url, timeSpan.TotalSeconds, DateTime.Now.Add(timeSpan));
+				httpResponseMessage.Dispose();
+				cancellationTokenSource.CancelAfter(timeSpan.Add(TimeSpan.FromMinutes(5)));
+				await Task.Delay(timeSpan, cancellationTokenSource.Token);
+				throw new SilentException();
+			}
+		}
+	}
+
 	private async Task<bool> OpenCloudflareBrowser()
 	{
 		Program.Logger.Warning("Cloudflare protection detected, trying to launch browser. Solve protection yourself, indexing will start automatically!");
 
-		using BrowserContext browserContext = new(SocketsHttpHandler.CookieContainer, cloudFlare: true);
+		using BrowserContext browserContext = new(SocketsHttpHandler.CookieContainer, cloudFlare: true, debugInfo: false);
 		bool cloudFlareOK = await browserContext.DoCloudFlareAsync(OpenDirectoryIndexerSettings.Url);
 
 		if (cloudFlareOK)
