@@ -62,7 +62,7 @@ jobs:
 
     - name: Get version info
       id: get_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/v}
+      run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
       
     - name: Restore with dotnet
       run: dotnet restore src/OpenDirectoryDownloader
@@ -115,7 +115,7 @@ jobs:
 
     - name: Get tag info
       id: tag_info
-      run: echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
+      run: echo "SOURCE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
     - name: Create release
       uses: softprops/action-gh-release@v1
       env:
@@ -151,7 +151,7 @@ jobs:
     steps:
       - name: Get version info
         id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/v}
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
       - name: Download artifact 
         uses: actions/download-artifact@v2
@@ -200,7 +200,7 @@ jobs:
 
       - name: Get tag info
         id: tag_info
-        run: echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
+        run: echo "SOURCE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
       - name: Combine images
         run: >
