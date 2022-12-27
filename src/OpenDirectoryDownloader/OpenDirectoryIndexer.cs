@@ -1424,10 +1424,9 @@ public partial class OpenDirectoryIndexer
 
 	private static async Task<string> GetHtml(Stream stream)
 	{
-		using (StreamReader streamReader = new(stream))
-		{
-			return await streamReader.ReadToEndAsync();
-		}
+		using StreamReader streamReader = new(stream);
+
+		return await streamReader.ReadToEndAsync();
 	}
 
 	/// <summary>
@@ -1469,58 +1468,56 @@ public partial class OpenDirectoryIndexer
 		MemoryStream responseStream = new();
 		StreamWriter streamWriter = new(responseStream, encoding);
 
-		using (Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync())
+		using Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync();
+
+		using StreamReader streamReader = new(stream, encoding);
+
+		// Check first 10kB for any 'HTML'
+		char[] buffer = new char[10 * Constants.Kilobyte];
+		int readBytes = await streamReader.ReadBlockAsync(buffer, 0, buffer.Length);
+
+		if (readBytes < buffer.Length)
 		{
-			using (StreamReader streamReader = new(stream, encoding))
-			{
-				// Check first 10kB for any 'HTML'
-				char[] buffer = new char[10 * Constants.Kilobyte];
-				int readBytes = await streamReader.ReadBlockAsync(buffer, 0, buffer.Length);
-
-				if (readBytes < buffer.Length)
-				{
-					Array.Resize(ref buffer, readBytes);
-				}
-
-				if (!buffer.Contains('<'))
-				{
-					return null;
-				}
-				else if (!IsHtmlMaybe(buffer, readBytes))
-				{
-					return null;
-				}
-				else
-				{
-					Regex htmlRegex = HtmlRegex();
-
-					if (!htmlRegex.Match(new string(buffer)).Success)
-					{
-						return null;
-					}
-				}
-
-				await streamWriter.WriteAsync(buffer, 0, buffer.Length);
-				await streamWriter.FlushAsync();
-
-				buffer = new char[Constants.Kilobyte];
-
-				do
-				{
-					readBytes = await streamReader.ReadBlockAsync(buffer, 0, buffer.Length);
-
-					if (readBytes > 0)
-					{
-						await streamWriter.WriteAsync(buffer, 0, readBytes);
-						await streamWriter.FlushAsync();
-					}
-				} while (readBytes > 0);
-
-				streamReader.Close();
-			}
-
-			stream.Close();
+			Array.Resize(ref buffer, readBytes);
 		}
+
+		if (!buffer.Contains('<'))
+		{
+			return null;
+		}
+		else if (!IsHtmlMaybe(buffer, readBytes))
+		{
+			return null;
+		}
+		else
+		{
+			Regex htmlRegex = HtmlRegex();
+
+			if (!htmlRegex.Match(new string(buffer)).Success)
+			{
+				return null;
+			}
+		}
+
+		await streamWriter.WriteAsync(buffer, 0, buffer.Length);
+		await streamWriter.FlushAsync();
+
+		buffer = new char[Constants.Kilobyte];
+
+		do
+		{
+			readBytes = await streamReader.ReadBlockAsync(buffer, 0, buffer.Length);
+
+			if (readBytes > 0)
+			{
+				await streamWriter.WriteAsync(buffer, 0, readBytes);
+				await streamWriter.FlushAsync();
+			}
+		} while (readBytes > 0);
+
+		streamReader.Close();
+
+		stream.Close();
 
 		await streamWriter.FlushAsync();
 		responseStream.Seek(0, SeekOrigin.Begin);

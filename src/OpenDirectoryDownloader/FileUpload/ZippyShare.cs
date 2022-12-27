@@ -37,41 +37,35 @@ public class ZippyShare : IFileUploadSite
 				string uploadId = uploadIdMatch.Groups["UploadId"].Value;
 				string server = serverMatch.Groups["Server"].Value;
 
-				using (MultipartFormDataContent multipartFormDataContent = new($"Upload----{Guid.NewGuid()}"))
+				using MultipartFormDataContent multipartFormDataContent = new($"Upload----{Guid.NewGuid()}")
 				{
-					multipartFormDataContent.Add(new StringContent("on"), "terms");
-					multipartFormDataContent.Add(new StringContent("on"), "private");
-					multipartFormDataContent.Add(new StringContent(uploadId), "uploadId");
-					multipartFormDataContent.Add(new StreamContent(new FileStream(path, FileMode.Open)), "file", Path.GetFileName(path));
+					{ new StringContent("on"), "terms" },
+					{ new StringContent("on"), "private" },
+					{ new StringContent(uploadId), "uploadId" },
+					{ new StreamContent(new FileStream(path, FileMode.Open)), "file", Path.GetFileName(path) }
+				};
 
-					using (HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"https://{server}.zippyshare.com/upload", multipartFormDataContent))
+				using HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"https://{server}.zippyshare.com/upload", multipartFormDataContent);
+
+				if (httpResponseMessage.IsSuccessStatusCode)
+				{
+					string response = await httpResponseMessage.Content.ReadAsStringAsync();
+					OpenDirectoryIndexer.Session.UploadedUrlsResponse = response;
+
+					Program.Logger.Debug("Response from {siteName}: {response}", Name, response);
+
+					IHtmlDocument htmlDocument = await HtmlParser.ParseDocumentAsync(response);
+					IHtmlAnchorElement link = htmlDocument.QuerySelector<IHtmlAnchorElement>("#urls a") ?? throw new Exception($"{Name} error, cannot find link");
+					
+					return new ZippyShareFile
 					{
-						if (httpResponseMessage.IsSuccessStatusCode)
-						{
-							string response = await httpResponseMessage.Content.ReadAsStringAsync();
-							OpenDirectoryIndexer.Session.UploadedUrlsResponse = response;
-
-							Program.Logger.Debug("Response from {siteName}: {response}", Name, response);
-
-							IHtmlDocument htmlDocument = await HtmlParser.ParseDocumentAsync(response);
-							IHtmlAnchorElement link = htmlDocument.QuerySelector<IHtmlAnchorElement>("#urls a");
-
-							if (link == null)
-							{
-								throw new Exception($"{Name} error, cannot find link");
-							}
-
-							return new ZippyShareFile
-							{
-								Url = link.Href
-							};
-						}
-						else
-						{
-							Program.Logger.Error("Error uploading file, retry in 5 seconds..");
-							await Task.Delay(TimeSpan.FromSeconds(5));
-						}
-					}
+						Url = link.Href
+					};
+				}
+				else
+				{
+					Program.Logger.Error("Error uploading file, retry in 5 seconds..");
+					await Task.Delay(TimeSpan.FromSeconds(5));
 				}
 
 				retries++;

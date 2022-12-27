@@ -106,13 +106,10 @@ public class Library
 	{
 		JsonSerializer jsonSerializer = new();
 
-		using (StreamWriter streamWriter = new(filePath))
-		{
-			using (JsonWriter jsonWriter = new JsonTextWriter(streamWriter))
-			{
-				jsonSerializer.Serialize(jsonWriter, session);
-			}
-		}
+		using StreamWriter streamWriter = new(filePath);
+		using JsonWriter jsonWriter = new JsonTextWriter(streamWriter);
+
+		jsonSerializer.Serialize(jsonWriter, session);
 	}
 
 	public static string CleanUriToFilename(Uri uri)
@@ -122,13 +119,10 @@ public class Library
 
 	public static Session LoadSessionJson(string fileName)
 	{
-		using (StreamReader streamReader = new(fileName))
-		{
-			using (JsonReader jsonReader = new JsonTextReader(streamReader))
-			{
-				return new JsonSerializer().Deserialize<Session>(jsonReader);
-			}
-		}
+		using StreamReader streamReader = new(fileName);
+		using JsonReader jsonReader = new JsonTextReader(streamReader);
+
+		return new JsonSerializer().Deserialize<Session>(jsonReader);
 	}
 
 	public static string FormatWithThousands(object value)
@@ -175,12 +169,11 @@ public class Library
 
 		try
 		{
-			using (Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync())
-			{
-				SpeedtestResult speedtestResult = SpeedtestFromStream(stream, seconds);
+			using Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync();
 
-				return speedtestResult;
-			}
+			SpeedtestResult speedtestResult = SpeedtestFromStream(stream, seconds);
+
+			return speedtestResult;
 		}
 		finally
 		{
@@ -194,12 +187,11 @@ public class Library
 
 		Uri uri = new(url);
 
-		using (Stream stream = await ftpClient.OpenRead(uri.LocalPath))
-		{
-			SpeedtestResult speedtestResult = SpeedtestFromStream(stream, seconds);
+		using Stream stream = await ftpClient.OpenRead(uri.LocalPath);
 
-			return await Task.FromResult(speedtestResult);
-		}
+		SpeedtestResult speedtestResult = SpeedtestFromStream(stream, seconds);
+
+		return await Task.FromResult(speedtestResult);
 	}
 
 	private static SpeedtestResult SpeedtestFromStream(Stream stream, int seconds)
@@ -375,22 +367,17 @@ public class Library
 
 	public static async IAsyncEnumerable<string> GetSourcesFromSourceMapAsync(HttpClient httpClient, string sourceUrl)
 	{
-		using (Stream httpStream = await httpClient.GetStreamAsync(sourceUrl))
-		{
-			using (StreamReader streamReader = new(httpStream))
-			{
-				using (JsonReader jsonReader = new JsonTextReader(streamReader))
-				{
-					JObject jObject = JObject.Load(jsonReader);
+		using Stream httpStream = await httpClient.GetStreamAsync(sourceUrl);
+		using StreamReader streamReader = new(httpStream);
+		using JsonReader jsonReader = new JsonTextReader(streamReader);
 
-					if (jObject.TryGetValue("sources", out JToken sources))
-					{
-						foreach (JToken source in sources)
-						{
-							yield return source.Value<string>();
-						}
-					}
-				}
+		JObject jObject = JObject.Load(jsonReader);
+
+		if (jObject.TryGetValue("sources", out JToken sources))
+		{
+			foreach (JToken source in sources)
+			{
+				yield return source.Value<string>();
 			}
 		}
 	}

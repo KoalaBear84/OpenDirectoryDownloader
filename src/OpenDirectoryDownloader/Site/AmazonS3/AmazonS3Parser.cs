@@ -59,15 +59,12 @@ public static class AmazonS3Parser
 
 				AmazonS3Result result;
 
-				using (TextReader textReader = new StreamReader(await httpResponseMessage.Content.ReadAsStreamAsync()))
-				{
-					using (XmlTextReader xmlTextReader = new(textReader))
-					{
-						xmlTextReader.Namespaces = false;
-						XmlSerializer xmlSerializer = new(typeof(AmazonS3Result));
-						result = (AmazonS3Result)xmlSerializer.Deserialize(xmlTextReader);
-					}
-				}
+				using TextReader textReader = new StreamReader(await httpResponseMessage.Content.ReadAsStreamAsync());
+				using XmlTextReader xmlTextReader = new(textReader);
+
+				xmlTextReader.Namespaces = false;
+				XmlSerializer xmlSerializer = new(typeof(AmazonS3Result));
+				result = (AmazonS3Result)xmlSerializer.Deserialize(xmlTextReader);
 
 				isTruncated = result.IsTruncated;
 				nextMarker = result.NextMarker;

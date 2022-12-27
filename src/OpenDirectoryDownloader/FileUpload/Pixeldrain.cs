@@ -16,21 +16,20 @@ public class Pixeldrain : IFileUploadSite
 		{
 			try
 			{
-				using (HttpResponseMessage httpResponseMessage = await httpClient.PutAsync($"https://pixeldrain.com/api/file/{Uri.EscapeDataString(Path.GetFileName(path))}", new StreamContent(new FileStream(path, FileMode.Open))))
-				{
-					if (httpResponseMessage.IsSuccessStatusCode)
-					{
-						string response = await httpResponseMessage.Content.ReadAsStringAsync();
-						OpenDirectoryIndexer.Session.UploadedUrlsResponse = response;
-						Program.Logger.Debug("Response from {siteName}: {response}", Name, response);
+				using HttpResponseMessage httpResponseMessage = await httpClient.PutAsync($"https://pixeldrain.com/api/file/{Uri.EscapeDataString(Path.GetFileName(path))}", new StreamContent(new FileStream(path, FileMode.Open)));
 
-						return JsonConvert.DeserializeObject<PixeldrainFile>(response);
-					}
-					else
-					{
-						Program.Logger.Error("Error uploading file, retry in 5 seconds..");
-						await Task.Delay(TimeSpan.FromSeconds(5));
-					}
+				if (httpResponseMessage.IsSuccessStatusCode)
+				{
+					string response = await httpResponseMessage.Content.ReadAsStringAsync();
+					OpenDirectoryIndexer.Session.UploadedUrlsResponse = response;
+					Program.Logger.Debug("Response from {siteName}: {response}", Name, response);
+
+					return JsonConvert.DeserializeObject<PixeldrainFile>(response);
+				}
+				else
+				{
+					Program.Logger.Error("Error uploading file, retry in 5 seconds..");
+					await Task.Delay(TimeSpan.FromSeconds(5));
 				}
 
 				retries++;

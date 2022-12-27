@@ -16,27 +16,26 @@ public class AnonFiles : IFileUploadSite
 		{
 			try
 			{
-				using (MultipartFormDataContent multipartFormDataContent = new($"Upload----{Guid.NewGuid()}"))
+				using MultipartFormDataContent multipartFormDataContent = new($"Upload----{Guid.NewGuid()}")
 				{
-					multipartFormDataContent.Add(new StreamContent(new FileStream(path, FileMode.Open)), "file", Path.GetFileName(path));
+					{ new StreamContent(new FileStream(path, FileMode.Open)), "file", Path.GetFileName(path) }
+				};
 
-					using (HttpResponseMessage httpResponseMessage = await httpClient.PostAsync("https://api.anonfiles.com/upload", multipartFormDataContent))
-					{
-						if (httpResponseMessage.IsSuccessStatusCode)
-						{
-							string response = await httpResponseMessage.Content.ReadAsStringAsync();
-							OpenDirectoryIndexer.Session.UploadedUrlsResponse = response;
+				using HttpResponseMessage httpResponseMessage = await httpClient.PostAsync("https://api.anonfiles.com/upload", multipartFormDataContent);
 
-							Program.Logger.Debug("Response from {siteName}: {response}", Name, response);
+				if (httpResponseMessage.IsSuccessStatusCode)
+				{
+					string response = await httpResponseMessage.Content.ReadAsStringAsync();
+					OpenDirectoryIndexer.Session.UploadedUrlsResponse = response;
 
-							return JsonConvert.DeserializeObject<AnonFilesFile>(response);
-						}
-						else
-						{
-							Program.Logger.Error("Error uploading file, retry in 5 seconds..");
-							await Task.Delay(TimeSpan.FromSeconds(5));
-						}
-					}
+					Program.Logger.Debug("Response from {siteName}: {response}", Name, response);
+
+					return JsonConvert.DeserializeObject<AnonFilesFile>(response);
+				}
+				else
+				{
+					Program.Logger.Error("Error uploading file, retry in 5 seconds..");
+					await Task.Delay(TimeSpan.FromSeconds(5));
 				}
 
 				retries++;

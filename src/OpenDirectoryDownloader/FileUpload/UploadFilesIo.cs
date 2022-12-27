@@ -47,17 +47,16 @@ public class UploadFilesIo : IFileUploadSite
 					}
 
 					// Post file
-					using (MultipartFormDataContent multipartFormDataContent = new($"Upload----{Guid.NewGuid()}"))
+					using MultipartFormDataContent multipartFormDataContent = new($"Upload----{Guid.NewGuid()}")
 					{
-						multipartFormDataContent.Add(new StringContent("1"), "chunk_index");
-						multipartFormDataContent.Add(new StringContent(fileId), "fuid");
-						multipartFormDataContent.Add(new StreamContent(new FileStream(path, FileMode.Open)), "file", Path.GetFileName(path));
+						{ new StringContent("1"), "chunk_index" },
+						{ new StringContent(fileId), "fuid" },
+						{ new StreamContent(new FileStream(path, FileMode.Open)), "file", Path.GetFileName(path) }
+					};
 
-						using (HttpResponseMessage httpResponseMessage = await httpClient.PostAsync("https://up.ufile.io/v1/upload/chunk", multipartFormDataContent))
-						{
-							httpResponseMessage.EnsureSuccessStatusCode();
-						}
-					}
+					using HttpResponseMessage httpResponseMessage = await httpClient.PostAsync("https://up.ufile.io/v1/upload/chunk", multipartFormDataContent);
+
+					httpResponseMessage.EnsureSuccessStatusCode();
 
 					// Finalise
 					Dictionary<string, string> postValuesFinalise = new()
