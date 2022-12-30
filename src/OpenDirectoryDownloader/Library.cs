@@ -163,7 +163,7 @@ public class Library
 				retrievedUrl = httpResponseMessage.Headers.Location.ToString();
 			}
 
-			Program.Logger.Warning("Speedtest cancelled because it returns HTTP {httpStatusCode}{(with URL {retrievedUrl}}", (int)httpResponseMessage.StatusCode, retrievedUrl);
+			Program.Logger.Warning("Speedtest cancelled because it returns HTTP {httpStatusCode} (with URL {retrievedUrl}", (int)httpResponseMessage.StatusCode, retrievedUrl);
 			return new SpeedtestResult();
 		}
 
