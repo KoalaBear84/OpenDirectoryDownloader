@@ -266,6 +266,12 @@ public static class DirectoryParser
 				return ParseHfsListing(ref baseUrl, parsedWebDirectory, htmlDocument, divElements, checkParents);
 			}
 
+			// copyparty
+			if (htmlDocument.QuerySelector("div#ops") is not null)
+			{
+				return ParseCopypartyListing(baseUrl, parsedWebDirectory, htmlDocument);
+			}
+
 			IHtmlCollection<IElement> pres = htmlDocument.QuerySelectorAll("pre");
 
 			if (pres.Any())
@@ -433,6 +439,52 @@ public static class DirectoryParser
 		}
 
 		CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
+
+		return parsedWebDirectory;
+	}
+
+	private static WebDirectory ParseCopypartyListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument)
+	{
+		IElement table = htmlDocument.QuerySelector("table#files");
+
+		parsedWebDirectory.ParsedSuccessfully = true;
+
+		IHtmlCollection<IElement> entries = table.QuerySelectorAll("tbody tr");
+
+		foreach (IElement entry in entries)
+		{
+			IHtmlAnchorElement link = entry.QuerySelector("td:nth-child(2) a") as IHtmlAnchorElement;
+			IHtmlTableCellElement fileSize = entry.QuerySelector("td:nth-child(3)") as IHtmlTableCellElement;
+			IHtmlTableCellElement fileType = entry.QuerySelector("td:nth-child(4)") as IHtmlTableCellElement;
+
+			bool isDirectory = fileType.TextContent == "---";
+
+			if (link is not null)
+			{
+				ProcessUrl(baseUrl, link, out _, out _, out string fullUrl);
+
+				if (isDirectory)
+				{
+					string directoryName = link.TextContent.TrimEnd('/');
+
+					parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
+					{
+						Parser = "ParseCopypartyListing",
+						Url = fullUrl,
+						Name = directoryName
+					});
+				}
+				else
+				{
+					parsedWebDirectory.Files.Add(new WebFile
+					{
+						Url = fullUrl,
+						FileName = Path.GetFileName(WebUtility.UrlDecode(fullUrl)),
+						FileSize = FileSizeHelper.ParseFileSize(fileSize.TextContent)
+					});
+				}
+			}
+		}
 
 		return parsedWebDirectory;
 	}
