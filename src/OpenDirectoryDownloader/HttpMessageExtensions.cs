@@ -35,7 +35,7 @@ public static class HttpMessageExtensions
 		stringBuilder.AppendLine();
 
 		string body = await (httpRequestMessage.Content?.ReadAsStringAsync() ?? Task.FromResult<string>(null));
-		
+
 		if (!string.IsNullOrWhiteSpace(body))
 		{
 			stringBuilder.AppendLine(body);
@@ -73,7 +73,7 @@ public static class HttpMessageExtensions
 		stringBuilder.AppendLine();
 
 		string body = await response.Content.ReadAsStringAsync();
-		
+
 		if (!string.IsNullOrWhiteSpace(body))
 		{
 			stringBuilder.AppendLine(body);

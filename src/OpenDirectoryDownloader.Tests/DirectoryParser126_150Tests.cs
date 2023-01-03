@@ -145,7 +145,7 @@ public class DirectoryParser126_150Tests : DirectoryParserTests
 		Assert.Equal("30.Rock.iNTEGRALE.FRENCH.WEB.H264-FRATERNiTY", webDirectory.Subdirectories[0].Name);
 		Assert.Equal(3, webDirectory.Files.Count);
 		Assert.Equal("Interstellar.2014.TRUEFRENCH.BRRip.x264.AC3-SVR.mkv", webDirectory.Files[0].FileName);
-		Assert.Equal(1437711157 , webDirectory.Files[0].FileSize);
+		Assert.Equal(1437711157, webDirectory.Files[0].FileSize);
 	}
 
 	/// <summary>

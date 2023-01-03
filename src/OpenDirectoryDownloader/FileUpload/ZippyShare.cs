@@ -56,7 +56,7 @@ public class ZippyShare : IFileUploadSite
 
 					IHtmlDocument htmlDocument = await HtmlParser.ParseDocumentAsync(response);
 					IHtmlAnchorElement link = htmlDocument.QuerySelector<IHtmlAnchorElement>("#urls a") ?? throw new Exception($"{Name} error, cannot find link");
-					
+
 					return new ZippyShareFile
 					{
 						Url = link.Href

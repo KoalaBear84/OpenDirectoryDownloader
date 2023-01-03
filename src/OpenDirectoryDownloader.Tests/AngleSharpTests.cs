@@ -6,14 +6,14 @@ namespace OpenDirectoryDownloader.Tests;
 
 public class AngleSharpTests
 {
-    /// <summary>
-    /// Test 1
-    /// </summary>
-    /// <returns>Nothing</returns>
-    [Fact]
-    public async System.Threading.Tasks.Task Test01Async()
-    {
-        string html = @"<table>
+	/// <summary>
+	/// Test 1
+	/// </summary>
+	/// <returns>Nothing</returns>
+	[Fact]
+	public async System.Threading.Tasks.Task Test01Async()
+	{
+		string html = @"<table>
   <thead>
     <tr>
       <th>Month</th>
@@ -37,9 +37,9 @@ public class AngleSharpTests
     </tr>
   </tfoot>
 </table>";
-        HtmlParser htmlParser = new();
-        IHtmlDocument htmlDocument = await htmlParser.ParseDocumentAsync(html);
+		HtmlParser htmlParser = new();
+		IHtmlDocument htmlDocument = await htmlParser.ParseDocumentAsync(html);
 
-        Assert.Equal("TABLE", htmlDocument.QuerySelector("tbody tr").Parent("table").TagName);
-    }
+		Assert.Equal("TABLE", htmlDocument.QuerySelector("tbody tr").Parent("table").TagName);
+	}
 }
