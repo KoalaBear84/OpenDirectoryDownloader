@@ -1,4 +1,5 @@
-﻿using FluentFTP;
+using FluentFTP;
+using FluentFTP.Exceptions;
 using OpenDirectoryDownloader.Shared.Models;
 using Polly;
 using Polly.Retry;
