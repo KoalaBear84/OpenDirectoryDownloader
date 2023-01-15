@@ -267,7 +267,7 @@ public static class DirectoryParser
 			}
 
 			// copyparty
-			if (htmlDocument.QuerySelector("div#ops") is not null)
+			if (htmlDocument.QuerySelector("#op_bup #u2err") is not null)
 			{
 				return ParseCopypartyListing(baseUrl, parsedWebDirectory, htmlDocument);
 			}
@@ -455,9 +455,8 @@ public static class DirectoryParser
 		{
 			IHtmlAnchorElement link = entry.QuerySelector("td:nth-child(2) a") as IHtmlAnchorElement;
 			IHtmlTableCellElement fileSize = entry.QuerySelector("td:nth-child(3)") as IHtmlTableCellElement;
-			IHtmlTableCellElement fileType = entry.QuerySelector("td:nth-child(4)") as IHtmlTableCellElement;
 
-			bool isDirectory = fileType.TextContent == "---";
+			bool isDirectory = link.TextContent.EndsWith("/");
 
 			if (link is not null)
 			{
@@ -479,7 +478,7 @@ public static class DirectoryParser
 					parsedWebDirectory.Files.Add(new WebFile
 					{
 						Url = fullUrl,
-						FileName = Path.GetFileName(WebUtility.UrlDecode(fullUrl)),
+						FileName = Path.GetFileName(WebUtility.UrlDecode(fullUrl.Split('?')[0])),
 						FileSize = FileSizeHelper.ParseFileSize(fileSize.TextContent)
 					});
 				}
