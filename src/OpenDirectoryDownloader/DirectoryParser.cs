@@ -9,6 +9,7 @@ using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using OpenDirectoryDownloader.Site.BlitzfilesTech;
+using OpenDirectoryDownloader.Site.Copyparty;
 using OpenDirectoryDownloader.Site.Dropbox;
 using OpenDirectoryDownloader.Site.GDIndex;
 using OpenDirectoryDownloader.Site.GDIndex.Bhadoo;
@@ -269,7 +270,7 @@ public static class DirectoryParser
 			// copyparty
 			if (htmlDocument.QuerySelector("#op_bup #u2err") is not null)
 			{
-				return ParseCopypartyListing(baseUrl, parsedWebDirectory, htmlDocument);
+				return await ParseCopypartyListingAsync(baseUrl, httpClient, parsedWebDirectory, htmlDocument, html);
 			}
 
 			IHtmlCollection<IElement> pres = htmlDocument.QuerySelectorAll("pre");
@@ -443,49 +444,9 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static WebDirectory ParseCopypartyListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument)
+	private static async Task<WebDirectory> ParseCopypartyListingAsync(string baseUrl, HttpClient httpClient, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, string html)
 	{
-		IElement table = htmlDocument.QuerySelector("table#files");
-
-		parsedWebDirectory.ParsedSuccessfully = true;
-
-		IHtmlCollection<IElement> entries = table.QuerySelectorAll("tbody tr");
-
-		foreach (IElement entry in entries)
-		{
-			IHtmlAnchorElement link = entry.QuerySelector("td:nth-child(2) a") as IHtmlAnchorElement;
-			IHtmlTableCellElement fileSize = entry.QuerySelector("td:nth-child(3)") as IHtmlTableCellElement;
-
-			bool isDirectory = link.TextContent.EndsWith("/");
-
-			if (link is not null)
-			{
-				ProcessUrl(baseUrl, link, out _, out _, out string fullUrl);
-
-				if (isDirectory)
-				{
-					string directoryName = link.TextContent.TrimEnd('/');
-
-					parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
-					{
-						Parser = "ParseCopypartyListing",
-						Url = fullUrl,
-						Name = directoryName
-					});
-				}
-				else
-				{
-					parsedWebDirectory.Files.Add(new WebFile
-					{
-						Url = fullUrl,
-						FileName = Path.GetFileName(WebUtility.UrlDecode(fullUrl.Split('?')[0])),
-						FileSize = FileSizeHelper.ParseFileSize(fileSize.TextContent)
-					});
-				}
-			}
-		}
-
-		return parsedWebDirectory;
+		return await Copyparty.ParseIndex(baseUrl, httpClient, parsedWebDirectory, htmlDocument, html);
 	}
 
 	private static WebDirectory ParseDirLIST(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> tables)
