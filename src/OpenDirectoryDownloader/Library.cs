@@ -1,3 +1,4 @@
+using AngleSharp.Dom;
 using FluentFTP;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -380,5 +381,12 @@ public class Library
 				yield return source.Value<string>();
 			}
 		}
+	}
+
+	public static void ProcessUrl(string baseUrl, IElement link, out string linkHref, out Uri uri, out string fullUrl)
+	{
+		linkHref = link.Attributes["href"]?.Value;
+		uri = new Uri(new Uri(baseUrl), linkHref);
+		fullUrl = uri.ToString();
 	}
 }

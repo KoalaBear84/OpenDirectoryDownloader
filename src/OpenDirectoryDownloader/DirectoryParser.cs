@@ -515,7 +515,7 @@ public static class DirectoryParser
 
 					if (link is not null)
 					{
-						ProcessUrl(baseUrl, link, out _, out _, out string fullUrl);
+						Library.ProcessUrl(baseUrl, link, out _, out _, out string fullUrl);
 
 						if (isDirectory)
 						{
@@ -688,7 +688,7 @@ public static class DirectoryParser
 
 			if (IsValidLink(link))
 			{
-				ProcessUrl(baseUrl, link, out _, out _, out string fullUrl);
+				Library.ProcessUrl(baseUrl, link, out _, out _, out string fullUrl);
 
 				bool isFile = IsFileSize(size);
 
@@ -783,7 +783,7 @@ public static class DirectoryParser
 
 			if (IsValidLink(link))
 			{
-				ProcessUrl(baseUrl, link, out _, out Uri uri, out string fullUrl);
+				Library.ProcessUrl(baseUrl, link, out _, out Uri uri, out string fullUrl);
 
 				bool isFile = !divElement.ClassList.Contains("item-type-folder");
 
@@ -824,7 +824,7 @@ public static class DirectoryParser
 
 			if (IsValidLink(link))
 			{
-				ProcessUrl(baseUrl, link, out _, out _, out string fullUrl);
+				Library.ProcessUrl(baseUrl, link, out _, out _, out string fullUrl);
 
 				string size = tableRow.QuerySelector("td:nth-child(3)").TextContent.Trim();
 				bool isFile = IsFileSize(size);
@@ -863,7 +863,7 @@ public static class DirectoryParser
 
 			if (IsValidLink(link))
 			{
-				ProcessUrl(baseUrl, link, out _, out _, out string fullUrl);
+				Library.ProcessUrl(baseUrl, link, out _, out _, out string fullUrl);
 
 				string size = listItem.QuerySelector(".file-size").TextContent.Trim();
 				bool isFile = IsFileSize(size);
@@ -917,7 +917,7 @@ public static class DirectoryParser
 
 				if (IsValidLink(link))
 				{
-					ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+					Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 					string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim();
 					bool isFile = IsFileSize(size) && !size.Contains("item");
@@ -1042,7 +1042,7 @@ public static class DirectoryParser
 
 			if (IsValidLink(link))
 			{
-				ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+				Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 				string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim();
 				bool isFile = !string.IsNullOrWhiteSpace(size);
@@ -1152,7 +1152,7 @@ public static class DirectoryParser
 							{
 								addedEntry = true;
 
-								ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+								Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 								fullUrl = StripUrl(fullUrl);
 
@@ -1299,13 +1299,6 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static void ProcessUrl(string baseUrl, IElement link, out string linkHref, out Uri uri, out string fullUrl)
-	{
-		linkHref = link.Attributes["href"]?.Value;
-		uri = new Uri(new Uri(baseUrl), linkHref);
-		fullUrl = uri.ToString();
-	}
-
 	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser1 = async (webDirectory, baseUrl, line) =>
 	{
 		Match match = Regex.Match(line, @"(?:<img.*>\s*)+<a.*?>.*?<\/a>\S*\s*(?<Modified>\d*-(?:[a-zA-Z]*|\d*)-\d*\s*\d*:\d*(:\d*)?)?\s*(?<FileSize>\S+)?(\s*(?<Description>.*))?");
@@ -1322,7 +1315,7 @@ public static class DirectoryParser
 				IElement link = parsedLine.QuerySelector("a");
 				if (IsValidLink(link))
 				{
-					ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+					Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 					bool isFile = IsFileSize(match.Groups["FileSize"].Value.Trim()) && parsedLine.QuerySelector("img[alt=\"[DIR]\"]") == null;
 
@@ -1372,7 +1365,7 @@ public static class DirectoryParser
 
 			if (IsValidLink(link))
 			{
-				ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+				Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 				string fileSizeGroup = match.Groups["FileSize"].Value.Trim();
 				bool isFile = long.TryParse(fileSizeGroup, out long fileSize);
@@ -1424,7 +1417,7 @@ public static class DirectoryParser
 
 				if (IsValidLink(link))
 				{
-					ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+					Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 					bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;" && match.Groups["FileSize"].Value.Trim() != "DIR";
 
@@ -1479,7 +1472,7 @@ public static class DirectoryParser
 
 				if (IsValidLink(link))
 				{
-					ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+					Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 					bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;";
 
@@ -1536,7 +1529,7 @@ public static class DirectoryParser
 
 				if (IsValidLink(link))
 				{
-					ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+					Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 					if (!isFile)
 					{
@@ -1590,7 +1583,7 @@ public static class DirectoryParser
 
 				if (IsValidLink(link))
 				{
-					ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+					Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 					bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;";
 
@@ -1642,7 +1635,7 @@ public static class DirectoryParser
 
 				if (IsValidLink(link))
 				{
-					ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+					Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 					string fileMode = match.Groups["FileMode"].Value.ToLowerInvariant();
 					bool isFile = !fileMode.StartsWith("d") && !fileMode.StartsWith("l");
@@ -1702,7 +1695,7 @@ public static class DirectoryParser
 
 				if (IsValidLink(link))
 				{
-					ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+					Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 					string fileSizeString = match.Groups["FileSize"].Value;
 					long fileSize = FileSizeHelper.ParseFileSize(fileSizeString);
@@ -1769,7 +1762,7 @@ public static class DirectoryParser
 
 				if (IsValidLink(link))
 				{
-					ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+					Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 					bool isFile = !string.IsNullOrWhiteSpace(match.Groups["FileSize"].Value) && match.Groups["FileSize"].Value.Trim() != "-";
 
@@ -1828,7 +1821,7 @@ public static class DirectoryParser
 
 				if (IsValidLink(link))
 				{
-					ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+					Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 					string fileMode = match.Groups["Dir"].Value.ToLowerInvariant();
 
@@ -2065,7 +2058,7 @@ public static class DirectoryParser
 						fileSize = listItem.Attributes["data-sort-size"].Value;
 					}
 
-					ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+					Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 					bool isFile = listItem.ClassList.Contains("file");
 
@@ -2114,7 +2107,7 @@ public static class DirectoryParser
 		{
 			if (IsValidLink(link))
 			{
-				ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+				Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 				bool isFile = !link.QuerySelector("i").ClassList.Contains("fa-folder");
 				UrlEncodingParser urlEncodingParser = new(fullUrl);
@@ -2218,7 +2211,7 @@ public static class DirectoryParser
 			{
 				try
 				{
-					ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+					Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 					fullUrl = StripUrl(fullUrl);
 
