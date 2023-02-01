@@ -424,6 +424,14 @@ public static class DirectoryParser
 				}
 			}
 
+			if (parsedWebDirectory.Subdirectories.Count == 0 && parsedWebDirectory.Files.Count == 0 && OpenDirectoryIndexer.Session?.ProcessedBrowserUrls.Any() == false &&
+				htmlDocument.QuerySelector("iframe") != null)
+			{
+				IEnumerable<Uri> iframeUrls = htmlDocument.QuerySelectorAll<IHtmlInlineFrameElement>("iframe").Select(x => new Uri(OpenDirectoryIndexer.Session.Root.Uri, x.GetAttribute("src")));
+
+				Program.Logger.Warning("No directories and files found on {url}, but did find <iframe> tag(s), you could try this url(s):\n{iframeUrls}", webDirectory.Url, string.Join(Environment.NewLine, iframeUrls));
+			}
+
 			return parsedWebDirectory;
 		}
 		catch (FriendlyException ex)
