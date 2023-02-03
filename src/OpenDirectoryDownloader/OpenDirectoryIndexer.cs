@@ -1009,7 +1009,7 @@ public partial class OpenDirectoryIndexer
 
 		if (httpResponseMessage?.Content.Headers.ContentType?.MediaType == "application/xml")
 		{
-			string xml = await GetHtml(httpResponseMessage);
+			string xml = await Library.GetHtml(httpResponseMessage);
 
 			if (xml.Contains("ListBucketResult"))
 			{
@@ -1028,7 +1028,7 @@ public partial class OpenDirectoryIndexer
 
 		if ((httpResponseMessage?.StatusCode == HttpStatusCode.ServiceUnavailable || httpResponseMessage?.StatusCode == HttpStatusCode.Forbidden) && httpResponseMessage.Headers.Server.FirstOrDefault()?.Product.Name.ToLowerInvariant() == "cloudflare")
 		{
-			string cloudflareHtml = await GetHtml(httpResponseMessage);
+			string cloudflareHtml = await Library.GetHtml(httpResponseMessage);
 
 			if (Regex.IsMatch(cloudflareHtml, @"<form (?:class|id)=""challenge-form[^>]*>([\s\S]*?)<\/form>"))
 			{
@@ -1080,7 +1080,7 @@ public partial class OpenDirectoryIndexer
 			{
 				if (htmlStream != null)
 				{
-					html = await GetHtml(htmlStream);
+					html = await Library.GetHtml(htmlStream);
 				}
 				else
 				{
@@ -1112,7 +1112,7 @@ public partial class OpenDirectoryIndexer
 					{
 						if (htmlStream != null)
 						{
-							html = await GetHtml(htmlStream);
+							html = await Library.GetHtml(htmlStream);
 						}
 					}
 				}
@@ -1136,7 +1136,7 @@ public partial class OpenDirectoryIndexer
 				{
 					if (htmlStream != null)
 					{
-						html = await GetHtml(htmlStream);
+						html = await Library.GetHtml(htmlStream);
 					}
 					else
 					{
@@ -1165,7 +1165,7 @@ public partial class OpenDirectoryIndexer
 				{
 					if (htmlStream != null)
 					{
-						html = await GetHtml(htmlStream);
+						html = await Library.GetHtml(htmlStream);
 					}
 					else
 					{
@@ -1196,7 +1196,7 @@ public partial class OpenDirectoryIndexer
 				{
 					if (htmlStream != null)
 					{
-						html = await GetHtml(htmlStream);
+						html = await Library.GetHtml(htmlStream);
 					}
 					else
 					{
@@ -1247,7 +1247,7 @@ public partial class OpenDirectoryIndexer
 					{
 						if (htmlStream != null)
 						{
-							html = await GetHtml(htmlStream);
+							html = await Library.GetHtml(htmlStream);
 						}
 						else
 						{
@@ -1310,7 +1310,7 @@ public partial class OpenDirectoryIndexer
 
 			if (httpResponseMessage.IsSuccessStatusCode)
 			{
-				html ??= await GetHtml(httpResponseMessage);
+				html ??= await Library.GetHtml(httpResponseMessage);
 
 				if (html.Length > Constants.Megabyte)
 				{
@@ -1415,20 +1415,6 @@ public partial class OpenDirectoryIndexer
 		}
 	}
 
-	private static async Task<string> GetHtml(HttpResponseMessage httpResponseMessage)
-	{
-		FixCharSet(httpResponseMessage);
-
-		return await httpResponseMessage.Content.ReadAsStringAsync();
-	}
-
-	private static async Task<string> GetHtml(Stream stream)
-	{
-		using StreamReader streamReader = new(stream);
-
-		return await streamReader.ReadToEndAsync();
-	}
-
 	/// <summary>
 	/// Checks for maximum of 10% control characters, which should not be in HTML
 	/// </summary>
@@ -1450,7 +1436,7 @@ public partial class OpenDirectoryIndexer
 	/// <returns>A checked stream when possible HTML, else null</returns>
 	private static async Task<Stream> GetHtmlStream(HttpResponseMessage httpResponseMessage)
 	{
-		FixCharSet(httpResponseMessage);
+		Library.FixCharSet(httpResponseMessage);
 
 		Encoding encoding = Encoding.ASCII;
 
@@ -1523,25 +1509,6 @@ public partial class OpenDirectoryIndexer
 		responseStream.Seek(0, SeekOrigin.Begin);
 
 		return responseStream;
-	}
-
-	/// <summary>
-	/// Check and fix some common bad charsets
-	/// </summary>
-	/// <param name="httpResponseMessage">Fixed charset</param>
-	private static void FixCharSet(HttpResponseMessage httpResponseMessage)
-	{
-		if (httpResponseMessage.Content.Headers.ContentType?.CharSet?.ToLowerInvariant() == "utf8" ||
-			httpResponseMessage.Content.Headers.ContentType?.CharSet?.ToLowerInvariant() == "\"utf-8\"" ||
-			httpResponseMessage.Content.Headers.ContentType?.CharSet == "GB1212")
-		{
-			httpResponseMessage.Content.Headers.ContentType.CharSet = "UTF-8";
-		}
-
-		if (httpResponseMessage.Content.Headers.ContentType?.CharSet == "WIN-1251")
-		{
-			httpResponseMessage.Content.Headers.ContentType.CharSet = "Windows-1251";
-		}
 	}
 
 	private void AddProcessedWebDirectory(WebDirectory webDirectory, WebDirectory parsedWebDirectory, bool processSubdirectories = true)

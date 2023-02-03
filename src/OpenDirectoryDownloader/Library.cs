@@ -389,4 +389,37 @@ public class Library
 		uri = new Uri(new Uri(baseUrl), linkHref);
 		fullUrl = uri.ToString();
 	}
+
+	/// <summary>
+	/// Check and fix some common bad charsets
+	/// </summary>
+	/// <param name="httpResponseMessage">Fixed charset</param>
+	public static void FixCharSet(HttpResponseMessage httpResponseMessage)
+	{
+		if (httpResponseMessage.Content.Headers.ContentType?.CharSet?.ToLowerInvariant() == "utf8" ||
+			httpResponseMessage.Content.Headers.ContentType?.CharSet?.ToLowerInvariant() == "\"utf-8\"" ||
+			httpResponseMessage.Content.Headers.ContentType?.CharSet == "GB1212")
+		{
+			httpResponseMessage.Content.Headers.ContentType.CharSet = "UTF-8";
+		}
+
+		if (httpResponseMessage.Content.Headers.ContentType?.CharSet == "WIN-1251")
+		{
+			httpResponseMessage.Content.Headers.ContentType.CharSet = "Windows-1251";
+		}
+	}
+
+	public static async Task<string> GetHtml(HttpResponseMessage httpResponseMessage)
+	{
+		FixCharSet(httpResponseMessage);
+
+		return await httpResponseMessage.Content.ReadAsStringAsync();
+	}
+
+	public static async Task<string> GetHtml(Stream stream)
+	{
+		using StreamReader streamReader = new(stream);
+
+		return await streamReader.ReadToEndAsync();
+	}
 }
