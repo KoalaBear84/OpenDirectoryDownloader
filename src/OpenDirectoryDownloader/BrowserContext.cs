@@ -1,4 +1,4 @@
-﻿using PuppeteerExtraSharp;
+using PuppeteerExtraSharp;
 using PuppeteerExtraSharp.Plugins.ExtraStealth;
 using PuppeteerSharp;
 using System.Diagnostics;
@@ -74,6 +74,8 @@ public class BrowserContext : IDisposable
 
 			await Page.GoToAsync(url);
 
+			// Not awaited on purpose, used to run it like a separate thread
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 			Task.Run(() =>
 			{
 				while (!CancellationTokenSource.IsCancellationRequested)
@@ -83,6 +85,7 @@ public class BrowserContext : IDisposable
 					Task.Delay(TimeSpan.FromSeconds(1)).Wait();
 				}
 			});
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
 			await Task.Delay(TimeSpan.FromSeconds(60), CancellationTokenSource.Token);
 
@@ -406,35 +409,38 @@ public class BrowserContext : IDisposable
 			return;
 		}
 
-		Task.Run(() =>
+		if (CloudFlare)
 		{
-			lock (LockCheckCloudflareCookie)
+			Task.Run(() =>
 			{
-				WriteDebugInfo("Retrieve cookies..");
-
-				try
+				lock (LockCheckCloudflareCookie)
 				{
-					CookieParam[] cookieParams = Page.GetCookiesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-					WriteDebugInfo($"Retrieved {cookieParams.Length} cookies");
+					WriteDebugInfo("Retrieve cookies..");
 
-					CookieParam cloudflareClearanceCookie = cookieParams.FirstOrDefault(cookie => cookie.Name.StartsWith(CloudflareClearanceKey));
-
-					if (cloudflareClearanceCookie is not null)
+					try
 					{
-						WriteDebugInfo($"Cloudflare clearance cookie found: {cloudflareClearanceCookie.Value}");
+						CookieParam[] cookieParams = Page.GetCookiesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+						WriteDebugInfo($"Retrieved {cookieParams.Length} cookies");
 
-						AddCookiesToContainer(CookieContainer, cookieParams);
+						CookieParam cloudflareClearanceCookie = cookieParams.FirstOrDefault(cookie => cookie.Name.StartsWith(CloudflareClearanceKey));
 
-						OK = true;
-						CancellationTokenSource.Cancel();
+						if (cloudflareClearanceCookie is not null)
+						{
+							WriteDebugInfo($"Cloudflare clearance cookie found: {cloudflareClearanceCookie.Value}");
+
+							AddCookiesToContainer(CookieContainer, cookieParams);
+
+							OK = true;
+							CancellationTokenSource.Cancel();
+						}
+					}
+					catch
+					{
+						// No logging
 					}
 				}
-				catch
-				{
-					// No logging
-				}
-			}
-		});
+			});
+		}
 	}
 
 	private void Page_WorkerCreated(object sender, WorkerEventArgs e)
