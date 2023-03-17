@@ -937,6 +937,12 @@ public partial class OpenDirectoryIndexer
 
 			Interlocked.Decrement(ref RunningWebDirectoryThreads);
 
+			if (OpenDirectoryIndexerSettings.CommandLineOptions.WaitSecondsBetweenCalls > 0)
+			{
+				await Task.Delay(TimeSpan.FromSeconds(OpenDirectoryIndexerSettings.CommandLineOptions.WaitSecondsBetweenCalls), cancellationToken);
+			}
+			else
+			{
 			if (RunningWebDirectoryThreads > 0)
 			{
 				// Needed, because of the TryDequeue, no waiting in ConcurrentQueue!
@@ -947,12 +953,6 @@ public partial class OpenDirectoryIndexer
 				}
 				else
 				{
-					if (OpenDirectoryIndexerSettings.CommandLineOptions.WaitSecondsBetweenCalls > 0)
-					{
-						await Task.Delay(TimeSpan.FromSeconds(OpenDirectoryIndexerSettings.CommandLineOptions.WaitSecondsBetweenCalls), cancellationToken);
-					}
-					else
-					{
 						await Task.Delay(TimeSpan.FromMilliseconds(10), cancellationToken);
 					}
 				}
