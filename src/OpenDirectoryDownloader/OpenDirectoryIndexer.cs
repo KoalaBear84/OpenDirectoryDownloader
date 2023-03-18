@@ -1072,6 +1072,37 @@ public partial class OpenDirectoryIndexer
 
 		string html = null;
 
+		if (httpResponseMessage?.Headers.Server.FirstOrDefault()?.Product.Name.ToLowerInvariant() == "diamondcdn" && ((int?)httpResponseMessage?.StatusCode == 418))
+		{
+			Program.Logger.Warning("Starting Browser..");
+			using BrowserContext browserContext = new(SocketsHttpHandler.CookieContainer);
+			await browserContext.InitializeAsync();
+			Program.Logger.Warning("Started Browser");
+
+			Program.Logger.Warning("Retrieving HTML through Browser..");
+			string browserHtml = await browserContext.GetHtml(webDirectory.Url);
+			Program.Logger.Warning("Retrieved HTML through Browser");
+
+			// Transfer cookies to HttpClient, so hopefully the following requests can be done with the help of cookies
+			CookieParam[] cookieParams = await browserContext.GetCookiesAsync();
+
+			BrowserContext.AddCookiesToContainer(SocketsHttpHandler.CookieContainer, cookieParams);
+
+			if (Session.MaxThreads != Session.CommandLineOptions.Threads)
+			{
+				Program.Logger.Warning("Increasing threads back to {threads}", Session.CommandLineOptions.Threads);
+				Session.MaxThreads = Session.CommandLineOptions.Threads;
+			}
+
+			if (browserHtml != html)
+			{
+				html = browserHtml;
+
+				// Override to succesfull call
+				httpResponseMessage.StatusCode = HttpStatusCode.OK;
+			}
+		}
+
 		if (httpResponseMessage?.IsSuccessStatusCode == true)
 		{
 			SetRootUrl(httpResponseMessage);
