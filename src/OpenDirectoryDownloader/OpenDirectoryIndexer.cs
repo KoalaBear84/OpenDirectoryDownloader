@@ -1076,6 +1076,8 @@ public partial class OpenDirectoryIndexer
 		{
 			SetRootUrl(httpResponseMessage);
 
+			if (html is null)
+			{
 			using (Stream htmlStream = await GetHtmlStream(httpResponseMessage))
 			{
 				if (htmlStream != null)
@@ -1094,6 +1096,7 @@ public partial class OpenDirectoryIndexer
 
 					return;
 				}
+			}
 			}
 
 			if (html.Contains("document.cookie"))
@@ -1465,6 +1468,11 @@ public partial class OpenDirectoryIndexer
 		if (readBytes < buffer.Length)
 		{
 			Array.Resize(ref buffer, readBytes);
+		}
+
+		if (readBytes == 0)
+		{
+			return responseStream;
 		}
 
 		if (!buffer.Contains('<'))
