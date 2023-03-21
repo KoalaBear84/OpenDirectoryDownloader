@@ -115,12 +115,7 @@ public static class BhadooIndexParser
 						s.Source?.Contains("app.min.js") == true ||
 						s.Source?.Contains("app.obf.js") == true ||
 						s.Source?.Contains("app.obf.min.js") == true
-					);
-
-					if (appJsScript is null)
-					{
-						throw new Exception("Couldn't find the right JavaScript files");
-					}
+					) ?? throw new Exception("Couldn't find the right JavaScript files");
 
 					Obfuscated = appJsScript.Source.Contains("obf.");
 
