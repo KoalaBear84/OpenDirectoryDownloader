@@ -506,7 +506,6 @@ public partial class OpenDirectoryIndexer
 									List<IFileUploadSite> uploadSites = new()
 									{
 										new Pixeldrain(),
-										new ZippyShare(),
 										new GoFileIo(),
 										new UploadFilesIo(),
 										new AnonFiles(),
