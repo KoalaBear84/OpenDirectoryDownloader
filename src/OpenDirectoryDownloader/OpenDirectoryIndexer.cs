@@ -11,6 +11,7 @@ using OpenDirectoryDownloader.Site.CrushFtp;
 using OpenDirectoryDownloader.Site.GitHub;
 using Polly;
 using Polly.Retry;
+using PuppeteerSharp;
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Http.Headers;
