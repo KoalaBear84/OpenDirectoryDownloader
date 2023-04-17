@@ -151,11 +151,11 @@ public class Library
 			httpResponseMessage = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
 		}
 
-		if (!httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.RequestMessage.RequestUri.ToString() != url)
+		if (!httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.RequestMessage.RequestUri.OriginalString != url)
 		{
 			string retrievedUrl = null;
 
-			if (httpResponseMessage.RequestMessage.RequestUri.ToString() != url)
+			if (httpResponseMessage.RequestMessage.RequestUri.OriginalString != url)
 			{
 				retrievedUrl = httpResponseMessage.RequestMessage.RequestUri.ToString();
 			}
