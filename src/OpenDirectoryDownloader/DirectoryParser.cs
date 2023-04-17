@@ -11,6 +11,7 @@ using OpenDirectoryDownloader.Shared.Models;
 using OpenDirectoryDownloader.Site.BlitzfilesTech;
 using OpenDirectoryDownloader.Site.Copyparty;
 using OpenDirectoryDownloader.Site.Dropbox;
+using OpenDirectoryDownloader.Site.FileBrowser;
 using OpenDirectoryDownloader.Site.GDIndex;
 using OpenDirectoryDownloader.Site.GDIndex.Bhadoo;
 using OpenDirectoryDownloader.Site.GDIndex.GdIndex;
@@ -92,6 +93,23 @@ public static class DirectoryParser
 			if (webDirectory.Uri.Host == "ipfs.io" || webDirectory.Uri.Host == "gateway.ipfs.io")
 			{
 				return ParseIpfsDirectoryListing(baseUrl, parsedWebDirectory, htmlDocument, checkParents);
+			}
+
+			if (htmlDocument.Title == "File Browser")
+			{
+				Regex scriptRegex = new(@"app\..*\.js");
+
+				if (htmlDocument.Scripts.Any(s => s.Source is not null && scriptRegex.IsMatch(s.Source)))
+				{
+					Regex baseUrlRegex = new(@"""BaseURL"":""(?<BaseUrl>.*?)"",");
+
+					Match baseUrlRegexMatch = baseUrlRegex.Match(html);
+
+					if (baseUrlRegexMatch.Success)
+					{
+						return await FileBrowserParser.ParseIndex(baseUrl, httpClient, parsedWebDirectory, htmlDocument, html);
+					}
+				}
 			}
 
 			if (httpClient is not null && !OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.GoogleDriveIndexType))
