@@ -7,9 +7,6 @@ using System.Text.RegularExpressions;
 
 namespace OpenDirectoryDownloader.Site.Copyparty;
 
-/// <summary>
-/// Similar to GoIndex
-/// </summary>
 public static class Copyparty
 {
 	private const string Parser = "Copyparty";
