@@ -1236,7 +1236,7 @@ public static class DirectoryParser
 
 									if (urlEncodingParser["file"] != null)
 									{
-										filename = Path.GetFileName(urlEncodingParser["file"]);
+										filename = Path.GetFileName(WebUtility.UrlDecode(urlEncodingParser["file"]));
 									}
 
 									if (string.IsNullOrWhiteSpace(filename))
