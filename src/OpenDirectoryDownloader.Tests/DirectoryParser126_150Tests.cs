@@ -259,4 +259,35 @@ public class DirectoryParser126_150Tests : DirectoryParserTests
 		Assert.Empty(webDirectory.Subdirectories);
 		Assert.Empty(webDirectory.Files);
 	}
+
+	/// <summary>
+	/// Url: http://localhost:8000/ODTest/EmptyFolder/
+	/// https://github.com/TheWaWaR/simple-http-server/
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing134aAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Equal("ROOT", webDirectory.Name);
+		Assert.Equal(4, webDirectory.Subdirectories.Count);
+		Assert.Equal("¡¢£¤¥ăĄƃɔʵ̆΅ЄԆԷ اܑऌঋਕએଓஒఎಐഎඐทພ༩ဒႱᄎሓᎷᐖᚖᚸᜃភᠮℕⅨ↦", webDirectory.Subdirectories[0].Name);
+		Assert.Equal(2, webDirectory.Files.Count);
+		Assert.Equal("∌⌀②▄▣☂✄⠅⿴〄.test", webDirectory.Files[0].FileName);
+		Assert.Equal(19057, webDirectory.Files[0].FileSize);
+	}
+
+	/// <summary>
+	/// Url: http://localhost:8000/ODTest/EmptyFolder/
+	/// https://github.com/TheWaWaR/simple-http-server/
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing134bAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample(), "http://localhost:8000/ODTest/EmptyFolder/");
+
+		Assert.Equal("EmptyFolder", webDirectory.Name);
+		Assert.Empty(webDirectory.Subdirectories);
+		Assert.Empty(webDirectory.Files);
+	}
 }

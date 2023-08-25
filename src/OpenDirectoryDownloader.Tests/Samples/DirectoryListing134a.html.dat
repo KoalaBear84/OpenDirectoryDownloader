@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <style> a { text-decoration:none; } </style>
+</head>
+<body>
+  
+  <div><a href="/"><strong>[Root]</strong></a> / ODTest</div>
+  <hr />
+  <table>
+    
+<tr>
+  <th><a href="/ODTest/?sort=name&order=asc">Name</a></th>
+  <th><a href="/ODTest/?sort=modified&order=desc">Last modified</a></th>
+  <th><a href="/ODTest/?sort=size&order=desc">Size</a></th>
+</tr>
+<tr><td style="border-top:1px dashed #BBB;" colspan="5"></td></tr>
+
+    
+<tr>
+  <td><a href="/"><strong>[Up]</strong></a></td>
+  <td></td>
+  <td></td>
+</tr>
+
+
+<tr>
+  <td><a  href="/ODTest/%E2%88%8C%E2%8C%80%E2%91%A1%E2%96%84%E2%96%A3%E2%98%82%E2%9C%84%E2%A0%85%E2%BF%B4%E3%80%84.test">∌⌀②▄▣☂✄⠅⿴〄.test</a></td>
+  <td style="color:#888;">[2018-11-02 09:08:32]</td>
+  <td><bold>18.61 kB</bold></td>
+</tr>
+
+
+<tr>
+  <td><a style="font-weight: bold;" href="/ODTest/%C2%A1%C2%A2%C2%A3%C2%A4%C2%A5%C4%83%C4%84%C6%83%C9%94%CA%B5%CC%86%CE%85%D0%84%D4%86%D4%B7%20%D8%A7%DC%91%E0%A4%8C%E0%A6%8B%E0%A8%95%E0%AA%8F%E0%AC%93%E0%AE%92%E0%B0%8E%E0%B2%90%E0%B4%8E%E0%B6%90%E0%B8%97%E0%BA%9E%E0%BC%A9%E1%80%92%E1%82%B1%E1%84%8E%E1%88%93%E1%8E%B7%E1%90%96%E1%9A%96%E1%9A%B8%E1%9C%83%E1%9E%97%E1%A0%AE%E2%84%95%E2%85%A8%E2%86%A6/">¡¢£¤¥ăĄƃɔʵ̆΅ЄԆԷ اܑऌঋਕએଓஒఎಐഎඐทພ༩ဒႱᄎሓᎷᐖᚖᚸᜃភᠮℕⅨ↦/</a></td>
+  <td style="color:#888;">[2021-01-09 14:28:14]</td>
+  <td><bold>-</bold></td>
+</tr>
+
+
+<tr>
+  <td><a style="font-weight: bold;" href="/ODTest/resources/">resources/</a></td>
+  <td style="color:#888;">[2021-01-09 14:28:14]</td>
+  <td><bold>-</bold></td>
+</tr>
+
+
+<tr>
+  <td><a  href="/ODTest/index.php">index.php</a></td>
+  <td style="color:#888;">[2017-06-23 23:55:26]</td>
+  <td><bold>1.28 kB</bold></td>
+</tr>
+
+
+<tr>
+  <td><a  href="/ODTest/asciifilename.txt">asciifilename.txt</a></td>
+  <td style="color:#888;">[2018-11-02 09:05:17]</td>
+  <td><bold>0 B</bold></td>
+</tr>
+
+
+<tr>
+  <td><a style="font-weight: bold;" href="/ODTest/Test/">Test/</a></td>
+  <td style="color:#888;">[2022-10-02 18:14:42]</td>
+  <td><bold>-</bold></td>
+</tr>
+
+
+<tr>
+  <td><a style="font-weight: bold;" href="/ODTest/EmptyFolder/">EmptyFolder/</a></td>
+  <td style="color:#888;">[2022-10-29 15:31:19]</td>
+  <td><bold>-</bold></td>
+</tr>
+
+  </table>
+</body>
+</html>

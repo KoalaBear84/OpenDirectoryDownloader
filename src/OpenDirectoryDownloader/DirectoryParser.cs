@@ -2476,11 +2476,21 @@ public static class DirectoryParser
 	{
 		UrlEncodingParser urlEncodingParser = new(url);
 
-		if (urlEncodingParser.Count == 2 && urlEncodingParser.Get("C") != null && urlEncodingParser.Get("O") != null)
+		if (urlEncodingParser.Count == 2)
+		{
+			if (urlEncodingParser.Get("C") != null && urlEncodingParser.Get("O") != null)
 		{
 			// Remove the default C (column) and O (order) parameters
 			urlEncodingParser.Remove("C");
 			urlEncodingParser.Remove("O");
+			}
+
+			if (urlEncodingParser.Get("sort") != null && urlEncodingParser.Get("order") != null)
+			{
+				// Remove the default sort and order parameters for https://github.com/TheWaWaR/simple-http-server/
+				urlEncodingParser.Remove("sort");
+				urlEncodingParser.Remove("order");
+			}
 
 			return urlEncodingParser.ToString();
 		}
