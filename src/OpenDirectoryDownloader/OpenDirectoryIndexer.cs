@@ -865,9 +865,7 @@ public partial class OpenDirectoryIndexer
 								Program.Logger.Debug("[{thread}] Start download '{url}'", threadName, webDirectory.Url);
 								Session.TotalHttpRequests++;
 
-								CancellationTokenSource cancellationTokenSource = new();
-
-								cancellationTokenSource.CancelAfter(TimeSpan.FromMinutes(5));
+								CancellationTokenSource cancellationTokenSource = new(TimeSpan.FromMinutes(5));
 
 								Context pollyContext = new()
 								{
