@@ -2307,14 +2307,14 @@ public static class DirectoryParser
 			webDirectorySub.Url = StripUrl(webDirectorySub.Url);
 		}
 
-		if (checkParents)
-		{
-			CheckParents(webDirectory, baseUrl);
-		}
-
 		if (webDirectory.Uri.Scheme != Constants.UriScheme.Ftp && webDirectory.Uri.Scheme != Constants.UriScheme.Ftps)
 		{
 			CleanFragments(webDirectory);
+		}
+
+		if (checkParents)
+		{
+			CheckParents(webDirectory, baseUrl);
 		}
 
 		CleanDynamicEntries(webDirectory);
