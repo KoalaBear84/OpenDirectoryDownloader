@@ -1,6 +1,7 @@
 using PuppeteerExtraSharp;
 using PuppeteerExtraSharp.Plugins.ExtraStealth;
 using PuppeteerSharp;
+using PuppeteerSharp.BrowserData;
 using System.Diagnostics;
 using System.Net;
 using ErrorEventArgs = PuppeteerSharp.ErrorEventArgs;
@@ -141,11 +142,11 @@ public class BrowserContext : IDisposable
 
 			try
 			{
-				if (!browserFetcher.LocalRevisions().Contains(BrowserFetcher.DefaultChromiumRevision))
+				if (!browserFetcher.GetInstalledBrowsers().Any(x => x.BuildId == Chrome.DefaultBuildId))
 				{
 					Program.Logger.Warning("Downloading browser... First time it can take a while, depending on your internet connection.");
-					RevisionInfo revisionInfo = await browserFetcher.DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
-					Program.Logger.Warning("Downloaded browser. Downloaded: {downloaded}, Platform: {platform}, Revision: {revision}, Path: {path}", revisionInfo.Downloaded, revisionInfo.Platform, revisionInfo.Revision, revisionInfo.FolderPath);
+					InstalledBrowser installedBrowser = await browserFetcher.DownloadAsync(Chrome.DefaultBuildId);
+					Program.Logger.Warning("Downloaded browser. Browser: {browser}, Platform: {platform}, BuildId: {buildId}, ExecutablePath: {executablePath}", installedBrowser.Browser, installedBrowser.Platform, installedBrowser.BuildId, installedBrowser.GetExecutablePath());
 				}
 			}
 			finally

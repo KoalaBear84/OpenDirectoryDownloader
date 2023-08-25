@@ -33,14 +33,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AngleSharp" Version="1.0.2-alpha-278" />
+    <PackageReference Include="AngleSharp" Version="1.0.4" />
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
-    <PackageReference Include="FluentFTP" Version="46.0.2" />
-    <PackageReference Include="Jint" Version="3.0.0-beta-2049" />
+    <PackageReference Include="FluentFTP" Version="47.1.0" />
+    <PackageReference Include="Jint" Version="3.0.0-beta-2050" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Polly" Version="7.2.3" />
+    <PackageReference Include="Polly" Version="8.0.0-alpha.8" />
     <PackageReference Include="PuppeteerExtraSharp" Version="2.0.0" />
-    <PackageReference Include="PuppeteerSharp" Version="9.1.0" />
+    <PackageReference Include="PuppeteerSharp" Version="11.0.2" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00947" />
     <PackageReference Include="TextCopy" Version="6.2.1" />
   </ItemGroup>
