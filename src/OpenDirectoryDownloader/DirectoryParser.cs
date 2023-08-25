@@ -2401,28 +2401,34 @@ public static class DirectoryParser
 
 	private static void CheckParents(WebDirectory webDirectory, string baseUrl)
 	{
+		Uri baseUri = new(baseUrl);
+
+		List<string> goodSchemes = new()
+		{
+			Constants.UriScheme.Https,
+			Constants.UriScheme.Http,
+			Constants.UriScheme.Ftp,
+			Constants.UriScheme.Ftps
+		};
+
+		List<string> skipHosts = new()
+		{
+			Constants.GoogleDriveDomain,
+			Constants.BlitzfilesTechDomain
+		};
+
 		webDirectory.Subdirectories.Where(d =>
 		{
 			Uri uri = new(d.Url);
 
-			if (uri.Host == Constants.GoogleDriveDomain || uri.Host == Constants.BlitzfilesTechDomain)
-			{
-				return false;
-			}
-
-			return (uri.Scheme != Constants.UriScheme.Https && uri.Scheme != Constants.UriScheme.Http && uri.Scheme != Constants.UriScheme.Ftp && uri.Scheme != Constants.UriScheme.Ftps) || uri.Host != new Uri(baseUrl).Host || !SameHostAndDirectoryDirectory(new Uri(baseUrl), uri);
+			return !goodSchemes.Contains(uri.Scheme) || uri.Host != baseUri.Host || skipHosts.Contains(uri.Host) || !SameHostAndDirectoryDirectory(baseUri, uri);
 		}).ToList().ForEach(wd => webDirectory.Subdirectories.Remove(wd));
 
 		webDirectory.Files.Where(f =>
 		{
 			Uri uri = new(f.Url);
 
-			if (uri.Host == Constants.GoogleDriveDomain || uri.Host == Constants.BlitzfilesTechDomain)
-			{
-				return false;
-			}
-
-			return (uri.Scheme != Constants.UriScheme.Https && uri.Scheme != Constants.UriScheme.Http && uri.Scheme != Constants.UriScheme.Ftp && uri.Scheme != Constants.UriScheme.Ftps) || uri.Host != new Uri(baseUrl).Host || !SameHostAndDirectoryFile(uri, new Uri(baseUrl));
+			return !goodSchemes.Contains(uri.Scheme) || uri.Host != baseUri.Host || skipHosts.Contains(uri.Host) || !SameHostAndDirectoryFile(uri, baseUri);
 		}).ToList().ForEach(f => webDirectory.Files.Remove(f));
 	}
 
@@ -2479,10 +2485,10 @@ public static class DirectoryParser
 		if (urlEncodingParser.Count == 2)
 		{
 			if (urlEncodingParser.Get("C") != null && urlEncodingParser.Get("O") != null)
-		{
-			// Remove the default C (column) and O (order) parameters
-			urlEncodingParser.Remove("C");
-			urlEncodingParser.Remove("O");
+			{
+				// Remove the default C (column) and O (order) parameters
+				urlEncodingParser.Remove("C");
+				urlEncodingParser.Remove("O");
 			}
 
 			if (urlEncodingParser.Get("sort") != null && urlEncodingParser.Get("order") != null)
