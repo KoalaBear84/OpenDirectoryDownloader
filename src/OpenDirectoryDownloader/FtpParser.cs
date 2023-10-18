@@ -18,9 +18,32 @@ public class FtpParser
 	private static readonly Regex RegexMaxThreadsGeneral01 = new(@"Too many connections");
 	private static readonly Regex RegexMaxThreadsGeneral02 = new(@"There are too many connections from your internet address.");
 	private static readonly Regex RegexMaxThreadsGeneral03 = new(@"No more connections allowed from your IP.");
-	private static readonly Regex RegexMaxThreadsGeneral04 = new(@"There are too many connected users, please try later.");
-	private static readonly Regex RegexMaxThreadsGeneral05 = new(@"Too many users logged in for this account.*");
-	private static readonly Regex RegexMaxThreadsGeneral06 = new(@"Sorry, the maximum number of clients \(\d*\) for this user are already connected.");
+	private static readonly Regex RegexMaxThreadsGeneral04 = new(@"Sorry, the maximum number of clients \(\d*\) for this user are already connected.");
+
+	private static readonly List<Regex> RegexesThreads = new()
+	{
+		RegexMaxThreadsSpecific01,
+		RegexMaxThreadsSpecific02,
+		RegexMaxThreadsSpecific03,
+		RegexMaxThreadsSpecific04,
+
+        // General needs to be check the latest
+        RegexMaxThreadsGeneral01,
+		RegexMaxThreadsGeneral02,
+		RegexMaxThreadsGeneral03,
+		RegexMaxThreadsGeneral04,
+	};
+
+	private static readonly Regex RegexMaxUsersGeneral01 = new(@"Too many users logged in for this account.*");
+	private static readonly Regex RegexMaxUsersGeneral02 = new(@"There are too many connected users, please try later.");
+	private static readonly Regex RegexMaxUsersGeneral03 = new(@"Xlight (personal edition )?only allows (?<MaxThreads>\d*) online users at the same time");
+
+	private static readonly List<Regex> RegexesConnections = new()
+	{
+		RegexMaxUsersGeneral01,
+		RegexMaxUsersGeneral02,
+		RegexMaxUsersGeneral03,
+	};
 
 	private static readonly Random Jitterer = new();
 	private static readonly AsyncRetryPolicy RetryPolicyNew = Policy
@@ -69,22 +92,7 @@ public class FtpParser
 
 	private static bool IsMaxThreads(FtpCommandException ftpCommandException)
 	{
-		List<Regex> regexes = new()
-		{
-			RegexMaxThreadsSpecific01,
-			RegexMaxThreadsSpecific02,
-			RegexMaxThreadsSpecific03,
-			RegexMaxThreadsSpecific04,
-
-            // General needs to be check the latest
-            RegexMaxThreadsGeneral01,
-			RegexMaxThreadsGeneral02,
-			RegexMaxThreadsGeneral03,
-			RegexMaxThreadsGeneral05,
-			RegexMaxThreadsGeneral06
-		};
-
-		foreach (Regex regex in regexes)
+		foreach (Regex regex in RegexesThreads)
 		{
 			if (regex.IsMatch(ftpCommandException.Message))
 			{
@@ -118,10 +126,12 @@ public class FtpParser
 			}
 		}
 
-		// This one is not specific to threads
-		if (RegexMaxThreadsGeneral04.IsMatch(ftpCommandException.Message))
+		foreach (Regex regex in RegexesConnections)
 		{
-			throw ftpCommandException;
+			if (regex.IsMatch(ftpCommandException.Message))
+			{
+				throw ftpCommandException;
+			}
 		}
 
 		return false;
