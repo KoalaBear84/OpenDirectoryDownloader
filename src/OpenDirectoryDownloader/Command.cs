@@ -1,4 +1,4 @@
-﻿using OpenDirectoryDownloader.Shared.Models;
+using OpenDirectoryDownloader.Shared.Models;
 using System.Diagnostics;
 using System.Net;
 using System.Reflection;
@@ -216,7 +216,7 @@ public class Command
 
 		lock (openDirectoryIndexer.WebDirectoryProcessorInfoLock)
 		{
-			foreach (KeyValuePair<string, WebDirectory> webDirectory in openDirectoryIndexer.WebDirectoryProcessorInfo.OrderBy(i => i.Key))
+			foreach (KeyValuePair<string, WebDirectory> webDirectory in openDirectoryIndexer.WebDirectoryProcessorInfo.OrderByDescending(x => x.Value.StartTime))
 			{
 				Console.WriteLine($"[{webDirectory.Key}] {Library.FormatWithThousands((DateTimeOffset.UtcNow - webDirectory.Value.StartTime).TotalMilliseconds)}ms | {webDirectory.Value.Url}");
 			}
