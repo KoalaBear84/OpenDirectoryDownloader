@@ -95,6 +95,7 @@ public static class DirectoryParser
 				return ParseIpfsDirectoryListing(baseUrl, parsedWebDirectory, htmlDocument, checkParents);
 			}
 
+			// https://github.com/filebrowser/filebrowser
 			if (htmlDocument.Title == "File Browser")
 			{
 				Regex scriptRegex = new(@"app\..*\.js");
