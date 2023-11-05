@@ -988,7 +988,7 @@ public partial class OpenDirectoryIndexer
 
 		try
 		{
-			httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
+			httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token);
 		}
 		catch (TaskCanceledException)// when (ex.InnerException is TimeoutException)
 		{
