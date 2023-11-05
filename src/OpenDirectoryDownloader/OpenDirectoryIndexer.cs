@@ -1244,7 +1244,7 @@ public partial class OpenDirectoryIndexer
 
 		if (httpResponseMessage is null)
 		{
-			throw new Exception($"Error retrieving directory listing for {webDirectory.Url}");
+			throw new Exception($"Error retrieving directory listing (empty/null) for {webDirectory.Url}");
 		}
 
 		if (!HttpClient.DefaultRequestHeaders.Contains("Referer"))
