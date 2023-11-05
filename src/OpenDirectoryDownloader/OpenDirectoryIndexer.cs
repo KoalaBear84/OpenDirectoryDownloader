@@ -46,7 +46,7 @@ public partial class OpenDirectoryIndexer
 	public Task IndexingTask { get; set; }
 
 	private bool FirstRequest { get; set; } = true;
-	private static bool RateLimited { get; set; }
+	private static bool RateLimitedOrConnectionIssues { get; set; }
 
 	private SocketsHttpHandler SocketsHttpHandler { get; set; }
 	private HttpClient HttpClient { get; set; }
@@ -64,6 +64,8 @@ public partial class OpenDirectoryIndexer
 	};
 
 	private GoogleDriveIndexer GoogleDriveIndexer { get; set; }
+
+	private const int FallbackRetryCount = 4;
 
 	private readonly AsyncRetryPolicy RetryPolicy = Policy
 		.Handle<Exception>()
@@ -90,7 +92,7 @@ public partial class OpenDirectoryIndexer
 				{
 					Program.Logger.Warning("[{thread}] Rate limited (try {retryCount}). Url '{relativeUrl}'. Waiting {waitTime:F0} seconds.", threadName, retryCount, relativeUrl, waitTime);
 				}
-				else if (retryCount <= 4 && ex is TaskCanceledException taskCanceledException && taskCanceledException.InnerException is TimeoutException timeoutException)
+				else if (retryCount <= FallbackRetryCount && ex is TaskCanceledException taskCanceledException && taskCanceledException.InnerException is TimeoutException timeoutException)
 				{
 					Program.Logger.Warning("[{thread}] Timeout (try {retryCount}). Url '{relativeUrl}'. Waiting {waitTime:F0} seconds.", threadName, retryCount, relativeUrl, waitTime);
 				}
@@ -111,19 +113,19 @@ public partial class OpenDirectoryIndexer
 					else if (httpRequestException.StatusCode == HttpStatusCode.ServiceUnavailable || httpRequestException.StatusCode == HttpStatusCode.TooManyRequests)
 					{
 						Program.Logger.Warning("[{thread}] HTTP {httpStatusCode}. Rate limited (try {retryCount}). Url '{relativeUrl}'. Waiting {waitTime:F0} seconds.", threadName, httpStatusCode, retryCount, relativeUrl, waitTime);
-						RateLimited = true;
+						RateLimitedOrConnectionIssues = true;
 					}
 					else if (httpRequestException.StatusCode == HttpStatusCode.LoopDetected)
 					{
 						// It could be that a Retry-After header is returned, which should be the seconds of time to wait, but this could be as high as 14.400 which is 4 hours!
 						// But a request will probably be successful after just a couple of seconds
 						Program.Logger.Warning("[{thread}] HTTP {httpStatusCode}. Rate limited / out of capacity (try {retryCount}). Url '{relativeUrl}'. Waiting {waitTime:F0} seconds.", threadName, httpStatusCode, retryCount, relativeUrl, waitTime);
-						RateLimited = true;
+						RateLimitedOrConnectionIssues = true;
 					}
 					else if (ex.Message.Contains("No connection could be made because the target machine actively refused it."))
 					{
 						Program.Logger.Warning("[{thread}] HTTP {httpStatusCode}. Rate limited? (try {retryCount}). Url '{relativeUrl}'. Waiting {waitTime:F0} seconds.", threadName, httpStatusCode, retryCount, relativeUrl, waitTime);
-						RateLimited = true;
+						RateLimitedOrConnectionIssues = true;
 					}
 					else if (!Session.GDIndex && (httpRequestException.StatusCode == HttpStatusCode.NotFound || ex.Message == "No such host is known."))
 					{
@@ -140,7 +142,7 @@ public partial class OpenDirectoryIndexer
 						Program.Logger.Warning("[{thread}] HTTP {httpStatusCode}. Error '{error}' retrieving on try {retryCount}) for '{relativeUrl}'. Skipping..", threadName, httpStatusCode, ex.Message, retryCount, relativeUrl);
 						(context["CancellationTokenSource"] as CancellationTokenSource).Cancel();
 					}
-					else if (retryCount <= 4)
+					else if (retryCount <= FallbackRetryCount)
 					{
 						Program.Logger.Warning("[{thread}] HTTP {httpStatusCode}. Error '{error}' retrieving on try {retryCount}) for '{relativeUrl}'. Waiting {waitTime:F0} seconds.", threadName, httpStatusCode, GetExceptionWithInner(ex), retryCount, relativeUrl, waitTime);
 					}
@@ -152,7 +154,7 @@ public partial class OpenDirectoryIndexer
 				}
 				else
 				{
-					if (retryCount <= 4)
+					if (retryCount <= FallbackRetryCount)
 					{
 						Program.Logger.Warning("[{thread}] Error '{error}' retrieving on try {retryCount} for url '{relativeUrl}'. Waiting {waitTime:F0} seconds.", threadName, GetExceptionWithInner(ex), retryCount, relativeUrl, waitTime);
 					}
@@ -762,7 +764,7 @@ public partial class OpenDirectoryIndexer
 
 		do
 		{
-			if (RateLimited && RunningWebDirectoryThreads + 1 > 5)
+			if (RateLimitedOrConnectionIssues && RunningWebDirectoryThreads + 1 > 5)
 			{
 				Program.Logger.Warning($"Decrease threads because of rate limiting");
 				break;
