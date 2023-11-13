@@ -33,10 +33,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AngleSharp" Version="1.0.6-alpha-325" />
+    <PackageReference Include="AngleSharp" Version="1.0.6" />
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="FluentFTP" Version="48.0.3" />
-    <PackageReference Include="Jint" Version="3.0.0-beta-2054" />
+    <PackageReference Include="Jint" Version="3.0.0-beta-2055" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Polly" Version="8.1.0" />
     <PackageReference Include="PuppeteerExtraSharp" Version="2.0.0" />
