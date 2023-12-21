@@ -25,6 +25,8 @@ jobs:
           - linux-arm
           - linux-arm64
           - win-x64
+          - win-arm
+          - win-arm64
           - osx-x64
         self-contained:
           - normal
