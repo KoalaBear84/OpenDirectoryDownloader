@@ -40,6 +40,10 @@ jobs:
             os: ubuntu-latest
           - target: win-x64
             os: windows-latest
+          - target: win-arm
+            os: windows-latest
+          - target: win-arm64
+            os: windows-latest
           - target: osx-x64
             os: macos-latest
           
