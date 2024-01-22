@@ -25,8 +25,6 @@ jobs:
           - linux-arm
           - linux-arm64
           - win-x64
-          - win-arm
-          - win-arm64
           - osx-x64
         self-contained:
           - normal
@@ -39,10 +37,6 @@ jobs:
           - target: linux-arm64
             os: ubuntu-latest
           - target: win-x64
-            os: windows-latest
-          - target: win-arm
-            os: windows-latest
-          - target: win-arm64
             os: windows-latest
           - target: osx-x64
             os: macos-latest
