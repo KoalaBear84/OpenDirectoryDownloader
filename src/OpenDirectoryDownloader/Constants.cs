@@ -1,4 +1,4 @@
-﻿namespace OpenDirectoryDownloader;
+namespace OpenDirectoryDownloader;
 
 public class Constants
 {
@@ -29,7 +29,7 @@ public class Constants
 
 	public class UserAgent
 	{
-		public const string Chrome = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36";
+		public const string Chrome = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36";
 		public const string Curl = "curl/7.55.1";
 	}
 
