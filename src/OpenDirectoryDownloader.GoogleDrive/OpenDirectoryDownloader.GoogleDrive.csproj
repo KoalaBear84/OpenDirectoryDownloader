@@ -11,8 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Apis.Drive.v3" Version="1.67.0.3309" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
+    <PackageReference Include="Google.Apis.Drive.v3" Version="1.67.0.3373" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="5.1.0-dev-00943" />
   </ItemGroup>
 
   <ItemGroup>
