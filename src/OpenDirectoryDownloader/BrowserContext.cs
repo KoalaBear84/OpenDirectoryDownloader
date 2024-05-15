@@ -311,19 +311,19 @@ public class BrowserContext : IDisposable
 		WriteDebugInfo($"Page_Error: {e.Error}");
 	}
 
-	private void Page_FrameAttached(object sender, FrameEventArgs e)
+	private async void Page_FrameAttached(object sender, FrameEventArgs e)
 	{
-		WriteDebugInfo($"Page_FrameAttached: {e.Frame.Name}, {e.Frame.Url}");
+		WriteDebugInfo($"Page_FrameAttached: {e.Frame.Url}");
 	}
 
 	private void Page_FrameDetached(object sender, FrameEventArgs e)
 	{
-		WriteDebugInfo($"Page_FrameDetached: {e.Frame.Name}, {e.Frame.Url}");
+		WriteDebugInfo($"Page_FrameDetached: {e.Frame.Url}");
 	}
 
-	private void Page_FrameNavigated(object sender, FrameEventArgs e)
+	private void Page_FrameNavigated(object sender, FrameNavigatedEventArgs e)
 	{
-		WriteDebugInfo($"Page_FrameNavigated: {e.Frame.Name}, {e.Frame.Url}");
+		WriteDebugInfo($"Page_FrameNavigated: {e.Frame.Url}");
 	}
 
 	private void Page_Load(object sender, EventArgs e)
