@@ -100,7 +100,7 @@ public partial class OpenDirectoryIndexer
 				{
 					if (OperatingSystem.IsWindows() && ex.InnerException is AuthenticationException)
 					{
-						Program.Logger.Warning("[{thread}] Please check readme to fix possible TLS 1.3 issue: https://github.com/KoalaBear84/OpenDirectoryDownloader/#tls-errors-windows", threadName);
+						Program.Logger.Warning("[{thread}] Please check readme to fix possible TLS 1.3 issue: https://github.com/KoalaBear84/OpenDirectoryDownloader/#tls-errors-windows-10", threadName);
 					}
 
 					int httpStatusCode = (int)(httpRequestException.StatusCode ?? 0);
@@ -269,8 +269,7 @@ public partial class OpenDirectoryIndexer
 
 		HttpClient = new HttpClient(SocketsHttpHandler)
 		{
-			Timeout = TimeSpan.FromSeconds(OpenDirectoryIndexerSettings.Timeout),
-			//DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrHigher
+			Timeout = TimeSpan.FromSeconds(OpenDirectoryIndexerSettings.Timeout)
 		};
 
 		HttpClient.DefaultRequestHeaders.Accept.ParseAdd("*/*");
