@@ -35,7 +35,7 @@ public partial class OpenDirectoryIndexer
 	public ConcurrentQueue<WebDirectory> WebDirectoriesQueue { get; set; } = new ConcurrentQueue<WebDirectory>();
 	public int RunningWebDirectoryThreads;
 	public Task[] WebDirectoryProcessors;
-	public Dictionary<string, WebDirectory> WebDirectoryProcessorInfo = new();
+	public Dictionary<string, WebDirectory> WebDirectoryProcessorInfo = [];
 	public readonly object WebDirectoryProcessorInfoLock = new();
 
 	public ConcurrentQueue<WebFile> WebFilesFileSizeQueue { get; set; } = new ConcurrentQueue<WebFile>();
@@ -51,17 +51,17 @@ public partial class OpenDirectoryIndexer
 	private SocketsHttpHandler SocketsHttpHandler { get; set; }
 	private HttpClient HttpClient { get; set; }
 	public static CookieContainer CookieContainer { get; set; } = new();
-	private static List<EncodingInfo> EncodingInfos { get; set; } = Encoding.GetEncodings().ToList();
+	private static List<EncodingInfo> EncodingInfos { get; set; } = [.. Encoding.GetEncodings()];
 
 	private System.Timers.Timer TimerStatistics { get; set; }
 
 	private static readonly Random Jitterer = new();
 
-	private static readonly List<string> KnownErrorPaths = new()
-	{
+	private static readonly List<string> KnownErrorPaths =
+	[
 		"cgi-bin/",
 		"lost%2Bfound/"
-	};
+	];
 
 	private GoogleDriveIndexer GoogleDriveIndexer { get; set; }
 
@@ -198,7 +198,7 @@ public partial class OpenDirectoryIndexer
 						try
 						{
 							string urlHostname = new Uri(url).Host;
-							List<string> possibleDnsNames = new();
+							List<string> possibleDnsNames = [];
 
 							Regex commonNameRegex = new("CN=(?<CommonName>[^,]+),.+");
 
@@ -269,7 +269,8 @@ public partial class OpenDirectoryIndexer
 
 		HttpClient = new HttpClient(SocketsHttpHandler)
 		{
-			Timeout = TimeSpan.FromSeconds(OpenDirectoryIndexerSettings.Timeout)
+			Timeout = TimeSpan.FromSeconds(OpenDirectoryIndexerSettings.Timeout),
+			//DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrHigher
 		};
 
 		HttpClient.DefaultRequestHeaders.Accept.ParseAdd("*/*");
@@ -289,7 +290,7 @@ public partial class OpenDirectoryIndexer
 			string headerName = splitHeader[0].TrimStart();
 			string headerValue = string.Join(":", splitHeader.Skip(1)).TrimStart();
 
-			if (headerName.ToLowerInvariant() == "cookie")
+			if (headerName.Equals("cookie", StringComparison.InvariantCultureIgnoreCase))
 			{
 				string[] cookies = headerValue.Split(';').Where(c => !string.IsNullOrWhiteSpace(c)).ToArray();
 
@@ -506,13 +507,13 @@ public partial class OpenDirectoryIndexer
 							{
 								try
 								{
-									List<IFileUploadSite> uploadSites = new()
-									{
+									List<IFileUploadSite> uploadSites =
+									[
 										new Pixeldrain(),
 										new GoFileIo(),
 										new UploadFilesIo(),
 										new AnonFiles(),
-									};
+									];
 
 									foreach (IFileUploadSite uploadSite in uploadSites)
 									{
@@ -1259,7 +1260,7 @@ public partial class OpenDirectoryIndexer
 		{
 			FirstRequest = false;
 
-			List<string> serverHeaders = new();
+			List<string> serverHeaders = [];
 
 			if (httpResponseMessage.Headers.Contains("Server"))
 			{

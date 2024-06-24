@@ -28,9 +28,9 @@ public class WebDirectory
 	[JsonIgnore]
 	public bool ParsedSuccessfully { get; set; }
 
-	public ConcurrentList<WebDirectory> Subdirectories { get; set; } = new ConcurrentList<WebDirectory>();
+	public ConcurrentList<WebDirectory> Subdirectories { get; set; } = [];
 
-	public ConcurrentList<WebFile> Files { get; set; } = new ConcurrentList<WebFile>();
+	public ConcurrentList<WebFile> Files { get; set; } = [];
 
 	public bool Error { get; set; }
 

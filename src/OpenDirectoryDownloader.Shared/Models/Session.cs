@@ -10,10 +10,10 @@ public class Session
 	public DateTimeOffset Started { get; set; } = DateTimeOffset.MinValue;
 	public DateTimeOffset Finished { get; set; } = DateTimeOffset.MinValue;
 	public string Version { get; set; } = Assembly.GetEntryAssembly().GetName().Version?.ToString();
-	public Dictionary<int, int> HttpStatusCodes { get; set; } = new();
-	public Dictionary<string, string> Parameters { get; set; } = new();
+	public Dictionary<int, int> HttpStatusCodes { get; set; } = [];
+	public Dictionary<string, string> Parameters { get; set; } = [];
 	public CommandLineOptions CommandLineOptions { get; set; } = new();
-	public List<string> PossibleAlternativeUrls { get; set; } = new();
+	public List<string> PossibleAlternativeUrls { get; set; } = [];
 	public string Description { get; set; }
 	public long TotalHttpTraffic { get; set; }
 	public int TotalHttpRequests { get; set; }
@@ -25,15 +25,15 @@ public class Session
 	public int Skipped { get; set; }
 	public string UploadedUrlsUrl { get; set; }
 	public string UploadedUrlsResponse { get; set; }
-	public List<string> UrlsWithErrors { get; set; } = new();
+	public List<string> UrlsWithErrors { get; set; } = [];
 	public SpeedtestResult SpeedtestResult { get; set; }
 
 	[JsonIgnore]
 	public bool StopLogging { get; set; }
 	[JsonIgnore]
-	public ConcurrentSet<string> ProcessedUrls { get; set; } = new();
+	public ConcurrentSet<string> ProcessedUrls { get; set; } = [];
 	[JsonIgnore]
-	public ConcurrentSet<string> ProcessedBrowserUrls { get; set; } = new();
+	public ConcurrentSet<string> ProcessedBrowserUrls { get; set; } = [];
 	[JsonIgnore]
 	public bool GDIndex { get; set; }
 }

@@ -1072,7 +1072,7 @@ public static class DirectoryParser
 		// Dirty solution..
 		bool hasSeperateDirectoryAndFilesTables = false;
 
-		ConcurrentList<WebDirectory> results = new();
+		ConcurrentList<WebDirectory> results = [];
 
 		foreach (IElement table in tables)
 		{
@@ -1250,7 +1250,7 @@ public static class DirectoryParser
 										filename = link.TextContent.Trim();
 									}
 
-									if (urlEncodingParser.Count == 0 && filename.ToLowerInvariant() == "index.php")
+									if (urlEncodingParser.Count == 0 && filename.Equals("index.php", StringComparison.InvariantCultureIgnoreCase))
 									{
 										continue;
 									}
@@ -1851,8 +1851,8 @@ public static class DirectoryParser
 
 	private static async Task<WebDirectory> ParsePreDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> pres, bool checkParents)
 	{
-		List<Func<WebDirectory, string, string, Task<bool>>> regexFuncs = new()
-		{
+		List<Func<WebDirectory, string, string, Task<bool>>> regexFuncs =
+		[
 			RegexParser1,
 			RegexParser2,
 			RegexParser3,
@@ -1863,7 +1863,7 @@ public static class DirectoryParser
 			RegexParser8,
 			RegexParser9,
 			RegexParser10,
-		};
+		];
 
 		foreach (IElement pre in pres)
 		{
@@ -2080,7 +2080,7 @@ public static class DirectoryParser
 	private static WebDirectory ParseDirectoryListerDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, bool checkParents)
 	{
 		parsedWebDirectory.Parser = "ParseDirectoryListerDirectoryListing";
-		List<HeaderInfo> tableHeaderInfos = new();
+		List<HeaderInfo> tableHeaderInfos = [];
 
 		IHtmlCollection<IElement> headerDivs = htmlDocument.QuerySelectorAll("#content > div > div > div");
 
@@ -2404,19 +2404,19 @@ public static class DirectoryParser
 	{
 		Uri baseUri = new(baseUrl);
 
-		List<string> goodSchemes = new()
-		{
+		List<string> goodSchemes =
+		[
 			Constants.UriScheme.Https,
 			Constants.UriScheme.Http,
 			Constants.UriScheme.Ftp,
 			Constants.UriScheme.Ftps
-		};
+		];
 
-		List<string> skipHosts = new()
-		{
+		List<string> skipHosts =
+		[
 			Constants.GoogleDriveDomain,
 			Constants.BlitzfilesTechDomain
-		};
+		];
 
 		webDirectory.Subdirectories.Where(d =>
 		{
@@ -2440,7 +2440,7 @@ public static class DirectoryParser
 
 		if (directoriesWithFragments.Any())
 		{
-			List<WebDirectory> clientWebDirs = new();
+			List<WebDirectory> clientWebDirs = [];
 
 			foreach (WebDirectory webDir in directoriesWithFragments)
 			{
@@ -2519,8 +2519,8 @@ public static class DirectoryParser
 					{
 						Program.Logger.Error("Possible virtual directory or symlink detected (level {level})! SKIPPING! Url: {url}", level, webDirectory.Url);
 
-						webDirectory.Subdirectories = new ConcurrentList<WebDirectory>();
-						webDirectory.Files = new ConcurrentList<WebFile>();
+						webDirectory.Subdirectories = [];
+						webDirectory.Files = [];
 						webDirectory.Error = true;
 						break;
 					}
@@ -2627,7 +2627,7 @@ public static class DirectoryParser
 
 	private static Dictionary<int, HeaderInfo> GetTableHeaders(IElement table)
 	{
-		Dictionary<int, HeaderInfo> tableHeaders = new();
+		Dictionary<int, HeaderInfo> tableHeaders = [];
 
 		IHtmlCollection<IElement> headers = table.QuerySelector("th")?.ParentElement?.QuerySelectorAll("th");
 
@@ -2688,10 +2688,10 @@ public static class DirectoryParser
 			{
 				tableHeaders.Clear();
 
-				List<int> fileNameColumnIndex = new();
-				List<int> dateColumnIndex = new();
-				List<int> fileSizeColumnIndex = new();
-				List<int> typeColumnIndex = new();
+				List<int> fileNameColumnIndex = [];
+				List<int> dateColumnIndex = [];
+				List<int> fileSizeColumnIndex = [];
+				List<int> typeColumnIndex = [];
 
 				int maxColums = 0;
 
@@ -2904,8 +2904,8 @@ public static class DirectoryParser
 			link.TextContent.Trim() != "." &&
 			linkHref?.ToLowerInvariant().StartsWith("javascript:") == false &&
 			linkHref?.ToLowerInvariant().StartsWith("mailto:") == false &&
-			link.TextContent.ToLowerInvariant() != "parent directory" &&
-			link.TextContent.ToLowerInvariant() != "[to parent directory]" &&
+			!link.TextContent.Equals("parent directory", StringComparison.InvariantCultureIgnoreCase) &&
+			!link.TextContent.Equals("[to parent directory]", StringComparison.InvariantCultureIgnoreCase) &&
 			link.TextContent.Trim() != "Name" &&
 			linkHref?.Contains("&expand") == false &&
 			(!new Regex(@"\?[NMSD]=?[AD]").IsMatch(linkHref) || linkHref.StartsWith("DirectoryList.asp")) &&

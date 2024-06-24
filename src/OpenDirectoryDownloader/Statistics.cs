@@ -38,7 +38,7 @@ public static class Statistics
 
 	public static string GetSessionStats(Session session, bool includeExtensions = false, bool includeFullExtensions = false, bool onlyRedditStats = false, bool includeBanner = false)
 	{
-		Dictionary<string, ExtensionStats> extensionsStats = new();
+		Dictionary<string, ExtensionStats> extensionsStats = [];
 
 		if (includeExtensions || includeFullExtensions)
 		{

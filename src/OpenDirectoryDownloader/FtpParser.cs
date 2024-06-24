@@ -20,8 +20,8 @@ public class FtpParser
 	private static readonly Regex RegexMaxThreadsGeneral03 = new(@"No more connections allowed from your IP.");
 	private static readonly Regex RegexMaxThreadsGeneral04 = new(@"Sorry, the maximum number of clients \(\d*\) for this user are already connected.");
 
-	private static readonly List<Regex> RegexesThreads = new()
-	{
+	private static readonly List<Regex> RegexesThreads =
+	[
 		RegexMaxThreadsSpecific01,
 		RegexMaxThreadsSpecific02,
 		RegexMaxThreadsSpecific03,
@@ -32,18 +32,18 @@ public class FtpParser
 		RegexMaxThreadsGeneral02,
 		RegexMaxThreadsGeneral03,
 		RegexMaxThreadsGeneral04,
-	};
+	];
 
 	private static readonly Regex RegexMaxUsersGeneral01 = new(@"Too many users logged in for this account.*");
 	private static readonly Regex RegexMaxUsersGeneral02 = new(@"There are too many connected users, please try later.");
 	private static readonly Regex RegexMaxUsersGeneral03 = new(@"Xlight (personal edition )?only allows (?<MaxThreads>\d*) online users at the same time");
 
-	private static readonly List<Regex> RegexesConnections = new()
-	{
+	private static readonly List<Regex> RegexesConnections =
+	[
 		RegexMaxUsersGeneral01,
 		RegexMaxUsersGeneral02,
 		RegexMaxUsersGeneral03,
-	};
+	];
 
 	private static readonly Random Jitterer = new();
 	private static readonly AsyncRetryPolicy RetryPolicyNew = Policy
@@ -137,7 +137,7 @@ public class FtpParser
 		return false;
 	}
 
-	public static Dictionary<string, AsyncFtpClient> FtpClients { get; set; } = new Dictionary<string, AsyncFtpClient>();
+	public static Dictionary<string, AsyncFtpClient> FtpClients { get; set; } = [];
 
 	public static async Task<WebDirectory> ParseFtpAsync(string threadName, WebDirectory webDirectory, string username, string password)
 	{

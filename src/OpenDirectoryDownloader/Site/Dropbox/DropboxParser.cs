@@ -67,8 +67,7 @@ public static class DropboxParser
 				DropboxResult dropboxResult = DropboxResult.FromJson(decodedJson);
 				takedownActive = takedownActive || dropboxResult.TakedownRequestType is not null;
 
-				List<Entry> entries = new();
-				entries.AddRange(dropboxResult.Entries);
+				List<Entry> entries = [.. dropboxResult.Entries];
 
 				if (dropboxResult.HasMoreEntries)
 				{

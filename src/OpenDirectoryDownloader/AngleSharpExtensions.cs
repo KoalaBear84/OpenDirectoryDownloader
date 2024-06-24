@@ -11,7 +11,7 @@ public static class AngleSharpExtensions
 		do
 		{
 			parentElement = parentElement.ParentElement;
-		} while (parentElement != null && parentElement.TagName.ToUpperInvariant() != elementName.ToUpperInvariant());
+		} while (parentElement != null && !parentElement.TagName.Equals(elementName, StringComparison.InvariantCultureIgnoreCase));
 
 		return parentElement;
 	}

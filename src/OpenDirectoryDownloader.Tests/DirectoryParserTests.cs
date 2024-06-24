@@ -18,7 +18,7 @@ public class DirectoryParserTests
 
 	public static void CleanWebDirectory(WebDirectory webDirectory, Uri testedUri)
 	{
-		List<WebDirectory> newWebDirectories = new();
+		List<WebDirectory> newWebDirectories = [];
 
 		foreach (WebDirectory subdirectory in webDirectory.Subdirectories)
 		{
