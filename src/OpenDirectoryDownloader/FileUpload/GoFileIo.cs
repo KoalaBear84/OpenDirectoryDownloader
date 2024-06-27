@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenDirectoryDownloader.Models;
 
@@ -17,7 +17,7 @@ public class GoFileIo : IFileUploadSite
 		{
 			try
 			{
-				string jsonServer = await httpClient.GetStringAsync("https://apiv2.gofile.io/getServer");
+				string jsonServer = await httpClient.GetStringAsync("https://api.gofile.io/servers");
 
 				JObject result = JObject.Parse(jsonServer);
 
@@ -26,7 +26,8 @@ public class GoFileIo : IFileUploadSite
 					throw new Exception("GoFile.io error, probably in maintenance");
 				}
 
-				string server = result.SelectToken("data.server").Value<string>();
+				string server = result.SelectToken("data.servers").First()["name"].Value<string>();
+
 				using FileStream fileStream = new(path, FileMode.Open);
 				using StreamContent streamContent = new(fileStream);
 
