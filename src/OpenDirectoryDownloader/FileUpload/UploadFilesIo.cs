@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenDirectoryDownloader.Models;
 using System.Text.RegularExpressions;
@@ -47,11 +47,14 @@ public class UploadFilesIo : IFileUploadSite
 					}
 
 					// Post file
+					using FileStream fileStream = new(path, FileMode.Open);
+					using StreamContent streamContent = new(fileStream);
+
 					using MultipartFormDataContent multipartFormDataContent = new($"Upload----{Guid.NewGuid()}")
 					{
 						{ new StringContent("1"), "chunk_index" },
 						{ new StringContent(fileId), "fuid" },
-						{ new StreamContent(new FileStream(path, FileMode.Open)), "file", Path.GetFileName(path) }
+						{ streamContent, "file", Path.GetFileName(path) }
 					};
 
 					using HttpResponseMessage httpResponseMessage = await httpClient.PostAsync("https://up.ufile.io/v1/upload/chunk", multipartFormDataContent);

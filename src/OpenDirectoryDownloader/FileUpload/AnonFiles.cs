@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using OpenDirectoryDownloader.Models;
 
 namespace OpenDirectoryDownloader.FileUpload;
@@ -16,9 +16,12 @@ public class AnonFiles : IFileUploadSite
 		{
 			try
 			{
+				using FileStream fileStream = new(path, FileMode.Open);
+				using StreamContent streamContent = new(fileStream);
+
 				using MultipartFormDataContent multipartFormDataContent = new($"Upload----{Guid.NewGuid()}")
 				{
-					{ new StreamContent(new FileStream(path, FileMode.Open)), "file", Path.GetFileName(path) }
+					{ streamContent, "file", Path.GetFileName(path) }
 				};
 
 				using HttpResponseMessage httpResponseMessage = await httpClient.PostAsync("https://api.anonfiles.com/upload", multipartFormDataContent);

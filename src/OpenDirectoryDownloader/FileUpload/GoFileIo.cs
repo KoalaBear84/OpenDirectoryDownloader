@@ -27,10 +27,12 @@ public class GoFileIo : IFileUploadSite
 				}
 
 				string server = result.SelectToken("data.server").Value<string>();
+				using FileStream fileStream = new(path, FileMode.Open);
+				using StreamContent streamContent = new(fileStream);
 
 				using MultipartFormDataContent multipartFormDataContent = new($"Upload----{Guid.NewGuid()}")
 				{
-					{ new StreamContent(new FileStream(path, FileMode.Open)), "file", Path.GetFileName(path) }
+					{ streamContent, "file", Path.GetFileName(path) }
 				};
 
 				using HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"https://{server}.gofile.io/uploadFile", multipartFormDataContent);

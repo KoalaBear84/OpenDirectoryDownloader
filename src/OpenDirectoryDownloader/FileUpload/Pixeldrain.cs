@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using OpenDirectoryDownloader.Models;
 
 namespace OpenDirectoryDownloader.FileUpload;
@@ -16,7 +16,9 @@ public class Pixeldrain : IFileUploadSite
 		{
 			try
 			{
-				using HttpResponseMessage httpResponseMessage = await httpClient.PutAsync($"https://pixeldrain.com/api/file/{Uri.EscapeDataString(Path.GetFileName(path))}", new StreamContent(new FileStream(path, FileMode.Open)));
+				using FileStream fileStream = new(path, FileMode.Open);
+				using StreamContent streamContent = new(fileStream);
+				using HttpResponseMessage httpResponseMessage = await httpClient.PutAsync($"https://pixeldrain.com/api/file/{Uri.EscapeDataString(Path.GetFileName(path))}", streamContent);
 
 				if (httpResponseMessage.IsSuccessStatusCode)
 				{
