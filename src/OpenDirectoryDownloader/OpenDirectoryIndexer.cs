@@ -508,7 +508,6 @@ public partial class OpenDirectoryIndexer
 								{
 									List<IFileUploadSite> uploadSites =
 									[
-										new Pixeldrain(),
 										new GoFileIo(),
 										new UploadFilesIo(),
 										new AnonFiles(),
