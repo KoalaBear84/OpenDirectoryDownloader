@@ -1,6 +1,6 @@
-﻿using AngleSharp.Html.Dom;
-using Esprima;
-using Esprima.Ast;
+using AngleSharp.Html.Dom;
+using Acornima;
+using Acornima.Ast;
 using Jint;
 using Jint.Native;
 using OpenDirectoryDownloader.Models;
@@ -121,7 +121,7 @@ public static class BhadooIndexParser
 
 					string appJsSource = httpClient.GetStringAsync(appJsScript.Source.Replace("obf.", string.Empty)).GetAwaiter().GetResult();
 
-					JavaScriptParser javaScriptParser = new();
+					Parser javaScriptParser = new();
 					Script program = javaScriptParser.ParseScript(appJsSource);
 					IEnumerable<FunctionDeclaration> javaScriptFunctions = program.ChildNodes.OfType<FunctionDeclaration>();
 					FunctionDeclaration readFunctionDeclaration = javaScriptFunctions.FirstOrDefault(f => f.ChildNodes.OfType<Identifier>().Any(i => i.Name == "read"));

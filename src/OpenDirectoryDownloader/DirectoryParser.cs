@@ -1,8 +1,8 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
-using Esprima;
-using Esprima.Ast;
+using Acornima;
+using Acornima.Ast;
 using Newtonsoft.Json;
 using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Models;
@@ -156,7 +156,7 @@ public static class DirectoryParser
 
 						string appJsSource = await httpClient.GetStringAsync(scriptUrl);
 
-						JavaScriptParser javaScriptParser = new();
+						Parser javaScriptParser = new();
 						Script program = javaScriptParser.ParseScript(appJsSource);
 						IEnumerable<FunctionDeclaration> javaScriptFunctions = program.ChildNodes.OfType<FunctionDeclaration>();
 						FunctionDeclaration gdidecodeFunctionDeclaration = javaScriptFunctions.FirstOrDefault(f => f.ChildNodes.OfType<Identifier>().Any(i => i.Name == "gdidecode"));

@@ -1,5 +1,5 @@
-﻿using Esprima;
-using Esprima.Ast;
+using Acornima;
+using Acornima.Ast;
 using OpenDirectoryDownloader.Shared.Models;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -57,9 +57,9 @@ public static class DropboxParser
 			if (prefetchListingRegexMatch.Success)
 			{
 				string htmlJavascriptString = prefetchListingRegexMatch.Groups["PrefetchListing"].Value;
-				JavaScriptParser javaScriptParser = new();
+				Parser javaScriptParser = new();
 				Script program = javaScriptParser.ParseScript(htmlJavascriptString);
-				string decodedJson = (program.Body[0].ChildNodes.First() as Literal).StringValue;
+				string decodedJson = (program.Body[0].ChildNodes.First() as Literal).Raw;
 
 				Match urlRegexMatch = UrlRegex.Match(webDirectory.Uri.ToString());
 				bool takedownActive = false;
