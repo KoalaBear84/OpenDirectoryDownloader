@@ -90,7 +90,7 @@ jobs:
       if: ${{ matrix.os == 'ubuntu-latest' && matrix.self-contained == 'normal' }}
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ matrix.target }}
+        name: build-artifact-${{ matrix.target }}
         path: |
           OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}.zip
           src/Dockerfile
@@ -98,7 +98,7 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: all-artifacts
+        name: build-artifact-${{ matrix.target }}
         path: |
           OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}.zip
 
@@ -111,7 +111,9 @@ jobs:
     - name: Download Artifacts
       uses: actions/download-artifact@v4.1.7
       with:
-        name: all-artifacts
+        path: build-artifact
+        pattern: build-artifact-*
+        merge-multiple: true
 
     - name: Get tag info
       id: tag_info
