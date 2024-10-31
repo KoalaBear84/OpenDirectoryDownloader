@@ -88,7 +88,7 @@ jobs:
 
     - name: Upload artifact for docker job (linux only)
       if: ${{ matrix.os == 'ubuntu-latest' && matrix.self-contained == 'normal' }}
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.target }}
         path: |
@@ -96,7 +96,7 @@ jobs:
           src/Dockerfile
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: all-artifacts
         path: |
