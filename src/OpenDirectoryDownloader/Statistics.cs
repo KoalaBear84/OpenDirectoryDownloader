@@ -15,7 +15,8 @@ public static class Statistics
 
 		extensionCount = webDirectory.Files
 			.GroupBy(f => Path.GetExtension(f.FileName).ToLowerInvariant(), f => f)
-			.ToDictionary(f => f.Key.ToLowerInvariant(), f => new ExtensionStats { Count = f.Count(), FileSize = f.ToList().Sum(f2 => f2.FileSize) });
+			.ToDictionary(f => f.Key.ToLowerInvariant(),
+				f => new ExtensionStats { Count = f.Count(), FileSize = f.ToList().Sum(f2 => f2.FileSize) });
 
 		foreach (WebDirectory subdirectory in webDirectory.Subdirectories)
 		{
@@ -36,7 +37,8 @@ public static class Statistics
 		return extensionCount;
 	}
 
-	public static string GetSessionStats(Session session, bool includeExtensions = false, bool includeFullExtensions = false, bool onlyRedditStats = false, bool includeBanner = false)
+	public static string GetSessionStats(Session session, bool includeExtensions = false,
+		bool includeFullExtensions = false, bool onlyRedditStats = false, bool includeBanner = false)
 	{
 		Dictionary<string, ExtensionStats> extensionsStats = [];
 
@@ -51,9 +53,11 @@ public static class Statistics
 		{
 			stringBuilder.AppendLine($"Extensions");
 
-			foreach (KeyValuePair<string, ExtensionStats> extensionStat in extensionsStats.OrderByDescending(e => e.Value.Count).Take(50))
+			foreach (KeyValuePair<string, ExtensionStats> extensionStat in extensionsStats
+				         .OrderByDescending(e => e.Value.Count).Take(50))
 			{
-				stringBuilder.AppendLine($"{extensionStat.Key}: {extensionStat.Value.Count} files, {extensionStat.Value.FileSize} bytes");
+				stringBuilder.AppendLine(
+					$"{extensionStat.Key}: {extensionStat.Value.Count} files, {extensionStat.Value.FileSize} bytes");
 			}
 		}
 
@@ -64,16 +68,21 @@ public static class Statistics
 			stringBuilder.AppendLine($"{statusCode.Key}: {statusCode.Value}");
 		}
 
-		stringBuilder.AppendLine($"Total files: {Library.FormatWithThousands(session.Root.TotalFiles)}, Total estimated size: {(session.Root.TotalFileSize > 0 ? FileSizeHelper.ToHumanReadable(session.Root.TotalFileSize) : "n/a")}");
-		stringBuilder.AppendLine($"Total directories: {Library.FormatWithThousands(session.Root.TotalDirectories + 1)}");
-		stringBuilder.AppendLine($"Total HTTP requests: {Library.FormatWithThousands(session.TotalHttpRequests)}, Total HTTP traffic: {FileSizeHelper.ToHumanReadable(session.TotalHttpTraffic)}");
+		stringBuilder.AppendLine(
+			$"Total files: {Library.FormatWithThousands(session.Root.TotalFiles)}, Total estimated size: {(session.Root.TotalFileSize > 0 ? FileSizeHelper.ToHumanReadable(session.Root.TotalFileSize) : "n/a")}");
+		stringBuilder.AppendLine(
+			$"Total directories: {Library.FormatWithThousands(session.Root.TotalDirectories + 1)}");
+		stringBuilder.AppendLine(
+			$"Total HTTP requests: {Library.FormatWithThousands(session.TotalHttpRequests)}, Total HTTP traffic: {FileSizeHelper.ToHumanReadable(session.TotalHttpTraffic)}");
 
 		if (onlyRedditStats)
 		{
 			stringBuilder.Clear();
 		}
 
-		string uploadedUrlsText = !string.IsNullOrWhiteSpace(session.UploadedUrlsUrl) ? $"[Urls file]({session.UploadedUrlsUrl})" : string.Empty;
+		string uploadedUrlsText = !string.IsNullOrWhiteSpace(session.UploadedUrlsUrl)
+			? $"[Urls file]({session.UploadedUrlsUrl})"
+			: string.Empty;
 
 		if (session.Root.Url.Length < 40)
 		{
@@ -81,7 +90,7 @@ public static class Statistics
 		}
 		else
 		{
-			stringBuilder.AppendLine($"|**Url:** {$"[{session.Root.Url[..38]}...]({session.Root.Url})"}||{uploadedUrlsText}|");
+			stringBuilder.AppendLine($"|**Url:** [{session.Root.Url[..38]}...]({session.Root.Url})||{uploadedUrlsText}|");
 		}
 
 		stringBuilder.AppendLine("|:-|-:|-:|");
@@ -90,17 +99,7 @@ public static class Statistics
 		{
 			stringBuilder.AppendLine("|**Extension (Top 5)**|**Files**|**Size**|");
 
-			foreach (KeyValuePair<string, ExtensionStats> extensionStat in extensionsStats.OrderByDescending(e =>
-			{
-				if (e.Value.FileSize > 0)
-				{
-					return e.Value.FileSize;
-				}
-				else
-				{
-					return e.Value.Count;
-				}
-			}).Take(5))
+			foreach (KeyValuePair<string, ExtensionStats> extensionStat in extensionsStats.OrderByDescending(e => e.Value.FileSize > 0 ? e.Value.FileSize : e.Value.Count).Take(5))
 			{
 				stringBuilder.AppendLine($"|{extensionStat.Key}|{Library.FormatWithThousands(extensionStat.Value.Count)}|{(extensionStat.Value.FileSize > 0 ? FileSizeHelper.ToHumanReadable(extensionStat.Value.FileSize) : "n/a")}|");
 			}
@@ -112,11 +111,13 @@ public static class Statistics
 
 		stringBuilder.AppendLine($"|**Date (UTC):** {session.Started.ToString(Constants.DateTimeFormat)}|**Time:** {TimeSpan.FromSeconds((int)((session.Finished == DateTimeOffset.MinValue ? DateTimeOffset.UtcNow : session.Finished) - session.Started).TotalSeconds)}|{(session.SpeedtestResult != null ? $"**Speed:** {(session.SpeedtestResult.DownloadedBytes > 0 ? $"{session.SpeedtestResult.MaxBytesPerSecond / (double)Constants.Megabyte:F2} MB/s ({session.SpeedtestResult.MaxBytesPerSecond / (double)Constants.Megabyte * 8:F1} mbit)" : "Failed")}" : string.Empty)}|");
 
-		if (onlyRedditStats || includeBanner)
+		if (!onlyRedditStats && !includeBanner)
 		{
-			stringBuilder.AppendLine();
-			stringBuilder.AppendLine($"^(Created by [KoalaBear84's OpenDirectory Indexer v{VersionNumber}](https://github.com/KoalaBear84/OpenDirectoryDownloader/))");
+			return stringBuilder.ToString();
 		}
+
+		stringBuilder.AppendLine();
+		stringBuilder.AppendLine($"^(Created by [KoalaBear84's OpenDirectory Indexer v{VersionNumber}](https://github.com/KoalaBear84/OpenDirectoryDownloader/))");
 
 		return stringBuilder.ToString();
 	}

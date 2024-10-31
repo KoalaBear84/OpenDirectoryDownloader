@@ -152,12 +152,12 @@ public class FtpParser
 			{ "CancellationTokenSource", cancellationTokenSource }
 		};
 
-		return (await RetryPolicyNew.ExecuteAndCaptureAsync(async (context, token) => { return await ParseFtpInnerAsync(threadName, webDirectory, username, password, cancellationTokenSource.Token); }, pollyContext, cancellationTokenSource.Token)).Result;
+		return (await RetryPolicyNew.ExecuteAndCaptureAsync(async (context, token) => await ParseFtpInnerAsync(threadName, webDirectory, username, password, cancellationTokenSource.Token), pollyContext, cancellationTokenSource.Token)).Result;
 	}
 
 	private static async Task<WebDirectory> ParseFtpInnerAsync(string threadName, WebDirectory webDirectory, string username, string password, CancellationToken cancellationToken)
 	{
-		if (!FtpClients.ContainsKey(threadName))
+		if (!FtpClients.TryGetValue(threadName, out AsyncFtpClient value))
 		{
 			if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password))
 			{
@@ -170,8 +170,7 @@ public class FtpParser
 			Program.Logger.Warning("[{thread}] Connecting to FTP...", threadName);
 
 			int timeout = (int)TimeSpan.FromSeconds(30).TotalMilliseconds;
-
-			FtpClients[threadName] = new AsyncFtpClient(webDirectory.Uri.Host, webDirectory.Uri.Port)
+			value = new AsyncFtpClient(webDirectory.Uri.Host, webDirectory.Uri.Port)
 			{
 				Credentials = new NetworkCredential(username, password),
 				Config = new FtpConfig
@@ -184,6 +183,7 @@ public class FtpParser
 					ValidateAnyCertificate = true
 				}
 			};
+			FtpClients[threadName] = value;
 
 			try
 			{
@@ -207,7 +207,7 @@ public class FtpParser
 
 		Program.Logger.Debug("Started retrieving {url}..", relativeUrl);
 
-		foreach (FtpListItem item in await FtpClients[threadName].GetListing(relativeUrl, cancellationToken))
+		foreach (FtpListItem item in await value.GetListing(relativeUrl, cancellationToken))
 		{
 			// Some strange FTP servers.. Give parent directoryies back..
 			if (item.Name == "/" || item.FullName == webDirectory.Uri.LocalPath || !item.FullName.StartsWith(webDirectory.Uri.LocalPath))
@@ -218,24 +218,29 @@ public class FtpParser
 			Uri uri = new(new Uri(webDirectory.Url), item.FullName);
 			string fullUrl = uri.ToString();
 
-			if (item.Type == FtpObjectType.File)
+			switch (item.Type)
 			{
-				webDirectory.Files.Add(new WebFile
-				{
-					Url = fullUrl,
-					FileName = Path.GetFileName(new Uri(fullUrl).LocalPath),
-					FileSize = item.Size
-				});
-			}
-			else if (item.Type == FtpObjectType.Directory)
-			{
-				if (webDirectory.Url != fullUrl)
-				{
-					webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+				case FtpObjectType.File:
+					webDirectory.Files.Add(new WebFile
 					{
 						Url = fullUrl,
-						Name = item.Name
+						FileName = Path.GetFileName(new Uri(fullUrl).LocalPath),
+						FileSize = item.Size
 					});
+					break;
+
+				case FtpObjectType.Directory:
+				{
+					if (webDirectory.Url != fullUrl)
+					{
+						webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+						{
+							Url = fullUrl,
+							Name = item.Name
+						});
+					}
+
+					break;
 				}
 			}
 		}
@@ -260,7 +265,7 @@ public class FtpParser
 			{ "CancellationTokenSource", cancellationTokenSource }
 		};
 
-		return (await RetryPolicyNew.ExecuteAndCaptureAsync(async (context, token) => { return await GetFtpServerInfoInnerAsync(webDirectory, username, password, cancellationTokenSource.Token); }, pollyContext, cancellationTokenSource.Token)).Result;
+		return (await RetryPolicyNew.ExecuteAndCaptureAsync(async (context, token) => await GetFtpServerInfoInnerAsync(webDirectory, username, password, cancellationTokenSource.Token), pollyContext, cancellationTokenSource.Token)).Result;
 	}
 
 	private static async Task<string> GetFtpServerInfoInnerAsync(WebDirectory webDirectory, string username, string password, CancellationToken cancellationToken)
@@ -309,7 +314,7 @@ public class FtpParser
 				await ftpClient.Disconnect(cancellationToken);
 
 				return
-					$"Connect Respones: {connectReply.InfoMessages}{Environment.NewLine}" +
+					$"Connect Response: {connectReply.InfoMessages}{Environment.NewLine}" +
 					$"ServerType: {ftpClient.ServerType}{Environment.NewLine}" +
 					$"Help response: {helpReply.InfoMessages}{Environment.NewLine}" +
 					$"Status response: {statusReply.InfoMessages}{Environment.NewLine}" +
@@ -350,12 +355,14 @@ public class FtpParser
 		username = "anonymous";
 		password = "password";
 
-		if (webDirectory.Uri.UserInfo?.Contains(':') == true)
+		if (webDirectory.Uri.UserInfo?.Contains(':') != true)
 		{
-			string[] splitted = webDirectory.Uri.UserInfo.Split(':');
-
-			username = WebUtility.UrlDecode(splitted.First());
-			password = WebUtility.UrlDecode(splitted.Last());
+			return;
 		}
+
+		string[] splitted = webDirectory.Uri.UserInfo.Split(':');
+
+		username = WebUtility.UrlDecode(splitted.First());
+		password = WebUtility.UrlDecode(splitted.Last());
 	}
 }

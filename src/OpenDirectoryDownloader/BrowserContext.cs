@@ -142,7 +142,7 @@ public class BrowserContext : IDisposable
 
 			try
 			{
-				if (!browserFetcher.GetInstalledBrowsers().Any(x => x.BuildId == Chrome.DefaultBuildId))
+				if (browserFetcher.GetInstalledBrowsers().All(x => x.BuildId != Chrome.DefaultBuildId))
 				{
 					Program.Logger.Warning("Downloading browser... First time it can take a while, depending on your internet connection.");
 					InstalledBrowser installedBrowser = await browserFetcher.DownloadAsync(Chrome.DefaultBuildId);
@@ -164,9 +164,9 @@ public class BrowserContext : IDisposable
 			Browser = await puppeteerExtra.LaunchAsync(new LaunchOptions
 			{
 				Headless = false,
-				Args = new[] { "--no-sandbox", "--disable-setuid-sandbox", $"--user-agent=\"{Constants.UserAgent.Chrome}\"" },
+				Args = ["--no-sandbox", "--disable-setuid-sandbox", $"--user-agent=\"{Constants.UserAgent.Chrome}\""],
 				DefaultViewport = null,
-				IgnoreHTTPSErrors = true
+				AcceptInsecureCerts = true
 			});
 
 			Program.Logger.Information("Started browser with PID {processId}", Browser.Process.Id);
@@ -311,7 +311,7 @@ public class BrowserContext : IDisposable
 		WriteDebugInfo($"Page_Error: {e.Error}");
 	}
 
-	private async void Page_FrameAttached(object sender, FrameEventArgs e)
+	private void Page_FrameAttached(object sender, FrameEventArgs e)
 	{
 		WriteDebugInfo($"Page_FrameAttached: {e.Frame.Url}");
 	}
@@ -379,23 +379,29 @@ public class BrowserContext : IDisposable
 
 			string theCookie = cookieHeader.Split('\n').FirstOrDefault(cookie => cookie.StartsWith(CloudflareClearanceKey));
 
-			if (theCookie != null)
+			if (theCookie == null)
 			{
-				CookieContainer.SetCookies(new Uri(baseUrl), theCookie);
-
-				if (CloudFlare)
-				{
-					Cookie cloudflareClearance = CookieContainer.GetCookies(new Uri(baseUrl)).FirstOrDefault(c => c.Name == CloudflareClearanceKey);
-
-					if (cloudflareClearance != null)
-					{
-						WriteDebugInfo($"Cloudflare clearance cookie found: {cloudflareClearance.Value}");
-
-						OK = true;
-						CancellationTokenSource.Cancel();
-					}
-				}
+				return;
 			}
+
+			CookieContainer.SetCookies(new Uri(baseUrl), theCookie);
+
+			if (!CloudFlare)
+			{
+				return;
+			}
+
+			Cookie cloudflareClearance = CookieContainer.GetCookies(new Uri(baseUrl)).FirstOrDefault(c => c.Name == CloudflareClearanceKey);
+
+			if (cloudflareClearance == null)
+			{
+				return;
+			}
+
+			WriteDebugInfo($"Cloudflare clearance cookie found: {cloudflareClearance.Value}");
+
+			OK = true;
+			CancellationTokenSource.Cancel();
 		}
 		else
 		{
@@ -425,15 +431,17 @@ public class BrowserContext : IDisposable
 
 						CookieParam cloudflareClearanceCookie = cookieParams.FirstOrDefault(cookie => cookie.Name.StartsWith(CloudflareClearanceKey));
 
-						if (cloudflareClearanceCookie is not null)
+						if (cloudflareClearanceCookie is null)
 						{
-							WriteDebugInfo($"Cloudflare clearance cookie found: {cloudflareClearanceCookie.Value}");
-
-							AddCookiesToContainer(CookieContainer, cookieParams);
-
-							OK = true;
-							CancellationTokenSource.Cancel();
+							return;
 						}
+
+						WriteDebugInfo($"Cloudflare clearance cookie found: {cloudflareClearanceCookie.Value}");
+
+						AddCookiesToContainer(CookieContainer, cookieParams);
+
+						OK = true;
+						CancellationTokenSource.Cancel();
 					}
 					catch
 					{

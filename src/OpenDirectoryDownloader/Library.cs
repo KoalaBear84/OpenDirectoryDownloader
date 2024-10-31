@@ -83,7 +83,7 @@ public class Library
 
 		Uri uri = new(url);
 
-		if (!url.EndsWith("/") && string.IsNullOrWhiteSpace(Path.GetFileName(WebUtility.UrlDecode(uri.AbsolutePath))) && string.IsNullOrWhiteSpace(uri.Query))
+		if (!url.EndsWith('/') && string.IsNullOrWhiteSpace(Path.GetFileName(WebUtility.UrlDecode(uri.AbsolutePath))) && string.IsNullOrWhiteSpace(uri.Query))
 		{
 			url += "/";
 		}
@@ -128,13 +128,13 @@ public class Library
 
 	public static string FormatWithThousands(object value)
 	{
-		return string.Format("{0:#,0}", value);
+		return $"{value:#,0}";
 	}
 
 	private static long GetSpeedInBytes(IGrouping<long, KeyValuePair<long, long>> measurements, int useMiliseconds = 0)
 	{
 		long time = useMiliseconds == 0 ? measurements.Last().Key - measurements.First().Key : useMiliseconds;
-		long downloadedBytes = (measurements.Last().Value - measurements.First().Value);
+		long downloadedBytes = measurements.Last().Value - measurements.First().Value;
 		return downloadedBytes / (time / 1000);
 	}
 
@@ -144,20 +144,20 @@ public class Library
 
 		HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
 
-		if (!httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.RequestMessage.RequestUri.ToString() != url)
+		if (!httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.RequestMessage?.RequestUri?.ToString() != url)
 		{
 			httpClient.DefaultRequestHeaders.Referrer = GetUrlDirectory(url);
 			httpResponseMessage.Dispose();
 			httpResponseMessage = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
 		}
 
-		if (!httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.RequestMessage.RequestUri.OriginalString != url)
+		if (!httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.RequestMessage?.RequestUri?.OriginalString != url)
 		{
 			string retrievedUrl = null;
 
-			if (httpResponseMessage.RequestMessage.RequestUri.OriginalString != url)
+			if (httpResponseMessage.RequestMessage?.RequestUri?.OriginalString != url)
 			{
-				retrievedUrl = httpResponseMessage.RequestMessage.RequestUri.ToString();
+				retrievedUrl = httpResponseMessage.RequestMessage?.RequestUri?.ToString();
 			}
 			else if (httpResponseMessage.Headers.Location is not null)
 			{
@@ -188,7 +188,7 @@ public class Library
 
 		Uri uri = new(url);
 
-		using Stream stream = await ftpClient.OpenRead(uri.LocalPath);
+		await using Stream stream = await ftpClient.OpenRead(uri.LocalPath);
 
 		SpeedtestResult speedtestResult = SpeedtestFromStream(stream, seconds);
 
@@ -218,7 +218,7 @@ public class Library
 			if (previousTime / 1000 < stopwatch.ElapsedMilliseconds / 1000)
 			{
 				ClearCurrentLine();
-				long maxBytesPerSecond = measurements.Any() ? measurements.GroupBy(m => m.Key / 1000).Max(s => GetSpeedInBytes(s, 1000)) : 0;
+				long maxBytesPerSecond = measurements.Count != 0 ? measurements.GroupBy(m => m.Key / 1000).Max(s => GetSpeedInBytes(s, 1000)) : 0;
 				Console.Write($"Downloaded: {FileSizeHelper.ToHumanReadable(totalBytesRead)}, Time: {stopwatch.ElapsedMilliseconds / 1000}s, Speed: {FileSizeHelper.ToHumanReadable(maxBytesPerSecond):F1)}/s ({FileSizeHelper.ToHumanReadable(maxBytesPerSecond * 8, true):F0}/s)");
 			}
 
@@ -259,10 +259,10 @@ public class Library
 		{
 			DownloadedBytes = totalBytesRead,
 			ElapsedMilliseconds = stopwatch.ElapsedMilliseconds,
-			MaxBytesPerSecond = measurements.Any() ? measurements.GroupBy(m => m.Key / 1000).Max(s => GetSpeedInBytes(s, 1000)) : 0
+			MaxBytesPerSecond = measurements.Count != 0 ? measurements.GroupBy(m => m.Key / 1000).Max(s => GetSpeedInBytes(s, 1000)) : 0
 		};
 
-		if (measurements.Any())
+		if (measurements.Count != 0)
 		{
 			Program.Logger.Information("Downloaded: {downloadedMBs:F2} MB, Time: {elapsedMilliseconds} ms, Speed: {maxBytesPerSecond:F1)}/s ({maxBitsPerSecond:F0}/s)", speedtestResult.DownloadedMBs, speedtestResult.ElapsedMilliseconds, FileSizeHelper.ToHumanReadable(speedtestResult.MaxBytesPerSecond), FileSizeHelper.ToHumanReadable(speedtestResult.MaxBytesPerSecond * 8, true));
 		}
@@ -308,12 +308,7 @@ public class Library
 	{
 		List<string> resourcePaths = assembly.GetManifestResourceNames().Where(x => x.EndsWith(resourceFileName, StringComparison.OrdinalIgnoreCase)).ToList();
 
-		if (resourcePaths.Count == 1)
-		{
-			return assembly.GetManifestResourceStream(resourcePaths.Single());
-		}
-
-		return null;
+		return resourcePaths.Count == 1 ? assembly.GetManifestResourceStream(resourcePaths.Single()) : null;
 	}
 
 	public static bool GetUriCredentials(Uri uri, out string username, out string password)
@@ -321,16 +316,17 @@ public class Library
 		username = null;
 		password = null;
 
-		if (uri.UserInfo?.Contains(':') == true)
+		if (uri.UserInfo?.Contains(':') != true)
 		{
-			string[] splitted = uri.UserInfo.Split(':');
-
-			username = WebUtility.UrlDecode(splitted.First());
-			password = WebUtility.UrlDecode(splitted.Last());
-			return true;
+			return false;
 		}
 
-		return false;
+		string[] splitted = uri.UserInfo.Split(':');
+
+		username = WebUtility.UrlDecode(splitted.First());
+		password = WebUtility.UrlDecode(splitted.Last());
+
+		return true;
 	}
 
 	public static AsyncRetryPolicy GetAsyncRetryPolicy(Action<Exception, TimeSpan, int, Context> onRetry, int maxRetries = 4)
@@ -358,28 +354,25 @@ public class Library
 
 		Match regexMatch = regex.Match(javaScript);
 
-		if (!regexMatch.Success)
-		{
-			return null;
-		}
-
-		return regexMatch.Groups["SourceMapUrl"].Value;
+		return !regexMatch.Success ? null : regexMatch.Groups["SourceMapUrl"].Value;
 	}
 
 	public static async IAsyncEnumerable<string> GetSourcesFromSourceMapAsync(HttpClient httpClient, string sourceUrl)
 	{
-		using Stream httpStream = await httpClient.GetStreamAsync(sourceUrl);
+		await using Stream httpStream = await httpClient.GetStreamAsync(sourceUrl);
 		using StreamReader streamReader = new(httpStream);
-		using JsonReader jsonReader = new JsonTextReader(streamReader);
+		await using JsonReader jsonReader = new JsonTextReader(streamReader);
 
-		JObject jObject = JObject.Load(jsonReader);
+		JObject jObject = await JObject.LoadAsync(jsonReader);
 
-		if (jObject.TryGetValue("sources", out JToken sources))
+		if (!jObject.TryGetValue("sources", out JToken sources))
 		{
-			foreach (JToken source in sources)
-			{
-				yield return source.Value<string>();
-			}
+			yield break;
+		}
+
+		foreach (JToken source in sources)
+		{
+			yield return source.Value<string>();
 		}
 	}
 

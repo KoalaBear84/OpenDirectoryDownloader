@@ -73,7 +73,7 @@ public class Program
 			return 1;
 		}
 
-		if (CommandLineOptions.Threads < 1 || CommandLineOptions.Threads > 100)
+		if (CommandLineOptions.Threads is < 1 or > 100)
 		{
 			Console.WriteLine("Threads must be between 1 and 100");
 			return 1;
@@ -158,11 +158,13 @@ public class Program
 
 		await openDirectoryIndexer.IndexingTask;
 
-		if (!CommandLineOptions.Quit)
+		if (CommandLineOptions.Quit)
 		{
-			Console.WriteLine("Press ESC to exit");
-			Console.ReadKey();
+			return 0;
 		}
+
+		Console.WriteLine("Press ESC to exit");
+		Console.ReadKey();
 
 		return 0;
 	}

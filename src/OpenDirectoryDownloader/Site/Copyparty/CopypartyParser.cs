@@ -36,7 +36,7 @@ public static class Copyparty
 		return webDirectory;
 	}
 
-	private static async Task<WebDirectory> ScanAsync(string baseUrl, HttpClient httpClient, WebDirectory webDirectory, IHtmlDocument htmlDocument, string html)
+	private static Task<WebDirectory> ScanAsync(string baseUrl, HttpClient httpClient, WebDirectory webDirectory, IHtmlDocument htmlDocument, string html)
 	{
 		Program.Logger.Debug("Processing listings for '{url}'", webDirectory.Uri);
 
@@ -55,32 +55,34 @@ public static class Copyparty
 					IHtmlAnchorElement link = entry.QuerySelector("td:nth-child(2) a") as IHtmlAnchorElement;
 					IHtmlTableCellElement fileSize = entry.QuerySelector("td:nth-child(3)") as IHtmlTableCellElement;
 
-					bool isDirectory = link.TextContent.EndsWith("/");
-
-					if (link is not null)
+					if (link is null)
 					{
-						Library.ProcessUrl(baseUrl, link, out _, out _, out string fullUrl);
+						continue;
+					}
 
-						if (isDirectory)
-						{
-							string directoryName = link.TextContent.TrimEnd('/');
+					bool isDirectory = link.TextContent.EndsWith('/');
 
-							webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
-							{
-								Parser = Parser,
-								Url = fullUrl,
-								Name = directoryName
-							});
-						}
-						else
+					Library.ProcessUrl(baseUrl, link, out _, out _, out string fullUrl);
+
+					if (isDirectory)
+					{
+						string directoryName = link.TextContent.TrimEnd('/');
+
+						webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
 						{
-							webDirectory.Files.Add(new WebFile
-							{
-								Url = fullUrl,
-								FileName = Path.GetFileName(WebUtility.UrlDecode(fullUrl.Split('?')[0])),
-								FileSize = FileSizeHelper.ParseFileSize(fileSize.TextContent)
-							});
-						}
+							Parser = Parser,
+							Url = fullUrl,
+							Name = directoryName
+						});
+					}
+					else
+					{
+						webDirectory.Files.Add(new WebFile
+						{
+							Url = fullUrl,
+							FileName = Path.GetFileName(WebUtility.UrlDecode(fullUrl.Split('?')[0])),
+							FileSize = FileSizeHelper.ParseFileSize(fileSize.TextContent)
+						});
 					}
 				}
 
@@ -88,10 +90,10 @@ public static class Copyparty
 			}
 			else
 			{
-				return ParseCopypartyJavaScriptListing(baseUrl, webDirectory, htmlDocument, html);
+				return Task.FromResult(ParseCopypartyJavaScriptListing(baseUrl, webDirectory, htmlDocument, html));
 			}
 
-			return webDirectory;
+			return Task.FromResult(webDirectory);
 		}
 		catch (Exception ex)
 		{
@@ -108,7 +110,7 @@ public static class Copyparty
 			//throw;
 		}
 
-		return webDirectory;
+		return Task.FromResult(webDirectory);
 	}
 
 	private static WebDirectory ParseCopypartyJavaScriptListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, string html)

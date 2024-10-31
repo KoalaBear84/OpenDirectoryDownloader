@@ -16,11 +16,13 @@ public class Command
 	/// </summary>
 	internal static void SetConsoleProperties()
 	{
-		if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+		if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 		{
-			Console.WindowWidth = Math.Min(170, Console.LargestWindowWidth);
-			Console.WindowHeight = Math.Min(34, Console.LargestWindowHeight);
+			return;
 		}
+
+		Console.WindowWidth = Math.Min(170, Console.LargestWindowWidth);
+		Console.WindowHeight = Math.Min(34, Console.LargestWindowHeight);
 	}
 
 	internal static void ShowInfoAndCommands()
@@ -253,28 +255,30 @@ public class Command
 		{
 		}
 
-		if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+		if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
 		{
-			try
+			return;
+		}
+
+		try
+		{
+			Process clipboardExecutable = new()
 			{
-				Process clipboardExecutable = new()
+				StartInfo = new ProcessStartInfo
 				{
-					StartInfo = new ProcessStartInfo
-					{
-						RedirectStandardInput = true,
-						FileName = @"wl-copy",
-					}
-				};
+					RedirectStandardInput = true,
+					FileName = @"wl-copy",
+				}
+			};
 
-				clipboardExecutable.Start();
-				clipboardExecutable.StandardInput.Write(value);
-				clipboardExecutable.StandardInput.Close();
+			clipboardExecutable.Start();
+			clipboardExecutable.StandardInput.Write(value);
+			clipboardExecutable.StandardInput.Close();
 
-				return;
-			}
-			catch
-			{
-			}
+			return;
+		}
+		catch
+		{
 		}
 	}
 }

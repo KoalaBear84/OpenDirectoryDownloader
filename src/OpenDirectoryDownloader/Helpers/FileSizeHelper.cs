@@ -52,27 +52,29 @@ public static class FileSizeHelper
 		try
 		{
 			// Find the last non-alphabetic character.
-			int ext_start = 0;
+			int extStart = 0;
 
 			for (int i = value.Length - 1; i >= 0; i--)
 			{
 				// Stop if we find something other than a letter.
-				if (!char.IsLetter(value, i))
+				if (char.IsLetter(value, i))
 				{
-					ext_start = i + 1;
-					break;
+					continue;
 				}
+
+				extStart = i + 1;
+				break;
 			}
 
 			// Get the numeric part.
-			if (double.TryParse(value.AsSpan(0, ext_start), NumberStyles.Any, CultureInfo.InvariantCulture, out double number))
+			if (double.TryParse(value.AsSpan(0, extStart), NumberStyles.Any, CultureInfo.InvariantCulture, out double number))
 			{
 				// Get the extension.
 				string suffix;
 
-				if (ext_start < value.Length)
+				if (extStart < value.Length)
 				{
-					suffix = value[ext_start..].Trim().ToUpperInvariant();
+					suffix = value[extStart..].Trim().ToUpperInvariant();
 				}
 				else
 				{
@@ -84,11 +86,13 @@ public static class FileSizeHelper
 
 				for (int i = 0; i < SizeSuffixes.Length; i++)
 				{
-					if (SizeSuffixes[i].ToList().Contains(suffix))
+					if (!SizeSuffixes[i].ToList().Contains(suffix))
 					{
-						suffix_index = i;
-						break;
+						continue;
 					}
+
+					suffix_index = i;
+					break;
 				}
 
 				if (suffix_index < 0)
@@ -108,20 +112,18 @@ public static class FileSizeHelper
 			{
 				throw new FormatException($"Invalid file size format, value: {value}", ex);
 			}
-			else
-			{
-				if (!onlyChecking)
-				{
-					Program.Logger.Warning("Cannot parse '{value}' as a filesize.", value);
-				}
 
-				return Constants.NoFileSize;
+			if (!onlyChecking)
+			{
+				Program.Logger.Warning("Cannot parse '{value}' as a filesize.", value);
 			}
+
+			return Constants.NoFileSize;
 		}
 	}
 
-	private static readonly string[] sizeSuffixes = { "B", "kiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB" };
-	private static readonly string[] sizeSuffixesBit = { "b", "kib", "Mib", "Gib", "Tib", "Pib", "Eib", "Zib", "Yib" };
+	private static readonly string[] sizeSuffixes = ["B", "kiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"];
+	private static readonly string[] sizeSuffixesBit = ["b", "kib", "Mib", "Gib", "Tib", "Pib", "Eib", "Zib", "Yib"];
 
 	public static string ToHumanReadable(long? size, bool useBits = false)
 	{
@@ -129,25 +131,20 @@ public static class FileSizeHelper
 
 		const string formatTemplate = "{0}{1:#.##} {2}";
 
-		if (size == null)
+		switch (size)
 		{
-			return "-";
-		}
-
-		if (size == 0)
-		{
-			return string.Format(formatTemplate, null, 0, sizeSuffixes[0]);
+			case null:
+				return "-";
+			case 0:
+				return string.Format(formatTemplate, null, 0, sizeSuffixes[0]);
 		}
 
 		double absSize = Math.Abs((double)size);
 		double fpPower = Math.Log(absSize, 1000);
 		int intPower = (int)fpPower;
-		int iUnit = intPower >= sizeSuffixes.Length
-			? sizeSuffixes.Length - 1
-			: intPower;
+		int iUnit = intPower >= sizeSuffixes.Length ? sizeSuffixes.Length - 1 : intPower;
 		double normSize = absSize / Math.Pow(1024, iUnit);
 
 		return string.Format(formatTemplate, size < 0 ? "-" : null, normSize, (useBits ? sizeSuffixesBit : sizeSuffixes)[iUnit]);
 	}
-
 }

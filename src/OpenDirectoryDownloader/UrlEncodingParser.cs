@@ -125,16 +125,18 @@ public class UrlEncodingParser : NameValueCollection
 
 		query = query.Trim('&');
 
-		if (!string.IsNullOrEmpty(Url))
+		if (string.IsNullOrEmpty(Url))
 		{
-			if (Url.Contains('?'))
-			{
-				query = Url[..Url.IndexOf('?')] + (!string.IsNullOrWhiteSpace(query) ? $"?{query}" : string.Empty);
-			}
-			else
-			{
-				query = $"{Url}{(!string.IsNullOrWhiteSpace(query) ? $"?{query}" : string.Empty)}";
-			}
+			return query;
+		}
+
+		if (Url.Contains('?'))
+		{
+			query = Url[..Url.IndexOf('?')] + (!string.IsNullOrWhiteSpace(query) ? $"?{query}" : string.Empty);
+		}
+		else
+		{
+			query = $"{Url}{(!string.IsNullOrWhiteSpace(query) ? $"?{query}" : string.Empty)}";
 		}
 
 		return query;
