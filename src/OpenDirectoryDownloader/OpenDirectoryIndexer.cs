@@ -471,8 +471,7 @@ public partial class OpenDirectoryIndexer
 				Session.TotalFiles = Session.Root.TotalFiles;
 				Session.TotalFileSizeEstimated = Session.Root.TotalFileSize;
 
-				// Replaced WebUtility.UrlDecode with Uri.UnescapeDataString because of issues with Google Drive alternatives (+ sign)
-				IEnumerable<string> distinctUrls = Session.Root.AllFileUrls.Distinct().Select(x => Uri.UnescapeDataString(x)).OrderBy(x => x, NaturalSortStringComparer.InvariantCulture);
+				IEnumerable<string> distinctUrls = Session.Root.AllFileUrls.Distinct().OrderBy(x => x, NaturalSortStringComparer.InvariantCulture);
 
 				if (Session.TotalFiles != distinctUrls.Count())
 				{
