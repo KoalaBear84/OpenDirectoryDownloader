@@ -102,9 +102,20 @@ jobs:
         path: |
           OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}.zip
 
+  
+  # Merge native executables into the same directory
+  merge:
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    steps:
+      - name: Merge Artifacts
+        uses: actions/upload-artifact/merge@v4
+        with:
+          name: artifacts
+          pattern:  artifacts-*
 
   release:
-    needs: build
+    needs: merge
     runs-on: ubuntu-latest
 
     steps:
