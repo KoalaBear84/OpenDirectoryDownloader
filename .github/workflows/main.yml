@@ -104,9 +104,18 @@ jobs:
           OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}.zip
         overwrite: true
 
+  merge:
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    steps:
+      - name: Merge Artifacts
+        uses: actions/upload-artifact/merge@v4
+        with:
+          name: build-artifact
+          pattern:  build-artifact-*
 
   release:
-    needs: build
+    needs: [ merge ]
     runs-on: ubuntu-latest
 
     steps:
