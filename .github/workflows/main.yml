@@ -90,32 +90,23 @@ jobs:
       if: ${{ matrix.os == 'ubuntu-latest' && matrix.self-contained == 'normal' }}
       uses: actions/upload-artifact@v4
       with:
-        name: build-artifact-${{ matrix.target }}${{ matrix.suffix }}${{ matrix.self-contained }}
+        name: build-artifact-${{ matrix.target }}
         path: |
           OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}.zip
           src/Dockerfile
+        overwrite: true
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: build-artifact-${{ matrix.target }}${{ matrix.suffix }}${{ matrix.self-contained }}
+        name: build-artifact-${{ matrix.target }}
         path: |
           OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}.zip
+        overwrite: true
 
-  
-  # Merge native executables into the same directory
-  merge:
-    runs-on: ubuntu-latest
-    needs: [ build ]
-    steps:
-      - name: Merge Artifacts
-        uses: actions/upload-artifact/merge@v4
-        with:
-          name: artifacts
-          pattern:  artifacts-*
 
   release:
-    needs: merge
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
