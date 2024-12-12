@@ -209,7 +209,7 @@ public class Command
 	{
 		Console.WriteLine("Exiting...");
 		Program.Logger.Information("Exiting...");
-		Environment.Exit(1);
+		Environment.Exit(0);
 	}
 
 	private static void ShowThreads(OpenDirectoryIndexer openDirectoryIndexer)
