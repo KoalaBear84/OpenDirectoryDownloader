@@ -229,7 +229,7 @@ public class Library
 				{
 					List<IGrouping<long, KeyValuePair<long, long>>> perSecond = measurements.GroupBy(m => m.Key / 1000).ToList();
 
-					if (!perSecond.Any())
+					if (perSecond.Count == 0)
 					{
 						break;
 					}

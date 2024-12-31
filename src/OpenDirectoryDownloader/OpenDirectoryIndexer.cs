@@ -649,7 +649,7 @@ public partial class OpenDirectoryIndexer
 					Program.Logger.Error(ex, "Error logging session stats");
 				}
 
-				if (Session.UrlsWithErrors.Any())
+				if (Session.UrlsWithErrors.Count != 0)
 				{
 					Program.Logger.Information("URLs with errors:");
 					Console.WriteLine("URLs with errors:");
@@ -1033,7 +1033,7 @@ public partial class OpenDirectoryIndexer
 
 			if (Regex.IsMatch(cloudflareHtml, @"<form (?:class|id)=""challenge-form[^>]*>([\s\S]*?)<\/form>"))
 			{
-				if (!HttpClient.DefaultRequestHeaders.UserAgent.Any())
+				if (HttpClient.DefaultRequestHeaders.UserAgent.Count == 0)
 				{
 					HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
 					httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
