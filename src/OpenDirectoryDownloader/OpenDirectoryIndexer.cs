@@ -1038,7 +1038,7 @@ public partial class OpenDirectoryIndexer
 		{
 			string cloudflareHtml = await Library.GetHtml(httpResponseMessage);
 
-			if (Regex.IsMatch(cloudflareHtml, @"<form (?:class|id)=""challenge-form[^>]*>([\s\S]*?)<\/form>"))
+			if (RegexCloudflareChallengeForm().IsMatch(cloudflareHtml))
 			{
 				if (HttpClient.DefaultRequestHeaders.UserAgent.Count == 0)
 				{
@@ -1655,6 +1655,9 @@ public partial class OpenDirectoryIndexer
 
 	[GeneratedRegex("<[a-zA-Z0-9] ?([^>]+)>", RegexOptions.IgnoreCase, "en-US")]
 	private static partial Regex HtmlRegex();
+
+	[GeneratedRegex(@"<form (?:class|id)=""challenge-form[^>]*>([\s\S]*?)<\/form>")]
+	private static partial Regex RegexCloudflareChallengeForm();
 }
 
 public class OpenDirectoryIndexerSettings
