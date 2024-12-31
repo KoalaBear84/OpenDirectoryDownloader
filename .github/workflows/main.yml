@@ -133,7 +133,7 @@ jobs:
     
 
   docker:
-    needs: [ merge ]
+    needs: [ build ]
 
     strategy:
       matrix:
