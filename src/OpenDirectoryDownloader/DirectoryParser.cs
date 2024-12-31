@@ -354,7 +354,12 @@ public static partial class DirectoryParser
 
 			if (htmlDocument.QuerySelectorAll("#content ul#file-list li").Length == 2)
 			{
-				return ParseDirectoryListerDirectoryListing(baseUrl, parsedWebDirectory, htmlDocument, checkParents);
+				return ParseDirectoryLister01DirectoryListing(baseUrl, parsedWebDirectory, htmlDocument, checkParents);
+			}
+
+			if (htmlDocument.QuerySelectorAll("body > div[x-data=\"application\"]").Length == 1)
+			{
+				return ParseDirectoryLister02DirectoryListing(baseUrl, parsedWebDirectory, htmlDocument, checkParents);
 			}
 
 			listItems = htmlDocument.QuerySelectorAll(".list-group li");
@@ -2213,18 +2218,16 @@ public static partial class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static WebDirectory ParseDirectoryListerDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory,
-		IHtmlDocument htmlDocument, bool checkParents)
+	private static WebDirectory ParseDirectoryLister01DirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, bool checkParents)
 	{
-		parsedWebDirectory.Parser = "ParseDirectoryListerDirectoryListing";
+		parsedWebDirectory.Parser = "ParseDirectoryLister01DirectoryListing";
 		List<HeaderInfo> tableHeaderInfos = [];
 
 		IHtmlCollection<IElement> headerDivs = htmlDocument.QuerySelectorAll("#content > div > div > div");
 
-		tableHeaderInfos.AddRange(headerDivs.Select(headerDiv => GetHeaderInfo(headerDiv)));
+		tableHeaderInfos.AddRange(headerDivs.Select(GetHeaderInfo));
 
-		IHtmlCollection<IElement> links = htmlDocument.QuerySelectorAll("#content ul#file-list li").Last()
-			.QuerySelectorAll("a");
+		IHtmlCollection<IElement> links = htmlDocument.QuerySelectorAll("#content ul#file-list li").Last().QuerySelectorAll("a");
 
 		foreach (IElement link in links)
 		{
@@ -2242,7 +2245,68 @@ public static partial class DirectoryParser
 			{
 				parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
 				{
-					Parser = "ParseDirectoryListerDirectoryListing",
+					Parser = "ParseDirectoryLister01DirectoryListing",
+					// Will fix URLs which ends in spaces etc
+					Url = uri.AbsoluteUri,
+					Name = WebUtility.UrlDecode(urlEncodingParser["dir"]?.Split("/").Last()),
+				});
+			}
+			else
+			{
+				try
+				{
+					List<IElement> divs = link.QuerySelectorAll("div > div").ToList();
+					// Remove file info 'column'
+					divs.RemoveAt(tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileName) + 1);
+					string fileSize = link.QuerySelectorAll("div > div").Skip(2).ToList()[tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileSize)].TextContent;
+
+					parsedWebDirectory.Files.Add(new WebFile
+					{
+						Url = fullUrl,
+						FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+						FileSize = FileSizeHelper.ParseFileSize(fileSize),
+					});
+				}
+				catch (Exception ex)
+				{
+					Program.Logger.Error(ex, "Error parsing with ParseDirectoryListerDirectoryListing");
+				}
+			}
+		}
+
+		CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
+
+		return parsedWebDirectory;
+	}
+
+	private static WebDirectory ParseDirectoryLister02DirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, bool checkParents)
+	{
+		parsedWebDirectory.Parser = "ParseDirectoryLister02DirectoryListing";
+		List<HeaderInfo> tableHeaderInfos = [];
+
+		IHtmlCollection<IElement> headerDivs = htmlDocument.QuerySelectorAll("body > div[x-data=\"application\"] > div > div > div > div > div");
+
+		tableHeaderInfos.AddRange(headerDivs.Select(GetHeaderInfo));
+
+		IHtmlCollection<IElement> links = htmlDocument.QuerySelectorAll("body > div[x-data=\"application\"] > div > div > div > ul > li").Last().QuerySelectorAll("a");
+
+		foreach (IElement link in links)
+		{
+			if (!IsValidLink(link))
+			{
+				continue;
+			}
+
+			Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
+			bool isFile = !link.QuerySelector("i").ClassList.Contains("fa-folder");
+			UrlEncodingParser urlEncodingParser = new(fullUrl);
+
+			if (!isFile)
+			{
+				parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
+				{
+					Parser = "ParseDirectoryLister02DirectoryListing",
 					// Will fix URLs which ends in spaces etc
 					Url = uri.AbsoluteUri,
 					Name = WebUtility.UrlDecode(urlEncodingParser["dir"]?.Split("/").Last()),
