@@ -112,8 +112,9 @@ jobs:
     - name: Download Artifacts
       uses: actions/download-artifact@v4
       with:
-        path: build-artifact
+        path: build-artifacts
         pattern: build-artifact-*
+        merge-multiple: true
 
     - name: Get tag info
       id: tag_info
@@ -129,7 +130,7 @@ jobs:
         prerelease: false
         body: ${{ github.event.head_commit.message }}
         files: |
-          build-artifact/OpenDirectoryDownloader-*.zip
+          build-artifacts/OpenDirectoryDownloader-*.zip
     
 
   docker:
