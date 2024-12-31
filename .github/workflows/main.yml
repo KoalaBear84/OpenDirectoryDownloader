@@ -130,7 +130,7 @@ jobs:
       id: tag_info
       run: echo "SOURCE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
     - name: Create release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -199,7 +199,7 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/opendirectorydownloader:${{ matrix.target }}
 
   combine:
-    needs: docker
+    needs: [ docker ]
     runs-on: ubuntu-latest
     steps:
       - name: Set up Docker Buildx
@@ -223,4 +223,3 @@ jobs:
           ${{ secrets.DOCKERHUB_USERNAME }}/opendirectorydownloader:linux-x64
           ${{ secrets.DOCKERHUB_USERNAME }}/opendirectorydownloader:linux-arm
           ${{ secrets.DOCKERHUB_USERNAME }}/opendirectorydownloader:linux-arm64
-
