@@ -31,7 +31,7 @@ public class AnonFiles : IFileUploadSite
 					string response = await httpResponseMessage.Content.ReadAsStringAsync();
 					OpenDirectoryIndexer.Session.UploadedUrlsResponse = response;
 
-					Program.Logger.Debug("Response from {siteName}: {response}", Name, response);
+					Program.Logger.Debug("Response from {siteName}: {response}", Name, OpenDirectoryIndexer.Session.UploadedUrlsResponse);
 
 					return JsonConvert.DeserializeObject<AnonFilesFile>(response);
 				}

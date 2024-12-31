@@ -81,7 +81,7 @@ public class GoFileIo : IFileUploadSite
 					GoFileIoUploadFileResponse uploadFileResponse = await httpResponseMessageUploadFile.Content.ReadFromJsonAsync<GoFileIoUploadFileResponse>();
 					OpenDirectoryIndexer.Session.UploadedUrlsResponse = JsonSerializer.Serialize(uploadFileResponse);
 
-					Program.Logger.Debug("Response from {siteName}: {response}", Name, uploadFileResponse);
+					Program.Logger.Debug("Response from {siteName}: {response}", Name, OpenDirectoryIndexer.Session.UploadedUrlsResponse);
 
 					return JsonSerializer.Deserialize<GoFileIoFile>(JsonSerializer.Serialize(uploadFileResponse));
 				}
