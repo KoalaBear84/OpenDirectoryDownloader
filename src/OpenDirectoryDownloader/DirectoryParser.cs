@@ -549,7 +549,7 @@ public static partial class DirectoryParser
 							{
 								Url = fullUrl,
 								FileName = Path.GetFileName(WebUtility.UrlDecode(fullUrl)),
-								FileSize = Constants.NoFileSize
+								FileSize = null
 							});
 						}
 					}
@@ -1433,12 +1433,14 @@ public static partial class DirectoryParser
 		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 		string fileSizeGroup = match.Groups["FileSize"].Value.Trim();
-		bool isFile = long.TryParse(fileSizeGroup, out long fileSize);
+
+		bool isFile = long.TryParse(fileSizeGroup, out long parsedFileSize);
+		long? fileSize = parsedFileSize;
 
 		if (!isFile && IsFileSize(fileSizeGroup))
 		{
 			fileSize = FileSizeHelper.ParseFileSize(fileSizeGroup);
-			isFile = fileSize > 0;
+			isFile = fileSize is not null;
 		}
 
 		if (!isFile)
@@ -1817,7 +1819,7 @@ public static partial class DirectoryParser
 		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 		string fileSizeString = match.Groups["FileSize"].Value;
-		long fileSize = FileSizeHelper.ParseFileSize(fileSizeString);
+		long? fileSize = FileSizeHelper.ParseFileSize(fileSizeString);
 
 		bool isFile = !string.IsNullOrWhiteSpace(fileSizeString) && fileSizeString.Trim() != "-" &&
 			            // This is not perfect.. Specific block sizes
@@ -2443,7 +2445,7 @@ public static partial class DirectoryParser
 			{
 				parsedWebDirectory.Parser = parser;
 
-				long fileSize = Constants.NoFileSize;
+				long? fileSize = null;
 
 				if (link.ParentElement?.NodeName != "BODY")
 				{
@@ -2943,7 +2945,7 @@ public static partial class DirectoryParser
 						dateColumnIndex.Add(tableColumn.Index());
 					}
 
-					if (FileSizeHelper.ParseFileSize(tableColumn.TextContent, onlyChecking: true) > Constants.NoFileSize)
+					if (FileSizeHelper.ParseFileSize(tableColumn.TextContent, onlyChecking: true) is not null)
 					{
 						fileSizeColumnIndex.Add(tableColumn.Index());
 					}

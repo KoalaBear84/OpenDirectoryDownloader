@@ -469,7 +469,7 @@ public partial class OpenDirectoryIndexer
 
 				Session.Finished = DateTimeOffset.UtcNow;
 				Session.TotalFiles = Session.Root.TotalFiles;
-				Session.TotalFileSizeEstimated = Session.Root.TotalFileSize ?? 0;
+				Session.TotalFileSizeEstimated = Session.Root.TotalFileSize;
 
 				IEnumerable<string> distinctUrls = Session.Root.AllFileUrls.Distinct().OrderBy(x => x, NaturalSortStringComparer.InvariantCulture);
 

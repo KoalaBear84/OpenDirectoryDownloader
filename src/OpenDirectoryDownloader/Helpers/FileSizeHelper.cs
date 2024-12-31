@@ -1,36 +1,37 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace OpenDirectoryDownloader.Helpers;
 
-public static class FileSizeHelper
+public static partial class FileSizeHelper
 {
 	// Parse a file size.
 	private static readonly string[][] SizeSuffixes =
-	{
-			new string[] { "BYTES", "BYTE", "B", "OCTETS", "OCTET" },
-			new string[] { "KB", "K", "KIB", "KO" },
-			new string[] { "MB", "M", "MIB", "MO" },
-			new string[] { "GB", "G", "GIB", "GO" },
-			new string[] { "TB", "T", "TIB", "TO" },
-			new string[] { "PB", "P", "PIB", "PO" },
-			new string[] { "EB", "E", "EIB", "EO" },
-			new string[] { "ZB", "Z", "ZIB", "ZO" },
-			new string[] { "YB", "Y", "YIB", "YO" }
-		};
+	[
+		["BYTES", "BYTE", "B", "OCTETS", "OCTET"],
+		["KB", "K", "KIB", "KO"],
+		["MB", "M", "MIB", "MO"],
+		["GB", "G", "GIB", "GO"],
+		["TB", "T", "TIB", "TO"],
+		["PB", "P", "PIB", "PO"],
+		["EB", "E", "EIB", "EO"],
+		["ZB", "Z", "ZIB", "ZO"],
+		["YB", "Y", "YIB", "YO"]
+	];
+
 	private static readonly Regex AlphaNumericRegex = new("[^a-zA-Z0-9 .,]");
 	private static readonly Regex BytesRegex = new("\\((?<FileSize>(\\d*,?)+)bytes\\)");
 
-	public static long ParseFileSize(string value, int kbValue = 1024, bool throwException = false, bool onlyChecking = false)
+	public static long? ParseFileSize(string value, int kbValue = 1024, bool throwException = false, bool onlyChecking = false)
 	{
 		if (string.IsNullOrWhiteSpace(value))
 		{
-			return Constants.NoFileSize;
+			return null;
 		}
 
 		// Strip HTML
-		value = Regex.Replace(value, "<.*?>", string.Empty);
+		value = RegexStripHtml().Replace(value, string.Empty);
 
 		Match bytesRegexMatch = BytesRegex.Match(value);
 
@@ -46,7 +47,7 @@ public static class FileSizeHelper
 
 		if (string.IsNullOrWhiteSpace(value))
 		{
-			return Constants.NoFileSize;
+			return null;
 		}
 
 		try
@@ -104,7 +105,7 @@ public static class FileSizeHelper
 				return (long)Math.Round(number * Math.Pow(kbValue, suffix_index));
 			}
 
-			return Constants.NoFileSize;
+			return null;
 		}
 		catch (Exception ex)
 		{
@@ -118,7 +119,7 @@ public static class FileSizeHelper
 				Program.Logger.Warning("Cannot parse '{value}' as a filesize.", value);
 			}
 
-			return Constants.NoFileSize;
+			return null;
 		}
 	}
 
@@ -147,4 +148,7 @@ public static class FileSizeHelper
 
 		return string.Format(formatTemplate, size < 0 ? "-" : null, normSize, (useBits ? sizeSuffixesBit : sizeSuffixes)[iUnit]);
 	}
+
+	[GeneratedRegex("<.*?>")]
+	private static partial Regex RegexStripHtml();
 }
