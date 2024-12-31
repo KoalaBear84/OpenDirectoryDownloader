@@ -104,18 +104,8 @@ jobs:
           OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}.zip
         overwrite: true
 
-  merge:
-    runs-on: ubuntu-latest
-    needs: [ build ]
-    steps:
-      - name: Merge Artifacts
-        uses: actions/upload-artifact/merge@v4
-        with:
-          name: build-artifact
-          pattern:  build-artifact-*
-
   release:
-    needs: [ merge ]
+    needs: [ build ]
     runs-on: ubuntu-latest
 
     steps:
@@ -124,7 +114,6 @@ jobs:
       with:
         path: build-artifact
         pattern: build-artifact-*
-        merge-multiple: true
 
     - name: Get tag info
       id: tag_info
@@ -140,7 +129,7 @@ jobs:
         prerelease: false
         body: ${{ github.event.head_commit.message }}
         files: |
-          OpenDirectoryDownloader-*.zip
+          build-artifact/OpenDirectoryDownloader-*.zip
     
 
   docker:
