@@ -1,8 +1,8 @@
+using Acornima;
+using Acornima.Ast;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
-using Acornima;
-using Acornima.Ast;
 using Newtonsoft.Json;
 using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Models;
@@ -29,11 +29,13 @@ using System.Text.RegularExpressions;
 
 namespace OpenDirectoryDownloader;
 
-public static class DirectoryParser
+public static partial class DirectoryParser
 {
 	private static readonly HtmlParser HtmlParser = new();
 
 	private static readonly SemaphoreSlim SemaphoreSlimBrowser = new(1, 1);
+
+	private static readonly char[] trimChars = ['/'];
 
 	/// <summary>
 	/// Parses Html to a WebDirectory object containing the current directory index
@@ -41,23 +43,19 @@ public static class DirectoryParser
 	/// <param name="baseUrl">Base url</param>
 	/// <param name="html">Html to parse</param>
 	/// <returns>WebDirectory object containing current directory index</returns>
-	public static async Task<WebDirectory> ParseHtml(WebDirectory webDirectory, string html,
-		HttpClient httpClient = null, SocketsHttpHandler socketsHttpHandler = null,
-		HttpResponseMessage httpResponseMessage = null, bool checkParents = true)
+	public static async Task<WebDirectory> ParseHtml(WebDirectory webDirectory, string html, HttpClient httpClient = null, SocketsHttpHandler socketsHttpHandler = null, HttpResponseMessage httpResponseMessage = null, bool checkParents = true)
 	{
 		string baseUrl = webDirectory.Url;
 
-		if (!baseUrl.EndsWith("/") && string.IsNullOrWhiteSpace(webDirectory.Uri.Query) &&
-		    string.IsNullOrWhiteSpace(Path.GetExtension(baseUrl)))
+		if (!baseUrl.EndsWith('/') && string.IsNullOrWhiteSpace(webDirectory.Uri.Query) && string.IsNullOrWhiteSpace(Path.GetExtension(baseUrl)))
 		{
-			baseUrl += "/";
+			baseUrl += '/';
 		}
 
 		WebDirectory parsedWebDirectory = new(webDirectory.ParentDirectory)
 		{
 			Url = baseUrl,
-			Name = WebUtility.UrlDecode(Path.GetDirectoryName(new Uri(baseUrl).Segments.LastOrDefault())) ??
-			       Constants.Root
+			Name = WebUtility.UrlDecode(Path.GetDirectoryName(new Uri(baseUrl).Segments.LastOrDefault())) ?? Constants.Root
 		};
 
 		try
@@ -112,14 +110,12 @@ public static class DirectoryParser
 
 					if (baseUrlRegexMatch.Success)
 					{
-						return await FileBrowserParser.ParseIndex(baseUrl, httpClient, parsedWebDirectory, htmlDocument,
-							html);
+						return await FileBrowserParser.ParseIndex(baseUrl, httpClient, parsedWebDirectory, htmlDocument, html);
 					}
 				}
 			}
 
-			if (httpClient is not null &&
-			    !OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.GoogleDriveIndexType))
+			if (httpClient is not null && !OpenDirectoryIndexer.Session.Parameters.ContainsKey(Constants.GoogleDriveIndexType))
 			{
 				string googleDriveIndexType = null;
 
@@ -127,23 +123,17 @@ public static class DirectoryParser
 				{
 					googleDriveIndexType = GoogleDriveIndexMapping.GetGoogleDriveIndexType(script.Source);
 
-					if (googleDriveIndexType is null &&
-					    script.Source.Contains("app.min.js", StringComparison.InvariantCultureIgnoreCase))
+					if (googleDriveIndexType is null && script.Source.Contains("app.min.js", StringComparison.InvariantCultureIgnoreCase))
 					{
-						Program.Logger.Warning("Checking/downloading javascript for sourcemaps: {scriptUrl}",
-							script.Source);
-						string sourceMapUrl =
-							await Library.GetSourceMapUrlFromJavaScriptAsync(httpClient, script.Source);
+						Program.Logger.Warning("Checking/downloading javascript for sourcemaps: {scriptUrl}", script.Source);
+						string sourceMapUrl = await Library.GetSourceMapUrlFromJavaScriptAsync(httpClient, script.Source);
 
 						if (!string.IsNullOrWhiteSpace(sourceMapUrl))
 						{
 							string fullSourceMapUrl = new Uri(new Uri(script.Source), sourceMapUrl).ToString();
-							Program.Logger.Warning(
-								"Checking/downloading sourcemap for known Google Drive index: {sourceMapUrl}",
-								fullSourceMapUrl);
+							Program.Logger.Warning("Checking/downloading sourcemap for known Google Drive index: {sourceMapUrl}", fullSourceMapUrl);
 
-							IAsyncEnumerable<string> sources =
-								Library.GetSourcesFromSourceMapAsync(httpClient, fullSourceMapUrl);
+							IAsyncEnumerable<string> sources = Library.GetSourcesFromSourceMapAsync(httpClient, fullSourceMapUrl);
 
 							await foreach (string source in sources)
 							{
@@ -157,8 +147,7 @@ public static class DirectoryParser
 						}
 					}
 
-					if (googleDriveIndexType is null &&
-					    script.Source.Contains("app.js", StringComparison.InvariantCultureIgnoreCase))
+					if (googleDriveIndexType is null && script.Source.Contains("app.js", StringComparison.InvariantCultureIgnoreCase))
 					{
 						string scriptUrl = script.Source;
 
@@ -171,10 +160,8 @@ public static class DirectoryParser
 
 						Parser javaScriptParser = new();
 						Script program = javaScriptParser.ParseScript(appJsSource);
-						IEnumerable<FunctionDeclaration> javaScriptFunctions =
-							program.ChildNodes.OfType<FunctionDeclaration>();
-						FunctionDeclaration gdidecodeFunctionDeclaration = javaScriptFunctions.FirstOrDefault(f =>
-							f.ChildNodes.OfType<Identifier>().Any(i => i.Name == "gdidecode"));
+						IEnumerable<FunctionDeclaration> javaScriptFunctions = program.ChildNodes.OfType<FunctionDeclaration>();
+						FunctionDeclaration gdidecodeFunctionDeclaration = javaScriptFunctions.FirstOrDefault(f => f.ChildNodes.OfType<Identifier>().Any(i => i.Name == "gdidecode"));
 
 						if (gdidecodeFunctionDeclaration is not null)
 						{
@@ -201,8 +188,7 @@ public static class DirectoryParser
 				}
 			}
 
-			if (OpenDirectoryIndexer.Session is not null &&
-			    OpenDirectoryIndexer.Session.Parameters.TryGetValue(Constants.GoogleDriveIndexType, out string value))
+			if (OpenDirectoryIndexer.Session is not null && OpenDirectoryIndexer.Session.Parameters.TryGetValue(Constants.GoogleDriveIndexType, out string value))
 			{
 				string googleDriveIndexType = value;
 
@@ -230,7 +216,7 @@ public static class DirectoryParser
 				// document.querySelectorAll('#files tr')
 				IHtmlCollection<IElement> hfsTable = htmlDocument.QuerySelectorAll("table#files");
 
-				if (hfsTable.Any())
+				if (hfsTable.Length != 0)
 				{
 					return ParseTablesDirectoryListing(baseUrl, parsedWebDirectory, hfsTable, checkParents);
 				}
@@ -244,18 +230,16 @@ public static class DirectoryParser
 				// This is already handled by normal parsers
 			}
 
-			IHtmlCollection<IElement> directoryListingDotComlistItems =
-				htmlDocument.QuerySelectorAll("#directory-listing li, .directory-listing li");
+			IHtmlCollection<IElement> directoryListingDotComlistItems = htmlDocument.QuerySelectorAll("#directory-listing li, .directory-listing li");
 
-			if (directoryListingDotComlistItems.Any())
+			if (directoryListingDotComlistItems.Length != 0)
 			{
-				return ParseDirectoryListingDoctComDirectoryListing(baseUrl, parsedWebDirectory,
-					directoryListingDotComlistItems, checkParents);
+				return ParseDirectoryListingDoctComDirectoryListing(baseUrl, parsedWebDirectory, directoryListingDotComlistItems, checkParents);
 			}
 
 			IHtmlCollection<IElement> h5aiTableRows = htmlDocument.QuerySelectorAll("#fallback table tr");
 
-			if (h5aiTableRows.Any())
+			if (h5aiTableRows.Length != 0)
 			{
 				return ParseH5aiDirectoryListing(baseUrl, parsedWebDirectory, h5aiTableRows, checkParents);
 			}
@@ -264,7 +248,7 @@ public static class DirectoryParser
 			// http://web.archive.org/web/20140724000351/http://bitfolge.de/index.php?option=com_content&view=article&id=66:snif-simple-and-nice-index-file&catid=38:eigene&Itemid=59
 			IHtmlCollection<IElement> snifTableRows = htmlDocument.QuerySelectorAll("table.snif tr");
 
-			if (snifTableRows.Any())
+			if (snifTableRows.Length != 0)
 			{
 				return ParseSnifDirectoryListing(baseUrl, parsedWebDirectory, snifTableRows, checkParents);
 			}
@@ -272,10 +256,9 @@ public static class DirectoryParser
 			// Godir - https://gitlab.com/Montessquio/godir
 			IHtmlCollection<IElement> pureTableRows = htmlDocument.QuerySelectorAll("table.listing-table tbody tr");
 
-			if (pureTableRows.Any())
+			if (pureTableRows.Length != 0)
 			{
-				return ParsePureDirectoryListing(ref baseUrl, parsedWebDirectory, htmlDocument, pureTableRows,
-					checkParents);
+				return ParsePureDirectoryListing(ref baseUrl, parsedWebDirectory, htmlDocument, pureTableRows, checkParents);
 			}
 
 			// Remove it after ParsePureDirectoryListing (.breadcrumb is used in it)
@@ -284,7 +267,7 @@ public static class DirectoryParser
 			// Custom directory listing
 			IHtmlCollection<IElement> divElements = htmlDocument.QuerySelectorAll("div#listing div");
 
-			if (divElements.Any())
+			if (divElements.Length != 0)
 			{
 				return ParseCustomDivListing(ref baseUrl, parsedWebDirectory, htmlDocument, divElements, checkParents);
 			}
@@ -292,7 +275,7 @@ public static class DirectoryParser
 			// Custom directory listing 2
 			divElements = htmlDocument.QuerySelectorAll("div#filelist .tb-row.folder,div#filelist .tb-row.afile");
 
-			if (divElements.Any())
+			if (divElements.Length != 0)
 			{
 				return ParseCustomDivListing2(ref baseUrl, parsedWebDirectory, htmlDocument, divElements, checkParents);
 			}
@@ -300,7 +283,7 @@ public static class DirectoryParser
 			// HFS
 			divElements = htmlDocument.QuerySelectorAll("div#files .item");
 
-			if (divElements.Any())
+			if (divElements.Length != 0)
 			{
 				return ParseHfsListing(ref baseUrl, parsedWebDirectory, htmlDocument, divElements, checkParents);
 			}
@@ -313,11 +296,11 @@ public static class DirectoryParser
 
 			IHtmlCollection<IElement> pres = htmlDocument.QuerySelectorAll("pre");
 
-			if (pres.Any())
+			if (pres.Length != 0)
 			{
 				WebDirectory result = await ParsePreDirectoryListing(baseUrl, parsedWebDirectory, pres, checkParents);
 
-				if (result.Files.Any() || result.Subdirectories.Any() || result.Error)
+				if (result.Files.Count != 0 || result.Subdirectories.Count != 0 || result.Error)
 				{
 					return result;
 				}
@@ -333,10 +316,9 @@ public static class DirectoryParser
 
 			IHtmlCollection<IElement> listItems = htmlDocument.QuerySelectorAll("ul#root li");
 
-			if (listItems.Any())
+			if (listItems.Length != 0)
 			{
-				WebDirectory result =
-					ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems, checkParents);
+				WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems, checkParents);
 
 				if (result.ParsedSuccessfully || result.Error)
 				{
@@ -346,7 +328,7 @@ public static class DirectoryParser
 
 			IHtmlCollection<IElement> tables = htmlDocument.QuerySelectorAll("table");
 
-			if (tables.Any())
+			if (tables.Length != 0)
 			{
 				WebDirectory result = ParseDirLIST(baseUrl, parsedWebDirectory, htmlDocument, tables);
 
@@ -357,7 +339,7 @@ public static class DirectoryParser
 
 				result = ParseTablesDirectoryListing(baseUrl, parsedWebDirectory, tables, checkParents);
 
-				if (result.Files.Any() || result.Subdirectories.Any() || result.Error)
+				if (result.Files.Count != 0 || result.Subdirectories.Count != 0 || result.Error)
 				{
 					return result;
 				}
@@ -365,10 +347,9 @@ public static class DirectoryParser
 
 			IHtmlCollection<IElement> materialDesignListItems = htmlDocument.QuerySelectorAll("ul.mdui-list li");
 
-			if (materialDesignListItems.Any())
+			if (materialDesignListItems.Length != 0)
 			{
-				return ParseMaterialDesignListItemsDirectoryListing(baseUrl, parsedWebDirectory,
-					materialDesignListItems, checkParents);
+				return ParseMaterialDesignListItemsDirectoryListing(baseUrl, parsedWebDirectory, materialDesignListItems, checkParents);
 			}
 
 			if (htmlDocument.QuerySelectorAll("#content ul#file-list li").Length == 2)
@@ -378,10 +359,9 @@ public static class DirectoryParser
 
 			listItems = htmlDocument.QuerySelectorAll(".list-group li");
 
-			if (listItems.Any())
+			if (listItems.Length != 0)
 			{
-				WebDirectory result =
-					ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems, checkParents);
+				WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems, checkParents);
 
 				if (result.ParsedSuccessfully || result.Error)
 				{
@@ -391,10 +371,9 @@ public static class DirectoryParser
 
 			listItems = htmlDocument.QuerySelectorAll("ul li");
 
-			if (listItems.Any())
+			if (listItems.Length != 0)
 			{
-				WebDirectory result =
-					ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems, checkParents);
+				WebDirectory result = ParseListItemsDirectoryListing(baseUrl, parsedWebDirectory, listItems, checkParents);
 
 				if (result.ParsedSuccessfully || result.Error)
 				{
@@ -405,13 +384,12 @@ public static class DirectoryParser
 			// Latest fallback
 			IHtmlCollection<IElement> links = htmlDocument.QuerySelectorAll("a");
 
-			if (links.Any())
+			if (links.Length != 0)
 			{
 				parsedWebDirectory = ParseLinksDirectoryListing(baseUrl, parsedWebDirectory, links, checkParents);
 			}
 
-			parsedWebDirectory =
-				await ParseDirectoryListingModel01(baseUrl, parsedWebDirectory, htmlDocument, httpClient);
+			parsedWebDirectory = await ParseDirectoryListingModel01(baseUrl, parsedWebDirectory, htmlDocument, httpClient);
 
 			CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
 
@@ -419,9 +397,7 @@ public static class DirectoryParser
 			    !OpenDirectoryIndexer.Session?.ProcessedBrowserUrls.Contains(webDirectory.Url) == false &&
 			    htmlDocument.QuerySelector("noscript") != null && htmlDocument.QuerySelector("script") != null)
 			{
-				Program.Logger.Warning(
-					"No directories and files found on {url}, but did find a <noscript> tag, maybe a JavaScript challenge in there which is unsupported",
-					webDirectory.Url);
+				Program.Logger.Warning("No directories and files found on {url}, but did find a <noscript> tag, maybe a JavaScript challenge in there which is unsupported", webDirectory.Url);
 
 				if (!OpenDirectoryIndexer.Session.CommandLineOptions.NoBrowser && httpClient is not null)
 				{
@@ -435,8 +411,7 @@ public static class DirectoryParser
 
 						if (OpenDirectoryIndexer.Session.MaxThreads != 1)
 						{
-							Program.Logger.Warning("Reduce threads to {threads} because of possible Browser JavaScript",
-								1);
+							Program.Logger.Warning("Reduce threads to {threads} because of possible Browser JavaScript", 1);
 							OpenDirectoryIndexer.Session.MaxThreads = 1;
 						}
 
@@ -454,13 +429,10 @@ public static class DirectoryParser
 
 						BrowserContext.AddCookiesToContainer(socketsHttpHandler.CookieContainer, cookieParams);
 
-						if (OpenDirectoryIndexer.Session.MaxThreads !=
-						    OpenDirectoryIndexer.Session.CommandLineOptions.Threads)
+						if (OpenDirectoryIndexer.Session.MaxThreads != OpenDirectoryIndexer.Session.CommandLineOptions.Threads)
 						{
-							Program.Logger.Warning("Increasing threads back to {threads}",
-								OpenDirectoryIndexer.Session.CommandLineOptions.Threads);
-							OpenDirectoryIndexer.Session.MaxThreads =
-								OpenDirectoryIndexer.Session.CommandLineOptions.Threads;
+							Program.Logger.Warning("Increasing threads back to {threads}", OpenDirectoryIndexer.Session.CommandLineOptions.Threads);
+							OpenDirectoryIndexer.Session.MaxThreads = OpenDirectoryIndexer.Session.CommandLineOptions.Threads;
 						}
 
 						if (browserHtml != html)
@@ -479,12 +451,9 @@ public static class DirectoryParser
 			    OpenDirectoryIndexer.Session?.ProcessedBrowserUrls.Any() == false &&
 			    htmlDocument.QuerySelector("iframe") != null)
 			{
-				IEnumerable<Uri> iframeUrls = htmlDocument.QuerySelectorAll<IHtmlInlineFrameElement>("iframe")
-					.Select(x => new Uri(OpenDirectoryIndexer.Session.Root.Uri, x.GetAttribute("src")));
+				IEnumerable<Uri> iframeUrls = htmlDocument.QuerySelectorAll<IHtmlInlineFrameElement>("iframe").Select(x => new Uri(OpenDirectoryIndexer.Session.Root.Uri, x.GetAttribute("src")));
 
-				Program.Logger.Warning(
-					"No directories and files found on {url}, but did find <iframe> tag(s), you could try this url(s):\n{iframeUrls}",
-					webDirectory.Url, string.Join(Environment.NewLine, iframeUrls));
+				Program.Logger.Warning("No directories and files found on {url}, but did find <iframe> tag(s), you could try this url(s):\n{iframeUrls}", webDirectory.Url, string.Join(Environment.NewLine, iframeUrls));
 			}
 
 			return parsedWebDirectory;
@@ -507,14 +476,12 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static async Task<WebDirectory> ParseCopypartyListingAsync(string baseUrl, HttpClient httpClient,
-		WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, string html)
+	private static async Task<WebDirectory> ParseCopypartyListingAsync(string baseUrl, HttpClient httpClient, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, string html)
 	{
 		return await Copyparty.ParseIndex(baseUrl, httpClient, parsedWebDirectory, htmlDocument, html);
 	}
 
-	private static WebDirectory ParseDirLIST(string baseUrl, WebDirectory parsedWebDirectory,
-		IHtmlDocument htmlDocument, IHtmlCollection<IElement> tables)
+	private static WebDirectory ParseDirLIST(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> tables)
 	{
 		if (htmlDocument.Title.StartsWith("dirLIST - Index of:"))
 		{
@@ -531,8 +498,7 @@ public static class DirectoryParser
 			{
 				parsedWebDirectory.ParsedSuccessfully = true;
 
-				IHtmlCollection<IElement> entries =
-					dirListTables[3].QuerySelectorAll("td.folder_bg, td.file_bg1, td.file_bg2");
+				IHtmlCollection<IElement> entries = dirListTables[3].QuerySelectorAll("td.folder_bg, td.file_bg1, td.file_bg2");
 
 				foreach (IElement entry in entries)
 				{
@@ -552,8 +518,7 @@ public static class DirectoryParser
 
 							if (Library.IsBase64String(urlEncodingParser["folder"]))
 							{
-								directoryName =
-									Encoding.UTF8.GetString(Convert.FromBase64String(urlEncodingParser["folder"]));
+								directoryName = Encoding.UTF8.GetString(Convert.FromBase64String(urlEncodingParser["folder"]));
 							}
 							else
 							{
@@ -587,13 +552,12 @@ public static class DirectoryParser
 	private static WebDirectory ParseJavaScriptDrawn(string baseUrl, WebDirectory parsedWebDirectory, string html)
 	{
 		Regex regexDirectory = new("_d\\('(?<DirectoryName>.*)','(?<Date>.*)','(?<Link>.*)'\\)");
-		Regex regexFile =
-			new("_f\\('(?<FileName>.*)',(?<FileSize>\\d*),'(?<Date>.*)','(?<Link>.*)',(?<UnixTimestamp>\\d*)\\)");
+		Regex regexFile = new("_f\\('(?<FileName>.*)',(?<FileSize>\\d*),'(?<Date>.*)','(?<Link>.*)',(?<UnixTimestamp>\\d*)\\)");
 
 		MatchCollection matchCollectionDirectories = regexDirectory.Matches(html);
 		MatchCollection matchCollectionFiles = regexFile.Matches(html);
 
-		if (matchCollectionDirectories.Any() || matchCollectionFiles.Any())
+		if (matchCollectionDirectories.Count != 0 || matchCollectionFiles.Count != 0)
 		{
 			parsedWebDirectory.ParsedSuccessfully = true;
 
@@ -606,8 +570,7 @@ public static class DirectoryParser
 					urlEncodingParser.AllKeys.ToList().ForEach(key => urlEncodingParser.Remove(key));
 					baseUrl = urlEncodingParser.ToString();
 
-					baseUrl = new Uri(baseUrl.Replace(Path.GetFileName(new Uri(baseUrl).AbsolutePath), string.Empty))
-						.ToString();
+					baseUrl = new Uri(baseUrl.Replace(Path.GetFileName(new Uri(baseUrl).AbsolutePath), string.Empty)).ToString();
 				}
 
 				parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
@@ -622,10 +585,8 @@ public static class DirectoryParser
 			{
 				parsedWebDirectory.Files.Add(new WebFile
 				{
-					Url = baseUrl +
-					      Path.GetFileName(WebUtility.UrlDecode(Uri.UnescapeDataString(file.Groups["Link"].Value))),
-					FileName = Path.GetFileName(
-						WebUtility.UrlDecode(Uri.UnescapeDataString(file.Groups["FileName"].Value))),
+					Url = baseUrl + Path.GetFileName(WebUtility.UrlDecode(Uri.UnescapeDataString(file.Groups["Link"].Value))),
+					FileName = Path.GetFileName(WebUtility.UrlDecode(Uri.UnescapeDataString(file.Groups["FileName"].Value))),
 					FileSize = FileSizeHelper.ParseFileSize(file.Groups["FileSize"].Value)
 				});
 			}
@@ -634,8 +595,10 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static async Task<WebDirectory> ParseDirectoryListingModel01(string baseUrl,
-		WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, HttpClient httpClient)
+	[GeneratedRegex(@"\$\.get\('(?<DirectoryIndexFile>.*)',")]
+	private static partial Regex RegexParseDirectoryListingModel01();
+
+	private static async Task<WebDirectory> ParseDirectoryListingModel01(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, HttpClient httpClient)
 	{
 		// If anyone knows which directory listing this is... :P
 		IElement fileManager = htmlDocument.QuerySelector("div.filemanager");
@@ -649,7 +612,7 @@ public static class DirectoryParser
 				Uri scriptUri = new(new Uri(baseUrl), script.Attributes["src"].Value);
 				string scriptBody = await httpClient.GetStringAsync(scriptUri);
 
-				Match regexMatch = new Regex(@"\$\.get\('(?<DirectoryIndexFile>.*)',").Match(scriptBody);
+				Match regexMatch = RegexParseDirectoryListingModel01().Match(scriptBody);
 
 				if (regexMatch.Success)
 				{
@@ -657,11 +620,9 @@ public static class DirectoryParser
 
 					string directoryIndexJson = await httpClient.GetStringAsync(directoryIndexFile);
 
-					DirectoryListingModel01 directoryListingModel =
-						JsonConvert.DeserializeObject<DirectoryListingModel01>(directoryIndexJson);
+					DirectoryListingModel01 directoryListingModel = JsonConvert.DeserializeObject<DirectoryListingModel01>(directoryIndexJson);
 
-					WebDirectory newWebDirectory =
-						ConvertDirectoryListingModel01(baseUrl, parsedWebDirectory, directoryListingModel);
+					WebDirectory newWebDirectory = ConvertDirectoryListingModel01(baseUrl, parsedWebDirectory, directoryListingModel);
 					parsedWebDirectory.Description = newWebDirectory.Description;
 					parsedWebDirectory.StartTime = newWebDirectory.StartTime;
 					parsedWebDirectory.Files = newWebDirectory.Files;
@@ -679,8 +640,7 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static WebDirectory ConvertDirectoryListingModel01(string baseUrl, WebDirectory parsedWebDirectory,
-		DirectoryListingModel01 directoryListingModel)
+	private static WebDirectory ConvertDirectoryListingModel01(string baseUrl, WebDirectory parsedWebDirectory, DirectoryListingModel01 directoryListingModel)
 	{
 		Uri directoryUri = new(new Uri(baseUrl), directoryListingModel.Path);
 		string directoryFullUrl = directoryUri.ToString();
@@ -715,8 +675,7 @@ public static class DirectoryParser
 		return webDirectory;
 	}
 
-	private static WebDirectory ParseCustomDivListing(ref string baseUrl, WebDirectory parsedWebDirectory,
-		IHtmlDocument htmlDocument, IHtmlCollection<IElement> divElements, bool checkParents)
+	private static WebDirectory ParseCustomDivListing(ref string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> divElements, bool checkParents)
 	{
 		foreach (IElement divElement in divElements)
 		{
@@ -766,8 +725,7 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static WebDirectory ParseCustomDivListing2(ref string baseUrl, WebDirectory parsedWebDirectory,
-		IHtmlDocument htmlDocument, IHtmlCollection<IElement> divElements, bool checkParents)
+	private static WebDirectory ParseCustomDivListing2(ref string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> divElements, bool checkParents)
 	{
 		foreach (IElement divElement in divElements)
 		{
@@ -822,8 +780,7 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static WebDirectory ParseHfsListing(ref string baseUrl, WebDirectory parsedWebDirectory,
-		IHtmlDocument htmlDocument, IHtmlCollection<IElement> divElements, bool checkParents)
+	private static WebDirectory ParseHfsListing(ref string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> divElements, bool checkParents)
 	{
 		foreach (IElement divElement in divElements)
 		{
@@ -844,7 +801,7 @@ public static class DirectoryParser
 				{
 					Parser = "ParseHfsListing",
 					Url = fullUrl,
-					Name = WebUtility.UrlDecode(uri.Segments.Last()).Trim().TrimEnd(new char[] { '/' })
+					Name = WebUtility.UrlDecode(uri.Segments.Last()).Trim().TrimEnd(trimChars)
 				});
 			}
 			else
@@ -866,8 +823,7 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static WebDirectory ParseIpfsDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory,
-		IHtmlDocument htmlDocument, bool checkParents)
+	private static WebDirectory ParseIpfsDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, bool checkParents)
 	{
 		foreach (IElement tableRow in htmlDocument.QuerySelectorAll("table tr"))
 		{
@@ -908,8 +864,7 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static WebDirectory ParseDirectoryListingDoctComDirectoryListing(string baseUrl,
-		WebDirectory parsedWebDirectory, IHtmlCollection<IElement> listItems, bool checkParents)
+	private static WebDirectory ParseDirectoryListingDoctComDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> listItems, bool checkParents)
 	{
 		foreach (IElement listItem in listItems)
 		{
@@ -953,19 +908,16 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static WebDirectory ParseSnifDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory,
-		IHtmlCollection<IElement> snifTableRows, bool checkParents)
+	private static WebDirectory ParseSnifDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> snifTableRows, bool checkParents)
 	{
 		IElement table = snifTableRows.First().Parent("table");
 
 		Dictionary<int, HeaderInfo> tableHeaders = GetTableHeaders(table);
 
-		KeyValuePair<int, HeaderInfo> fileSizeHeader =
-			tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileSize);
+		KeyValuePair<int, HeaderInfo> fileSizeHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileSize);
 		int fileSizeHeaderColumnIndex = fileSizeHeader.Value != null ? fileSizeHeader.Key : 0;
 
-		KeyValuePair<int, HeaderInfo> nameHeader =
-			tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileName);
+		KeyValuePair<int, HeaderInfo> nameHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileName);
 		int nameHeaderColumnIndex = nameHeader.Value != null ? nameHeader.Key : 0;
 
 		foreach (IElement tableRow in snifTableRows)
@@ -975,9 +927,7 @@ public static class DirectoryParser
 				continue;
 			}
 
-			IHtmlAnchorElement link =
-				tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})")?.QuerySelector("a") as
-					IHtmlAnchorElement;
+			IHtmlAnchorElement link = tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})")?.QuerySelector("a") as IHtmlAnchorElement;
 
 			if (!IsValidLink(link))
 			{
@@ -1004,10 +954,7 @@ public static class DirectoryParser
 				{
 					Url = fullUrl,
 					FileName = link?.Title,
-					FileSize = long.Parse(string.Join(null,
-						Regex.Split(
-							(tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex}) span") as
-								IHtmlSpanElement).Title, "[^\\d]")))
+					FileSize = long.Parse(string.Join(null, Regex.Split((tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex}) span") as IHtmlSpanElement).Title, "[^\\d]")))
 				});
 			}
 		}
@@ -1017,12 +964,9 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static WebDirectory ParsePureDirectoryListing(ref string baseUrl, WebDirectory parsedWebDirectory,
-		IHtmlDocument htmlDocument, IHtmlCollection<IElement> pureTableRows, bool checkParents)
+	private static WebDirectory ParsePureDirectoryListing(ref string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, IHtmlCollection<IElement> pureTableRows, bool checkParents)
 	{
-		string urlFromBreadcrumbs = Uri.EscapeDataString(string.Join("/",
-			htmlDocument.QuerySelectorAll(".breadcrumbs_main .breadcrumb").Where(b => !b.ClassList.Contains("smaller"))
-				.Select(b => b.TextContent)) + "/");
+		string urlFromBreadcrumbs = Uri.EscapeDataString(string.Join("/", htmlDocument.QuerySelectorAll(".breadcrumbs_main .breadcrumb").Where(b => !b.ClassList.Contains("smaller")).Select(b => b.TextContent)) + "/");
 
 		// Remove possible file part (index.html) from url
 		if (!string.IsNullOrWhiteSpace(Path.GetFileName(WebUtility.UrlDecode(baseUrl))))
@@ -1031,8 +975,7 @@ public static class DirectoryParser
 		}
 
 		// /. is for problem displaying a folder starting with a dot
-		string urlFromBaseUrl = baseUrl.Remove(0, new Uri(baseUrl).Scheme.Length + new Uri(baseUrl).Host.Length + 3)
-			.Replace("/.", "/");
+		string urlFromBaseUrl = baseUrl.Remove(0, new Uri(baseUrl).Scheme.Length + new Uri(baseUrl).Host.Length + 3).Replace("/.", "/");
 		urlFromBaseUrl = urlFromBaseUrl.Replace("%23", "#");
 
 		if (urlFromBreadcrumbs == urlFromBaseUrl || urlFromBreadcrumbs == Uri.EscapeDataString(urlFromBaseUrl))
@@ -1041,12 +984,10 @@ public static class DirectoryParser
 
 			Dictionary<int, HeaderInfo> tableHeaders = GetTableHeaders(table);
 
-			KeyValuePair<int, HeaderInfo> fileSizeHeader =
-				tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileSize);
+			KeyValuePair<int, HeaderInfo> fileSizeHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileSize);
 			int fileSizeHeaderColumnIndex = fileSizeHeader.Value != null ? fileSizeHeader.Key : 0;
 
-			KeyValuePair<int, HeaderInfo> nameHeader =
-				tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileName);
+			KeyValuePair<int, HeaderInfo> nameHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileName);
 			int nameHeaderColumnIndex = nameHeader.Value != null ? nameHeader.Key : 0;
 
 			foreach (IElement tableRow in pureTableRows)
@@ -1084,8 +1025,7 @@ public static class DirectoryParser
 					{
 						Url = fullUrl,
 						FileName = link.TextContent,
-						FileSize = FileSizeHelper.ParseFileSize(tableRow
-							.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})").TextContent)
+						FileSize = FileSizeHelper.ParseFileSize(tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})").TextContent)
 					});
 				}
 			}
@@ -1093,9 +1033,7 @@ public static class DirectoryParser
 		else
 		{
 			parsedWebDirectory.Error = true;
-			Program.Logger.Error(
-				"Directory listing returns different directory than requested! Expected: {urlFromBaseUrl}, Actual: {urlFromBreadcrumbs}",
-				urlFromBaseUrl, urlFromBreadcrumbs);
+			Program.Logger.Error("Directory listing returns different directory than requested! Expected: {urlFromBaseUrl}, Actual: {urlFromBreadcrumbs}", urlFromBaseUrl, urlFromBreadcrumbs);
 		}
 
 		CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
@@ -1103,26 +1041,21 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static WebDirectory ParseH5aiDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory,
-		IHtmlCollection<IElement> h5aiTableRows, bool checkParents)
+	private static WebDirectory ParseH5aiDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> h5aiTableRows, bool checkParents)
 	{
 		IElement table = h5aiTableRows.First().Parent("table");
 
 		Dictionary<int, HeaderInfo> tableHeaders = GetTableHeaders(table);
 
-		KeyValuePair<int, HeaderInfo> fileSizeHeader =
-			tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileSize);
+		KeyValuePair<int, HeaderInfo> fileSizeHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileSize);
 		int fileSizeHeaderColumnIndex = fileSizeHeader.Value != null ? fileSizeHeader.Key : 0;
 
-		KeyValuePair<int, HeaderInfo> nameHeader =
-			tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileName);
+		KeyValuePair<int, HeaderInfo> nameHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileName);
 		int nameHeaderColumnIndex = nameHeader.Value != null ? nameHeader.Key : 0;
 
 		foreach (IElement tableRow in h5aiTableRows)
 		{
-			IHtmlAnchorElement link =
-				tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})")?.QuerySelector("a") as
-					IHtmlAnchorElement;
+			IHtmlAnchorElement link = tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})")?.QuerySelector("a") as IHtmlAnchorElement;
 
 			if (!IsValidLink(link))
 			{
@@ -1155,8 +1088,7 @@ public static class DirectoryParser
 				{
 					Url = fullUrl,
 					FileName = link?.TextContent.Trim(),
-					FileSize = FileSizeHelper.ParseFileSize(tableRow
-						.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})").TextContent)
+					FileSize = FileSizeHelper.ParseFileSize(tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})").TextContent)
 				});
 			}
 		}
@@ -1166,8 +1098,7 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static WebDirectory ParseTablesDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory,
-		IHtmlCollection<IElement> tables, bool checkParents)
+	private static WebDirectory ParseTablesDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> tables, bool checkParents)
 	{
 		// Dirty solution..
 		bool hasSeperateDirectoryAndFilesTables = false;
@@ -1176,23 +1107,19 @@ public static class DirectoryParser
 
 		foreach (IElement table in tables)
 		{
-			WebDirectory webDirectoryCopy =
-				JsonConvert.DeserializeObject<WebDirectory>(JsonConvert.SerializeObject(parsedWebDirectory));
+			WebDirectory webDirectoryCopy = JsonConvert.DeserializeObject<WebDirectory>(JsonConvert.SerializeObject(parsedWebDirectory));
 			webDirectoryCopy.ParentDirectory = parsedWebDirectory.ParentDirectory;
 
 			Dictionary<int, HeaderInfo> tableHeaders = GetTableHeaders(table);
 			webDirectoryCopy.HeaderCount = tableHeaders.Count(th => th.Value.Type != HeaderType.Unknown);
 
-			KeyValuePair<int, HeaderInfo> fileSizeHeader =
-				tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileSize);
+			KeyValuePair<int, HeaderInfo> fileSizeHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileSize);
 			int fileSizeHeaderColumnIndex = fileSizeHeader.Value != null ? fileSizeHeader.Key : 0;
 
-			KeyValuePair<int, HeaderInfo> nameHeader =
-				tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileName);
+			KeyValuePair<int, HeaderInfo> nameHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.FileName);
 			int nameHeaderColumnIndex = nameHeader.Value != null ? nameHeader.Key : 0;
 
-			KeyValuePair<int, HeaderInfo> descriptionHeader =
-				tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.Description);
+			KeyValuePair<int, HeaderInfo> descriptionHeader = tableHeaders.FirstOrDefault(th => th.Value.Type == HeaderType.Description);
 			int descriptionHeaderColumnIndex = descriptionHeader.Value != null ? descriptionHeader.Key : 0;
 
 			// Extra fallback
@@ -1222,8 +1149,7 @@ public static class DirectoryParser
 			{
 				if (table.QuerySelector("a") != null)
 				{
-					webDirectoryCopy = ParseLinksDirectoryListing(baseUrl, webDirectoryCopy,
-						table.QuerySelectorAll("a"), checkParents);
+					webDirectoryCopy = ParseLinksDirectoryListing(baseUrl, webDirectoryCopy, table.QuerySelectorAll("a"), checkParents);
 				}
 			}
 			else
@@ -1259,8 +1185,7 @@ public static class DirectoryParser
 
 						fullUrl = StripUrl(fullUrl);
 
-						bool hasFolderIcon =
-							tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex}) i.bi-folder") != null;
+						bool hasFolderIcon = tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex}) i.bi-folder") != null;
 						UrlEncodingParser urlEncodingParser = new(fullUrl);
 
 						IElement imageElement = tableRow.QuerySelector("img");
@@ -1277,15 +1202,12 @@ public static class DirectoryParser
 							                    urlEncodingParser["dirname"] != null
 						                    ));
 
-						string description = tableRow.QuerySelector($"td:nth-child({descriptionHeaderColumnIndex})")
-							?.TextContent.Trim();
-						string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent
-							.Trim().Replace(" ", string.Empty);
+						string description = tableRow.QuerySelector($"td:nth-child({descriptionHeaderColumnIndex})")?.TextContent.Trim();
+						string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim().Replace(" ", string.Empty);
 
 						size ??= tableRow.QuerySelector(".size")?.TextContent.Trim();
 
-						bool isFile =
-							urlEncodingParser["file"] != null ||
+						bool isFile = urlEncodingParser["file"] != null ||
 							!isDirectory &&
 							(urlEncodingParser["dir"] == null && (
 								(fileSizeHeader.Value == null && !linkHref.EndsWith("/")) ||
@@ -1323,8 +1245,7 @@ public static class DirectoryParser
 							{
 								if (Library.IsBase64String(urlEncodingParser["folder"]))
 								{
-									directoryName =
-										Encoding.UTF8.GetString(Convert.FromBase64String(urlEncodingParser["folder"]));
+									directoryName = Encoding.UTF8.GetString(Convert.FromBase64String(urlEncodingParser["folder"]));
 								}
 								else
 								{
@@ -1358,8 +1279,7 @@ public static class DirectoryParser
 
 							if (urlEncodingParser["url"] != null)
 							{
-								filename = Path.GetFileName(
-									WebUtility.UrlDecode(new Uri(urlEncodingParser["url"]).AbsolutePath));
+								filename = Path.GetFileName(WebUtility.UrlDecode(new Uri(urlEncodingParser["url"]).AbsolutePath));
 							}
 
 							if (urlEncodingParser["file"] != null)
@@ -1377,8 +1297,7 @@ public static class DirectoryParser
 								filename = link.TextContent.Trim();
 							}
 
-							if (urlEncodingParser.Count == 0 && filename.Equals("index.php",
-								    StringComparison.InvariantCultureIgnoreCase))
+							if (urlEncodingParser.Count == 0 && filename.Equals("index.php", StringComparison.InvariantCultureIgnoreCase))
 							{
 								continue;
 							}
@@ -1400,19 +1319,15 @@ public static class DirectoryParser
 
 		if (!hasSeperateDirectoryAndFilesTables)
 		{
-			parsedWebDirectory = results
-				                     .Where(r => (r.ParsedSuccessfully || r.Error) &&
-				                                 (r.Files.Count > 0 || r.Subdirectories.Count > 0))
+			parsedWebDirectory = results.Where(r => (r.ParsedSuccessfully || r.Error) && (r.Files.Count > 0 || r.Subdirectories.Count > 0))
 				                     .OrderByDescending(r => r.HeaderCount)
 				                     .ThenByDescending(r => r.TotalDirectoriesIncludingUnfinished + r.TotalFiles)
-				                     .FirstOrDefault() ??
-			                     parsedWebDirectory;
+				                     .FirstOrDefault() ?? parsedWebDirectory;
 		}
 		else
 		{
-			parsedWebDirectory.Subdirectories =
-				new ConcurrentList<WebDirectory>(results.SelectMany(r => r.Subdirectories));
-			parsedWebDirectory.Files = new ConcurrentList<WebFile>(results.SelectMany(r => r.Files));
+			parsedWebDirectory.Subdirectories = [.. results.SelectMany(r => r.Subdirectories)];
+			parsedWebDirectory.Files = [.. results.SelectMany(r => r.Files)];
 		}
 
 		CheckParsedResults(parsedWebDirectory, baseUrl, checkParents);
@@ -1420,11 +1335,12 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser1 =
-		async (webDirectory, baseUrl, line) =>
+	[GeneratedRegex(@"(?:<img.*>\s*)+<a.*?>.*?<\/a>\S*\s*(?<Modified>\d*-(?:[a-zA-Z]*|\d*)-\d*\s*\d*:\d*(:\d*)?)?\s*(?<FileSize>\S+)?(\s*(?<Description>.*))?")]
+	private static partial Regex RegexRegexParser1();
+
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser1 = async (webDirectory, baseUrl, line) =>
 		{
-			Match match = Regex.Match(line,
-				@"(?:<img.*>\s*)+<a.*?>.*?<\/a>\S*\s*(?<Modified>\d*-(?:[a-zA-Z]*|\d*)-\d*\s*\d*:\d*(:\d*)?)?\s*(?<FileSize>\S+)?(\s*(?<Description>.*))?");
+		Match match = RegexRegexParser1().Match(line);
 
 			if (!match.Success)
 			{
@@ -1450,8 +1366,7 @@ public static class DirectoryParser
 
 			Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
-			bool isFile = IsFileSize(match.Groups["FileSize"].Value.Trim()) &&
-			              parsedLine.QuerySelector("img[alt=\"[DIR]\"]") == null;
+		bool isFile = IsFileSize(match.Groups["FileSize"].Value.Trim()) && parsedLine.QuerySelector("img[alt=\"[DIR]\"]") == null;
 
 			if (!isFile)
 			{
@@ -1484,11 +1399,12 @@ public static class DirectoryParser
 			return match.Success;
 		};
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser2 =
-		async (webDirectory, baseUrl, line) =>
+	[GeneratedRegex(@"<a.*<\/a>\s*(?<DateTime>\d+-\w+-\d+\s\d+:\d{0,2}|-)\s*(?<FileSize>\S+\s?\S*)?\s*\S*")]
+	private static partial Regex RegexRegexParser2();
+
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser2 = async (webDirectory, baseUrl, line) =>
 		{
-			Match match = Regex.Match(line,
-				@"<a.*<\/a>\s*(?<DateTime>\d+-\w+-\d+\s\d+:\d{0,2}|-)\s*(?<FileSize>\S+\s?\S*)?\s*\S*");
+		Match match = RegexRegexParser2().Match(line);
 
 			if (!match.Success)
 			{
@@ -1536,11 +1452,12 @@ public static class DirectoryParser
 			return match.Success;
 		};
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser3 =
-		async (webDirectory, baseUrl, line) =>
+	[GeneratedRegex(@"(?<Modified>\d+[\.-](?:[a-zA-Z]*|\d+)[\.-]\d+(?:\s*\d*:\d*(?::\d*)?)?)(?:<img.*>\s*)?\S*\s*(?<FileSize>\S+)\s*?<[aA].*<\/[aA]>")]
+	private static partial Regex RegexRegexParser3();
+
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser3 = async (webDirectory, baseUrl, line) =>
 		{
-			Match match = Regex.Match(line,
-				@"(?<Modified>\d+[\.-](?:[a-zA-Z]*|\d+)[\.-]\d+(?:\s*\d*:\d*(?::\d*)?)?)(?:<img.*>\s*)?\S*\s*(?<FileSize>\S+)\s*?<[aA].*<\/[aA]>");
+		Match match = RegexRegexParser3().Match(line);
 
 			if (!match.Success)
 			{
@@ -1566,8 +1483,7 @@ public static class DirectoryParser
 
 			Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
-			bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;" &&
-			              match.Groups["FileSize"].Value.Trim() != "DIR";
+		bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;" && match.Groups["FileSize"].Value.Trim() != "DIR";
 
 			if (!isFile)
 			{
@@ -1600,11 +1516,12 @@ public static class DirectoryParser
 			return match.Success;
 		};
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser4 =
-		async (webDirectory, baseUrl, line) =>
+	[GeneratedRegex(@"\s*(?<Modified>[A-z]*,\s*[A-z]*\s*\d*, \d*\s*\d*:\d*\s*[APM]*)\s+(?<FileSize>\S*)\s+<a.*<\/a>")]
+	private static partial Regex RegexRegexParser4();
+
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser4 = async (webDirectory, baseUrl, line) =>
 		{
-			Match match = Regex.Match(line,
-				@"\s*(?<Modified>[A-z]*,\s*[A-z]*\s*\d*, \d*\s*\d*:\d*\s*[APM]*)\s+(?<FileSize>\S*)\s+<a.*<\/a>");
+		Match match = RegexRegexParser4().Match(line);
 
 			if (!match.Success)
 			{
@@ -1663,11 +1580,12 @@ public static class DirectoryParser
 			return match.Success;
 		};
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser5 =
-		async (webDirectory, baseUrl, line) =>
+	[GeneratedRegex(@"\s*(?<Modified>\d*-\d*-\d*\s*[오전후]*\s*\d*:\d*)\s*(?<FileSize>\S*)\s+<[aA].*<\/[aA]>")]
+	private static partial Regex RegexRegexParser5();
+
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser5 = async (webDirectory, baseUrl, line) =>
 		{
-			Match match = Regex.Match(line,
-				@"\s*(?<Modified>\d*-\d*-\d*\s*[오전후]*\s*\d*:\d*)\s*(?<FileSize>\S*)\s+<[aA].*<\/[aA]>");
+		Match match = RegexRegexParser5().Match(line);
 
 			if (!match.Success)
 			{
@@ -1726,11 +1644,12 @@ public static class DirectoryParser
 			return match.Success;
 		};
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser6 =
-		async (webDirectory, baseUrl, line) =>
+	[GeneratedRegex(@"(?<Modified>\d+\/\d+\/\d+(\s*\d+:\d+\s+[APM]+)?)\s+(?<FileSize>\S*)\s*<a.*<\/a>")]
+	private static partial Regex RegexRegexParser6();
+
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser6 = async (webDirectory, baseUrl, line) =>
 		{
-			Match match = Regex.Match(line,
-				@"(?<Modified>\d+\/\d+\/\d+(\s*\d+:\d+\s+[APM]+)?)\s+(?<FileSize>\S*)\s*<a.*<\/a>");
+		Match match = RegexRegexParser6().Match(line);
 
 			if (!match.Success)
 			{
@@ -1789,11 +1708,12 @@ public static class DirectoryParser
 			return match.Success;
 		};
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser7 =
-		async (webDirectory, baseUrl, line) =>
+	[GeneratedRegex(@"(?i)(?<FileMode>[d-]r[-w][x-])\s*\d*\s*(?<FileSize>-?\d*)\s*(\S{3}\s*\d*\s*(?:\d*:\d*(:\d*)?|\d*\.?))\s*(<a.*<\/a>\/?)", RegexOptions.None, "en-NL")]
+	private static partial Regex RegexRegexParser7();
+
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser7 = async (webDirectory, baseUrl, line) =>
 		{
-			Match match = Regex.Match(line,
-				@"(?i)(?<FileMode>[d-]r[-w][x-])\s*\d*\s*(?<FileSize>-?\d*)\s*(\S{3}\s*\d*\s*(?:\d*:\d*(:\d*)?|\d*\.?))\s*(<a.*<\/a>\/?)");
+		Match match = RegexRegexParser7().Match(line);
 
 			if (!match.Success)
 			{
@@ -1834,7 +1754,7 @@ public static class DirectoryParser
 				{
 					string fileSize = match.Groups["FileSize"].Value;
 
-					if (fileSize.StartsWith("-"))
+				if (fileSize.StartsWith('-'))
 					{
 						// If filesize is negative, it will be 4GB minus the amount of bytes (without the - sign),
 						// but this will only work for when it is between 2 and 4 GB, so skip it
@@ -1857,11 +1777,12 @@ public static class DirectoryParser
 			return match.Success;
 		};
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser8 =
-		async (webDirectory, baseUrl, line) =>
+	[GeneratedRegex(@"^\s*(?<Link><a.*<\/a>)\s+(?:(?<Day>\d+)(?<Month>\D+)(?<Year>\d+))(?:\s+(?<Hour>\d+):(?<Minute>\d+))(?:\s+)?(?<FileSize>\S+)?")]
+	private static partial Regex RegexRegexParser8();
+
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser8 = async (webDirectory, baseUrl, line) =>
 		{
-			Match match = Regex.Match(line,
-				@"^\s*(?<Link><a.*<\/a>)\s+(?:(?<Day>\d+)(?<Month>\D+)(?<Year>\d+))(?:\s+(?<Hour>\d+):(?<Minute>\d+))(?:\s+)?(?<FileSize>\S+)?");
+		Match match = RegexRegexParser8().Match(line);
 
 			if (!match.Success)
 			{
@@ -1927,10 +1848,12 @@ public static class DirectoryParser
 			return match.Success;
 		};
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser9 =
-		async (webDirectory, baseUrl, line) =>
+	[GeneratedRegex(@"^\s*(?<Link><a.*<\/a>)\s*(?<IsDirectory>\/?)(?<FileSize>\S+)?")]
+	private static partial Regex RegexRegexParser9();
+
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser9 = async (webDirectory, baseUrl, line) =>
 		{
-			Match match = Regex.Match(line, @"^\s*(?<Link><a.*<\/a>)\s*(?<IsDirectory>\/?)(?<FileSize>\S+)?");
+		Match match = RegexRegexParser9().Match(line);
 
 			if (!match.Success ||
 			    (match.Groups["IsDirectory"].Success &&
@@ -2002,11 +1925,12 @@ public static class DirectoryParser
 			return match.Success;
 		};
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser10 =
-		async (webDirectory, baseUrl, line) =>
+	[GeneratedRegex(@"(?<Dir>[\-ld])(?<Permissions>(?:[\-r][\-w][\-xs]){1,3})\s+(?<Owner>\w+)\s+(?<Group>\w+)\s+(?<Month>\S{3})\s+(?<Day>\d+)\s+(?<Year>\d+)\s+(?<FileSize>\d+\s+?\w+)?\s+(?:[\w&;]+\s+)?(?<Link><a.*<\/a>\/?)?")]
+	private static partial Regex RegexRegexParser10();
+
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser10 = async (webDirectory, baseUrl, line) =>
 		{
-			Match match = Regex.Match(line,
-				@"(?<Dir>[\-ld])(?<Permissions>(?:[\-r][\-w][\-xs]){1,3})\s+(?<Owner>\w+)\s+(?<Group>\w+)\s+(?<Month>\S{3})\s+(?<Day>\d+)\s+(?<Year>\d+)\s+(?<FileSize>\d+\s+?\w+)?\s+(?:[\w&;]+\s+)?(?<Link><a.*<\/a>\/?)?");
+		Match match = RegexRegexParser10().Match(line);
 
 			if (!match.Success)
 			{
@@ -2064,8 +1988,7 @@ public static class DirectoryParser
 			return match.Success;
 		};
 
-	private static async Task<WebDirectory> ParsePreDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory,
-		IHtmlCollection<IElement> pres, bool checkParents)
+	private static async Task<WebDirectory> ParsePreDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> pres, bool checkParents)
 	{
 		List<Func<WebDirectory, string, string, Task<bool>>> regexFuncs =
 		[
@@ -2107,8 +2030,7 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static WebDirectory ParseMaterialDesignListItemsDirectoryListing(string baseUrl,
-		WebDirectory parsedWebDirectory, IHtmlCollection<IElement> listItems, bool checkParents)
+	private static WebDirectory ParseMaterialDesignListItemsDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> listItems, bool checkParents)
 	{
 		int nameIndex = -1;
 		int sizeIndex = -1;
@@ -2203,8 +2125,7 @@ public static class DirectoryParser
 		//  <div class="mdui-col-sm-2 mdui-text-right">大小</div>
 		//</li>
 
-		foreach (IElement listItem in listItems.Where(li =>
-			         li.ClassList.Contains("mdui-list-item") && !li.ClassList.Contains("th")))
+		foreach (IElement listItem in listItems.Where(li => li.ClassList.Contains("mdui-list-item") && !li.ClassList.Contains("th")))
 		{
 			IElement italicItem = listItem.QuerySelector("i");
 
@@ -2253,8 +2174,7 @@ public static class DirectoryParser
 
 			if (listItem.Attributes["data-sort-date"] != null)
 			{
-				modified = Library.UnixTimestampToDateTime(long.Parse(listItem.Attributes["data-sort-date"].Value))
-					.ToString();
+				modified = Library.UnixTimestampToDateTime(long.Parse(listItem.Attributes["data-sort-date"].Value)).ToString();
 			}
 
 			string fileSize = link.QuerySelector($"div:nth-child({sizeIndex + 1})")?.TextContent.Trim();
@@ -2335,9 +2255,7 @@ public static class DirectoryParser
 					List<IElement> divs = link.QuerySelectorAll("div > div").ToList();
 					// Remove file info 'column'
 					divs.RemoveAt(tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileName) + 1);
-					string fileSize =
-						link.QuerySelectorAll("div > div").Skip(2).ToList()[
-							tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileSize)].TextContent;
+					string fileSize = link.QuerySelectorAll("div > div").Skip(2).ToList()[tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileSize)].TextContent;
 
 					parsedWebDirectory.Files.Add(new WebFile
 					{
@@ -2358,12 +2276,14 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static WebDirectory ParseListItemsDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory,
-		IHtmlCollection<IElement> listItems, bool checkParents)
+	[GeneratedRegex(@"Size: (?<Size>\d+(\.\d+)? \S+)")]
+	private static partial Regex RegexParseListItemsDirectoryListingSize();
+
+	private static WebDirectory ParseListItemsDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> listItems, bool checkParents)
 	{
 		bool firstLink = true;
 
-		Regex regex = new(@"Size: (?<Size>\d+(\.\d+)? \S+)");
+		Regex regex = RegexParseListItemsDirectoryListingSize();
 
 		foreach (IElement listItem in listItems)
 		{
@@ -2388,8 +2308,7 @@ public static class DirectoryParser
 
 			if (regexMatch.Success)
 			{
-				ProcessLink(baseUrl, parsedWebDirectory, link, "ParseListItemsDirectoryListing",
-					regexMatch.Groups["Size"].Value);
+				ProcessLink(baseUrl, parsedWebDirectory, link, "ParseListItemsDirectoryListing", regexMatch.Groups["Size"].Value);
 			}
 			else
 			{
@@ -2402,8 +2321,7 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static WebDirectory ParseLinksDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory,
-		IHtmlCollection<IElement> links, bool checkParents)
+	private static WebDirectory ParseLinksDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> links, bool checkParents)
 	{
 		foreach (IElement link in links)
 		{
@@ -2415,8 +2333,7 @@ public static class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static void ProcessLink(string baseUrl, WebDirectory parsedWebDirectory, IElement link, string parser,
-		string sizeHint = null)
+	private static void ProcessLink(string baseUrl, WebDirectory parsedWebDirectory, IElement link, string parser, string sizeHint = null)
 	{
 		if (!link.HasAttribute("href"))
 		{
@@ -2449,8 +2366,7 @@ public static class DirectoryParser
 
 			parsedWebDirectory.ParsedSuccessfully = true;
 
-			bool directoryListAsp = Path.GetFileName(fullUrl) == "DirectoryList.asp" ||
-			                        fullUrl.Contains("DirectoryList.asp");
+			bool directoryListAsp = Path.GetFileName(fullUrl) == "DirectoryList.asp" || fullUrl.Contains("DirectoryList.asp");
 			bool dirParam = urlEncodingParser["dir"] != null || urlEncodingParser["path"] != null;
 
 			if (!string.IsNullOrWhiteSpace(Path.GetExtension(fullUrl)) && !directoryListAsp && !dirParam)
@@ -2461,8 +2377,7 @@ public static class DirectoryParser
 
 				if (link.ParentElement?.NodeName != "BODY")
 				{
-					fileSize = FileSizeHelper.ParseFileSize(link.ParentElement?.QuerySelector(".fileSize")
-						?.TextContent);
+					fileSize = FileSizeHelper.ParseFileSize(link.ParentElement?.QuerySelector(".fileSize")?.TextContent);
 				}
 
 				if (sizeHint != null)
@@ -2498,12 +2413,8 @@ public static class DirectoryParser
 						Parser = parser,
 						Url = fullUrl,
 						Name = urlEncodingParser["dir"] != null
-							? WebUtility
-								.UrlDecode(new Uri(parsedWebDirectory.Uri, urlEncodingParser["dir"]).Segments.Last())
-								.TrimEnd(new char[] { '/' })
-							: WebUtility
-								.UrlDecode(new Uri(parsedWebDirectory.Uri, urlEncodingParser["path"]).Segments.Last())
-								.TrimEnd(new char[] { '/' })
+							? WebUtility.UrlDecode(new Uri(parsedWebDirectory.Uri, urlEncodingParser["dir"]).Segments.Last()).TrimEnd(trimChars)
+							: WebUtility.UrlDecode(new Uri(parsedWebDirectory.Uri, urlEncodingParser["path"]).Segments.Last()).TrimEnd(trimChars)
 					});
 				}
 				else if (!directoryListAsp)
@@ -2512,7 +2423,7 @@ public static class DirectoryParser
 					{
 						Parser = parser,
 						Url = fullUrl,
-						Name = WebUtility.UrlDecode(uri.Segments.Last()).Trim().TrimEnd(new char[] { '/' })
+						Name = WebUtility.UrlDecode(uri.Segments.Last()).Trim().TrimEnd(trimChars)
 					});
 				}
 				else
@@ -2521,7 +2432,7 @@ public static class DirectoryParser
 					{
 						Parser = parser,
 						Url = fullUrl,
-						Name = link.TextContent.Trim().TrimEnd(new char[] { '/' })
+						Name = link.TextContent.Trim().TrimEnd(trimChars)
 					});
 				}
 			}
@@ -2660,24 +2571,21 @@ public static class DirectoryParser
 		{
 			Uri uri = new(d.Url);
 
-			return !goodSchemes.Contains(uri.Scheme) || uri.Host != baseUri.Host || skipHosts.Contains(uri.Host) ||
-			       !SameHostAndDirectoryDirectory(baseUri, uri);
+			return !goodSchemes.Contains(uri.Scheme) || uri.Host != baseUri.Host || skipHosts.Contains(uri.Host) || !SameHostAndDirectoryDirectory(baseUri, uri);
 		}).ToList().ForEach(wd => webDirectory.Subdirectories.Remove(wd));
 
 		webDirectory.Files.Where(f =>
 		{
 			Uri uri = new(f.Url);
 
-			return !goodSchemes.Contains(uri.Scheme) || uri.Host != baseUri.Host || skipHosts.Contains(uri.Host) ||
-			       !SameHostAndDirectoryFile(uri, baseUri);
+			return !goodSchemes.Contains(uri.Scheme) || uri.Host != baseUri.Host || skipHosts.Contains(uri.Host) || !SameHostAndDirectoryFile(uri, baseUri);
 		}).ToList().ForEach(f => webDirectory.Files.Remove(f));
 	}
 
 	private static void CleanFragments(WebDirectory webDirectory)
 	{
 		// Directories
-		List<WebDirectory> directoriesWithFragments =
-			webDirectory.Subdirectories.Where(wd => wd.Url.Contains('#')).ToList();
+		List<WebDirectory> directoriesWithFragments = webDirectory.Subdirectories.Where(wd => wd.Url.Contains('#')).ToList();
 
 		if (directoriesWithFragments.Count != 0)
 		{
@@ -2761,9 +2669,7 @@ public static class DirectoryParser
 			{
 				if (CheckDirectoryTheSame(webDirectory, parentWebDirectory))
 				{
-					Program.Logger.Error(
-						"Possible virtual directory or symlink detected (level {level})! SKIPPING! Url: {url}", level,
-						webDirectory.Url);
+					Program.Logger.Error("Possible virtual directory or symlink detected (level {level})! SKIPPING! Url: {url}", level, webDirectory.Url);
 
 					webDirectory.Subdirectories = [];
 					webDirectory.Files = [];
@@ -2845,8 +2751,7 @@ public static class DirectoryParser
 			return false;
 		}
 
-		return ReplaceCommonDefaultFilenames(checkUri.LocalPath)
-			.StartsWith(ReplaceCommonDefaultFilenames(baseUri.LocalPath));
+		return ReplaceCommonDefaultFilenames(checkUri.LocalPath).StartsWith(ReplaceCommonDefaultFilenames(baseUri.LocalPath));
 	}
 
 	/// <summary>
@@ -2963,14 +2868,12 @@ public static class DirectoryParser
 						fileNameColumnIndex.Add(tableColumn.Index());
 					}
 
-					if (DateTime.TryParse(tableColumn.TextContent, out DateTime parsedDateTime) &&
-					    parsedDateTime != DateTime.MinValue)
+					if (DateTime.TryParse(tableColumn.TextContent, out DateTime parsedDateTime) && parsedDateTime != DateTime.MinValue)
 					{
 						dateColumnIndex.Add(tableColumn.Index());
 					}
 
-					if (FileSizeHelper.ParseFileSize(tableColumn.TextContent, onlyChecking: true) >
-					    Constants.NoFileSize)
+					if (FileSizeHelper.ParseFileSize(tableColumn.TextContent, onlyChecking: true) > Constants.NoFileSize)
 					{
 						fileSizeColumnIndex.Add(tableColumn.Index());
 					}
@@ -3164,7 +3067,10 @@ public static class DirectoryParser
 			!link.TextContent.Equals("[to parent directory]", StringComparison.InvariantCultureIgnoreCase) &&
 			link.TextContent.Trim() != "Name" &&
 			linkHref?.Contains("&expand") == false &&
-			(!new Regex(@"\?[NMSD]=?[AD]").IsMatch(linkHref) || linkHref.StartsWith("DirectoryList.asp")) &&
+			(!RegexNMSDAD().IsMatch(linkHref) || linkHref.StartsWith("DirectoryList.asp")) &&
 			(Path.GetFileName(linkHref) != "DirectoryList.asp" || !string.IsNullOrWhiteSpace(link.TextContent));
 	}
+
+	[GeneratedRegex(@"\?[NMSD]=?[AD]")]
+	private static partial Regex RegexNMSDAD();
 }

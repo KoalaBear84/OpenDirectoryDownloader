@@ -48,7 +48,7 @@ public static class Copyparty
 
 			IHtmlCollection<IElement> entries = table.QuerySelectorAll("tbody tr");
 
-			if (entries.Any())
+			if (entries.Length != 0)
 			{
 				foreach (IElement entry in entries)
 				{

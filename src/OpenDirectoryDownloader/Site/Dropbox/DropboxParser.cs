@@ -45,7 +45,7 @@ public static class DropboxParser
 
 		try
 		{
-			if (!httpClient.DefaultRequestHeaders.UserAgent.Any())
+			if (httpClient.DefaultRequestHeaders.UserAgent.Count == 0)
 			{
 				httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(Constants.UserAgent.Chrome);
 			}
