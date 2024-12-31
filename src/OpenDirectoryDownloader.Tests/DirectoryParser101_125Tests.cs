@@ -570,7 +570,7 @@ public class DirectoryParser101_125Tests : DirectoryParserTests
 		Assert.Equal("daily", webDirectory.Subdirectories[0].Name);
 		Assert.Equal(4, webDirectory.Files.Count);
 		Assert.Equal("Ramadhan last day dua iqbal.pdf", webDirectory.Files[0].FileName);
-		Assert.Equal(Constants.NoFileSize, webDirectory.Files[0].FileSize);
+		Assert.Null(webDirectory.Files[0].FileSize);
 	}
 
 	/// <summary>
@@ -587,7 +587,7 @@ public class DirectoryParser101_125Tests : DirectoryParserTests
 		Assert.Empty(webDirectory.Subdirectories);
 		Assert.Equal(7, webDirectory.Files.Count);
 		Assert.Equal("RamadhanAllahummaHadhaShahr.pdf", webDirectory.Files[0].FileName);
-		Assert.Equal(Constants.NoFileSize, webDirectory.Files[0].FileSize);
+		Assert.Null(webDirectory.Files[0].FileSize);
 	}
 
 	/// <summary>
@@ -605,7 +605,7 @@ public class DirectoryParser101_125Tests : DirectoryParserTests
 		Assert.Equal("acjp", webDirectory.Subdirectories[0].Name);
 		Assert.Equal(4, webDirectory.Files.Count);
 		Assert.Equal("index-nof.html", webDirectory.Files[0].FileName);
-		Assert.Equal(Constants.NoFileSize, webDirectory.Files[0].FileSize);
+		Assert.Null(webDirectory.Files[0].FileSize);
 	}
 
 	/// <summary>
@@ -622,7 +622,7 @@ public class DirectoryParser101_125Tests : DirectoryParserTests
 		Assert.Empty(webDirectory.Subdirectories);
 		Assert.Equal(52, webDirectory.Files.Count);
 		Assert.Equal("acjp_hayden01.ram", webDirectory.Files[0].FileName);
-		Assert.Equal(Constants.NoFileSize, webDirectory.Files[0].FileSize);
+		Assert.Null(webDirectory.Files[0].FileSize);
 	}
 
 	/// <summary>
@@ -637,7 +637,7 @@ public class DirectoryParser101_125Tests : DirectoryParserTests
 		Assert.Empty(webDirectory.Subdirectories);
 		Assert.Equal(588, webDirectory.Files.Count);
 		Assert.Equal("101-engr.jpg", webDirectory.Files[0].FileName);
-		Assert.Equal(Constants.NoFileSize, webDirectory.Files[0].FileSize);
+		Assert.Null(webDirectory.Files[0].FileSize);
 	}
 
 	/// <summary>

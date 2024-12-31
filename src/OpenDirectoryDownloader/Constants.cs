@@ -21,7 +21,6 @@ public class Constants
 
 	public const string GoogleDriveIndexType = "GOOGLEDRIVEINDEXTYPE";
 
-	public const long NoFileSize = 0;
 	public const string Root = "ROOT";
 	public const string Ftp_Max_Connections = "MAX_CONNECTIONS";
 	public const int Kilobyte = 1024;

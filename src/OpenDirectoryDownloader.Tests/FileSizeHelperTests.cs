@@ -1,15 +1,15 @@
-﻿using OpenDirectoryDownloader.Helpers;
+using OpenDirectoryDownloader.Helpers;
 using Xunit;
 
 namespace OpenDirectoryDownloader.Tests;
 
 public class FileSizeHelperTests
 {
-	const long KB = 1024;
-	const long MB = 1024 * KB;
-	const long GB = 1024 * MB;
-	const long TB = 1024 * GB;
-	const long PB = 1024 * TB;
+	private const long KB = 1024;
+	private const long MB = 1024 * KB;
+	private const long GB = 1024 * MB;
+	private const long TB = 1024 * GB;
+	private const long PB = 1024 * TB;
 
 	/// <summary>
 	/// Test 1
@@ -52,11 +52,11 @@ public class FileSizeHelperTests
 	public void Test02()
 	{
 		Assert.Equal(5 * MB, FileSizeHelper.ParseFileSize("⇩5MB"));
-		Assert.Equal(1.5 * KB, FileSizeHelper.ParseFileSize("1.5 kB"));
+		Assert.Equal(1.5 * KB, FileSizeHelper.ParseFileSize("1.5 kB") ?? 0);
 		Assert.Equal(15 * KB, FileSizeHelper.ParseFileSize("1,5 kB"));
 		Assert.Equal(3, FileSizeHelper.ParseFileSize("3 OcTeTs"));
 		Assert.Equal(8, FileSizeHelper.ParseFileSize("8 OcTeT"));
-		Assert.Equal(Math.Round(0.92 * KB), FileSizeHelper.ParseFileSize("0.92 Ko"));
+		Assert.Equal(Math.Round(0.92 * KB), FileSizeHelper.ParseFileSize("0.92 Ko") ?? 0);
 		//            Assert.Equal(-1, FileSizeHelper.ParseFileSize("-1"));
 	}
 }

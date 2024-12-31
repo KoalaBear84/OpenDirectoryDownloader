@@ -1,4 +1,4 @@
-﻿using OpenDirectoryDownloader.Helpers;
+using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Shared.Models;
 using System.Reflection;
 using System.Text;
@@ -15,8 +15,7 @@ public static class Statistics
 
 		extensionCount = webDirectory.Files
 			.GroupBy(f => Path.GetExtension(f.FileName).ToLowerInvariant(), f => f)
-			.ToDictionary(f => f.Key.ToLowerInvariant(),
-				f => new ExtensionStats { Count = f.Count(), FileSize = f.ToList().Sum(f2 => f2.FileSize) });
+			.ToDictionary(f => f.Key.ToLowerInvariant(), f => new ExtensionStats { Count = f.Count(), FileSize = f.ToList().Sum(f2 => f2.FileSize ?? 0) });
 
 		foreach (WebDirectory subdirectory in webDirectory.Subdirectories)
 		{

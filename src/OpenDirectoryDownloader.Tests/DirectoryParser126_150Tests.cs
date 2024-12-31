@@ -1,4 +1,4 @@
-﻿using OpenDirectoryDownloader.Shared.Models;
+using OpenDirectoryDownloader.Shared.Models;
 using Xunit;
 
 namespace OpenDirectoryDownloader.Tests;
@@ -79,7 +79,7 @@ public class DirectoryParser126_150Tests : DirectoryParserTests
 		Assert.Equal(".well-known", webDirectory.Subdirectories[0].Name);
 		Assert.Single(webDirectory.Files);
 		Assert.Equal("robots.txt", webDirectory.Files[0].FileName);
-		Assert.Equal(Constants.NoFileSize, webDirectory.Files[0].FileSize);
+		Assert.Null(webDirectory.Files[0].FileSize);
 	}
 
 	/// <summary>
@@ -95,7 +95,7 @@ public class DirectoryParser126_150Tests : DirectoryParserTests
 		Assert.Empty(webDirectory.Subdirectories);
 		Assert.Equal(28, webDirectory.Files.Count);
 		Assert.Equal("101+ Crystal Radio Circuits.pdf", webDirectory.Files[0].FileName);
-		Assert.Equal(Constants.NoFileSize, webDirectory.Files[0].FileSize);
+		Assert.Null(webDirectory.Files[0].FileSize);
 	}
 
 	/// <summary>

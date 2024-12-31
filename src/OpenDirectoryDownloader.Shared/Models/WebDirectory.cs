@@ -35,7 +35,7 @@ public class WebDirectory
 	public bool Error { get; set; }
 
 	[JsonIgnore]
-	public long TotalFileSize => Subdirectories.Sum(sd => sd.TotalFileSize) + Files.Sum(f => f.FileSize);
+	public long TotalFileSize => Subdirectories.Sum(sd => sd.TotalFileSize) + Files.Sum(f => f.FileSize ?? 0);
 
 	[JsonIgnore]
 	public int TotalFiles => Subdirectories.Sum(sd => sd.TotalFiles) + Files.Count;

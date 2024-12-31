@@ -469,7 +469,7 @@ public partial class OpenDirectoryIndexer
 
 				Session.Finished = DateTimeOffset.UtcNow;
 				Session.TotalFiles = Session.Root.TotalFiles;
-				Session.TotalFileSizeEstimated = Session.Root.TotalFileSize;
+				Session.TotalFileSizeEstimated = Session.Root.TotalFileSize ?? 0;
 
 				IEnumerable<string> distinctUrls = Session.Root.AllFileUrls.Distinct().OrderBy(x => x, NaturalSortStringComparer.InvariantCulture);
 
@@ -1428,7 +1428,7 @@ public partial class OpenDirectoryIndexer
 		{
 			Url = webDirectory.Url,
 			FileName = webDirectory.Name,
-			FileSize = httpResponseMessage.Content.Headers.ContentLength ?? Constants.NoFileSize
+			FileSize = httpResponseMessage.Content.Headers.ContentLength
 		});
 	}
 
@@ -1597,7 +1597,7 @@ public partial class OpenDirectoryIndexer
 
 		if (Session.Root.Uri.Scheme != Constants.UriScheme.Ftp && Session.Root.Uri.Scheme != Constants.UriScheme.Ftps)
 		{
-			foreach (WebFile webFile in webDirectory.Files.Where(f => f.FileSize == Constants.NoFileSize && !OpenDirectoryIndexerSettings.CommandLineOptions.FastScan || OpenDirectoryIndexerSettings.CommandLineOptions.ExactFileSizes))
+			foreach (WebFile webFile in webDirectory.Files.Where(f => f.FileSize is null && !OpenDirectoryIndexerSettings.CommandLineOptions.FastScan || OpenDirectoryIndexerSettings.CommandLineOptions.ExactFileSizes))
 			{
 				WebFilesFileSizeQueue.Enqueue(webFile);
 			}
