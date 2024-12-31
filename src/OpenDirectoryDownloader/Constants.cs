@@ -13,6 +13,7 @@ public class Constants
 	public const string PixeldrainDomain = "pixeldrain.com";
 
 	public const string Parameters_GdIndex_RootId = "GDINDEX_ROOTID";
+	public const string Parameters_HttpHeader_Server = "HttpHeader_Server";
 	public const string Parameters_GoFileIOAccountToken = "GOFILE_ACCOUNTTOKEN";
 
 	public const string DateTimeFormat = "yyyy-MM-dd HH:mm:ss";

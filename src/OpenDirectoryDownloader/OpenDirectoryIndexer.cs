@@ -974,7 +974,7 @@ public partial class OpenDirectoryIndexer
 
 		if (webDirectory.Parser == Site.HFS.HfsParser.Parser)
 		{
-			WebDirectory parsedWebDirectory = await Site.HFS.HfsParser.ParseIndex(HttpClient, webDirectory, null);
+			WebDirectory parsedWebDirectory = await Site.HFS.HfsParser.ScanAsync(HttpClient, webDirectory, null);
 			AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
 			return;
 		}

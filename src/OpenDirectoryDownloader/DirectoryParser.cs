@@ -91,9 +91,10 @@ public static partial class DirectoryParser
 				return await PixeldrainParser.ParseIndex(httpClient, webDirectory, html);
 			}
 
-			if (httpResponseMessage?.Headers.Server?.ToString()?.ToLowerInvariant().StartsWith("hfs") == true)
+			if (httpResponseMessage?.Headers.Server?.ToString()?.StartsWith("hfs", StringComparison.InvariantCultureIgnoreCase) == true)
 			{
-				return await HfsParser.ParseIndex(httpClient, webDirectory, html);
+				string httpHeaderServer = httpResponseMessage?.Headers.Server?.ToString();
+				return await HfsParser.ParseIndex(httpClient, webDirectory, html, httpHeaderServer);
 			}
 
 			IHtmlDocument htmlDocument = await HtmlParser.ParseDocumentAsync(html);

@@ -7,10 +7,15 @@ public static class HfsParser
 {
 	public const string Parser = "HFS";
 
-	public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory, string html)
+	public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory, string html, string httpHeaderServer)
 	{
 		try
 		{
+			if (!string.IsNullOrWhiteSpace(httpHeaderServer))
+			{
+				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_HttpHeader_Server] = httpHeaderServer;
+			}
+
 			webDirectory = await ScanAsync(httpClient, webDirectory, html);
 		}
 		catch (Exception ex)
@@ -31,14 +36,27 @@ public static class HfsParser
 		return webDirectory;
 	}
 
-	private static async Task<WebDirectory> ScanAsync(HttpClient httpClient, WebDirectory webDirectory, string html)
+	public static async Task<WebDirectory> ScanAsync(HttpClient httpClient, WebDirectory webDirectory, string html)
 	{
 		Program.Logger.Debug("Retrieving listings for {url}", webDirectory.Url);
 		webDirectory.Parser = Parser;
 
 		try
 		{
-			HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"{webDirectory.Uri.Scheme}://{webDirectory.Uri.Host}{(webDirectory.Uri.IsDefaultPort ? string.Empty : $":{webDirectory.Uri.Port}")}/~/api/file_list?csrf=&path={WebUtility.UrlEncode(webDirectory.Uri.AbsolutePath)}&omit=c");
+			bool useGetFileList = true;
+
+			if (OpenDirectoryIndexer.Session.Parameters.TryGetValue(Constants.Parameters_HttpHeader_Server, out string httpHeaderServerSession))
+			{
+				useGetFileList =
+					httpHeaderServerSession.StartsWith("HFS 2023", StringComparison.InvariantCultureIgnoreCase) ||
+					httpHeaderServerSession.StartsWith("HFS 0.", StringComparison.InvariantCultureIgnoreCase);
+			}
+
+			string url = useGetFileList ?
+				$"{webDirectory.Uri.Scheme}://{webDirectory.Uri.Host}{(webDirectory.Uri.IsDefaultPort ? string.Empty : $":{webDirectory.Uri.Port}")}/~/api/get_file_list?csrf=&uri={WebUtility.UrlEncode(webDirectory.Uri.AbsolutePath)}&omit=c" :
+				$"{webDirectory.Uri.Scheme}://{webDirectory.Uri.Host}{(webDirectory.Uri.IsDefaultPort ? string.Empty : $":{webDirectory.Uri.Port}")}/~/api/file_list?csrf=&path={WebUtility.UrlEncode(webDirectory.Uri.AbsolutePath)}&omit=c";
+
+			HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(url);
 			string content = await httpResponseMessage.Content.ReadAsStringAsync();
 
 			HfsListing hfsListing = HfsListing.FromJson(content);
@@ -66,7 +84,7 @@ public static class HfsParser
 				{
 					Url = new Uri(baseUri, hfsItem.N).ToString(),
 					FileName = hfsItem.N,
-					FileSize = hfsItem.S ?? -1
+					FileSize = hfsItem.S
 				});
 			}
 		}
