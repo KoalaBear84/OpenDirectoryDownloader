@@ -19,6 +19,7 @@ using OpenDirectoryDownloader.Site.GDIndex.Go2Index;
 using OpenDirectoryDownloader.Site.GDIndex.GoIndex;
 using OpenDirectoryDownloader.Site.GitHub;
 using OpenDirectoryDownloader.Site.GoFileIO;
+using OpenDirectoryDownloader.Site.HFS;
 using OpenDirectoryDownloader.Site.Mediafire;
 using OpenDirectoryDownloader.Site.Pixeldrain;
 using PuppeteerSharp;
@@ -88,6 +89,11 @@ public static partial class DirectoryParser
 			if (webDirectory.Uri.Host == Constants.PixeldrainDomain)
 			{
 				return await PixeldrainParser.ParseIndex(httpClient, webDirectory, html);
+			}
+
+			if (httpResponseMessage?.Headers.Server?.ToString()?.ToLowerInvariant().StartsWith("hfs") == true)
+			{
+				return await HfsParser.ParseIndex(httpClient, webDirectory, html);
 			}
 
 			IHtmlDocument htmlDocument = await HtmlParser.ParseDocumentAsync(html);
@@ -212,7 +218,7 @@ public static partial class DirectoryParser
 
 			if (htmlDocument.Title.StartsWith("HFS /"))
 			{
-				// HFS up to 2.3x
+				// HFS (legacy) up to 2.3x
 				// document.querySelectorAll('#files tr')
 				IHtmlCollection<IElement> hfsTable = htmlDocument.QuerySelectorAll("table#files");
 
@@ -226,7 +232,7 @@ public static partial class DirectoryParser
 					return parsedWebDirectory;
 				}
 
-				// HFS 2.4+
+				// HFS (legacy) 2.4+
 				// This is already handled by normal parsers
 			}
 
@@ -1344,107 +1350,498 @@ public static partial class DirectoryParser
 	private static partial Regex RegexRegexParser1();
 
 	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser1 = async (webDirectory, baseUrl, line) =>
-		{
+	{
 		Match match = RegexRegexParser1().Match(line);
 
-			if (!match.Success)
-			{
-				return match.Success;
-			}
+		if (!match.Success)
+		{
+			return match.Success;
+		}
 
-			IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
 
-			if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
-			    parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
-			    parsedLine.QuerySelector("a") == null ||
-			    line.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase))
-			{
-				return match.Success;
-			}
+		if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
+			parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
+			parsedLine.QuerySelector("a") == null ||
+			line.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase))
+		{
+			return match.Success;
+		}
 
-			IElement link = parsedLine.QuerySelector("a");
+		IElement link = parsedLine.QuerySelector("a");
 
-			if (!IsValidLink(link))
-			{
-				return match.Success;
-			}
+		if (!IsValidLink(link))
+		{
+			return match.Success;
+		}
 
-			Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
 
 		bool isFile = IsFileSize(match.Groups["FileSize"].Value.Trim()) && parsedLine.QuerySelector("img[alt=\"[DIR]\"]") == null;
 
-			if (!isFile)
+		if (!isFile)
+		{
+			webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
 			{
-				webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+				Parser = "RegexParser1",
+				Url = fullUrl,
+				Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last())),
+				Description = match.Groups["Description"].Value.Trim()
+			});
+		}
+		else
+		{
+			try
+			{
+				webDirectory.Files.Add(new WebFile
 				{
-					Parser = "RegexParser1",
 					Url = fullUrl,
-					Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last())),
+					FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+					FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
 					Description = match.Groups["Description"].Value.Trim()
 				});
 			}
-			else
+			catch (Exception ex)
 			{
-				try
-				{
-					webDirectory.Files.Add(new WebFile
-					{
-						Url = fullUrl,
-						FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
-						FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
-						Description = match.Groups["Description"].Value.Trim()
-					});
-				}
-				catch (Exception ex)
-				{
-					Program.Logger.Error(ex, "Error parsing with RegexParser1");
-				}
+				Program.Logger.Error(ex, "Error parsing with RegexParser1");
 			}
+		}
 
-			return match.Success;
-		};
+		return match.Success;
+	};
 
 	[GeneratedRegex(@"<a.*<\/a>\s*(?<DateTime>\d+-\w+-\d+\s\d+:\d{0,2}|-)\s*(?<FileSize>\S+\s?\S*)?\s*\S*")]
 	private static partial Regex RegexRegexParser2();
 
 	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser2 = async (webDirectory, baseUrl, line) =>
-		{
+	{
 		Match match = RegexRegexParser2().Match(line);
 
-			if (!match.Success)
+		if (!match.Success)
+		{
+			return match.Success;
+		}
+
+		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+		IElement link = parsedLine.QuerySelector("a");
+
+		if (!IsValidLink(link))
+		{
+			return match.Success;
+		}
+
+		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
+		string fileSizeGroup = match.Groups["FileSize"].Value.Trim();
+		bool isFile = long.TryParse(fileSizeGroup, out long fileSize);
+
+		if (!isFile && IsFileSize(fileSizeGroup))
+		{
+			fileSize = FileSizeHelper.ParseFileSize(fileSizeGroup);
+			isFile = fileSize > 0;
+		}
+
+		if (!isFile)
+		{
+			webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
 			{
-				return match.Success;
-			}
-
-			IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
-			IElement link = parsedLine.QuerySelector("a");
-
-			if (!IsValidLink(link))
+				Parser = "RegexParser2",
+				Url = fullUrl,
+				Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last()))
+			});
+		}
+		else
+		{
+			webDirectory.Files.Add(new WebFile
 			{
-				return match.Success;
-			}
+				Url = fullUrl,
+				FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+				FileSize = fileSize
+			});
+		}
 
-			Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+		return match.Success;
+	};
 
-			string fileSizeGroup = match.Groups["FileSize"].Value.Trim();
-			bool isFile = long.TryParse(fileSizeGroup, out long fileSize);
+	[GeneratedRegex(@"(?<Modified>\d+[\.-](?:[a-zA-Z]*|\d+)[\.-]\d+(?:\s*\d*:\d*(?::\d*)?)?)(?:<img.*>\s*)?\S*\s*(?<FileSize>\S+)\s*?<[aA].*<\/[aA]>")]
+	private static partial Regex RegexRegexParser3();
 
-			if (!isFile && IsFileSize(fileSizeGroup))
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser3 = async (webDirectory, baseUrl, line) =>
+	{
+		Match match = RegexRegexParser3().Match(line);
+
+		if (!match.Success)
+		{
+			return match.Success;
+		}
+
+		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+
+		if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
+			parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
+			parsedLine.QuerySelector("a") == null ||
+			line.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase))
+		{
+			return match.Success;
+		}
+
+		IElement link = parsedLine.QuerySelector("a");
+
+		if (!IsValidLink(link))
+		{
+			return match.Success;
+		}
+
+		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
+		bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;" && match.Groups["FileSize"].Value.Trim() != "DIR";
+
+		if (!isFile)
+		{
+			webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
 			{
-				fileSize = FileSizeHelper.ParseFileSize(fileSizeGroup);
-				isFile = fileSize > 0;
-			}
-
-			if (!isFile)
+				Parser = "RegexParser3",
+				Url = fullUrl,
+				Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last())),
+				//Description = match.Groups["Description"].Value.Trim()
+			});
+		}
+		else
+		{
+			try
 			{
-				webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+				webDirectory.Files.Add(new WebFile
 				{
-					Parser = "RegexParser2",
 					Url = fullUrl,
-					Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last()))
+					FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+					FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
+					//Description = match.Groups["Description"].Value.Trim()
 				});
 			}
-			else
+			catch (Exception ex)
+			{
+				Program.Logger.Error(ex, "Error parsing with RegexParser3");
+			}
+		}
+
+		return match.Success;
+	};
+
+	[GeneratedRegex(@"\s*(?<Modified>[A-z]*,\s*[A-z]*\s*\d*, \d*\s*\d*:\d*\s*[APM]*)\s+(?<FileSize>\S*)\s+<a.*<\/a>")]
+	private static partial Regex RegexRegexParser4();
+
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser4 = async (webDirectory, baseUrl, line) =>
+	{
+		Match match = RegexRegexParser4().Match(line);
+
+		if (!match.Success)
+		{
+			return match.Success;
+		}
+
+		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+
+		if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
+			parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
+			parsedLine.QuerySelector("a") == null ||
+			line.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase))
+		{
+			return match.Success;
+		}
+
+		IElement link = parsedLine.QuerySelector("a");
+
+		if (!IsValidLink(link))
+		{
+			return match.Success;
+		}
+
+		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
+		bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;";
+
+		if (!isFile)
+		{
+			webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+			{
+				Parser = "RegexParser4",
+				Url = fullUrl,
+				Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last())),
+				//Description = match.Groups["Description"].Value.Trim()
+			});
+		}
+		else
+		{
+			try
+			{
+				webDirectory.Files.Add(new WebFile
+				{
+					Url = fullUrl,
+					FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+					FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
+					//Description = match.Groups["Description"].Value.Trim()
+				});
+			}
+			catch (Exception ex)
+			{
+				Program.Logger.Error(ex, "Error parsing with RegexParser4");
+			}
+		}
+
+		return match.Success;
+	};
+
+	[GeneratedRegex(@"\s*(?<Modified>\d*-\d*-\d*\s*[오전후]*\s*\d*:\d*)\s*(?<FileSize>\S*)\s+<[aA].*<\/[aA]>")]
+	private static partial Regex RegexRegexParser5();
+
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser5 = async (webDirectory, baseUrl, line) =>
+	{
+		Match match = RegexRegexParser5().Match(line);
+
+		if (!match.Success)
+		{
+			return match.Success;
+		}
+
+		bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;";
+
+		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+
+		if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
+			parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
+			parsedLine.QuerySelector("a") == null ||
+			line.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase))
+		{
+			return match.Success;
+		}
+
+		IElement link = parsedLine.QuerySelector("a");
+
+		if (!IsValidLink(link))
+		{
+			return match.Success;
+		}
+
+		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
+		if (!isFile)
+		{
+			webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+			{
+				Parser = "RegexParser5",
+				Url = fullUrl,
+				Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last())),
+				//Description = match.Groups["Description"].Value.Trim()
+			});
+		}
+		else
+		{
+			try
+			{
+				webDirectory.Files.Add(new WebFile
+				{
+					Url = fullUrl,
+					FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+					FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
+					//Description = match.Groups["Description"].Value.Trim()
+				});
+			}
+			catch (Exception ex)
+			{
+				Program.Logger.Error(ex, "Error parsing with RegexParser5");
+			}
+		}
+
+		return match.Success;
+	};
+
+	[GeneratedRegex(@"(?<Modified>\d+\/\d+\/\d+(\s*\d+:\d+\s+[APM]+)?)\s+(?<FileSize>\S*)\s*<a.*<\/a>")]
+	private static partial Regex RegexRegexParser6();
+
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser6 = async (webDirectory, baseUrl, line) =>
+	{
+		Match match = RegexRegexParser6().Match(line);
+
+		if (!match.Success)
+		{
+			return match.Success;
+		}
+
+		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+
+		if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
+			parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
+			parsedLine.QuerySelector("a") == null ||
+			line.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase))
+		{
+			return match.Success;
+		}
+
+		IElement link = parsedLine.QuerySelector("a");
+
+		if (!IsValidLink(link))
+		{
+			return match.Success;
+		}
+
+		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
+		bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;";
+
+		if (!isFile)
+		{
+			webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+			{
+				Parser = "RegexParser6",
+				Url = fullUrl,
+				Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last())),
+				//Description = match.Groups["Description"].Value.Trim()
+			});
+		}
+		else
+		{
+			try
+			{
+				webDirectory.Files.Add(new WebFile
+				{
+					Url = fullUrl,
+					FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+					FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
+					//Description = match.Groups["Description"].Value.Trim()
+				});
+			}
+			catch (Exception ex)
+			{
+				Program.Logger.Error(ex, "Error parsing with RegexParser6");
+			}
+		}
+
+		return match.Success;
+	};
+
+	[GeneratedRegex(@"(?i)(?<FileMode>[d-]r[-w][x-])\s*\d*\s*(?<FileSize>-?\d*)\s*(\S{3}\s*\d*\s*(?:\d*:\d*(:\d*)?|\d*\.?))\s*(<a.*<\/a>\/?)", RegexOptions.None, "en-NL")]
+	private static partial Regex RegexRegexParser7();
+
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser7 = async (webDirectory, baseUrl, line) =>
+	{
+		Match match = RegexRegexParser7().Match(line);
+
+		if (!match.Success)
+		{
+			return match.Success;
+		}
+
+		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+
+		if (parsedLine.QuerySelector("a") == null)
+		{
+			return match.Success;
+		}
+
+		IElement link = parsedLine.QuerySelector("a");
+
+		if (!IsValidLink(link))
+		{
+			return match.Success;
+		}
+
+		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
+		string fileMode = match.Groups["FileMode"].Value.ToLowerInvariant();
+		bool isFile = !fileMode.StartsWith('d') && !fileMode.StartsWith('l');
+
+		if (!isFile)
+		{
+			webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+			{
+				Parser = "RegexParser7",
+				Url = fullUrl,
+				Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last()))
+			});
+		}
+		else
+		{
+			try
+			{
+				string fileSize = match.Groups["FileSize"].Value;
+
+				if (fileSize.StartsWith('-'))
+				{
+					// If filesize is negative, it will be 4GB minus the amount of bytes (without the - sign),
+					// but this will only work for when it is between 2 and 4 GB, so skip it
+					fileSize = string.Empty;
+				}
+
+				webDirectory.Files.Add(new WebFile
+				{
+					Url = fullUrl,
+					FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+					FileSize = FileSizeHelper.ParseFileSize(fileSize)
+				});
+			}
+			catch (Exception ex)
+			{
+				Program.Logger.Error(ex, "Error parsing with RegexParser7");
+			}
+		}
+
+		return match.Success;
+	};
+
+	[GeneratedRegex(@"^\s*(?<Link><a.*<\/a>)\s+(?:(?<Day>\d+)(?<Month>\D+)(?<Year>\d+))(?:\s+(?<Hour>\d+):(?<Minute>\d+))(?:\s+)?(?<FileSize>\S+)?")]
+	private static partial Regex RegexRegexParser8();
+
+	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser8 = async (webDirectory, baseUrl, line) =>
+	{
+		Match match = RegexRegexParser8().Match(line);
+
+		if (!match.Success)
+		{
+			return match.Success;
+		}
+
+		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+
+		if (parsedLine.QuerySelector("a") == null)
+		{
+			return match.Success;
+		}
+
+		IElement link = parsedLine.QuerySelector("a");
+
+		if (!IsValidLink(link))
+		{
+			return match.Success;
+		}
+
+		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
+		string fileSizeString = match.Groups["FileSize"].Value;
+		long fileSize = FileSizeHelper.ParseFileSize(fileSizeString);
+
+		bool isFile = !string.IsNullOrWhiteSpace(fileSizeString) && fileSizeString.Trim() != "-" &&
+			            // This is not perfect.. Specific block sizes
+			            (fileSize is not 32768 or 65536);
+
+		if (!isFile)
+		{
+			string directoryName = Path.GetDirectoryName(WebUtility.UrlDecode(uri.Segments.Last()));
+
+			if (string.IsNullOrWhiteSpace(directoryName))
+			{
+				directoryName = WebUtility.UrlDecode(linkHref);
+			}
+
+			webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+			{
+				Parser = "RegexParser8",
+				Url = fullUrl,
+				Name = directoryName
+			});
+		}
+		else
+		{
+			try
 			{
 				webDirectory.Files.Add(new WebFile
 				{
@@ -1453,545 +1850,154 @@ public static partial class DirectoryParser
 					FileSize = fileSize
 				});
 			}
-
-			return match.Success;
-		};
-
-	[GeneratedRegex(@"(?<Modified>\d+[\.-](?:[a-zA-Z]*|\d+)[\.-]\d+(?:\s*\d*:\d*(?::\d*)?)?)(?:<img.*>\s*)?\S*\s*(?<FileSize>\S+)\s*?<[aA].*<\/[aA]>")]
-	private static partial Regex RegexRegexParser3();
-
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser3 = async (webDirectory, baseUrl, line) =>
-		{
-		Match match = RegexRegexParser3().Match(line);
-
-			if (!match.Success)
+			catch (Exception ex)
 			{
-				return match.Success;
+				Program.Logger.Error(ex, "Error parsing with RegexParser8");
 			}
+		}
 
-			IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
-
-			if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
-			    parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
-			    parsedLine.QuerySelector("a") == null ||
-			    line.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase))
-			{
-				return match.Success;
-			}
-
-			IElement link = parsedLine.QuerySelector("a");
-
-			if (!IsValidLink(link))
-			{
-				return match.Success;
-			}
-
-			Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
-
-		bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;" && match.Groups["FileSize"].Value.Trim() != "DIR";
-
-			if (!isFile)
-			{
-				webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
-				{
-					Parser = "RegexParser3",
-					Url = fullUrl,
-					Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last())),
-					//Description = match.Groups["Description"].Value.Trim()
-				});
-			}
-			else
-			{
-				try
-				{
-					webDirectory.Files.Add(new WebFile
-					{
-						Url = fullUrl,
-						FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
-						FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
-						//Description = match.Groups["Description"].Value.Trim()
-					});
-				}
-				catch (Exception ex)
-				{
-					Program.Logger.Error(ex, "Error parsing with RegexParser3");
-				}
-			}
-
-			return match.Success;
-		};
-
-	[GeneratedRegex(@"\s*(?<Modified>[A-z]*,\s*[A-z]*\s*\d*, \d*\s*\d*:\d*\s*[APM]*)\s+(?<FileSize>\S*)\s+<a.*<\/a>")]
-	private static partial Regex RegexRegexParser4();
-
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser4 = async (webDirectory, baseUrl, line) =>
-		{
-		Match match = RegexRegexParser4().Match(line);
-
-			if (!match.Success)
-			{
-				return match.Success;
-			}
-
-			IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
-
-			if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
-			    parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
-			    parsedLine.QuerySelector("a") == null ||
-			    line.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase))
-			{
-				return match.Success;
-			}
-
-			IElement link = parsedLine.QuerySelector("a");
-
-			if (!IsValidLink(link))
-			{
-				return match.Success;
-			}
-
-			Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
-
-			bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;";
-
-			if (!isFile)
-			{
-				webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
-				{
-					Parser = "RegexParser4",
-					Url = fullUrl,
-					Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last())),
-					//Description = match.Groups["Description"].Value.Trim()
-				});
-			}
-			else
-			{
-				try
-				{
-					webDirectory.Files.Add(new WebFile
-					{
-						Url = fullUrl,
-						FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
-						FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
-						//Description = match.Groups["Description"].Value.Trim()
-					});
-				}
-				catch (Exception ex)
-				{
-					Program.Logger.Error(ex, "Error parsing with RegexParser4");
-				}
-			}
-
-			return match.Success;
-		};
-
-	[GeneratedRegex(@"\s*(?<Modified>\d*-\d*-\d*\s*[오전후]*\s*\d*:\d*)\s*(?<FileSize>\S*)\s+<[aA].*<\/[aA]>")]
-	private static partial Regex RegexRegexParser5();
-
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser5 = async (webDirectory, baseUrl, line) =>
-		{
-		Match match = RegexRegexParser5().Match(line);
-
-			if (!match.Success)
-			{
-				return match.Success;
-			}
-
-			bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;";
-
-			IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
-
-			if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
-			    parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
-			    parsedLine.QuerySelector("a") == null ||
-			    line.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase))
-			{
-				return match.Success;
-			}
-
-			IElement link = parsedLine.QuerySelector("a");
-
-			if (!IsValidLink(link))
-			{
-				return match.Success;
-			}
-
-			Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
-
-			if (!isFile)
-			{
-				webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
-				{
-					Parser = "RegexParser5",
-					Url = fullUrl,
-					Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last())),
-					//Description = match.Groups["Description"].Value.Trim()
-				});
-			}
-			else
-			{
-				try
-				{
-					webDirectory.Files.Add(new WebFile
-					{
-						Url = fullUrl,
-						FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
-						FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
-						//Description = match.Groups["Description"].Value.Trim()
-					});
-				}
-				catch (Exception ex)
-				{
-					Program.Logger.Error(ex, "Error parsing with RegexParser5");
-				}
-			}
-
-			return match.Success;
-		};
-
-	[GeneratedRegex(@"(?<Modified>\d+\/\d+\/\d+(\s*\d+:\d+\s+[APM]+)?)\s+(?<FileSize>\S*)\s*<a.*<\/a>")]
-	private static partial Regex RegexRegexParser6();
-
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser6 = async (webDirectory, baseUrl, line) =>
-		{
-		Match match = RegexRegexParser6().Match(line);
-
-			if (!match.Success)
-			{
-				return match.Success;
-			}
-
-			IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
-
-			if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
-			    parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
-			    parsedLine.QuerySelector("a") == null ||
-			    line.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase))
-			{
-				return match.Success;
-			}
-
-			IElement link = parsedLine.QuerySelector("a");
-
-			if (!IsValidLink(link))
-			{
-				return match.Success;
-			}
-
-			Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
-
-			bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;";
-
-			if (!isFile)
-			{
-				webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
-				{
-					Parser = "RegexParser6",
-					Url = fullUrl,
-					Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last())),
-					//Description = match.Groups["Description"].Value.Trim()
-				});
-			}
-			else
-			{
-				try
-				{
-					webDirectory.Files.Add(new WebFile
-					{
-						Url = fullUrl,
-						FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
-						FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
-						//Description = match.Groups["Description"].Value.Trim()
-					});
-				}
-				catch (Exception ex)
-				{
-					Program.Logger.Error(ex, "Error parsing with RegexParser6");
-				}
-			}
-
-			return match.Success;
-		};
-
-	[GeneratedRegex(@"(?i)(?<FileMode>[d-]r[-w][x-])\s*\d*\s*(?<FileSize>-?\d*)\s*(\S{3}\s*\d*\s*(?:\d*:\d*(:\d*)?|\d*\.?))\s*(<a.*<\/a>\/?)", RegexOptions.None, "en-NL")]
-	private static partial Regex RegexRegexParser7();
-
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser7 = async (webDirectory, baseUrl, line) =>
-		{
-		Match match = RegexRegexParser7().Match(line);
-
-			if (!match.Success)
-			{
-				return match.Success;
-			}
-
-			IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
-
-			if (parsedLine.QuerySelector("a") == null)
-			{
-				return match.Success;
-			}
-
-			IElement link = parsedLine.QuerySelector("a");
-
-			if (!IsValidLink(link))
-			{
-				return match.Success;
-			}
-
-			Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
-
-			string fileMode = match.Groups["FileMode"].Value.ToLowerInvariant();
-			bool isFile = !fileMode.StartsWith('d') && !fileMode.StartsWith('l');
-
-			if (!isFile)
-			{
-				webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
-				{
-					Parser = "RegexParser7",
-					Url = fullUrl,
-					Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last()))
-				});
-			}
-			else
-			{
-				try
-				{
-					string fileSize = match.Groups["FileSize"].Value;
-
-				if (fileSize.StartsWith('-'))
-					{
-						// If filesize is negative, it will be 4GB minus the amount of bytes (without the - sign),
-						// but this will only work for when it is between 2 and 4 GB, so skip it
-						fileSize = string.Empty;
-					}
-
-					webDirectory.Files.Add(new WebFile
-					{
-						Url = fullUrl,
-						FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
-						FileSize = FileSizeHelper.ParseFileSize(fileSize)
-					});
-				}
-				catch (Exception ex)
-				{
-					Program.Logger.Error(ex, "Error parsing with RegexParser7");
-				}
-			}
-
-			return match.Success;
-		};
-
-	[GeneratedRegex(@"^\s*(?<Link><a.*<\/a>)\s+(?:(?<Day>\d+)(?<Month>\D+)(?<Year>\d+))(?:\s+(?<Hour>\d+):(?<Minute>\d+))(?:\s+)?(?<FileSize>\S+)?")]
-	private static partial Regex RegexRegexParser8();
-
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser8 = async (webDirectory, baseUrl, line) =>
-		{
-		Match match = RegexRegexParser8().Match(line);
-
-			if (!match.Success)
-			{
-				return match.Success;
-			}
-
-			IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
-
-			if (parsedLine.QuerySelector("a") == null)
-			{
-				return match.Success;
-			}
-
-			IElement link = parsedLine.QuerySelector("a");
-
-			if (!IsValidLink(link))
-			{
-				return match.Success;
-			}
-
-			Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
-
-			string fileSizeString = match.Groups["FileSize"].Value;
-			long fileSize = FileSizeHelper.ParseFileSize(fileSizeString);
-
-			bool isFile = !string.IsNullOrWhiteSpace(fileSizeString) && fileSizeString.Trim() != "-" &&
-			              // This is not perfect.. Specific block sizes
-			              (fileSize is not 32768 or 65536);
-
-			if (!isFile)
-			{
-				string directoryName = Path.GetDirectoryName(WebUtility.UrlDecode(uri.Segments.Last()));
-
-				if (string.IsNullOrWhiteSpace(directoryName))
-				{
-					directoryName = WebUtility.UrlDecode(linkHref);
-				}
-
-				webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
-				{
-					Parser = "RegexParser8",
-					Url = fullUrl,
-					Name = directoryName
-				});
-			}
-			else
-			{
-				try
-				{
-					webDirectory.Files.Add(new WebFile
-					{
-						Url = fullUrl,
-						FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
-						FileSize = fileSize
-					});
-				}
-				catch (Exception ex)
-				{
-					Program.Logger.Error(ex, "Error parsing with RegexParser8");
-				}
-			}
-
-			return match.Success;
-		};
+		return match.Success;
+	};
 
 	[GeneratedRegex(@"^\s*(?<Link><a.*<\/a>)\s*(?<IsDirectory>\/?)(?<FileSize>\S+)?")]
 	private static partial Regex RegexRegexParser9();
 
 	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser9 = async (webDirectory, baseUrl, line) =>
-		{
+	{
 		Match match = RegexRegexParser9().Match(line);
 
-			if (!match.Success ||
-			    (match.Groups["IsDirectory"].Success &&
-			     !string.IsNullOrWhiteSpace(match.Groups["IsDirectory"].Value)) ==
-			    match.Groups["FileSize"].Success)
+		if (!match.Success ||
+			(match.Groups["IsDirectory"].Success &&
+			    !string.IsNullOrWhiteSpace(match.Groups["IsDirectory"].Value)) ==
+			match.Groups["FileSize"].Success)
+		{
+			return match.Success;
+		}
+
+		if (match.Groups["FileSize"].Value.Contains('<'))
+		{
+			return false;
+		}
+
+		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+
+		if (parsedLine.QuerySelector("a") == null)
+		{
+			return match.Success;
+		}
+
+		IElement link = parsedLine.QuerySelector("a");
+
+		if (!IsValidLink(link))
+		{
+			return match.Success;
+		}
+
+		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
+		bool isFile = !string.IsNullOrWhiteSpace(match.Groups["FileSize"].Value) &&
+			            match.Groups["FileSize"].Value.Trim() != "-";
+
+		if (!isFile)
+		{
+			string directoryName = Path.GetDirectoryName(WebUtility.UrlDecode(uri.Segments.Last()));
+
+			if (string.IsNullOrWhiteSpace(directoryName))
 			{
-				return match.Success;
+				directoryName = WebUtility.UrlDecode(linkHref);
 			}
 
-			if (match.Groups["FileSize"].Value.Contains('<'))
+			webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
 			{
-				return false;
-			}
-
-			IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
-
-			if (parsedLine.QuerySelector("a") == null)
+				Parser = "RegexParser9",
+				Url = fullUrl,
+				Name = directoryName
+			});
+		}
+		else
+		{
+			try
 			{
-				return match.Success;
-			}
+				string fileSize = match.Groups["FileSize"].Value;
 
-			IElement link = parsedLine.QuerySelector("a");
-
-			if (!IsValidLink(link))
-			{
-				return match.Success;
-			}
-
-			Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
-
-			bool isFile = !string.IsNullOrWhiteSpace(match.Groups["FileSize"].Value) &&
-			              match.Groups["FileSize"].Value.Trim() != "-";
-
-			if (!isFile)
-			{
-				string directoryName = Path.GetDirectoryName(WebUtility.UrlDecode(uri.Segments.Last()));
-
-				if (string.IsNullOrWhiteSpace(directoryName))
+				webDirectory.Files.Add(new WebFile
 				{
-					directoryName = WebUtility.UrlDecode(linkHref);
-				}
-
-				webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
-				{
-					Parser = "RegexParser9",
 					Url = fullUrl,
-					Name = directoryName
+					FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+					FileSize = FileSizeHelper.ParseFileSize(fileSize)
 				});
 			}
-			else
+			catch (Exception ex)
 			{
-				try
-				{
-					string fileSize = match.Groups["FileSize"].Value;
-
-					webDirectory.Files.Add(new WebFile
-					{
-						Url = fullUrl,
-						FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
-						FileSize = FileSizeHelper.ParseFileSize(fileSize)
-					});
-				}
-				catch (Exception ex)
-				{
-					Program.Logger.Error(ex, "Error parsing with RegexParser9");
-				}
+				Program.Logger.Error(ex, "Error parsing with RegexParser9");
 			}
+		}
 
-			return match.Success;
-		};
+		return match.Success;
+	};
 
 	[GeneratedRegex(@"(?<Dir>[\-ld])(?<Permissions>(?:[\-r][\-w][\-xs]){1,3})\s+(?<Owner>\w+)\s+(?<Group>\w+)\s+(?<Month>\S{3})\s+(?<Day>\d+)\s+(?<Year>\d+)\s+(?<FileSize>\d+\s+?\w+)?\s+(?:[\w&;]+\s+)?(?<Link><a.*<\/a>\/?)?")]
 	private static partial Regex RegexRegexParser10();
 
 	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser10 = async (webDirectory, baseUrl, line) =>
-		{
+	{
 		Match match = RegexRegexParser10().Match(line);
 
-			if (!match.Success)
+		if (!match.Success)
+		{
+			return match.Success;
+		}
+
+		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+
+		if (parsedLine.QuerySelector("a") == null)
+		{
+			return match.Success;
+		}
+
+		IElement link = parsedLine.QuerySelector("a");
+
+		if (!IsValidLink(link))
+		{
+			return match.Success;
+		}
+
+		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+
+		string fileMode = match.Groups["Dir"].Value.ToLowerInvariant();
+
+		bool isFile = !fileMode.StartsWith('d') && !fileMode.StartsWith('l');
+
+		if (!isFile)
+		{
+			webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
 			{
-				return match.Success;
-			}
-
-			IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
-
-			if (parsedLine.QuerySelector("a") == null)
+				Parser = "RegexParser10",
+				Url = fullUrl,
+				Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last()))
+			});
+		}
+		else
+		{
+			try
 			{
-				return match.Success;
-			}
+				string fileSize = match.Groups["FileSize"].Value;
 
-			IElement link = parsedLine.QuerySelector("a");
-
-			if (!IsValidLink(link))
-			{
-				return match.Success;
-			}
-
-			Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
-
-			string fileMode = match.Groups["Dir"].Value.ToLowerInvariant();
-
-			bool isFile = !fileMode.StartsWith('d') && !fileMode.StartsWith('l');
-
-			if (!isFile)
-			{
-				webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
+				webDirectory.Files.Add(new WebFile
 				{
-					Parser = "RegexParser10",
 					Url = fullUrl,
-					Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last()))
+					FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+					FileSize = FileSizeHelper.ParseFileSize(fileSize)
 				});
 			}
-			else
+			catch (Exception ex)
 			{
-				try
-				{
-					string fileSize = match.Groups["FileSize"].Value;
-
-					webDirectory.Files.Add(new WebFile
-					{
-						Url = fullUrl,
-						FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
-						FileSize = FileSizeHelper.ParseFileSize(fileSize)
-					});
-				}
-				catch (Exception ex)
-				{
-					Program.Logger.Error(ex, "Error parsing with RegexParser10");
-				}
+				Program.Logger.Error(ex, "Error parsing with RegexParser10");
 			}
+		}
 
-			return match.Success;
-		};
+		return match.Success;
+	};
 
 	private static async Task<WebDirectory> ParsePreDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> pres, bool checkParents)
 	{

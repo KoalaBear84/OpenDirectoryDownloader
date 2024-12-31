@@ -972,6 +972,13 @@ public partial class OpenDirectoryIndexer
 			return;
 		}
 
+		if (webDirectory.Parser == Site.HFS.HfsParser.Parser)
+		{
+			WebDirectory parsedWebDirectory = await Site.HFS.HfsParser.ParseIndex(HttpClient, webDirectory, null);
+			AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
+			return;
+		}
+
 		if (webDirectory.Uri.Host is Constants.GitHubDomain or Constants.GitHubApiDomain)
 		{
 			WebDirectory parsedWebDirectory = await GitHubParser.ParseIndex(HttpClient, webDirectory, Session.CommandLineOptions.GitHubToken);
