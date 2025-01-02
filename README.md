@@ -26,9 +26,9 @@ When using the self-contained releases you don't need to install the .NET (Core)
 
 ## Prerequisites
 
-When you are NOT using the self-contained releases, you need to install the latest/current Runtime version of .NET 8:
+When you are NOT using the self-contained releases, you need to install the latest/current Runtime version of .NET 9:
 
-https://dotnet.microsoft.com/download/dotnet/8.0/runtime
+https://dotnet.microsoft.com/download/dotnet/9.0/runtime
 
 ## Usage
 
@@ -187,7 +187,7 @@ It will save the URLs files onto C:\\Scans (windows), or replace with a custom f
 
 ## Building
 
-1.  Install the newest .NET 8 SDK: https://dotnet.microsoft.com/download/dotnet/8.0
+1.  Install the newest .NET 9 SDK: https://dotnet.microsoft.com/download/dotnet/9.0
 2.  `git clone https://github.com/KoalaBear84/OpenDirectoryDownloader`
 3.  `cd OpenDirectoryDownloader/src`
 4.  `dotnet build .`
