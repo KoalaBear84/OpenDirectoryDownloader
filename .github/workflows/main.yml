@@ -59,7 +59,7 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '9.0.x'
-        include-prerelease: true
+        dotnet-quality: 'preview'
         cache: true
 
     - name: Get version info
