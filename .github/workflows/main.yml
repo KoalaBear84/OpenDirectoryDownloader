@@ -56,11 +56,10 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '9.0.x'
         dotnet-quality: 'preview'
-        cache: true
 
     - name: Get version info
       id: get_version
