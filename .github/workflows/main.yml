@@ -184,7 +184,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./src/Dockerfile
+          file: ./build-artifacts/src/Dockerfile
           platforms: ${{ matrix.platform }}
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/opendirectorydownloader:${{ matrix.target }}
