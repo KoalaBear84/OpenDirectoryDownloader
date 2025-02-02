@@ -3,7 +3,7 @@ using OpenDirectoryDownloader.Models;
 
 namespace OpenDirectoryDownloader.FileUpload;
 
-public class AnonFiles : IFileUploadSite
+public class FileVCFiles : IFileUploadSite
 {
 	public string Name => "Files.vc";
 
@@ -33,7 +33,7 @@ public class AnonFiles : IFileUploadSite
 
 					Program.Logger.Debug("Response from {siteName}: {response}", Name, OpenDirectoryIndexer.Session.UploadedUrlsResponse);
 
-					return JsonConvert.DeserializeObject<AnonFilesFile>(response);
+					return JsonConvert.DeserializeObject<FileVCFile>(response);
 				}
 				else
 				{
@@ -55,33 +55,33 @@ public class AnonFiles : IFileUploadSite
 	}
 }
 
-public class AnonFilesFile : IFileUploadSiteFile
+public class FileVCFile : IFileUploadSiteFile
 {
 	[JsonProperty("status")]
 	public bool Status { get; set; }
 
 	[JsonProperty("data")]
-	public AnonFilesFileData Data { get; set; }
+	public FileVCFileData Data { get; set; }
 
 	public string Url { get => Data.File.Url.Short; }
 }
 
-public class AnonFilesFileData
+public class FileVCFileData
 {
 	[JsonProperty("file")]
-	public AnonFilesFileDataFile File { get; set; }
+	public FileVCFileDataFile File { get; set; }
 }
 
-public class AnonFilesFileDataFile
+public class FileVCFileDataFile
 {
 	[JsonProperty("url")]
-	public AnonFilesFileDataFileUrl Url { get; set; }
+	public FileVCFileDataFileUrl Url { get; set; }
 
 	[JsonProperty("metadata")]
-	public AnonFilesFileDataFileMetadata Metadata { get; set; }
+	public FileVCFileDataFileMetadata Metadata { get; set; }
 }
 
-public class AnonFilesFileDataFileUrl
+public class FileVCFileDataFileUrl
 {
 	[JsonProperty("full")]
 	public string Full { get; set; }
@@ -90,7 +90,7 @@ public class AnonFilesFileDataFileUrl
 	public string Short { get; set; }
 }
 
-public class AnonFilesFileDataFileMetadata
+public class FileVCFileDataFileMetadata
 {
 	[JsonProperty("id")]
 	public string Id { get; set; }
@@ -99,10 +99,10 @@ public class AnonFilesFileDataFileMetadata
 	public string Name { get; set; }
 
 	[JsonProperty("size")]
-	public AnonFilesFileDataFileMetadataSize Size { get; set; }
+	public FileVCFileDataFileMetadataSize Size { get; set; }
 }
 
-public class AnonFilesFileDataFileMetadataSize
+public class FileVCFileDataFileMetadataSize
 {
 	[JsonProperty("bytes")]
 	public int Bytes { get; set; }
