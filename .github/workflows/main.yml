@@ -157,10 +157,12 @@ jobs:
         id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
-      - name: Download artifact 
+      - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: build-artifact-${{ matrix.target }}${{ matrix.suffix }}
+          path: build-artifacts
+          pattern: build-artifact-*
+          merge-multiple: true
 
       - name: Decompress artifact
         uses: TonyBogdanov/zip@1.0
