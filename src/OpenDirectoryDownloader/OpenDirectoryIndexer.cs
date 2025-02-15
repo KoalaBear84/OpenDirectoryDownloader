@@ -507,9 +507,9 @@ public partial class OpenDirectoryIndexer
 								{
 									List<IFileUploadSite> uploadSites =
 									[
+										new FilesVc(),
 										new GoFileIo(),
 										new UploadFilesIo(),
-										new AnonFiles(),
 									];
 
 									foreach (IFileUploadSite uploadSite in uploadSites)
