@@ -457,7 +457,7 @@ public partial class OpenDirectoryIndexer
 				Console.WriteLine("Finshed indexing");
 				Program.Logger.Information("Finshed indexing");
 
-				if (WebFilesFileSizeQueue.Any())
+				if (!WebFilesFileSizeQueue.IsEmpty)
 				{
 					TimerStatistics.Interval = TimeSpan.FromSeconds(5).TotalMilliseconds;
 					Console.WriteLine($"Retrieving filesize of {WebFilesFileSizeQueue.Count} urls");
@@ -480,13 +480,15 @@ public partial class OpenDirectoryIndexer
 
 				Console.WriteLine(Statistics.GetSessionStats(Session, onlyRedditStats: true, includeExtensions: true));
 
-				if (!OpenDirectoryIndexerSettings.CommandLineOptions.NoUrls &&
-					Session.Root.Uri.Host != Constants.GoogleDriveDomain &&
-					Session.Root.Uri.Host != Constants.BlitzfilesTechDomain &&
-					Session.Root.Uri.Host != Constants.DropboxDomain &&
-					Session.Root.Uri.Host != Constants.GoFileIoDomain &&
-					Session.Root.Uri.Host != Constants.MediafireDomain &&
-					Session.Root.Uri.Host != Constants.PixeldrainDomain)
+				bool genericWebsite =
+					Session.Root.Uri.Host == Constants.GoogleDriveDomain ||
+					Session.Root.Uri.Host == Constants.BlitzfilesTechDomain ||
+					Session.Root.Uri.Host == Constants.DropboxDomain ||
+					Session.Root.Uri.Host == Constants.GoFileIoDomain ||
+					Session.Root.Uri.Host == Constants.MediafireDomain ||
+					Session.Root.Uri.Host == Constants.PixeldrainDomain;
+
+				if (!OpenDirectoryIndexerSettings.CommandLineOptions.NoUrls && !genericWebsite)
 				{
 					if (Session.TotalFiles > 0)
 					{
@@ -540,6 +542,37 @@ public partial class OpenDirectoryIndexer
 						catch (Exception ex)
 						{
 							Program.Logger.Error(ex, "Error saving or uploading URLs file: {error}", ex.Message);
+						}
+					}
+					else
+					{
+						Program.Logger.Information("No URLs to save");
+						Console.WriteLine("No URLs to save");
+					}
+				}
+
+				if (OpenDirectoryIndexerSettings.CommandLineOptions.Aria2UrlsFile && !genericWebsite)
+				{
+					if (Session.TotalFiles > 0)
+					{
+						Program.Logger.Information("Saving aria2 URL list to file..");
+						Console.WriteLine("Saving aria2 URL list to file..");
+
+						try
+						{
+							string urlsPath = Library.GetOutputFullPath(Session, OpenDirectoryIndexerSettings, "txt");
+							urlsPath = $"{Path.GetFileNameWithoutExtension(urlsPath)}-aria2.txt";
+							using FileStream fileStream = new(urlsPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read, bufferSize: 1024 * 1024);
+							using StreamWriter streamWriter = new(fileStream);
+
+							WriteAria2Urls(Session.Root, streamWriter);
+
+							Program.Logger.Information("Saved aria2 URL list to file: {path}", urlsPath);
+							Console.WriteLine($"Saved aria2 URL list to file: {urlsPath}");
+						}
+						catch (Exception ex)
+						{
+							Program.Logger.Error(ex, "Error saving aria2 URLs file: {error}", ex.Message);
 						}
 					}
 					else
@@ -651,8 +684,8 @@ public partial class OpenDirectoryIndexer
 
 				if (Session.UrlsWithErrors.Count != 0)
 				{
-					Program.Logger.Information("URLs with errors:");
-					Console.WriteLine("URLs with errors:");
+					Program.Logger.Information($"URLs with errors ({Session.UrlsWithErrors.Count}):");
+					Console.WriteLine($"URLs with errors ({Session.UrlsWithErrors.Count}):");
 
 					foreach (string urlWithError in Session.UrlsWithErrors.OrderBy(u => u, NaturalSortStringComparer.InvariantCulture))
 					{
@@ -715,6 +748,24 @@ public partial class OpenDirectoryIndexer
 				Program.Logger.Error(ex, "Error in indexing task");
 			}
 		});
+	}
+
+	private static void WriteAria2Urls(WebDirectory webDirectory, StreamWriter streamWriter)
+	{
+		foreach (WebFile webFile in webDirectory.Files)
+		{
+			streamWriter.WriteLine(webFile.Url);
+
+			string directory = webFile.Url[0..^webFile.FileName.Length].Replace(Session.Root.Url, string.Empty).TrimEnd('/');
+
+			streamWriter.WriteLine($"  dir={directory}");
+			streamWriter.WriteLine($"  out={webFile.FileName}");
+		}
+
+		foreach (WebDirectory subdirectory in webDirectory.Subdirectories)
+		{
+			WriteAria2Urls(subdirectory, streamWriter);
+		}
 	}
 
 	/// <summary>

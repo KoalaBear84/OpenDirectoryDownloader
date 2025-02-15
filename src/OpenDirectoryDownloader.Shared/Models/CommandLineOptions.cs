@@ -1,4 +1,4 @@
-﻿using CommandLine;
+using CommandLine;
 
 namespace OpenDirectoryDownloader.Shared.Models;
 
@@ -27,6 +27,9 @@ public class CommandLineOptions
 
 	[Option('f', "no-urls", Required = false, Default = false, HelpText = "Do not save URLs file")]
 	public bool NoUrls { get; set; }
+
+	[Option('i', "aria2-urls", Required = false, Default = false, HelpText = "Save aria2 urls files (with directory support)")]
+	public bool Aria2UrlsFile { get; set; }
 
 	[Option("no-browser", Required = false, Default = false, HelpText = "Do not launch browser (for cloudflare etc.)")]
 	public bool NoBrowser { get; set; }
