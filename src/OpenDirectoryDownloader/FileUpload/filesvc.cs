@@ -3,7 +3,7 @@ using OpenDirectoryDownloader.Models;
 
 namespace OpenDirectoryDownloader.FileUpload;
 
-public class FileVCFiles : IFileUploadSite
+public class FilesVc : IFileUploadSite
 {
 	public string Name => "Files.vc";
 
@@ -33,7 +33,7 @@ public class FileVCFiles : IFileUploadSite
 
 					Program.Logger.Debug("Response from {siteName}: {response}", Name, OpenDirectoryIndexer.Session.UploadedUrlsResponse);
 
-					return JsonConvert.DeserializeObject<FileVCFile>(response);
+					return JsonConvert.DeserializeObject<FilesVcFile>(response);
 				}
 				else
 				{
@@ -55,58 +55,34 @@ public class FileVCFiles : IFileUploadSite
 	}
 }
 
-public class FileVCFile : IFileUploadSiteFile
+public class FilesVcFile : IFileUploadSiteFile
 {
-	[JsonProperty("status")]
-	public bool Status { get; set; }
+	[JsonProperty("message")]
+	public string Message { get; set; }
 
-	[JsonProperty("data")]
-	public FileVCFileData Data { get; set; }
+	[JsonProperty("file_url")]
+	public string FileUrl { get; set; }
 
-	public string Url { get => Data.File.Url.Short; }
+	[JsonProperty("debug_info")]
+	public FilesVCFileDebugInfo DebugInfo { get; set; }
+
+	public string Url { get => FileUrl; }
 }
 
-public class FileVCFileData
+public class FilesVCFileDebugInfo
 {
-	[JsonProperty("file")]
-	public FileVCFileDataFile File { get; set; }
-}
+	[JsonProperty("filename")]
+	public string Filename { get; set; }
 
-public class FileVCFileDataFile
-{
-	[JsonProperty("url")]
-	public FileVCFileDataFileUrl Url { get; set; }
+	[JsonProperty("filepath")]
+	public string Filepath { get; set; }
 
-	[JsonProperty("metadata")]
-	public FileVCFileDataFileMetadata Metadata { get; set; }
-}
+	[JsonProperty("file_url")]
+	public string FileUrl { get; set; }
 
-public class FileVCFileDataFileUrl
-{
-	[JsonProperty("full")]
-	public string Full { get; set; }
+	[JsonProperty("file_size")]
+	public long FileSize { get; set; }
 
-	[JsonProperty("short")]
-	public string Short { get; set; }
-}
-
-public class FileVCFileDataFileMetadata
-{
-	[JsonProperty("id")]
-	public string Id { get; set; }
-
-	[JsonProperty("name")]
-	public string Name { get; set; }
-
-	[JsonProperty("size")]
-	public FileVCFileDataFileMetadataSize Size { get; set; }
-}
-
-public class FileVCFileDataFileMetadataSize
-{
-	[JsonProperty("bytes")]
-	public int Bytes { get; set; }
-
-	[JsonProperty("readable")]
-	public string Readable { get; set; }
+	[JsonProperty("hash")]
+	public string Hash { get; set; }
 }
