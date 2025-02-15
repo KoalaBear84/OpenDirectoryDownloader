@@ -11,8 +11,13 @@ Downloading is not (yet) implemented, but is already possible when you use the r
 Downloading with [wget](https://www.gnu.org/software/wget/):
 `wget -x -i theurlsfile.txt`
 
-Downloading with [aria2c](https://aria2.github.io/) (Does not support directory structure..):
+Downloading with [aria2c](https://aria2.github.io/) with `--aria2-urls` (theurlsfile-aria2.txt):
+`aria2c -i theurlsfile-aria2.txt`
+
+Downloading with [aria2c](https://aria2.github.io/) with normal theurlsfile.txt (Does not support directory structure):
 `aria2c -i theurlsfile.txt`
+
+For aria2 you sometimes needs `--disable-ipv6` if downloading fails.
 
 If you have improvements, supply me with a pull request! If you have a format not yet supported, please let me know.
 
@@ -44,10 +49,11 @@ Command line parameters:
 | `-c`  | `--clipboard`        | Automatically copy the Reddits stats once the scan is done                                                                                                                                                                    |
 | `-j`  | `--json`             | Save JSON file                                                                                                                                                                                                                |
 | `-f`  | `--no-urls`          | Do not save URLs file                                                                                                                                                                                                         |
+| `-f`  | `--aria2-urls`       | Do not Save aria2 urls files (with directory support)                                                                                                                                                                         |
 | `-r`  | `--no-reddit`        | Do not show Reddit stats markdown                                                                                                                                                                                             |
 | `-l`  | `--upload-urls`      | Uploads urls file                                                                                                                                                                                                             |
 | `-e`  | `--exact-file-sizes` | Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server)                                                                                                                                |
-|       | `--fast-scan`        | Only use sizes from HTML, no HEAD requests, even if the approx. size cannot be extracted from the HTML                                                                                                                         |
+|       | `--fast-scan`        | Only use sizes from HTML, no HEAD requests, even if the approx. size cannot be extracted from the HTML                                                                                                                        |
 | `-s`  | `--speedtest`        | Does a speed test after indexing                                                                                                                                                                                              |
 | `-a`  | `--user-agent`       | Use custom default User Agent                                                                                                                                                                                                 |
 |       | `--username`         | Username                                                                                                                                                                                                                      |
