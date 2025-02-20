@@ -46,7 +46,7 @@ jobs:
             build_args: --no-self-contained
             suffix: ""
           - self-contained: self-contained
-            build_args: --self-contained -p:PublishTrimmed=true -p:TrimMode=partial -p:EnableCompressionInSingleFile=true
+            build_args: --self-contained -p:PublishTrimmed=true -p:EnableCompressionInSingleFile=true
             suffix: "-self-contained"
 
     runs-on: ${{ matrix.os }}

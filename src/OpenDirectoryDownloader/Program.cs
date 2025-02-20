@@ -4,6 +4,7 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace OpenDirectoryDownloader;
@@ -16,6 +17,8 @@ public class Program
 	public static string ConsoleTitle { get; set; }
 	private static CommandLineOptions CommandLineOptions { get; set; }
 
+	// https://github.com/commandlineparser/commandline/issues/848
+	[DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(CommandLineOptions))]
 	public static async Task<int> Main(string[] args)
 	{
 		SetConsoleTitle("OpenDirectoryDownloader");
