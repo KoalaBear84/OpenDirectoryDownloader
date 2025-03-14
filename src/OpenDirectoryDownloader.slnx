@@ -1,0 +1,21 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Project Path="OpenDirectoryDownloader.GoogleDrive/OpenDirectoryDownloader.GoogleDrive.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="OpenDirectoryDownloader.Shared/OpenDirectoryDownloader.Shared.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="OpenDirectoryDownloader.Tests/OpenDirectoryDownloader.Tests.csproj">
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
+  <Project Path="OpenDirectoryDownloader/OpenDirectoryDownloader.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+</Solution>
