@@ -197,7 +197,7 @@ It will save the URLs files onto C:\\Scans (windows), or replace with a custom f
 2.  `git clone https://github.com/KoalaBear84/OpenDirectoryDownloader`
 3.  `cd OpenDirectoryDownloader/src`
 4.  `dotnet build .`
-5.  `cd OpenDirectoryDownloader/bin/Debug/net7.0`
+5.  `cd OpenDirectoryDownloader/bin/Debug/net9.0`
 6.  `./OpenDirectoryDownloader --url "https://myopendirectory.com"`
 
 For Linux (Might not be needed since .NET 7):  
