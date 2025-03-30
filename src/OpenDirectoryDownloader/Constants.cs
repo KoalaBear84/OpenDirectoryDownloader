@@ -11,6 +11,8 @@ public class Constants
 	public const string GoogleDriveDomain = "drive.google.com";
 	public const string MediafireDomain = "www.mediafire.com";
 	public const string PixeldrainDomain = "pixeldrain.com";
+	public const string PCloudDomain1 = "filedn.com";
+	public const string PCloudDomain2 = "filedn.eu";
 
 	public const string Parameters_GdIndex_RootId = "GDINDEX_ROOTID";
 	public const string Parameters_HttpHeader_Server = "HttpHeader_Server";

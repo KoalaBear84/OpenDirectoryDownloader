@@ -290,4 +290,35 @@ public class DirectoryParser126_150Tests : DirectoryParserTests
 		Assert.Empty(webDirectory.Subdirectories);
 		Assert.Empty(webDirectory.Files);
 	}
+
+	/// <summary>
+	/// Url: https://filedn.com/lgm4rog8XwDbvwRIvGBXqry/
+	/// https://www.pcloud.com/
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing135aAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample(), "https://filedn.com/lgm4rog8XwDbvwRIvGBXqry/");
+
+		Assert.Equal(21, webDirectory.Subdirectories.Count);
+		Assert.Equal("***Textbooks", webDirectory.Subdirectories[0].Name);
+		Assert.Equal(3, webDirectory.Files.Count);
+		Assert.Equal("First Aid for the USMLE Step 1 2024.pdf", webDirectory.Files[0].FileName);
+		Assert.Equal(342792216, webDirectory.Files[0].FileSize);
+	}
+
+	/// <summary>
+	/// Url: https://filedn.com/lgm4rog8XwDbvwRIvGBXqry/%2ABoard%20Review%20Series%20%28BRS%29%20Books/EPUB/
+	/// https://www.pcloud.com/
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing135bAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample(), "https://filedn.com/lgm4rog8XwDbvwRIvGBXqry/%2ABoard%20Review%20Series%20%28BRS%29%20Books/EPUB/");
+
+		Assert.Empty(webDirectory.Subdirectories);
+		Assert.Equal(5, webDirectory.Files.Count);
+		Assert.Equal("BRS Behavioral Science 8e.epub", webDirectory.Files[0].FileName);
+		Assert.Equal(11151639, webDirectory.Files[0].FileSize);
+	}
 }

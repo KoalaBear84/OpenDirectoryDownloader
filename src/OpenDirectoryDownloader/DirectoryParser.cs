@@ -21,6 +21,7 @@ using OpenDirectoryDownloader.Site.GitHub;
 using OpenDirectoryDownloader.Site.GoFileIO;
 using OpenDirectoryDownloader.Site.HFS;
 using OpenDirectoryDownloader.Site.Mediafire;
+using OpenDirectoryDownloader.Site.PCloud;
 using OpenDirectoryDownloader.Site.Pixeldrain;
 using PuppeteerSharp;
 using System.Diagnostics;
@@ -64,41 +65,45 @@ public static partial class DirectoryParser
             string webDirectoryUriHost = webDirectory.Uri.Host.ToLower();
 
             if (webDirectoryUriHost == Constants.BlitzfilesTechDomain)
-			{
-				return await BlitzfilesTechParser.ParseIndex(httpClient, webDirectory);
-			}
+            {
+                return await BlitzfilesTechParser.ParseIndex(httpClient, webDirectory);
+            }
 
             if (webDirectoryUriHost == Constants.DropboxDomain)
-			{
-				return await DropboxParser.ParseIndex(httpClient, webDirectory, html, httpResponseMessage);
-			}
+            {
+                return await DropboxParser.ParseIndex(httpClient, webDirectory, html, httpResponseMessage);
+            }
 
             if (webDirectoryUriHost == Constants.GitHubDomain || webDirectoryUriHost == Constants.GitHubApiDomain)
-			{
-				return await GitHubParser.ParseIndex(httpClient, webDirectory);
-			}
+            {
+                return await GitHubParser.ParseIndex(httpClient, webDirectory);
+            }
 
             if (webDirectoryUriHost == Constants.GoFileIoDomain)
-			{
-				return await GoFileIOParser.ParseIndex(httpClient, webDirectory);
-			}
+            {
+                return await GoFileIOParser.ParseIndex(httpClient, webDirectory);
+            }
 
             if (webDirectoryUriHost == Constants.MediafireDomain)
-			{
-				return await MediafireParser.ParseIndex(httpClient, webDirectory);
-			}
+            {
+                return await MediafireParser.ParseIndex(httpClient, webDirectory);
+            }
 
-			if (webDirectory.Uri.Host == Constants.PixeldrainDomain)
+            if (webDirectoryUriHost == Constants.PCloudDomain1 || webDirectoryUriHost == Constants.PCloudDomain2)
+            {
+                return await PCloudParser.ParseIndex(httpClient, webDirectory, html);
+            }
+
             if (webDirectoryUriHost == Constants.PixeldrainDomain)
-			{
-				return await PixeldrainParser.ParseIndex(httpClient, webDirectory, html);
-			}
+            {
+                return await PixeldrainParser.ParseIndex(httpClient, webDirectory, html);
+            }
 
-			if (httpResponseMessage?.Headers.Server?.ToString()?.StartsWith("hfs", StringComparison.InvariantCultureIgnoreCase) == true)
-			{
-				string httpHeaderServer = httpResponseMessage?.Headers.Server?.ToString();
-				return await HfsParser.ParseIndex(httpClient, webDirectory, html, httpHeaderServer);
-			}
+            if (httpResponseMessage?.Headers.Server?.ToString()?.StartsWith("hfs", StringComparison.InvariantCultureIgnoreCase) == true)
+            {
+                string httpHeaderServer = httpResponseMessage?.Headers.Server?.ToString();
+                return await HfsParser.ParseIndex(httpClient, webDirectory, html, httpHeaderServer);
+            }
 
 			IHtmlDocument htmlDocument = await HtmlParser.ParseDocumentAsync(html);
 

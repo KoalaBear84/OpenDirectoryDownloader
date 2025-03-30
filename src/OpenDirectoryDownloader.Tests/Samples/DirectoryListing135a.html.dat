@@ -1,0 +1,204 @@
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>pCloud - *Medical School Master Drive</title>
+  <link href="//pcdn-filedn.pcloud.com/Z1c/css/main.css" rel="stylesheet" type="text/css">
+  <link href="//pcdn-filedn.pcloud.com/fav.ico" rel="shortcut icon" type="image/x-icon">
+  <script src="//pcdn-filedn.pcloud.com/js/jquery-1.10.2.min.js"></script>
+  <script src="//pcdn-filedn.pcloud.com/Z1c/js/main.js"></script>
+</head>
+<body>
+<div class="main">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tbody>
+      <tr>
+        <td align="center" class="logo">
+          <a href="https://www.pcloud.com/">
+            <img src="//pcdn-filedn.pcloud.com/img/lazy-load.png" data-src="//pcdn-filedn.pcloud.com/img/logo.png" data-src-retina="//pcdn-filedn.pcloud.com/img/logo@2x.png" width="51" alt="Powered by pCloud" title="Powered by pCloud"/>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td class="cont">
+          <table border="0" cellspacing="0" cellpadding="0">
+            <tbody id="dlcontent">
+              <tr>
+                <td colspan="3" class="bread"><strong>Directory:</strong> /</td>
+              </tr>
+              <tr>
+                <td class="sub-one">Name</td>
+                <td class="sub">Last Modified</td>
+                <td class="sub-tree">Size</td>
+              </tr>
+              <tr>
+                <td colspan="3" class="parent" style="display:none"><a href="/lgm4rog8XwDbvwRIvGBXqry/"><img src="//pcdn-filedn.pcloud.com/img/up.png" width="16" height="16" alt=""/>Parent directory</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" class="powered">Powered by <a href="https://www.pcloud.com/">pCloud</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<script>
+  var directLinkData={
+	"code": "lgm4rog8XwDbvwRIvGBXqry",
+	"dirpath": "\/",
+	"content": [
+		{
+			"name": "***Textbooks",
+			"urlencodedname": "%2A%2A%2ATextbooks",
+			"modified": "Thu, 20 Mar 2025 03:06:42 +0000",
+			"icon": 20
+		},
+		{
+			"name": "**Amboss, UWorld, Anki",
+			"urlencodedname": "%2A%2AAmboss%2C%20UWorld%2C%20Anki",
+			"modified": "Thu, 20 Mar 2025 03:06:42 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*Board Review Series (BRS) Books",
+			"urlencodedname": "%2ABoard%20Review%20Series%20%28BRS%29%20Books",
+			"modified": "Thu, 20 Mar 2025 03:06:42 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*Boards & Beyond (Videos and Slides)",
+			"urlencodedname": "%2ABoards%20%26%20Beyond%20%28Videos%20and%20Slides%29",
+			"modified": "Thu, 20 Mar 2025 03:06:42 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*Clinical Medicine-Physical Exam (Bates, Videos, Textbook, Questions)",
+			"urlencodedname": "%2AClinical%20Medicine-Physical%20Exam%20%28Bates%2C%20Videos%2C%20Textbook%2C%20Questions%29",
+			"modified": "Thu, 20 Mar 2025 03:06:42 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*First Aid Books",
+			"urlencodedname": "%2AFirst%20Aid%20Books",
+			"modified": "Thu, 20 Mar 2025 03:06:42 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*Kaplan Medical Step 1 & 2 (Books, Q-Bank, Videos)",
+			"urlencodedname": "%2AKaplan%20Medical%20Step%201%20%26%202%20%28Books%2C%20Q-Bank%2C%20Videos%29",
+			"modified": "Thu, 20 Mar 2025 03:06:43 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*Lecturio",
+			"urlencodedname": "%2ALecturio",
+			"modified": "Thu, 20 Mar 2025 03:06:43 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*Med Bootcamp (Slides and Videos)",
+			"urlencodedname": "%2AMed%20Bootcamp%20%28Slides%20and%20Videos%29",
+			"modified": "Thu, 20 Mar 2025 03:06:43 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*NBME Self Assessment Forms",
+			"urlencodedname": "%2ANBME%20Self%20Assessment%20Forms",
+			"modified": "Thu, 20 Mar 2025 03:06:43 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*Ninja Nerd",
+			"urlencodedname": "%2ANinja%20Nerd",
+			"modified": "Thu, 20 Mar 2025 03:06:43 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*OnlineMedEd",
+			"urlencodedname": "%2AOnlineMedEd",
+			"modified": "Thu, 20 Mar 2025 03:06:43 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*Osmosis (Videos)",
+			"urlencodedname": "%2AOsmosis%20%28Videos%29",
+			"modified": "Thu, 20 Mar 2025 03:06:43 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*Pathoma (Videos)",
+			"urlencodedname": "%2APathoma%20%28Videos%29",
+			"modified": "Thu, 20 Mar 2025 03:06:43 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*Physeo (Videos)",
+			"urlencodedname": "%2APhyseo%20%28Videos%29",
+			"modified": "Thu, 20 Mar 2025 03:06:43 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*Picmonic  (Videos)",
+			"urlencodedname": "%2APicmonic%20%20%28Videos%29",
+			"modified": "Thu, 20 Mar 2025 03:06:43 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*Pixorize (Videos)",
+			"urlencodedname": "%2APixorize%20%28Videos%29",
+			"modified": "Thu, 20 Mar 2025 03:06:43 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*Skratchy Medical (Videos)",
+			"urlencodedname": "%2ASkratchy%20Medical%20%28Videos%29",
+			"modified": "Thu, 20 Mar 2025 03:06:43 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*The EKG GUY",
+			"urlencodedname": "%2AThe%20EKG%20GUY",
+			"modified": "Thu, 20 Mar 2025 03:06:43 +0000",
+			"icon": 20
+		},
+		{
+			"name": "*USMLE-Rx (Videos & Q-Bank)",
+			"urlencodedname": "%2AUSMLE-Rx%20%28Videos%20%26%20Q-Bank%29",
+			"modified": "Thu, 20 Mar 2025 03:06:43 +0000",
+			"icon": 20
+		},
+		{
+			"name": "More Resources",
+			"urlencodedname": "More%20Resources",
+			"modified": "Thu, 20 Mar 2025 03:06:43 +0000",
+			"icon": 20
+		},
+		{
+			"name": "First Aid for the USMLE Step 1 2024.pdf",
+			"urlencodedname": "First%20Aid%20for%20the%20USMLE%20Step%201%202024.pdf",
+			"size": 342792216,
+			"modified": "Tue, 26 Mar 2024 12:22:08 +0000",
+			"icon": 17
+		},
+		{
+			"name": "First Aid for the USMLE Step 1 2025 35th Edition.pdf",
+			"urlencodedname": "First%20Aid%20for%20the%20USMLE%20Step%201%202025%2035th%20Edition.pdf",
+			"size": 125677615,
+			"modified": "Sun, 09 Mar 2025 21:46:52 +0000",
+			"icon": 17
+		},
+		{
+			"name": "USMLE Laboratory Reference Values.pdf",
+			"urlencodedname": "USMLE%20Laboratory%20Reference%20Values.pdf",
+			"size": 227149,
+			"modified": "Sun, 15 Dec 2024 02:33:42 +0000",
+			"icon": 17
+		}
+	]
+};
+</script>
+</body>
+</html>
