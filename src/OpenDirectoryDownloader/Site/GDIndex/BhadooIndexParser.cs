@@ -91,7 +91,7 @@ public static class BhadooIndexParser
 		string responseString = await httpResponseMessage.Content.ReadAsStringAsync();
 		string responseJson = string.Empty;
 
-		if (responseString.StartsWith("{"))
+		if (responseString.StartsWith('{'))
 		{
 			responseJson = responseString;
 		}

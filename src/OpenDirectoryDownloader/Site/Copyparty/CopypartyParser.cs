@@ -52,10 +52,9 @@ public static class Copyparty
 			{
 				foreach (IElement entry in entries)
 				{
-					IHtmlAnchorElement link = entry.QuerySelector("td:nth-child(2) a") as IHtmlAnchorElement;
 					IHtmlTableCellElement fileSize = entry.QuerySelector("td:nth-child(3)") as IHtmlTableCellElement;
 
-					if (link is null)
+					if (entry.QuerySelector("td:nth-child(2) a") is not IHtmlAnchorElement link)
 					{
 						continue;
 					}

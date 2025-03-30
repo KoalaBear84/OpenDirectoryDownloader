@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using System.Net;
@@ -125,9 +125,9 @@ public static class Go2IndexParser
 				RateLimiter.AddDelay(waitTimeSpan);
 			}, 8);
 
-			if (!webDirectory.Url.EndsWith("/"))
+			if (!webDirectory.Url.EndsWith('/'))
 			{
-				webDirectory.Url += "/";
+				webDirectory.Url += '/';
 			}
 
 			long pageIndex = 0;
