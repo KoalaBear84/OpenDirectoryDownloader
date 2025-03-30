@@ -61,32 +61,35 @@ public static partial class DirectoryParser
 
 		try
 		{
-			if (webDirectory.Uri.Host == Constants.BlitzfilesTechDomain)
+            string webDirectoryUriHost = webDirectory.Uri.Host.ToLower();
+
+            if (webDirectoryUriHost == Constants.BlitzfilesTechDomain)
 			{
 				return await BlitzfilesTechParser.ParseIndex(httpClient, webDirectory);
 			}
 
-			if (webDirectory.Uri.Host == Constants.DropboxDomain)
+            if (webDirectoryUriHost == Constants.DropboxDomain)
 			{
 				return await DropboxParser.ParseIndex(httpClient, webDirectory, html, httpResponseMessage);
 			}
 
-			if (webDirectory.Uri.Host == Constants.GitHubDomain || webDirectory.Uri.Host == Constants.GitHubApiDomain)
+            if (webDirectoryUriHost == Constants.GitHubDomain || webDirectoryUriHost == Constants.GitHubApiDomain)
 			{
 				return await GitHubParser.ParseIndex(httpClient, webDirectory);
 			}
 
-			if (webDirectory.Uri.Host == Constants.GoFileIoDomain)
+            if (webDirectoryUriHost == Constants.GoFileIoDomain)
 			{
 				return await GoFileIOParser.ParseIndex(httpClient, webDirectory);
 			}
 
-			if (webDirectory.Uri.Host == Constants.MediafireDomain)
+            if (webDirectoryUriHost == Constants.MediafireDomain)
 			{
 				return await MediafireParser.ParseIndex(httpClient, webDirectory);
 			}
 
 			if (webDirectory.Uri.Host == Constants.PixeldrainDomain)
+            if (webDirectoryUriHost == Constants.PixeldrainDomain)
 			{
 				return await PixeldrainParser.ParseIndex(httpClient, webDirectory, html);
 			}
