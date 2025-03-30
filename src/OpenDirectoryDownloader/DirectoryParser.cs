@@ -91,7 +91,10 @@ public static partial class DirectoryParser
 
             if (webDirectoryUriHost == Constants.PCloudDomain1 || webDirectoryUriHost == Constants.PCloudDomain2)
             {
-                return await PCloudParser.ParseIndex(httpClient, webDirectory, html);
+				if (html.Contains("directLinkData"))
+				{
+					return await PCloudParser.ParseIndex(httpClient, webDirectory, html);
+				}
             }
 
             if (webDirectoryUriHost == Constants.PixeldrainDomain)
