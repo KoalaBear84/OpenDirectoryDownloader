@@ -1384,7 +1384,9 @@ public partial class OpenDirectoryIndexer
 		Program.Logger.Debug("[{thread}] Finish download [HTTP {httpcode}] '{url}', size: {length}", threadName, httpResponseMessage.StatusCode, webDirectory.Url, FileSizeHelper.ToHumanReadable(html?.Length));
 
 		// Process only same site
-		if (httpResponseMessage.RequestMessage.RequestUri.Host == Session.Root.Uri.Host)
+		if (httpResponseMessage.RequestMessage.RequestUri.Host == Session.Root.Uri.Host ||
+			httpResponseMessage.RequestMessage.RequestUri.Host.Equals(Constants.PCloudDomain1) ||
+			httpResponseMessage.RequestMessage.RequestUri.Host.Equals(Constants.PCloudDomain2))
 		{
 			int httpStatusCode = (int)httpResponseMessage.StatusCode;
 

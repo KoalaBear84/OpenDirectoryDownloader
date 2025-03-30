@@ -248,6 +248,14 @@ public static partial class DirectoryParser
 				// This is already handled by normal parsers
 			}
 
+			if (htmlDocument.Title.StartsWith("pCloud - "))
+			{
+				if (html.Contains("directLinkData"))
+				{
+					return await PCloudParser.ParseIndex(httpClient, webDirectory, html);
+				}
+			}
+
 			IHtmlCollection<IElement> directoryListingDotComlistItems = htmlDocument.QuerySelectorAll("#directory-listing li, .directory-listing li");
 
 			if (directoryListingDotComlistItems.Length != 0)
