@@ -6,6 +6,7 @@ using OpenDirectoryDownloader.GoogleDrive;
 using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared.Models;
+using OpenDirectoryDownloader.Site.AList;
 using OpenDirectoryDownloader.Site.AmazonS3;
 using OpenDirectoryDownloader.Site.CrushFtp;
 using OpenDirectoryDownloader.Site.GitHub;
@@ -1041,6 +1042,13 @@ public partial class OpenDirectoryIndexer
 		{
 			HttpClient.DefaultRequestHeaders.UserAgent.Clear();
 			HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(OpenDirectoryIndexerSettings.CommandLineOptions.UserAgent);
+		}
+
+		if (webDirectory.Parser == AListParser.Parser)
+		{
+			WebDirectory parsedWebDirectory = await AListParser.ParseIndex(HttpClient, webDirectory);
+			AddProcessedWebDirectory(webDirectory, parsedWebDirectory);
+			return;
 		}
 
 		HttpResponseMessage httpResponseMessage = null;

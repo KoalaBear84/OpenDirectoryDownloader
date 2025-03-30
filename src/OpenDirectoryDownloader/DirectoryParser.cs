@@ -8,6 +8,7 @@ using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
+using OpenDirectoryDownloader.Site.AList;
 using OpenDirectoryDownloader.Site.BlitzfilesTech;
 using OpenDirectoryDownloader.Site.Copyparty;
 using OpenDirectoryDownloader.Site.Dropbox;
@@ -130,6 +131,16 @@ public static partial class DirectoryParser
 					{
 						return await FileBrowserParser.ParseIndex(baseUrl, httpClient, parsedWebDirectory, htmlDocument, html);
 					}
+				}
+			}
+
+			string generator = htmlDocument.QuerySelectorAll<IHtmlMetaElement>("meta[name][content]").FirstOrDefault(x => x.Name == "generator")?.Content;
+
+			if (!string.IsNullOrWhiteSpace(generator))
+			{
+				if (generator == "AList V3")
+				{
+					return await AListParser.ParseIndex(httpClient, parsedWebDirectory);
 				}
 			}
 
