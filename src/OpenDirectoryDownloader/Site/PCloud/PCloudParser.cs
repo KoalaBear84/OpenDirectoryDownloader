@@ -6,7 +6,7 @@ namespace OpenDirectoryDownloader.Site.PCloud;
 
 public static class PCloudParser
 {
-	private static readonly Regex ListingRegex = new(@"<script>\W*(?:var|let)\W*directLinkData=(?<Listing>.*?);.*<\/script>", RegexOptions.Singleline);
+	private static readonly Regex ListingRegex = new(@"<script>\W*(?:var|let)\W*directLinkData=(?<Listing>.*);.*<\/script>", RegexOptions.Singleline);
 	private const string Parser = "pCloud";
 
 	public static async Task<WebDirectory> ParseIndex(HttpClient httpClient, WebDirectory webDirectory, string html)
@@ -63,7 +63,8 @@ public static class PCloudParser
 					webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
                     {
 						Parser = Parser,
-						Url = new Uri(webDirectory.Uri, entry.Urlencodedname).ToString(),
+						// Keep it like this, as some entries have a trailing space
+						Url = $"{webDirectory.Uri}{entry.Urlencodedname}",
                         Name = entry.Name
                     });
                 }
@@ -71,8 +72,9 @@ public static class PCloudParser
                 {
                     webDirectory.Files.Add(new WebFile
                     {
-                        Url = new Uri(webDirectory.Uri, entry.Urlencodedname).ToString(),
-                        FileName = entry.Name,
+						// Keep it like this, as some entries have a trailing space
+						Url = $"{webDirectory.Uri}{entry.Urlencodedname}",
+						FileName = entry.Name,
                         FileSize = entry.Size
                     });
                 }
