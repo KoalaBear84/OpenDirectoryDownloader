@@ -571,15 +571,28 @@ public partial class OpenDirectoryIndexer
 					{
 						Program.Logger.Information("Saving aria2 URL list to file..");
 						Console.WriteLine("Saving aria2 URL list to file..");
-
+						
 						try
 						{
+							string rootDir = string.Empty;
+							string urlDir = string.Empty;
+							if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.CommandLineOptions.Aria2RootDir))
+							{
+								rootDir = OpenDirectoryIndexerSettings.CommandLineOptions.Aria2RootDir.TrimStart('/').TrimEnd('/');
+							}
+
 							string urlsPath = Library.GetOutputFullPath(Session, OpenDirectoryIndexerSettings, "txt");
+
+							if (OpenDirectoryIndexerSettings.CommandLineOptions.Aria2UrlDir)
+							{
+								urlDir = Path.GetFileNameWithoutExtension(urlsPath);
+							}
+
 							urlsPath = $"{Path.GetFileNameWithoutExtension(urlsPath)}-aria2.txt";
 							using FileStream fileStream = new(urlsPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read, bufferSize: 1024 * 1024);
 							using StreamWriter streamWriter = new(fileStream);
 
-							WriteAria2Urls(Session.Root, streamWriter);
+							WriteAria2Urls(Session.Root, streamWriter, rootDir, urlDir);
 
 							Program.Logger.Information("Saved aria2 URL list to file: {path}", urlsPath);
 							Console.WriteLine($"Saved aria2 URL list to file: {urlsPath}");
@@ -764,7 +777,7 @@ public partial class OpenDirectoryIndexer
 		});
 	}
 
-	private static void WriteAria2Urls(WebDirectory webDirectory, StreamWriter streamWriter)
+	private static void WriteAria2Urls(WebDirectory webDirectory, StreamWriter streamWriter, string rootDir, string urlDir)
 	{
 		foreach (WebFile webFile in webDirectory.Files)
 			{
@@ -779,13 +792,24 @@ public partial class OpenDirectoryIndexer
 				}
 
 				string directory = webFile.Url[0..^webFile.FileName.Length].Replace(Session.Root.Url, string.Empty).TrimEnd('/');
+				
+				if (!string.IsNullOrWhiteSpace(urlDir))
+				{
+					directory = Path.Combine(urlDir, directory.TrimStart('/').TrimEnd('/'));
+				}
+
+				if (!string.IsNullOrWhiteSpace(rootDir))
+				{
+					directory = Path.Combine(rootDir, directory.TrimStart('/').TrimEnd('/'));
+				}
+
 				streamWriter.WriteLine($"  dir={directory}");
 				streamWriter.WriteLine($"  out={webFile.FileName}");
 			}
 
 		foreach (WebDirectory subdirectory in webDirectory.Subdirectories)
 		{
-			WriteAria2Urls(subdirectory, streamWriter);
+			WriteAria2Urls(subdirectory, streamWriter, rootDir, urlDir);
 		}
 	}
 
