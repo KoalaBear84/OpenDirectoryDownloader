@@ -31,7 +31,7 @@ public class CommandLineOptions
 	[Option('i', "aria2-urls", Required = false, Default = false, HelpText = "Save aria2 urls files (with directory support)")]
 	public bool Aria2UrlsFile { get; set; }
 
-	[Option("aria2-root-dir", Required = false, Default = "", HelpText = "Specify a root directory for aria2 urls files (with directory support) e.g. /dir/)]
+	[Option("aria2-root-dir", Required = false, Default = "", HelpText = "Specify a root directory for aria2 urls files (with directory support) e.g. /dir/")]
 	public string Aria2RootDir { get; set; }
 
 	[Option("aria2-url-dir", Required = false, Default = false, HelpText = "Use URL as folder name for aria2 urls files (with directory support)")]
