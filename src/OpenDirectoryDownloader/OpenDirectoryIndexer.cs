@@ -499,7 +499,20 @@ public partial class OpenDirectoryIndexer
 						try
 						{
 							string urlsPath = Library.GetOutputFullPath(Session, OpenDirectoryIndexerSettings, "txt");
-							File.WriteAllLines(urlsPath, distinctUrls);
+							List<string> outputUrls = [];
+							foreach (string url in distinctUrls)
+							{
+								string safeUrl = url.Contains("#") ? url.Replace("#", "%23") : url;
+								if (Uri.TryCreate(safeUrl, UriKind.Absolute, out Uri uri))
+								{
+									outputUrls.Add(uri.AbsoluteUri);
+								}
+								else
+								{
+									outputUrls.Add(safeUrl);
+								}
+							}
+							File.WriteAllLines(urlsPath, outputUrls);
 
 							Program.Logger.Information("Saved URL list to file: {path}", urlsPath);
 							Console.WriteLine($"Saved URL list to file: {urlsPath}");
@@ -768,7 +781,15 @@ public partial class OpenDirectoryIndexer
 	{
 		foreach (WebFile webFile in webDirectory.Files)
 			{
-				streamWriter.WriteLine(webFile.Url);
+				string safeUrl = webFile.Url.Contains("#") ? webFile.Url.Replace("#", "%23") : webFile.Url;
+				if (Uri.TryCreate(safeUrl, UriKind.Absolute, out Uri uri))
+				{
+					streamWriter.WriteLine(uri.AbsoluteUri);
+				}
+				else
+				{
+					streamWriter.WriteLine(safeUrl);
+				}
 
 				string directory = webFile.Url[0..^webFile.FileName.Length].Replace(Session.Root.Url, string.Empty).TrimEnd('/');
 				
