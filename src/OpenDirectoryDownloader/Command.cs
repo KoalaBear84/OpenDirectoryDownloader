@@ -1,3 +1,4 @@
+using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Shared.Models;
 using System.Diagnostics;
 using System.Net;
@@ -192,9 +193,22 @@ public class Command
 			Program.Logger.Information("Saving URL list to file..");
 			Console.WriteLine("Saving URL list to file..");
 
-			IEnumerable<string> distinctUrls = OpenDirectoryIndexer.Session.Root.AllFileUrls.Distinct().Select(i => WebUtility.UrlDecode(i));
+			IEnumerable<string> distinctUrls = OpenDirectoryIndexer.Session.Root.AllFileUrls.Distinct().OrderBy(x => x, NaturalSortStringComparer.InvariantCulture);
+			List<string> outputUrls = [];
+			foreach (string url in distinctUrls)
+			{
+				string safeUrl = url.Contains("#") ? url.Replace("#", "%23") : url;
+				if (Uri.TryCreate(safeUrl, UriKind.Absolute, out Uri uri))
+				{
+					outputUrls.Add(uri.AbsoluteUri);
+				}
+				else
+				{
+					outputUrls.Add(safeUrl);
+				}
+			}
 			string urlsPath = Library.GetOutputFullPath(OpenDirectoryIndexer.Session, openDirectoryIndexer.OpenDirectoryIndexerSettings, "txt");
-			File.WriteAllLines(urlsPath, distinctUrls);
+			File.WriteAllLines(urlsPath, outputUrls);
 
 			Program.Logger.Information("Saved URL list to file: {path}", urlsPath);
 			Console.WriteLine($"Saved URL list to file: {urlsPath}");
