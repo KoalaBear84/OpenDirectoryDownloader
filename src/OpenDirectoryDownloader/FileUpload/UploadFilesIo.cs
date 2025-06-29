@@ -1,6 +1,6 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using OpenDirectoryDownloader.Models;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 namespace OpenDirectoryDownloader.FileUpload;
@@ -27,19 +27,36 @@ public class UploadFilesIo : IFileUploadSite
 					string csrfToken = regexMatchCSRFToken.Groups["CSRFToken"].Value;
 					string sessionId = regexMatchSessionId.Groups["SessionId"].Value;
 
-					// Create session
+					Dictionary<string, string> postValuesSelectStorage = new()
+					{
+						{ "csrf_test_name", csrfToken }
+					};
+
+					HttpRequestMessage httpRequestMessageSelectStorage = new(HttpMethod.Post, "https://ufile.io/v1/upload/select_storage") { Content = new FormUrlEncodedContent(postValuesSelectStorage) };
+					HttpResponseMessage httpResponseMessageSelectStorage = await httpClient.SendAsync(httpRequestMessageSelectStorage);
+
+					string selectStorageJson = await httpResponseMessageSelectStorage.Content.ReadAsStringAsync();
+
+					using JsonDocument jsonDocSelectStorage = JsonDocument.Parse(selectStorageJson);
+					string storageBaseUrl = jsonDocSelectStorage.RootElement.TryGetProperty("storageBaseUrl", out var storageBaseUrlProp) ? storageBaseUrlProp.GetString() : null;
+
+					if (string.IsNullOrEmpty(storageBaseUrl))
+					{
+						throw new Exception("Ufile.io error, error selecting storage");
+					}
+
 					Dictionary<string, string> postValuesCreateSession = new()
 					{
 						{ "csrf_test_name", csrfToken },
 						{ "file_size", new FileInfo(path).Length.ToString() }
 					};
 
-					HttpRequestMessage httpRequestMessageCreateSession = new(HttpMethod.Post, "https://up.ufile.io/v1/upload/create_session") { Content = new FormUrlEncodedContent(postValuesCreateSession) };
+					HttpRequestMessage httpRequestMessageCreateSession = new(HttpMethod.Post, $"{storageBaseUrl}/v1/upload/create_session") { Content = new FormUrlEncodedContent(postValuesCreateSession) };
 					HttpResponseMessage httpResponseMessageCreateSession = await httpClient.SendAsync(httpRequestMessageCreateSession);
 
-					JObject resultCreateSession = JObject.Parse(await httpResponseMessageCreateSession.Content.ReadAsStringAsync());
-
-					string fileId = resultCreateSession["fuid"].Value<string>();
+					string createSessionJson = await httpResponseMessageCreateSession.Content.ReadAsStringAsync();
+					using JsonDocument jsonDocCreateSession = JsonDocument.Parse(createSessionJson);
+					string fileId = jsonDocCreateSession.RootElement.TryGetProperty("fuid", out JsonElement fuidProp) ? fuidProp.GetString() : null;
 
 					if (string.IsNullOrEmpty(fileId))
 					{
@@ -57,7 +74,7 @@ public class UploadFilesIo : IFileUploadSite
 						{ streamContent, "file", Path.GetFileName(path) }
 					};
 
-					using HttpResponseMessage httpResponseMessage = await httpClient.PostAsync("https://up.ufile.io/v1/upload/chunk", multipartFormDataContent);
+					using HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"{storageBaseUrl}/v1/upload/chunk", multipartFormDataContent);
 
 					httpResponseMessage.EnsureSuccessStatusCode();
 
@@ -72,13 +89,13 @@ public class UploadFilesIo : IFileUploadSite
 						{ "session_id", sessionId },
 					};
 
-					HttpRequestMessage httpRequestMessageFinalise = new(HttpMethod.Post, "https://up.ufile.io/v1/upload/finalise") { Content = new FormUrlEncodedContent(postValuesFinalise) };
+					HttpRequestMessage httpRequestMessageFinalise = new(HttpMethod.Post, $"{storageBaseUrl}/v1/upload/finalise") { Content = new FormUrlEncodedContent(postValuesFinalise) };
 					HttpResponseMessage httpResponseMessageFinalise = await httpClient.SendAsync(httpRequestMessageFinalise);
 
 					string response = await httpResponseMessageFinalise.Content.ReadAsStringAsync();
 					OpenDirectoryIndexer.Session.UploadedUrlsResponse = response;
 
-					return JsonConvert.DeserializeObject<UploadFilesIoFile>(response);
+					return JsonSerializer.Deserialize<UploadFilesIoFile>(response, UploadFilesIoFile.JsonOptions);
 				}
 
 				retries++;
@@ -97,33 +114,38 @@ public class UploadFilesIo : IFileUploadSite
 
 public class UploadFilesIoFile : IFileUploadSiteFile
 {
-	[JsonProperty("url")]
+	[JsonPropertyName("url")]
 	public string Url { get; set; }
 
-	[JsonProperty("id")]
+	[JsonPropertyName("id")]
 	public long Id { get; set; }
 
-	[JsonProperty("destination")]
+	[JsonPropertyName("destination")]
 	public Uri Destination { get; set; }
 
-	[JsonProperty("name")]
+	[JsonPropertyName("name")]
 	public string Name { get; set; }
 
-	[JsonProperty("filename")]
+	[JsonPropertyName("filename")]
 	public string Filename { get; set; }
 
-	[JsonProperty("slug")]
+	[JsonPropertyName("slug")]
 	public string Slug { get; set; }
 
-	[JsonProperty("size")]
+	[JsonPropertyName("size")]
 	public string Size { get; set; }
 
-	[JsonProperty("type")]
+	[JsonPropertyName("type")]
 	public string Type { get; set; }
 
-	[JsonProperty("expiry")]
+	[JsonPropertyName("expiry")]
 	public string Expiry { get; set; }
 
-	[JsonProperty("location")]
+	[JsonPropertyName("location")]
 	public string Location { get; set; }
+
+	public static readonly JsonSerializerOptions JsonOptions = new()
+	{
+		PropertyNameCaseInsensitive = true,
+	};
 }
