@@ -116,6 +116,21 @@ public static partial class DirectoryParser
 				return ParseIpfsDirectoryListing(baseUrl, parsedWebDirectory, htmlDocument, checkParents);
 			}
 
+			IHtmlTemplateElement dufsIndexData = htmlDocument.QuerySelector<IHtmlTemplateElement>("template#index-data");
+
+			if (dufsIndexData is not null)
+			{
+				// Get content of <template id="index-data"> and convert it from Base64 to JSON
+				string dufsIndexDataContent = dufsIndexData.Content.TextContent.Trim();
+
+				if (Library.IsBase64String(dufsIndexDataContent))
+				{
+					dufsIndexDataContent = Encoding.UTF8.GetString(Convert.FromBase64String(dufsIndexDataContent));
+
+					return await DufsParser.ParseIndex(httpClient, parsedWebDirectory, dufsIndexDataContent);
+				}
+			}
+
 			// https://github.com/filebrowser/filebrowser
 			if (htmlDocument.Title == "File Browser")
 			{

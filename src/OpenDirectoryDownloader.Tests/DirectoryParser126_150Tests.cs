@@ -321,4 +321,33 @@ public class DirectoryParser126_150Tests : DirectoryParserTests
 		Assert.Equal("BRS Behavioral Science 8e.epub", webDirectory.Files[0].FileName);
 		Assert.Equal(11151639, webDirectory.Files[0].FileSize);
 	}
+
+	/// <summary>
+	/// Url: http://localhost:5114/data/
+	/// https://github.com/sigoden/dufs
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing136aAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Equal(2, webDirectory.Subdirectories.Count);
+		Assert.Equal("EmptyFolder", webDirectory.Subdirectories[0].Name);
+		Assert.Equal(2, webDirectory.Files.Count);
+		Assert.Equal("asciifilename.txt", webDirectory.Files[0].FileName);
+		Assert.Equal(4, webDirectory.Files[0].FileSize);
+	}
+
+	/// <summary>
+	/// Url: http://localhost:5114/data/EmptyFolder/
+	/// https://github.com/sigoden/dufs
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing136bAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Empty(webDirectory.Subdirectories);
+		Assert.Empty(webDirectory.Files);
+	}
 }

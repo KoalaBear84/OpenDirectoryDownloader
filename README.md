@@ -1,6 +1,6 @@
 # Open Directory Downloader
 
-Indexes open directories listings in 130+ supported formats, including FTP(S), Google Drive, AList, Directory Lister, HFS, Bhadoo, GoIndex, Go2Index (alternatives), Mediafire, GoFile, GitHub, pCloud.
+Indexes open directories listings in 130+ supported formats, including FTP(S), Google Drive, AList, Directory Lister, HFS, Bhadoo, GoIndex, Go2Index (alternatives), Mediafire, GoFile, GitHub, pCloud, Dufs.
 
 ![](assets/Screenshot01.png)
 
