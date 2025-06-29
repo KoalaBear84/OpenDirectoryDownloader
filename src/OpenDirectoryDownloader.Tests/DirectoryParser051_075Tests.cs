@@ -1,4 +1,4 @@
-﻿using OpenDirectoryDownloader.Shared.Models;
+using OpenDirectoryDownloader.Shared.Models;
 using Xunit;
 
 namespace OpenDirectoryDownloader.Tests;
@@ -233,7 +233,7 @@ public class DirectoryParser051_075Tests : DirectoryParserTests
 		Assert.Equal("Old-Calculator-RPGs-Headquarter-Archive", webDirectory.Subdirectories[0].Name);
 		Assert.Single(webDirectory.Files);
 		Assert.Equal("master.index", webDirectory.Files[0].FileName);
-		Assert.Equal(0, webDirectory.Files[0].FileSize);
+		Assert.Null(webDirectory.Files[0].FileSize);
 	}
 
 	/// <summary>
@@ -248,7 +248,7 @@ public class DirectoryParser051_075Tests : DirectoryParserTests
 		Assert.Empty(webDirectory.Subdirectories);
 		Assert.Equal(6, webDirectory.Files.Count);
 		Assert.Equal("aronstyle.zip", webDirectory.Files[0].FileName);
-		Assert.Equal(0, webDirectory.Files[0].FileSize);
+		Assert.Null(webDirectory.Files[0].FileSize);
 	}
 
 	/// <summary>
@@ -399,7 +399,7 @@ public class DirectoryParser051_075Tests : DirectoryParserTests
 		Assert.Equal("Coco 2017 HD-TS X264 HQ-CPG", webDirectory.Subdirectories[0].Name);
 		Assert.Equal(15, webDirectory.Files.Count);
 		Assert.Equal("Aquaman 2018 720p.mp4", webDirectory.Files[0].FileName);
-		Assert.Equal(0, webDirectory.Files[0].FileSize);
+		Assert.Null(webDirectory.Files[0].FileSize);
 	}
 
 	/// <summary>
@@ -414,7 +414,7 @@ public class DirectoryParser051_075Tests : DirectoryParserTests
 		Assert.Empty(webDirectory.Subdirectories);
 		Assert.Equal(12, webDirectory.Files.Count);
 		Assert.Equal("Ant.Man.2015.720p.HDRip.x264.AAC-ETRG.mp4", webDirectory.Files[0].FileName);
-		Assert.Equal(0, webDirectory.Files[0].FileSize);
+		Assert.Null(webDirectory.Files[0].FileSize);
 	}
 
 	/// <summary>
@@ -708,7 +708,7 @@ public class DirectoryParser051_075Tests : DirectoryParserTests
 		Assert.Equal(335910500, webDirectory.Files[0].FileSize);
 
 		// This directory listing contains negative file sizes, which will result in "0"
-		Assert.Contains(webDirectory.Files, f => f.FileSize == 0);
+		Assert.Contains(webDirectory.Files, f => f.FileSize is null);
 	}
 
 	/// <summary>

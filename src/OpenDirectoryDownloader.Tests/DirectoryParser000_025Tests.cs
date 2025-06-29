@@ -1,4 +1,4 @@
-﻿using OpenDirectoryDownloader.Shared.Models;
+using OpenDirectoryDownloader.Shared.Models;
 using Xunit;
 
 namespace OpenDirectoryDownloader.Tests;
@@ -131,7 +131,7 @@ public class DirectoryParser000_025Tests : DirectoryParserTests
 		Assert.Equal("Crystal Maps", webDirectory.Subdirectories[0].Name);
 		Assert.Single(webDirectory.Files);
 		Assert.Equal("Pokemon Crystal.sg1.SGM", webDirectory.Files[0].FileName);
-		Assert.Equal(0, webDirectory.Files[0].FileSize);
+		Assert.Null(webDirectory.Files[0].FileSize);
 	}
 
 	/// <summary>
@@ -147,7 +147,7 @@ public class DirectoryParser000_025Tests : DirectoryParserTests
 		Assert.Equal("Nintendo DS", webDirectory.Subdirectories[0].Name);
 		Assert.Equal(7, webDirectory.Files.Count);
 		Assert.Equal("Pokemon Dash.zip", webDirectory.Files[0].FileName);
-		Assert.Equal(0, webDirectory.Files[0].FileSize);
+		Assert.Null(webDirectory.Files[0].FileSize);
 	}
 
 	/// <summary>
