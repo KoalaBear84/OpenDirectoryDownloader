@@ -1,4 +1,4 @@
-﻿namespace OpenDirectoryDownloader.Site.GDIndex;
+namespace OpenDirectoryDownloader.Site.GDIndex;
 
 public class GoogleDriveIndexMapping
 {
@@ -12,7 +12,7 @@ public class GoogleDriveIndexMapping
 		public void Add(TKey key, TValue value) => Add(new KeyValuePair<TKey, TValue>(key, value));
 	}
 
-	public static KeyValueList<string, string> SiteMapping = new()
+	public static readonly KeyValueList<string, string> SiteMapping = new()
 	{
 		// Order is important!
 		{ "goindex-theme-acrou", Go2Index },
@@ -37,6 +37,7 @@ public class GoogleDriveIndexMapping
 
 		{ "/go2index/", Go2Index },
 		{ "/alx-xlx/goindex", Go2Index },
+		{ "/setnomJ/goindexv", Go2Index },
 
 		{ "goindex", GoIndex },
 
@@ -47,7 +48,7 @@ public class GoogleDriveIndexMapping
 	{
 		foreach (KeyValuePair<string, string> siteMapping in SiteMapping)
 		{
-			if (scriptUrl.ToLowerInvariant().Contains(siteMapping.Key.ToLowerInvariant()))
+			if (scriptUrl.Contains(siteMapping.Key, StringComparison.InvariantCultureIgnoreCase))
 			{
 				return siteMapping.Value;
 			}
