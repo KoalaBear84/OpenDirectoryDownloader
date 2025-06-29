@@ -524,6 +524,7 @@ public partial class OpenDirectoryIndexer
 									List<IFileUploadSite> uploadSites =
 									[
 										new GoFileIo(),
+										new QuAx(),
 										new UploadFilesIo(),
 										new AnonFiles(),
 									];
