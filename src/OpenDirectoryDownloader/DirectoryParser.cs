@@ -41,6 +41,31 @@ public static partial class DirectoryParser
 	private static readonly char[] trimChars = ['/'];
 
 	/// <summary>
+	/// Extract the encoding from the HTTP response's Content-Type header
+	/// </summary>
+	/// <param name="httpResponseMessage">The HTTP response message</param>
+	/// <returns>The encoding specified by the server, or UTF-8 if not specified or invalid</returns>
+	private static Encoding GetEncodingFromResponse(HttpResponseMessage httpResponseMessage)
+	{
+		if (httpResponseMessage?.Content?.Headers?.ContentType?.CharSet == null)
+		{
+			return Encoding.UTF8;
+		}
+
+		try
+		{
+			Library.FixCharSet(httpResponseMessage);
+			string charSet = httpResponseMessage.Content.Headers.ContentType.CharSet;
+			return Encoding.GetEncoding(charSet);
+		}
+		catch
+		{
+			// If the charset is invalid or not supported, fall back to UTF-8
+			return Encoding.UTF8;
+		}
+	}
+
+	/// <summary>
 	/// Parses Html to a WebDirectory object containing the current directory index
 	/// </summary>
 	/// <param name="baseUrl">Base url</param>
@@ -55,10 +80,13 @@ public static partial class DirectoryParser
 			baseUrl += '/';
 		}
 
+		// Get the encoding from the HTTP response if available
+		Encoding responseEncoding = GetEncodingFromResponse(httpResponseMessage);
+
 		WebDirectory parsedWebDirectory = new(webDirectory.ParentDirectory)
 		{
 			Url = baseUrl,
-			Name = WebUtility.UrlDecode(Path.GetDirectoryName(new Uri(baseUrl).Segments.LastOrDefault())) ?? Constants.Root
+			Name = Library.UrlDecode(Path.GetDirectoryName(new Uri(baseUrl).Segments.LastOrDefault()), responseEncoding) ?? Constants.Root
 		};
 
 		try
@@ -262,7 +290,7 @@ public static partial class DirectoryParser
 
 				if (hfsTable.Length != 0)
 				{
-					return ParseTablesDirectoryListing(baseUrl, parsedWebDirectory, hfsTable, checkParents);
+					return ParseTablesDirectoryListing(baseUrl, parsedWebDirectory, hfsTable, checkParents, responseEncoding);
 				}
 
 				if (htmlDocument.QuerySelector("div#files") == null)
@@ -358,7 +386,7 @@ public static partial class DirectoryParser
 				}
 			}
 
-			WebDirectory parsedJavaScriptDrawn = ParseJavaScriptDrawn(baseUrl, parsedWebDirectory, html);
+			WebDirectory parsedJavaScriptDrawn = ParseJavaScriptDrawn(baseUrl, parsedWebDirectory, html, responseEncoding);
 
 			if (parsedJavaScriptDrawn.ParsedSuccessfully && (parsedJavaScriptDrawn.Files.Count != 0 ||
 			                                                 parsedJavaScriptDrawn.Subdirectories.Count != 0))
@@ -389,7 +417,7 @@ public static partial class DirectoryParser
 					return result;
 				}
 
-				result = ParseTablesDirectoryListing(baseUrl, parsedWebDirectory, tables, checkParents);
+				result = ParseTablesDirectoryListing(baseUrl, parsedWebDirectory, tables, checkParents, responseEncoding);
 
 				if (result.Files.Count != 0 || result.Subdirectories.Count != 0 || result.Error)
 				{
@@ -606,8 +634,10 @@ public static partial class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static WebDirectory ParseJavaScriptDrawn(string baseUrl, WebDirectory parsedWebDirectory, string html)
+	private static WebDirectory ParseJavaScriptDrawn(string baseUrl, WebDirectory parsedWebDirectory, string html, Encoding encoding = null)
 	{
+		encoding ??= Encoding.UTF8;
+
 		Regex regexDirectory = new("_d\\('(?<DirectoryName>.*)','(?<Date>.*)','(?<Link>.*)'\\)");
 		Regex regexFile = new("_f\\('(?<FileName>.*)',(?<FileSize>\\d*),'(?<Date>.*)','(?<Link>.*)',(?<UnixTimestamp>\\d*)\\)");
 
@@ -621,7 +651,7 @@ public static partial class DirectoryParser
 			foreach (Match directory in matchCollectionDirectories.Cast<Match>())
 			{
 				// Remove possible file part (index.php) from url
-				if (!string.IsNullOrWhiteSpace(Path.GetFileName(WebUtility.UrlDecode(baseUrl))))
+				if (!string.IsNullOrWhiteSpace(Path.GetFileName(Library.UrlDecode(baseUrl, encoding))))
 				{
 					UrlEncodingParser urlEncodingParser = new(baseUrl);
 					urlEncodingParser.AllKeys.ToList().ForEach(key => urlEncodingParser.Remove(key));
@@ -634,7 +664,7 @@ public static partial class DirectoryParser
 				{
 					Parser = "ParseJavaScriptDrawn",
 					Url = baseUrl + directory.Groups["Link"].Value,
-					Name = Uri.UnescapeDataString(directory.Groups["DirectoryName"].Value)
+					Name = Library.UrlDecode(directory.Groups["DirectoryName"].Value, encoding)
 				});
 			}
 
@@ -642,8 +672,8 @@ public static partial class DirectoryParser
 			{
 				parsedWebDirectory.Files.Add(new WebFile
 				{
-					Url = baseUrl + Path.GetFileName(WebUtility.UrlDecode(Uri.UnescapeDataString(file.Groups["Link"].Value))),
-					FileName = Path.GetFileName(WebUtility.UrlDecode(Uri.UnescapeDataString(file.Groups["FileName"].Value))),
+					Url = baseUrl + Path.GetFileName(Library.UrlDecode(file.Groups["Link"].Value, encoding)),
+					FileName = Path.GetFileName(Library.UrlDecode(file.Groups["FileName"].Value, encoding)),
 					FileSize = FileSizeHelper.ParseFileSize(file.Groups["FileSize"].Value)
 				});
 			}
@@ -1155,8 +1185,10 @@ public static partial class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	private static WebDirectory ParseTablesDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> tables, bool checkParents)
+	private static WebDirectory ParseTablesDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> tables, bool checkParents, Encoding encoding = null)
 	{
+		encoding ??= Encoding.UTF8;
+
 		// Dirty solution..
 		bool hasSeperateDirectoryAndFilesTables = false;
 
@@ -1274,7 +1306,7 @@ public static partial class DirectoryParser
 
 						if (!isFile)
 						{
-							string directoryName = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last()));
+							string directoryName = Library.UrlDecode(Path.GetDirectoryName(uri.Segments.Last()), encoding);
 
 							// Fallback..
 							if (string.IsNullOrWhiteSpace(directoryName))
@@ -1332,16 +1364,16 @@ public static partial class DirectoryParser
 						{
 							webDirectoryCopy.Parser = "ParseTablesDirectoryListing";
 
-							string filename = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath));
+							string filename = Path.GetFileName(Library.UrlDecode(new Uri(fullUrl).AbsolutePath, encoding));
 
 							if (urlEncodingParser["url"] != null)
 							{
-								filename = Path.GetFileName(WebUtility.UrlDecode(new Uri(urlEncodingParser["url"]).AbsolutePath));
+								filename = Path.GetFileName(Library.UrlDecode(new Uri(urlEncodingParser["url"]).AbsolutePath, encoding));
 							}
 
 							if (urlEncodingParser["file"] != null)
 							{
-								filename = Path.GetFileName(WebUtility.UrlDecode(urlEncodingParser["file"]));
+								filename = Path.GetFileName(Library.UrlDecode(urlEncodingParser["file"], encoding));
 							}
 
 							if (string.IsNullOrWhiteSpace(filename))

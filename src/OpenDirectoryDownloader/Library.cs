@@ -415,4 +415,63 @@ public class Library
 
 		return await streamReader.ReadToEndAsync();
 	}
+
+	/// <summary>
+	/// Decode a URL-encoded string using the specified encoding.
+	/// This is necessary because WebUtility.UrlDecode() assumes UTF-8, but some servers use other encodings like ISO-8859-1.
+	/// </summary>
+	/// <param name="encodedString">The URL-encoded string to decode</param>
+	/// <param name="encoding">The encoding to use for decoding (defaults to UTF-8 if null)</param>
+	/// <returns>The decoded string</returns>
+	public static string UrlDecode(string encodedString, Encoding encoding = null)
+	{
+		if (string.IsNullOrWhiteSpace(encodedString))
+		{
+			return encodedString;
+		}
+
+		encoding ??= Encoding.UTF8;
+
+		// If it's already UTF-8, use the standard method
+		if (encoding.Equals(Encoding.UTF8))
+		{
+			return WebUtility.UrlDecode(encodedString);
+		}
+
+		// For other encodings, we need to manually decode
+		// First, convert percent-encoded bytes to actual bytes using the specified encoding
+		List<byte> bytes = new();
+		int i = 0;
+		char[] singleChar = new char[1]; // Reusable array for efficiency
+
+		while (i < encodedString.Length)
+		{
+			if (encodedString[i] == '%' && i + 2 < encodedString.Length)
+			{
+				// Try to parse the hex value (need at least 2 characters after %)
+				if (int.TryParse(encodedString.Substring(i + 1, 2), System.Globalization.NumberStyles.HexNumber, null, out int byteValue))
+				{
+					bytes.Add((byte)byteValue);
+					i += 3;
+					continue;
+				}
+			}
+			
+			if (encodedString[i] == '+')
+			{
+				// Plus signs represent spaces
+				bytes.AddRange(encoding.GetBytes(" "));
+				i++;
+				continue;
+			}
+
+			// Regular character - convert to bytes using the encoding
+			singleChar[0] = encodedString[i];
+			bytes.AddRange(encoding.GetBytes(singleChar));
+			i++;
+		}
+
+		// Convert the bytes back to string using the specified encoding
+		return encoding.GetString(bytes.ToArray());
+	}
 }
