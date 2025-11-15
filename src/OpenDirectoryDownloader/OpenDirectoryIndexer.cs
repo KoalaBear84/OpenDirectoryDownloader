@@ -190,6 +190,9 @@ public partial class OpenDirectoryIndexer
 		{
 			SslOptions = new SslClientAuthenticationOptions
 			{
+				// Enable TLS 1.3 support explicitly for Windows 10
+				// This allows connections to servers that only support TLS 1.3
+				EnabledSslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13,
 				RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) =>
 				{
 					if (!FirstRequest || !sslPolicyErrors.HasFlag(SslPolicyErrors.RemoteCertificateNameMismatch))
