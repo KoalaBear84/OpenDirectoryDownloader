@@ -41,6 +41,31 @@ public static partial class DirectoryParser
 	private static readonly char[] trimChars = ['/'];
 
 	/// <summary>
+	/// Extract the encoding from the HTTP response's Content-Type header
+	/// </summary>
+	/// <param name="httpResponseMessage">The HTTP response message</param>
+	/// <returns>The encoding specified by the server, or UTF-8 if not specified or invalid</returns>
+	private static Encoding GetEncodingFromResponse(HttpResponseMessage httpResponseMessage)
+	{
+		if (httpResponseMessage?.Content?.Headers?.ContentType?.CharSet == null)
+		{
+			return Encoding.UTF8;
+		}
+
+		try
+		{
+			Library.FixCharSet(httpResponseMessage);
+			string charSet = httpResponseMessage.Content.Headers.ContentType.CharSet;
+			return Encoding.GetEncoding(charSet);
+		}
+		catch
+		{
+			// If the charset is invalid or not supported, fall back to UTF-8
+			return Encoding.UTF8;
+		}
+	}
+
+	/// <summary>
 	/// Parses Html to a WebDirectory object containing the current directory index
 	/// </summary>
 	/// <param name="baseUrl">Base url</param>
@@ -55,10 +80,13 @@ public static partial class DirectoryParser
 			baseUrl += '/';
 		}
 
+		// Get the encoding from the HTTP response if available
+		Encoding responseEncoding = GetEncodingFromResponse(httpResponseMessage);
+
 		WebDirectory parsedWebDirectory = new(webDirectory.ParentDirectory)
 		{
 			Url = baseUrl,
-			Name = WebUtility.UrlDecode(Path.GetDirectoryName(new Uri(baseUrl).Segments.LastOrDefault())) ?? Constants.Root
+			Name = Library.UrlDecode(Path.GetDirectoryName(new Uri(baseUrl).Segments.LastOrDefault()), responseEncoding) ?? Constants.Root
 		};
 
 		try
