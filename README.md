@@ -109,7 +109,9 @@ For others see: https://docs.microsoft.com/en-us/dotnet/core/install/linux
 
 ## TLS errors (Windows 10)
 
-If you received errors like this, please apply the registry file "Enable TLS 1.3.reg" from this [site](https://www.itechtics.com/tls-1-3/).
+**Note:** As of version 3.5.0.7+, TLS 1.3 support is now built into the application and should work automatically on Windows 10.
+
+If you are using an older version and receive errors like this, please upgrade to the latest version or apply the registry file "Enable TLS 1.3.reg" from this [site](https://www.itechtics.com/tls-1-3/).
 
 ```
 System.Net.Http.HttpRequestException: The SSL connection could not be established, see inner exception.
