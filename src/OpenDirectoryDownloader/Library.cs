@@ -446,7 +446,7 @@ public class Library
 
 		while (i < encodedString.Length)
 		{
-			if (encodedString[i] == '%' && i + 1 < encodedString.Length && i + 2 < encodedString.Length)
+			if (encodedString[i] == '%' && i + 2 < encodedString.Length)
 			{
 				// Try to parse the hex value (need at least 2 characters after %)
 				if (int.TryParse(encodedString.Substring(i + 1, 2), System.Globalization.NumberStyles.HexNumber, null, out int byteValue))

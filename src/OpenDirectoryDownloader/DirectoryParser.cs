@@ -664,7 +664,7 @@ public static partial class DirectoryParser
 				{
 					Parser = "ParseJavaScriptDrawn",
 					Url = baseUrl + directory.Groups["Link"].Value,
-					Name = Library.UrlDecode(Uri.UnescapeDataString(directory.Groups["DirectoryName"].Value), encoding)
+					Name = Library.UrlDecode(directory.Groups["DirectoryName"].Value, encoding)
 				});
 			}
 
@@ -672,8 +672,8 @@ public static partial class DirectoryParser
 			{
 				parsedWebDirectory.Files.Add(new WebFile
 				{
-					Url = baseUrl + Path.GetFileName(Library.UrlDecode(Uri.UnescapeDataString(file.Groups["Link"].Value), encoding)),
-					FileName = Path.GetFileName(Library.UrlDecode(Uri.UnescapeDataString(file.Groups["FileName"].Value), encoding)),
+					Url = baseUrl + Path.GetFileName(Library.UrlDecode(file.Groups["Link"].Value, encoding)),
+					FileName = Path.GetFileName(Library.UrlDecode(file.Groups["FileName"].Value, encoding)),
 					FileSize = FileSizeHelper.ParseFileSize(file.Groups["FileSize"].Value)
 				});
 			}
