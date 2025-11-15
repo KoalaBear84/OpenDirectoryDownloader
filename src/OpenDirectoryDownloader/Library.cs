@@ -442,12 +442,13 @@ public class Library
 		// First, convert percent-encoded bytes to actual bytes using the specified encoding
 		List<byte> bytes = new();
 		int i = 0;
+		char[] singleChar = new char[1]; // Reusable array for efficiency
 
 		while (i < encodedString.Length)
 		{
-			if (encodedString[i] == '%' && i + 2 < encodedString.Length)
+			if (encodedString[i] == '%' && i + 1 < encodedString.Length && i + 2 < encodedString.Length)
 			{
-				// Try to parse the hex value
+				// Try to parse the hex value (need at least 2 characters after %)
 				if (int.TryParse(encodedString.Substring(i + 1, 2), System.Globalization.NumberStyles.HexNumber, null, out int byteValue))
 				{
 					bytes.Add((byte)byteValue);
@@ -455,7 +456,8 @@ public class Library
 					continue;
 				}
 			}
-			else if (encodedString[i] == '+')
+			
+			if (encodedString[i] == '+')
 			{
 				// Plus signs represent spaces
 				bytes.AddRange(encoding.GetBytes(" "));
@@ -464,7 +466,8 @@ public class Library
 			}
 
 			// Regular character - convert to bytes using the encoding
-			bytes.AddRange(encoding.GetBytes(new char[] { encodedString[i] }));
+			singleChar[0] = encodedString[i];
+			bytes.AddRange(encoding.GetBytes(singleChar));
 			i++;
 		}
 
