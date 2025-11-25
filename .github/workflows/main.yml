@@ -157,6 +157,10 @@ jobs:
         id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
+      - name: Set lowercase repository owner
+        id: repo_owner
+        run: echo "REPO_OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_OUTPUT
+
       - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
@@ -198,7 +202,7 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/opendirectorydownloader:${{ matrix.target }}
-            ghcr.io/${{ github.repository }}:${{ matrix.target }}
+            ghcr.io/${{ steps.repo_owner.outputs.REPO_OWNER_LC }}/opendirectorydownloader:${{ matrix.target }}
 
   combine:
     needs: [ docker ]
@@ -224,6 +228,10 @@ jobs:
         id: tag_info
         run: echo "SOURCE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
+      - name: Set lowercase repository owner
+        id: repo_owner
+        run: echo "REPO_OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_OUTPUT
+
       - name: Combine images for Docker Hub
         run: >
           docker buildx imagetools create
@@ -236,8 +244,8 @@ jobs:
       - name: Combine images for GitHub Container Registry
         run: >
           docker buildx imagetools create
-          -t ghcr.io/${{ github.repository }}:latest
-          -t ghcr.io/${{ github.repository }}:${{ steps.tag_info.outputs.SOURCE_TAG }}
-          ghcr.io/${{ github.repository }}:linux-x64
-          ghcr.io/${{ github.repository }}:linux-arm
-          ghcr.io/${{ github.repository }}:linux-arm64
+          -t ghcr.io/${{ steps.repo_owner.outputs.REPO_OWNER_LC }}/opendirectorydownloader:latest
+          -t ghcr.io/${{ steps.repo_owner.outputs.REPO_OWNER_LC }}/opendirectorydownloader:${{ steps.tag_info.outputs.SOURCE_TAG }}
+          ghcr.io/${{ steps.repo_owner.outputs.REPO_OWNER_LC }}/opendirectorydownloader:linux-x64
+          ghcr.io/${{ steps.repo_owner.outputs.REPO_OWNER_LC }}/opendirectorydownloader:linux-arm
+          ghcr.io/${{ steps.repo_owner.outputs.REPO_OWNER_LC }}/opendirectorydownloader:linux-arm64
