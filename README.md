@@ -143,13 +143,21 @@ By default GitHub has a rate limit of 60 request per hour, which is enough for 2
 
 ## Docker
 
-Every release will automatically push an image to the Docker Hub:
+Every release will automatically push an image to Docker Hub and GitHub Container Registry:
 
+**Docker Hub:**
 https://hub.docker.com/repository/docker/koalabear84/opendirectorydownloader
+
+**GitHub Container Registry (ghcr.io):**
+https://github.com/KoalaBear84/OpenDirectoryDownloader/pkgs/container/opendirectorydownloader
 
 Run it like:
 
 `docker run --rm -v c:/Scans:/app/Scans -it koalabear84/opendirectorydownloader --quit --speedtest`
+
+Or with GitHub Container Registry:
+
+`docker run --rm -v c:/Scans:/app/Scans -it ghcr.io/koalabear84/opendirectorydownloader --quit --speedtest`
 
 It will save the URLs files onto C:\\Scans (windows), or replace with a custom folder on other OS-ses.
 
