@@ -169,9 +169,7 @@ jobs:
           merge-multiple: true
 
       - name: Decompress artifact
-        uses: TonyBogdanov/zip@1.0
-        with:
-            args: unzip -qq ./build-artifacts/OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}.zip -d ./app
+        run: unzip -qq ./build-artifacts/OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}.zip -d ./app
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
