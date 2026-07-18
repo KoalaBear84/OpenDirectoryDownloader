@@ -57,7 +57,19 @@ public class Command
 			{
 				if (Console.IsInputRedirected)
 				{
-					int keyPressed = Console.Read();
+					int keyPressed;
+
+					try
+					{
+						keyPressed = Console.Read();
+					}
+					catch (IOException)
+					{
+						// When running with nohup or in detached mode on Linux, stdin may be closed
+						// (redirected to /dev/null), causing Console.Read() to throw IOException
+						// with "Bad file descriptor". Treat this the same as -1 (no input available)
+						keyPressed = -1;
+					}
 
 					if (keyPressed == -1)
 					{
