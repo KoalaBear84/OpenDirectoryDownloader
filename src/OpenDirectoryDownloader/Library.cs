@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
+using OpenDirectoryDownloader.Storage;
 using Polly;
 using Polly.Retry;
 using System.Diagnostics;
@@ -111,6 +112,81 @@ public class Library
 		using JsonWriter jsonWriter = new JsonTextWriter(streamWriter);
 
 		jsonSerializer.Serialize(jsonWriter, session);
+	}
+
+	/// <summary>
+	/// Same output as SaveSessionJson, except the Root directory tree is rebuilt from <paramref
+	/// name="scanDatabase"/> instead of walked from the in-memory session.Root. Needed once eviction
+	/// (issue #56 phase 4) may have dropped some directories' Files/Subdirectories from memory - the
+	/// in-memory tree alone would silently produce incomplete JSON for anything under an evicted
+	/// directory. Every other Session field is untouched (they're never evicted), so this reuses the
+	/// normal reflection-based serialization for those and only replaces the "Root" property.
+	/// </summary>
+	public static async Task SaveSessionJsonAsync(Session session, string filePath, ScanDatabase scanDatabase)
+	{
+		await scanDatabase.FlushAsync();
+
+		JObject sessionJObject = JObject.FromObject(session);
+		sessionJObject["Root"] = await BuildDirectoryJTokenAsync(scanDatabase, session.Root.Url);
+
+		using StreamWriter streamWriter = new(filePath);
+		using JsonWriter jsonWriter = new JsonTextWriter(streamWriter);
+
+		await sessionJObject.WriteToAsync(jsonWriter);
+	}
+
+	private static async Task<JToken> BuildDirectoryJTokenAsync(ScanDatabase scanDatabase, string url)
+	{
+		ScanDatabase.MirroredDirectory directory = await scanDatabase.GetDirectoryAsync(url);
+
+		if (directory is null)
+		{
+			// Never mirrored (e.g. --use-database was turned on after the scan started, or the directory
+			// errored before ever being written) - fall back to an empty-but-valid node rather than null.
+			return new JObject
+			{
+				["Url"] = url,
+				["Name"] = string.Empty,
+				["Description"] = null,
+				["Finished"] = false,
+				["Subdirectories"] = new JArray(),
+				["Files"] = new JArray(),
+				["Error"] = false
+			};
+		}
+
+		List<ScanDatabase.MirroredFile> files = await scanDatabase.GetFilesAsync(url);
+		JArray filesJArray = [];
+
+		foreach (ScanDatabase.MirroredFile file in files)
+		{
+			filesJArray.Add(new JObject
+			{
+				["Url"] = file.Url,
+				["FileName"] = file.FileName,
+				["FileSize"] = file.FileSize,
+				["Description"] = file.Description
+			});
+		}
+
+		List<ScanDatabase.MirroredDirectory> subdirectories = await scanDatabase.GetSubdirectoriesAsync(url);
+		JArray subdirectoriesJArray = [];
+
+		foreach (ScanDatabase.MirroredDirectory subdirectory in subdirectories)
+		{
+			subdirectoriesJArray.Add(await BuildDirectoryJTokenAsync(scanDatabase, subdirectory.Url));
+		}
+
+		return new JObject
+		{
+			["Url"] = directory.Url,
+			["Name"] = directory.Name,
+			["Description"] = directory.Description,
+			["Finished"] = directory.Finished,
+			["Subdirectories"] = subdirectoriesJArray,
+			["Files"] = filesJArray,
+			["Error"] = directory.Error
+		};
 	}
 
 	public static string CleanUriToFilename(Uri uri)

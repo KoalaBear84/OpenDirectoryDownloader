@@ -37,6 +37,7 @@ public class Command
 			"│ Press T for thread info                                                 │\n" +
 			"│ Press U for Save TXT                                                    │\n" +
 			"│ Press J for Save JSON                                                   │\n" +
+			"│ Press P to Pause (stop cleanly, resumable with --resume)                │\n" +
 			"├─────────────────────────────────────────────────────────────────────────┤\n" +
 			"│ Press ESC or X to EXIT                                                  │\n" +
 			"└─────────────────────────────────────────────────────────────────────────┘\n");
@@ -86,7 +87,7 @@ public class Command
 						case 'c':
 							if (OpenDirectoryIndexer.Session.Finished != DateTimeOffset.MinValue)
 							{
-								SetClipboard(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
+								SetClipboard(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true, scanDatabase: openDirectoryIndexer.ScanDatabase));
 								KillApplication();
 							}
 							break;
@@ -101,6 +102,10 @@ public class Command
 						case 'j':
 						case 'J':
 							SaveSession(openDirectoryIndexer);
+							break;
+						case 'p':
+						case 'P':
+							PauseAndExit(openDirectoryIndexer);
 							break;
 						default:
 							break;
@@ -131,7 +136,7 @@ public class Command
 							{
 								try
 								{
-									SetClipboard(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true));
+									SetClipboard(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, onlyRedditStats: true, scanDatabase: openDirectoryIndexer.ScanDatabase));
 								}
 								catch (Exception ex)
 								{
@@ -152,6 +157,9 @@ public class Command
 							break;
 						case ConsoleKey.U:
 							SaveUrls(openDirectoryIndexer);
+							break;
+						case ConsoleKey.P:
+							PauseAndExit(openDirectoryIndexer);
 							break;
 						default:
 							break;
@@ -175,7 +183,7 @@ public class Command
 			Program.Logger.Information("Saving session to JSON..");
 			Console.WriteLine("Saving session to JSON..");
 
-			Library.SaveSessionJson(OpenDirectoryIndexer.Session, jsonPath);
+			openDirectoryIndexer.SaveSessionJson(jsonPath);
 
 			Program.Logger.Information("Saved session to JSON: {path}", jsonPath);
 			Console.WriteLine($"Saved session to JSON: {jsonPath}");
@@ -193,7 +201,7 @@ public class Command
 			Program.Logger.Information("Saving URL list to file..");
 			Console.WriteLine("Saving URL list to file..");
 
-			IEnumerable<string> distinctUrls = OpenDirectoryIndexer.Session.Root.AllFileUrls.Distinct().OrderBy(x => x, NaturalSortStringComparer.InvariantCulture);
+			List<string> distinctUrls = openDirectoryIndexer.GetDistinctFileUrls();
 			List<string> outputUrls = [];
 			foreach (string url in distinctUrls)
 			{
@@ -219,6 +227,45 @@ public class Command
 		}
 	}
 
+	/// <summary>
+	/// Stops the scan cleanly instead of requiring a hard kill to interrupt one (issue #56 phase 6, the
+	/// 'P' key). Waits for OpenDirectoryIndexer.PauseAsync to make sure the scan database (if any) is
+	/// safely flushed before exiting, then prints the command to pick the scan back up with --resume.
+	/// </summary>
+	private static void PauseAndExit(OpenDirectoryIndexer openDirectoryIndexer)
+	{
+		// Captured before pausing: ScanDatabase is disposed (and nulled out) as part of PauseAsync.
+		string dbPath = openDirectoryIndexer.ScanDatabase?.Path;
+
+		try
+		{
+			if (dbPath is null)
+			{
+				Console.WriteLine("Pausing without --use-database: this scan cannot be resumed. Exiting.");
+				Program.Logger.Warning("Paused without --use-database; scan cannot be resumed.");
+			}
+			else
+			{
+				Console.WriteLine("Pausing - waiting for in-flight requests and saving the database, please wait...");
+			}
+
+			openDirectoryIndexer.PauseAsync().GetAwaiter().GetResult();
+
+			if (dbPath is not null)
+			{
+				Console.WriteLine($"Paused. Resume with: --resume --use-database --db-path \"{dbPath}\" -u {OpenDirectoryIndexer.Session.Root.Url}");
+			}
+		}
+		catch (Exception ex)
+		{
+			Program.Logger.Error(ex, "Error pausing");
+		}
+		finally
+		{
+			KillApplication();
+		}
+	}
+
 	public static void KillApplication()
 	{
 		Console.WriteLine("Exiting...");
@@ -241,7 +288,7 @@ public class Command
 
 	private static void ShowStatistics(OpenDirectoryIndexer openDirectoryIndexer)
 	{
-		Console.WriteLine(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true));
+		Console.WriteLine(Statistics.GetSessionStats(OpenDirectoryIndexer.Session, includeExtensions: true, scanDatabase: openDirectoryIndexer.ScanDatabase));
 		Console.WriteLine($"Queue: {Library.FormatWithThousands(openDirectoryIndexer.WebDirectoriesQueue.Count)} ({openDirectoryIndexer.RunningWebDirectoryThreads} threads), Queue (filesizes): {Library.FormatWithThousands(openDirectoryIndexer.WebFilesFileSizeQueue.Count)} ({openDirectoryIndexer.RunningWebFileFileSizeThreads} threads)");
 	}
 

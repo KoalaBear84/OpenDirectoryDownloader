@@ -68,6 +68,12 @@ Command line parameters:
 |       | `--flaresolverr-docker-name` | FlareSolverr Docker container name, e.g. `flaresolverr`. If provided, OpenDirectoryDownloader will also show and save the output from `docker logs -f` for that container.                                      |
 |       | `--no-browser`       | Disallow starting Chromium browser (for Cloudflare)                                                                                                                                                                           |
 |       | `--http-cloak`       | *SLOWER!* *EXPERIMENTAL* Emulate a real browser's TLS/HTTP fingerprint for improved compatibility. See below for more info.                                                                                                            |
+|       | `--use-database`     | EXPERIMENTAL: Mirror the scan to a SQLite database as it runs, for `--resume` (see [Large scans / low memory](#large-scans--low-memory))                                                                                     |
+|       | `--db-path`          | Path for the SQLite database used by `--use-database`/`--resume` (default: output base filename with a `.sqlite` extension)                                                                                                  |
+|       | `--keep-db`          | Keep the database file after a successful scan instead of deleting it                                                                                                                                                        |
+|       | `--evict-memory`     | EXPERIMENTAL: Requires `--use-database`. Actually reduces peak memory on very large scans by dropping finished directories from memory (see [Large scans / low memory](#large-scans--low-memory))                           |
+|       | `--resume`            | EXPERIMENTAL: Continue a previously interrupted scan from its database instead of starting over (see [Large scans / low memory](#large-scans--low-memory))                                                                   |
+|       | `--retry-errors`     | With `--resume`, retry directories that errored during the previous run instead of leaving them as-is                                                                                                                       |
 
 ### Example
 
@@ -109,6 +115,39 @@ When you want to copy (`C` key or `-c` flag) the stats at the end on Linux you n
 On some distros you need extra dependencies. For Alpine: https://docs.microsoft.com/en-us/dotnet/core/install/linux-alpine
 
 For others see: https://docs.microsoft.com/en-us/dotnet/core/install/linux
+
+## Large scans / low memory
+
+*EXPERIMENTAL!*
+
+Scanning a very large open directory (millions of files) can use a lot of memory, since the whole listing is normally kept in memory until the scan finishes. `--use-database` and `--evict-memory` reduce that, and `--resume` lets you pick a scan back up instead of starting over:
+
+| Flag              | What it does                                                                                                          |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `--use-database`  | Mirrors the scan to a SQLite database as it runs. On its own this doesn't reduce memory usage yet, but is required for the other flags below. |
+| `--evict-memory`  | Requires `--use-database`. Once a directory (and everything under it) has finished scanning, its data is dropped from memory and read back from the database when needed - this is what actually caps peak memory. |
+| `--resume`        | Continues a previously interrupted scan using the database at `--db-path` (or the default, derived from the output filename), instead of starting over. Implies `--use-database`, and always keeps the database file so an interrupted resume can itself be resumed again. If no matching database is found, starts a fresh scan as normal. |
+| `--retry-errors`  | With `--resume`: retries directories that errored during the previous run. Without it, if any errored directories are found and the console is interactive you'll be asked whether to retry them; in a non-interactive session (e.g. a script) they're left alone unless you pass this. |
+
+Example:
+
+```
+OpenDirectoryDownloader --url "https://myopendirectory.com" --use-database --evict-memory --resume
+```
+
+If you need to stop a scan early, press **`P`** to pause: it finishes any in-flight requests, safely saves the database, and exits - unlike a hard kill (`Ctrl+C`, closing the window), this guarantees the database is in a consistent, resumable state. Run the same command again with `--resume` added to continue where you left off.
+
+The database also keeps a small history of the scan itself: the root URL, when it was first started, when it completed (if it has), and one entry per run/resume attempt with that run's cumulative HTTP traffic, requests, errors and skipped count. Resuming prints a summary of this, e.g.:
+
+```
+Successfully resumed from database: myopendirectory.sqlite
+  Site: https://myopendirectory.com/
+  This is attempt #2 (1 prior attempt); first started 2026-09-15 09:56 UTC.
+  Already in database: 4 of 7 directories finished, 8 of 8 files with a known size.
+  Queued: 3 directories to (re)process, 0 file sizes to look up.
+```
+
+These flags don't change the JSON/URLs/aria2 output format - resuming a scan produces the exact same output as if it had never been interrupted.
 
 ## TLS errors (Windows 10)
 

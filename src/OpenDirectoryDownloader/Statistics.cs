@@ -1,5 +1,6 @@
 using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Shared.Models;
+using OpenDirectoryDownloader.Storage;
 using System.Reflection;
 using System.Text;
 
@@ -36,14 +37,28 @@ public static class Statistics
 		return extensionCount;
 	}
 
+	/// <summary>
+	/// Same result as GetExtensions(WebDirectory), sourced from the scan database instead. Needed once
+	/// eviction (issue #56 phase 4) may have dropped some directories' Files from memory - the in-memory
+	/// tree alone would silently under-report extension counts for anything under an evicted directory.
+	/// </summary>
+	public static Dictionary<string, ExtensionStats> GetExtensions(ScanDatabase scanDatabase)
+	{
+		List<(string FileName, long? FileSize)> files = scanDatabase.GetAllFileNamesAndSizesAsync().GetAwaiter().GetResult();
+
+		return files
+			.GroupBy(f => Path.GetExtension(f.FileName).ToLowerInvariant())
+			.ToDictionary(g => g.Key, g => new ExtensionStats { Count = g.Count(), FileSize = g.Sum(f => f.FileSize ?? 0) });
+	}
+
 	public static string GetSessionStats(Session session, bool includeExtensions = false,
-		bool includeFullExtensions = false, bool onlyRedditStats = false, bool includeBanner = false)
+		bool includeFullExtensions = false, bool onlyRedditStats = false, bool includeBanner = false, ScanDatabase scanDatabase = null)
 	{
 		Dictionary<string, ExtensionStats> extensionsStats = [];
 
 		if (includeExtensions || includeFullExtensions)
 		{
-			extensionsStats = GetExtensions(session.Root);
+			extensionsStats = scanDatabase is not null ? GetExtensions(scanDatabase) : GetExtensions(session.Root);
 		}
 
 		StringBuilder stringBuilder = new();

@@ -91,6 +91,24 @@ public class CommandLineOptions
 	[Option('H', "header", Required = false, Default = null, HelpText = "Provide a custom header to use for any HTTP request while indexing. Option can be used multiple times for multiple headers.")]
 	public IEnumerable<string> Header { get; set; }
 
+	[Option("use-database", Required = false, Default = false, HelpText = "EXPERIMENTAL: Mirror discovered directories and files to a SQLite database while scanning (issue #56, phase 1). Does not change how the scan works yet, only writes an additional, currently unused, working file.")]
+	public bool UseDatabase { get; set; }
+
+	[Option("db-path", Required = false, Default = null, HelpText = "Path for the SQLite database file used by --use-database. Defaults to the output base filename with a .sqlite extension.")]
+	public string DbPath { get; set; }
+
+	[Option("keep-db", Required = false, Default = false, HelpText = "Keep the SQLite database file (used by --use-database) after a successful scan instead of deleting it.")]
+	public bool KeepDb { get; set; }
+
+	[Option("evict-memory", Required = false, Default = false, HelpText = "EXPERIMENTAL: Requires --use-database. Drop a directory's in-memory files/subdirectories once its whole subtree has finished scanning, reading them back from the database for output instead. This is what actually reduces peak memory on very large scans (issue #56, phase 4); without it --use-database only mirrors to disk without freeing anything.")]
+	public bool EvictMemory { get; set; }
+
+	[Option("resume", Required = false, Default = false, HelpText = "EXPERIMENTAL: Continue a previously interrupted scan from the database at --db-path (or the default derived path), instead of starting over. Implies --use-database and keeps the database file regardless of --keep-db, so an interrupted resume can itself be resumed again. If no existing database is found, starts a fresh scan as normal.")]
+	public bool Resume { get; set; }
+
+	[Option("retry-errors", Required = false, Default = false, HelpText = "When resuming with --resume, retry directories that errored during the previous run instead of leaving them as-is. Without this, if any are found and the console is interactive, you'll be asked; otherwise they're left alone.")]
+	public bool RetryErrors { get; set; }
+
 	// TODO: Future use
 	//[Option('d', "download", Required = false, HelpText = "Downloads the contents (after indexing is finished)")]
 	//public bool Download { get; set; }

@@ -11,6 +11,7 @@ using OpenDirectoryDownloader.Site.AList;
 using OpenDirectoryDownloader.Site.AmazonS3;
 using OpenDirectoryDownloader.Site.CrushFtp;
 using OpenDirectoryDownloader.Site.GitHub;
+using OpenDirectoryDownloader.Storage;
 using Polly;
 using Polly.Retry;
 using PuppeteerSharp;
@@ -44,8 +45,27 @@ public partial class OpenDirectoryIndexer
 	public int RunningWebFileFileSizeThreads;
 	public readonly Task[] WebFileFileSizeProcessors;
 
+	/// <summary>EXPERIMENTAL (issue #56, phase 1): mirrors the scan to SQLite when --use-database is passed. Null otherwise.</summary>
+	internal ScanDatabase ScanDatabase { get; private set; }
+
+	/// <summary>EXPERIMENTAL (issue #56, phase 4): true when closed directory subtrees should be evicted from memory once fully scanned (--use-database --evict-memory).</summary>
+	private bool EvictionEnabled => ScanDatabase is not null && OpenDirectoryIndexerSettings.CommandLineOptions.EvictMemory;
+
+	/// <summary>--resume always keeps its database (issue #56 phase 6), regardless of --keep-db, so an interrupted resume can itself be resumed again.</summary>
+	/// <summary>
+	/// --resume and a paused scan (Paused, issue #56 phase 6) always keep their database regardless of
+	/// --keep-db, so an interrupted resume can itself be resumed again, and pausing never accidentally
+	/// deletes the very checkpoint it just saved. Checked from two places - the normal end-of-scan
+	/// disposal and the outer exception-fallback disposal - since cancelling a pause makes an in-flight
+	/// wait (e.g. Task.Delay) throw, which is caught by the latter rather than reaching the former.
+	/// </summary>
+	private bool ShouldKeepScanDatabase => OpenDirectoryIndexerSettings.CommandLineOptions.KeepDb || OpenDirectoryIndexerSettings.CommandLineOptions.Resume || Paused;
+
 	public CancellationTokenSource IndexingTaskCts { get; set; }
 	public Task IndexingTask { get; set; }
+
+	/// <summary>Set by PauseAsync (the 'P' key, issue #56 phase 6) to tell the indexing task, once its crawl loops actually stop, to persist and exit cleanly instead of producing "scan finished" output.</summary>
+	public bool Paused { get; private set; }
 
 	private bool FirstRequest { get; set; } = true;
 	private static bool RateLimitedOrConnectionIssues { get; set; }
@@ -395,6 +415,126 @@ public partial class OpenDirectoryIndexer
 
 		Session.MaxThreads = OpenDirectoryIndexerSettings.Threads;
 
+		ScanResume.Result resumeResult = null;
+
+		if (OpenDirectoryIndexerSettings.CommandLineOptions.UseDatabase || OpenDirectoryIndexerSettings.CommandLineOptions.Resume)
+		{
+			string dbPath = !string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.CommandLineOptions.DbPath) ?
+				OpenDirectoryIndexerSettings.CommandLineOptions.DbPath :
+				Library.GetOutputFullPath(Session, OpenDirectoryIndexerSettings, "sqlite");
+
+			bool resuming = OpenDirectoryIndexerSettings.CommandLineOptions.Resume && File.Exists(dbPath);
+
+			if (OpenDirectoryIndexerSettings.CommandLineOptions.Resume && !resuming)
+			{
+				Program.Logger.Warning("--resume was specified but no existing database was found at '{path}'; starting a fresh scan.", dbPath);
+			}
+
+			try
+			{
+				ScanDatabase = resuming ?
+					await ScanDatabase.OpenForResumeAsync(dbPath) :
+					await ScanDatabase.CreateAsync(dbPath);
+
+				Program.Logger.Information(resuming ? "Resuming scan from database: {path}" : "Mirroring scan to database: {path}", dbPath);
+
+				long priorRunCount = 0;
+				ScanDatabase.ScanInfoSnapshot scanInfo = null;
+
+				if (resuming)
+				{
+					bool skipFileSizeLookups = new Uri(OpenDirectoryIndexerSettings.Url).Scheme is Constants.UriScheme.Ftp or Constants.UriScheme.Ftps;
+					bool retryErrors = await ShouldRetryErrorsAsync();
+
+					resumeResult = await ScanResume.BuildAsync(ScanDatabase, OpenDirectoryIndexerSettings.Url, skipFileSizeLookups, retryErrors);
+
+					if (resumeResult is null)
+					{
+						Program.Logger.Warning("Database at '{path}' has no record of '{url}'; starting a fresh scan instead of resuming.", dbPath, OpenDirectoryIndexerSettings.Url);
+						resuming = false;
+					}
+					else
+					{
+						Session.Root = resumeResult.Root;
+
+						foreach (string processedUrl in resumeResult.ProcessedUrls)
+						{
+							Session.ProcessedUrls.Add(processedUrl);
+						}
+
+						ScanDatabase.SessionStatsSnapshot previousStats = await ScanDatabase.GetLatestRunStatsAsync();
+
+						if (previousStats is not null)
+						{
+							// So the final/periodic totals reflect the whole scan, not just this resumed
+							// portion - these counters aren't part of the WebDirectory tree, so ScanResume
+							// can't restore them; restored here instead from the previous run's last snapshot
+							// (see MirrorSessionStats/TimerStatistics_Elapsed). Read before BeginRunAsync
+							// below, which seeds the new run's starting values from these.
+							Session.TotalHttpTraffic = previousStats.TotalHttpTraffic;
+							Session.TotalHttpRequests = previousStats.TotalHttpRequests;
+							Session.Errors = previousStats.Errors;
+							Session.Skipped = previousStats.Skipped;
+
+							foreach (KeyValuePair<int, int> statusCode in previousStats.HttpStatusCodes)
+							{
+								Session.HttpStatusCodes[statusCode.Key] = statusCode.Value;
+							}
+						}
+
+						scanInfo = await ScanDatabase.GetScanInfoAsync();
+
+						if (scanInfo is not null)
+						{
+							// Fixes what would otherwise always read as "now": Session.Started is set to
+							// DateTimeOffset.UtcNow unconditionally above, before resume gets a chance to
+							// know any better.
+							Session.Started = scanInfo.FirstStartedAtUtc;
+
+							if (!string.Equals(scanInfo.RootUrl, OpenDirectoryIndexerSettings.Url, StringComparison.Ordinal))
+							{
+								Program.Logger.Warning(
+									"This database was originally for '{originalUrl}', not '{url}' - continuing anyway, but this looks like the wrong database/URL combination.",
+									scanInfo.RootUrl, OpenDirectoryIndexerSettings.Url);
+							}
+						}
+
+						priorRunCount = await ScanDatabase.CountRunsAsync();
+
+						if (!resumeResult.DirectoriesToRequeue.Contains(resumeResult.Root))
+						{
+							// FirstRequest normally marks "this response is for the root directory" (root
+							// URL redirect fix-up, Cloudflare/challenge detection, the SSL mismatch check).
+							// On resume the root itself may already be finished, so the first request this
+							// run makes is for some other, still-open directory instead - don't let that be
+							// mistaken for the root's own request.
+							FirstRequest = false;
+						}
+					}
+				}
+
+				int runNumber = await ScanDatabase.BeginRunAsync(Session, OpenDirectoryIndexerSettings.Url, isFreshScan: !resuming);
+
+				if (resuming)
+				{
+					await PrintResumeSummaryAsync(dbPath, resumeResult, runNumber, priorRunCount, scanInfo);
+				}
+
+				if (OpenDirectoryIndexerSettings.CommandLineOptions.EvictMemory)
+				{
+					Program.Logger.Warning("--evict-memory is enabled: closed directory subtrees will be dropped from memory once fully scanned and read back from the database for output. This is experimental.");
+				}
+			}
+			catch (Exception ex)
+			{
+				Program.Logger.Error(ex, "Could not open scan database '{path}', continuing without it", dbPath);
+			}
+		}
+		else if (OpenDirectoryIndexerSettings.CommandLineOptions.EvictMemory)
+		{
+			Program.Logger.Warning("--evict-memory has no effect without --use-database; ignoring it.");
+		}
+
 		if (Session.Root.Uri.Host == Constants.GoogleDriveDomain)
 		{
 			Program.Logger.Warning("{indexer} scanning is limited to {directoriesPerSecond} directories per second!", "Google Drive", 9);
@@ -470,6 +610,18 @@ public partial class OpenDirectoryIndexer
 					//var flatList = nodes.Flatten(n => n.IsDeleted == false, n => n.Children);
 					//var directoriesToDo = Session.Root.Subdirectories.Flatten(null, wd => wd.Subdirectories).Where(wd => !wd.Finished);
 				}
+				else if (resumeResult is not null)
+				{
+					foreach (WebDirectory webDirectory in resumeResult.DirectoriesToRequeue)
+					{
+						WebDirectoriesQueue.Enqueue(webDirectory);
+					}
+
+					foreach (WebFile webFile in resumeResult.FilesToRequeueForSize)
+					{
+						WebFilesFileSizeQueue.Enqueue(webFile);
+					}
+				}
 				else
 				{
 					// Add root
@@ -506,18 +658,37 @@ public partial class OpenDirectoryIndexer
 
 				TimerStatistics.Stop();
 
+				if (Paused)
+				{
+					// Deliberately skips all of the "scan finished" output below (URLs .txt, JSON, aria2,
+					// stats) - those describe a completed scan, and this one is only paused. The outer
+					// finally block mirrors final stats, disposes (keeping, never deleting) ScanDatabase,
+					// and logs "Paused." - shared with the case where cancellation instead surfaces as an
+					// exception from whatever a crawl thread was doing (e.g. a Task.Delay), since a plain
+					// early return here wouldn't be reached in that case.
+					return;
+				}
+
+				// Note: ScanDatabase is NOT disposed here. Output below (URLs .txt, JSON) may still need to
+				// read from it - eviction can have dropped in-memory Files/Subdirectories for directories
+				// that closed mid-scan (issue #56 phase 4), so the database, not session.Root, is the
+				// complete picture from this point on. Disposed once all of that has been written, below.
 				Session.Finished = DateTimeOffset.UtcNow;
 				Session.TotalFiles = Session.Root.TotalFiles;
 				Session.TotalFileSizeEstimated = Session.Root.TotalFileSize;
 
-				IEnumerable<string> distinctUrls = Session.Root.AllFileUrls.Distinct().OrderBy(x => x, NaturalSortStringComparer.InvariantCulture);
+				// Only reached on a genuine full finish, never on a pause (see the early return above) -
+				// lets a later --resume (or just inspecting the database) tell a scan actually completed.
+				ScanDatabase?.MarkCompleted(Session.Finished);
 
-				if (Session.TotalFiles != distinctUrls.Count())
+				List<string> distinctUrls = GetDistinctFileUrls();
+
+				if (Session.TotalFiles != distinctUrls.Count)
 				{
-					Program.Logger.Warning("Indexed files and unique files is not the same, please check results. Found a total of {totalUrls} files resulting in {distinctUrls} urls", Session.TotalFiles, distinctUrls.Count());
+					Program.Logger.Warning("Indexed files and unique files is not the same, please check results. Found a total of {totalUrls} files resulting in {distinctUrls} urls", Session.TotalFiles, distinctUrls.Count);
 				}
 
-				Console.WriteLine(Statistics.GetSessionStats(Session, onlyRedditStats: true, includeExtensions: true));
+				Console.WriteLine(Statistics.GetSessionStats(Session, onlyRedditStats: true, includeExtensions: true, scanDatabase: ScanDatabase));
 
 				bool genericWebsite =
 					Session.Root.Uri.Host == Constants.GoogleDriveDomain ||
@@ -631,7 +802,15 @@ public partial class OpenDirectoryIndexer
 							using FileStream fileStream = new(urlsPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read, bufferSize: 1024 * 1024);
 							using StreamWriter streamWriter = new(fileStream);
 
-							WriteAria2Urls(Session.Root, streamWriter, rootDir, urlDir);
+							if (ScanDatabase is not null)
+							{
+								await ScanDatabase.FlushAsync();
+								await WriteAria2UrlsFromDatabaseAsync(Session.Root.Url, streamWriter, rootDir, urlDir);
+							}
+							else
+							{
+								WriteAria2Urls(Session.Root, streamWriter, rootDir, urlDir);
+							}
 
 							Program.Logger.Information("Saved aria2 URL list to file: {path}", urlsPath);
 							Console.WriteLine($"Saved aria2 URL list to file: {urlsPath}");
@@ -665,7 +844,7 @@ public partial class OpenDirectoryIndexer
 					{
 						try
 						{
-							WebFile biggestFile = Session.Root.AllFiles.OrderByDescending(f => f.FileSize).First();
+							(string Url, long? FileSize) biggestFile = GetLargestFile() ?? throw new InvalidOperationException("No files found");
 
 							Console.WriteLine($"Starting speedtest (10-25 seconds)..");
 							Console.WriteLine($"Test file: {FileSizeHelper.ToHumanReadable(biggestFile.FileSize)} {biggestFile.Url}");
@@ -694,7 +873,7 @@ public partial class OpenDirectoryIndexer
 							if (ftpClient != null)
 							{
 
-								WebFile biggestFile = Session.Root.AllFiles.OrderByDescending(f => f.FileSize).First();
+								(string Url, long? FileSize) biggestFile = GetLargestFile() ?? throw new InvalidOperationException("No files found");
 
 								Console.WriteLine($"Starting speedtest (10-25 seconds)..");
 								Console.WriteLine($"Test file: {FileSizeHelper.ToHumanReadable(biggestFile.FileSize)} {biggestFile.Url}");
@@ -732,7 +911,7 @@ public partial class OpenDirectoryIndexer
 				Program.Logger.Information("Logging sessions stats..");
 				try
 				{
-					string sessionStats = Statistics.GetSessionStats(Session, includeExtensions: true, includeBanner: true);
+					string sessionStats = Statistics.GetSessionStats(Session, includeExtensions: true, includeBanner: true, scanDatabase: ScanDatabase);
 					Program.Logger.Information(sessionStats);
 					Program.HistoryLogger.Information(sessionStats);
 					Program.Logger.Information("Logged sessions stats");
@@ -769,7 +948,8 @@ public partial class OpenDirectoryIndexer
 
 					try
 					{
-						Library.SaveSessionJson(Session, jsonPath);
+						SaveSessionJson(jsonPath);
+
 						Program.Logger.Information("Saved session: {path}", jsonPath);
 						Console.WriteLine($"Saved session: {jsonPath}");
 					}
@@ -790,7 +970,7 @@ public partial class OpenDirectoryIndexer
 				{
 					try
 					{
-						new Clipboard().SetText(Statistics.GetSessionStats(Session, includeExtensions: true, onlyRedditStats: true));
+						new Clipboard().SetText(Statistics.GetSessionStats(Session, includeExtensions: true, onlyRedditStats: true, scanDatabase: ScanDatabase));
 						Console.WriteLine("Copied Reddit stats to clipboard!");
 						clipboardSuccess = true;
 					}
@@ -799,6 +979,11 @@ public partial class OpenDirectoryIndexer
 						Program.Logger.Error("Error copying stats to clipboard: {error}", ex.Message);
 					}
 				}
+
+				// Everything above that could still need it (URLs .txt, JSON, extension stats) has been
+				// written by now.
+				ScanDatabase?.MirrorSessionStats(Session);
+				await DisposeScanDatabaseAsync(deleteFile: !ShouldKeepScanDatabase);
 
 				if (OpenDirectoryIndexerSettings.CommandLineOptions.Quit)
 				{
@@ -809,47 +994,293 @@ public partial class OpenDirectoryIndexer
 					Console.WriteLine(clipboardSuccess ? "Press ESC to exit!" : "Press ESC to exit! Or C to copy to clipboard and quit!");
 				}
 			}
+			catch (OperationCanceledException) when (Paused)
+			{
+				// Expected: pausing (issue #56 phase 6) cancels IndexingTaskCts, which can surface as this
+				// from whatever a crawl thread happened to be doing at the time (e.g. a Task.Delay), rather
+				// than always being observed as a graceful loop exit. Not an error - nothing to log.
+			}
 			catch (Exception ex)
 			{
 				Program.Logger.Error(ex, "Error in indexing task");
 			}
+			finally
+			{
+				// Best-effort: normal completion (and the Paused early-return above) already dispose
+				// ScanDatabase; this only covers the case where an exception skipped that (e.g.
+				// cancellation, parse error).
+				ScanDatabase?.MirrorSessionStats(Session);
+				await DisposeScanDatabaseAsync(deleteFile: !ShouldKeepScanDatabase);
+
+				if (Paused)
+				{
+					Program.Logger.Information("Paused.");
+				}
+			}
 		});
+	}
+
+	/// <summary>
+	/// Decides whether a --resume should retry directories that errored during the previous run (issue #56
+	/// phase 6). --retry-errors always says yes without asking. Otherwise, if there's nothing to retry this
+	/// is a no-op; if there is and the session looks interactive, asks; if it doesn't (redirected input, or
+	/// --quit implying an unattended run), defaults to no rather than risking a script hanging on a prompt.
+	/// </summary>
+	private async Task<bool> ShouldRetryErrorsAsync()
+	{
+		if (OpenDirectoryIndexerSettings.CommandLineOptions.RetryErrors)
+		{
+			return true;
+		}
+
+		long erroredCount = await ScanDatabase.CountErroredDirectoriesAsync();
+
+		if (erroredCount == 0)
+		{
+			return false;
+		}
+
+		if (Console.IsInputRedirected || OpenDirectoryIndexerSettings.CommandLineOptions.Quit)
+		{
+			Program.Logger.Warning(
+				"{count} director{suffix} had errors during the previous run; not retrying them (non-interactive session - pass --retry-errors to retry automatically).",
+				erroredCount, erroredCount == 1 ? "y" : "ies");
+
+			return false;
+		}
+
+		Console.Write($"Found {Library.FormatWithThousands(erroredCount)} director{(erroredCount == 1 ? "y" : "ies")} that had errors during the previous run. Retry {(erroredCount == 1 ? "it" : "them")}? [y/N]: ");
+		string answer = Console.ReadLine();
+
+		return answer?.Trim().Equals("y", StringComparison.OrdinalIgnoreCase) == true;
+	}
+
+	/// <summary>
+	/// Reports a successful --resume: what was already in the database (issue #56 phase 6) and how much is
+	/// queued to happen next, so it's clear the right database was loaded and what it's about to do -
+	/// rather than silently continuing. Also identifies which attempt this is and when the scan as a whole
+	/// first started, using the ScanInfo/ScanRuns history (issue #56: root URL, timestamps, distinguishing
+	/// resume attempts), not just the file/directory counts.
+	/// </summary>
+	private async Task PrintResumeSummaryAsync(string dbPath, ScanResume.Result resumeResult, int runNumber, long priorRunCount, ScanDatabase.ScanInfoSnapshot scanInfo)
+	{
+		long totalDirectoriesInDatabase = await ScanDatabase.CountDirectoriesAsync();
+		long totalFilesInDatabase = await ScanDatabase.CountFilesAsync();
+		long filesWithKnownSize = totalFilesInDatabase - resumeResult.FilesToRequeueForSize.Count;
+
+		string sitePrefix = scanInfo is null ? string.Empty :
+			$"""
+
+			  Site: {scanInfo.RootUrl}
+			  This is attempt #{Library.FormatWithThousands(runNumber)} ({Library.FormatWithThousands(priorRunCount)} prior attempt{(priorRunCount == 1 ? "" : "s")}); first started {scanInfo.FirstStartedAtUtc:yyyy-MM-dd HH:mm} UTC.
+			""";
+
+		string summary =
+			$"""
+			Successfully resumed from database: {dbPath}{sitePrefix}
+			  Already in database: {Library.FormatWithThousands(resumeResult.ProcessedUrls.Count)} of {Library.FormatWithThousands(totalDirectoriesInDatabase)} directories finished, {Library.FormatWithThousands(filesWithKnownSize)} of {Library.FormatWithThousands(totalFilesInDatabase)} files with a known size.
+			  Queued: {Library.FormatWithThousands(resumeResult.DirectoriesToRequeue.Count)} director{(resumeResult.DirectoriesToRequeue.Count == 1 ? "y" : "ies")} to (re)process, {Library.FormatWithThousands(resumeResult.FilesToRequeueForSize.Count)} file size{(resumeResult.FilesToRequeueForSize.Count == 1 ? "" : "s")} to look up.
+			""";
+
+		Console.WriteLine(summary);
+		Program.Logger.Information(summary);
+	}
+
+	/// <summary>
+	/// Gracefully stops an in-progress scan instead of requiring a hard kill (issue #56 phase 6, the 'P'
+	/// key - see Command.ProcessConsoleInput): signals cancellation so the crawl loops stop picking up new
+	/// work, waits for them to actually wind down (in-flight requests still get to finish or time out
+	/// normally), then makes sure everything mirrored so far is safely committed to the scan database
+	/// before returning. Without --use-database there's nothing to persist, so this is effectively the
+	/// same as a normal exit in that case - callers should say so.
+	/// </summary>
+	public async Task PauseAsync()
+	{
+		if (IndexingTaskCts is null || IndexingTaskCts.IsCancellationRequested)
+		{
+			return;
+		}
+
+		Paused = true;
+		IndexingTaskCts.Cancel();
+
+		if (IndexingTask is not null)
+		{
+			try
+			{
+				await IndexingTask;
+			}
+			catch (Exception ex)
+			{
+				Program.Logger.Error(ex, "Error while pausing");
+			}
+		}
+	}
+
+	/// <summary>
+	/// Saves the session as JSON to <paramref name="filePath"/>, reading the directory tree back from the
+	/// scan database instead of the in-memory session.Root when one is active - see
+	/// Library.SaveSessionJsonAsync for why that matters once eviction (issue #56 phase 4) is enabled.
+	/// Used both by the automatic end-of-scan save and the mid-scan 'J' key (see Command.SaveSession).
+	/// </summary>
+	public void SaveSessionJson(string filePath)
+	{
+		if (ScanDatabase is not null)
+		{
+			Library.SaveSessionJsonAsync(Session, filePath, ScanDatabase).GetAwaiter().GetResult();
+		}
+		else
+		{
+			Library.SaveSessionJson(Session, filePath);
+		}
+	}
+
+	/// <summary>
+	/// Every distinct file URL found so far, naturally sorted - sourced from the scan database instead of
+	/// session.Root.AllFileUrls when one is active, for the same reason as SaveSessionJson. Used both by
+	/// the automatic end-of-scan URLs .txt save and the mid-scan 'U' key (see Command.SaveUrls).
+	/// </summary>
+	public List<string> GetDistinctFileUrls()
+	{
+		IEnumerable<string> urls = ScanDatabase is not null ?
+			ScanDatabase.GetAllFileUrlsAsync().GetAwaiter().GetResult() :
+			Session.Root.AllFileUrls;
+
+		return [.. urls.Distinct().OrderBy(x => x, NaturalSortStringComparer.InvariantCulture)];
+	}
+
+	/// <summary>
+	/// URL and size of the single largest file found so far, used to pick a --speedtest target - sourced
+	/// from the scan database instead of session.Root.AllFiles when one is active, for the same reason as
+	/// SaveSessionJson. Returns null if no files have been found yet.
+	/// </summary>
+	private (string Url, long? FileSize)? GetLargestFile()
+	{
+		if (ScanDatabase is not null)
+		{
+			ScanDatabase.MirroredFile file = ScanDatabase.GetLargestFileAsync().GetAwaiter().GetResult();
+
+			return file is null ? null : (file.Url, file.FileSize);
+		}
+
+		WebFile biggestFile = Session.Root.AllFiles.OrderByDescending(f => f.FileSize).FirstOrDefault();
+
+		return biggestFile is null ? null : (biggestFile.Url, biggestFile.FileSize);
+	}
+
+	private async Task DisposeScanDatabaseAsync(bool deleteFile)
+	{
+		if (ScanDatabase is null)
+		{
+			return;
+		}
+
+		string dbPath = ScanDatabase.Path;
+
+		try
+		{
+			await ScanDatabase.DisposeAsync();
+		}
+		catch (Exception ex)
+		{
+			Program.Logger.Error(ex, "Error closing scan database '{path}'", dbPath);
+		}
+		finally
+		{
+			ScanDatabase = null;
+		}
+
+		if (deleteFile)
+		{
+			try
+			{
+				if (File.Exists(dbPath))
+				{
+					File.Delete(dbPath);
+				}
+
+				string walPath = $"{dbPath}-wal";
+				string shmPath = $"{dbPath}-shm";
+
+				if (File.Exists(walPath))
+				{
+					File.Delete(walPath);
+				}
+
+				if (File.Exists(shmPath))
+				{
+					File.Delete(shmPath);
+				}
+			}
+			catch (Exception ex)
+			{
+				Program.Logger.Warning(ex, "Could not delete scan database '{path}'", dbPath);
+			}
+		}
+		else
+		{
+			Program.Logger.Information("Kept scan database: {path}", dbPath);
+		}
 	}
 
 	private static void WriteAria2Urls(WebDirectory webDirectory, StreamWriter streamWriter, string rootDir, string urlDir)
 	{
 		foreach (WebFile webFile in webDirectory.Files)
-			{
-				string safeUrl = webFile.Url.Contains("#") ? webFile.Url.Replace("#", "%23") : webFile.Url;
-				if (Uri.TryCreate(safeUrl, UriKind.Absolute, out Uri uri))
-				{
-					streamWriter.WriteLine(uri.AbsoluteUri);
-				}
-				else
-				{
-					streamWriter.WriteLine(safeUrl);
-				}
-
-				string directory = webFile.Url[0..^webFile.FileName.Length].Replace(Session.Root.Url, string.Empty).TrimEnd('/');
-				
-				if (!string.IsNullOrWhiteSpace(urlDir))
-				{
-					directory = Path.Combine(urlDir, directory.TrimStart('/').TrimEnd('/'));
-				}
-
-				if (!string.IsNullOrWhiteSpace(rootDir))
-				{
-					directory = Path.Combine(rootDir, directory.TrimStart('/').TrimEnd('/'));
-				}
-
-				streamWriter.WriteLine($"  dir={directory}");
-				streamWriter.WriteLine($"  out={webFile.FileName}");
-			}
+		{
+			WriteAria2FileEntry(streamWriter, webFile.Url, webFile.FileName, rootDir, urlDir);
+		}
 
 		foreach (WebDirectory subdirectory in webDirectory.Subdirectories)
 		{
 			WriteAria2Urls(subdirectory, streamWriter, rootDir, urlDir);
 		}
+	}
+
+	/// <summary>
+	/// Same output as WriteAria2Urls(WebDirectory, ...), sourced from the scan database instead of the
+	/// in-memory tree. Needed once eviction (issue #56 phase 4) may have dropped some directories'
+	/// Files/Subdirectories from memory - the in-memory tree alone would silently produce an incomplete
+	/// aria2 input file for anything under an evicted directory.
+	/// </summary>
+	private async Task WriteAria2UrlsFromDatabaseAsync(string directoryUrl, StreamWriter streamWriter, string rootDir, string urlDir)
+	{
+		foreach (ScanDatabase.MirroredFile file in await ScanDatabase.GetFilesAsync(directoryUrl))
+		{
+			WriteAria2FileEntry(streamWriter, file.Url, file.FileName, rootDir, urlDir);
+		}
+
+		foreach (ScanDatabase.MirroredDirectory subdirectory in await ScanDatabase.GetSubdirectoriesAsync(directoryUrl))
+		{
+			await WriteAria2UrlsFromDatabaseAsync(subdirectory.Url, streamWriter, rootDir, urlDir);
+		}
+	}
+
+	private static void WriteAria2FileEntry(StreamWriter streamWriter, string fileUrl, string fileName, string rootDir, string urlDir)
+	{
+		string safeUrl = fileUrl.Contains("#") ? fileUrl.Replace("#", "%23") : fileUrl;
+		if (Uri.TryCreate(safeUrl, UriKind.Absolute, out Uri uri))
+		{
+			streamWriter.WriteLine(uri.AbsoluteUri);
+		}
+		else
+		{
+			streamWriter.WriteLine(safeUrl);
+		}
+
+		string directory = fileUrl[0..^fileName.Length].Replace(Session.Root.Url, string.Empty).TrimEnd('/');
+
+		if (!string.IsNullOrWhiteSpace(urlDir))
+		{
+			directory = Path.Combine(urlDir, directory.TrimStart('/').TrimEnd('/'));
+		}
+
+		if (!string.IsNullOrWhiteSpace(rootDir))
+		{
+			directory = Path.Combine(rootDir, directory.TrimStart('/').TrimEnd('/'));
+		}
+
+		streamWriter.WriteLine($"  dir={directory}");
+		streamWriter.WriteLine($"  out={fileName}");
 	}
 
 	/// <summary>
@@ -868,6 +1299,13 @@ public partial class OpenDirectoryIndexer
 
 	private void TimerStatistics_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
 	{
+		// Independent of ShowStatistics (a display-only toggle): periodically snapshot the running
+		// counters (HTTP traffic/requests, status codes, errors, skipped) so --resume can restore them
+		// instead of restarting them at zero (issue #56 phase 6). Cheap and non-blocking; these change on
+		// nearly every processed directory, so this runs on the same cadence as the stats display rather
+		// than on every single increment.
+		ScanDatabase?.MirrorSessionStats(Session);
+
 		if (!ShowStatistics)
 		{
 			return;
@@ -1065,6 +1503,12 @@ public partial class OpenDirectoryIndexer
 					{
 						webDirectory.Finished = true;
 						webDirectory.FinishTime = DateTimeOffset.UtcNow;
+
+						ScanDatabase?.MirrorDirectory(webDirectory);
+
+						// This directory's own parse step (including registering any children/file-size
+						// lookups as outstanding work, above) is done - one unit of its own PendingWork.
+						TryCloseDirectory(webDirectory);
 					}
 				}
 			}
@@ -1709,6 +2153,33 @@ public partial class OpenDirectoryIndexer
 		webDirectory.Name = parsedWebDirectory.Name;
 		webDirectory.Subdirectories = parsedWebDirectory.Subdirectories;
 		webDirectory.Url = parsedWebDirectory.Url;
+		// Was previously never copied, so e.g. a symlink-loop detection (DirectoryParser.CheckSymlinks,
+		// which only sets it on this transient parsedWebDirectory) never actually reached the real,
+		// tree-linked/mirrored webDirectory.Error - only the separate exception-handler paths did. Needed
+		// so --resume's retry-on-error (issue #56 phase 6) can see all error cases, not just those.
+		webDirectory.Error = parsedWebDirectory.Error;
+		webDirectory.ContentFingerprint = webDirectory.ComputeContentFingerprint();
+
+		// parsedWebDirectory.Subdirectories were constructed with the transient parsedWebDirectory as their
+		// parent (see the various DirectoryParser.*Parser methods), not the real, tree-linked webDirectory.
+		// Fix that up now: eviction (below) reassigns webDirectory.Files/Subdirectories rather than mutating
+		// them in place, and anything still reaching the old transient parent would otherwise keep the old,
+		// un-evicted lists (and everything in them) alive forever.
+		foreach (WebDirectory subdirectory in webDirectory.Subdirectories)
+		{
+			subdirectory.ParentDirectory = webDirectory;
+		}
+
+		if (ScanDatabase is not null)
+		{
+			ScanDatabase.MirrorDirectory(webDirectory);
+
+			foreach (WebFile webFile in webDirectory.Files)
+			{
+				webFile.ParentDirectory = webDirectory;
+				ScanDatabase.MirrorFile(webFile, webDirectory);
+			}
+		}
 
 		if (processSubdirectories)
 		{
@@ -1726,7 +2197,16 @@ public partial class OpenDirectoryIndexer
 					}
 					else
 					{
+						// Must happen before Enqueue: once queued, another thread can dequeue and close it
+						// (see TryCloseDirectory) before we'd otherwise get a chance to register it as
+						// outstanding work on webDirectory.
+						if (EvictionEnabled)
+						{
+							Interlocked.Increment(ref webDirectory.PendingWork);
+						}
+
 						WebDirectoriesQueue.Enqueue(subdirectory);
+						ScanDatabase?.MirrorDirectory(subdirectory);
 					}
 				}
 
@@ -1743,9 +2223,27 @@ public partial class OpenDirectoryIndexer
 		{
 			foreach (WebFile webFile in webDirectory.Files.Where(f => f.FileSize is null && !OpenDirectoryIndexerSettings.CommandLineOptions.FastScan || OpenDirectoryIndexerSettings.CommandLineOptions.ExactFileSizes))
 			{
+				// Same ordering requirement as above: increment before the file becomes visible to the
+				// size-lookup processor.
+				if (EvictionEnabled)
+				{
+					Interlocked.Increment(ref webDirectory.PendingWork);
+				}
+
 				WebFilesFileSizeQueue.Enqueue(webFile);
 			}
 		}
+	}
+
+	/// <summary>No-op unless eviction is enabled; see WebDirectory.TryClose for the algorithm (issue #56 phase 4).</summary>
+	private void TryCloseDirectory(WebDirectory directory)
+	{
+		if (!EvictionEnabled)
+		{
+			return;
+		}
+
+		WebDirectory.TryClose(directory);
 	}
 
 	private async Task WebFileFileSizeProcessor(ConcurrentQueue<WebFile> queue, string threadName, Task[] tasks, CancellationToken cancellationToken)
@@ -1771,11 +2269,19 @@ public partial class OpenDirectoryIndexer
 						webFile.FileSize = await HttpClient.GetUrlFileSizeByDownloadingAsync(webFile.Url) ?? 0;
 					}
 
+					ScanDatabase?.MirrorFileSize(webFile);
+
 					Program.Logger.Debug("Retrieved filesize for: {url}", webFile.Url);
 				}
 				catch (Exception ex)
 				{
 					Program.Logger.Error(ex, "Error retrieving filesize of Url: '{url}'", webFile.Url);
+				}
+				finally
+				{
+					// Whether the lookup succeeded or failed, it's no longer outstanding work - must run
+					// unconditionally or a directory with a permanently-failing file size would never close.
+					TryCloseDirectory(webFile.ParentDirectory);
 				}
 			}
 

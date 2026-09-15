@@ -2776,6 +2776,10 @@ public static partial class DirectoryParser
 	{
 		WebDirectory parentWebDirectory = webDirectory.ParentDirectory;
 
+		// Computed once (direct children only, not recursive) and reused for every ancestor level below,
+		// instead of re-serializing webDirectory's own Files/Subdirectories on every iteration.
+		string webDirectoryFingerprint = null;
+
 		for (int level = 1; level <= 8; level++)
 		{
 			if (webDirectory.Uri.Segments.Length <= level || parentWebDirectory == null)
@@ -2785,7 +2789,9 @@ public static partial class DirectoryParser
 
 			if (webDirectory.Subdirectories.Count != 0 || webDirectory.Files.Count != 0)
 			{
-				if (CheckDirectoryTheSame(webDirectory, parentWebDirectory))
+				webDirectoryFingerprint ??= webDirectory.ComputeContentFingerprint();
+
+				if (CheckDirectoryTheSame(webDirectory, webDirectoryFingerprint, parentWebDirectory))
 				{
 					Program.Logger.Error("Possible virtual directory or symlink detected (level {level})! SKIPPING! Url: {url}", level, webDirectory.Url);
 
@@ -2800,7 +2806,7 @@ public static partial class DirectoryParser
 		}
 	}
 
-	private static bool CheckDirectoryTheSame(WebDirectory webDirectory, WebDirectory parentWebDirectory)
+	private static bool CheckDirectoryTheSame(WebDirectory webDirectory, string webDirectoryFingerprint, WebDirectory parentWebDirectory)
 	{
 		if (webDirectory.Files.Count != parentWebDirectory.Files.Count ||
 		    webDirectory.Subdirectories.Count != parentWebDirectory.Subdirectories.Count)
@@ -2808,18 +2814,11 @@ public static partial class DirectoryParser
 			return false;
 		}
 
-		// TODO: If anyone knows a nice way without JsonConvert, PR!
-		if ((parentWebDirectory.Files.Count == 0 ||
-		     (JsonConvert.SerializeObject(parentWebDirectory.Files.Select(f => new { f.FileName, f.FileSize })) ==
-		      JsonConvert.SerializeObject(webDirectory.Files.Select(f => new { f.FileName, f.FileSize })))) &&
-		    (parentWebDirectory.Subdirectories.Count == 0 ||
-		     JsonConvert.SerializeObject(parentWebDirectory.Subdirectories.Select(d => d.Name)) ==
-		     JsonConvert.SerializeObject(webDirectory.Subdirectories.Select(d => d.Name))))
-		{
-			return true;
-		}
+		// Ancestors are always already finished by the time a descendant is parsed, so their fingerprint
+		// is normally cached (see OpenDirectoryIndexer.AddProcessedWebDirectory); fall back just in case.
+		string parentFingerprint = parentWebDirectory.ContentFingerprint ?? parentWebDirectory.ComputeContentFingerprint();
 
-		return false;
+		return webDirectoryFingerprint == parentFingerprint;
 	}
 
 	public static string ReplaceCommonDefaultFilenames(string input)
