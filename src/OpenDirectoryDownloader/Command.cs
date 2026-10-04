@@ -52,13 +52,39 @@ public class Command
 			Program.Logger.Warning(message);
 		}
 
+		// Set once stdin turns out to be unusable (see below), so we stop trying to read it again every
+		// iteration and just idle instead.
+		bool consoleInputUnavailable = false;
+
 		while (true)
 		{
 			try
 			{
 				if (Console.IsInputRedirected)
 				{
-					int keyPressed = Console.Read();
+					if (consoleInputUnavailable)
+					{
+						Task.Delay(250).Wait();
+						continue;
+					}
+
+					int keyPressed;
+
+					try
+					{
+						keyPressed = Console.Read();
+					}
+					catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+					{
+						// When run detached/unattended on Linux (e.g. `nohup ... &`), stdin can
+						// end up pointing at a closed/invalid file descriptor instead of cleanly returning
+						// EOF (-1), which throws (IOException "Bad file descriptor", sometimes surfaced as
+						// UnauthorizedAccessException) instead. Treat that as "no input will ever arrive"
+						// rather than crashing the otherwise healthy indexing run.
+						Program.Logger.Warning(ex, "Console input is unavailable (e.g. closed stdin when running detached); ignoring console input from now on.");
+						consoleInputUnavailable = true;
+						continue;
+					}
 
 					if (keyPressed == -1)
 					{
