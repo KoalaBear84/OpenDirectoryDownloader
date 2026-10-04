@@ -40,6 +40,22 @@ public static partial class DirectoryParser
 
 	private static readonly char[] trimChars = ['/'];
 
+	private static readonly HashSet<string> UsrSubdirectoriesToRemove = ["bin", "include", "lib", "lib32", "share", "src"];
+
+	private static readonly HashSet<string> GoodUriSchemes =
+	[
+		Constants.UriScheme.Https,
+		Constants.UriScheme.Http,
+		Constants.UriScheme.Ftp,
+		Constants.UriScheme.Ftps
+	];
+
+	private static readonly HashSet<string> SkipHosts =
+	[
+		Constants.GoogleDriveDomain,
+		Constants.BlitzfilesTechDomain
+	];
+
 	/// <summary>
 	/// Parses Html to a WebDirectory object containing the current directory index
 	/// </summary>
@@ -606,13 +622,16 @@ public static partial class DirectoryParser
 		return parsedWebDirectory;
 	}
 
+	[GeneratedRegex(@"_d\('(?<DirectoryName>.*)','(?<Date>.*)','(?<Link>.*)'\)")]
+	private static partial Regex RegexParseJavaScriptDrawnDirectory();
+
+	[GeneratedRegex(@"_f\('(?<FileName>.*)',(?<FileSize>\d*),'(?<Date>.*)','(?<Link>.*)',(?<UnixTimestamp>\d*)\)")]
+	private static partial Regex RegexParseJavaScriptDrawnFile();
+
 	private static WebDirectory ParseJavaScriptDrawn(string baseUrl, WebDirectory parsedWebDirectory, string html)
 	{
-		Regex regexDirectory = new("_d\\('(?<DirectoryName>.*)','(?<Date>.*)','(?<Link>.*)'\\)");
-		Regex regexFile = new("_f\\('(?<FileName>.*)',(?<FileSize>\\d*),'(?<Date>.*)','(?<Link>.*)',(?<UnixTimestamp>\\d*)\\)");
-
-		MatchCollection matchCollectionDirectories = regexDirectory.Matches(html);
-		MatchCollection matchCollectionFiles = regexFile.Matches(html);
+		MatchCollection matchCollectionDirectories = RegexParseJavaScriptDrawnDirectory().Matches(html);
+		MatchCollection matchCollectionFiles = RegexParseJavaScriptDrawnFile().Matches(html);
 
 		if (matchCollectionDirectories.Count != 0 || matchCollectionFiles.Count != 0)
 		{
@@ -965,6 +984,9 @@ public static partial class DirectoryParser
 		return parsedWebDirectory;
 	}
 
+	[GeneratedRegex(@"[^\d]")]
+	private static partial Regex RegexNonDigits();
+
 	private static WebDirectory ParseSnifDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> snifTableRows, bool checkParents)
 	{
 		IElement table = snifTableRows.First().Parent("table");
@@ -1011,7 +1033,7 @@ public static partial class DirectoryParser
 				{
 					Url = fullUrl,
 					FileName = link?.Title,
-					FileSize = long.Parse(string.Join(null, Regex.Split((tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex}) span") as IHtmlSpanElement).Title, "[^\\d]")))
+					FileSize = long.Parse(string.Join(null, RegexNonDigits().Split((tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex}) span") as IHtmlSpanElement).Title)))
 				});
 			}
 		}
@@ -1100,7 +1122,7 @@ public static partial class DirectoryParser
 
 	private static WebDirectory ParseH5aiDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> h5aiTableRows, bool checkParents)
 	{
-		IElement table = h5aiTableRows.First().Parent("table");
+		IElement table = h5aiTableRows[0].Parent("table");
 
 		Dictionary<int, HeaderInfo> tableHeaders = GetTableHeaders(table);
 
@@ -2047,6 +2069,9 @@ public static partial class DirectoryParser
 		return match.Success;
 	};
 
+	[GeneratedRegex(@"\r\n|\r|\n|<br\S*>|<hr>")]
+	private static partial Regex RegexPreLineSeparator();
+
 	private static async Task<WebDirectory> ParsePreDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> pres, bool checkParents)
 	{
 		List<Func<WebDirectory, string, string, Task<bool>>> regexFuncs =
@@ -2065,7 +2090,7 @@ public static partial class DirectoryParser
 
 		foreach (IElement pre in pres)
 		{
-			List<string> lines = Regex.Split(pre.InnerHtml, "\r\n|\r|\n|<br\\S*>|<hr>").ToList();
+			List<string> lines = RegexPreLineSeparator().Split(pre.InnerHtml).ToList();
 
 			foreach (string line in lines)
 			{
@@ -2594,7 +2619,10 @@ public static partial class DirectoryParser
 	/// <param name="webDirectory">Directory to clean</param>
 	private static void CleanDynamicEntries(WebDirectory webDirectory)
 	{
-		webDirectory.Files.Where(f => f.FileName == "core").ToList().ForEach(f => webDirectory.Files.Remove(f));
+		if (webDirectory.Files.Any(f => f.FileName == "core"))
+		{
+			webDirectory.Files = [.. webDirectory.Files.Where(f => f.FileName != "core")];
+		}
 
 		if (webDirectory.Name == "dev")
 		{
@@ -2652,9 +2680,10 @@ public static partial class DirectoryParser
 
 		if (webDirectory.Name == "usr")
 		{
-			webDirectory.Subdirectories
-				.Where(d => new List<string> { "bin", "include", "lib", "lib32", "share", "src" }.Contains(d.Name))
-				.ToList().ForEach(wd => webDirectory.Subdirectories.Remove(wd));
+			if (webDirectory.Subdirectories.Any(d => UsrSubdirectoriesToRemove.Contains(d.Name)))
+			{
+				webDirectory.Subdirectories = [.. webDirectory.Subdirectories.Where(d => !UsrSubdirectoriesToRemove.Contains(d.Name))];
+			}
 		}
 
 		if (webDirectory.Name == "var")
@@ -2671,33 +2700,29 @@ public static partial class DirectoryParser
 	{
 		Uri baseUri = new(baseUrl);
 
-		List<string> goodSchemes =
-		[
-			Constants.UriScheme.Https,
-			Constants.UriScheme.Http,
-			Constants.UriScheme.Ftp,
-			Constants.UriScheme.Ftps
-		];
-
-		List<string> skipHosts =
-		[
-			Constants.GoogleDriveDomain,
-			Constants.BlitzfilesTechDomain
-		];
-
-		webDirectory.Subdirectories.Where(d =>
+		bool IsBadSubdirectory(WebDirectory d)
 		{
 			Uri uri = new(d.Url);
 
-			return !goodSchemes.Contains(uri.Scheme) || uri.Host != baseUri.Host || skipHosts.Contains(uri.Host) || !SameHostAndDirectoryDirectory(baseUri, uri);
-		}).ToList().ForEach(wd => webDirectory.Subdirectories.Remove(wd));
+			return !GoodUriSchemes.Contains(uri.Scheme) || uri.Host != baseUri.Host || SkipHosts.Contains(uri.Host) || !SameHostAndDirectoryDirectory(baseUri, uri);
+		}
 
-		webDirectory.Files.Where(f =>
+		bool IsBadFile(WebFile f)
 		{
 			Uri uri = new(f.Url);
 
-			return !goodSchemes.Contains(uri.Scheme) || uri.Host != baseUri.Host || skipHosts.Contains(uri.Host) || !SameHostAndDirectoryFile(uri, baseUri);
-		}).ToList().ForEach(f => webDirectory.Files.Remove(f));
+			return !GoodUriSchemes.Contains(uri.Scheme) || uri.Host != baseUri.Host || SkipHosts.Contains(uri.Host) || !SameHostAndDirectoryFile(uri, baseUri);
+		}
+
+		if (webDirectory.Subdirectories.Any(IsBadSubdirectory))
+		{
+			webDirectory.Subdirectories = [.. webDirectory.Subdirectories.Where(d => !IsBadSubdirectory(d))];
+		}
+
+		if (webDirectory.Files.Any(IsBadFile))
+		{
+			webDirectory.Files = [.. webDirectory.Files.Where(f => !IsBadFile(f))];
+		}
 	}
 
 	private static void CleanFragments(WebDirectory webDirectory)
@@ -2707,10 +2732,7 @@ public static partial class DirectoryParser
 
 		if (directoriesWithFragments.Count != 0)
 		{
-			foreach (WebDirectory webDir in directoriesWithFragments)
-			{
-				webDirectory.Subdirectories.Remove(webDir);
-			}
+			webDirectory.Subdirectories = [.. webDirectory.Subdirectories.Where(wd => !wd.Url.Contains('#'))];
 
 			foreach (WebDirectory directoryWithFragments in directoriesWithFragments)
 			{
@@ -2732,7 +2754,7 @@ public static partial class DirectoryParser
 			return;
 		}
 
-		webDirectory.Files.Where(wf => wf.Url.Contains('#')).ToList().ForEach(wd => webDirectory.Files.Remove(wd));
+		webDirectory.Files = [.. webDirectory.Files.Where(wf => !wf.Url.Contains('#'))];
 
 		foreach (WebFile fileWithFragment in filesWithFragments)
 		{

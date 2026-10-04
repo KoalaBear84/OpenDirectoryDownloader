@@ -137,6 +137,8 @@ public sealed class ScanDatabase : IAsyncDisposable
 
 				CREATE INDEX IF NOT EXISTS IX_Files_DirectoryUrl ON Files (DirectoryUrl);
 
+				CREATE INDEX IF NOT EXISTS IX_Files_FileSize ON Files (FileSize);
+
 				CREATE TABLE IF NOT EXISTS ScanInfo (
 					Id INTEGER PRIMARY KEY CHECK (Id = 1),
 					RootUrl TEXT NOT NULL,
