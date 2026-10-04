@@ -64,6 +64,8 @@ Command line parameters:
 |       | `--proxy-address`    | Proxy address, like "socks5://127.0.0.1:9050" (needed for .onion)                                                                                                                                                             |
 |       | `--proxy-username`   | Proxy username                                                                                                                                                                                                                |
 |       | `--proxy-password`   | Proxy password                                                                                                                                                                                                                |
+|       | `--flaresolverr-url` | FlareSolverr endpoint URL, e.g. `http://127.0.0.1:8191`. If provided, this endpoint is used as HTTP handler to solve Cloudflare challenges.                                                                                |
+|       | `--flaresolverr-docker-name` | FlareSolverr Docker container name, e.g. `flaresolverr`. If provided, OpenDirectoryDownloader will also show and save the output from `docker logs -f` for that container.                                      |
 |       | `--no-browser`       | Disallow starting Chromium browser (for Cloudflare)                                                                                                                                                                           |
 |       | `--http-cloak`       | *SLOWER!* *EXPERIMENTAL* Emulate a real browser's TLS/HTTP fingerprint for improved compatibility. See below for more info.                                                                                                            |
 
@@ -141,6 +143,12 @@ There is experimental support for Cloudflare. When it detects a Cloudflare issue
 Cloudflare does somehow detect that it is not the normal Chromium/Chrome browser and therefore it sadly will not always work. A good tip is move your mouse as soon as possible in the browser.
 
 Sometimes it fails and pops up a browser for every request, and also kills it almost immediately when Cloudflare sees that there is no problem with the session. If this happens, kill the indexer!
+
+If you are using FlareSolverr in Docker, you can now also stream its container logs in the app by supplying both `--flaresolverr-url` and `--flaresolverr-docker-name`, for example:
+
+`OpenDirectoryDownloader.exe --url "https://myopendirectory.com" --flaresolverr-url "http://127.0.0.1:8191" --flaresolverr-docker-name "flaresolverr"`
+
+This reads the container output using `docker logs -f <container-name>`, shows it in the console, and writes it to the normal log file.
 
 If anybody have more info how to get Cloudflare to work better, let me know!
 

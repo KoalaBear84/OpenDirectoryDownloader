@@ -1,4 +1,5 @@
 using AngleSharp.Dom;
+using FlareSolverrSharp;
 using Newtonsoft.Json;
 using OpenDirectoryDownloader.Calibre;
 using OpenDirectoryDownloader.FileUpload;
@@ -291,6 +292,20 @@ public partial class OpenDirectoryIndexer
 
 			HttpCloak.HttpCloakHandler httpCloakHandler = new(preset: OpenDirectoryIndexerSettings.CommandLineOptions.HttpCloak, proxy: cloakProxy);
 			httpMessageHandler = new CookieSyncHandler(httpCloakHandler, CookieContainer);
+		}
+
+		if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.CommandLineOptions.FlareSolverrUrl))
+		{
+			if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.CommandLineOptions.HttpCloak))
+			{
+				Program.Logger.Warning("--http-cloak and --flaresolverr-url were both specified; they cannot be combined, FlareSolverr takes precedence");
+			}
+
+			Program.Logger.Warning("Using FlareSolverr endpoint: {flareSolverrUrl}", OpenDirectoryIndexerSettings.CommandLineOptions.FlareSolverrUrl);
+			httpMessageHandler = new ClearanceHandler(OpenDirectoryIndexerSettings.CommandLineOptions.FlareSolverrUrl)
+			{
+				InnerHandler = SocketsHttpHandler
+			};
 		}
 
 		HttpClient = new HttpClient(httpMessageHandler)

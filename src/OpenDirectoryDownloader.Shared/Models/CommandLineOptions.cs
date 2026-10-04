@@ -82,6 +82,12 @@ public class CommandLineOptions
 	[Option("http-cloak", Required = false, Default = "", HelpText = "Use HttpCloak to emulate a real browser's TLS/HTTP fingerprint for improved compatibility. Use on its own to default to 'chrome-latest', or specify a preset, e.g. --http-cloak firefox-latest (other presets: safari-latest, chrome-latest-windows, etc). Omit entirely to disable. Note: bypasses this app's SSL certificate and automatic decompression, is a lot slower than without (its native proxy effectively serializes requests, regardless of --threads), and has no native binary for linux-arm.")]
 	public string HttpCloak { get; set; }
 
+	[Option("flaresolverr-url", Required = false, Default = "", HelpText = "FlareSolverr endpoint URL, e.g. http://127.0.0.1:8191")]
+	public string FlareSolverrUrl { get; set; }
+
+	[Option("flaresolverr-docker-name", Required = false, Default = "", HelpText = "FlareSolverr Docker container name to stream logs from, e.g. flaresolverr")]
+	public string FlareSolverrDockerName { get; set; }
+
 	[Option('H', "header", Required = false, Default = null, HelpText = "Provide a custom header to use for any HTTP request while indexing. Option can be used multiple times for multiple headers.")]
 	public IEnumerable<string> Header { get; set; }
 

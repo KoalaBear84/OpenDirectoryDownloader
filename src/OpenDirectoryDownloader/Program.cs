@@ -15,6 +15,7 @@ public class Program
 
 	public static string ConsoleTitle { get; set; }
 	private static CommandLineOptions CommandLineOptions { get; set; }
+	private static Process FlareSolverrLogProcess { get; set; }
 
 	public static async Task<int> Main(string[] args)
 	{
@@ -162,24 +163,126 @@ public class Program
 		OpenDirectoryIndexer openDirectoryIndexer = new(openDirectoryIndexerSettings);
 
 		SetConsoleTitle($"{new Uri(openDirectoryIndexerSettings.Url).Host.Replace("www.", string.Empty)} - {ConsoleTitle}");
+		StartFlareSolverrLogStreaming();
 
-		openDirectoryIndexer.StartIndexingAsync();
-		Console.WriteLine("Started indexing!");
-
-		Command.ShowInfoAndCommands();
-		Command.ProcessConsoleInput(openDirectoryIndexer);
-
-		await openDirectoryIndexer.IndexingTask;
-
-		if (CommandLineOptions.Quit)
+		try
 		{
+			openDirectoryIndexer.StartIndexingAsync();
+			Console.WriteLine("Started indexing!");
+
+			Command.ShowInfoAndCommands();
+			Command.ProcessConsoleInput(openDirectoryIndexer);
+
+			await openDirectoryIndexer.IndexingTask;
+
+			if (CommandLineOptions.Quit)
+			{
+				return 0;
+			}
+
+			Console.WriteLine("Press ESC to exit");
+			Console.ReadKey();
+
 			return 0;
 		}
+		finally
+		{
+			StopFlareSolverrLogStreaming();
+		}
+	}
 
-		Console.WriteLine("Press ESC to exit");
-		Console.ReadKey();
+	private static void StartFlareSolverrLogStreaming()
+	{
+		if (string.IsNullOrWhiteSpace(CommandLineOptions.FlareSolverrDockerName))
+		{
+			return;
+		}
 
-		return 0;
+		try
+		{
+			ProcessStartInfo processStartInfo = new("docker")
+			{
+				UseShellExecute = false,
+				RedirectStandardOutput = true,
+				RedirectStandardError = true,
+				CreateNoWindow = true
+			};
+
+			processStartInfo.ArgumentList.Add("logs");
+			processStartInfo.ArgumentList.Add("--tail");
+			processStartInfo.ArgumentList.Add("0");
+			processStartInfo.ArgumentList.Add("--follow");
+			processStartInfo.ArgumentList.Add(CommandLineOptions.FlareSolverrDockerName);
+
+			FlareSolverrLogProcess = new Process
+			{
+				StartInfo = processStartInfo
+			};
+
+			FlareSolverrLogProcess.OutputDataReceived += (_, e) => WriteFlareSolverrLogLine(e.Data, isError: false);
+			FlareSolverrLogProcess.ErrorDataReceived += (_, e) => WriteFlareSolverrLogLine(e.Data, isError: true);
+
+			if (!FlareSolverrLogProcess.Start())
+			{
+				Logger.Warning("Failed to start FlareSolverr Docker log streaming for container '{containerName}'", CommandLineOptions.FlareSolverrDockerName);
+				FlareSolverrLogProcess.Dispose();
+				FlareSolverrLogProcess = null;
+				return;
+			}
+
+			Logger.Warning("Streaming FlareSolverr Docker logs from container '{containerName}'", CommandLineOptions.FlareSolverrDockerName);
+			FlareSolverrLogProcess.BeginOutputReadLine();
+			FlareSolverrLogProcess.BeginErrorReadLine();
+		}
+		catch (Exception ex)
+		{
+			Logger.Warning(ex, "Failed to start FlareSolverr Docker log streaming for container '{containerName}'", CommandLineOptions.FlareSolverrDockerName);
+		}
+	}
+
+	private static void WriteFlareSolverrLogLine(string logLine, bool isError)
+	{
+		if (string.IsNullOrWhiteSpace(logLine))
+		{
+			return;
+		}
+
+		string formattedLogLine = $"[FlareSolverr] {logLine}";
+
+		if (isError)
+		{
+			Logger.Warning("{logLine}", formattedLogLine);
+			return;
+		}
+
+		Console.WriteLine(formattedLogLine);
+		Logger.Information("{logLine}", formattedLogLine);
+	}
+
+	private static void StopFlareSolverrLogStreaming()
+	{
+		if (FlareSolverrLogProcess is null)
+		{
+			return;
+		}
+
+		try
+		{
+			if (!FlareSolverrLogProcess.HasExited)
+			{
+				FlareSolverrLogProcess.Kill(true);
+				FlareSolverrLogProcess.WaitForExit(2000);
+			}
+		}
+		catch (Exception ex)
+		{
+			Logger.Warning(ex, "Failed to stop FlareSolverr Docker log streaming for container '{containerName}'", CommandLineOptions.FlareSolverrDockerName);
+		}
+		finally
+		{
+			FlareSolverrLogProcess.Dispose();
+			FlareSolverrLogProcess = null;
+		}
 	}
 
 	public static void SetConsoleTitle(string title)

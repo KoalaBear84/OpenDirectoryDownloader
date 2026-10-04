@@ -40,6 +40,7 @@
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="1.5.0" />
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
+    <PackageReference Include="FlareSolverrSharp" Version="3.0.7" />
     <PackageReference Include="FluentFTP" Version="53.0.1" />
     <PackageReference Include="HttpCloak" Version="1.7.2" />
     <PackageReference Include="Jint" Version="4.4.1" />

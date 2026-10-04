@@ -2,7 +2,7 @@
   "profiles": {
     "OpenDirectoryDownloader": {
       "commandName": "Project",
-      "commandLineArgs": "--threads 50 --json --upload-urls --speedtest"
+      "commandLineArgs": "--threads 50 --json --upload-urls --speedtest --flaresolverr-url \"http://localhost:8191/\" --flaresolverr-docker-name \"flaresolverr\""
     }
   }
 }
