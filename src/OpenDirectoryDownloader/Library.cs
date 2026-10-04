@@ -487,7 +487,7 @@ public class Library
 
 	public static async Task<string> GetHtml(Stream stream)
 	{
-		using StreamReader streamReader = new(stream);
+		using StreamReader streamReader = new(stream, Encoding.UTF8);
 
 		return await streamReader.ReadToEndAsync();
 	}

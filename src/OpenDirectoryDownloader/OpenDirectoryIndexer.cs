@@ -379,9 +379,6 @@ public partial class OpenDirectoryIndexer
 			HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{OpenDirectoryIndexerSettings.Username}:{OpenDirectoryIndexerSettings.Password}")));
 		}
 
-		// Fix encoding issue with "windows-1251"
-		Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
 		WebDirectoryProcessors = new Task[OpenDirectoryIndexerSettings.Threads];
 		WebFileFileSizeProcessors = new Task[OpenDirectoryIndexerSettings.Threads];
 
@@ -2069,7 +2066,7 @@ public partial class OpenDirectoryIndexer
 	{
 		Library.FixCharSet(httpResponseMessage);
 
-		Encoding encoding = Encoding.ASCII;
+		Encoding encoding = Encoding.UTF8;
 
 		string charSet = httpResponseMessage.Content.Headers.ContentType?.CharSet;
 
@@ -2082,8 +2079,10 @@ public partial class OpenDirectoryIndexer
 		}
 
 		// Don't use using tags, it will close the stream for the callee
+		// Bytes are decoded above using the server's declared/detected encoding; this intermediate
+		// buffer is always normalized to UTF-8, which is what Library.GetHtml(Stream) expects to read back.
 		MemoryStream responseStream = new();
-		StreamWriter streamWriter = new(responseStream, encoding);
+		StreamWriter streamWriter = new(responseStream, Encoding.UTF8);
 
 		await using Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync();
 

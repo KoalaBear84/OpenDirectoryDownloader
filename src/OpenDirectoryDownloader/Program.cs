@@ -23,6 +23,10 @@ public class Program
 
 		Console.OutputEncoding = Encoding.UTF8;
 
+		// Must happen before anything reads Encoding.GetEncodings() (e.g. OpenDirectoryIndexer.EncodingInfos),
+		// otherwise codepages like windows-1251 are invisible to that lookup.
+		Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
 		Logger = new LoggerConfiguration()
 			.MinimumLevel.Debug()
 			.WriteTo.File("OpenDirectoryDownloader-.log", rollingInterval: RollingInterval.Day)
