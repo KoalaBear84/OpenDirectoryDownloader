@@ -247,7 +247,8 @@ button.secondary {
 }
 
 a.btn.secondary {
-    background: var(--bar-bg);
+	background: var(--bar-bg);
+	color: var(--text);
 }
 
 .up-btn {
@@ -1541,6 +1542,11 @@ function finishNavProgress() {
 }
 
 async function loadDirectory(url, { pushState = true, replace = false } = {}) {
+	// Resets the page scroll position too, not just the entry list's own (see renderEntryRows) - otherwise
+	// clicking "Open" from somewhere further down the page (e.g. a global search result) leaves the viewport
+	// wherever it was instead of showing the top of the newly-loaded directory.
+	window.scrollTo(0, 0);
+
 	startNavProgress();
 
 	let data;
