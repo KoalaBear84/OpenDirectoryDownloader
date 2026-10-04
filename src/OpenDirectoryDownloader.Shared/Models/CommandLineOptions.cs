@@ -79,7 +79,7 @@ public class CommandLineOptions
 	[Option("proxy-password", Required = false, Default = "", HelpText = "Proxy password")]
 	public string ProxyPassword { get; set; }
 
-	[Option("http-cloak", Required = false, Default = "", HelpText = "Use HttpCloak to emulate a real browser's TLS/HTTP fingerprint for improved compatibility. Use on its own to default to 'chrome-latest', or specify a preset, e.g. --http-cloak firefox-latest (other presets: safari-latest, chrome-latest-windows, etc). Omit entirely to disable. Note: bypasses this app's SSL certificate and automatic decompression, and has no native binary for linux-arm.")]
+	[Option("http-cloak", Required = false, Default = "", HelpText = "Use HttpCloak to emulate a real browser's TLS/HTTP fingerprint for improved compatibility. Use on its own to default to 'chrome-latest', or specify a preset, e.g. --http-cloak firefox-latest (other presets: safari-latest, chrome-latest-windows, etc). Omit entirely to disable. Note: bypasses this app's SSL certificate and automatic decompression, is a lot slower than without (its native proxy effectively serializes requests, regardless of --threads), and has no native binary for linux-arm.")]
 	public string HttpCloak { get; set; }
 
 	[Option('H', "header", Required = false, Default = null, HelpText = "Provide a custom header to use for any HTTP request while indexing. Option can be used multiple times for multiple headers.")]

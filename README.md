@@ -65,7 +65,7 @@ Command line parameters:
 |       | `--proxy-username`   | Proxy username                                                                                                                                                                                                                |
 |       | `--proxy-password`   | Proxy password                                                                                                                                                                                                                |
 |       | `--no-browser`       | Disallow starting Chromium browser (for Cloudflare)                                                                                                                                                                           |
-|       | `--http-cloak`       | *EXPERIMENTAL* Emulate a real browser's TLS/HTTP fingerprint for improved compatibility. See below for more info.                                                                                                            |
+|       | `--http-cloak`       | *SLOWER!* *EXPERIMENTAL* Emulate a real browser's TLS/HTTP fingerprint for improved compatibility. See below for more info.                                                                                                            |
 
 ### Example
 
@@ -127,6 +127,8 @@ Alternatively, you can try the experimental [`--http-cloak`](#http-cloak-experim
 This might also help as an alternative to the registry fix mentioned above under [TLS errors (Windows 10)](#tls-errors-windows-10), since it does its own TLS handling independent of the OS/.NET TLS stack.
 
 Note: when enabled, it bypasses this app's SSL certificate validation and automatic decompression, and has no native binary for linux-arm.
+
+**It is a lot slower than scanning without it** (measured 6-70x, depending on site and `--threads`), only use `--http-cloak` when you actually need it!
 
 ## Cloudflare
 
