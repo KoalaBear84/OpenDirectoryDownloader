@@ -1,202 +1,204 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System.Globalization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
+using OpenDirectoryDownloader.Converters;
 
 namespace OpenDirectoryDownloader.Site.Mediafire;
 
 public partial class MediafireResult
 {
-	[JsonProperty("response")]
+	[JsonPropertyName("response")]
 	public Response Response { get; set; }
 }
 
 public partial class Response
 {
-	[JsonProperty("action")]
+	[JsonPropertyName("action")]
 	public string Action { get; set; }
 
-	[JsonProperty("asynchronous")]
+	[JsonPropertyName("asynchronous")]
 	public string Asynchronous { get; set; }
 
-	[JsonProperty("folder_content")]
+	[JsonPropertyName("folder_content")]
 	public FolderContent FolderContent { get; set; }
 
-	[JsonProperty("result")]
+	[JsonPropertyName("result")]
 	public string Result { get; set; }
 
-	[JsonProperty("current_api_version")]
+	[JsonPropertyName("current_api_version")]
 	public string CurrentApiVersion { get; set; }
 }
 
 public partial class FolderContent
 {
-	[JsonProperty("chunk_size")]
+	[JsonPropertyName("chunk_size")]
 	public long ChunkSize { get; set; }
 
-	[JsonProperty("content_type")]
+	[JsonPropertyName("content_type")]
 	public string ContentType { get; set; }
 
-	[JsonProperty("chunk_number")]
+	[JsonPropertyName("chunk_number")]
 	public long ChunkNumber { get; set; }
 
-	[JsonProperty("folderkey")]
+	[JsonPropertyName("folderkey")]
 	public string Folderkey { get; set; }
 
-	[JsonProperty("folders")]
+	[JsonPropertyName("folders")]
 	public Folder[] Folders { get; set; }
 
-	[JsonProperty("files")]
+	[JsonPropertyName("files")]
 	public File[] Files { get; set; }
 
-	[JsonProperty("more_chunks")]
+	[JsonPropertyName("more_chunks")]
 	public string MoreChunks { get; set; }
 
-	[JsonProperty("revision")]
+	[JsonPropertyName("revision")]
 	public long Revision { get; set; }
 }
 
 public partial class File
 {
-	[JsonProperty("quickkey")]
+	[JsonPropertyName("quickkey")]
 	public string Quickkey { get; set; }
 
-	[JsonProperty("hash")]
+	[JsonPropertyName("hash")]
 	public string Hash { get; set; }
 
-	[JsonProperty("filename")]
+	[JsonPropertyName("filename")]
 	public string Filename { get; set; }
 
-	[JsonProperty("description")]
+	[JsonPropertyName("description")]
 	public string Description { get; set; }
 
-	[JsonProperty("size")]
+	[JsonPropertyName("size")]
 	public long Size { get; set; }
 
-	[JsonProperty("privacy")]
+	[JsonPropertyName("privacy")]
 	public string Privacy { get; set; }
 
-	[JsonProperty("created")]
+	[JsonPropertyName("created")]
 	public DateTimeOffset Created { get; set; }
 
-	[JsonProperty("password_protected")]
+	[JsonPropertyName("password_protected")]
 	public string PasswordProtected { get; set; }
 
-	[JsonProperty("mimetype")]
+	[JsonPropertyName("mimetype")]
 	public string Mimetype { get; set; }
 
-	[JsonProperty("filetype")]
+	[JsonPropertyName("filetype")]
 	public string Filetype { get; set; }
 
-	[JsonProperty("view")]
+	[JsonPropertyName("view")]
 	public long View { get; set; }
 
-	[JsonProperty("edit")]
+	[JsonPropertyName("edit")]
 	public long Edit { get; set; }
 
-	[JsonProperty("revision")]
+	[JsonPropertyName("revision")]
 	public long Revision { get; set; }
 
-	[JsonProperty("flag")]
+	[JsonPropertyName("flag")]
 	public long Flag { get; set; }
 
-	[JsonProperty("permissions")]
+	[JsonPropertyName("permissions")]
 	public Permissions Permissions { get; set; }
 
-	[JsonProperty("downloads")]
+	[JsonPropertyName("downloads")]
 	public long Downloads { get; set; }
 
-	[JsonProperty("views")]
+	[JsonPropertyName("views")]
 	public long Views { get; set; }
 
-	[JsonProperty("links")]
+	[JsonPropertyName("links")]
 	public Links Links { get; set; }
 
-	[JsonProperty("created_utc")]
+	[JsonPropertyName("created_utc")]
 	public DateTimeOffset CreatedUtc { get; set; }
 }
 
 public partial class Links
 {
-	[JsonProperty("normal_download")]
+	[JsonPropertyName("normal_download")]
 	public Uri NormalDownload { get; set; }
 }
 
 public partial class Permissions
 {
-	[JsonProperty("value")]
+	[JsonPropertyName("value")]
 	public long Value { get; set; }
 
-	[JsonProperty("explicit")]
+	[JsonPropertyName("explicit")]
 	public long Explicit { get; set; }
 
-	[JsonProperty("read")]
+	[JsonPropertyName("read")]
 	public long Read { get; set; }
 
-	[JsonProperty("write")]
+	[JsonPropertyName("write")]
 	public long Write { get; set; }
 }
 
 public partial class Folder
 {
-	[JsonProperty("folderkey")]
+	[JsonPropertyName("folderkey")]
 	public string Folderkey { get; set; }
 
-	[JsonProperty("name")]
+	[JsonPropertyName("name")]
 	public string Name { get; set; }
 
-	[JsonProperty("description")]
+	[JsonPropertyName("description")]
 	public string Description { get; set; }
 
-	[JsonProperty("tags")]
+	[JsonPropertyName("tags")]
 	public string Tags { get; set; }
 
-	[JsonProperty("privacy")]
+	[JsonPropertyName("privacy")]
 	public string Privacy { get; set; }
 
-	[JsonProperty("created")]
+	[JsonPropertyName("created")]
 	public DateTimeOffset Created { get; set; }
 
-	[JsonProperty("revision")]
+	[JsonPropertyName("revision")]
 	public long Revision { get; set; }
 
-	[JsonProperty("flag")]
+	[JsonPropertyName("flag")]
 	public long Flag { get; set; }
 
-	[JsonProperty("permissions")]
+	[JsonPropertyName("permissions")]
 	public Permissions Permissions { get; set; }
 
-	[JsonProperty("file_count")]
+	[JsonPropertyName("file_count")]
 	public long FileCount { get; set; }
 
-	[JsonProperty("folder_count")]
+	[JsonPropertyName("folder_count")]
 	public long FolderCount { get; set; }
 
-	[JsonProperty("dropbox_enabled")]
+	[JsonPropertyName("dropbox_enabled")]
 	public string DropboxEnabled { get; set; }
 
-	[JsonProperty("created_utc")]
+	[JsonPropertyName("created_utc")]
 	public DateTimeOffset CreatedUtc { get; set; }
 }
 
 public partial class MediafireResult
 {
-	public static MediafireResult FromJson(string json) => JsonConvert.DeserializeObject<MediafireResult>(json, Converter.Settings);
+	public static MediafireResult FromJson(string json) => JsonSerializer.Deserialize<MediafireResult>(json, Converter.Settings);
 }
 
 public static class Serialize
 {
-	public static string ToJson(this MediafireResult self) => JsonConvert.SerializeObject(self, Converter.Settings);
+	public static string ToJson(this MediafireResult self) => JsonSerializer.Serialize(self, Converter.Settings);
 }
 
 internal static class Converter
 {
-	public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
-		MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-		DateParseHandling = DateParseHandling.None,
 		Converters =
 		{
-			new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
+			JsonMetadataServices.DateOnlyConverter,
+			new TimeOnlyConverter(),
+			new IsoDateTimeOffsetConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
 		},
 	};
 }

@@ -1,5 +1,6 @@
-using Newtonsoft.Json;
 using OpenDirectoryDownloader.Models;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace OpenDirectoryDownloader.FileUpload;
 
@@ -33,7 +34,7 @@ public class AnonFiles : IFileUploadSite
 
 					Program.Logger.Debug("Response from {siteName}: {response}", Name, OpenDirectoryIndexer.Session.UploadedUrlsResponse);
 
-					return JsonConvert.DeserializeObject<AnonFilesFile>(response);
+					return JsonSerializer.Deserialize<AnonFilesFile>(response);
 				}
 				else
 				{
@@ -57,10 +58,10 @@ public class AnonFiles : IFileUploadSite
 
 public class AnonFilesFile : IFileUploadSiteFile
 {
-	[JsonProperty("status")]
+	[JsonPropertyName("status")]
 	public bool Status { get; set; }
 
-	[JsonProperty("data")]
+	[JsonPropertyName("data")]
 	public AnonFilesFileData Data { get; set; }
 
 	public string Url { get => Data.File.Url.Short; }
@@ -68,45 +69,45 @@ public class AnonFilesFile : IFileUploadSiteFile
 
 public class AnonFilesFileData
 {
-	[JsonProperty("file")]
+	[JsonPropertyName("file")]
 	public AnonFilesFileDataFile File { get; set; }
 }
 
 public class AnonFilesFileDataFile
 {
-	[JsonProperty("url")]
+	[JsonPropertyName("url")]
 	public AnonFilesFileDataFileUrl Url { get; set; }
 
-	[JsonProperty("metadata")]
+	[JsonPropertyName("metadata")]
 	public AnonFilesFileDataFileMetadata Metadata { get; set; }
 }
 
 public class AnonFilesFileDataFileUrl
 {
-	[JsonProperty("full")]
+	[JsonPropertyName("full")]
 	public string Full { get; set; }
 
-	[JsonProperty("short")]
+	[JsonPropertyName("short")]
 	public string Short { get; set; }
 }
 
 public class AnonFilesFileDataFileMetadata
 {
-	[JsonProperty("id")]
+	[JsonPropertyName("id")]
 	public string Id { get; set; }
 
-	[JsonProperty("name")]
+	[JsonPropertyName("name")]
 	public string Name { get; set; }
 
-	[JsonProperty("size")]
+	[JsonPropertyName("size")]
 	public AnonFilesFileDataFileMetadataSize Size { get; set; }
 }
 
 public class AnonFilesFileDataFileMetadataSize
 {
-	[JsonProperty("bytes")]
+	[JsonPropertyName("bytes")]
 	public int Bytes { get; set; }
 
-	[JsonProperty("readable")]
+	[JsonPropertyName("readable")]
 	public string Readable { get; set; }
 }

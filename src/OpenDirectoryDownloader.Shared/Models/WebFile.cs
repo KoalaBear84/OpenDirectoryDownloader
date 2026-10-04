@@ -1,5 +1,5 @@
-using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 namespace OpenDirectoryDownloader.Shared.Models;
 

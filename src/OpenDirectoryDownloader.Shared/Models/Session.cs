@@ -1,6 +1,6 @@
-using Newtonsoft.Json;
 using Roslyn.Utilities;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace OpenDirectoryDownloader.Shared.Models;
 

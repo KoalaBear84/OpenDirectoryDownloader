@@ -1,262 +1,264 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System.Globalization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
+using OpenDirectoryDownloader.Converters;
 
 namespace OpenDirectoryDownloader.Site.Dropbox;
 
 public partial class DropboxResult
 {
-	[JsonProperty("entries")]
+	[JsonPropertyName("entries")]
 	public Entry[] Entries { get; set; }
 
-	[JsonProperty("share_tokens")]
+	[JsonPropertyName("share_tokens")]
 	public ShareToken[] ShareTokens { get; set; }
 
-	[JsonProperty("shared_link_infos")]
+	[JsonPropertyName("shared_link_infos")]
 	public SharedLinkInfo[] SharedLinkInfos { get; set; }
 
-	[JsonProperty("share_permissions")]
+	[JsonPropertyName("share_permissions")]
 	public SharePermission[] SharePermissions { get; set; }
 
-	[JsonProperty("takedown_request_type")]
+	[JsonPropertyName("takedown_request_type")]
 	public object TakedownRequestType { get; set; }
 
-	[JsonProperty("total_num_entries")]
+	[JsonPropertyName("total_num_entries")]
 	public long TotalNumEntries { get; set; }
 
-	[JsonProperty("has_more_entries")]
+	[JsonPropertyName("has_more_entries")]
 	public bool HasMoreEntries { get; set; }
 
-	[JsonProperty("next_request_voucher")]
+	[JsonPropertyName("next_request_voucher")]
 	public string NextRequestVoucher { get; set; }
 
-	[JsonProperty("folder")]
+	[JsonPropertyName("folder")]
 	public Folder Folder { get; set; }
 
-	[JsonProperty("folder_share_permission")]
+	[JsonPropertyName("folder_share_permission")]
 	public SharePermission FolderSharePermission { get; set; }
 
-	[JsonProperty("folder_share_token")]
+	[JsonPropertyName("folder_share_token")]
 	public ShareToken FolderShareToken { get; set; }
 
-	[JsonProperty("folder_shared_link_info")]
+	[JsonPropertyName("folder_shared_link_info")]
 	public SharedLinkInfo FolderSharedLinkInfo { get; set; }
 }
 
 public partial class Entry
 {
-	[JsonProperty("bytes")]
+	[JsonPropertyName("bytes")]
 	public long Bytes { get; set; }
 
-	[JsonProperty("file_id")]
+	[JsonPropertyName("file_id")]
 	public string FileId { get; set; }
 
-	[JsonProperty("filename")]
+	[JsonPropertyName("filename")]
 	public string Filename { get; set; }
 
-	[JsonProperty("href")]
+	[JsonPropertyName("href")]
 	public Uri Href { get; set; }
 
-	[JsonProperty("icon")]
+	[JsonPropertyName("icon")]
 	public string Icon { get; set; }
 
-	[JsonProperty("is_dir")]
+	[JsonPropertyName("is_dir")]
 	public bool IsDir { get; set; }
 
-	[JsonProperty("ns_id")]
+	[JsonPropertyName("ns_id")]
 	public long NsId { get; set; }
 
-	[JsonProperty("open_in_app_data")]
+	[JsonPropertyName("open_in_app_data")]
 	public object OpenInAppData { get; set; }
 
-	[JsonProperty("preview")]
+	[JsonPropertyName("preview")]
 	public Preview Preview { get; set; }
 
-	[JsonProperty("preview_type")]
+	[JsonPropertyName("preview_type")]
 	public string PreviewType { get; set; }
 
-	[JsonProperty("revision_id")]
+	[JsonPropertyName("revision_id")]
 	public string RevisionId { get; set; }
 
-	[JsonProperty("sjid")]
+	[JsonPropertyName("sjid")]
 	public long Sjid { get; set; }
 
-	[JsonProperty("sort_key")]
+	[JsonPropertyName("sort_key")]
 	public string[] SortKey { get; set; }
 
-	[JsonProperty("thumbnail_url_tmpl")]
+	[JsonPropertyName("thumbnail_url_tmpl")]
 	public Uri ThumbnailUrlTmpl { get; set; }
 
-	[JsonProperty("ts")]
+	[JsonPropertyName("ts")]
 	public long Ts { get; set; }
 
-	[JsonProperty("is_symlink")]
+	[JsonPropertyName("is_symlink")]
 	public bool IsSymlink { get; set; }
 }
 
 public partial class Preview
 {
-	[JsonProperty("content")]
+	[JsonPropertyName("content")]
 	public Content Content { get; set; }
 
-	[JsonProperty("preview_url")]
+	[JsonPropertyName("preview_url")]
 	public Uri PreviewUrl { get; set; }
 }
 
 public partial class Content
 {
-	[JsonProperty(".tag")]
+	[JsonPropertyName(".tag")]
 	public string Tag { get; set; }
 
-	[JsonProperty("text_url_tmpl")]
+	[JsonPropertyName("text_url_tmpl")]
 	public Uri TextUrlTmpl { get; set; }
 
-	[JsonProperty("image_url_tmpl")]
+	[JsonPropertyName("image_url_tmpl")]
 	public Uri ImageUrlTmpl { get; set; }
 
-	[JsonProperty("refresh_url")]
+	[JsonPropertyName("refresh_url")]
 	public Uri RefreshUrl { get; set; }
 
-	[JsonProperty("placeholder_image_url")]
+	[JsonPropertyName("placeholder_image_url")]
 	public Uri PlaceholderImageUrl { get; set; }
 
-	[JsonProperty("autoprint_url")]
+	[JsonPropertyName("autoprint_url")]
 	public Uri AutoprintUrl { get; set; }
 
-	[JsonProperty("supported_widths")]
+	[JsonPropertyName("supported_widths")]
 	public long[] SupportedWidths { get; set; }
 }
 
 public partial class Folder
 {
-	[JsonProperty("_mount_access_perms")]
+	[JsonPropertyName("_mount_access_perms")]
 	public string[] MountAccessPerms { get; set; }
 
-	[JsonProperty("filename")]
+	[JsonPropertyName("filename")]
 	public string Filename { get; set; }
 
-	[JsonProperty("href")]
+	[JsonPropertyName("href")]
 	public Uri Href { get; set; }
 
-	[JsonProperty("is_dir")]
+	[JsonPropertyName("is_dir")]
 	public bool IsDir { get; set; }
 
-	[JsonProperty("open_in_app_data")]
+	[JsonPropertyName("open_in_app_data")]
 	public object OpenInAppData { get; set; }
 
-	[JsonProperty("shared_folder_id")]
+	[JsonPropertyName("shared_folder_id")]
 	public object SharedFolderId { get; set; }
 
-	[JsonProperty("ns_id")]
+	[JsonPropertyName("ns_id")]
 	public long NsId { get; set; }
 
-	[JsonProperty("sort_key")]
+	[JsonPropertyName("sort_key")]
 	public string[] SortKey { get; set; }
 
-	[JsonProperty("folder_id")]
+	[JsonPropertyName("folder_id")]
 	public string FolderId { get; set; }
 }
 
 public partial class SharePermission
 {
-	[JsonProperty("canCopyToDropboxRoles")]
+	[JsonPropertyName("canCopyToDropboxRoles")]
 	public string[] CanCopyToDropboxRoles { get; set; }
 
-	[JsonProperty("canSyncToDropboxRoles")]
+	[JsonPropertyName("canSyncToDropboxRoles")]
 	public object[] CanSyncToDropboxRoles { get; set; }
 
-	[JsonProperty("canDownloadRoles")]
+	[JsonPropertyName("canDownloadRoles")]
 	public string[] CanDownloadRoles { get; set; }
 
-	[JsonProperty("canRemoveLinkUids")]
+	[JsonPropertyName("canRemoveLinkUids")]
 	public object[] CanRemoveLinkUids { get; set; }
 
-	[JsonProperty("canPrintRoles")]
+	[JsonPropertyName("canPrintRoles")]
 	public string[] CanPrintRoles { get; set; }
 
-	[JsonProperty("canViewContextMenuRoles")]
+	[JsonPropertyName("canViewContextMenuRoles")]
 	public string[] CanViewContextMenuRoles { get; set; }
 
-	[JsonProperty("canViewMetadataRoles")]
+	[JsonPropertyName("canViewMetadataRoles")]
 	public object[] CanViewMetadataRoles { get; set; }
 
-	[JsonProperty("isEditFolderLink")]
+	[JsonPropertyName("isEditFolderLink")]
 	public bool IsEditFolderLink { get; set; }
 
-	[JsonProperty("syncVarsByRoles")]
+	[JsonPropertyName("syncVarsByRoles")]
 	public object SyncVarsByRoles { get; set; }
 }
 
 public partial class ShareToken
 {
-	[JsonProperty("itemId")]
+	[JsonPropertyName("itemId")]
 	public object ItemId { get; set; }
 
-	[JsonProperty("linkType")]
+	[JsonPropertyName("linkType")]
 	public string LinkType { get; set; }
 
-	[JsonProperty("linkKey")]
+	[JsonPropertyName("linkKey")]
 	public string LinkKey { get; set; }
 
-	[JsonProperty("subPath")]
+	[JsonPropertyName("subPath")]
 	public string SubPath { get; set; }
 
-	[JsonProperty("secureHash")]
+	[JsonPropertyName("secureHash")]
 	public string SecureHash { get; set; }
 
-	[JsonProperty("rlkey")]
+	[JsonPropertyName("rlkey")]
 	public object Rlkey { get; set; }
 }
 
 public partial class SharedLinkInfo
 {
-	[JsonProperty("displayName")]
+	[JsonPropertyName("displayName")]
 	public string DisplayName { get; set; }
 
-	[JsonProperty("downloadTestUrl")]
+	[JsonPropertyName("downloadTestUrl")]
 	public Uri DownloadTestUrl { get; set; }
 
-	[JsonProperty("hasPublicAudienceOrVisibility")]
+	[JsonPropertyName("hasPublicAudienceOrVisibility")]
 	public bool HasPublicAudienceOrVisibility { get; set; }
 
-	[JsonProperty("ownerName")]
+	[JsonPropertyName("ownerName")]
 	public string OwnerName { get; set; }
 
-	[JsonProperty("ownerTeamLogo")]
+	[JsonPropertyName("ownerTeamLogo")]
 	public object OwnerTeamLogo { get; set; }
 
-	[JsonProperty("ownerTeamBackground")]
+	[JsonPropertyName("ownerTeamBackground")]
 	public object OwnerTeamBackground { get; set; }
 
-	[JsonProperty("ownerTeamName")]
+	[JsonPropertyName("ownerTeamName")]
 	public object OwnerTeamName { get; set; }
 
-	[JsonProperty("teamMemberBrandingPolicyEnabled")]
+	[JsonPropertyName("teamMemberBrandingPolicyEnabled")]
 	public bool TeamMemberBrandingPolicyEnabled { get; set; }
 
-	[JsonProperty("url")]
+	[JsonPropertyName("url")]
 	public Uri Url { get; set; }
 }
 
 public partial class DropboxResult
 {
-	public static DropboxResult FromJson(string json) => JsonConvert.DeserializeObject<DropboxResult>(json, Converter.Settings);
+	public static DropboxResult FromJson(string json) => JsonSerializer.Deserialize<DropboxResult>(json, Converter.Settings);
 }
 
 public static class Serialize
 {
-	public static string ToJson(this DropboxResult self) => JsonConvert.SerializeObject(self, Converter.Settings);
+	public static string ToJson(this DropboxResult self) => JsonSerializer.Serialize(self, Converter.Settings);
 }
 
 internal static class Converter
 {
-	public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
-		MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-		DateParseHandling = DateParseHandling.None,
 		Converters =
 		{
-			new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
+			JsonMetadataServices.DateOnlyConverter,
+			new TimeOnlyConverter(),
+			new IsoDateTimeOffsetConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
 		},
 	};
 }

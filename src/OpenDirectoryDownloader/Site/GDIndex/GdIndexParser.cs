@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using OpenDirectoryDownloader.Shared;
+﻿using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace OpenDirectoryDownloader.Site.GDIndex.GdIndex;
@@ -58,7 +58,7 @@ public static class GdIndexParser
 						Console.WriteLine($"Using password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}");
 						Program.Logger.Information("Using password: {password}", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]);
 
-						httpResponseMessage = await httpClient.PostAsync($"{webDirectory.Uri}?rootId={rootId}", new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
+						httpResponseMessage = await httpClient.PostAsync($"{webDirectory.Uri}?rootId={rootId}", new StringContent(JsonSerializer.Serialize(new Dictionary<string, object>
 						{
 							{ "page_index", 0 },
 							{ "page_token", null },

@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
-using OpenDirectoryDownloader.Models;
+﻿using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared.Models;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace OpenDirectoryDownloader.Site.GitHub;
 
@@ -44,7 +44,7 @@ public static class GitHubParser
 				HttpResponseMessage httpResponseMessage = await DoRequest(httpClient, GetApiUrl(Owner, Repository));
 
 				string json = await httpResponseMessage.Content.ReadAsStringAsync();
-				DefaultBranch = JObject.Parse(json).SelectToken("default_branch")?.Value<string>();
+				DefaultBranch = JsonDocument.Parse(json).RootElement.TryGetProperty("default_branch", out JsonElement defaultBranchElement) ? defaultBranchElement.GetString() : null;
 
 				if (string.IsNullOrEmpty(DefaultBranch))
 				{
@@ -58,7 +58,7 @@ public static class GitHubParser
 				httpResponseMessage = await DoRequest(httpClient, $"{GetApiUrl(Owner, Repository)}/branches/{DefaultBranch}");
 
 				json = await httpResponseMessage.Content.ReadAsStringAsync();
-				CurrentCommitSha = JObject.Parse(json).SelectToken("commit.sha")?.Value<string>();
+				CurrentCommitSha = JsonDocument.Parse(json).RootElement.TryGetProperty("commit", out JsonElement commitElement) && commitElement.TryGetProperty("sha", out JsonElement shaElement) ? shaElement.GetString() : null;
 
 				if (string.IsNullOrEmpty(CurrentCommitSha))
 				{

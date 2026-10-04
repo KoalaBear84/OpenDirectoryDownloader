@@ -1,199 +1,201 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System.Globalization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
+using OpenDirectoryDownloader.Converters;
 
 namespace OpenDirectoryDownloader.Site.BlitzfilesTech;
 
 public partial class BlitzfilesTechResponse
 {
-	[JsonProperty("link")]
+	[JsonPropertyName("link")]
 	public Link Link { get; set; }
 
-	[JsonProperty("folderChildren")]
+	[JsonPropertyName("folderChildren")]
 	public FolderChildren FolderChildren { get; set; }
 
-	[JsonProperty("status")]
+	[JsonPropertyName("status")]
 	public string Status { get; set; }
 
-	[JsonProperty("seo")]
+	[JsonPropertyName("seo")]
 	public object Seo { get; set; }
 }
 
 public partial class FolderChildren
 {
-	[JsonProperty("current_page")]
+	[JsonPropertyName("current_page")]
 	public long CurrentPage { get; set; }
 
-	[JsonProperty("data")]
+	[JsonPropertyName("data")]
 	public List<Entry> Data { get; set; }
 
-	[JsonProperty("from")]
+	[JsonPropertyName("from")]
 	public long From { get; set; }
 
-	[JsonProperty("last_page")]
+	[JsonPropertyName("last_page")]
 	public long LastPage { get; set; }
 
-	[JsonProperty("next_page_url")]
+	[JsonPropertyName("next_page_url")]
 	public string NextPageUrl { get; set; }
 
-	[JsonProperty("path")]
+	[JsonPropertyName("path")]
 	public string Path { get; set; }
 
-	[JsonProperty("per_page")]
+	[JsonPropertyName("per_page")]
 	public long PerPage { get; set; }
 
-	[JsonProperty("prev_page_url")]
+	[JsonPropertyName("prev_page_url")]
 	public string PrevPageUrl { get; set; }
 
-	[JsonProperty("to")]
+	[JsonPropertyName("to")]
 	public long To { get; set; }
 
-	[JsonProperty("total")]
+	[JsonPropertyName("total")]
 	public long Total { get; set; }
 }
 
 public partial class Entry
 {
-	[JsonProperty("id")]
+	[JsonPropertyName("id")]
 	public long Id { get; set; }
 
-	[JsonProperty("name")]
+	[JsonPropertyName("name")]
 	public string Name { get; set; }
 
-	[JsonProperty("description")]
+	[JsonPropertyName("description")]
 	public object Description { get; set; }
 
-	[JsonProperty("file_name")]
+	[JsonPropertyName("file_name")]
 	public string FileName { get; set; }
 
-	[JsonProperty("mime")]
+	[JsonPropertyName("mime")]
 	public string Mime { get; set; }
 
-	[JsonProperty("file_size")]
+	[JsonPropertyName("file_size")]
 	public long FileSize { get; set; }
 
-	[JsonProperty("user_id")]
+	[JsonPropertyName("user_id")]
 	public object UserId { get; set; }
 
-	[JsonProperty("parent_id")]
+	[JsonPropertyName("parent_id")]
 	public long? ParentId { get; set; }
 
-	[JsonProperty("password")]
+	[JsonPropertyName("password")]
 	public object Password { get; set; }
 
-	[JsonProperty("created_at")]
+	[JsonPropertyName("created_at")]
 	public DateTimeOffset CreatedAt { get; set; }
 
-	[JsonProperty("updated_at")]
+	[JsonPropertyName("updated_at")]
 	public DateTimeOffset UpdatedAt { get; set; }
 
-	[JsonProperty("deleted_at")]
+	[JsonPropertyName("deleted_at")]
 	public object DeletedAt { get; set; }
 
-	[JsonProperty("path")]
+	[JsonPropertyName("path")]
 	public string Path { get; set; }
 
-	[JsonProperty("disk_prefix")]
+	[JsonPropertyName("disk_prefix")]
 	public string DiskPrefix { get; set; }
 
-	[JsonProperty("type")]
+	[JsonPropertyName("type")]
 	public string Type { get; set; }
 
-	[JsonProperty("extension")]
+	[JsonPropertyName("extension")]
 	public string Extension { get; set; }
 
-	[JsonProperty("public")]
+	[JsonPropertyName("public")]
 	public bool Public { get; set; }
 
-	[JsonProperty("thumbnail")]
+	[JsonPropertyName("thumbnail")]
 	public bool Thumbnail { get; set; }
 
-	[JsonProperty("hash")]
+	[JsonPropertyName("hash")]
 	public string Hash { get; set; }
 
-	[JsonProperty("url")]
+	[JsonPropertyName("url")]
 	public string Url { get; set; }
 
-	[JsonProperty("users")]
+	[JsonPropertyName("users")]
 	public List<User> Users { get; set; }
 }
 
 public partial class User
 {
-	[JsonProperty("email")]
+	[JsonPropertyName("email")]
 	public string Email { get; set; }
 
-	[JsonProperty("id")]
+	[JsonPropertyName("id")]
 	public long Id { get; set; }
 
-	[JsonProperty("avatar")]
+	[JsonPropertyName("avatar")]
 	public Uri Avatar { get; set; }
 
-	[JsonProperty("owns_entry")]
+	[JsonPropertyName("owns_entry")]
 	public long OwnsEntry { get; set; }
 
-	[JsonProperty("entry_permissions")]
+	[JsonPropertyName("entry_permissions")]
 	public object EntryPermissions { get; set; }
 
-	[JsonProperty("display_name")]
+	[JsonPropertyName("display_name")]
 	public string DisplayName { get; set; }
 }
 
 public partial class Link
 {
-	[JsonProperty("id")]
+	[JsonPropertyName("id")]
 	public long Id { get; set; }
 
-	[JsonProperty("hash")]
+	[JsonPropertyName("hash")]
 	public string Hash { get; set; }
 
-	[JsonProperty("user_id")]
+	[JsonPropertyName("user_id")]
 	public long UserId { get; set; }
 
-	[JsonProperty("entry_id")]
+	[JsonPropertyName("entry_id")]
 	public long EntryId { get; set; }
 
-	[JsonProperty("allow_edit")]
+	[JsonPropertyName("allow_edit")]
 	public bool AllowEdit { get; set; }
 
-	[JsonProperty("allow_download")]
+	[JsonPropertyName("allow_download")]
 	public bool AllowDownload { get; set; }
 
-	[JsonProperty("password")]
+	[JsonPropertyName("password")]
 	public object Password { get; set; }
 
-	[JsonProperty("expires_at")]
+	[JsonPropertyName("expires_at")]
 	public object ExpiresAt { get; set; }
 
-	[JsonProperty("created_at")]
+	[JsonPropertyName("created_at")]
 	public DateTimeOffset CreatedAt { get; set; }
 
-	[JsonProperty("updated_at")]
+	[JsonPropertyName("updated_at")]
 	public DateTimeOffset UpdatedAt { get; set; }
 
-	[JsonProperty("entry")]
+	[JsonPropertyName("entry")]
 	public Entry Entry { get; set; }
 }
 
 public partial class BlitzfilesTechResponse
 {
-	public static BlitzfilesTechResponse FromJson(string json) => JsonConvert.DeserializeObject<BlitzfilesTechResponse>(json, Converter.Settings);
+	public static BlitzfilesTechResponse FromJson(string json) => JsonSerializer.Deserialize<BlitzfilesTechResponse>(json, Converter.Settings);
 }
 
 public static class Serialize
 {
-	public static string ToJson(this BlitzfilesTechResponse self) => JsonConvert.SerializeObject(self, Converter.Settings);
+	public static string ToJson(this BlitzfilesTechResponse self) => JsonSerializer.Serialize(self, Converter.Settings);
 }
 
 internal static class Converter
 {
-	public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
-		MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-		DateParseHandling = DateParseHandling.None,
 		Converters =
 		{
-			new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
+			JsonMetadataServices.DateOnlyConverter,
+			new TimeOnlyConverter(),
+			new IsoDateTimeOffsetConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
 		},
 	};
 }

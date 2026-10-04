@@ -1,154 +1,156 @@
 using System.Globalization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
+using OpenDirectoryDownloader.Converters;
 
 namespace OpenDirectoryDownloader.Site.CrushFtp;
 
 public partial class CrushFtpResult
 {
-	[JsonProperty("privs")]
+	[JsonPropertyName("privs")]
 	public string Privs { get; set; }
 
-	[JsonProperty("comment")]
+	[JsonPropertyName("comment")]
 	public string Comment { get; set; }
 
-	[JsonProperty("path")]
+	[JsonPropertyName("path")]
 	public string Path { get; set; }
 
-	[JsonProperty("defaultStrings")]
+	[JsonPropertyName("defaultStrings")]
 	public string DefaultStrings { get; set; }
 
-	[JsonProperty("site")]
+	[JsonPropertyName("site")]
 	public string Site { get; set; }
 
-	[JsonProperty("quota")]
+	[JsonPropertyName("quota")]
 	public string Quota { get; set; }
 
-	[JsonProperty("quota_bytes")]
+	[JsonPropertyName("quota_bytes")]
 	public string QuotaBytes { get; set; }
 
-	[JsonProperty("bytes_sent")]
+	[JsonPropertyName("bytes_sent")]
 	public long BytesSent { get; set; }
 
-	[JsonProperty("bytes_received")]
+	[JsonPropertyName("bytes_received")]
 	public long BytesReceived { get; set; }
 
-	[JsonProperty("max_upload_amount_day")]
-	public long MaxUploadAmountDay { get; set; }	
+	[JsonPropertyName("max_upload_amount_day")]
+	public long MaxUploadAmountDay { get; set; }
 
-	[JsonProperty("max_upload_amount_month")]
+	[JsonPropertyName("max_upload_amount_month")]
 	public long MaxUploadAmountMonth { get; set; }
 
-	[JsonProperty("max_upload_amount")]
+	[JsonPropertyName("max_upload_amount")]
 	public long MaxUploadAmount { get; set; }
 
-	[JsonProperty("max_upload_amount_available")]
+	[JsonPropertyName("max_upload_amount_available")]
 	public long MaxUploadAmountAvailable { get; set; }
 
-	[JsonProperty("max_upload_amount_day_available")]
+	[JsonPropertyName("max_upload_amount_day_available")]
 	public string MaxUploadAmountDayAvailable { get; set; }
 
-	[JsonProperty("max_upload_amount_month_available")]
+	[JsonPropertyName("max_upload_amount_month_available")]
 	public string MaxUploadAmountMonthAvailable { get; set; }
 
-	[JsonProperty("max_download_amount")]
+	[JsonPropertyName("max_download_amount")]
 	public long MaxDownloadAmount { get; set; }
 
-	[JsonProperty("max_download_amount_day")]
+	[JsonPropertyName("max_download_amount_day")]
 	public long MaxDownloadAmountDay { get; set; }
 
-	[JsonProperty("max_download_amount_month")]
+	[JsonPropertyName("max_download_amount_month")]
 	public long MaxDownloadAmountMonth { get; set; }
 
-	[JsonProperty("max_download_amount_available")]
+	[JsonPropertyName("max_download_amount_available")]
 	public long MaxDownloadAmountAvailable { get; set; }
 
-	[JsonProperty("max_download_amount_day_available")]
+	[JsonPropertyName("max_download_amount_day_available")]
 	public string MaxDownloadAmountDayAvailable { get; set; }
 
-	[JsonProperty("max_download_amount_month_available")]
+	[JsonPropertyName("max_download_amount_month_available")]
 	public string MaxDownloadAmountMonthAvailable { get; set; }
 
-	[JsonProperty("listing")]
+	[JsonPropertyName("listing")]
 	public Listing[] Listing { get; set; }
 }
 
 public partial class Listing
 {
-	[JsonProperty("name")]
+	[JsonPropertyName("name")]
 	public string Name { get; set; }
 
-	[JsonProperty("dir")]
+	[JsonPropertyName("dir")]
 	public string Dir { get; set; }
 
-	[JsonProperty("type")]
+	[JsonPropertyName("type")]
 	public string Type { get; set; }
 
-	[JsonProperty("root_dir")]
+	[JsonPropertyName("root_dir")]
 	public string RootDir { get; set; }
 
-	[JsonProperty("href_path")]
+	[JsonPropertyName("href_path")]
 	public string HrefPath { get; set; }
 
-	[JsonProperty("size")]
+	[JsonPropertyName("size")]
 	public long Size { get; set; }
 
-	[JsonProperty("modified")]
+	[JsonPropertyName("modified")]
 	public string Modified { get; set; }
 
-	[JsonProperty("created")]
+	[JsonPropertyName("created")]
 	public string Created { get; set; }
 
-	[JsonProperty("owner")]
+	[JsonPropertyName("owner")]
 	public string Owner { get; set; }
 
-	[JsonProperty("group")]
+	[JsonPropertyName("group")]
 	public string Group { get; set; }
 
-	[JsonProperty("permissionsNum")]
+	[JsonPropertyName("permissionsNum")]
 	public string PermissionsNum { get; set; }
 
-	[JsonProperty("keywords")]
+	[JsonPropertyName("keywords")]
 	public string Keywords { get; set; }
 
-	[JsonProperty("permissions")]
+	[JsonPropertyName("permissions")]
 	public string Permissions { get; set; }
 
-	[JsonProperty("num_items")]
+	[JsonPropertyName("num_items")]
 	public long NumItems { get; set; }
 
-	[JsonProperty("preview")]
+	[JsonPropertyName("preview")]
 	public long Preview { get; set; }
 
-	[JsonProperty("dateFormatted")]
+	[JsonPropertyName("dateFormatted")]
 	public string DateFormatted { get; set; }
 
-	[JsonProperty("createdDateFormatted")]
+	[JsonPropertyName("createdDateFormatted")]
 	public string CreatedDateFormatted { get; set; }
 
-	[JsonProperty("sizeFormatted")]
+	[JsonPropertyName("sizeFormatted")]
 	public string SizeFormatted { get; set; }
 }
 
 public partial class CrushFtpResult
 {
-	public static CrushFtpResult FromJson(string json) => JsonConvert.DeserializeObject<CrushFtpResult>(json, Converter.Settings);
+	public static CrushFtpResult FromJson(string json) => JsonSerializer.Deserialize<CrushFtpResult>(json, Converter.Settings);
 }
 
 public static class Serialize
 {
-	public static string ToJson(this CrushFtpResult self) => JsonConvert.SerializeObject(self, Converter.Settings);
+	public static string ToJson(this CrushFtpResult self) => JsonSerializer.Serialize(self, Converter.Settings);
 }
 
 internal static class Converter
 {
-	public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
-		MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-		DateParseHandling = DateParseHandling.None,
 		Converters =
 		{
-			new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
+			JsonMetadataServices.DateOnlyConverter,
+			new TimeOnlyConverter(),
+			new IsoDateTimeOffsetConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
 		},
 	};
 }

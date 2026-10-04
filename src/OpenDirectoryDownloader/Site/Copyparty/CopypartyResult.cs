@@ -1,45 +1,47 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System.Globalization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
+using OpenDirectoryDownloader.Converters;
 
 namespace OpenDirectoryDownloader.Site.Copyparty;
 
 public partial class CopypartyListing
 {
-	[JsonProperty("dirs")]
+	[JsonPropertyName("dirs")]
 	public Dir[] Dirs { get; set; }
 
-	[JsonProperty("files")]
+	[JsonPropertyName("files")]
 	public Dir[] Files { get; set; }
 
-	[JsonProperty("taglist")]
+	[JsonPropertyName("taglist")]
 	public object[] Taglist { get; set; }
 }
 
 public partial class Dir
 {
-	[JsonProperty("dt")]
+	[JsonPropertyName("dt")]
 	public DateTimeOffset Dt { get; set; }
 
-	[JsonProperty("ext")]
+	[JsonPropertyName("ext")]
 	public string Ext { get; set; }
 
-	[JsonProperty("href")]
+	[JsonPropertyName("href")]
 	public string Href { get; set; }
 
-	[JsonProperty("lead")]
+	[JsonPropertyName("lead")]
 	public string Lead { get; set; }
 
-	[JsonProperty("name")]
+	[JsonPropertyName("name")]
 	public string Name { get; set; }
 
-	[JsonProperty("sz")]
+	[JsonPropertyName("sz")]
 	public long Sz { get; set; }
 
-	[JsonProperty("tags")]
+	[JsonPropertyName("tags")]
 	public Tags Tags { get; set; }
 
-	[JsonProperty("ts")]
+	[JsonPropertyName("ts")]
 	public long Ts { get; set; }
 }
 
@@ -49,23 +51,23 @@ public partial class Tags
 
 public partial class CopypartyListing
 {
-	public static CopypartyListing FromJson(string json) => JsonConvert.DeserializeObject<CopypartyListing>(json, Converter.Settings);
+	public static CopypartyListing FromJson(string json) => JsonSerializer.Deserialize<CopypartyListing>(json, Converter.Settings);
 }
 
 public static class Serialize
 {
-	public static string ToJson(this CopypartyListing self) => JsonConvert.SerializeObject(self, Converter.Settings);
+	public static string ToJson(this CopypartyListing self) => JsonSerializer.Serialize(self, Converter.Settings);
 }
 
 internal static class Converter
 {
-	public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
-		MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-		DateParseHandling = DateParseHandling.None,
 		Converters =
 		{
-			new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
+			JsonMetadataServices.DateOnlyConverter,
+			new TimeOnlyConverter(),
+			new IsoDateTimeOffsetConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
 		},
 	};
 }

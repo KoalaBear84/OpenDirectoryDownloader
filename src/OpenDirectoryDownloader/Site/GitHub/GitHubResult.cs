@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System.Globalization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
+using OpenDirectoryDownloader.Converters;
 
 namespace OpenDirectoryDownloader.Site.GitHub;
 
@@ -9,59 +11,59 @@ namespace OpenDirectoryDownloader.Site.GitHub;
 /// </summary>
 public partial class GitHubResult
 {
-	[JsonProperty("sha")]
+	[JsonPropertyName("sha")]
 	public string Sha { get; set; }
 
-	[JsonProperty("url")]
+	[JsonPropertyName("url")]
 	public Uri Url { get; set; }
 
-	[JsonProperty("tree")]
+	[JsonPropertyName("tree")]
 	public Tree[] Tree { get; set; }
 
-	[JsonProperty("truncated")]
+	[JsonPropertyName("truncated")]
 	public bool Truncated { get; set; }
 }
 
 public partial class Tree
 {
-	[JsonProperty("path")]
+	[JsonPropertyName("path")]
 	public string Path { get; set; }
 
-	[JsonProperty("mode")]
+	[JsonPropertyName("mode")]
 	public string Mode { get; set; }
 
-	[JsonProperty("type")]
+	[JsonPropertyName("type")]
 	public string Type { get; set; }
 
-	[JsonProperty("sha")]
+	[JsonPropertyName("sha")]
 	public string Sha { get; set; }
 
-	[JsonProperty("url")]
+	[JsonPropertyName("url")]
 	public string Url { get; set; }
 
-	[JsonProperty("size", NullValueHandling = NullValueHandling.Ignore)]
+	[JsonPropertyName("size")]
 	public long Size { get; set; }
 }
 
 public partial class GitHubResult
 {
-	public static GitHubResult FromJson(string json) => JsonConvert.DeserializeObject<GitHubResult>(json, Converter.Settings);
+	public static GitHubResult FromJson(string json) => JsonSerializer.Deserialize<GitHubResult>(json, Converter.Settings);
 }
 
 public static class Serialize
 {
-	public static string ToJson(this GitHubResult self) => JsonConvert.SerializeObject(self, Converter.Settings);
+	public static string ToJson(this GitHubResult self) => JsonSerializer.Serialize(self, Converter.Settings);
 }
 
 internal static class Converter
 {
-	public static readonly JsonSerializerSettings Settings = new()
+	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
-		MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-		DateParseHandling = DateParseHandling.None,
 		Converters =
 		{
-			new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
+			JsonMetadataServices.DateOnlyConverter,
+			new TimeOnlyConverter(),
+			new IsoDateTimeOffsetConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
 		},
 	};
 }

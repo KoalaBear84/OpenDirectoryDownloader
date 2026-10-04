@@ -1,21 +1,21 @@
-﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace OpenDirectoryDownloader.Models;
 
 public class DirectoryListingModel01
 {
-	[JsonProperty(PropertyName = "name")]
+	[JsonPropertyName("name")]
 	public string Name { get; set; }
 
-	[JsonProperty(PropertyName = "type")]
+	[JsonPropertyName("type")]
 	public string Type { get; set; }
 
-	[JsonProperty(PropertyName = "path")]
+	[JsonPropertyName("path")]
 	public string Path { get; set; }
 
-	[JsonProperty(PropertyName = "items")]
+	[JsonPropertyName("items")]
 	public List<DirectoryListingModel01> Items { get; set; }
 
-	[JsonProperty(PropertyName = "size")]
+	[JsonPropertyName("size")]
 	public long Size { get; set; }
 }

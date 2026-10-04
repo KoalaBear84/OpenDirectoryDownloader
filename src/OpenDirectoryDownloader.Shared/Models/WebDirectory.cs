@@ -1,6 +1,6 @@
-using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading;
 
 namespace OpenDirectoryDownloader.Shared.Models;
@@ -11,6 +11,18 @@ public class WebDirectory
 	public WebDirectory(WebDirectory parentWebDirectory)
 	{
 		ParentDirectory = parentWebDirectory;
+	}
+
+	/// <summary>
+	/// Used by System.Text.Json deserialization only. ParentDirectory is [JsonIgnore]d (it would create a
+	/// cyclical graph) so no constructor parameter can bind to it - callers reconstructing a WebDirectory
+	/// from JSON (see Library.LoadSessionJson, DirectoryParser's WebDirectory clone-via-round-trip) must set
+	/// ParentDirectory themselves afterward, same as they already do for a tree walked from a freshly
+	/// deserialized Session.
+	/// </summary>
+	[JsonConstructor]
+	public WebDirectory()
+	{
 	}
 
 	[JsonIgnore]

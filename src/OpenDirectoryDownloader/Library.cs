@@ -1,7 +1,5 @@
 using AngleSharp.Dom;
 using FluentFTP;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
@@ -12,6 +10,8 @@ using System.Diagnostics;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 namespace OpenDirectoryDownloader;
@@ -106,87 +106,129 @@ public class Library
 
 	public static void SaveSessionJson(Session session, string filePath)
 	{
-		JsonSerializer jsonSerializer = new();
+		using FileStream fileStream = new(filePath, FileMode.Create, FileAccess.Write);
 
-		using StreamWriter streamWriter = new(filePath);
-		using JsonWriter jsonWriter = new JsonTextWriter(streamWriter);
-
-		jsonSerializer.Serialize(jsonWriter, session);
+		JsonSerializer.Serialize(fileStream, session);
 	}
+
+	/// <summary>
+	/// Properties of <see cref="Session"/> to serialize when streaming it out, in declaration order, computed
+	/// once via reflection the same way the old JObject.FromObject(session) did implicitly. Excludes anything
+	/// marked [JsonIgnore] so this stays in sync automatically as Session gains/loses properties.
+	/// </summary>
+	private static readonly PropertyInfo[] SessionJsonProperties = [.. typeof(Session)
+		.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+		.Where(property => property.GetCustomAttribute<JsonIgnoreAttribute>() is null)];
 
 	/// <summary>
 	/// Same output as SaveSessionJson, except the Root directory tree is rebuilt from <paramref
 	/// name="scanDatabase"/> instead of walked from the in-memory session.Root. Needed once eviction
 	/// (issue #56 phase 4) may have dropped some directories' Files/Subdirectories from memory - the
 	/// in-memory tree alone would silently produce incomplete JSON for anything under an evicted
-	/// directory. Every other Session field is untouched (they're never evicted), so this reuses the
-	/// normal reflection-based serialization for those and only replaces the "Root" property.
+	/// directory.
+	///
+	/// Every other Session field is written straight through via the normal reflection-based serializer.
+	/// The Root tree, which can be arbitrarily large, is instead streamed directly into the output
+	/// Utf8JsonWriter one directory/file at a time as it's read from the database - unlike the old
+	/// JObject.FromObject + BuildDirectoryJTokenAsync approach, this never materializes the whole tree
+	/// (or even one full directory level of it) as an in-memory JSON object graph before writing it out.
 	/// </summary>
 	public static async Task SaveSessionJsonAsync(Session session, string filePath, ScanDatabase scanDatabase)
 	{
 		await scanDatabase.FlushAsync();
 
-		JObject sessionJObject = JObject.FromObject(session);
-		sessionJObject["Root"] = await BuildDirectoryJTokenAsync(scanDatabase, session.Root.Url);
+		await using FileStream fileStream = new(filePath, FileMode.Create, FileAccess.Write);
+		await using Utf8JsonWriter writer = new(fileStream);
 
-		using StreamWriter streamWriter = new(filePath);
-		using JsonWriter jsonWriter = new JsonTextWriter(streamWriter);
+		writer.WriteStartObject();
 
-		await sessionJObject.WriteToAsync(jsonWriter);
+		foreach (PropertyInfo property in SessionJsonProperties)
+		{
+			writer.WritePropertyName(property.Name);
+
+			if (property.Name == nameof(Session.Root))
+			{
+				await WriteDirectoryAsync(writer, scanDatabase, session.Root.Url);
+			}
+			else
+			{
+				JsonSerializer.Serialize(writer, property.GetValue(session), property.PropertyType);
+			}
+		}
+
+		writer.WriteEndObject();
+
+		await writer.FlushAsync();
 	}
 
-	private static async Task<JToken> BuildDirectoryJTokenAsync(ScanDatabase scanDatabase, string url)
+	private static async Task WriteDirectoryAsync(Utf8JsonWriter writer, ScanDatabase scanDatabase, string url)
 	{
 		ScanDatabase.MirroredDirectory directory = await scanDatabase.GetDirectoryAsync(url);
+
+		writer.WriteStartObject();
 
 		if (directory is null)
 		{
 			// Never mirrored (e.g. --use-database was turned on after the scan started, or the directory
 			// errored before ever being written) - fall back to an empty-but-valid node rather than null.
-			return new JObject
-			{
-				["Url"] = url,
-				["Name"] = string.Empty,
-				["Description"] = null,
-				["Finished"] = false,
-				["Subdirectories"] = new JArray(),
-				["Files"] = new JArray(),
-				["Error"] = false
-			};
+			writer.WriteString("Url", url);
+			writer.WriteString("Name", string.Empty);
+			writer.WriteNull("Description");
+			writer.WriteBoolean("Finished", false);
+			writer.WriteStartArray("Subdirectories");
+			writer.WriteEndArray();
+			writer.WriteStartArray("Files");
+			writer.WriteEndArray();
+			writer.WriteBoolean("Error", false);
+			writer.WriteEndObject();
+
+			return;
 		}
 
-		List<ScanDatabase.MirroredFile> files = await scanDatabase.GetFilesAsync(url);
-		JArray filesJArray = [];
+		writer.WriteString("Url", directory.Url);
+		writer.WriteString("Name", directory.Name);
+		writer.WriteString("Description", directory.Description);
+		writer.WriteBoolean("Finished", directory.Finished);
 
-		foreach (ScanDatabase.MirroredFile file in files)
-		{
-			filesJArray.Add(new JObject
-			{
-				["Url"] = file.Url,
-				["FileName"] = file.FileName,
-				["FileSize"] = file.FileSize,
-				["Description"] = file.Description
-			});
-		}
+		writer.WriteStartArray("Subdirectories");
 
 		List<ScanDatabase.MirroredDirectory> subdirectories = await scanDatabase.GetSubdirectoriesAsync(url);
-		JArray subdirectoriesJArray = [];
 
 		foreach (ScanDatabase.MirroredDirectory subdirectory in subdirectories)
 		{
-			subdirectoriesJArray.Add(await BuildDirectoryJTokenAsync(scanDatabase, subdirectory.Url));
+			await WriteDirectoryAsync(writer, scanDatabase, subdirectory.Url);
 		}
 
-		return new JObject
+		writer.WriteEndArray();
+
+		writer.WriteStartArray("Files");
+
+		List<ScanDatabase.MirroredFile> files = await scanDatabase.GetFilesAsync(url);
+
+		foreach (ScanDatabase.MirroredFile file in files)
 		{
-			["Url"] = directory.Url,
-			["Name"] = directory.Name,
-			["Description"] = directory.Description,
-			["Finished"] = directory.Finished,
-			["Subdirectories"] = subdirectoriesJArray,
-			["Files"] = filesJArray,
-			["Error"] = directory.Error
-		};
+			writer.WriteStartObject();
+			writer.WriteString("Url", file.Url);
+			writer.WriteString("FileName", file.FileName);
+
+			if (file.FileSize.HasValue)
+			{
+				writer.WriteNumber("FileSize", file.FileSize.Value);
+			}
+			else
+			{
+				writer.WriteNull("FileSize");
+			}
+
+			writer.WriteString("Description", file.Description);
+			writer.WriteEndObject();
+		}
+
+		writer.WriteEndArray();
+
+		writer.WriteBoolean("Error", directory.Error);
+
+		writer.WriteEndObject();
 	}
 
 	public static string CleanUriToFilename(Uri uri)
@@ -196,10 +238,9 @@ public class Library
 
 	public static Session LoadSessionJson(string fileName)
 	{
-		using StreamReader streamReader = new(fileName);
-		using JsonReader jsonReader = new JsonTextReader(streamReader);
+		using FileStream fileStream = new(fileName, FileMode.Open, FileAccess.Read);
 
-		return new JsonSerializer().Deserialize<Session>(jsonReader);
+		return JsonSerializer.Deserialize<Session>(fileStream);
 	}
 
 	public static string FormatWithThousands(object value)
@@ -436,19 +477,17 @@ public class Library
 	public static async IAsyncEnumerable<string> GetSourcesFromSourceMapAsync(HttpClient httpClient, string sourceUrl)
 	{
 		await using Stream httpStream = await httpClient.GetStreamAsync(sourceUrl);
-		using StreamReader streamReader = new(httpStream);
-		await using JsonReader jsonReader = new JsonTextReader(streamReader);
 
-		JObject jObject = await JObject.LoadAsync(jsonReader);
+		using JsonDocument jsonDocument = await JsonDocument.ParseAsync(httpStream);
 
-		if (!jObject.TryGetValue("sources", out JToken sources))
+		if (!jsonDocument.RootElement.TryGetProperty("sources", out JsonElement sources))
 		{
 			yield break;
 		}
 
-		foreach (JToken source in sources)
+		foreach (JsonElement source in sources.EnumerateArray())
 		{
-			yield return source.Value<string>();
+			yield return source.GetString();
 		}
 	}
 

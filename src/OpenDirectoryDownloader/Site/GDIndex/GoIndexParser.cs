@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using OpenDirectoryDownloader.Shared;
+﻿using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using System.Net;
+using System.Text.Json;
 
 namespace OpenDirectoryDownloader.Site.GDIndex.GoIndex;
 
@@ -26,7 +26,7 @@ public static class GoIndexParser
 				Program.Logger.Information("Check if password is needed...");
 				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] = "";
 
-				HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
+				HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonSerializer.Serialize(new Dictionary<string, object>
 				{
 					{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] }
 				})));
@@ -48,7 +48,7 @@ public static class GoIndexParser
 						Console.WriteLine($"Using password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}");
 						Program.Logger.Information("Using password: {password}", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]);
 
-						httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
+						httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonSerializer.Serialize(new Dictionary<string, object>
 						{
 							{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] }
 						})));
@@ -126,7 +126,7 @@ public static class GoIndexParser
 
 				Program.Logger.Warning("Retrieving listings for {relativeUrl} with password: {password}", webDirectory.Uri.PathAndQuery, OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]);
 
-				HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
+				HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonSerializer.Serialize(new Dictionary<string, object>
 				{
 					{ "password", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] }
 				})));

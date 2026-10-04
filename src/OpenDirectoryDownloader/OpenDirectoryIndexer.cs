@@ -1,6 +1,5 @@
 using AngleSharp.Dom;
 using FlareSolverrSharp;
-using Newtonsoft.Json;
 using OpenDirectoryDownloader.Calibre;
 using OpenDirectoryDownloader.FileUpload;
 using OpenDirectoryDownloader.GoogleDrive;
@@ -23,6 +22,7 @@ using System.Security.Authentication;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using TextCopy;
 
@@ -742,7 +742,7 @@ public partial class OpenDirectoryIndexer
 											Console.WriteLine($"Uploading URLs ({FileSizeHelper.ToHumanReadable(new FileInfo(urlsPath).Length)}) with {uploadSite.Name}..");
 
 											IFileUploadSiteFile fileUploaderFile = await uploadSite.UploadFile(HttpClient, urlsPath);
-											Program.HistoryLogger.Information("{siteName} URL: {url}", uploadSite.Name, JsonConvert.SerializeObject(fileUploaderFile));
+											Program.HistoryLogger.Information("{siteName} URL: {url}", uploadSite.Name, JsonSerializer.Serialize((object)fileUploaderFile));
 											Program.HistoryLogger.Information("{siteName} full response: {response}", uploadSite.Name, Session.UploadedUrlsResponse);
 											Session.UploadedUrlsUrl = fileUploaderFile.Url;
 											Console.WriteLine($"Uploaded URLs link: {Session.UploadedUrlsUrl}");
@@ -1124,6 +1124,12 @@ public partial class OpenDirectoryIndexer
 	/// scan database instead of the in-memory session.Root when one is active - see
 	/// Library.SaveSessionJsonAsync for why that matters once eviction (issue #56 phase 4) is enabled.
 	/// Used both by the automatic end-of-scan save and the mid-scan 'J' key (see Command.SaveSession).
+	///
+	/// Both save paths now stream the (potentially huge) directory tree straight to disk instead of
+	/// building it up as one in-memory JSON object graph first, but a large scan can still have promoted a
+	/// lot of short-lived buffers/strings to gen2 by the time this returns - a save is infrequent (end of
+	/// scan, or a manual 'J' keypress) and a good point to ask the GC to actually reclaim that memory
+	/// rather than let it sit until the next collection happens on its own.
 	/// </summary>
 	public void SaveSessionJson(string filePath)
 	{
@@ -1135,6 +1141,9 @@ public partial class OpenDirectoryIndexer
 		{
 			Library.SaveSessionJson(Session, filePath);
 		}
+
+		GC.Collect();
+		GC.WaitForPendingFinalizers();
 	}
 
 	/// <summary>

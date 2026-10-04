@@ -3,7 +3,6 @@ using Acornima.Ast;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
-using Newtonsoft.Json;
 using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Shared;
@@ -28,6 +27,7 @@ using PuppeteerSharp;
 using System.Diagnostics;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace OpenDirectoryDownloader;
@@ -677,7 +677,7 @@ public static partial class DirectoryParser
 
 					string directoryIndexJson = await httpClient.GetStringAsync(directoryIndexFile);
 
-					DirectoryListingModel01 directoryListingModel = JsonConvert.DeserializeObject<DirectoryListingModel01>(directoryIndexJson);
+					DirectoryListingModel01 directoryListingModel = JsonSerializer.Deserialize<DirectoryListingModel01>(directoryIndexJson);
 
 					WebDirectory newWebDirectory = ConvertDirectoryListingModel01(baseUrl, parsedWebDirectory, directoryListingModel);
 					parsedWebDirectory.Description = newWebDirectory.Description;
@@ -1164,7 +1164,7 @@ public static partial class DirectoryParser
 
 		foreach (IElement table in tables)
 		{
-			WebDirectory webDirectoryCopy = JsonConvert.DeserializeObject<WebDirectory>(JsonConvert.SerializeObject(parsedWebDirectory));
+			WebDirectory webDirectoryCopy = JsonSerializer.Deserialize<WebDirectory>(JsonSerializer.Serialize(parsedWebDirectory));
 			webDirectoryCopy.ParentDirectory = parsedWebDirectory.ParentDirectory;
 
 			Dictionary<int, HeaderInfo> tableHeaders = GetTableHeaders(table);

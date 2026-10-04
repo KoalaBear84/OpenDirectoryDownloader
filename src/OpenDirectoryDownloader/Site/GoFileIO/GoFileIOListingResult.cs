@@ -1,122 +1,124 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System.Globalization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
+using OpenDirectoryDownloader.Converters;
 
 namespace OpenDirectoryDownloader.Site.GoFileIO;
 
 public partial class GoFileIOListingResult
 {
-	[JsonProperty("status")]
+	[JsonPropertyName("status")]
 	public string Status { get; set; }
 
-	[JsonProperty("data")]
+	[JsonPropertyName("data")]
 	public Data Data { get; set; }
 }
 
 public partial class Data
 {
 	// Only for /createAccount
-	[JsonProperty("token")]
+	[JsonPropertyName("token")]
 	public string Token { get; set; }
 
-	[JsonProperty("isOwner")]
+	[JsonPropertyName("isOwner")]
 	public bool IsOwner { get; set; }
 
-	[JsonProperty("id")]
+	[JsonPropertyName("id")]
 	public Guid Id { get; set; }
 
-	[JsonProperty("type")]
+	[JsonPropertyName("type")]
 	public string Type { get; set; }
 
-	[JsonProperty("name")]
+	[JsonPropertyName("name")]
 	public string Name { get; set; }
 
-	[JsonProperty("parentFolder")]
+	[JsonPropertyName("parentFolder")]
 	public Guid ParentFolder { get; set; }
 
-	[JsonProperty("code")]
+	[JsonPropertyName("code")]
 	public string Code { get; set; }
 
-	[JsonProperty("createTime")]
+	[JsonPropertyName("createTime")]
 	public long CreateTime { get; set; }
 
-	[JsonProperty("public")]
+	[JsonPropertyName("public")]
 	public bool Public { get; set; }
 
-	[JsonProperty("description")]
+	[JsonPropertyName("description")]
 	public string Description { get; set; }
 
-	[JsonProperty("childs")]
+	[JsonPropertyName("childs")]
 	public Guid[] Childs { get; set; }
 
-	[JsonProperty("totalDownloadCount")]
+	[JsonPropertyName("totalDownloadCount")]
 	public long TotalDownloadCount { get; set; }
 
-	[JsonProperty("totalSize")]
+	[JsonPropertyName("totalSize")]
 	public long TotalSize { get; set; }
 
-	[JsonProperty("contents")]
+	[JsonPropertyName("contents")]
 	public Dictionary<string, Content> Contents { get; set; }
 }
 
 public partial class Content
 {
-	[JsonProperty("id")]
+	[JsonPropertyName("id")]
 	public string Id { get; set; }
 
-	[JsonProperty("type")]
+	[JsonPropertyName("type")]
 	public string Type { get; set; }
 
-	[JsonProperty("name")]
+	[JsonPropertyName("name")]
 	public string Name { get; set; }
 
-	[JsonProperty("parentFolder")]
+	[JsonPropertyName("parentFolder")]
 	public Guid ParentFolder { get; set; }
 
-	[JsonProperty("createTime")]
+	[JsonPropertyName("createTime")]
 	public long CreateTime { get; set; }
 
-	[JsonProperty("size")]
+	[JsonPropertyName("size")]
 	public long Size { get; set; }
 
-	[JsonProperty("downloadCount")]
+	[JsonPropertyName("downloadCount")]
 	public long DownloadCount { get; set; }
 
-	[JsonProperty("md5")]
+	[JsonPropertyName("md5")]
 	public string Md5 { get; set; }
 
-	[JsonProperty("mimetype")]
+	[JsonPropertyName("mimetype")]
 	public string Mimetype { get; set; }
 
-	[JsonProperty("serverChoosen")]
+	[JsonPropertyName("serverChoosen")]
 	public string ServerChoosen { get; set; }
 
-	[JsonProperty("directLink")]
+	[JsonPropertyName("directLink")]
 	public Uri DirectLink { get; set; }
 
-	[JsonProperty("link")]
+	[JsonPropertyName("link")]
 	public Uri Link { get; set; }
 }
 
 public partial class GoFileIOListingResult
 {
-	public static GoFileIOListingResult FromJson(string json) => JsonConvert.DeserializeObject<GoFileIOListingResult>(json, Converter.Settings);
+	public static GoFileIOListingResult FromJson(string json) => JsonSerializer.Deserialize<GoFileIOListingResult>(json, Converter.Settings);
 }
 
 public static class Serialize
 {
-	public static string ToJson(this GoFileIOListingResult self) => JsonConvert.SerializeObject(self, Converter.Settings);
+	public static string ToJson(this GoFileIOListingResult self) => JsonSerializer.Serialize(self, Converter.Settings);
 }
 
 internal static class Converter
 {
-	public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
-		MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-		DateParseHandling = DateParseHandling.None,
 		Converters =
 		{
-			new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
+			JsonMetadataServices.DateOnlyConverter,
+			new TimeOnlyConverter(),
+			new IsoDateTimeOffsetConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
 		},
 	};
 }

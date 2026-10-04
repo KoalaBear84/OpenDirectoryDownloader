@@ -1,106 +1,108 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System.Globalization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
+using OpenDirectoryDownloader.Converters;
 
 namespace OpenDirectoryDownloader.Site.GDIndex.Bhadoo;
 
 public partial class BhadooIndexResponse
 {
-	[JsonProperty("nextPageToken")]
+	[JsonPropertyName("nextPageToken")]
 	public string NextPageToken { get; set; }
 
-	[JsonProperty("curPageIndex")]
+	[JsonPropertyName("curPageIndex")]
 	public long CurPageIndex { get; set; }
 
-	[JsonProperty("data")]
+	[JsonPropertyName("data")]
 	public Data Data { get; set; }
 
-	[JsonProperty("error")]
+	[JsonPropertyName("error")]
 	public Error Error { get; set; }
 }
 
 public partial class Error
 {
-	[JsonProperty("code")]
+	[JsonPropertyName("code")]
 	public int Code { get; set; }
 
-	[JsonProperty("message")]
+	[JsonPropertyName("message")]
 	public string Message { get; set; }
 }
 
 public partial class Data
 {
-	[JsonProperty("nextPageToken")]
+	[JsonPropertyName("nextPageToken")]
 	public string NextPageToken { get; set; }
 
-	[JsonProperty("files")]
+	[JsonPropertyName("files")]
 	public List<File> Files { get; set; }
 
-	[JsonProperty("error")]
+	[JsonPropertyName("error")]
 	public DataError Error { get; set; }
 }
 
 public partial class DataError
 {
-	[JsonProperty("errors")]
+	[JsonPropertyName("errors")]
 	public List<ErrorElement> Errors { get; set; }
 
-	[JsonProperty("code")]
+	[JsonPropertyName("code")]
 	public long Code { get; set; }
 
-	[JsonProperty("message")]
+	[JsonPropertyName("message")]
 	public string Message { get; set; }
 }
 
 public partial class ErrorElement
 {
-	[JsonProperty("domain")]
+	[JsonPropertyName("domain")]
 	public string Domain { get; set; }
 
-	[JsonProperty("reason")]
+	[JsonPropertyName("reason")]
 	public string Reason { get; set; }
 
-	[JsonProperty("message")]
+	[JsonPropertyName("message")]
 	public string Message { get; set; }
 }
 
 public partial class File
 {
-	[JsonProperty("id")]
+	[JsonPropertyName("id")]
 	public string Id { get; set; }
 
-	[JsonProperty("name")]
+	[JsonPropertyName("name")]
 	public string Name { get; set; }
 
-	[JsonProperty("mimeType")]
+	[JsonPropertyName("mimeType")]
 	public string MimeType { get; set; }
 
-	[JsonProperty("modifiedTime")]
+	[JsonPropertyName("modifiedTime")]
 	public DateTimeOffset ModifiedTime { get; set; }
 
-	[JsonProperty("size")]
+	[JsonPropertyName("size")]
 	public long Size { get; set; }
 }
 
 public partial class BhadooIndexResponse
 {
-	public static BhadooIndexResponse FromJson(string json) => JsonConvert.DeserializeObject<BhadooIndexResponse>(json, Converter.Settings);
+	public static BhadooIndexResponse FromJson(string json) => JsonSerializer.Deserialize<BhadooIndexResponse>(json, Converter.Settings);
 }
 
 public static class Serialize
 {
-	public static string ToJson(this BhadooIndexResponse self) => JsonConvert.SerializeObject(self, Converter.Settings);
+	public static string ToJson(this BhadooIndexResponse self) => JsonSerializer.Serialize(self, Converter.Settings);
 }
 
 internal static class Converter
 {
-	public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
-		MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-		DateParseHandling = DateParseHandling.None,
 		Converters =
 		{
-			new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
+			JsonMetadataServices.DateOnlyConverter,
+			new TimeOnlyConverter(),
+			new IsoDateTimeOffsetConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
 		},
 	};
 }

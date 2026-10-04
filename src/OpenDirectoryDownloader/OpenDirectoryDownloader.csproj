@@ -10,9 +10,9 @@
     <Platforms>AnyCPU;x64</Platforms>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
     <!-- The self-contained release builds are published with PublishTrimmed=true, which by default
-         disables reflection-based System.Text.Json serialization. Several JSON models (Dufs, AList,
-         PCloud, HFS, file upload parsers) rely on reflection-based (de)serialization, so force it
-         back on rather than converting every model to source generators. -->
+         disables reflection-based System.Text.Json serialization. All of the JSON models (session,
+         Dufs, AList, PCloud, HFS, file upload parsers, site parsers, ...) rely on reflection-based
+         (de)serialization, so force it back on rather than converting every model to source generators. -->
     <JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
   </PropertyGroup>
 
@@ -49,7 +49,6 @@
     <PackageReference Include="HttpCloak" Version="1.7.2" />
     <PackageReference Include="Jint" Version="4.4.1" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.12" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Polly" Version="8.6.3" />
     <PackageReference Include="PuppeteerExtraSharp" Version="3.0.1" />
     <PackageReference Include="PuppeteerSharp" Version="20.2.2" />

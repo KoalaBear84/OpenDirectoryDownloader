@@ -1,7 +1,7 @@
-using Newtonsoft.Json;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using System.Net;
+using System.Text.Json;
 
 namespace OpenDirectoryDownloader.Site.GDIndex.Go2Index;
 
@@ -26,7 +26,7 @@ public static class Go2IndexParser
 				Program.Logger.Information("Check if password is needed...");
 				OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password] = null;
 
-				HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
+				HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonSerializer.Serialize(new Dictionary<string, object>
 				{
 					{ "page_index", 0 },
 					{ "page_token", null },
@@ -51,7 +51,7 @@ public static class Go2IndexParser
 						Console.WriteLine($"Using password: {OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]}");
 						Program.Logger.Information("Using password: {password}", OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]);
 
-						httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
+						httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonSerializer.Serialize(new Dictionary<string, object>
 						{
 							{ "page_index", 0 },
 							{ "page_token", null },
@@ -141,7 +141,7 @@ public static class Go2IndexParser
 
 					Program.Logger.Warning("Retrieving listings for {relativeUrl}, page {page} with password: {password}", webDirectory.Uri.PathAndQuery, pageIndex + 1, OpenDirectoryIndexer.Session.Parameters[Constants.Parameters_Password]);
 
-					HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonConvert.SerializeObject(new Dictionary<string, object>
+					HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(webDirectory.Uri, new StringContent(JsonSerializer.Serialize(new Dictionary<string, object>
 					{
 						{ "page_index", pageIndex },
 						{ "page_token", nextPageToken },

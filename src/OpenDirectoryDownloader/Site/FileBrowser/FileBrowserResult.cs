@@ -1,109 +1,111 @@
 using System.Globalization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
+using OpenDirectoryDownloader.Converters;
 
 namespace OpenDirectoryDownloader.Site.FileBrowser;
 
 public partial class FileBrowserResult
 {
-	[JsonProperty("items")]
+	[JsonPropertyName("items")]
 	public List<Item> Items { get; set; }
 
-	[JsonProperty("numDirs")]
+	[JsonPropertyName("numDirs")]
 	public long NumDirs { get; set; }
 
-	[JsonProperty("numFiles")]
+	[JsonPropertyName("numFiles")]
 	public long NumFiles { get; set; }
 
-	[JsonProperty("sorting")]
+	[JsonPropertyName("sorting")]
 	public Sorting Sorting { get; set; }
 
-	[JsonProperty("path")]
+	[JsonPropertyName("path")]
 	public string Path { get; set; }
 
-	[JsonProperty("name")]
+	[JsonPropertyName("name")]
 	public string Name { get; set; }
 
-	[JsonProperty("size")]
+	[JsonPropertyName("size")]
 	public long Size { get; set; }
 
-	[JsonProperty("extension")]
+	[JsonPropertyName("extension")]
 	public string Extension { get; set; }
 
-	[JsonProperty("modified")]
+	[JsonPropertyName("modified")]
 	public DateTimeOffset Modified { get; set; }
 
-	[JsonProperty("mode")]
+	[JsonPropertyName("mode")]
 	public long Mode { get; set; }
 
-	[JsonProperty("isDir")]
+	[JsonPropertyName("isDir")]
 	public bool IsDir { get; set; }
 
-	[JsonProperty("isSymlink")]
+	[JsonPropertyName("isSymlink")]
 	public bool IsSymlink { get; set; }
 
-	[JsonProperty("type")]
+	[JsonPropertyName("type")]
 	public string Type { get; set; }
 }
 
 public partial class Item
 {
-	[JsonProperty("path")]
+	[JsonPropertyName("path")]
 	public string Path { get; set; }
 
-	[JsonProperty("name")]
+	[JsonPropertyName("name")]
 	public string Name { get; set; }
 
-	[JsonProperty("size")]
+	[JsonPropertyName("size")]
 	public long Size { get; set; }
 
-	[JsonProperty("extension")]
+	[JsonPropertyName("extension")]
 	public string Extension { get; set; }
 
-	[JsonProperty("modified")]
+	[JsonPropertyName("modified")]
 	public DateTimeOffset Modified { get; set; }
 
-	[JsonProperty("mode")]
+	[JsonPropertyName("mode")]
 	public long Mode { get; set; }
 
-	[JsonProperty("isDir")]
+	[JsonPropertyName("isDir")]
 	public bool IsDir { get; set; }
 
-	[JsonProperty("isSymlink")]
+	[JsonPropertyName("isSymlink")]
 	public bool IsSymlink { get; set; }
 
-	[JsonProperty("type")]
+	[JsonPropertyName("type")]
 	public string Type { get; set; }
 }
 
 public partial class Sorting
 {
-	[JsonProperty("by")]
+	[JsonPropertyName("by")]
 	public string By { get; set; }
 
-	[JsonProperty("asc")]
+	[JsonPropertyName("asc")]
 	public bool Asc { get; set; }
 }
 
 public partial class FileBrowserResult
 {
-	public static FileBrowserResult FromJson(string json) => JsonConvert.DeserializeObject<FileBrowserResult>(json, Converter.Settings);
+	public static FileBrowserResult FromJson(string json) => JsonSerializer.Deserialize<FileBrowserResult>(json, Converter.Settings);
 }
 
 public static class Serialize
 {
-	public static string ToJson(this FileBrowserResult self) => JsonConvert.SerializeObject(self, Converter.Settings);
+	public static string ToJson(this FileBrowserResult self) => JsonSerializer.Serialize(self, Converter.Settings);
 }
 
 internal static class Converter
 {
-	public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
-		MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-		DateParseHandling = DateParseHandling.None,
 		Converters =
-			{
-				new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
-			},
+		{
+			JsonMetadataServices.DateOnlyConverter,
+			new TimeOnlyConverter(),
+			new IsoDateTimeOffsetConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
+		},
 	};
 }

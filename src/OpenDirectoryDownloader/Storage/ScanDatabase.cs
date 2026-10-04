@@ -1,7 +1,7 @@
 using Microsoft.Data.Sqlite;
-using Newtonsoft.Json;
 using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
+using System.Text.Json;
 using System.Threading.Channels;
 
 namespace OpenDirectoryDownloader.Storage;
@@ -266,7 +266,7 @@ public sealed class ScanDatabase : IAsyncDisposable
 	public async Task<int> BeginRunAsync(Session session, string rootUrl, bool isFreshScan)
 	{
 		TaskCompletionSource<int> runNumberResult = new(TaskCreationOptions.RunContinuationsAsynchronously);
-		string httpStatusCodesJson = JsonConvert.SerializeObject(session.HttpStatusCodes);
+		string httpStatusCodesJson = JsonSerializer.Serialize(session.HttpStatusCodes);
 
 		_channel.Writer.TryWrite(new BeginRunRecord(
 			isFreshScan,
@@ -301,7 +301,7 @@ public sealed class ScanDatabase : IAsyncDisposable
 			return;
 		}
 
-		string httpStatusCodesJson = JsonConvert.SerializeObject(session.HttpStatusCodes);
+		string httpStatusCodesJson = JsonSerializer.Serialize(session.HttpStatusCodes);
 
 		_channel.Writer.TryWrite(new SessionStatsRecord(_currentRunNumber, DateTimeOffset.UtcNow, session.TotalHttpTraffic, session.TotalHttpRequests, session.Errors, session.Skipped, httpStatusCodesJson));
 	}
@@ -449,7 +449,7 @@ public sealed class ScanDatabase : IAsyncDisposable
 			return null;
 		}
 
-		Dictionary<int, int> httpStatusCodes = JsonConvert.DeserializeObject<Dictionary<int, int>>(reader.GetString(7)) ?? [];
+		Dictionary<int, int> httpStatusCodes = JsonSerializer.Deserialize<Dictionary<int, int>>(reader.GetString(7)) ?? [];
 
 		return new SessionStatsSnapshot(
 			reader.GetInt32(0),
