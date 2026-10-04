@@ -91,10 +91,12 @@ public class Program
 		{
 			Console.WriteLine("Which URL do you want to index?");
 			url = Console.ReadLine();
-		}
 
-		// Wait until this ticket is closed: https://github.com/dotnet/corefx/pull/37050
-		//AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2Support", true);
+			if (url?.Equals("quit", StringComparison.OrdinalIgnoreCase) == true || url?.Equals("exit", StringComparison.OrdinalIgnoreCase) == true)
+			{
+				return 0;
+			}
+		}
 
 		OpenDirectoryIndexerSettings openDirectoryIndexerSettings = new()
 		{
