@@ -215,9 +215,7 @@ Note: when enabled, it bypasses this app's SSL certificate validation and automa
 
 **It is a lot slower than scanning without it** (measured 6-70x, depending on site and `--threads`), only use `--http-cloak` when you actually need it!
 
-## Cloudflare
-
-*EXPERIMANTAL!! READ THIS FIRST!*
+## Cloudflare (Experimental)
 
 IT WILL NOT ALWAYS WORK!
 
@@ -226,6 +224,8 @@ There is experimental support for Cloudflare. When it detects a Cloudflare issue
 Cloudflare does somehow detect that it is not the normal Chromium/Chrome browser and therefore it sadly will not always work. A good tip is move your mouse as soon as possible in the browser.
 
 Sometimes it fails and pops up a browser for every request, and also kills it almost immediately when Cloudflare sees that there is no problem with the session. If this happens, kill the indexer!
+
+As an alternative to the built-in browser automation, you can use [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr) to solve Cloudflare challenges by supplying `--flaresolverr-url`, e.g. `--flaresolverr-url "http://127.0.0.1:8191"`.
 
 If you are using FlareSolverr in Docker, you can now also stream its container logs in the app by supplying both `--flaresolverr-url` and `--flaresolverr-docker-name`, for example:
 
