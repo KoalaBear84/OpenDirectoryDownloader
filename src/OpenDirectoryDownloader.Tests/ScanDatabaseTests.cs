@@ -591,6 +591,42 @@ public class ScanDatabaseTests : IAsyncLifetime
 		Assert.Equal(50, cAggregate.TotalSize);
 	}
 
+	/// <summary>
+	/// GetChildSubtreeAggregatesAsync caches its (potentially expensive, for a huge subtree) result per parent
+	/// URL until the database changes - mirroring the real web-viewer setup (a separate OpenReadOnlyAsync
+	/// connection browsing a database some other process, or the writer side here, is mirroring into): a
+	/// repeat call for the same parent must be served from cache, but a write from the *other* connection
+	/// must still be picked up on the next call (PRAGMA data_version, which this relies on, only reports
+	/// changes committed by other connections - not ones made by the calling connection itself).
+	/// </summary>
+	[Fact]
+	public async Task GetChildSubtreeAggregatesAsync_CachesUntilDatabaseChanges()
+	{
+		WebDirectory root = new(parentWebDirectory: null) { Url = "https://example.com/", Name = "example.com", Finished = true };
+		WebDirectory childA = new(parentWebDirectory: root) { Url = "https://example.com/a/", Name = "a", Finished = true };
+
+		_scanDatabase.MirrorDirectory(root);
+		_scanDatabase.MirrorDirectory(childA);
+		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/a/x.bin", FileName = "x.bin", FileSize = 100 }, childA);
+
+		await _scanDatabase.FlushAsync();
+
+		await using ScanDatabase reader = await ScanDatabase.OpenReadOnlyAsync(_dbPath);
+
+		Dictionary<string, ScanDatabase.SubtreeAggregate> first = await reader.GetChildSubtreeAggregatesAsync("https://example.com/");
+		Dictionary<string, ScanDatabase.SubtreeAggregate> second = await reader.GetChildSubtreeAggregatesAsync("https://example.com/");
+
+		Assert.Equal(first["https://example.com/a/"], second["https://example.com/a/"]);
+		Assert.Equal(100, second["https://example.com/a/"].TotalSize);
+
+		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/a/y.bin", FileName = "y.bin", FileSize = 200 }, childA);
+		await _scanDatabase.FlushAsync();
+
+		Dictionary<string, ScanDatabase.SubtreeAggregate> afterChange = await reader.GetChildSubtreeAggregatesAsync("https://example.com/");
+
+		Assert.Equal(300, afterChange["https://example.com/a/"].TotalSize);
+	}
+
 	[Fact]
 	public async Task GetSubtreeAsync_ReturnsDescendantDirectoriesAndAllFilesUnderneath()
 	{

@@ -48,6 +48,15 @@ public sealed class ScanDatabase : IAsyncDisposable
 	private readonly bool _ownsSidecarFiles;
 	private readonly DateTime _mainFileLastWriteTimeUtcAtOpen;
 
+	/// <summary>
+	/// Per-parent cache for <see cref="GetChildSubtreeAggregatesAsync"/>, keyed to <see cref="PRAGMA data_version"/>
+	/// (see that method) so a huge subtree (e.g. a single top-level directory holding most of a million-file scan)
+	/// only gets its recursive totals walked once per database write, instead of on every web-viewer navigation
+	/// into it or one of its ancestors.
+	/// </summary>
+	private readonly Dictionary<string, Dictionary<string, SubtreeAggregate>> _subtreeAggregateCache = [];
+	private long _subtreeAggregateCacheDataVersion = -1;
+
 	private ScanDatabase(SqliteConnection connection, string path, bool startWriter = true, bool ownsSidecarFiles = false)
 	{
 		_connection = connection;
@@ -801,10 +810,27 @@ public sealed class ScanDatabase : IAsyncDisposable
 	/// whole subtree (including the child directory itself) - used by the web viewer's tree view to size
 	/// each row's progress bar relative to the others. One recursive CTE walk (via IX_Directories_ParentUrl)
 	/// per call; a child with no entry has no descendants and no files.
+	///
+	/// Cached per <paramref name="parentUrl"/> for as long as <see cref="GetDataVersionAsync"/> reports no
+	/// writes since the cache was populated - without this, a directory whose subtree holds most of a huge
+	/// scan (e.g. one top-level folder out of a million files) would get its full recursive walk re-run on
+	/// every single web-viewer navigation into it, or into any of its ancestors.
 	/// </summary>
 	public async Task<Dictionary<string, SubtreeAggregate>> GetChildSubtreeAggregatesAsync(string parentUrl)
 	{
 		await FlushAsync();
+
+		long dataVersion = await GetDataVersionAsync();
+
+		if (dataVersion != _subtreeAggregateCacheDataVersion)
+		{
+			_subtreeAggregateCache.Clear();
+			_subtreeAggregateCacheDataVersion = dataVersion;
+		}
+		else if (_subtreeAggregateCache.TryGetValue(parentUrl, out Dictionary<string, SubtreeAggregate> cached))
+		{
+			return cached;
+		}
 
 		Dictionary<string, SubtreeAggregate> aggregates = [];
 
@@ -841,7 +867,24 @@ public sealed class ScanDatabase : IAsyncDisposable
 				reader.IsDBNull(4) ? 0 : reader.GetInt64(4));
 		}
 
+		_subtreeAggregateCache[parentUrl] = aggregates;
+
 		return aggregates;
+	}
+
+	/// <summary>
+	/// SQLite's own change counter for this database file: unchanged since the last call here means no *other*
+	/// connection has committed anything since (it does not reflect writes made by this same connection - the
+	/// web viewer's connection is always a separate OpenReadOnlyAsync one from whatever is writing, so that's
+	/// exactly what it needs), so cached query results are still fresh. Essentially free to call - unlike
+	/// re-running a recursive aggregate over hundreds of thousands of rows just to find out nothing changed.
+	/// </summary>
+	private async Task<long> GetDataVersionAsync()
+	{
+		using SqliteCommand command = _connection.CreateCommand();
+		command.CommandText = "PRAGMA data_version";
+
+		return (long)await command.ExecuteScalarAsync();
 	}
 
 	public sealed record SubtreeAggregate(long DirectoryCount, long FileCount, long TotalSize, long UnknownSizeCount);
