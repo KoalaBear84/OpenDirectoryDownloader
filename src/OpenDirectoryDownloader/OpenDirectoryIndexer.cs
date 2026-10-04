@@ -903,6 +903,11 @@ public partial class OpenDirectoryIndexer
 					Program.Logger.Warning("Speedtest skipped because of general service or disabled through command line");
 				}
 
+				if (Session.SpeedtestResult != null)
+				{
+					ScanDatabase?.MirrorSpeedtestResult(Session.SpeedtestResult);
+				}
+
 				if (Session.Root.Uri.Scheme == Constants.UriScheme.Ftp || Session.Root.Uri.Scheme == Constants.UriScheme.Ftps)
 				{
 					FtpParser.CloseAll();
@@ -2153,11 +2158,8 @@ public partial class OpenDirectoryIndexer
 		webDirectory.Name = parsedWebDirectory.Name;
 		webDirectory.Subdirectories = parsedWebDirectory.Subdirectories;
 		webDirectory.Url = parsedWebDirectory.Url;
-		// Was previously never copied, so e.g. a symlink-loop detection (DirectoryParser.CheckSymlinks,
-		// which only sets it on this transient parsedWebDirectory) never actually reached the real,
-		// tree-linked/mirrored webDirectory.Error - only the separate exception-handler paths did. Needed
-		// so --resume's retry-on-error (issue #56 phase 6) can see all error cases, not just those.
 		webDirectory.Error = parsedWebDirectory.Error;
+		webDirectory.Parser = parsedWebDirectory.Parser;
 		webDirectory.ContentFingerprint = webDirectory.ComputeContentFingerprint();
 
 		// parsedWebDirectory.Subdirectories were constructed with the transient parsedWebDirectory as their

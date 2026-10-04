@@ -166,7 +166,11 @@ public static class GdIndexParser
 						{
 							Parser = Parser,
 							// Yes, string concatenation, do not use new Uri(webDirectory.Uri, file.Name), because things could end with a space...
-							Url = $"{webDirectory.Uri}{file.Name}/",
+							// The name itself must still be escaped (Uri.EscapeDataString preserves a trailing
+							// space as %20, so this doesn't lose the trailing-space handling above) - Drive
+							// names are unconstrained and can contain '/', '%', '#', etc., which otherwise
+							// corrupt this URL (wrong path segments, or a decodeURIComponent() throw later).
+							Url = $"{webDirectory.Uri}{Uri.EscapeDataString(file.Name)}/",
 							Name = file.Name
 						});
 					}
@@ -176,7 +180,8 @@ public static class GdIndexParser
 						{
 							Url = new Uri(webDirectory.Uri, file.Name).ToString(),
 							FileName = file.Name,
-							FileSize = file.Size
+							FileSize = file.Size,
+							Description = GoogleDriveIndexMapping.GetFriendlyMimeTypeName(file.MimeType)
 						});
 					}
 				}

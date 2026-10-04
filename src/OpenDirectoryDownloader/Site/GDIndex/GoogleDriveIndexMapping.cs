@@ -56,4 +56,28 @@ public class GoogleDriveIndexMapping
 
 		return null;
 	}
+
+	private static readonly Dictionary<string, string> NativeMimeTypeNames = new()
+	{
+		{ "application/vnd.google-apps.document", "Doc" },
+		{ "application/vnd.google-apps.spreadsheet", "Sheet" },
+		{ "application/vnd.google-apps.presentation", "Slide" },
+		{ "application/vnd.google-apps.drawing", "Drawing" },
+		{ "application/vnd.google-apps.form", "Form" },
+		{ "application/vnd.google-apps.script", "Script" },
+		{ "application/vnd.google-apps.site", "Site" },
+		{ "application/vnd.google-apps.jam", "Jamboard" },
+		{ "application/vnd.google-apps.map", "My Map" },
+		{ "application/vnd.google-apps.shortcut", "Shortcut" },
+		{ "application/vnd.google-apps.fusiontable", "Fusion Table" },
+	};
+
+	/// <summary>
+	/// A short, human-readable label for a Google Drive native file's type (e.g. "Slide", "Doc", "Sheet") -
+	/// these files don't have a normal file extension, so the mime type is the only way to tell what they
+	/// are. Returns null for anything else (a real file with its own extension, which already speaks for
+	/// itself - no need to override WebFile.Description for those).
+	/// </summary>
+	public static string GetFriendlyMimeTypeName(string mimeType) =>
+		mimeType is not null && NativeMimeTypeNames.TryGetValue(mimeType, out string name) ? name : null;
 }

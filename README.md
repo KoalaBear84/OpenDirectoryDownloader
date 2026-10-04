@@ -74,6 +74,11 @@ Command line parameters:
 |       | `--evict-memory`     | EXPERIMENTAL: Requires `--use-database`. Actually reduces peak memory on very large scans by dropping finished directories from memory (see [Large scans / low memory](#large-scans--low-memory))                           |
 |       | `--resume`            | EXPERIMENTAL: Continue a previously interrupted scan from its database instead of starting over (see [Large scans / low memory](#large-scans--low-memory))                                                                   |
 |       | `--retry-errors`     | With `--resume`, retry directories that errored during the previous run instead of leaving them as-is                                                                                                                       |
+|       | `--serve`            | EXPERIMENTAL: Start a local web viewer for a scan database instead of scanning a URL (see [Web viewer for scan databases](#web-viewer-for-scan-databases))                                                                   |
+|       | `--serve-db`          | Path to a `.sqlite` scan database to preload when using `--serve`. Optional - a database can also be dropped onto the page                                                                                                   |
+|       | `--serve-port`        | Port for `--serve` (default: `8080`). If it's already in use, the next port is tried automatically (up to 20 attempts)                                                                                                        |
+|       | `--serve-host`        | Host/IP to bind `--serve` to (default: `127.0.0.1`, loopback only - the server has no authentication)                                                                                                                        |
+|       | `--serve-no-browser`  | Don't automatically open the default browser when `--serve` starts                                                                                                                                                            |
 
 ### Example
 
@@ -148,6 +153,45 @@ Successfully resumed from database: myopendirectory.sqlite
 ```
 
 These flags don't change the JSON/URLs/aria2 output format - resuming a scan produces the exact same output as if it had never been interrupted.
+
+A `--use-database` database can also be browsed interactively afterwards - see [Web viewer for scan databases](#web-viewer-for-scan-databases) below.
+
+## Web viewer for scan databases
+
+*EXPERIMENTAL!*
+
+Any `.sqlite` database produced by `--use-database` (finished or not - see [Large scans / low memory](#large-scans--low-memory) above) can be browsed in your browser instead of only reading the JSON/TXT/aria2 output files: a tree view with size-proportional progress bars, an optional image gallery, and per-file or per-directory (as a ZIP) downloads straight from the original site.
+
+Start the server:
+
+```
+OpenDirectoryDownloader --serve
+```
+
+Then open a database one of two ways:
+
+- **Drag a `.sqlite` file straight onto the `OpenDirectoryDownloader` executable** in Explorer - it launches the server preloaded with that database and opens your browser automatically.
+- **Drag a `.sqlite` file onto the page** while the server is running (works at any time, including to switch to a different database).
+
+By default the server only listens on `127.0.0.1` (loopback) since it has no authentication - use `--serve-host`/`--serve-port` to change that only on a trusted network. `--serve-db <path>` preloads a database from the command line instead of dragging one, and `--serve-no-browser` skips automatically opening a browser tab.
+
+The folder listing renders only the rows currently in view (via [Clusterize.js](https://clusterize.js.org/), loaded from a CDN) so even directories with hundreds of thousands of entries stay smooth to scroll. This is the one part of the viewer that needs internet access - everything else is served entirely from the `.exe` itself.
+
+While a database is open, SQLite's own `-wal`/`-shm` sidecar files appear next to it - normal for browsing a WAL-mode database, not something the viewer writes itself, and needed to support opening a database another process is still actively scanning. Stopping the server (Ctrl+C) cleans those up automatically; killing the process instead (e.g. Task Manager, `kill -9`) skips that cleanup, same as force-killing any other program, though the leftover files are harmless and SQLite recovers them correctly the next time anything opens that database.
+
+In the viewer:
+
+- Each row's progress bar shows its size relative to the largest entry in that folder, with the folder's total size shown above the list.
+- Click the **Name**/**Size** column headers to sort the current folder (folders always stay listed before files); click again to reverse the direction.
+- The search box instantly filters the current folder as you type, and (once you've typed 2+ characters) also searches the whole database for matches elsewhere, listed under "Elsewhere in this scan" with a **Show in folder** link and **Download** button - handy for finding a file without clicking through the tree. Note this search is a substring scan of every file/directory name, so it can be slow on a database with millions of rows.
+- The **Gallery view** checkbox (off by default) switches image files in the current folder to a thumbnail grid.
+- Every file has a **Download** button; every folder has a **ZIP** button that downloads the whole folder as a ZIP (built on the fly, with a live progress panel showing files done and bytes written) while preserving its directory structure.
+- Every row also has a 🔗 button that opens the file/folder's real URL on the original site directly, bypassing the viewer entirely - handy for e.g. opening a Google Drive file in Drive's own viewer instead of downloading it.
+- The bar under the root URL also shows which Open Directory "engine(s)" were detected while scanning (e.g. `AList`, `Dufs`, or one of the generic listing formats) - `Type: X`, or `Types: X, Y` if more than one was seen across the scan.
+- Files get an icon based on their media type (image/video/audio/document/archive/etc.); a Google Drive-native file (Doc, Sheet, Slide, ...) that has no real file extension gets a matching icon and a small type badge instead.
+- Click **&uarr; Up** (next to the breadcrumbs) to jump to the parent folder.
+- The bar under the root URL also shows the scan's total file count, total size, and the `.sqlite` database's own file size, available as soon as the page loads.
+- The **Statistics** button opens a panel with a media-type breakdown (a pie chart by size, with each slice's file count), the top 10 most common file extensions by file count and size, and the scan's `--speedtest` result (if one was run) - downloaded amount, duration, and peak speed.
 
 ## TLS errors (Windows 10)
 

@@ -35,6 +35,16 @@ public class Program
 			.WriteTo.Console(outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj}{NewLine}{Exception}", restrictedToMinimumLevel: LogEventLevel.Warning, theme: AnsiConsoleTheme.Code)
 			.CreateLogger();
 
+		// Dragging a .sqlite scan database straight onto the .exe in Explorer launches this process with
+		// that file as its only argument - rewrite it into `--serve --serve-db <path>` before the normal
+		// parser ever sees it, so --serve-port/--serve-host/etc. still get their proper [Option] defaults
+		// (constructing a CommandLineOptions directly, bypassing the parser, would leave those at 0/null).
+		// Positional arguments aren't otherwise supported by CommandLineOptions.
+		if (args.Length == 1 && File.Exists(args[0]) && Path.GetExtension(args[0]).Equals(".sqlite", StringComparison.OrdinalIgnoreCase))
+		{
+			args = ["--serve", "--serve-db", args[0]];
+		}
+
 		Process currentProcess = Process.GetCurrentProcess();
 
 		Console.WriteLine($"Started with PID {currentProcess.Id}");
@@ -83,6 +93,11 @@ public class Program
 		if (httpCloakPreset is not null)
 		{
 			CommandLineOptions.HttpCloak = httpCloakPreset.Length > 0 ? httpCloakPreset : "chrome-latest";
+		}
+
+		if (CommandLineOptions.Serve)
+		{
+			return await Server.ScanDatabaseServer.RunAsync(CommandLineOptions, Logger);
 		}
 
 		if (CommandLineOptions.Threads is < 1 or > 100)

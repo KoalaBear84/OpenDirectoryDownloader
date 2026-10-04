@@ -196,7 +196,8 @@ public static class Go2IndexParser
 							{
 								Url = new Uri(webDirectory.Uri, Uri.EscapeDataString(file.Name)).ToString(),
 								FileName = file.Name,
-								FileSize = file.Size
+								FileSize = file.Size,
+								Description = GoogleDriveIndexMapping.GetFriendlyMimeTypeName(file.MimeType)
 							});
 						}
 					}

@@ -1,5 +1,6 @@
 using Microsoft.Data.Sqlite;
 using Newtonsoft.Json;
+using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 using System.Threading.Channels;
 
@@ -29,18 +30,45 @@ public sealed class ScanDatabase : IAsyncDisposable
 
 	public string Path { get; }
 
-	private ScanDatabase(SqliteConnection connection, string path)
+	/// <summary>
+	/// True for a database opened via <see cref="OpenReadOnlyAsync"/>: no writer channel/task exists, so
+	/// mirroring methods must not be called (the web viewer only ever reads). <see cref="FlushAsync"/> and
+	/// <see cref="DisposeAsync"/> both special-case this.
+	/// </summary>
+	private bool IsReadOnly => _channel is null;
+
+	/// <summary>
+	/// Set by <see cref="OpenReadOnlyAsync"/> when it found no -wal/-shm sidecar files next to a database
+	/// that's already fully checkpointed (the common "browse a finished scan" case) - meaning any such files
+	/// that exist by the time this connection closes were created by this read-only connection itself, purely
+	/// as SQLite's WAL-reader bookkeeping, not left behind by some other (possibly still-active) writer. See
+	/// <see cref="DisposeAsync"/>, which deletes them in that case, re-checking <see cref="_mainFileLastWriteTimeUtcAtOpen"/>
+	/// first as a best-effort guard against a writer having started mid-session on the same file.
+	/// </summary>
+	private readonly bool _ownsSidecarFiles;
+	private readonly DateTime _mainFileLastWriteTimeUtcAtOpen;
+
+	private ScanDatabase(SqliteConnection connection, string path, bool startWriter = true, bool ownsSidecarFiles = false)
 	{
 		_connection = connection;
 		Path = path;
+		_ownsSidecarFiles = ownsSidecarFiles;
 
-		_channel = Channel.CreateUnbounded<IScanRecord>(new UnboundedChannelOptions
+		if (ownsSidecarFiles)
 		{
-			SingleReader = true,
-			SingleWriter = false
-		});
+			_mainFileLastWriteTimeUtcAtOpen = File.GetLastWriteTimeUtc(path);
+		}
 
-		_writerTask = Task.Run(WriterLoopAsync);
+		if (startWriter)
+		{
+			_channel = Channel.CreateUnbounded<IScanRecord>(new UnboundedChannelOptions
+			{
+				SingleReader = true,
+				SingleWriter = false
+			});
+
+			_writerTask = Task.Run(WriterLoopAsync);
+		}
 	}
 
 	public static Task<ScanDatabase> CreateAsync(string path, CancellationToken cancellationToken = default) =>
@@ -84,7 +112,8 @@ public sealed class ScanDatabase : IAsyncDisposable
 					Name TEXT NOT NULL,
 					Description TEXT NULL,
 					Finished INTEGER NOT NULL,
-					Error INTEGER NOT NULL
+					Error INTEGER NOT NULL,
+					Parser TEXT NULL
 				);
 
 				CREATE INDEX IF NOT EXISTS IX_Directories_ParentUrl ON Directories (ParentUrl);
@@ -114,7 +143,10 @@ public sealed class ScanDatabase : IAsyncDisposable
 					TotalHttpRequests INTEGER NOT NULL,
 					Errors INTEGER NOT NULL,
 					Skipped INTEGER NOT NULL,
-					HttpStatusCodesJson TEXT NOT NULL
+					HttpStatusCodesJson TEXT NOT NULL,
+					SpeedtestDownloadedBytes INTEGER NULL,
+					SpeedtestElapsedMs INTEGER NULL,
+					SpeedtestMaxBytesPerSecond INTEGER NULL
 				);
 				""";
 
@@ -122,6 +154,63 @@ public sealed class ScanDatabase : IAsyncDisposable
 		}
 
 		return new ScanDatabase(connection, path);
+	}
+
+	/// <summary>
+	/// Opens an existing database file purely for reading (the local web viewer, see 'Web viewer' in the
+	/// README): the connection is opened read-only (no schema creation, no WAL pragma - both would attempt
+	/// a write), and no writer channel/task is started, so this instance's mirroring methods must never be
+	/// called. Works against a database still being actively written by another process (WAL readers don't
+	/// block on a concurrent writer). Throws if the file doesn't exist or doesn't look like a scan database.
+	/// </summary>
+	public static async Task<ScanDatabase> OpenReadOnlyAsync(string path, CancellationToken cancellationToken = default)
+	{
+		if (!File.Exists(path))
+		{
+			throw new FileNotFoundException($"Database file '{path}' not found.", path);
+		}
+
+		// If a WAL-mode database's -wal/-shm sidecar files don't exist yet, opening even a read-only
+		// connection to it creates them (SQLite's WAL-reader bookkeeping - see the Web viewer README
+		// section). Noting that here, before opening, is what lets DisposeAsync safely clean them back up
+		// once this connection closes instead of leaving them behind: if they were already there, some other
+		// (possibly still-active) writer owns them and they must be left alone.
+		bool ownsSidecarFiles = !File.Exists($"{path}-wal") && !File.Exists($"{path}-shm");
+
+		SqliteConnectionStringBuilder connectionStringBuilder = new()
+		{
+			DataSource = path,
+			Mode = SqliteOpenMode.ReadOnly
+		};
+
+		SqliteConnection connection = new(connectionStringBuilder.ConnectionString);
+
+		try
+		{
+			await connection.OpenAsync(cancellationToken);
+			await EnsureLooksLikeScanDatabaseAsync(connection, path, cancellationToken);
+		}
+		catch
+		{
+			await connection.DisposeAsync();
+			SqliteConnection.ClearPool(connection);
+			throw;
+		}
+
+		return new ScanDatabase(connection, path, startWriter: false, ownsSidecarFiles: ownsSidecarFiles);
+	}
+
+	private static async Task EnsureLooksLikeScanDatabaseAsync(SqliteConnection connection, string path, CancellationToken cancellationToken)
+	{
+		using SqliteCommand command = connection.CreateCommand();
+		command.CommandText = "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name IN ('Directories', 'Files', 'ScanInfo')";
+
+		long matchingTables = (long)await command.ExecuteScalarAsync(cancellationToken);
+
+		if (matchingTables != 3)
+		{
+			throw new InvalidOperationException($"'{path}' doesn't look like an OpenDirectoryDownloader scan database.");
+		}
 	}
 
 	/// <summary>Queues a directory (or an update to a previously queued one, e.g. once it's Finished) for mirroring. Non-blocking.</summary>
@@ -133,7 +222,8 @@ public sealed class ScanDatabase : IAsyncDisposable
 			webDirectory.Name,
 			webDirectory.Description,
 			webDirectory.Finished,
-			webDirectory.Error));
+			webDirectory.Error,
+			webDirectory.Parser));
 	}
 
 	/// <summary>Queues a file discovered under <paramref name="parentDirectory"/> for mirroring. Non-blocking.</summary>
@@ -213,9 +303,30 @@ public sealed class ScanDatabase : IAsyncDisposable
 		_channel.Writer.TryWrite(new ScanCompletedRecord(completedAtUtc));
 	}
 
-	/// <summary>Waits until every queued record so far has been committed to the database.</summary>
+	/// <summary>
+	/// Queues the result of a --speedtest run (attached to the current run, like MirrorSessionStats) for the
+	/// web viewer's Statistics panel. A no-op before BeginRunAsync has completed. DownloadedBytes of 0 means
+	/// the speedtest was attempted but failed (see OpenDirectoryIndexer) - stored as-is rather than skipped,
+	/// so the viewer can show "failed" instead of silently having no speedtest row at all.
+	/// </summary>
+	public void MirrorSpeedtestResult(SpeedtestResult speedtestResult)
+	{
+		if (_currentRunNumber == 0)
+		{
+			return;
+		}
+
+		_channel.Writer.TryWrite(new SpeedtestResultRecord(_currentRunNumber, speedtestResult.DownloadedBytes, speedtestResult.ElapsedMilliseconds, speedtestResult.MaxBytesPerSecond));
+	}
+
+	/// <summary>Waits until every queued record so far has been committed to the database. A no-op on a read-only instance (nothing is ever queued).</summary>
 	public async Task FlushAsync()
 	{
+		if (IsReadOnly)
+		{
+			return;
+		}
+
 		TaskCompletionSource flushCompleted = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
 		_channel.Writer.TryWrite(new FlushMarker(flushCompleted));
@@ -282,6 +393,30 @@ public sealed class ScanDatabase : IAsyncDisposable
 			reader.IsDBNull(2) ? null : DateTimeOffset.Parse(reader.GetString(2)));
 	}
 
+	/// <summary>
+	/// The distinct "engine" types detected across every mirrored directory (e.g. "AList", "Dufs", "HFS", or
+	/// one of the generic Apache/Nginx-style listing parsers - see WebDirectory.Parser), for the web viewer's
+	/// "Open Directory type(s)" display. Empty if nothing was ever mirrored.
+	/// </summary>
+	public async Task<List<string>> GetDistinctParserTypesAsync()
+	{
+		await FlushAsync();
+
+		List<string> types = [];
+
+		using SqliteCommand command = _connection.CreateCommand();
+		command.CommandText = "SELECT DISTINCT Parser FROM Directories WHERE Parser IS NOT NULL AND Parser != '' ORDER BY Parser";
+
+		using SqliteDataReader reader = await command.ExecuteReaderAsync();
+
+		while (await reader.ReadAsync())
+		{
+			types.Add(reader.GetString(0));
+		}
+
+		return types;
+	}
+
 	public sealed record ScanInfoSnapshot(string RootUrl, DateTimeOffset FirstStartedAtUtc, DateTimeOffset? CompletedAtUtc);
 
 	/// <summary>The most recent attempt's (ScanRuns row's) counters, or null if BeginRunAsync has never completed for this database (a fresh scan, or one interrupted before it could).</summary>
@@ -320,6 +455,37 @@ public sealed class ScanDatabase : IAsyncDisposable
 
 	public sealed record SessionStatsSnapshot(int RunNumber, DateTimeOffset StartedAtUtc, DateTimeOffset LastUpdatedAtUtc, long TotalHttpTraffic, int TotalHttpRequests, int Errors, int Skipped, Dictionary<int, int> HttpStatusCodes);
 
+	/// <summary>
+	/// The most recent --speedtest result recorded against any run (not necessarily the latest run - a later
+	/// --resume may not have run one itself), for the web viewer's Statistics panel. Null if no run has ever
+	/// recorded one.
+	/// </summary>
+	public async Task<SpeedtestSnapshot> GetLatestSpeedtestResultAsync()
+	{
+		await FlushAsync();
+
+		using SqliteCommand command = _connection.CreateCommand();
+		command.CommandText =
+			"""
+			SELECT SpeedtestDownloadedBytes, SpeedtestElapsedMs, SpeedtestMaxBytesPerSecond
+			FROM ScanRuns
+			WHERE SpeedtestElapsedMs IS NOT NULL
+			ORDER BY RunNumber DESC
+			LIMIT 1
+			""";
+
+		using SqliteDataReader reader = await command.ExecuteReaderAsync();
+
+		if (!await reader.ReadAsync())
+		{
+			return null;
+		}
+
+		return new SpeedtestSnapshot(reader.GetInt64(0), reader.GetInt64(1), reader.GetInt64(2));
+	}
+
+	public sealed record SpeedtestSnapshot(long DownloadedBytes, long ElapsedMilliseconds, long MaxBytesPerSecond);
+
 	public async Task<long?> GetFileSizeAsync(string url)
 	{
 		using SqliteCommand command = _connection.CreateCommand();
@@ -330,6 +496,57 @@ public sealed class ScanDatabase : IAsyncDisposable
 
 		return result is null or DBNull ? null : (long)result;
 	}
+
+	/// <summary>
+	/// The file's known name and size, or null if this URL was never mirrored. Used by the web viewer's
+	/// file download endpoint so the browser saves the file under its real name - deriving a filename from
+	/// the URL alone breaks for sites like Google Drive, where the download URL is just ".../uc?id=..." with
+	/// no filename in it at all; the actual name is only known from the original directory listing.
+	/// </summary>
+	public async Task<FileInfoSnapshot> GetFileInfoAsync(string url)
+	{
+		using SqliteCommand command = _connection.CreateCommand();
+		command.CommandText = "SELECT FileName, FileSize FROM Files WHERE Url = $url";
+		command.Parameters.AddWithValue("$url", url);
+
+		using SqliteDataReader reader = await command.ExecuteReaderAsync();
+
+		if (!await reader.ReadAsync())
+		{
+			return null;
+		}
+
+		return new FileInfoSnapshot(reader.GetString(0), reader.IsDBNull(1) ? null : reader.GetInt64(1));
+	}
+
+	public sealed record FileInfoSnapshot(string FileName, long? FileSize);
+
+	/// <summary>
+	/// Whole-database totals (every file/directory, not just one folder) - used by the web viewer to show
+	/// "X files, Y total" up front, alongside the rest of the session info, without waiting on the heavier
+	/// per-extension breakdown (<see cref="Statistics.GetExtensionsAsync"/>) the Statistics panel needs.
+	/// Three scalar subqueries in one round trip rather than three separate commands.
+	/// </summary>
+	public async Task<OverallStats> GetOverallStatsAsync()
+	{
+		await FlushAsync();
+
+		using SqliteCommand command = _connection.CreateCommand();
+		command.CommandText =
+			"""
+			SELECT
+				(SELECT COUNT(*) FROM Files),
+				(SELECT COALESCE(SUM(FileSize), 0) FROM Files),
+				(SELECT COUNT(*) FROM Directories)
+			""";
+
+		using SqliteDataReader reader = await command.ExecuteReaderAsync();
+		await reader.ReadAsync();
+
+		return new OverallStats(reader.GetInt64(0), reader.GetInt64(1), reader.GetInt64(2));
+	}
+
+	public sealed record OverallStats(long TotalFiles, long TotalSize, long TotalDirectories);
 
 	/// <summary>
 	/// Every file's FileName and FileSize (not Url - callers here only need to group by extension). Used
@@ -491,6 +708,46 @@ public sealed class ScanDatabase : IAsyncDisposable
 			reader.GetBoolean(4));
 	}
 
+	/// <summary>
+	/// The chain of ancestor directories from the root down to (but not including) <paramref name="url"/>
+	/// itself, each as (Url, Name) - used by the web viewer to render breadcrumbs from the database's real
+	/// parent/child links instead of by treating the directory URL as a hierarchical path and splitting it
+	/// on '/'. That approach breaks for sites whose URLs aren't simple paths at all, or (as with the Google
+	/// Drive index family, whose folder names are unconstrained) contain characters like '/', '%', '#' that
+	/// corrupt a naive path-split or make decodeURIComponent() throw client-side.
+	/// </summary>
+	public async Task<List<(string Url, string Name)>> GetAncestorsAsync(string url)
+	{
+		await FlushAsync();
+
+		List<(string Url, string Name)> ancestors = [];
+		string currentUrl = url;
+
+		// One single-row lookup per level; capped as a defensive guard against an unexpected cyclical
+		// ParentUrl chain in the underlying data rather than looping forever.
+		for (int i = 0; i < 1000; i++)
+		{
+			MirroredDirectory current = await GetDirectoryAsync(currentUrl);
+
+			if (current?.ParentUrl is null)
+			{
+				break;
+			}
+
+			MirroredDirectory parent = await GetDirectoryAsync(current.ParentUrl);
+
+			if (parent is null)
+			{
+				break;
+			}
+
+			ancestors.Insert(0, (parent.Url, parent.Name));
+			currentUrl = parent.Url;
+		}
+
+		return ancestors;
+	}
+
 	/// <summary>Direct (non-recursive) subdirectories of <paramref name="parentUrl"/>, ordered for deterministic output.</summary>
 	public async Task<List<MirroredDirectory>> GetSubdirectoriesAsync(string parentUrl)
 	{
@@ -539,6 +796,213 @@ public sealed class ScanDatabase : IAsyncDisposable
 		return files;
 	}
 
+	/// <summary>
+	/// For each immediate child of <paramref name="parentUrl"/>, the recursive totals across that child's
+	/// whole subtree (including the child directory itself) - used by the web viewer's tree view to size
+	/// each row's progress bar relative to the others. One recursive CTE walk (via IX_Directories_ParentUrl)
+	/// per call; a child with no entry has no descendants and no files.
+	/// </summary>
+	public async Task<Dictionary<string, SubtreeAggregate>> GetChildSubtreeAggregatesAsync(string parentUrl)
+	{
+		await FlushAsync();
+
+		Dictionary<string, SubtreeAggregate> aggregates = [];
+
+		using SqliteCommand command = _connection.CreateCommand();
+		command.CommandText =
+			"""
+			WITH RECURSIVE subtree(Url, AnchorUrl) AS (
+				SELECT Url, Url FROM Directories WHERE ParentUrl = $parentUrl
+				UNION ALL
+				SELECT d.Url, s.AnchorUrl
+				FROM Directories d
+				JOIN subtree s ON d.ParentUrl = s.Url
+			)
+			SELECT
+				s.AnchorUrl,
+				COUNT(DISTINCT s.Url),
+				COUNT(f.Url),
+				COALESCE(SUM(f.FileSize), 0),
+				SUM(CASE WHEN f.FileSize IS NULL THEN 1 ELSE 0 END)
+			FROM subtree s
+			LEFT JOIN Files f ON f.DirectoryUrl = s.Url
+			GROUP BY s.AnchorUrl
+			""";
+		command.Parameters.AddWithValue("$parentUrl", parentUrl);
+
+		using SqliteDataReader reader = await command.ExecuteReaderAsync();
+
+		while (await reader.ReadAsync())
+		{
+			aggregates[reader.GetString(0)] = new SubtreeAggregate(
+				reader.GetInt64(1),
+				reader.GetInt64(2),
+				reader.GetInt64(3),
+				reader.IsDBNull(4) ? 0 : reader.GetInt64(4));
+		}
+
+		return aggregates;
+	}
+
+	public sealed record SubtreeAggregate(long DirectoryCount, long FileCount, long TotalSize, long UnknownSizeCount);
+
+	/// <summary>
+	/// Every descendant directory (not including <paramref name="rootUrl"/> itself) and every file under
+	/// <paramref name="rootUrl"/>'s whole subtree (including its own direct files) - used by the web
+	/// viewer's directory-as-ZIP download to walk the tree and reconstruct relative paths from ParentUrl.
+	/// </summary>
+	public async Task<SubtreeResult> GetSubtreeAsync(string rootUrl)
+	{
+		await FlushAsync();
+
+		List<MirroredDirectory> directories = [];
+		List<SubtreeFile> files = [];
+
+		using (SqliteCommand directoriesCommand = _connection.CreateCommand())
+		{
+			directoriesCommand.CommandText =
+				"""
+				WITH RECURSIVE subtree(Url) AS (
+					SELECT $rootUrl
+					UNION ALL
+					SELECT d.Url FROM Directories d JOIN subtree s ON d.ParentUrl = s.Url
+				)
+				SELECT Url, ParentUrl, Name, Description, Finished, Error
+				FROM Directories
+				WHERE Url IN (SELECT Url FROM subtree) AND Url != $rootUrl
+				""";
+			directoriesCommand.Parameters.AddWithValue("$rootUrl", rootUrl);
+
+			using SqliteDataReader reader = await directoriesCommand.ExecuteReaderAsync();
+
+			while (await reader.ReadAsync())
+			{
+				directories.Add(new MirroredDirectory(
+					reader.GetString(0),
+					reader.IsDBNull(1) ? null : reader.GetString(1),
+					reader.GetString(2),
+					reader.IsDBNull(3) ? null : reader.GetString(3),
+					reader.GetBoolean(4),
+					reader.GetBoolean(5)));
+			}
+		}
+
+		using (SqliteCommand filesCommand = _connection.CreateCommand())
+		{
+			filesCommand.CommandText =
+				"""
+				WITH RECURSIVE subtree(Url) AS (
+					SELECT $rootUrl
+					UNION ALL
+					SELECT d.Url FROM Directories d JOIN subtree s ON d.ParentUrl = s.Url
+				)
+				SELECT f.Url, f.DirectoryUrl, f.FileName, f.FileSize, f.Description
+				FROM Files f
+				WHERE f.DirectoryUrl IN (SELECT Url FROM subtree)
+				""";
+			filesCommand.Parameters.AddWithValue("$rootUrl", rootUrl);
+
+			using SqliteDataReader reader = await filesCommand.ExecuteReaderAsync();
+
+			while (await reader.ReadAsync())
+			{
+				files.Add(new SubtreeFile(
+					reader.GetString(0),
+					reader.GetString(1),
+					reader.GetString(2),
+					reader.IsDBNull(3) ? null : reader.GetInt64(3),
+					reader.IsDBNull(4) ? null : reader.GetString(4)));
+			}
+		}
+
+		return new SubtreeResult(directories, files);
+	}
+
+	/// <summary>
+	/// Finds files/directories anywhere in the database whose name contains <paramref name="term"/>
+	/// (case-insensitive for ASCII, per SQLite's default LIKE behavior) - used by the web viewer's "Elsewhere
+	/// in this scan" search. Each of the two LIKE queries is capped at <paramref name="limit"/> + 1 rows so a
+	/// full row count of limit + 1 signals more matches exist than are returned (<see cref="SearchResult.Truncated"/>).
+	/// <paramref name="term"/> is escaped so a literal '%' or '_' the user typed is matched literally, not as
+	/// a wildcard. Note: a leading-wildcard LIKE can't use an index, so this is a full table scan of Files/
+	/// Directories - fine at the scale of a typical scan, bounded by the caller's limit and debounce, but
+	/// would be slow against a many-million-row database (not solved here).
+	/// </summary>
+	public async Task<SearchResult> SearchAsync(string term, int limit)
+	{
+		await FlushAsync();
+
+		string pattern = $"%{EscapeLikePattern(term)}%";
+
+		List<SearchFileMatch> files = [];
+		List<SearchDirectoryMatch> directories = [];
+
+		using (SqliteCommand filesCommand = _connection.CreateCommand())
+		{
+			filesCommand.CommandText = "SELECT Url, DirectoryUrl, FileName, FileSize, Description FROM Files WHERE FileName LIKE $pattern ESCAPE '\\' ORDER BY FileName LIMIT $limit";
+			filesCommand.Parameters.AddWithValue("$pattern", pattern);
+			filesCommand.Parameters.AddWithValue("$limit", limit + 1);
+
+			using SqliteDataReader reader = await filesCommand.ExecuteReaderAsync();
+
+			while (await reader.ReadAsync())
+			{
+				files.Add(new SearchFileMatch(
+					reader.GetString(0),
+					reader.GetString(1),
+					reader.GetString(2),
+					reader.IsDBNull(3) ? null : reader.GetInt64(3),
+					reader.IsDBNull(4) ? null : reader.GetString(4)));
+			}
+		}
+
+		using (SqliteCommand directoriesCommand = _connection.CreateCommand())
+		{
+			directoriesCommand.CommandText = "SELECT Url, ParentUrl, Name, Finished, Error FROM Directories WHERE Name LIKE $pattern ESCAPE '\\' ORDER BY Name LIMIT $limit";
+			directoriesCommand.Parameters.AddWithValue("$pattern", pattern);
+			directoriesCommand.Parameters.AddWithValue("$limit", limit + 1);
+
+			using SqliteDataReader reader = await directoriesCommand.ExecuteReaderAsync();
+
+			while (await reader.ReadAsync())
+			{
+				directories.Add(new SearchDirectoryMatch(
+					reader.GetString(0),
+					reader.IsDBNull(1) ? null : reader.GetString(1),
+					reader.GetString(2),
+					reader.GetBoolean(3),
+					reader.GetBoolean(4)));
+			}
+		}
+
+		bool truncated = files.Count > limit || directories.Count > limit;
+
+		if (files.Count > limit)
+		{
+			files.RemoveRange(limit, files.Count - limit);
+		}
+
+		if (directories.Count > limit)
+		{
+			directories.RemoveRange(limit, directories.Count - limit);
+		}
+
+		return new SearchResult(files, directories, truncated);
+	}
+
+	private static string EscapeLikePattern(string term) =>
+		term.Replace("\\", "\\\\").Replace("%", "\\%").Replace("_", "\\_");
+
+	public sealed record SearchResult(List<SearchFileMatch> Files, List<SearchDirectoryMatch> Directories, bool Truncated);
+
+	public sealed record SearchFileMatch(string Url, string DirectoryUrl, string FileName, long? FileSize, string Description);
+
+	public sealed record SearchDirectoryMatch(string Url, string ParentUrl, string Name, bool Finished, bool Error);
+
+	public sealed record SubtreeResult(List<MirroredDirectory> Directories, List<SubtreeFile> Files);
+
+	public sealed record SubtreeFile(string Url, string DirectoryUrl, string FileName, long? FileSize, string Description);
+
 	public sealed record MirroredDirectory(string Url, string ParentUrl, string Name, string Description, bool Finished, bool Error);
 
 	public sealed record MirroredFile(string Url, string FileName, long? FileSize, string Description);
@@ -578,6 +1042,7 @@ public sealed class ScanDatabase : IAsyncDisposable
 		using SqliteCommand upsertFileCommand = CreateUpsertFileCommand(transaction);
 		using SqliteCommand updateFileSizeCommand = CreateUpdateFileSizeCommand(transaction);
 		using SqliteCommand upsertSessionStatsCommand = CreateUpsertSessionStatsCommand(transaction);
+		using SqliteCommand updateSpeedtestCommand = CreateUpdateSpeedtestCommand(transaction);
 
 		List<TaskCompletionSource> flushesToComplete = null;
 
@@ -600,6 +1065,10 @@ public sealed class ScanDatabase : IAsyncDisposable
 				case SessionStatsRecord sessionStatsRecord:
 					SetSessionStatsParameters(upsertSessionStatsCommand, sessionStatsRecord);
 					await upsertSessionStatsCommand.ExecuteNonQueryAsync();
+					break;
+				case SpeedtestResultRecord speedtestResultRecord:
+					SetSpeedtestParameters(updateSpeedtestCommand, speedtestResultRecord);
+					await updateSpeedtestCommand.ExecuteNonQueryAsync();
 					break;
 				case ScanCompletedRecord scanCompletedRecord:
 					await ExecuteMarkCompletedAsync(transaction, scanCompletedRecord);
@@ -633,14 +1102,15 @@ public sealed class ScanDatabase : IAsyncDisposable
 		command.Transaction = transaction;
 		command.CommandText =
 			"""
-			INSERT INTO Directories (Url, ParentUrl, Name, Description, Finished, Error)
-			VALUES ($url, $parentUrl, $name, $description, $finished, $error)
+			INSERT INTO Directories (Url, ParentUrl, Name, Description, Finished, Error, Parser)
+			VALUES ($url, $parentUrl, $name, $description, $finished, $error, $parser)
 			ON CONFLICT(Url) DO UPDATE SET
 				ParentUrl = excluded.ParentUrl,
 				Name = excluded.Name,
 				Description = excluded.Description,
 				Finished = excluded.Finished,
-				Error = excluded.Error;
+				Error = excluded.Error,
+				Parser = excluded.Parser;
 			""";
 
 		command.Parameters.Add("$url", SqliteType.Text);
@@ -649,6 +1119,7 @@ public sealed class ScanDatabase : IAsyncDisposable
 		command.Parameters.Add("$description", SqliteType.Text);
 		command.Parameters.Add("$finished", SqliteType.Integer);
 		command.Parameters.Add("$error", SqliteType.Integer);
+		command.Parameters.Add("$parser", SqliteType.Text);
 
 		return command;
 	}
@@ -661,6 +1132,7 @@ public sealed class ScanDatabase : IAsyncDisposable
 		command.Parameters["$description"].Value = (object)directoryRecord.Description ?? DBNull.Value;
 		command.Parameters["$finished"].Value = directoryRecord.Finished;
 		command.Parameters["$error"].Value = directoryRecord.Error;
+		command.Parameters["$parser"].Value = string.IsNullOrEmpty(directoryRecord.Parser) ? DBNull.Value : directoryRecord.Parser;
 	}
 
 	private static SqliteCommand CreateUpsertFileCommand(SqliteTransaction transaction)
@@ -752,6 +1224,35 @@ public sealed class ScanDatabase : IAsyncDisposable
 		command.Parameters["$httpStatusCodesJson"].Value = sessionStatsRecord.HttpStatusCodesJson;
 	}
 
+	private static SqliteCommand CreateUpdateSpeedtestCommand(SqliteTransaction transaction)
+	{
+		SqliteCommand command = transaction.Connection.CreateCommand();
+		command.Transaction = transaction;
+		command.CommandText =
+			"""
+			UPDATE ScanRuns SET
+				SpeedtestDownloadedBytes = $downloadedBytes,
+				SpeedtestElapsedMs = $elapsedMs,
+				SpeedtestMaxBytesPerSecond = $maxBytesPerSecond
+			WHERE RunNumber = $runNumber;
+			""";
+
+		command.Parameters.Add("$runNumber", SqliteType.Integer);
+		command.Parameters.Add("$downloadedBytes", SqliteType.Integer);
+		command.Parameters.Add("$elapsedMs", SqliteType.Integer);
+		command.Parameters.Add("$maxBytesPerSecond", SqliteType.Integer);
+
+		return command;
+	}
+
+	private static void SetSpeedtestParameters(SqliteCommand command, SpeedtestResultRecord speedtestResultRecord)
+	{
+		command.Parameters["$runNumber"].Value = speedtestResultRecord.RunNumber;
+		command.Parameters["$downloadedBytes"].Value = speedtestResultRecord.DownloadedBytes;
+		command.Parameters["$elapsedMs"].Value = speedtestResultRecord.ElapsedMilliseconds;
+		command.Parameters["$maxBytesPerSecond"].Value = speedtestResultRecord.MaxBytesPerSecond;
+	}
+
 	private static async Task<int> ExecuteBeginRunAsync(SqliteTransaction transaction, BeginRunRecord beginRunRecord)
 	{
 		string nowText = beginRunRecord.StartedAtUtc.ToString("o");
@@ -802,26 +1303,70 @@ public sealed class ScanDatabase : IAsyncDisposable
 
 	public async ValueTask DisposeAsync()
 	{
-		_channel.Writer.TryComplete();
+		if (!IsReadOnly)
+		{
+			_channel.Writer.TryComplete();
 
-		await _writerTask;
+			await _writerTask;
+		}
+
 		await _connection.DisposeAsync();
 
 		// Microsoft.Data.Sqlite pools connections by default: disposing the SqliteConnection alone
 		// does not release the underlying OS file handle, which would leave the file locked for
 		// callers (e.g. deleting it right after) until the pool is cleared.
 		SqliteConnection.ClearPool(_connection);
+
+		if (_ownsSidecarFiles)
+		{
+			DeleteOwnedSidecarFilesIfSafe();
+		}
+	}
+
+	/// <summary>
+	/// Deletes the -wal/-shm files this read-only connection created purely by opening a WAL-mode database
+	/// (see OpenReadOnlyAsync and the Web viewer README section) - so stopping --serve doesn't leave them
+	/// behind next to a database nothing else is writing to. Re-checks the main file's last-write time
+	/// against what it was when this connection opened as a best-effort guard: if it changed, some other
+	/// process wrote to this database while this connection was open and may still need its WAL, so the
+	/// sidecar files are left alone rather than risking deleting data a concurrent writer hasn't checkpointed
+	/// yet. Not a hard guarantee (no file locking is taken out for this check), just a safety net for the
+	/// common case of two completely separate scan/serve runs happening to race on the same file.
+	/// </summary>
+	private void DeleteOwnedSidecarFilesIfSafe()
+	{
+		if (!File.Exists(Path) || File.GetLastWriteTimeUtc(Path) != _mainFileLastWriteTimeUtcAtOpen)
+		{
+			return;
+		}
+
+		foreach (string sidecarPath in new[] { $"{Path}-wal", $"{Path}-shm" })
+		{
+			try
+			{
+				if (File.Exists(sidecarPath))
+				{
+					File.Delete(sidecarPath);
+				}
+			}
+			catch (IOException)
+			{
+				// Best-effort cleanup - if the file is still locked by something, just leave it.
+			}
+		}
 	}
 
 	private interface IScanRecord;
 
-	private sealed record DirectoryRecord(string Url, string ParentUrl, string Name, string Description, bool Finished, bool Error) : IScanRecord;
+	private sealed record DirectoryRecord(string Url, string ParentUrl, string Name, string Description, bool Finished, bool Error, string Parser) : IScanRecord;
 
 	private sealed record FileRecord(string Url, string DirectoryUrl, string FileName, long? FileSize, string Description) : IScanRecord;
 
 	private sealed record FileSizeRecord(string Url, long? FileSize) : IScanRecord;
 
 	private sealed record SessionStatsRecord(int RunNumber, DateTimeOffset UpdatedAtUtc, long TotalHttpTraffic, int TotalHttpRequests, int Errors, int Skipped, string HttpStatusCodesJson) : IScanRecord;
+
+	private sealed record SpeedtestResultRecord(int RunNumber, long DownloadedBytes, long ElapsedMilliseconds, long MaxBytesPerSecond) : IScanRecord;
 
 	private sealed record BeginRunRecord(bool IsFreshScan, string RootUrl, DateTimeOffset StartedAtUtc, long TotalHttpTraffic, int TotalHttpRequests, int Errors, int Skipped, string HttpStatusCodesJson, TaskCompletionSource<int> RunNumberResult) : IScanRecord;
 

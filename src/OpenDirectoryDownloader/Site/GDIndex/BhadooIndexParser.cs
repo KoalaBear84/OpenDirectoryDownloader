@@ -254,7 +254,8 @@ public static class BhadooIndexParser
 										{
 											Url = new Uri(webDirectory.Uri, GetSafeName(file.Name)).ToString(),
 											FileName = file.Name,
-											FileSize = file.Size
+											FileSize = file.Size,
+											Description = GoogleDriveIndexMapping.GetFriendlyMimeTypeName(file.MimeType)
 										});
 									}
 								}
@@ -289,10 +290,8 @@ public static class BhadooIndexParser
 		return webDirectory;
 	}
 
-	private static string GetSafeName(string name)
-	{
-		return name
-			.Replace("#", "%23")
-			.Replace("/", "%2F");
-	}
+	// Drive names are unconstrained and can contain '/', '%', '#', etc. - previously only '#' and '/' were
+	// neutralized, leaving e.g. a literal '%' not followed by hex digits to later make decodeURIComponent()
+	// throw client-side (breaking the web viewer's breadcrumbs). Uri.EscapeDataString handles all of this.
+	private static string GetSafeName(string name) => Uri.EscapeDataString(name);
 }

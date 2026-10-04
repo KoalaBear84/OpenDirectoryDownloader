@@ -109,6 +109,21 @@ public class CommandLineOptions
 	[Option("retry-errors", Required = false, Default = false, HelpText = "When resuming with --resume, retry directories that errored during the previous run instead of leaving them as-is. Without this, if any are found and the console is interactive, you'll be asked; otherwise they're left alone.")]
 	public bool RetryErrors { get; set; }
 
+	[Option("serve", Required = false, Default = false, HelpText = "EXPERIMENTAL: Start a local web server to browse a scan database (see 'Web viewer' in the README) instead of scanning a URL.")]
+	public bool Serve { get; set; }
+
+	[Option("serve-db", Required = false, Default = null, HelpText = "Path to a .sqlite scan database to preload when using --serve. Optional - a database can also be dropped onto the page.")]
+	public string ServeDb { get; set; }
+
+	[Option("serve-port", Required = false, Default = 8080, HelpText = "Port for --serve.")]
+	public int ServePort { get; set; }
+
+	[Option("serve-host", Required = false, Default = "127.0.0.1", HelpText = "Host/IP to bind --serve to. Defaults to loopback only; the server has no authentication, so only change this on a trusted network.")]
+	public string ServeHost { get; set; }
+
+	[Option("serve-no-browser", Required = false, Default = false, HelpText = "Don't automatically open the default browser when --serve starts.")]
+	public bool ServeNoBrowser { get; set; }
+
 	// TODO: Future use
 	//[Option('d', "download", Required = false, HelpText = "Downloads the contents (after indexing is finished)")]
 	//public bool Download { get; set; }

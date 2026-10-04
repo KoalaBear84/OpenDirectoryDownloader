@@ -42,9 +42,18 @@ public static class Statistics
 	/// eviction (issue #56 phase 4) may have dropped some directories' Files from memory - the in-memory
 	/// tree alone would silently under-report extension counts for anything under an evicted directory.
 	/// </summary>
-	public static Dictionary<string, ExtensionStats> GetExtensions(ScanDatabase scanDatabase)
+	public static Dictionary<string, ExtensionStats> GetExtensions(ScanDatabase scanDatabase) =>
+		GetExtensionsAsync(scanDatabase).GetAwaiter().GetResult();
+
+	/// <summary>
+	/// Same as <see cref="GetExtensions(ScanDatabase)"/>, but genuinely async - used by the web viewer's
+	/// Statistics endpoint (see ScanDatabaseServer), which runs inside the ASP.NET Core request pipeline
+	/// and must not block a thread-pool thread on GetAwaiter().GetResult() the way the CLI's end-of-scan
+	/// report does.
+	/// </summary>
+	public static async Task<Dictionary<string, ExtensionStats>> GetExtensionsAsync(ScanDatabase scanDatabase)
 	{
-		List<(string FileName, long? FileSize)> files = scanDatabase.GetAllFileNamesAndSizesAsync().GetAwaiter().GetResult();
+		List<(string FileName, long? FileSize)> files = await scanDatabase.GetAllFileNamesAndSizesAsync();
 
 		return files
 			.GroupBy(f => Path.GetExtension(f.FileName).ToLowerInvariant())
