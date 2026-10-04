@@ -49,7 +49,13 @@ public class Program
 			with.HelpWriter = Console.Error;
 		});
 
-		parser.ParseArguments<CommandLineOptions>(args)
+		// CommandLineParser blindly consumes whatever token follows "--http-cloak" as its value, even if that token
+		// is itself a valid option (e.g. "--http-cloak --url X" ends up with HttpCloak = "url" and Url unset). Strip
+		// "--http-cloak" (and a following value, if any) out of the raw args ourselves before the rest get parsed,
+		// so its position relative to other options can no longer corrupt them.
+		(List<string> remainingArgs, string httpCloakPreset) = ExtractHttpCloakOption(args);
+
+		parser.ParseArguments<CommandLineOptions>(remainingArgs)
 			.WithNotParsed(o =>
 			{
 				List<Error> errors = o.ToList();
@@ -71,6 +77,11 @@ public class Program
 		if (stopProcessing)
 		{
 			return 1;
+		}
+
+		if (httpCloakPreset is not null)
+		{
+			CommandLineOptions.HttpCloak = httpCloakPreset.Length > 0 ? httpCloakPreset : "chrome-latest";
 		}
 
 		if (CommandLineOptions.Threads is < 1 or > 100)
@@ -176,5 +187,49 @@ public class Program
 		ConsoleTitle = title;
 
 		Console.Title = title;
+	}
+
+	/// <summary>
+	/// Pulls "--http-cloak" (bare, "--http-cloak value" or "--http-cloak=value") out of the raw args.
+	/// </summary>
+	/// <returns>The remaining args to hand to CommandLineParser, and the requested preset: null if "--http-cloak"
+	/// wasn't specified at all, or an empty string if it was specified without a preset.</returns>
+	private static (List<string> RemainingArgs, string HttpCloakPreset) ExtractHttpCloakOption(string[] args)
+	{
+		const string option = "--http-cloak";
+
+		List<string> remainingArgs = [.. args];
+		string preset = null;
+
+		for (int i = 0; i < remainingArgs.Count; i++)
+		{
+			string arg = remainingArgs[i];
+
+			if (arg.StartsWith($"{option}=", StringComparison.Ordinal))
+			{
+				preset = arg[(option.Length + 1)..];
+				remainingArgs.RemoveAt(i);
+				break;
+			}
+
+			if (arg == option)
+			{
+				remainingArgs.RemoveAt(i);
+
+				if (i < remainingArgs.Count && !remainingArgs[i].StartsWith('-'))
+				{
+					preset = remainingArgs[i];
+					remainingArgs.RemoveAt(i);
+				}
+				else
+				{
+					preset = string.Empty;
+				}
+
+				break;
+			}
+		}
+
+		return (remainingArgs, preset);
 	}
 }

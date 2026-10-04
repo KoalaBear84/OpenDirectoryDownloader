@@ -65,6 +65,7 @@ Command line parameters:
 |       | `--proxy-username`   | Proxy username                                                                                                                                                                                                                |
 |       | `--proxy-password`   | Proxy password                                                                                                                                                                                                                |
 |       | `--no-browser`       | Disallow starting Chromium browser (for Cloudflare)                                                                                                                                                                           |
+|       | `--http-cloak`       | *EXPERIMENTAL* Emulate a real browser's TLS/HTTP fingerprint for improved compatibility. See below for more info.                                                                                                            |
 
 ### Example
 
@@ -116,6 +117,16 @@ System.Net.Http.HttpRequestException: The SSL connection could not be establishe
  ---> System.Security.Authentication.AuthenticationException: Authentication failed because the remote party sent a TLS alert: 'ProtocolVersion'.
  ---> System.ComponentModel.Win32Exception (0x80090326): The message received was unexpected or badly formatted.
  ```
+
+Alternatively, you can try the experimental [`--http-cloak`](#http-cloak-experimental) option, which does its own TLS handling independent of the OS/.NET TLS stack and so may avoid this error without needing the registry fix.
+
+## HTTP Cloak (Experimental)
+
+`--http-cloak` emulates a real browser's TLS/HTTP fingerprint, for improved compatibility. Use it on its own to default to the `chrome-latest` preset, or specify one explicitly, e.g. `--http-cloak firefox-latest` (other presets: `safari-latest`, `chrome-latest-windows`, etc).
+
+This might also help as an alternative to the registry fix mentioned above under [TLS errors (Windows 10)](#tls-errors-windows-10), since it does its own TLS handling independent of the OS/.NET TLS stack.
+
+Note: when enabled, it bypasses this app's SSL certificate validation and automatic decompression, and has no native binary for linux-arm.
 
 ## Cloudflare
 

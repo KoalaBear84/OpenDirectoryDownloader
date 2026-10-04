@@ -270,7 +270,30 @@ public partial class OpenDirectoryIndexer
 		//LoggingHandler loggingHandler = new(SocketsHttpHandler);
 		//HttpClient = new HttpClient(loggingHandler)
 
-		HttpClient = new HttpClient(SocketsHttpHandler)
+		HttpMessageHandler httpMessageHandler = SocketsHttpHandler;
+
+		if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.CommandLineOptions.HttpCloak))
+		{
+			string cloakProxy = string.Empty;
+
+			if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.CommandLineOptions.ProxyAddress))
+			{
+				UriBuilder proxyUriBuilder = new(OpenDirectoryIndexerSettings.CommandLineOptions.ProxyAddress);
+
+				if (!string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.CommandLineOptions.ProxyUsername) || !string.IsNullOrWhiteSpace(OpenDirectoryIndexerSettings.CommandLineOptions.ProxyPassword))
+				{
+					proxyUriBuilder.UserName = Uri.EscapeDataString(OpenDirectoryIndexerSettings.CommandLineOptions.ProxyUsername ?? string.Empty);
+					proxyUriBuilder.Password = Uri.EscapeDataString(OpenDirectoryIndexerSettings.CommandLineOptions.ProxyPassword ?? string.Empty);
+				}
+
+				cloakProxy = proxyUriBuilder.Uri.ToString();
+			}
+
+			HttpCloak.HttpCloakHandler httpCloakHandler = new(preset: OpenDirectoryIndexerSettings.CommandLineOptions.HttpCloak, proxy: cloakProxy);
+			httpMessageHandler = new CookieSyncHandler(httpCloakHandler, CookieContainer);
+		}
+
+		HttpClient = new HttpClient(httpMessageHandler)
 		{
 			Timeout = TimeSpan.FromSeconds(OpenDirectoryIndexerSettings.Timeout)
 		};
