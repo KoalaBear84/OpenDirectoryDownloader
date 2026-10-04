@@ -564,31 +564,47 @@ public class ScanDatabaseTests : IAsyncLifetime
 		WebDirectory childA = new(parentWebDirectory: root) { Url = "https://example.com/a/", Name = "a", Finished = true };
 		WebDirectory childAB = new(parentWebDirectory: childA) { Url = "https://example.com/a/b/", Name = "b", Finished = true };
 		WebDirectory childC = new(parentWebDirectory: root) { Url = "https://example.com/c/", Name = "c", Finished = true };
+		WebDirectory childD = new(parentWebDirectory: root) { Url = "https://example.com/d/", Name = "d", Finished = true };
+		WebDirectory childDE = new(parentWebDirectory: childD) { Url = "https://example.com/d/e/", Name = "e", Finished = true };
 
 		_scanDatabase.MirrorDirectory(root);
 		_scanDatabase.MirrorDirectory(childA);
 		_scanDatabase.MirrorDirectory(childAB);
 		_scanDatabase.MirrorDirectory(childC);
+		_scanDatabase.MirrorDirectory(childD);
+		_scanDatabase.MirrorDirectory(childDE);
 
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/a/x.bin", FileName = "x.bin", FileSize = 100 }, childA);
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/a/b/y.bin", FileName = "y.bin", FileSize = 200 }, childAB);
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/c/z.bin", FileName = "z.bin", FileSize = 50 }, childC);
+		// childD itself has no files directly in it - only its subdirectory childDE does, with a known size.
+		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/d/e/w.bin", FileName = "w.bin", FileSize = 25 }, childDE);
 
 		await _scanDatabase.FlushAsync();
 
 		Dictionary<string, ScanDatabase.SubtreeAggregate> aggregates = await _scanDatabase.GetChildSubtreeAggregatesAsync("https://example.com/");
 
-		Assert.Equal(2, aggregates.Count);
+		Assert.Equal(3, aggregates.Count);
 
 		ScanDatabase.SubtreeAggregate aAggregate = aggregates["https://example.com/a/"];
 		Assert.Equal(2, aAggregate.DirectoryCount);
 		Assert.Equal(2, aAggregate.FileCount);
 		Assert.Equal(300, aAggregate.TotalSize);
+		Assert.Equal(0, aAggregate.UnknownSizeCount);
 
 		ScanDatabase.SubtreeAggregate cAggregate = aggregates["https://example.com/c/"];
 		Assert.Equal(1, cAggregate.DirectoryCount);
 		Assert.Equal(1, cAggregate.FileCount);
 		Assert.Equal(50, cAggregate.TotalSize);
+		Assert.Equal(0, cAggregate.UnknownSizeCount);
+
+		// Regression check: childD has no files directly in it (only its subdirectory childDE does), so the
+		// LEFT JOIN's null placeholder row for childD itself must not be miscounted as an unknown-size file.
+		ScanDatabase.SubtreeAggregate dAggregate = aggregates["https://example.com/d/"];
+		Assert.Equal(2, dAggregate.DirectoryCount);
+		Assert.Equal(1, dAggregate.FileCount);
+		Assert.Equal(25, dAggregate.TotalSize);
+		Assert.Equal(0, dAggregate.UnknownSizeCount);
 	}
 
 	/// <summary>

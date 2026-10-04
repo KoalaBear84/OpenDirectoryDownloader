@@ -849,7 +849,7 @@ public sealed class ScanDatabase : IAsyncDisposable
 				COUNT(DISTINCT s.Url),
 				COUNT(f.Url),
 				COALESCE(SUM(f.FileSize), 0),
-				SUM(CASE WHEN f.FileSize IS NULL THEN 1 ELSE 0 END)
+				SUM(CASE WHEN f.Url IS NOT NULL AND f.FileSize IS NULL THEN 1 ELSE 0 END)
 			FROM subtree s
 			LEFT JOIN Files f ON f.DirectoryUrl = s.Url
 			GROUP BY s.AnchorUrl
