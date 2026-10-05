@@ -38,6 +38,32 @@ public static partial class DirectoryParser
 
 	private static readonly SemaphoreSlim SemaphoreSlimBrowser = new(1, 1);
 
+	/// <summary>
+	/// Parses a single line of HTML (e.g. one row of a `&lt;pre&gt;`-style directory listing) the way
+	/// RegexParser1..10 need it - just enough DOM to run QuerySelector against - without constructing a
+	/// full navigable document (Window/Location/History/...) the way <see cref="HtmlParser.ParseDocumentAsync(string, System.Threading.CancellationToken)"/>
+	/// does. Parsing an empty string to get the shell document is effectively free (nothing to tokenize),
+	/// and HTML5 fragment parsing skips the head/body insertion-mode machinery a full document parse goes
+	/// through, so this does meaningfully less work per call. Every call still gets its own brand-new,
+	/// fully independent <see cref="IHtmlDocument"/> (nothing shared across calls or threads), so this is
+	/// exactly as safe to call from the crawler's concurrent worker threads as the document parse it
+	/// replaces.
+	/// </summary>
+	private static IElement ParseLineFragment(string line)
+	{
+		IHtmlDocument shellDocument = HtmlParser.ParseDocument(string.Empty);
+		IElement container = shellDocument.CreateElement("div");
+
+		// ParseFragment's result is live against the nodes it just produced, so it must be snapshotted
+		// (ToArray) before AppendChild mutates things out from under the in-progress enumeration.
+		foreach (AngleSharp.Dom.INode node in HtmlParser.ParseFragment(line, container).ToArray())
+		{
+			container.AppendChild(node);
+		}
+
+		return container;
+	}
+
 	private static readonly char[] trimChars = ['/'];
 
 	private static readonly HashSet<string> UsrSubdirectoriesToRemove = ["bin", "include", "lib", "lib32", "share", "src"];
@@ -366,7 +392,7 @@ public static partial class DirectoryParser
 
 			if (pres.Length != 0)
 			{
-				WebDirectory result = await ParsePreDirectoryListing(baseUrl, parsedWebDirectory, pres, checkParents);
+				WebDirectory result = ParsePreDirectoryListing(baseUrl, parsedWebDirectory, pres, checkParents);
 
 				if (result.Files.Count != 0 || result.Subdirectories.Count != 0 || result.Error)
 				{
@@ -1186,7 +1212,7 @@ public static partial class DirectoryParser
 
 		foreach (IElement table in tables)
 		{
-			WebDirectory webDirectoryCopy = JsonSerializer.Deserialize<WebDirectory>(JsonSerializer.Serialize(parsedWebDirectory));
+			WebDirectory webDirectoryCopy = parsedWebDirectory.Clone();
 			webDirectoryCopy.ParentDirectory = parsedWebDirectory.ParentDirectory;
 
 			Dictionary<int, HeaderInfo> tableHeaders = GetTableHeaders(table);
@@ -1417,7 +1443,7 @@ public static partial class DirectoryParser
 	[GeneratedRegex(@"(?:<img.*>\s*)+<a.*?>.*?<\/a>\S*\s*(?<Modified>\d*-(?:[a-zA-Z]*|\d*)-\d*\s*\d*:\d*(:\d*)?)?\s*(?<FileSize>\S+)?(\s*(?<Description>.*))?")]
 	private static partial Regex RegexRegexParser1();
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser1 = async (webDirectory, baseUrl, line) =>
+	private static readonly Func<WebDirectory, string, string, bool> RegexParser1 = (webDirectory, baseUrl, line) =>
 	{
 		Match match = RegexRegexParser1().Match(line);
 
@@ -1426,7 +1452,7 @@ public static partial class DirectoryParser
 			return match.Success;
 		}
 
-		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+		IElement parsedLine = ParseLineFragment(line);
 
 		if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
 			parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
@@ -1481,7 +1507,7 @@ public static partial class DirectoryParser
 	[GeneratedRegex(@"<a.*<\/a>\s*(?<DateTime>\d+-\w+-\d+\s\d+:\d{0,2}|-)\s*(?<FileSize>\S+\s?\S*)?\s*\S*")]
 	private static partial Regex RegexRegexParser2();
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser2 = async (webDirectory, baseUrl, line) =>
+	private static readonly Func<WebDirectory, string, string, bool> RegexParser2 = (webDirectory, baseUrl, line) =>
 	{
 		Match match = RegexRegexParser2().Match(line);
 
@@ -1490,7 +1516,7 @@ public static partial class DirectoryParser
 			return match.Success;
 		}
 
-		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+		IElement parsedLine = ParseLineFragment(line);
 		IElement link = parsedLine.QuerySelector("a");
 
 		if (!IsValidLink(link))
@@ -1536,7 +1562,7 @@ public static partial class DirectoryParser
 	[GeneratedRegex(@"(?<Modified>\d+[\.-](?:[a-zA-Z]*|\d+)[\.-]\d+(?:\s*\d*:\d*(?::\d*)?)?)(?:<img.*>\s*)?\S*\s*(?<FileSize>\S+)\s*?<[aA].*<\/[aA]>")]
 	private static partial Regex RegexRegexParser3();
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser3 = async (webDirectory, baseUrl, line) =>
+	private static readonly Func<WebDirectory, string, string, bool> RegexParser3 = (webDirectory, baseUrl, line) =>
 	{
 		Match match = RegexRegexParser3().Match(line);
 
@@ -1545,7 +1571,7 @@ public static partial class DirectoryParser
 			return match.Success;
 		}
 
-		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+		IElement parsedLine = ParseLineFragment(line);
 
 		if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
 			parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
@@ -1600,7 +1626,7 @@ public static partial class DirectoryParser
 	[GeneratedRegex(@"\s*(?<Modified>[A-z]*,\s*[A-z]*\s*\d*, \d*\s*\d*:\d*\s*[APM]*)\s+(?<FileSize>\S*)\s+<a.*<\/a>")]
 	private static partial Regex RegexRegexParser4();
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser4 = async (webDirectory, baseUrl, line) =>
+	private static readonly Func<WebDirectory, string, string, bool> RegexParser4 = (webDirectory, baseUrl, line) =>
 	{
 		Match match = RegexRegexParser4().Match(line);
 
@@ -1609,7 +1635,7 @@ public static partial class DirectoryParser
 			return match.Success;
 		}
 
-		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+		IElement parsedLine = ParseLineFragment(line);
 
 		if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
 			parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
@@ -1664,7 +1690,7 @@ public static partial class DirectoryParser
 	[GeneratedRegex(@"\s*(?<Modified>\d*-\d*-\d*\s*[오전후]*\s*\d*:\d*)\s*(?<FileSize>\S*)\s+<[aA].*<\/[aA]>")]
 	private static partial Regex RegexRegexParser5();
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser5 = async (webDirectory, baseUrl, line) =>
+	private static readonly Func<WebDirectory, string, string, bool> RegexParser5 = (webDirectory, baseUrl, line) =>
 	{
 		Match match = RegexRegexParser5().Match(line);
 
@@ -1675,7 +1701,7 @@ public static partial class DirectoryParser
 
 		bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;";
 
-		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+		IElement parsedLine = ParseLineFragment(line);
 
 		if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
 			parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
@@ -1728,7 +1754,7 @@ public static partial class DirectoryParser
 	[GeneratedRegex(@"(?<Modified>\d+\/\d+\/\d+(\s*\d+:\d+\s+[APM]+)?)\s+(?<FileSize>\S*)\s*<a.*<\/a>")]
 	private static partial Regex RegexRegexParser6();
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser6 = async (webDirectory, baseUrl, line) =>
+	private static readonly Func<WebDirectory, string, string, bool> RegexParser6 = (webDirectory, baseUrl, line) =>
 	{
 		Match match = RegexRegexParser6().Match(line);
 
@@ -1737,7 +1763,7 @@ public static partial class DirectoryParser
 			return match.Success;
 		}
 
-		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+		IElement parsedLine = ParseLineFragment(line);
 
 		if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
 			parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
@@ -1792,7 +1818,7 @@ public static partial class DirectoryParser
 	[GeneratedRegex(@"(?i)(?<FileMode>[d-]r[-w][x-])\s*\d*\s*(?<FileSize>-?\d*)\s*(\S{3}\s*\d*\s*(?:\d*:\d*(:\d*)?|\d*\.?))\s*(<a.*<\/a>\/?)", RegexOptions.None, "en-NL")]
 	private static partial Regex RegexRegexParser7();
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser7 = async (webDirectory, baseUrl, line) =>
+	private static readonly Func<WebDirectory, string, string, bool> RegexParser7 = (webDirectory, baseUrl, line) =>
 	{
 		Match match = RegexRegexParser7().Match(line);
 
@@ -1801,7 +1827,7 @@ public static partial class DirectoryParser
 			return match.Success;
 		}
 
-		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+		IElement parsedLine = ParseLineFragment(line);
 
 		if (parsedLine.QuerySelector("a") == null)
 		{
@@ -1861,7 +1887,7 @@ public static partial class DirectoryParser
 	[GeneratedRegex(@"^\s*(?<Link><a.*<\/a>)\s+(?:(?<Day>\d+)(?<Month>\D+)(?<Year>\d+))(?:\s+(?<Hour>\d+):(?<Minute>\d+))(?:\s+)?(?<FileSize>\S+)?")]
 	private static partial Regex RegexRegexParser8();
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser8 = async (webDirectory, baseUrl, line) =>
+	private static readonly Func<WebDirectory, string, string, bool> RegexParser8 = (webDirectory, baseUrl, line) =>
 	{
 		Match match = RegexRegexParser8().Match(line);
 
@@ -1870,7 +1896,7 @@ public static partial class DirectoryParser
 			return match.Success;
 		}
 
-		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+		IElement parsedLine = ParseLineFragment(line);
 
 		if (parsedLine.QuerySelector("a") == null)
 		{
@@ -1932,7 +1958,7 @@ public static partial class DirectoryParser
 	[GeneratedRegex(@"^\s*(?<Link><a.*<\/a>)\s*(?<IsDirectory>\/?)(?<FileSize>\S+)?")]
 	private static partial Regex RegexRegexParser9();
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser9 = async (webDirectory, baseUrl, line) =>
+	private static readonly Func<WebDirectory, string, string, bool> RegexParser9 = (webDirectory, baseUrl, line) =>
 	{
 		Match match = RegexRegexParser9().Match(line);
 
@@ -1949,7 +1975,7 @@ public static partial class DirectoryParser
 			return false;
 		}
 
-		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+		IElement parsedLine = ParseLineFragment(line);
 
 		if (parsedLine.QuerySelector("a") == null)
 		{
@@ -2009,7 +2035,7 @@ public static partial class DirectoryParser
 	[GeneratedRegex(@"(?<Dir>[\-ld])(?<Permissions>(?:[\-r][\-w][\-xs]){1,3})\s+(?<Owner>\w+)\s+(?<Group>\w+)\s+(?<Month>\S{3})\s+(?<Day>\d+)\s+(?<Year>\d+)\s+(?<FileSize>\d+\s+?\w+)?\s+(?:[\w&;]+\s+)?(?<Link><a.*<\/a>\/?)?")]
 	private static partial Regex RegexRegexParser10();
 
-	private static readonly Func<WebDirectory, string, string, Task<bool>> RegexParser10 = async (webDirectory, baseUrl, line) =>
+	private static readonly Func<WebDirectory, string, string, bool> RegexParser10 = (webDirectory, baseUrl, line) =>
 	{
 		Match match = RegexRegexParser10().Match(line);
 
@@ -2018,7 +2044,7 @@ public static partial class DirectoryParser
 			return match.Success;
 		}
 
-		IHtmlDocument parsedLine = await HtmlParser.ParseDocumentAsync(line);
+		IElement parsedLine = ParseLineFragment(line);
 
 		if (parsedLine.QuerySelector("a") == null)
 		{
@@ -2072,9 +2098,9 @@ public static partial class DirectoryParser
 	[GeneratedRegex(@"\r\n|\r|\n|<br\S*>|<hr>")]
 	private static partial Regex RegexPreLineSeparator();
 
-	private static async Task<WebDirectory> ParsePreDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> pres, bool checkParents)
+	private static WebDirectory ParsePreDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> pres, bool checkParents)
 	{
-		List<Func<WebDirectory, string, string, Task<bool>>> regexFuncs =
+		List<Func<WebDirectory, string, string, bool>> regexFuncs =
 		[
 			RegexParser1,
 			RegexParser2,
@@ -2094,9 +2120,9 @@ public static partial class DirectoryParser
 
 			foreach (string line in lines)
 			{
-				foreach (Func<WebDirectory, string, string, Task<bool>> regexFunc in regexFuncs)
+				foreach (Func<WebDirectory, string, string, bool> regexFunc in regexFuncs)
 				{
-					bool succeeded = await regexFunc(parsedWebDirectory, baseUrl, line);
+					bool succeeded = regexFunc(parsedWebDirectory, baseUrl, line);
 
 					if (!succeeded)
 					{
@@ -2306,6 +2332,10 @@ public static partial class DirectoryParser
 
 		tableHeaderInfos.AddRange(headerDivs.Select(GetHeaderInfo));
 
+		// tableHeaderInfos doesn't change per row - look these up once per page instead of once per link.
+		int fileNameHeaderIndex = tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileName);
+		int fileSizeHeaderIndex = tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileSize);
+
 		IHtmlCollection<IElement> links = htmlDocument.QuerySelectorAll("#content ul#file-list li").Last().QuerySelectorAll("a");
 
 		foreach (IElement link in links)
@@ -2334,10 +2364,14 @@ public static partial class DirectoryParser
 			{
 				try
 				{
+					// One query instead of two - the second QuerySelectorAll in the original call was just
+					// a fresh copy of the exact same elements this one already fetched.
 					List<IElement> divs = link.QuerySelectorAll("div > div").ToList();
-					// Remove file info 'column'
-					divs.RemoveAt(tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileName) + 1);
-					string fileSize = link.QuerySelectorAll("div > div").Skip(2).ToList()[tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileSize)].TextContent;
+					string fileSize = divs.Skip(2).ToList()[fileSizeHeaderIndex].TextContent;
+					// Remove file info 'column' - result unused below, kept only so a malformed/missing
+					// FileName header still throws here (row dropped, same as before) rather than silently
+					// changing which rows get skipped.
+					divs.RemoveAt(fileNameHeaderIndex + 1);
 
 					parsedWebDirectory.Files.Add(new WebFile
 					{
@@ -2367,6 +2401,10 @@ public static partial class DirectoryParser
 
 		tableHeaderInfos.AddRange(headerDivs.Select(GetHeaderInfo));
 
+		// tableHeaderInfos doesn't change per row - look these up once per page instead of once per link.
+		int fileNameHeaderIndex = tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileName);
+		int fileSizeHeaderIndex = tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileSize);
+
 		IHtmlCollection<IElement> links = htmlDocument.QuerySelectorAll("body > div[x-data=\"application\"] > div > div > div > ul > li").Last().QuerySelectorAll("a");
 
 		foreach (IElement link in links)
@@ -2395,10 +2433,14 @@ public static partial class DirectoryParser
 			{
 				try
 				{
+					// One query instead of two - the second QuerySelectorAll in the original call was just
+					// a fresh copy of the exact same elements this one already fetched.
 					List<IElement> divs = link.QuerySelectorAll("div > div").ToList();
-					// Remove file info 'column'
-					divs.RemoveAt(tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileName) + 1);
-					string fileSize = link.QuerySelectorAll("div > div").Skip(2).ToList()[tableHeaderInfos.FindIndex(h => h.Type == HeaderType.FileSize)].TextContent;
+					string fileSize = divs.Skip(2).ToList()[fileSizeHeaderIndex].TextContent;
+					// Remove file info 'column' - result unused below, kept only so a malformed/missing
+					// FileName header still throws here (row dropped, same as before) rather than silently
+					// changing which rows get skipped.
+					divs.RemoveAt(fileNameHeaderIndex + 1);
 
 					parsedWebDirectory.Files.Add(new WebFile
 					{

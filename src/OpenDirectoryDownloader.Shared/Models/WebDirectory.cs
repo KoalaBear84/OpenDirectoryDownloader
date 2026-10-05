@@ -208,4 +208,27 @@ public class WebDirectory
 			directory = directory.ParentDirectory;
 		}
 	}
+
+	/// <summary>
+	/// A deep copy of Url/Name/Description/Finished/Error/Subdirectories/Files - the same fields a JSON
+	/// round-trip through this type would preserve (everything else here is [JsonIgnore]d). Used by
+	/// DirectoryParser.ParseTablesDirectoryListing to give each `&lt;table&gt;` candidate on a page its own
+	/// independent copy to populate, without constructing and tearing down a JSON document to do it.
+	/// Deliberately does not fix up ParentDirectory on any cloned subdirectory (including nested ones) -
+	/// same as the JSON round-trip it replaces, where [JsonIgnore] means every level comes back null;
+	/// callers that need the top-level ParentDirectory set do so themselves afterward.
+	/// </summary>
+	public WebDirectory Clone()
+	{
+		return new WebDirectory
+		{
+			Url = Url,
+			Name = Name,
+			Description = Description,
+			Finished = Finished,
+			Error = Error,
+			Subdirectories = new ConcurrentList<WebDirectory>(Subdirectories.Select(sd => sd.Clone())),
+			Files = new ConcurrentList<WebFile>(Files.Select(f => f.Clone()))
+		};
+	}
 }

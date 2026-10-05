@@ -18,4 +18,16 @@ public class WebFile
 	/// </summary>
 	[JsonIgnore]
 	public WebDirectory ParentDirectory { get; set; }
+
+	/// <summary>A copy of Url/FileName/FileSize/Description - see WebDirectory.Clone().</summary>
+	public WebFile Clone()
+	{
+		return new WebFile
+		{
+			Url = Url,
+			FileName = FileName,
+			FileSize = FileSize,
+			Description = Description
+		};
+	}
 }
