@@ -14,7 +14,7 @@ namespace OpenDirectoryDownloader.Storage;
 /// </summary>
 public sealed class ScanDatabase : IAsyncDisposable
 {
-	private const int MaxBatchSize = 1000;
+	private const int MaxBatchSize = 5000;
 
 	private readonly SqliteConnection _connection;
 	private readonly Channel<IScanRecord> _channel;
@@ -124,6 +124,9 @@ public sealed class ScanDatabase : IAsyncDisposable
 				"""
 				PRAGMA journal_mode = WAL;
 				PRAGMA synchronous = NORMAL;
+				PRAGMA cache_size = -16384;
+				PRAGMA temp_store = MEMORY;
+				PRAGMA wal_autocheckpoint = 10000;
 
 				CREATE TABLE IF NOT EXISTS Directories (
 					Url TEXT PRIMARY KEY,
@@ -224,6 +227,11 @@ public sealed class ScanDatabase : IAsyncDisposable
 			await connection.OpenAsync(cancellationToken);
 			RegisterFunctions(connection);
 			await EnsureLooksLikeScanDatabaseAsync(connection, path, cancellationToken);
+
+			// The viewer's CTEs and GROUP BYs would otherwise spill to temp files; mmap keeps reads off the page-copy path
+			using SqliteCommand readPragmaCommand = connection.CreateCommand();
+			readPragmaCommand.CommandText = "PRAGMA temp_store = MEMORY; PRAGMA mmap_size = 268435456;";
+			await readPragmaCommand.ExecuteNonQueryAsync(cancellationToken);
 		}
 		catch
 		{
