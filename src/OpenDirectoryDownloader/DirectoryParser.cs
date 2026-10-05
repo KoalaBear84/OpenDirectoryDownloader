@@ -1455,11 +1455,18 @@ public static partial class DirectoryParser
 
 	private static readonly Func<WebDirectory, string, string, bool> RegexParser1 = (webDirectory, baseUrl, line) =>
 	{
-		Match match = RegexRegexParser1().Match(line);
-
-		if (!match.Success)
+		// Regular Apache rows are read directly (no Match and groups per line); anything else goes through the regex as before
+		if (!LineRegexFastPath.TryMatchApache(line, out string fileSizeText, out string descriptionText))
 		{
-			return match.Success;
+			Match match = RegexRegexParser1().Match(line);
+
+			if (!match.Success)
+			{
+				return false;
+			}
+
+			fileSizeText = match.Groups["FileSize"].Value;
+			descriptionText = match.Groups["Description"].Value;
 		}
 
 		LineView parsedLine = LineFragmentParser.Parse(line);
@@ -1469,19 +1476,19 @@ public static partial class DirectoryParser
 			!parsedLine.HasLink ||
 			line.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase))
 		{
-			return match.Success;
+			return true;
 		}
 
 		LineView link = parsedLine;
 
 		if (!IsValidLink(link))
 		{
-			return match.Success;
+			return true;
 		}
 
 		Library.ProcessUrl(baseUrl, link.Href, out string linkHref, out Uri uri, out string fullUrl);
 
-		bool isFile = IsFileSize(match.Groups["FileSize"].Value.Trim()) && !parsedLine.HasImage("[DIR]");
+		bool isFile = IsFileSize(fileSizeText.Trim()) && !parsedLine.HasImage("[DIR]");
 
 		if (!isFile)
 		{
@@ -1490,7 +1497,7 @@ public static partial class DirectoryParser
 				Parser = "RegexParser1",
 				Url = fullUrl,
 				Name = WebUtility.UrlDecode(Path.GetDirectoryName(uri.Segments.Last())),
-				Description = match.Groups["Description"].Value.Trim()
+				Description = descriptionText.Trim()
 			});
 		}
 		else
@@ -1501,8 +1508,8 @@ public static partial class DirectoryParser
 				{
 					Url = fullUrl,
 					FileName = Library.GetFileNameFromUrl(uri, fullUrl),
-					FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
-					Description = match.Groups["Description"].Value.Trim()
+					FileSize = FileSizeHelper.ParseFileSize(fileSizeText),
+					Description = descriptionText.Trim()
 				});
 			}
 			catch (Exception ex)
@@ -1511,7 +1518,7 @@ public static partial class DirectoryParser
 			}
 		}
 
-		return match.Success;
+		return true;
 	};
 
 	[GeneratedRegex(@"<a.*<\/a>\s*(?<DateTime>\d+-\w+-\d+\s\d+:\d{0,2}|-)\s*(?<FileSize>\S+\s?\S*)?\s*\S*", RegexOptions.ExplicitCapture)]
@@ -1519,11 +1526,17 @@ public static partial class DirectoryParser
 
 	private static readonly Func<WebDirectory, string, string, bool> RegexParser2 = (webDirectory, baseUrl, line) =>
 	{
-		Match match = RegexRegexParser2().Match(line);
-
-		if (!match.Success)
+		// Regular nginx rows are read directly (no Match and groups per line); anything else goes through the regex as before
+		if (!LineRegexFastPath.TryMatchNginx(line, out string fileSizeGroup))
 		{
-			return match.Success;
+			Match match = RegexRegexParser2().Match(line);
+
+			if (!match.Success)
+			{
+				return false;
+			}
+
+			fileSizeGroup = match.Groups["FileSize"].Value.Trim();
 		}
 
 		LineView parsedLine = LineFragmentParser.Parse(line);
@@ -1531,12 +1544,11 @@ public static partial class DirectoryParser
 
 		if (!IsValidLink(link))
 		{
-			return match.Success;
+			return true;
 		}
 
 		Library.ProcessUrl(baseUrl, link.Href, out string linkHref, out Uri uri, out string fullUrl);
 
-		string fileSizeGroup = match.Groups["FileSize"].Value.Trim();
 
 		bool isFile = long.TryParse(fileSizeGroup, out long parsedFileSize);
 		long? fileSize = parsedFileSize;
@@ -1566,7 +1578,7 @@ public static partial class DirectoryParser
 			});
 		}
 
-		return match.Success;
+		return true;
 	};
 
 	[GeneratedRegex(@"(?<Modified>\d+[\.-](?:[a-zA-Z]*|\d+)[\.-]\d+(?:\s*\d*:\d*(?::\d*)?)?)(?:<img.*>\s*)?\S*\s*(?<FileSize>\S+)\s*?<[aA].*<\/[aA]>", RegexOptions.ExplicitCapture)]
