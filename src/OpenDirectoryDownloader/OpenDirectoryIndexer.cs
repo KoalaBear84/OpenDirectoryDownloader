@@ -746,20 +746,7 @@ public partial class OpenDirectoryIndexer
 						try
 						{
 							string urlsPath = Library.GetOutputFullPath(Session, OpenDirectoryIndexerSettings, "txt");
-							List<string> outputUrls = [];
-							foreach (string url in distinctUrls)
-							{
-								string safeUrl = url.Contains("#") ? url.Replace("#", "%23") : url;
-								if (Uri.TryCreate(safeUrl, UriKind.Absolute, out Uri uri))
-								{
-									outputUrls.Add(uri.AbsoluteUri);
-								}
-								else
-								{
-									outputUrls.Add(safeUrl);
-								}
-							}
-							File.WriteAllLines(urlsPath, outputUrls);
+							Library.WriteUrlList(urlsPath, distinctUrls);
 
 							Program.Logger.Information("Saved URL list to file: {path}", urlsPath);
 							Console.WriteLine($"Saved URL list to file: {urlsPath}");
@@ -1204,11 +1191,21 @@ public partial class OpenDirectoryIndexer
 	/// </summary>
 	public List<string> GetDistinctFileUrls()
 	{
-		IEnumerable<string> urls = ScanDatabase is not null ?
+		// Files.Url is the primary key, so the database never holds duplicates: sort that list in place
+		// instead of copying it through Distinct() and OrderBy() (3 extra copies of every URL).
+		List<string> urls = ScanDatabase is not null ?
 			ScanDatabase.GetAllFileUrlsAsync().GetAwaiter().GetResult() :
-			Session.Root.AllFileUrls;
+			[.. Session.Root.AllFileUrls.Distinct()];
 
-		return [.. urls.Distinct().OrderBy(x => x, NaturalSortStringComparer.InvariantCulture)];
+		// List.Sort isn't stable (OrderBy was), so ties between different strings are broken ordinally
+		urls.Sort((x, y) =>
+		{
+			int result = NaturalSortStringComparer.InvariantCulture.Compare(x, y);
+
+			return result != 0 ? result : string.CompareOrdinal(x, y);
+		});
+
+		return urls;
 	}
 
 	/// <summary>
@@ -2211,13 +2208,26 @@ public partial class OpenDirectoryIndexer
 		return responseStream;
 	}
 
+	/// <summary>Plain loop instead of Sum(lambda): runs twice for every directory, and a directory can hold 100k+ files.</summary>
+	private static long SumFileSizes(IEnumerable<WebFile> files)
+	{
+		long total = 0;
+
+		foreach (WebFile file in files)
+		{
+			total += file.FileSize ?? 0;
+		}
+
+		return total;
+	}
+
 	private void AddProcessedWebDirectory(WebDirectory webDirectory, WebDirectory parsedWebDirectory, bool processSubdirectories = true)
 	{
 		// Delta against whatever was there before (not just parsedWebDirectory.Files.Count/size), so this
 		// stays correct even if a directory is ever processed more than once (e.g. --retry-errors) rather
 		// than assuming webDirectory.Files always starts empty - see Session.RunningTotalFiles/FileSize.
 		int previousFileCount = webDirectory.Files.Count;
-		long previousFileSize = webDirectory.Files.Sum(f => f.FileSize ?? 0);
+		long previousFileSize = SumFileSizes(webDirectory.Files);
 
 		webDirectory.Description = parsedWebDirectory.Description;
 		webDirectory.StartTime = parsedWebDirectory.StartTime;
@@ -2232,7 +2242,7 @@ public partial class OpenDirectoryIndexer
 		webDirectory.ContentFingerprint = webDirectory.ComputeContentFingerprint();
 
 		Session.RunningTotalFiles += webDirectory.Files.Count - previousFileCount;
-		Session.RunningTotalFileSize += webDirectory.Files.Sum(f => f.FileSize ?? 0) - previousFileSize;
+		Session.RunningTotalFileSize += SumFileSizes(webDirectory.Files) - previousFileSize;
 
 		// parsedWebDirectory.Subdirectories were constructed with the transient parsedWebDirectory as their
 		// parent (see the various DirectoryParser.*Parser methods), not the real, tree-linked webDirectory.

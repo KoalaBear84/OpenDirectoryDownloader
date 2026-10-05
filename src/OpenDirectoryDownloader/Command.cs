@@ -228,21 +228,9 @@ public class Command
 			Console.WriteLine("Saving URL list to file..");
 
 			List<string> distinctUrls = openDirectoryIndexer.GetDistinctFileUrls();
-			List<string> outputUrls = [];
-			foreach (string url in distinctUrls)
-			{
-				string safeUrl = url.Contains("#") ? url.Replace("#", "%23") : url;
-				if (Uri.TryCreate(safeUrl, UriKind.Absolute, out Uri uri))
-				{
-					outputUrls.Add(uri.AbsoluteUri);
-				}
-				else
-				{
-					outputUrls.Add(safeUrl);
-				}
-			}
 			string urlsPath = Library.GetOutputFullPath(OpenDirectoryIndexer.Session, openDirectoryIndexer.OpenDirectoryIndexerSettings, "txt");
-			File.WriteAllLines(urlsPath, outputUrls);
+
+			Library.WriteUrlList(urlsPath, distinctUrls);
 
 			Program.Logger.Information("Saved URL list to file: {path}", urlsPath);
 			Console.WriteLine($"Saved URL list to file: {urlsPath}");

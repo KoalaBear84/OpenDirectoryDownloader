@@ -67,6 +67,19 @@ public class Library
 		return Convert.TryFromBase64String(base64, buffer, out _);
 	}
 
+	/// <summary>Writes the URL list one line at a time (no second full copy of every URL), '#' escaped and normalized to an absolute URI where possible.</summary>
+	public static void WriteUrlList(string path, IEnumerable<string> urls)
+	{
+		using StreamWriter streamWriter = new(path);
+
+		foreach (string url in urls)
+		{
+			string safeUrl = url.Contains('#') ? url.Replace("#", "%23") : url;
+
+			streamWriter.WriteLine(Uri.TryCreate(safeUrl, UriKind.Absolute, out Uri uri) ? uri.AbsoluteUri : safeUrl);
+		}
+	}
+
 	public static string FixUrl(string url)
 	{
 		url = url.Trim();
