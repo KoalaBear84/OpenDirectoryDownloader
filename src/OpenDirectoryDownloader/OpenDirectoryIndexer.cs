@@ -1771,11 +1771,11 @@ public partial class OpenDirectoryIndexer
 
 			if (html is null)
 			{
-				await using Stream htmlStream = await GetHtmlStream(httpResponseMessage);
+				string htmlText = await GetHtmlString(httpResponseMessage);
 
-				if (htmlStream != null)
+				if (htmlText != null)
 				{
-					html = await Library.GetHtml(htmlStream);
+					html = htmlText;
 				}
 				else
 				{
@@ -1802,11 +1802,11 @@ public partial class OpenDirectoryIndexer
 					// Retrieve/retry content again with added cookies
 					httpResponseMessage = await HttpClient.GetAsync(webDirectory.Url, cancellationTokenSource.Token);
 
-					await using Stream htmlStream = await GetHtmlStream(httpResponseMessage);
+					string htmlText = await GetHtmlString(httpResponseMessage);
 
-					if (htmlStream != null)
+					if (htmlText != null)
 					{
-						html = await Library.GetHtml(htmlStream);
+						html = htmlText;
 					}
 				}
 			}
@@ -1825,11 +1825,11 @@ public partial class OpenDirectoryIndexer
 
 				SetRootUrl(httpResponseMessage);
 
-				await using Stream htmlStream = await GetHtmlStream(httpResponseMessage);
+				string htmlText = await GetHtmlString(httpResponseMessage);
 
-				if (htmlStream != null)
+				if (htmlText != null)
 				{
-					html = await Library.GetHtml(htmlStream);
+					html = htmlText;
 				}
 				else
 				{
@@ -1853,11 +1853,11 @@ public partial class OpenDirectoryIndexer
 
 				SetRootUrl(httpResponseMessage);
 
-				await using Stream htmlStream = await GetHtmlStream(httpResponseMessage);
+				string htmlText = await GetHtmlString(httpResponseMessage);
 
-				if (htmlStream != null)
+				if (htmlText != null)
 				{
-					html = await Library.GetHtml(htmlStream);
+					html = htmlText;
 				}
 				else
 				{
@@ -1883,11 +1883,11 @@ public partial class OpenDirectoryIndexer
 
 				SetRootUrl(httpResponseMessage);
 
-				await using Stream htmlStream = await GetHtmlStream(httpResponseMessage);
+				string htmlText = await GetHtmlString(httpResponseMessage);
 
-				if (htmlStream != null)
+				if (htmlText != null)
 				{
-					html = await Library.GetHtml(htmlStream);
+					html = htmlText;
 				}
 				else
 				{
@@ -1933,11 +1933,11 @@ public partial class OpenDirectoryIndexer
 			{
 				if (html == null)
 				{
-					await using Stream htmlStream = await GetHtmlStream(httpResponseMessage);
+					string htmlText = await GetHtmlString(httpResponseMessage);
 
-					if (htmlStream != null)
+					if (htmlText != null)
 					{
-						html = await Library.GetHtml(htmlStream);
+						html = htmlText;
 					}
 					else
 					{
@@ -2122,12 +2122,17 @@ public partial class OpenDirectoryIndexer
 	}
 
 	/// <summary>
-	/// Check HttpResponseMessage for HTML, as good as it can
+	/// Check HttpResponseMessage for HTML, as good as it can, and return its text
 	/// The code below might not be perfect, streams are hard
 	/// </summary>
+	/// <remarks>
+	/// Decodes the body once, straight into the string. It used to decode into characters, re-encode those
+	/// into a MemoryStream (flushing every KB) and decode them again, which for a big listing meant about
+	/// fifteen copies of the body in memory.
+	/// </remarks>
 	/// <param name="httpResponseMessage">The HttpResponseMessage to read from</param>
-	/// <returns>A checked stream when possible HTML, else null</returns>
-	private static async Task<Stream> GetHtmlStream(HttpResponseMessage httpResponseMessage)
+	/// <returns>The text when it is possible HTML (empty for an empty body), else null</returns>
+	private static async Task<string> GetHtmlString(HttpResponseMessage httpResponseMessage)
 	{
 		Library.FixCharSet(httpResponseMessage);
 
@@ -2142,12 +2147,6 @@ public partial class OpenDirectoryIndexer
 				encoding = Encoding.GetEncoding(charSet);
 			}
 		}
-
-		// Don't use using tags, it will close the stream for the callee
-		// Bytes are decoded above using the server's declared/detected encoding; this intermediate
-		// buffer is always normalized to UTF-8, which is what Library.GetHtml(Stream) expects to read back.
-		MemoryStream responseStream = new();
-		StreamWriter streamWriter = new(responseStream, Encoding.UTF8);
 
 		await using Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync();
 
@@ -2164,7 +2163,7 @@ public partial class OpenDirectoryIndexer
 
 		if (readBytes == 0)
 		{
-			return responseStream;
+			return string.Empty;
 		}
 
 		if (!buffer.Contains('<'))
@@ -2177,39 +2176,25 @@ public partial class OpenDirectoryIndexer
 			return null;
 		}
 
-		Regex htmlRegex = HtmlRegex();
-
-		if (!htmlRegex.Match(new string(buffer)).Success)
+		if (!HtmlRegex().IsMatch(buffer))
 		{
 			return null;
 		}
 
-		await streamWriter.WriteAsync(buffer, 0, buffer.Length);
-		await streamWriter.FlushAsync();
+		// The declared length is bytes, roughly the number of characters: a good size to start with, capped
+		// so a bogus Content-Length can't make us reserve gigabytes up front
+		long declaredLength = httpResponseMessage.Content.Headers.ContentLength ?? 0;
+		StringBuilder builder = new(declaredLength > buffer.Length ? (int)Math.Min(declaredLength, 64 * Constants.Megabyte) : buffer.Length * 2);
+		builder.Append(buffer);
 
-		buffer = new char[Constants.Kilobyte];
+		char[] chunk = new char[16 * Constants.Kilobyte];
 
-		do
+		while ((readBytes = await streamReader.ReadBlockAsync(chunk, 0, chunk.Length)) > 0)
 		{
-			readBytes = await streamReader.ReadBlockAsync(buffer, 0, buffer.Length);
+			builder.Append(chunk, 0, readBytes);
+		}
 
-			if (readBytes <= 0)
-			{
-				continue;
-			}
-
-			await streamWriter.WriteAsync(buffer, 0, readBytes);
-			await streamWriter.FlushAsync();
-		} while (readBytes > 0);
-
-		streamReader.Close();
-
-		stream.Close();
-
-		await streamWriter.FlushAsync();
-		responseStream.Seek(0, SeekOrigin.Begin);
-
-		return responseStream;
+		return builder.ToString();
 	}
 
 	/// <summary>Plain loop instead of Sum(lambda): runs twice for every directory, and a directory can hold 100k+ files.</summary>

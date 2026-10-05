@@ -40,6 +40,9 @@ public sealed class FakeSiteOptions
 	public TimeSpan Latency { get; init; } = TimeSpan.Zero;
 
 	public string HostName { get; init; } = "files.example.test";
+
+	/// <summary>Keep each rendered listing around instead of generating it again for every request. Use it when measuring the client (allocation, memory): otherwise the server's own work for a huge listing, in the same process, is counted too.</summary>
+	public bool CacheListings { get; init; }
 }
 
 public sealed record FakeSiteExpectation(int Directories, long Files, long TotalBytes);

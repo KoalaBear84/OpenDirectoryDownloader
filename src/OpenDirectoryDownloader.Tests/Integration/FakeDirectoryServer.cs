@@ -24,6 +24,7 @@ public sealed class FakeDirectoryServer : IAsyncDisposable
 	private long _peakInFlight;
 	private long _handlerTicks;
 	private long _handledRequests;
+	private readonly System.Collections.Concurrent.ConcurrentDictionary<string, byte[]> _listingCache = new();
 
 	public FakeSite Site { get; }
 
@@ -115,7 +116,9 @@ public sealed class FakeDirectoryServer : IAsyncDisposable
 				return;
 			}
 
-			byte[] body = Encoding.UTF8.GetBytes(Site.RenderListing(path));
+			byte[] body = Site.Options.CacheListings
+				? _listingCache.GetOrAdd(path, key => Encoding.UTF8.GetBytes(Site.RenderListing(key)))
+				: Encoding.UTF8.GetBytes(Site.RenderListing(path));
 			context.Response.ContentType = "text/html;charset=UTF-8";
 			context.Response.ContentLength = body.Length;
 

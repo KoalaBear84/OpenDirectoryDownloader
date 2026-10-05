@@ -75,7 +75,8 @@ public sealed class LargeScanLoadTests(ITestOutputHelper output) : IDisposable
 		{
 			Style = ListingStyle.NginxAutoindex,
 			Depth = 0,
-			FilesPerDirectory = files
+			FilesPerDirectory = files,
+			CacheListings = true
 		});
 		FakeSiteExpectation expected = server.Site.Expectation();
 
