@@ -27,7 +27,7 @@ public sealed class LoadFactAttribute : FactAttribute
 /// $env:ODD_LOAD_TESTS = "1"
 /// dotnet test src/OpenDirectoryDownloader.Tests --filter "FullyQualifiedName~LargeScanLoadTests" --logger "console;verbosity=detailed"
 /// </code>
-/// Sizes: ODD_LOAD_FILES (files in the one huge directory, default 200000) and ODD_LOAD_DEPTH (depth of the
+/// Sizes: ODD_LOAD_FILES (files in the one huge directory, default 100000; the app treats a response over 20 MB, roughly 150000 files, as a file instead of a directory) and ODD_LOAD_DEPTH (depth of the
 /// wide tree, default 4; 8 subdirectories per level and 40 files per directory). Each test prints elapsed time,
 /// throughput and the process' peak working set. The numbers include the fake server running in the same
 /// process, so only compare them between runs of the same scenario, not against a real scan.
@@ -68,7 +68,7 @@ public sealed class LargeScanLoadTests(ITestOutputHelper output) : IDisposable
 	[LoadFact]
 	public async Task OneHugeDirectory()
 	{
-		int files = EnvironmentInt("ODD_LOAD_FILES", 200_000);
+		int files = EnvironmentInt("ODD_LOAD_FILES", 100_000);
 
 		await using FakeDirectoryServer server = await FakeDirectoryServer.StartAsync(new FakeSiteOptions
 		{
