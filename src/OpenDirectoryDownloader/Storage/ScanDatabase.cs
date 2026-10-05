@@ -107,6 +107,7 @@ public sealed class ScanDatabase : IAsyncDisposable
 
 		SqliteConnection connection = new($"Data Source={path}");
 		await connection.OpenAsync(cancellationToken);
+		RegisterFunctions(connection);
 
 		using (SqliteCommand pragmaAndSchemaCommand = connection.CreateCommand())
 		{
@@ -212,6 +213,7 @@ public sealed class ScanDatabase : IAsyncDisposable
 		try
 		{
 			await connection.OpenAsync(cancellationToken);
+			RegisterFunctions(connection);
 			await EnsureLooksLikeScanDatabaseAsync(connection, path, cancellationToken);
 		}
 		catch
@@ -222,6 +224,18 @@ public sealed class ScanDatabase : IAsyncDisposable
 		}
 
 		return new ScanDatabase(connection, path, startWriter: false, ownsSidecarFiles: ownsSidecarFiles);
+	}
+
+	/// <summary>
+	/// Registers the SQL functions this class's queries rely on - currently just FileExtension, used by
+	/// GetExtensionStatsAsync so extension grouping can happen in SQLite's own GROUP BY instead of in C#
+	/// over every file row. Must run on every connection this class opens (the writer connection from
+	/// OpenAsync and the separate read-only one from OpenReadOnlyAsync each need their own registration -
+	/// SQL functions are per-connection, not per-database file).
+	/// </summary>
+	private static void RegisterFunctions(SqliteConnection connection)
+	{
+		connection.CreateFunction("FileExtension", (string fileName) => System.IO.Path.GetExtension(fileName ?? string.Empty).ToLowerInvariant());
 	}
 
 	private static async Task EnsureLooksLikeScanDatabaseAsync(SqliteConnection connection, string path, CancellationToken cancellationToken)
@@ -594,27 +608,41 @@ public sealed class ScanDatabase : IAsyncDisposable
 	public sealed record OverallStats(long TotalFiles, long TotalSize, long TotalDirectories);
 
 	/// <summary>
-	/// Every file's FileName and FileSize (not Url - callers here only need to group by extension). Used
-	/// so Statistics.GetExtensions can produce a per-extension breakdown once eviction may have dropped
-	/// some directories' Files from memory (issue #56 phase 4). Flushes pending writes first.
+	/// Per-extension file count and total size, computed with SQLite's own GROUP BY/COUNT/SUM instead of
+	/// pulling every file's name and size into memory to group in C# (the previous approach here) - the
+	/// extension itself still comes from the exact same <see cref="Path.GetExtension(string)"/> logic
+	/// Statistics.GetExtensions(WebDirectory) uses for the in-memory tree, registered as a SQL function (see
+	/// RegisterFunctions) rather than reimplemented as a SQL expression, so the two can't drift apart on an
+	/// edge-case filename. Used so Statistics.GetExtensions can produce a per-extension breakdown once
+	/// eviction may have dropped some directories' Files from memory (issue #56 phase 4). Flushes pending
+	/// writes first.
 	/// </summary>
-	public async Task<List<(string FileName, long? FileSize)>> GetAllFileNamesAndSizesAsync()
+	public async Task<Dictionary<string, ExtensionStats>> GetExtensionStatsAsync()
 	{
 		await FlushAsync();
 
-		List<(string, long?)> files = [];
+		Dictionary<string, ExtensionStats> stats = [];
 
 		using SqliteCommand command = _connection.CreateCommand();
-		command.CommandText = "SELECT FileName, FileSize FROM Files";
+		command.CommandText =
+			"""
+			SELECT FileExtension(FileName), COUNT(*), COALESCE(SUM(FileSize), 0)
+			FROM Files
+			GROUP BY FileExtension(FileName)
+			""";
 
 		using SqliteDataReader reader = await command.ExecuteReaderAsync();
 
 		while (await reader.ReadAsync())
 		{
-			files.Add((reader.GetString(0), reader.IsDBNull(1) ? null : reader.GetInt64(1)));
+			stats[reader.GetString(0)] = new ExtensionStats
+			{
+				Count = (int)reader.GetInt64(1),
+				FileSize = reader.GetInt64(2)
+			};
 		}
 
-		return files;
+		return stats;
 	}
 
 	/// <summary>The single largest file found so far (by FileSize), or null if none have been mirrored yet. Used for --speedtest once eviction may have dropped it from memory (issue #56 phase 4).</summary>

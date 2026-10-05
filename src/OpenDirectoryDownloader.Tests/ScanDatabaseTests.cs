@@ -220,6 +220,30 @@ public class ScanDatabaseTests : IAsyncLifetime
 	}
 
 	[Fact]
+	public async Task GetExtensionStatsAsync_GroupsByLowercasedExtensionAcrossWholeDatabase()
+	{
+		WebDirectory root = new(parentWebDirectory: null) { Url = "https://example.com/", Name = "example.com", Finished = true };
+		WebDirectory subdirectory = new(parentWebDirectory: root) { Url = "https://example.com/sub/", Name = "sub", Finished = true };
+
+		_scanDatabase.MirrorDirectory(root);
+		_scanDatabase.MirrorDirectory(subdirectory);
+		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/a.txt", FileName = "a.txt", FileSize = 100 }, root);
+		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/B.TXT", FileName = "B.TXT", FileSize = 50 }, root);
+		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/sub/c.iso", FileName = "c.iso", FileSize = 1000 }, subdirectory);
+		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/sub/noext", FileName = "noext", FileSize = null }, subdirectory);
+		await _scanDatabase.FlushAsync();
+
+		Dictionary<string, ExtensionStats> stats = await _scanDatabase.GetExtensionStatsAsync();
+
+		Assert.Equal(2, stats[".txt"].Count);
+		Assert.Equal(150, stats[".txt"].FileSize);
+		Assert.Equal(1, stats[".iso"].Count);
+		Assert.Equal(1000, stats[".iso"].FileSize);
+		Assert.Equal(1, stats[""].Count);
+		Assert.Equal(0, stats[""].FileSize);
+	}
+
+	[Fact]
 	public async Task FlushAsync_WaitsForAllPreviouslyQueuedWrites()
 	{
 		WebDirectory directory = new(parentWebDirectory: null)

@@ -51,14 +51,8 @@ public static class Statistics
 	/// and must not block a thread-pool thread on GetAwaiter().GetResult() the way the CLI's end-of-scan
 	/// report does.
 	/// </summary>
-	public static async Task<Dictionary<string, ExtensionStats>> GetExtensionsAsync(ScanDatabase scanDatabase)
-	{
-		List<(string FileName, long? FileSize)> files = await scanDatabase.GetAllFileNamesAndSizesAsync();
-
-		return files
-			.GroupBy(f => Path.GetExtension(f.FileName).ToLowerInvariant())
-			.ToDictionary(g => g.Key, g => new ExtensionStats { Count = g.Count(), FileSize = g.Sum(f => f.FileSize ?? 0) });
-	}
+	public static Task<Dictionary<string, ExtensionStats>> GetExtensionsAsync(ScanDatabase scanDatabase) =>
+		scanDatabase.GetExtensionStatsAsync();
 
 	public static string GetSessionStats(Session session, bool includeExtensions = false,
 		bool includeFullExtensions = false, bool onlyRedditStats = false, bool includeBanner = false, ScanDatabase scanDatabase = null)
