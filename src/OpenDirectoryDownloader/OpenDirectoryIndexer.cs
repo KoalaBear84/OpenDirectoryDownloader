@@ -79,14 +79,6 @@ public partial class OpenDirectoryIndexer
 
 	private static readonly Random Jitterer = new();
 
-	/// <summary>
-	/// How long a worker that finds the queue empty waits before looking again. It was a full second, so on a
-	/// fast server every level of a directory tree waited for sleeping workers to wake up (the first levels
-	/// ran on one thread), and after the last directory every worker still slept out its second before the
-	/// scan could finish. Checking an empty queue ten times a second costs nothing.
-	/// </summary>
-	private static readonly TimeSpan IdlePollInterval = TimeSpan.FromMilliseconds(100);
-
 	private static readonly List<string> KnownErrorPaths =
 	[
 		"cgi-bin/",
@@ -1396,6 +1388,7 @@ public partial class OpenDirectoryIndexer
 		Program.Logger.Debug("[{thread}] Start", threadName);
 
 		bool maxConnections = false;
+		IdleBackoff idleBackoff = new();
 
 		do
 		{
@@ -1417,6 +1410,8 @@ public partial class OpenDirectoryIndexer
 
 			if (queue.TryDequeue(out WebDirectory webDirectory))
 			{
+				idleBackoff.Reset();
+
 				try
 				{
 					lock (WebDirectoryProcessorInfoLock)
@@ -1598,7 +1593,7 @@ public partial class OpenDirectoryIndexer
 				if (queue.IsEmpty)
 				{
 					// Don't hog the CPU when queue < threads
-					await Task.Delay(IdlePollInterval, cancellationToken);
+					await Task.Delay(idleBackoff.NextWait(), cancellationToken);
 				}
 				else
 				{
@@ -2326,12 +2321,16 @@ public partial class OpenDirectoryIndexer
 	{
 		Program.Logger.Debug("[{thread}] Start", threadName);
 
+		IdleBackoff idleBackoff = new();
+
 		do
 		{
 			Interlocked.Increment(ref RunningWebFileFileSizeThreads);
 
 			if (queue.TryDequeue(out WebFile webFile))
 			{
+				idleBackoff.Reset();
+
 				try
 				{
 					Program.Logger.Debug("Retrieve filesize for: {url}", webFile.Url);
@@ -2373,7 +2372,7 @@ public partial class OpenDirectoryIndexer
 			if (queue.IsEmpty)
 			{
 				// Don't hog the CPU when queue < threads
-				await Task.Delay(IdlePollInterval, cancellationToken);
+				await Task.Delay(idleBackoff.NextWait(), cancellationToken);
 			}
 			else
 			{
