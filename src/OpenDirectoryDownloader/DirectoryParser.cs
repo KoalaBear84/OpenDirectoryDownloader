@@ -1266,6 +1266,12 @@ public static partial class DirectoryParser
 			{
 				webDirectoryCopy.ParsedSuccessfully = true;
 
+				// The same selector strings were rebuilt for every row (and the name cell queried twice)
+				string nameCellSelector = $"td:nth-child({nameHeaderColumnIndex})";
+				string folderIconSelector = $"{nameCellSelector} i.bi-folder";
+				string descriptionCellSelector = $"td:nth-child({descriptionHeaderColumnIndex})";
+				string sizeCellSelector = $"td:nth-child({fileSizeHeaderColumnIndex})";
+
 				foreach (IElement tableRow in table.QuerySelectorAll("tbody tr"))
 				{
 					if (tableRow.QuerySelector("img[alt=\"[ICO]\"]") != null ||
@@ -1273,8 +1279,8 @@ public static partial class DirectoryParser
 					    tableRow.QuerySelector("a") == null ||
 					    tableRow.QuerySelector("th") != null ||
 					    tableRow.ClassList.Contains("snHeading") ||
-					    tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})") == null ||
-					    tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex})").TextContent.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase) ||
+					    tableRow.QuerySelector(nameCellSelector) is not IElement nameCell ||
+					    nameCell.TextContent.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase) ||
 					    tableRow.QuerySelector("table") != null)
 					{
 						continue;
@@ -1295,7 +1301,7 @@ public static partial class DirectoryParser
 
 						fullUrl = StripUrl(fullUrl);
 
-						bool hasFolderIcon = tableRow.QuerySelector($"td:nth-child({nameHeaderColumnIndex}) i.bi-folder") != null;
+						bool hasFolderIcon = tableRow.QuerySelector(folderIconSelector) != null;
 						UrlEncodingParser urlEncodingParser = new(fullUrl);
 
 						IElement imageElement = tableRow.QuerySelector("img");
@@ -1312,8 +1318,8 @@ public static partial class DirectoryParser
 							                    urlEncodingParser["dirname"] != null
 						                    ));
 
-						string description = tableRow.QuerySelector($"td:nth-child({descriptionHeaderColumnIndex})")?.TextContent.Trim();
-						string size = tableRow.QuerySelector($"td:nth-child({fileSizeHeaderColumnIndex})")?.TextContent.Trim().Replace(" ", string.Empty);
+						string description = tableRow.QuerySelector(descriptionCellSelector)?.TextContent.Trim();
+						string size = tableRow.QuerySelector(sizeCellSelector)?.TextContent.Trim().Replace(" ", string.Empty);
 
 						size ??= tableRow.QuerySelector(".size")?.TextContent.Trim();
 
@@ -2746,39 +2752,115 @@ public static partial class DirectoryParser
 	private static void CheckParents(WebDirectory webDirectory, string baseUrl)
 	{
 		Uri baseUri = new(baseUrl);
+		UriParts baseParts = new(baseUri);
 
 		bool IsBadSubdirectory(WebDirectory d)
 		{
 			Uri uri = new(d.Url);
 
-			return !GoodUriSchemes.Contains(uri.Scheme) || uri.Host != baseUri.Host || SkipHosts.Contains(uri.Host) || !SameHostAndDirectoryDirectory(baseUri, uri);
+			return !GoodUriSchemes.Contains(uri.Scheme) || uri.Host != baseUri.Host || SkipHosts.Contains(uri.Host) || !SameHostAndDirectoryDirectory(baseParts, new UriParts(uri));
 		}
 
 		bool IsBadFile(WebFile f)
 		{
 			Uri uri = new(f.Url);
 
-			return !GoodUriSchemes.Contains(uri.Scheme) || uri.Host != baseUri.Host || SkipHosts.Contains(uri.Host) || !SameHostAndDirectoryFile(uri, baseUri);
+			return !GoodUriSchemes.Contains(uri.Scheme) || uri.Host != baseUri.Host || SkipHosts.Contains(uri.Host) || !SameHostAndDirectoryFile(new UriParts(uri), baseParts);
 		}
 
-		if (webDirectory.Subdirectories.Any(IsBadSubdirectory))
+		// One pass, one Uri parse per item: previously Any() and then Where() each parsed every item again
+		List<WebDirectory> goodSubdirectories = KeepGood(webDirectory.Subdirectories, IsBadSubdirectory);
+
+		if (goodSubdirectories is not null)
 		{
-			webDirectory.Subdirectories = [.. webDirectory.Subdirectories.Where(d => !IsBadSubdirectory(d))];
+			webDirectory.Subdirectories = [.. goodSubdirectories];
 		}
 
-		if (webDirectory.Files.Any(IsBadFile))
+		List<WebFile> goodFiles = KeepGood(webDirectory.Files, IsBadFile);
+
+		if (goodFiles is not null)
 		{
-			webDirectory.Files = [.. webDirectory.Files.Where(f => !IsBadFile(f))];
+			webDirectory.Files = [.. goodFiles];
 		}
+	}
+
+	/// <summary>The items for which isBad is false, in order - or null when none is bad, so callers can leave the original collection alone.</summary>
+	private static List<T> KeepGood<T>(IEnumerable<T> items, Func<T, bool> isBad)
+	{
+		// Snapshot first: re-enumerating a ConcurrentList while it is being enumerated would re-take its read lock
+		T[] snapshot = [.. items];
+		List<T> good = null;
+
+		for (int index = 0; index < snapshot.Length; index++)
+		{
+			if (isBad(snapshot[index]))
+			{
+				// First bad item: everything before it was good
+				good ??= [.. snapshot.Take(index)];
+			}
+			else
+			{
+				good?.Add(snapshot[index]);
+			}
+		}
+
+		return good;
+	}
+
+	/// <summary>A Uri plus the strings SameHostAndDirectory* derive from it, computed once instead of on every comparison.</summary>
+	private sealed class UriParts(Uri uri)
+	{
+		public string Host { get; } = uri.Host;
+		public string LocalPath { get; } = uri.LocalPath;
+		public string Text { get; } = uri.ToString();
+
+		private string _localPathWithoutDefaultFilenames;
+		public string LocalPathWithoutDefaultFilenames => _localPathWithoutDefaultFilenames ??= ReplaceCommonDefaultFilenames(LocalPath);
+
+		private string _fileName;
+		public string FileName => _fileName ??= Path.GetFileName(Text);
+
+		private string _withoutFileName;
+		/// <summary>LocalPath minus the file name, for the 'base' side of the file comparison</summary>
+		public string LocalPathWithoutFileName => _withoutFileName ??= string.IsNullOrWhiteSpace(FileName) ? LocalPath : LocalPath.Replace(FileName, string.Empty);
+
+		private string _defaultFilenamesAndFileNameRemoved;
+		/// <summary>LocalPath minus default filenames and the file name, for the 'check' side of the file comparison</summary>
+		public string LocalPathWithoutDefaultFilenamesAndFileName => _defaultFilenamesAndFileNameRemoved ??= string.IsNullOrWhiteSpace(FileName) ? LocalPathWithoutDefaultFilenames : LocalPathWithoutDefaultFilenames.Replace(FileName, string.Empty);
+	}
+
+	/// <summary>Same logic as the public overload, on precomputed parts. Note CheckParents deliberately passes the item first and the page second, exactly as before.</summary>
+	private static bool SameHostAndDirectoryFile(UriParts baseUri, UriParts checkUri)
+	{
+		return baseUri.Text == checkUri.Text || (baseUri.Host == checkUri.Host && (
+			checkUri.LocalPath.StartsWith(baseUri.LocalPath) ||
+			checkUri.LocalPath.StartsWith(baseUri.LocalPathWithoutFileName) ||
+			baseUri.LocalPath.StartsWith(checkUri.LocalPathWithoutDefaultFilenamesAndFileName)
+		));
+	}
+
+	private static bool SameHostAndDirectoryDirectory(UriParts baseUri, UriParts checkUri)
+	{
+		if (baseUri.Text == checkUri.Text)
+		{
+			return true;
+		}
+
+		if (baseUri.Host != checkUri.Host)
+		{
+			return false;
+		}
+
+		return checkUri.LocalPathWithoutDefaultFilenames.StartsWith(baseUri.LocalPathWithoutDefaultFilenames);
 	}
 
 	private static void CleanFragments(WebDirectory webDirectory)
 	{
 		// Directories
-		List<WebDirectory> directoriesWithFragments = webDirectory.Subdirectories.Where(wd => wd.Url.Contains('#')).ToList();
-
-		if (directoriesWithFragments.Count != 0)
+		if (webDirectory.Subdirectories.Any(wd => wd.Url.Contains('#')))
 		{
+			List<WebDirectory> directoriesWithFragments = webDirectory.Subdirectories.Where(wd => wd.Url.Contains('#')).ToList();
+
 			webDirectory.Subdirectories = [.. webDirectory.Subdirectories.Where(wd => !wd.Url.Contains('#'))];
 
 			foreach (WebDirectory directoryWithFragments in directoriesWithFragments)
@@ -2794,12 +2876,12 @@ public static partial class DirectoryParser
 		}
 
 		// Files
-		List<WebFile> filesWithFragments = webDirectory.Files.Where(wf => wf.Url.Contains('#')).ToList();
-
-		if (filesWithFragments.Count == 0)
+		if (!webDirectory.Files.Any(wf => wf.Url.Contains('#')))
 		{
 			return;
 		}
+
+		List<WebFile> filesWithFragments = webDirectory.Files.Where(wf => wf.Url.Contains('#')).ToList();
 
 		webDirectory.Files = [.. webDirectory.Files.Where(wf => !wf.Url.Contains('#'))];
 

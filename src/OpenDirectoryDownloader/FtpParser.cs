@@ -215,7 +215,7 @@ public class FtpParser
 				continue;
 			}
 
-			Uri uri = new(new Uri(webDirectory.Url), item.FullName);
+			Uri uri = new(webDirectory.Uri, item.FullName);
 			string fullUrl = uri.ToString();
 
 			switch (item.Type)
