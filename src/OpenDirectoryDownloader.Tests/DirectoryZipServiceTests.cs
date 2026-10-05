@@ -2,6 +2,7 @@ using OpenDirectoryDownloader.Server;
 using OpenDirectoryDownloader.Storage;
 using System.IO.Compression;
 using System.Net;
+using Serilog;
 using Xunit;
 
 namespace OpenDirectoryDownloader.Tests;
@@ -13,6 +14,14 @@ namespace OpenDirectoryDownloader.Tests;
 /// </summary>
 public class DirectoryZipServiceTests
 {
+	static DirectoryZipServiceTests()
+	{
+		// WriteZipAsync logs skipped files through Program.Logger, normally set up by Program.Main, which
+		// doesn't run under the test host (without this the test only passed when another test class
+		// happened to initialize it first).
+		Program.Logger ??= new LoggerConfiguration().CreateLogger();
+	}
+
 	private const string RootUrl = "https://example.com/folder/";
 
 	private sealed class FakeHttpMessageHandler(Dictionary<string, byte[]> contentByUrl, HashSet<string> failingUrls = null) : HttpMessageHandler

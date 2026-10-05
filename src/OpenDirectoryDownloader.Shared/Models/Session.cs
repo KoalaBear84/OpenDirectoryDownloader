@@ -25,7 +25,7 @@ public class Session
 	public int Skipped { get; set; }
 	public string UploadedUrlsUrl { get; set; }
 	public string UploadedUrlsResponse { get; set; }
-	public List<string> UrlsWithErrors { get; set; } = [];
+	public ConcurrentSet<string> UrlsWithErrors { get; set; } = [];
 	public SpeedtestResult SpeedtestResult { get; set; }
 
 	[JsonIgnore]
