@@ -91,10 +91,13 @@ public static class Statistics
 			stringBuilder.AppendLine($"{statusCode.Key}: {statusCode.Value}");
 		}
 
+		// Running counters (Session.RunningTotalFiles/FileSize/DirectoriesFinished), not a fresh recursive
+		// walk of session.Root - this line is printed on every periodic statistics tick for the whole
+		// duration of a scan, and a full tree walk gets more expensive the longer the scan runs.
 		stringBuilder.AppendLine(
-			$"Total files: {Library.FormatWithThousands(session.Root.TotalFiles)}, Total estimated size: {(session.Root.TotalFileSize > 0 ? FileSizeHelper.ToHumanReadable(session.Root.TotalFileSize) : "n/a")}");
+			$"Total files: {Library.FormatWithThousands(session.RunningTotalFiles)}, Total estimated size: {(session.RunningTotalFileSize > 0 ? FileSizeHelper.ToHumanReadable(session.RunningTotalFileSize) : "n/a")}");
 		stringBuilder.AppendLine(
-			$"Total directories: {Library.FormatWithThousands(session.Root.TotalDirectories + 1)}");
+			$"Total directories: {Library.FormatWithThousands(session.RunningTotalDirectoriesFinished + 1)}");
 		stringBuilder.AppendLine(
 			$"Total HTTP requests: {Library.FormatWithThousands(session.TotalHttpRequests)}, Total HTTP traffic: {FileSizeHelper.ToHumanReadable(session.TotalHttpTraffic)}");
 

@@ -704,6 +704,14 @@ public partial class OpenDirectoryIndexer
 				Session.TotalFiles = Session.Root.TotalFiles;
 				Session.TotalFileSizeEstimated = Session.Root.TotalFileSize;
 
+				// One-time reconciliation of the fast running counters (see Session.RunningTotalFiles and
+				// friends) against the authoritative recursive walk above, so the final report can't drift
+				// from any lost update to a plain (non-Interlocked) counter touched by many worker threads
+				// over the course of the scan - same trade-off already accepted for TotalHttpRequests/Errors.
+				Session.RunningTotalFiles = Session.TotalFiles;
+				Session.RunningTotalFileSize = Session.TotalFileSizeEstimated;
+				Session.RunningTotalDirectoriesFinished = Session.Root.TotalDirectories;
+
 				// Only reached on a genuine full finish, never on a pause (see the early return above) -
 				// lets a later --resume (or just inspecting the database) tell a scan actually completed.
 				if (!resumeNothingToDo)
@@ -1558,6 +1566,10 @@ public partial class OpenDirectoryIndexer
 						webDirectory.Finished = true;
 						webDirectory.FinishTime = DateTimeOffset.UtcNow;
 
+						// Runs exactly once per directory (this finally block, one per dequeued item) - see
+						// Session.RunningTotalDirectoriesFinished.
+						Session.RunningTotalDirectoriesFinished++;
+
 						ScanDatabase?.MirrorDirectory(webDirectory);
 
 						// This directory's own parse step (including registering any children/file-size
@@ -2201,6 +2213,12 @@ public partial class OpenDirectoryIndexer
 
 	private void AddProcessedWebDirectory(WebDirectory webDirectory, WebDirectory parsedWebDirectory, bool processSubdirectories = true)
 	{
+		// Delta against whatever was there before (not just parsedWebDirectory.Files.Count/size), so this
+		// stays correct even if a directory is ever processed more than once (e.g. --retry-errors) rather
+		// than assuming webDirectory.Files always starts empty - see Session.RunningTotalFiles/FileSize.
+		int previousFileCount = webDirectory.Files.Count;
+		long previousFileSize = webDirectory.Files.Sum(f => f.FileSize ?? 0);
+
 		webDirectory.Description = parsedWebDirectory.Description;
 		webDirectory.StartTime = parsedWebDirectory.StartTime;
 		webDirectory.Files = parsedWebDirectory.Files;
@@ -2212,6 +2230,9 @@ public partial class OpenDirectoryIndexer
 		webDirectory.Error = parsedWebDirectory.Error;
 		webDirectory.Parser = parsedWebDirectory.Parser;
 		webDirectory.ContentFingerprint = webDirectory.ComputeContentFingerprint();
+
+		Session.RunningTotalFiles += webDirectory.Files.Count - previousFileCount;
+		Session.RunningTotalFileSize += webDirectory.Files.Sum(f => f.FileSize ?? 0) - previousFileSize;
 
 		// parsedWebDirectory.Subdirectories were constructed with the transient parsedWebDirectory as their
 		// parent (see the various DirectoryParser.*Parser methods), not the real, tree-linked webDirectory.
@@ -2313,6 +2334,8 @@ public partial class OpenDirectoryIndexer
 				{
 					Program.Logger.Debug("Retrieve filesize for: {url}", webFile.Url);
 
+					long previousFileSize = webFile.FileSize ?? 0;
+
 					if (!OpenDirectoryIndexerSettings.DetermineFileSizeByDownload)
 					{
 						webFile.FileSize = await HttpClient.GetUrlFileSizeAsync(webFile.Url) ?? 0;
@@ -2321,6 +2344,10 @@ public partial class OpenDirectoryIndexer
 					{
 						webFile.FileSize = await HttpClient.GetUrlFileSizeByDownloadingAsync(webFile.Url) ?? 0;
 					}
+
+					// This file was already counted (as 0, or an earlier estimate) when its directory was
+					// added - see Session.RunningTotalFileSize - so only the delta belongs here.
+					Session.RunningTotalFileSize += webFile.FileSize.Value - previousFileSize;
 
 					ScanDatabase?.MirrorFileSize(webFile);
 

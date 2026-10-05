@@ -36,4 +36,21 @@ public class Session
 	public ConcurrentSet<string> ProcessedBrowserUrls { get; set; } = [];
 	[JsonIgnore]
 	public bool GDIndex { get; set; }
+
+	/// <summary>
+	/// Fast running counters mirroring Root.TotalFiles/TotalFileSize/TotalDirectories, kept up to date
+	/// incrementally (see OpenDirectoryIndexer.AddProcessedWebDirectory, WebFileFileSizeProcessor, and the
+	/// directory-finished chokepoint) instead of recomputed by walking the whole tree. Used by the periodic
+	/// statistics timer, which would otherwise re-walk a tree that only grows larger as a long scan goes on.
+	/// Reconciled against the authoritative recursive walk once, at the very end of the scan, so the final
+	/// report is never just an accumulation of racy increments.
+	/// </summary>
+	[JsonIgnore]
+	public int RunningTotalFiles { get; set; }
+
+	[JsonIgnore]
+	public long RunningTotalFileSize { get; set; }
+
+	[JsonIgnore]
+	public int RunningTotalDirectoriesFinished { get; set; }
 }
