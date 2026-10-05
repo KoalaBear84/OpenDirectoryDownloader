@@ -164,6 +164,19 @@ public sealed class ScanDatabase : IAsyncDisposable
 			await pragmaAndSchemaCommand.ExecuteNonQueryAsync(cancellationToken);
 		}
 
+		// Added after the table first shipped, so databases created earlier need the column added
+		using (SqliteCommand hasUploadedUrlsColumnCommand = connection.CreateCommand())
+		{
+			hasUploadedUrlsColumnCommand.CommandText = "SELECT COUNT(*) FROM pragma_table_info('ScanInfo') WHERE name = 'UploadedUrlsUrl'";
+
+			if ((long)await hasUploadedUrlsColumnCommand.ExecuteScalarAsync(cancellationToken) == 0)
+			{
+				using SqliteCommand addUploadedUrlsColumnCommand = connection.CreateCommand();
+				addUploadedUrlsColumnCommand.CommandText = "ALTER TABLE ScanInfo ADD COLUMN UploadedUrlsUrl TEXT NULL";
+				await addUploadedUrlsColumnCommand.ExecuteNonQueryAsync(cancellationToken);
+			}
+		}
+
 		return new ScanDatabase(connection, path);
 	}
 
@@ -385,6 +398,23 @@ public sealed class ScanDatabase : IAsyncDisposable
 		command.CommandText = "SELECT COUNT(*) FROM ScanRuns";
 
 		return (long)await command.ExecuteScalarAsync();
+	}
+
+	/// <summary>Queues the link of the uploaded URLs file, so a later --resume that has nothing to do can show it instead of uploading again. Non-blocking.</summary>
+	public void MirrorUploadedUrlsUrl(string uploadedUrlsUrl)
+	{
+		_channel.Writer.TryWrite(new UploadedUrlsUrlRecord(uploadedUrlsUrl));
+	}
+
+	/// <summary>The link of the URLs file uploaded by an earlier run, or null if it was never uploaded.</summary>
+	public async Task<string> GetUploadedUrlsUrlAsync()
+	{
+		await FlushAsync();
+
+		using SqliteCommand command = _connection.CreateCommand();
+		command.CommandText = "SELECT UploadedUrlsUrl FROM ScanInfo WHERE Id = 1";
+
+		return await command.ExecuteScalarAsync() as string;
 	}
 
 	/// <summary>The scan's one-time identity (root URL, true first-started time, and completion time if it ever finished), or null if BeginRunAsync has never completed for this database (e.g. a database from before this table existed).</summary>
@@ -1122,6 +1152,9 @@ public sealed class ScanDatabase : IAsyncDisposable
 				case ScanCompletedRecord scanCompletedRecord:
 					await ExecuteMarkCompletedAsync(transaction, scanCompletedRecord);
 					break;
+				case UploadedUrlsUrlRecord uploadedUrlsUrlRecord:
+					await ExecuteSetUploadedUrlsUrlAsync(transaction, uploadedUrlsUrlRecord);
+					break;
 				case BeginRunRecord beginRunRecord:
 					// Rare (once per run) and needs the auto-assigned RunNumber back, so it doesn't fit the
 					// reusable-prepared-command pattern the rest of this switch uses - handled inline.
@@ -1350,6 +1383,16 @@ public sealed class ScanDatabase : IAsyncDisposable
 		await command.ExecuteNonQueryAsync();
 	}
 
+	private static async Task ExecuteSetUploadedUrlsUrlAsync(SqliteTransaction transaction, UploadedUrlsUrlRecord uploadedUrlsUrlRecord)
+	{
+		using SqliteCommand command = transaction.Connection.CreateCommand();
+		command.Transaction = transaction;
+		command.CommandText = "UPDATE ScanInfo SET UploadedUrlsUrl = $uploadedUrlsUrl WHERE Id = 1";
+		command.Parameters.AddWithValue("$uploadedUrlsUrl", uploadedUrlsUrlRecord.Url);
+
+		await command.ExecuteNonQueryAsync();
+	}
+
 	public async ValueTask DisposeAsync()
 	{
 		if (!IsReadOnly)
@@ -1420,6 +1463,8 @@ public sealed class ScanDatabase : IAsyncDisposable
 	private sealed record BeginRunRecord(bool IsFreshScan, string RootUrl, DateTimeOffset StartedAtUtc, long TotalHttpTraffic, int TotalHttpRequests, int Errors, int Skipped, string HttpStatusCodesJson, TaskCompletionSource<int> RunNumberResult) : IScanRecord;
 
 	private sealed record ScanCompletedRecord(DateTimeOffset CompletedAtUtc) : IScanRecord;
+
+	private sealed record UploadedUrlsUrlRecord(string Url) : IScanRecord;
 
 	private sealed record FlushMarker(TaskCompletionSource Completed) : IScanRecord;
 }

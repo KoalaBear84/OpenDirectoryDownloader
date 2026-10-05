@@ -413,6 +413,8 @@ public partial class OpenDirectoryIndexer
 		Session.MaxThreads = OpenDirectoryIndexerSettings.Threads;
 
 		ScanResume.Result resumeResult = null;
+		bool resumeNothingToDo = false;
+		bool speedtestRestoredFromDatabase = false;
 
 		if (OpenDirectoryIndexerSettings.CommandLineOptions.UseDatabase || OpenDirectoryIndexerSettings.CommandLineOptions.Resume)
 		{
@@ -498,6 +500,33 @@ public partial class OpenDirectoryIndexer
 
 						priorRunCount = await ScanDatabase.CountRunsAsync();
 
+						resumeNothingToDo = resumeResult.DirectoriesToRequeue.Count == 0 && resumeResult.FilesToRequeueForSize.Count == 0;
+
+						if (resumeNothingToDo)
+						{
+							// The URLs file can't have changed either, so show the link from the earlier upload
+							// instead of uploading it again (see the UploadUrls block below)
+							Session.UploadedUrlsUrl = await ScanDatabase.GetUploadedUrlsUrlAsync();
+						}
+
+						ScanDatabase.SpeedtestSnapshot previousSpeedtest = await ScanDatabase.GetLatestSpeedtestResultAsync();
+
+						if (previousSpeedtest is { DownloadedBytes: > 0 })
+						{
+							// A successful speedtest was already recorded by an earlier run: reuse it for the
+							// report instead of measuring (and storing) another one on every resume.
+							Session.SpeedtestResult = new Shared.SpeedtestResult
+							{
+								DownloadedBytes = previousSpeedtest.DownloadedBytes,
+								ElapsedMilliseconds = previousSpeedtest.ElapsedMilliseconds,
+								MaxBytesPerSecond = previousSpeedtest.MaxBytesPerSecond,
+								MaxKBsPerSecond = previousSpeedtest.MaxBytesPerSecond / 1024d,
+								MaxMBsPerSecond = previousSpeedtest.MaxBytesPerSecond / 1024d / 1024d
+							};
+
+							speedtestRestoredFromDatabase = true;
+						}
+
 						if (!resumeResult.DirectoriesToRequeue.Contains(resumeResult.Root))
 						{
 							// FirstRequest normally marks "this response is for the root directory" (root
@@ -510,7 +539,8 @@ public partial class OpenDirectoryIndexer
 					}
 				}
 
-				int runNumber = await ScanDatabase.BeginRunAsync(Session, OpenDirectoryIndexerSettings.Url, isFreshScan: !resuming);
+				// Nothing left to do: don't add a new (empty) run to the database, leave its history untouched
+				int runNumber = resumeNothingToDo ? 0 : await ScanDatabase.BeginRunAsync(Session, OpenDirectoryIndexerSettings.Url, isFreshScan: !resuming);
 
 				if (resuming)
 				{
@@ -676,7 +706,10 @@ public partial class OpenDirectoryIndexer
 
 				// Only reached on a genuine full finish, never on a pause (see the early return above) -
 				// lets a later --resume (or just inspecting the database) tell a scan actually completed.
-				ScanDatabase?.MarkCompleted(Session.Finished);
+				if (!resumeNothingToDo)
+				{
+					ScanDatabase?.MarkCompleted(Session.Finished);
+				}
 
 				List<string> distinctUrls = GetDistinctFileUrls();
 
@@ -723,7 +756,11 @@ public partial class OpenDirectoryIndexer
 							Program.Logger.Information("Saved URL list to file: {path}", urlsPath);
 							Console.WriteLine($"Saved URL list to file: {urlsPath}");
 
-							if (OpenDirectoryIndexerSettings.CommandLineOptions.UploadUrls && Session.TotalFiles > 0)
+							if (OpenDirectoryIndexerSettings.CommandLineOptions.UploadUrls && resumeNothingToDo && !string.IsNullOrWhiteSpace(Session.UploadedUrlsUrl))
+							{
+								Console.WriteLine($"URLs already uploaded, not uploading again. Uploaded URLs link: {Session.UploadedUrlsUrl}");
+							}
+							else if (OpenDirectoryIndexerSettings.CommandLineOptions.UploadUrls && Session.TotalFiles > 0)
 							{
 								try
 								{
@@ -745,6 +782,7 @@ public partial class OpenDirectoryIndexer
 											Program.HistoryLogger.Information("{siteName} URL: {url}", uploadSite.Name, JsonSerializer.Serialize((object)fileUploaderFile));
 											Program.HistoryLogger.Information("{siteName} full response: {response}", uploadSite.Name, Session.UploadedUrlsResponse);
 											Session.UploadedUrlsUrl = fileUploaderFile.Url;
+											ScanDatabase?.MirrorUploadedUrlsUrl(Session.UploadedUrlsUrl);
 											Console.WriteLine($"Uploaded URLs link: {Session.UploadedUrlsUrl}");
 											break;
 										}
@@ -827,6 +865,7 @@ public partial class OpenDirectoryIndexer
 				distinctUrls = null;
 
 				if (OpenDirectoryIndexerSettings.CommandLineOptions.Speedtest &&
+					!speedtestRestoredFromDatabase &&
 					Session.TotalFiles > 0 &&
 					Session.Root.Uri.Host != Constants.GoogleDriveDomain &&
 					!Session.Root.Uri.Host.EndsWith(Constants.AmazonS3Domain) &&
@@ -895,12 +934,16 @@ public partial class OpenDirectoryIndexer
 						}
 					}
 				}
+				else if (speedtestRestoredFromDatabase)
+				{
+					Program.Logger.Information("Speedtest skipped because a result is already stored in the database");
+				}
 				else
 				{
 					Program.Logger.Warning("Speedtest skipped because of general service or disabled through command line");
 				}
 
-				if (Session.SpeedtestResult != null)
+				if (Session.SpeedtestResult != null && !speedtestRestoredFromDatabase)
 				{
 					ScanDatabase?.MirrorSpeedtestResult(Session.SpeedtestResult);
 				}
@@ -1074,7 +1117,7 @@ public partial class OpenDirectoryIndexer
 			$"""
 
 			  Site: {scanInfo.RootUrl}
-			  This is attempt #{Library.FormatWithThousands(runNumber)} ({Library.FormatWithThousands(priorRunCount)} prior attempt{(priorRunCount == 1 ? "" : "s")}); first started {scanInfo.FirstStartedAtUtc:yyyy-MM-dd HH:mm} UTC.
+			  {(runNumber == 0 ? $"Nothing left to do, so no new attempt was recorded ({Library.FormatWithThousands(priorRunCount)} prior attempt{(priorRunCount == 1 ? "" : "s")})" : $"This is attempt #{Library.FormatWithThousands(runNumber)} ({Library.FormatWithThousands(priorRunCount)} prior attempt{(priorRunCount == 1 ? "" : "s")})")}; first started {scanInfo.FirstStartedAtUtc:yyyy-MM-dd HH:mm} UTC.
 			""";
 
 		string summary =
