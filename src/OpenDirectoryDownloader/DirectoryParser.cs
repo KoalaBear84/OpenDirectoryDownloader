@@ -2842,7 +2842,7 @@ public static partial class DirectoryParser
 
 		// Computed once (direct children only, not recursive) and reused for every ancestor level below,
 		// instead of re-serializing webDirectory's own Files/Subdirectories on every iteration.
-		string webDirectoryFingerprint = null;
+		UInt128? webDirectoryFingerprint = null;
 
 		for (int level = 1; level <= 8; level++)
 		{
@@ -2870,7 +2870,7 @@ public static partial class DirectoryParser
 		}
 	}
 
-	private static bool CheckDirectoryTheSame(WebDirectory webDirectory, string webDirectoryFingerprint, WebDirectory parentWebDirectory)
+	private static bool CheckDirectoryTheSame(WebDirectory webDirectory, UInt128? webDirectoryFingerprint, WebDirectory parentWebDirectory)
 	{
 		if (webDirectory.Files.Count != parentWebDirectory.Files.Count ||
 		    webDirectory.Subdirectories.Count != parentWebDirectory.Subdirectories.Count)
@@ -2880,7 +2880,7 @@ public static partial class DirectoryParser
 
 		// Ancestors are always already finished by the time a descendant is parsed, so their fingerprint
 		// is normally cached (see OpenDirectoryIndexer.AddProcessedWebDirectory); fall back just in case.
-		string parentFingerprint = parentWebDirectory.ContentFingerprint ?? parentWebDirectory.ComputeContentFingerprint();
+		UInt128 parentFingerprint = parentWebDirectory.ContentFingerprint ?? parentWebDirectory.ComputeContentFingerprint();
 
 		return webDirectoryFingerprint == parentFingerprint;
 	}
