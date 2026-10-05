@@ -2101,7 +2101,7 @@ public static partial class DirectoryParser
 
 		foreach (IElement pre in pres)
 		{
-			List<string> lines = RegexPreLineSeparator().Split(pre.FastInnerHtml()).ToList();
+			List<string> lines = pre.FastPreLines() ?? RegexPreLineSeparator().Split(pre.FastInnerHtml()).ToList();
 
 			foreach (string line in lines)
 			{
