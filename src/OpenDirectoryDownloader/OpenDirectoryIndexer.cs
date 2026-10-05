@@ -1192,7 +1192,7 @@ public partial class OpenDirectoryIndexer
 		// instead of copying it through Distinct() and OrderBy() (3 extra copies of every URL).
 		List<string> urls = ScanDatabase is not null ?
 			ScanDatabase.GetAllFileUrlsAsync().GetAwaiter().GetResult() :
-			[.. Session.Root.AllFileUrls.Distinct()];
+			[.. Session.Root.AllFiles.Select(file => file.Url).Distinct()];
 
 		// List.Sort isn't stable (OrderBy was), so ties between different strings are broken ordinally
 		urls.Sort((x, y) =>
