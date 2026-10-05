@@ -38,9 +38,6 @@ public static partial class DirectoryParser
 
 	private static readonly SemaphoreSlim SemaphoreSlimBrowser = new(1, 1);
 
-	/// <summary>One row of a `&lt;pre&gt;`-style directory listing as just enough DOM for RegexParser1..10 to query - see <see cref="LineFragmentParser"/>.</summary>
-	private static IElement ParseLineFragment(string line) => LineFragmentParser.Parse(line);
-
 	[GeneratedRegex(@"app\..*\.js")]
 	private static partial Regex FileBrowserScriptRegex();
 
@@ -1440,26 +1437,26 @@ public static partial class DirectoryParser
 			return match.Success;
 		}
 
-		IElement parsedLine = ParseLineFragment(line);
+		LineView parsedLine = LineFragmentParser.Parse(line);
 
-		if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
-			parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
-			parsedLine.QuerySelector("a") == null ||
+		if (parsedLine.HasImage("[ICO]") ||
+			parsedLine.HasImage("[PARENTDIR]") ||
+			!parsedLine.HasLink ||
 			line.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase))
 		{
 			return match.Success;
 		}
 
-		IElement link = parsedLine.QuerySelector("a");
+		LineView link = parsedLine;
 
 		if (!IsValidLink(link))
 		{
 			return match.Success;
 		}
 
-		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+		Library.ProcessUrl(baseUrl, link.Href, out string linkHref, out Uri uri, out string fullUrl);
 
-		bool isFile = IsFileSize(match.Groups["FileSize"].Value.Trim()) && parsedLine.QuerySelector("img[alt=\"[DIR]\"]") == null;
+		bool isFile = IsFileSize(match.Groups["FileSize"].Value.Trim()) && !parsedLine.HasImage("[DIR]");
 
 		if (!isFile)
 		{
@@ -1504,15 +1501,15 @@ public static partial class DirectoryParser
 			return match.Success;
 		}
 
-		IElement parsedLine = ParseLineFragment(line);
-		IElement link = parsedLine.QuerySelector("a");
+		LineView parsedLine = LineFragmentParser.Parse(line);
+		LineView link = parsedLine;
 
 		if (!IsValidLink(link))
 		{
 			return match.Success;
 		}
 
-		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+		Library.ProcessUrl(baseUrl, link.Href, out string linkHref, out Uri uri, out string fullUrl);
 
 		string fileSizeGroup = match.Groups["FileSize"].Value.Trim();
 
@@ -1559,24 +1556,24 @@ public static partial class DirectoryParser
 			return match.Success;
 		}
 
-		IElement parsedLine = ParseLineFragment(line);
+		LineView parsedLine = LineFragmentParser.Parse(line);
 
-		if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
-			parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
-			parsedLine.QuerySelector("a") == null ||
+		if (parsedLine.HasImage("[ICO]") ||
+			parsedLine.HasImage("[PARENTDIR]") ||
+			!parsedLine.HasLink ||
 			line.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase))
 		{
 			return match.Success;
 		}
 
-		IElement link = parsedLine.QuerySelector("a");
+		LineView link = parsedLine;
 
 		if (!IsValidLink(link))
 		{
 			return match.Success;
 		}
 
-		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+		Library.ProcessUrl(baseUrl, link.Href, out string linkHref, out Uri uri, out string fullUrl);
 
 		bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;" && match.Groups["FileSize"].Value.Trim() != "DIR";
 
@@ -1623,24 +1620,24 @@ public static partial class DirectoryParser
 			return match.Success;
 		}
 
-		IElement parsedLine = ParseLineFragment(line);
+		LineView parsedLine = LineFragmentParser.Parse(line);
 
-		if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
-			parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
-			parsedLine.QuerySelector("a") == null ||
+		if (parsedLine.HasImage("[ICO]") ||
+			parsedLine.HasImage("[PARENTDIR]") ||
+			!parsedLine.HasLink ||
 			line.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase))
 		{
 			return match.Success;
 		}
 
-		IElement link = parsedLine.QuerySelector("a");
+		LineView link = parsedLine;
 
 		if (!IsValidLink(link))
 		{
 			return match.Success;
 		}
 
-		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+		Library.ProcessUrl(baseUrl, link.Href, out string linkHref, out Uri uri, out string fullUrl);
 
 		bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;";
 
@@ -1689,24 +1686,24 @@ public static partial class DirectoryParser
 
 		bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;";
 
-		IElement parsedLine = ParseLineFragment(line);
+		LineView parsedLine = LineFragmentParser.Parse(line);
 
-		if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
-			parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
-			parsedLine.QuerySelector("a") == null ||
+		if (parsedLine.HasImage("[ICO]") ||
+			parsedLine.HasImage("[PARENTDIR]") ||
+			!parsedLine.HasLink ||
 			line.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase))
 		{
 			return match.Success;
 		}
 
-		IElement link = parsedLine.QuerySelector("a");
+		LineView link = parsedLine;
 
 		if (!IsValidLink(link))
 		{
 			return match.Success;
 		}
 
-		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+		Library.ProcessUrl(baseUrl, link.Href, out string linkHref, out Uri uri, out string fullUrl);
 
 		if (!isFile)
 		{
@@ -1751,24 +1748,24 @@ public static partial class DirectoryParser
 			return match.Success;
 		}
 
-		IElement parsedLine = ParseLineFragment(line);
+		LineView parsedLine = LineFragmentParser.Parse(line);
 
-		if (parsedLine.QuerySelector("img[alt=\"[ICO]\"]") != null ||
-			parsedLine.QuerySelector("img[alt=\"[PARENTDIR]\"]") != null ||
-			parsedLine.QuerySelector("a") == null ||
+		if (parsedLine.HasImage("[ICO]") ||
+			parsedLine.HasImage("[PARENTDIR]") ||
+			!parsedLine.HasLink ||
 			line.Contains("parent directory", StringComparison.InvariantCultureIgnoreCase))
 		{
 			return match.Success;
 		}
 
-		IElement link = parsedLine.QuerySelector("a");
+		LineView link = parsedLine;
 
 		if (!IsValidLink(link))
 		{
 			return match.Success;
 		}
 
-		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+		Library.ProcessUrl(baseUrl, link.Href, out string linkHref, out Uri uri, out string fullUrl);
 
 		bool isFile = match.Groups["FileSize"].Value.Trim() != "&lt;dir&gt;";
 
@@ -1815,21 +1812,21 @@ public static partial class DirectoryParser
 			return match.Success;
 		}
 
-		IElement parsedLine = ParseLineFragment(line);
+		LineView parsedLine = LineFragmentParser.Parse(line);
 
-		if (parsedLine.QuerySelector("a") == null)
+		if (!parsedLine.HasLink)
 		{
 			return match.Success;
 		}
 
-		IElement link = parsedLine.QuerySelector("a");
+		LineView link = parsedLine;
 
 		if (!IsValidLink(link))
 		{
 			return match.Success;
 		}
 
-		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+		Library.ProcessUrl(baseUrl, link.Href, out string linkHref, out Uri uri, out string fullUrl);
 
 		string fileMode = match.Groups["FileMode"].Value.ToLowerInvariant();
 		bool isFile = !fileMode.StartsWith('d') && !fileMode.StartsWith('l');
@@ -1884,21 +1881,21 @@ public static partial class DirectoryParser
 			return match.Success;
 		}
 
-		IElement parsedLine = ParseLineFragment(line);
+		LineView parsedLine = LineFragmentParser.Parse(line);
 
-		if (parsedLine.QuerySelector("a") == null)
+		if (!parsedLine.HasLink)
 		{
 			return match.Success;
 		}
 
-		IElement link = parsedLine.QuerySelector("a");
+		LineView link = parsedLine;
 
 		if (!IsValidLink(link))
 		{
 			return match.Success;
 		}
 
-		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+		Library.ProcessUrl(baseUrl, link.Href, out string linkHref, out Uri uri, out string fullUrl);
 
 		string fileSizeString = match.Groups["FileSize"].Value;
 		long? fileSize = FileSizeHelper.ParseFileSize(fileSizeString);
@@ -1963,21 +1960,21 @@ public static partial class DirectoryParser
 			return false;
 		}
 
-		IElement parsedLine = ParseLineFragment(line);
+		LineView parsedLine = LineFragmentParser.Parse(line);
 
-		if (parsedLine.QuerySelector("a") == null)
+		if (!parsedLine.HasLink)
 		{
 			return match.Success;
 		}
 
-		IElement link = parsedLine.QuerySelector("a");
+		LineView link = parsedLine;
 
 		if (!IsValidLink(link))
 		{
 			return match.Success;
 		}
 
-		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+		Library.ProcessUrl(baseUrl, link.Href, out string linkHref, out Uri uri, out string fullUrl);
 
 		bool isFile = !string.IsNullOrWhiteSpace(match.Groups["FileSize"].Value) &&
 			            match.Groups["FileSize"].Value.Trim() != "-";
@@ -2032,21 +2029,21 @@ public static partial class DirectoryParser
 			return match.Success;
 		}
 
-		IElement parsedLine = ParseLineFragment(line);
+		LineView parsedLine = LineFragmentParser.Parse(line);
 
-		if (parsedLine.QuerySelector("a") == null)
+		if (!parsedLine.HasLink)
 		{
 			return match.Success;
 		}
 
-		IElement link = parsedLine.QuerySelector("a");
+		LineView link = parsedLine;
 
 		if (!IsValidLink(link))
 		{
 			return match.Success;
 		}
 
-		Library.ProcessUrl(baseUrl, link, out string linkHref, out Uri uri, out string fullUrl);
+		Library.ProcessUrl(baseUrl, link.Href, out string linkHref, out Uri uri, out string fullUrl);
 
 		string fileMode = match.Groups["Dir"].Value.ToLowerInvariant();
 
@@ -3294,8 +3291,16 @@ public static partial class DirectoryParser
 			return false;
 		}
 
-		string linkHref = link.Attributes["href"]?.Value;
+		return IsValidLink(link.Attributes["href"]?.Value, (link as IHtmlAnchorElement)?.Title, link.TextContent);
+	}
 
+	private static bool IsValidLink(LineView line)
+	{
+		return line.HasLink && IsValidLink(line.Href, line.Title, line.Text);
+	}
+
+	private static bool IsValidLink(string linkHref, string title, string text)
+	{
 		return
 			linkHref != "/" &&
 			linkHref != ".." &&
@@ -3303,17 +3308,17 @@ public static partial class DirectoryParser
 			linkHref != "./." &&
 			linkHref != "./.." &&
 			linkHref != "#" &&
-			(link as IHtmlAnchorElement)?.Title != ".." &&
-			link.TextContent.Trim() != ".." &&
-			link.TextContent.Trim() != "." &&
+			title != ".." &&
+			text.Trim() != ".." &&
+			text.Trim() != "." &&
 			linkHref?.StartsWith("javascript:", StringComparison.InvariantCultureIgnoreCase) == false &&
 			linkHref?.StartsWith("mailto:", StringComparison.InvariantCultureIgnoreCase) == false &&
-			!link.TextContent.Equals("parent directory", StringComparison.InvariantCultureIgnoreCase) &&
-			!link.TextContent.Equals("[to parent directory]", StringComparison.InvariantCultureIgnoreCase) &&
-			link.TextContent.Trim() != "Name" &&
+			!text.Equals("parent directory", StringComparison.InvariantCultureIgnoreCase) &&
+			!text.Equals("[to parent directory]", StringComparison.InvariantCultureIgnoreCase) &&
+			text.Trim() != "Name" &&
 			linkHref?.Contains("&expand") == false &&
 			(!RegexNMSDAD().IsMatch(linkHref) || linkHref.StartsWith("DirectoryList.asp")) &&
-			(Path.GetFileName(linkHref) != "DirectoryList.asp" || !string.IsNullOrWhiteSpace(link.TextContent));
+			(Path.GetFileName(linkHref) != "DirectoryList.asp" || !string.IsNullOrWhiteSpace(text));
 	}
 
 	[GeneratedRegex(@"\?[NMSD]=?[AD]")]

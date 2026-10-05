@@ -1,3 +1,4 @@
+using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
 using OpenDirectoryDownloader.Tests.Integration;
@@ -10,7 +11,8 @@ public class LineFragmentParserTests
 {
 	private static readonly Regex LineSeparator = new(@"\r\n|\r|\n|<br\S*>|<hr>");
 
-	private static string Describe(IElement element) => element.InnerHtml;
+	/// <summary>What the parsers saw before LineView existed: the answers read from AngleSharp's DOM.</summary>
+	private static string FromAngleSharp(string line) => LineFragmentParser.ReadDom(LineFragmentParser.ParseWithAngleSharp(line)).ToString();
 
 	[Theory]
 	[InlineData("<a href=\"file.mkv\">file.mkv</a>                  02-Jan-2024 10:11     1503238553")]
@@ -18,12 +20,19 @@ public class LineFragmentParserTests
 	[InlineData("<a href=\"../\">../</a>")]
 	[InlineData("<a href=\"sub/\">sub/</a>   02-Jan-2024 10:11   -")]
 	[InlineData("<img src=\"/icons/back.gif\" alt=\"[PARENTDIR]\"> <a href=\"/\">Parent Directory</a>   -   ")]
-	public void SimpleLines_AreHandledDirectly_AndMatchAngleSharp(string line)
+	[InlineData("<img src=\"/icons/folder.gif\" alt=\"[DIR]\"> <a href=\"x/\" title=\"hello\">x/</a>")]
+	[InlineData("<a href=\"a\">first</a> <a href=\"b\" title=\"t\">second</a>")]
+	[InlineData("<a>no href</a>")]
+	[InlineData("<a href=\"x\"></a>")]
+	[InlineData("<img alt=\"[ICO]\"><img alt=\"[DIR]\"><img alt=\"[   ]\"><img src=\"no-alt.gif\"><a href=\"y\">y</a>")]
+	[InlineData("just text, no markup at all")]
+	[InlineData("")]
+	public void SimpleLines_AreHandledDirectly_AndAnswerLikeTheDom(string line)
 	{
-		IElement simple = LineFragmentParser.TryParseSimple(line);
+		LineView simple = LineFragmentParser.TryParseSimple(line);
 
 		Assert.NotNull(simple);
-		Assert.Equal(Describe(LineFragmentParser.ParseWithAngleSharp(line)), Describe(simple));
+		Assert.Equal(FromAngleSharp(line), simple.ToString());
 	}
 
 	[Theory]
@@ -32,6 +41,8 @@ public class LineFragmentParserTests
 	[InlineData("<a href=file.mkv>file.mkv</a>")]
 	[InlineData("<a href=\"a&amp;b\">a&amp;b</a>")]
 	[InlineData("<a href=\"x\" href=\"y\">x</a>")]
+	[InlineData("<a href=\"x\" title=\"1\" title=\"2\">x</a>")]
+	[InlineData("<img alt=\"a\" alt=\"b\">")]
 	[InlineData("<a href=\"x\"title=\"t\">x</a>")]
 	[InlineData("<a href=\"x\"><b>x</b></a>")]
 	[InlineData("<a href=\"x\">unclosed")]
@@ -42,14 +53,31 @@ public class LineFragmentParserTests
 	{
 		Assert.Null(LineFragmentParser.TryParseSimple(line));
 
-		// ...and the public entry point still produces a DOM for it
-		Assert.NotNull(LineFragmentParser.Parse(line));
+		// ...and the public entry point still answers, from the DOM
+		Assert.Equal(FromAngleSharp(line), LineFragmentParser.Parse(line).ToString());
+	}
+
+	[Fact]
+	public void HasImage_IsAnExactCaseSensitiveMatchOnAlt_LikeTheAttributeSelectorWas()
+	{
+		string line = "<img alt=\"[dir]\"> <img alt=\"[DIR] \"> <a href=\"x\">x</a>";
+		IElement dom = LineFragmentParser.ParseWithAngleSharp(line);
+
+		foreach (string alt in new[] { "[DIR]", "[dir]", "[DIR] ", "[ICO]" })
+		{
+			LineView simple = LineFragmentParser.TryParseSimple(line);
+			bool expected = dom.QuerySelector($"img[alt=\"{alt}\"]") is not null;
+
+			Assert.NotNull(simple);
+			Assert.Equal(expected, simple.HasImage(alt));
+			Assert.Equal(expected, LineFragmentParser.ReadDom(dom).HasImage(alt));
+		}
 	}
 
 	[Theory]
 	[InlineData(ListingStyle.ApachePre)]
 	[InlineData(ListingStyle.NginxAutoindex)]
-	public void GeneratedListings_AreAlmostAlwaysSimple_AndIdenticalToAngleSharp(ListingStyle style)
+	public void GeneratedListings_AreAlmostAlwaysSimple_AndAnswerLikeTheDom(ListingStyle style)
 	{
 		FakeSite site = new(new FakeSiteOptions { Style = style, Depth = 1, SubdirectoriesPerDirectory = 5, FilesPerDirectory = 2_000 });
 		IElement pre = new HtmlParser().ParseDocument(site.RenderListing("/")).QuerySelector("pre");
@@ -59,7 +87,7 @@ public class LineFragmentParserTests
 
 		foreach (string line in lines)
 		{
-			IElement fast = LineFragmentParser.TryParseSimple(line);
+			LineView fast = LineFragmentParser.TryParseSimple(line);
 
 			if (fast is null)
 			{
@@ -67,14 +95,14 @@ public class LineFragmentParserTests
 			}
 
 			simple++;
-			Assert.Equal(Describe(LineFragmentParser.ParseWithAngleSharp(line)), Describe(fast));
+			Assert.Equal(FromAngleSharp(line), fast.ToString());
 		}
 
 		Assert.True(simple > lines.Count * 0.99, $"Only {simple} of {lines.Count} lines took the fast path");
 	}
 
 	[Fact]
-	public void EveryLineOfEverySampleListing_GivesTheSameDomOnBothPaths()
+	public void EveryLineOfEverySampleListing_GivesTheSameAnswersOnBothPaths()
 	{
 		HtmlParser parser = new();
 		int compared = 0;
@@ -92,7 +120,7 @@ public class LineFragmentParserTests
 				foreach (string line in LineSeparator.Split(pre.FastInnerHtml()))
 				{
 					compared++;
-					IElement fast = LineFragmentParser.TryParseSimple(line);
+					LineView fast = LineFragmentParser.TryParseSimple(line);
 
 					if (fast is null)
 					{
@@ -100,8 +128,8 @@ public class LineFragmentParserTests
 					}
 
 					fastPath++;
-					string expected = Describe(LineFragmentParser.ParseWithAngleSharp(line));
-					Assert.True(expected == Describe(fast), $"Different DOM in {path} for line: {line}");
+					string expected = FromAngleSharp(line);
+					Assert.True(expected == fast.ToString(), $"Different answers in {path} for line: {line}{Environment.NewLine}expected {expected}{Environment.NewLine}actual   {fast}");
 				}
 			}
 		}
@@ -113,14 +141,17 @@ public class LineFragmentParserTests
 	[Fact]
 	public async Task ManyThreads_ParseLinesWithoutInterfering()
 	{
-		string line = "<img src=\"/icons/unknown.gif\" alt=\"[   ]\"> <a href=\"file.mkv\">file.mkv</a>   2024-01-02 10:11  1.4G   ";
-		string expected = Describe(LineFragmentParser.ParseWithAngleSharp(line));
+		string simple = "<img src=\"/icons/unknown.gif\" alt=\"[   ]\"> <a href=\"file.mkv\">file.mkv</a>   2024-01-02 10:11  1.4G   ";
+		string complex = "<a href=\"a&amp;b\">a&amp;b</a> <b>bold</b>";
+		string expectedSimple = FromAngleSharp(simple);
+		string expectedComplex = FromAngleSharp(complex);
 
 		await Task.WhenAll(Enumerable.Range(0, 8).Select(_ => Task.Run(() =>
 		{
 			for (int i = 0; i < 5_000; i++)
 			{
-				Assert.Equal(expected, Describe(LineFragmentParser.Parse(line)));
+				Assert.Equal(expectedSimple, LineFragmentParser.Parse(simple).ToString());
+				Assert.Equal(expectedComplex, LineFragmentParser.Parse(complex).ToString());
 			}
 		})));
 	}

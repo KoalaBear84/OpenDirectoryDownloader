@@ -506,8 +506,26 @@ public class Library
 
 	public static void ProcessUrl(string baseUrl, IElement link, out string linkHref, out Uri uri, out string fullUrl)
 	{
-		linkHref = link.Attributes["href"]?.Value;
-		uri = new Uri(new Uri(baseUrl), linkHref);
+		ProcessUrl(baseUrl, link.Attributes["href"]?.Value, out linkHref, out uri, out fullUrl);
+	}
+
+	// A listing resolves every line against the same base URL: parse it once per thread, not once per line
+	[ThreadStatic]
+	private static string _lastBaseUrl;
+
+	[ThreadStatic]
+	private static Uri _lastBaseUri;
+
+	public static void ProcessUrl(string baseUrl, string href, out string linkHref, out Uri uri, out string fullUrl)
+	{
+		if (!ReferenceEquals(_lastBaseUrl, baseUrl) && _lastBaseUrl != baseUrl)
+		{
+			_lastBaseUri = new Uri(baseUrl);
+			_lastBaseUrl = baseUrl;
+		}
+
+		linkHref = href;
+		uri = new Uri(_lastBaseUri, linkHref);
 		fullUrl = uri.ToString();
 	}
 

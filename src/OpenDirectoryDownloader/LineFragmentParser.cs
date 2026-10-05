@@ -5,15 +5,72 @@ using AngleSharp.Html.Parser;
 namespace OpenDirectoryDownloader;
 
 /// <summary>
-/// Parses one line of HTML (a row of a &lt;pre&gt;-style directory listing) into just enough DOM for RegexParser1..10
-/// to run QuerySelector against.
+/// What the line parsers (RegexParser1..10) need to know about one line of a &lt;pre&gt;-style directory listing:
+/// its first link (href, title, text) and which images it contains. Nothing else is ever asked of the line's
+/// HTML, so there is no need to build a DOM for it (AngleSharp elements cost 2.5 to 5 KB per line, and a big
+/// listing has hundreds of thousands of lines).
+/// </summary>
+public sealed class LineView
+{
+	private string _alt0;
+	private string _alt1;
+	private List<string> _moreAlts;
+
+	/// <summary>True when the line has an &lt;a&gt; element (<c>QuerySelector("a") != null</c>).</summary>
+	public bool HasLink { get; init; }
+
+	/// <summary>The first link's href attribute, null when it has none.</summary>
+	public string Href { get; init; }
+
+	/// <summary>The first link's title attribute, null when it has none or there is no link (what IHtmlAnchorElement.Title returns).</summary>
+	public string Title { get; init; }
+
+	/// <summary>The first link's text content, null when there is no link.</summary>
+	public string Text { get; init; }
+
+	/// <summary>True when the line has an &lt;img&gt; whose alt attribute is exactly <paramref name="alt"/> (<c>QuerySelector("img[alt=...]") != null</c>).</summary>
+	public bool HasImage(string alt)
+	{
+		return _alt0 == alt || _alt1 == alt || (_moreAlts is not null && _moreAlts.Contains(alt));
+	}
+
+	internal void AddImageAlt(string alt)
+	{
+		if (alt is null)
+		{
+			return;
+		}
+
+		if (_alt0 is null)
+		{
+			_alt0 = alt;
+		}
+		else if (_alt1 is null)
+		{
+			_alt1 = alt;
+		}
+		else
+		{
+			(_moreAlts ??= []).Add(alt);
+		}
+	}
+
+	/// <summary>Everything the parsers can observe, as one string, for comparing two ways of reading the same line.</summary>
+	public override string ToString()
+	{
+		string alts = string.Join("|", new[] { _alt0, _alt1 }.Concat(_moreAlts ?? []).Where(a => a is not null).OrderBy(a => a, StringComparer.Ordinal));
+
+		return $"link={HasLink} href={Href ?? "<null>"} title={Title ?? "<null>"} text={Text ?? "<null>"} alts={alts}";
+	}
+}
+
+/// <summary>
+/// Reads one line of a &lt;pre&gt;-style listing into a <see cref="LineView"/>.
 ///
-/// A big listing is hundreds of thousands of such lines, and AngleSharp costs ~20 µs and a lot of garbage per
-/// call (a whole document for the shell plus a full tokenizer and tree builder for the fragment), which made
-/// the line parsing about half of the time to scan a big directory. Almost every line is the same simple
-/// shape, so those are built directly: lowercase &lt;a&gt; and &lt;img&gt; with plain double-quoted attributes and
-/// plain text. Anything else (entities, other tags, odd quoting, ...) goes through AngleSharp as before, so
-/// the result is the same DOM either way; LineFragmentParserTests compares both paths on every sample listing.
+/// Almost every line is the same simple shape (lowercase &lt;a&gt; and &lt;img&gt; with plain double-quoted
+/// attributes and plain text), and those are read directly with no DOM at all. Anything else (entities, other
+/// tags, odd quoting, ...) goes through AngleSharp and is read from its DOM, so the answer is the same either
+/// way; LineFragmentParserTests compares both on every line of every sample listing.
 /// </summary>
 public static class LineFragmentParser
 {
@@ -25,9 +82,9 @@ public static class LineFragmentParser
 
 	private static IHtmlDocument ShellDocument => _shellDocument ??= HtmlParser.ParseDocument(string.Empty);
 
-	public static IElement Parse(string line)
+	public static LineView Parse(string line)
 	{
-		return TryParseSimple(line) ?? ParseWithAngleSharp(line);
+		return TryParseSimple(line) ?? ReadDom(ParseWithAngleSharp(line));
 	}
 
 	/// <summary>The general path: AngleSharp's own fragment parser.</summary>
@@ -45,11 +102,35 @@ public static class LineFragmentParser
 		return container;
 	}
 
-	/// <summary>The same DOM for the simple shape, or null when the line is anything else (the caller then uses AngleSharp).</summary>
-	public static IElement TryParseSimple(string line)
+	/// <summary>What the parsers would have asked of the DOM, answered from the DOM.</summary>
+	public static LineView ReadDom(IElement container)
 	{
-		IHtmlDocument document = ShellDocument;
-		IElement container = document.CreateElement("div");
+		IElement link = container.QuerySelector("a");
+
+		LineView view = new()
+		{
+			HasLink = link is not null,
+			Href = link?.Attributes["href"]?.Value,
+			Title = link is null ? null : (link as IHtmlAnchorElement)?.Title,
+			Text = link?.TextContent
+		};
+
+		foreach (IElement image in container.QuerySelectorAll("img"))
+		{
+			view.AddImageAlt(image.Attributes["alt"]?.Value);
+		}
+
+		return view;
+	}
+
+	/// <summary>The same answers for the simple shape, or null when the line is anything else (the caller then uses AngleSharp).</summary>
+	public static LineView TryParseSimple(string line)
+	{
+		bool hasLink = false;
+		string href = null;
+		string title = null;
+		string linkText = null;
+		List<string> alts = null;
 		int position = 0;
 
 		while (position < line.Length)
@@ -57,16 +138,9 @@ public static class LineFragmentParser
 			int tagStart = line.IndexOf('<', position);
 			int textEnd = tagStart < 0 ? line.Length : tagStart;
 
-			if (textEnd > position)
+			if (textEnd > position && !IsPlainText(line, position, textEnd))
 			{
-				string text = line.Substring(position, textEnd - position);
-
-				if (!IsPlainText(text))
-				{
-					return null;
-				}
-
-				container.AppendChild(document.CreateTextNode(text));
+				return null;
 			}
 
 			if (tagStart < 0)
@@ -82,55 +156,71 @@ public static class LineFragmentParser
 				position++;
 			}
 
-			string tagName = line.Substring(nameStart, position - nameStart);
+			ReadOnlySpan<char> tagName = line.AsSpan(nameStart, position - nameStart);
+			bool isAnchor = tagName.SequenceEqual("a");
 
-			if (tagName is not ("a" or "img"))
+			if (!isAnchor && !tagName.SequenceEqual("img"))
 			{
 				return null;
 			}
 
-			IElement element = document.CreateElement(tagName);
+			string elementHref = null;
+			string elementTitle = null;
+			string elementAlt = null;
 
-			if (!TryReadAttributes(line, ref position, element))
+			if (!TryReadAttributes(line, ref position, ref elementHref, ref elementTitle, ref elementAlt))
 			{
 				return null;
 			}
 
-			if (tagName == "a")
+			if (isAnchor)
 			{
 				int closeStart = line.IndexOf('<', position);
 
-				if (closeStart < 0 || string.CompareOrdinal(line, closeStart, "</a>", 0, 4) != 0)
+				if (closeStart < 0 || string.CompareOrdinal(line, closeStart, "</a>", 0, 4) != 0 || !IsPlainText(line, position, closeStart))
 				{
 					return null;
 				}
 
-				string linkText = line.Substring(position, closeStart - position);
-
-				if (!IsPlainText(linkText))
+				// QuerySelector("a") is the first anchor in the line; later ones only have to be simple too
+				if (!hasLink)
 				{
-					return null;
-				}
-
-				if (linkText.Length > 0)
-				{
-					element.AppendChild(document.CreateTextNode(linkText));
+					hasLink = true;
+					href = elementHref;
+					title = elementTitle;
+					linkText = line.Substring(position, closeStart - position);
 				}
 
 				position = closeStart + 4;
 			}
-
-			container.AppendChild(element);
+			else if (elementAlt is not null)
+			{
+				(alts ??= []).Add(elementAlt);
+			}
 		}
 
-		return container;
+		LineView view = new()
+		{
+			HasLink = hasLink,
+			Href = href,
+			Title = title,
+			Text = linkText
+		};
+
+		if (alts is not null)
+		{
+			foreach (string alt in alts)
+			{
+				view.AddImageAlt(alt);
+			}
+		}
+
+		return view;
 	}
 
-	/// <summary>Reads ` name="value"` pairs up to the closing '>'. Anything not strictly that shape fails, leaving it to AngleSharp.</summary>
-	private static bool TryReadAttributes(string line, ref int position, IElement element)
+	/// <summary>Reads ` name="value"` pairs up to the closing '>', keeping href, title and alt. Anything not strictly that shape fails, leaving it to AngleSharp.</summary>
+	private static bool TryReadAttributes(string line, ref int position, ref string href, ref string title, ref string alt)
 	{
-		HashSet<string> seen = null;
-
 		while (true)
 		{
 			if (position >= line.Length)
@@ -164,24 +254,45 @@ public static class LineFragmentParser
 				return false;
 			}
 
-			string name = line.Substring(nameStart, position - nameStart);
+			ReadOnlySpan<char> name = line.AsSpan(nameStart, position - nameStart);
 			int valueStart = position + 2;
 			int valueEnd = line.IndexOf('"', valueStart);
 
-			if (valueEnd < 0)
+			if (valueEnd < 0 || !IsPlainText(line, valueStart, valueEnd) || line.AsSpan(valueStart, valueEnd - valueStart).IndexOfAny('\'', '>') >= 0)
 			{
 				return false;
 			}
 
-			string value = line.Substring(valueStart, valueEnd - valueStart);
-
-			// The HTML parser keeps the first of a duplicate attribute; SetAttribute would keep the last
-			if (!IsPlainText(value) || value.Contains('\'') || value.Contains('>') || !(seen ??= []).Add(name))
+			// The HTML parser keeps the first of a duplicate attribute: don't try to be clever about those
+			// (attributes nobody reads can repeat freely, they never reach the LineView)
+			if (name.SequenceEqual("href"))
 			{
-				return false;
+				if (href is not null)
+				{
+					return false;
+				}
+
+				href = line.Substring(valueStart, valueEnd - valueStart);
+			}
+			else if (name.SequenceEqual("title"))
+			{
+				if (title is not null)
+				{
+					return false;
+				}
+
+				title = line.Substring(valueStart, valueEnd - valueStart);
+			}
+			else if (name.SequenceEqual("alt"))
+			{
+				if (alt is not null)
+				{
+					return false;
+				}
+
+				alt = line.Substring(valueStart, valueEnd - valueStart);
 			}
 
-			element.SetAttribute(name, value);
 			position = valueEnd + 1;
 
 			// Attributes need whitespace between them; anything else is parse-error recovery territory
@@ -193,10 +304,12 @@ public static class LineFragmentParser
 	}
 
 	/// <summary>No entities (they would need decoding), no characters the HTML parser rewrites, no tag start.</summary>
-	private static bool IsPlainText(string text)
+	private static bool IsPlainText(string line, int start, int end)
 	{
-		foreach (char c in text)
+		for (int i = start; i < end; i++)
 		{
+			char c = line[i];
+
 			if (c is '&' or '<' or '\0' or '\r' or '\n' or '\f' or '\t' || char.IsSurrogate(c))
 			{
 				return false;
