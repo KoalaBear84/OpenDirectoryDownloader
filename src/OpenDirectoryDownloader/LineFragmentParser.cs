@@ -123,8 +123,15 @@ public static class LineFragmentParser
 		return view;
 	}
 
+	/// <summary>
+	/// True when the line is simple AND its raw text is exactly what AngleSharp would serialize it back to (only
+	/// the attributes listings use, no characters the serializer would escape). A page whose lines are all strict
+	/// can be read from its raw text instead of from a DOM; see RawPreListing.
+	/// </summary>
+	public static bool IsStrictListingLine(string line) => TryParseSimple(line, strict: true) is not null;
+
 	/// <summary>The same answers for the simple shape, or null when the line is anything else (the caller then uses AngleSharp).</summary>
-	public static LineView TryParseSimple(string line)
+	public static LineView TryParseSimple(string line, bool strict = false)
 	{
 		bool hasLink = false;
 		string href = null;
@@ -138,7 +145,7 @@ public static class LineFragmentParser
 			int tagStart = line.IndexOf('<', position);
 			int textEnd = tagStart < 0 ? line.Length : tagStart;
 
-			if (textEnd > position && !IsPlainText(line, position, textEnd))
+			if (textEnd > position && !IsPlainText(line, position, textEnd, strict))
 			{
 				return null;
 			}
@@ -168,7 +175,7 @@ public static class LineFragmentParser
 			string elementTitle = null;
 			string elementAlt = null;
 
-			if (!TryReadAttributes(line, ref position, ref elementHref, ref elementTitle, ref elementAlt))
+			if (!TryReadAttributes(line, ref position, ref elementHref, ref elementTitle, ref elementAlt, strict))
 			{
 				return null;
 			}
@@ -177,7 +184,7 @@ public static class LineFragmentParser
 			{
 				int closeStart = line.IndexOf('<', position);
 
-				if (closeStart < 0 || string.CompareOrdinal(line, closeStart, "</a>", 0, 4) != 0 || !IsPlainText(line, position, closeStart))
+				if (closeStart < 0 || string.CompareOrdinal(line, closeStart, "</a>", 0, 4) != 0 || !IsPlainText(line, position, closeStart, strict))
 				{
 					return null;
 				}
@@ -219,7 +226,7 @@ public static class LineFragmentParser
 	}
 
 	/// <summary>Reads ` name="value"` pairs up to the closing '>', keeping href, title and alt. Anything not strictly that shape fails, leaving it to AngleSharp.</summary>
-	private static bool TryReadAttributes(string line, ref int position, ref string href, ref string title, ref string alt)
+	private static bool TryReadAttributes(string line, ref int position, ref string href, ref string title, ref string alt, bool strict)
 	{
 		while (true)
 		{
@@ -258,7 +265,13 @@ public static class LineFragmentParser
 			int valueStart = position + 2;
 			int valueEnd = line.IndexOf('"', valueStart);
 
-			if (valueEnd < 0 || !IsPlainText(line, valueStart, valueEnd) || line.AsSpan(valueStart, valueEnd - valueStart).IndexOfAny('\'', '>') >= 0)
+			if (valueEnd < 0 || !IsPlainText(line, valueStart, valueEnd, strict) || line.AsSpan(valueStart, valueEnd - valueStart).IndexOfAny('\'', '>') >= 0)
+			{
+				return false;
+			}
+
+			// Strict: only the attributes a listing line uses, so nothing in the markup can matter to a selector (id, class, ...)
+			if (strict && !(name.SequenceEqual("href") || name.SequenceEqual("src") || name.SequenceEqual("alt") || name.SequenceEqual("title")))
 			{
 				return false;
 			}
@@ -303,14 +316,17 @@ public static class LineFragmentParser
 		}
 	}
 
-	/// <summary>No entities (they would need decoding), no characters the HTML parser rewrites, no tag start.</summary>
-	private static bool IsPlainText(string line, int start, int end)
+	/// <summary>
+	/// No entities (they would need decoding), no characters the HTML parser rewrites, no tag start. Strict also
+	/// leaves out the two characters AngleSharp writes back differently: a bare '>' (as &amp;gt;) and a non-breaking space (as &amp;nbsp;).
+	/// </summary>
+	private static bool IsPlainText(string line, int start, int end, bool strict = false)
 	{
 		for (int i = start; i < end; i++)
 		{
 			char c = line[i];
 
-			if (c is '&' or '<' or '\0' or '\r' or '\n' or '\f' or '\t' || char.IsSurrogate(c))
+			if (c is '&' or '<' or '\0' or '\r' or '\n' or '\f' or '\t' || char.IsSurrogate(c) || (strict && c is '>' or '\u00A0'))
 			{
 				return false;
 			}

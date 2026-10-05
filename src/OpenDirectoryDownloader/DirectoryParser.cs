@@ -71,7 +71,12 @@ public static partial class DirectoryParser
 	/// <param name="baseUrl">Base url</param>
 	/// <param name="html">Html to parse</param>
 	/// <returns>WebDirectory object containing current directory index</returns>
-	public static async Task<WebDirectory> ParseHtml(WebDirectory webDirectory, string html, HttpClient httpClient = null, SocketsHttpHandler socketsHttpHandler = null, HttpResponseMessage httpResponseMessage = null, bool checkParents = true)
+	public static Task<WebDirectory> ParseHtml(WebDirectory webDirectory, string html, HttpClient httpClient = null, SocketsHttpHandler socketsHttpHandler = null, HttpResponseMessage httpResponseMessage = null, bool checkParents = true)
+	{
+		return ParseHtmlCore(webDirectory, html, httpClient, socketsHttpHandler, httpResponseMessage, checkParents, allowRawPre: true);
+	}
+
+	private static async Task<WebDirectory> ParseHtmlCore(WebDirectory webDirectory, string html, HttpClient httpClient, SocketsHttpHandler socketsHttpHandler, HttpResponseMessage httpResponseMessage, bool checkParents, bool allowRawPre)
 	{
 		string baseUrl = webDirectory.Url;
 
@@ -134,7 +139,10 @@ public static partial class DirectoryParser
                 return await HfsParser.ParseIndex(httpClient, webDirectory, html, httpHeaderServer);
             }
 
-			IHtmlDocument htmlDocument = await HtmlParser.ParseDocumentAsync(html);
+			// A big listing's one <pre> read from the raw text, so its thousands of lines never become DOM nodes
+			RawPreListing.Extracted rawPre = allowRawPre && html.Length >= RawPreListing.MinimumLength ? RawPreListing.TryExtract(html) : null;
+
+			IHtmlDocument htmlDocument = await HtmlParser.ParseDocumentAsync(rawPre?.HtmlWithMarkedPre ?? html);
 
 			if (webDirectory.Uri.Host == "ipfs.io" || webDirectory.Uri.Host == "gateway.ipfs.io")
 			{
@@ -368,6 +376,23 @@ public static partial class DirectoryParser
 			}
 
 			IHtmlCollection<IElement> pres = htmlDocument.QuerySelectorAll("pre");
+
+			if (rawPre is not null)
+			{
+				if (pres.Length == 1 && pres[0].HasAttribute(RawPreListing.MarkerAttribute))
+				{
+					WebDirectory rawResult = ParsePreLines(baseUrl, parsedWebDirectory, [rawPre.Lines], checkParents);
+
+					if (rawResult.Files.Count != 0 || rawResult.Subdirectories.Count != 0 || rawResult.Error)
+					{
+						return rawResult;
+					}
+				}
+
+				// Not the shape the shortcut expected, or it found nothing: the later parsers need the real
+				// DOM, so parse this page the normal way from the very start
+				return await ParseHtmlCore(webDirectory, html, httpClient, socketsHttpHandler, httpResponseMessage, checkParents, allowRawPre: false);
+			}
 
 			if (pres.Length != 0)
 			{
@@ -2085,6 +2110,12 @@ public static partial class DirectoryParser
 
 	private static WebDirectory ParsePreDirectoryListing(string baseUrl, WebDirectory parsedWebDirectory, IHtmlCollection<IElement> pres, bool checkParents)
 	{
+		// Lazily, one <pre> at a time, as before
+		return ParsePreLines(baseUrl, parsedWebDirectory, pres.Select(pre => pre.FastPreLines() ?? RegexPreLineSeparator().Split(pre.FastInnerHtml()).ToList()), checkParents);
+	}
+
+	private static WebDirectory ParsePreLines(string baseUrl, WebDirectory parsedWebDirectory, IEnumerable<List<string>> linesPerPre, bool checkParents)
+	{
 		List<Func<WebDirectory, string, string, bool>> regexFuncs =
 		[
 			RegexParser1,
@@ -2099,9 +2130,8 @@ public static partial class DirectoryParser
 			RegexParser10,
 		];
 
-		foreach (IElement pre in pres)
+		foreach (List<string> lines in linesPerPre)
 		{
-			List<string> lines = pre.FastPreLines() ?? RegexPreLineSeparator().Split(pre.FastInnerHtml()).ToList();
 
 			foreach (string line in lines)
 			{
