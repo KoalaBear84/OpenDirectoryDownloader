@@ -1450,7 +1450,7 @@ public static partial class DirectoryParser
 		return parsedWebDirectory;
 	}
 
-	[GeneratedRegex(@"(?:<img.*>\s*)+<a.*?>.*?<\/a>\S*\s*(?<Modified>\d*-(?:[a-zA-Z]*|\d*)-\d*\s*\d*:\d*(:\d*)?)?\s*(?<FileSize>\S+)?(\s*(?<Description>.*))?")]
+	[GeneratedRegex(@"(?:<img.*>\s*)+<a.*?>.*?<\/a>\S*\s*(?<Modified>\d*-(?:[a-zA-Z]*|\d*)-\d*\s*\d*:\d*(:\d*)?)?\s*(?<FileSize>\S+)?(\s*(?<Description>.*))?", RegexOptions.ExplicitCapture)]
 	private static partial Regex RegexRegexParser1();
 
 	private static readonly Func<WebDirectory, string, string, bool> RegexParser1 = (webDirectory, baseUrl, line) =>
@@ -1500,7 +1500,7 @@ public static partial class DirectoryParser
 				webDirectory.Files.Add(new WebFile
 				{
 					Url = fullUrl,
-					FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+					FileName = Library.GetFileNameFromUrl(uri, fullUrl),
 					FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
 					Description = match.Groups["Description"].Value.Trim()
 				});
@@ -1514,7 +1514,7 @@ public static partial class DirectoryParser
 		return match.Success;
 	};
 
-	[GeneratedRegex(@"<a.*<\/a>\s*(?<DateTime>\d+-\w+-\d+\s\d+:\d{0,2}|-)\s*(?<FileSize>\S+\s?\S*)?\s*\S*")]
+	[GeneratedRegex(@"<a.*<\/a>\s*(?<DateTime>\d+-\w+-\d+\s\d+:\d{0,2}|-)\s*(?<FileSize>\S+\s?\S*)?\s*\S*", RegexOptions.ExplicitCapture)]
 	private static partial Regex RegexRegexParser2();
 
 	private static readonly Func<WebDirectory, string, string, bool> RegexParser2 = (webDirectory, baseUrl, line) =>
@@ -1561,7 +1561,7 @@ public static partial class DirectoryParser
 			webDirectory.Files.Add(new WebFile
 			{
 				Url = fullUrl,
-				FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+				FileName = Library.GetFileNameFromUrl(uri, fullUrl),
 				FileSize = fileSize
 			});
 		}
@@ -1569,7 +1569,7 @@ public static partial class DirectoryParser
 		return match.Success;
 	};
 
-	[GeneratedRegex(@"(?<Modified>\d+[\.-](?:[a-zA-Z]*|\d+)[\.-]\d+(?:\s*\d*:\d*(?::\d*)?)?)(?:<img.*>\s*)?\S*\s*(?<FileSize>\S+)\s*?<[aA].*<\/[aA]>")]
+	[GeneratedRegex(@"(?<Modified>\d+[\.-](?:[a-zA-Z]*|\d+)[\.-]\d+(?:\s*\d*:\d*(?::\d*)?)?)(?:<img.*>\s*)?\S*\s*(?<FileSize>\S+)\s*?<[aA].*<\/[aA]>", RegexOptions.ExplicitCapture)]
 	private static partial Regex RegexRegexParser3();
 
 	private static readonly Func<WebDirectory, string, string, bool> RegexParser3 = (webDirectory, baseUrl, line) =>
@@ -1619,7 +1619,7 @@ public static partial class DirectoryParser
 				webDirectory.Files.Add(new WebFile
 				{
 					Url = fullUrl,
-					FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+					FileName = Library.GetFileNameFromUrl(uri, fullUrl),
 					FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
 					//Description = match.Groups["Description"].Value.Trim()
 				});
@@ -1633,7 +1633,7 @@ public static partial class DirectoryParser
 		return match.Success;
 	};
 
-	[GeneratedRegex(@"\s*(?<Modified>[A-z]*,\s*[A-z]*\s*\d*, \d*\s*\d*:\d*\s*[APM]*)\s+(?<FileSize>\S*)\s+<a.*<\/a>")]
+	[GeneratedRegex(@"\s*(?<Modified>[A-z]*,\s*[A-z]*\s*\d*, \d*\s*\d*:\d*\s*[APM]*)\s+(?<FileSize>\S*)\s+<a.*<\/a>", RegexOptions.ExplicitCapture)]
 	private static partial Regex RegexRegexParser4();
 
 	private static readonly Func<WebDirectory, string, string, bool> RegexParser4 = (webDirectory, baseUrl, line) =>
@@ -1683,7 +1683,7 @@ public static partial class DirectoryParser
 				webDirectory.Files.Add(new WebFile
 				{
 					Url = fullUrl,
-					FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+					FileName = Library.GetFileNameFromUrl(uri, fullUrl),
 					FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
 					//Description = match.Groups["Description"].Value.Trim()
 				});
@@ -1697,7 +1697,7 @@ public static partial class DirectoryParser
 		return match.Success;
 	};
 
-	[GeneratedRegex(@"\s*(?<Modified>\d*-\d*-\d*\s*[오전후]*\s*\d*:\d*)\s*(?<FileSize>\S*)\s+<[aA].*<\/[aA]>")]
+	[GeneratedRegex(@"\s*(?<Modified>\d*-\d*-\d*\s*[오전후]*\s*\d*:\d*)\s*(?<FileSize>\S*)\s+<[aA].*<\/[aA]>", RegexOptions.ExplicitCapture)]
 	private static partial Regex RegexRegexParser5();
 
 	private static readonly Func<WebDirectory, string, string, bool> RegexParser5 = (webDirectory, baseUrl, line) =>
@@ -1747,7 +1747,7 @@ public static partial class DirectoryParser
 				webDirectory.Files.Add(new WebFile
 				{
 					Url = fullUrl,
-					FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+					FileName = Library.GetFileNameFromUrl(uri, fullUrl),
 					FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
 					//Description = match.Groups["Description"].Value.Trim()
 				});
@@ -1761,7 +1761,7 @@ public static partial class DirectoryParser
 		return match.Success;
 	};
 
-	[GeneratedRegex(@"(?<Modified>\d+\/\d+\/\d+(\s*\d+:\d+\s+[APM]+)?)\s+(?<FileSize>\S*)\s*<a.*<\/a>")]
+	[GeneratedRegex(@"(?<Modified>\d+\/\d+\/\d+(\s*\d+:\d+\s+[APM]+)?)\s+(?<FileSize>\S*)\s*<a.*<\/a>", RegexOptions.ExplicitCapture)]
 	private static partial Regex RegexRegexParser6();
 
 	private static readonly Func<WebDirectory, string, string, bool> RegexParser6 = (webDirectory, baseUrl, line) =>
@@ -1811,7 +1811,7 @@ public static partial class DirectoryParser
 				webDirectory.Files.Add(new WebFile
 				{
 					Url = fullUrl,
-					FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+					FileName = Library.GetFileNameFromUrl(uri, fullUrl),
 					FileSize = FileSizeHelper.ParseFileSize(match.Groups["FileSize"].Value),
 					//Description = match.Groups["Description"].Value.Trim()
 				});
@@ -1825,7 +1825,7 @@ public static partial class DirectoryParser
 		return match.Success;
 	};
 
-	[GeneratedRegex(@"(?i)(?<FileMode>[d-]r[-w][x-])\s*\d*\s*(?<FileSize>-?\d*)\s*(\S{3}\s*\d*\s*(?:\d*:\d*(:\d*)?|\d*\.?))\s*(<a.*<\/a>\/?)", RegexOptions.None, "en-NL")]
+	[GeneratedRegex(@"(?i)(?<FileMode>[d-]r[-w][x-])\s*\d*\s*(?<FileSize>-?\d*)\s*(\S{3}\s*\d*\s*(?:\d*:\d*(:\d*)?|\d*\.?))\s*(<a.*<\/a>\/?)", RegexOptions.ExplicitCapture, "en-NL")]
 	private static partial Regex RegexRegexParser7();
 
 	private static readonly Func<WebDirectory, string, string, bool> RegexParser7 = (webDirectory, baseUrl, line) =>
@@ -1881,7 +1881,7 @@ public static partial class DirectoryParser
 				webDirectory.Files.Add(new WebFile
 				{
 					Url = fullUrl,
-					FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+					FileName = Library.GetFileNameFromUrl(uri, fullUrl),
 					FileSize = FileSizeHelper.ParseFileSize(fileSize)
 				});
 			}
@@ -1894,7 +1894,7 @@ public static partial class DirectoryParser
 		return match.Success;
 	};
 
-	[GeneratedRegex(@"^\s*(?<Link><a.*<\/a>)\s+(?:(?<Day>\d+)(?<Month>\D+)(?<Year>\d+))(?:\s+(?<Hour>\d+):(?<Minute>\d+))(?:\s+)?(?<FileSize>\S+)?")]
+	[GeneratedRegex(@"^\s*(?<Link><a.*<\/a>)\s+(?:(?<Day>\d+)(?<Month>\D+)(?<Year>\d+))(?:\s+(?<Hour>\d+):(?<Minute>\d+))(?:\s+)?(?<FileSize>\S+)?", RegexOptions.ExplicitCapture)]
 	private static partial Regex RegexRegexParser8();
 
 	private static readonly Func<WebDirectory, string, string, bool> RegexParser8 = (webDirectory, baseUrl, line) =>
@@ -1952,7 +1952,7 @@ public static partial class DirectoryParser
 				webDirectory.Files.Add(new WebFile
 				{
 					Url = fullUrl,
-					FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+					FileName = Library.GetFileNameFromUrl(uri, fullUrl),
 					FileSize = fileSize
 				});
 			}
@@ -1965,7 +1965,7 @@ public static partial class DirectoryParser
 		return match.Success;
 	};
 
-	[GeneratedRegex(@"^\s*(?<Link><a.*<\/a>)\s*(?<IsDirectory>\/?)(?<FileSize>\S+)?")]
+	[GeneratedRegex(@"^\s*(?<Link><a.*<\/a>)\s*(?<IsDirectory>\/?)(?<FileSize>\S+)?", RegexOptions.ExplicitCapture)]
 	private static partial Regex RegexRegexParser9();
 
 	private static readonly Func<WebDirectory, string, string, bool> RegexParser9 = (webDirectory, baseUrl, line) =>
@@ -2029,7 +2029,7 @@ public static partial class DirectoryParser
 				webDirectory.Files.Add(new WebFile
 				{
 					Url = fullUrl,
-					FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+					FileName = Library.GetFileNameFromUrl(uri, fullUrl),
 					FileSize = FileSizeHelper.ParseFileSize(fileSize)
 				});
 			}
@@ -2042,7 +2042,7 @@ public static partial class DirectoryParser
 		return match.Success;
 	};
 
-	[GeneratedRegex(@"(?<Dir>[\-ld])(?<Permissions>(?:[\-r][\-w][\-xs]){1,3})\s+(?<Owner>\w+)\s+(?<Group>\w+)\s+(?<Month>\S{3})\s+(?<Day>\d+)\s+(?<Year>\d+)\s+(?<FileSize>\d+\s+?\w+)?\s+(?:[\w&;]+\s+)?(?<Link><a.*<\/a>\/?)?")]
+	[GeneratedRegex(@"(?<Dir>[\-ld])(?<Permissions>(?:[\-r][\-w][\-xs]){1,3})\s+(?<Owner>\w+)\s+(?<Group>\w+)\s+(?<Month>\S{3})\s+(?<Day>\d+)\s+(?<Year>\d+)\s+(?<FileSize>\d+\s+?\w+)?\s+(?:[\w&;]+\s+)?(?<Link><a.*<\/a>\/?)?", RegexOptions.ExplicitCapture)]
 	private static partial Regex RegexRegexParser10();
 
 	private static readonly Func<WebDirectory, string, string, bool> RegexParser10 = (webDirectory, baseUrl, line) =>
@@ -2092,7 +2092,7 @@ public static partial class DirectoryParser
 				webDirectory.Files.Add(new WebFile
 				{
 					Url = fullUrl,
-					FileName = Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath)),
+					FileName = Library.GetFileNameFromUrl(uri, fullUrl),
 					FileSize = FileSizeHelper.ParseFileSize(fileSize)
 				});
 			}

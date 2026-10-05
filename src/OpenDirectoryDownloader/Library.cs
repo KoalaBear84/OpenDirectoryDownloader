@@ -516,6 +516,25 @@ public class Library
 	[ThreadStatic]
 	private static Uri _lastBaseUri;
 
+	/// <summary>
+	/// The file name of a listing entry, for the Uri ProcessUrl made and its fullUrl (always uri.ToString()).
+	/// This was <c>Path.GetFileName(WebUtility.UrlDecode(new Uri(fullUrl).AbsolutePath))</c>: a second parse of the
+	/// same URL for every file. The path of the Uri we already have is the same, except when it holds percent
+	/// escapes: ToString() unescapes some of them, so re-parsing can escape them differently (%78 and %x, say).
+	/// Those keep the old way. Checked on millions of random hrefs without a single difference when there is no '%'.
+	/// </summary>
+	public static string GetFileNameFromUrl(Uri uri, string fullUrl)
+	{
+		string path = uri.AbsolutePath;
+
+		if (path.Contains('%'))
+		{
+			path = new Uri(fullUrl).AbsolutePath;
+		}
+
+		return Path.GetFileName(WebUtility.UrlDecode(path));
+	}
+
 	public static void ProcessUrl(string baseUrl, string href, out string linkHref, out Uri uri, out string fullUrl)
 	{
 		if (!ReferenceEquals(_lastBaseUrl, baseUrl) && _lastBaseUrl != baseUrl)
