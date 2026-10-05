@@ -44,7 +44,10 @@ public static class GitHubParser
 				HttpResponseMessage httpResponseMessage = await DoRequest(httpClient, GetApiUrl(Owner, Repository));
 
 				string json = await httpResponseMessage.Content.ReadAsStringAsync();
-				DefaultBranch = JsonDocument.Parse(json).RootElement.TryGetProperty("default_branch", out JsonElement defaultBranchElement) ? defaultBranchElement.GetString() : null;
+				using (JsonDocument defaultBranchDocument = JsonDocument.Parse(json))
+				{
+					DefaultBranch = defaultBranchDocument.RootElement.TryGetProperty("default_branch", out JsonElement defaultBranchElement) ? defaultBranchElement.GetString() : null;
+				}
 
 				if (string.IsNullOrEmpty(DefaultBranch))
 				{
@@ -58,7 +61,10 @@ public static class GitHubParser
 				httpResponseMessage = await DoRequest(httpClient, $"{GetApiUrl(Owner, Repository)}/branches/{DefaultBranch}");
 
 				json = await httpResponseMessage.Content.ReadAsStringAsync();
-				CurrentCommitSha = JsonDocument.Parse(json).RootElement.TryGetProperty("commit", out JsonElement commitElement) && commitElement.TryGetProperty("sha", out JsonElement shaElement) ? shaElement.GetString() : null;
+				using (JsonDocument commitDocument = JsonDocument.Parse(json))
+				{
+					CurrentCommitSha = commitDocument.RootElement.TryGetProperty("commit", out JsonElement commitElement) && commitElement.TryGetProperty("sha", out JsonElement shaElement) ? shaElement.GetString() : null;
+				}
 
 				if (string.IsNullOrEmpty(CurrentCommitSha))
 				{

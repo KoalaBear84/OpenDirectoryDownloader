@@ -1788,8 +1788,7 @@ public partial class OpenDirectoryIndexer
 
 			if (html.Contains("document.cookie"))
 			{
-				Regex cookieRegex = new("document\\.cookie\\s?=\\s?\"(?<Cookie>.*?)\"");
-				Match cookieRegexMatch = cookieRegex.Match(html);
+				Match cookieRegexMatch = CookieRegex().Match(html);
 
 				if (cookieRegexMatch.Success)
 				{
@@ -2220,6 +2219,9 @@ public partial class OpenDirectoryIndexer
 
 		return total;
 	}
+
+	[GeneratedRegex("document\\.cookie\\s?=\\s?\"(?<Cookie>.*?)\"")]
+	private static partial Regex CookieRegex();
 
 	private void AddProcessedWebDirectory(WebDirectory webDirectory, WebDirectory parsedWebDirectory, bool processSubdirectories = true)
 	{

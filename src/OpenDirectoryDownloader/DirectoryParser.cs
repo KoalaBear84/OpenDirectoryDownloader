@@ -64,6 +64,15 @@ public static partial class DirectoryParser
 		return container;
 	}
 
+	[GeneratedRegex(@"app\..*\.js")]
+	private static partial Regex FileBrowserScriptRegex();
+
+	[GeneratedRegex(@"""BaseURL"":""(?<BaseUrl>.*?)"",")]
+	private static partial Regex FileBrowserBaseUrlRegex();
+
+	[GeneratedRegex(@"[^\u00BF-\u1FFF\u2C00-\uD7FF\w]")]
+	private static partial Regex HeaderNameCleanupRegex();
+
 	private static readonly char[] trimChars = ['/'];
 
 	private static readonly HashSet<string> UsrSubdirectoriesToRemove = ["bin", "include", "lib", "lib32", "share", "src"];
@@ -176,13 +185,9 @@ public static partial class DirectoryParser
 			// https://github.com/filebrowser/filebrowser
 			if (htmlDocument.Title == "File Browser")
 			{
-				Regex scriptRegex = new(@"app\..*\.js");
-
-				if (htmlDocument.Scripts.Any(s => s.Source is not null && scriptRegex.IsMatch(s.Source)))
+				if (htmlDocument.Scripts.Any(s => s.Source is not null && FileBrowserScriptRegex().IsMatch(s.Source)))
 				{
-					Regex baseUrlRegex = new(@"""BaseURL"":""(?<BaseUrl>.*?)"",");
-
-					Match baseUrlRegexMatch = baseUrlRegex.Match(html);
+					Match baseUrlRegexMatch = FileBrowserBaseUrlRegex().Match(html);
 
 					if (baseUrlRegexMatch.Success)
 					{
@@ -3171,7 +3176,7 @@ public static partial class DirectoryParser
 
 		headerName = headerName.ToLowerInvariant();
 
-		headerName = Regex.Replace(headerName, @"[^\u00BF-\u1FFF\u2C00-\uD7FF\w]", string.Empty);
+		headerName = HeaderNameCleanupRegex().Replace(headerName, string.Empty);
 
 		if (headerName == "lastmodified" || headerName == "modified" || headerName.Contains("date") ||
 		    headerName.Contains("lastmodification") || headerName.Contains("time") || headerName.Contains("修改时间") ||

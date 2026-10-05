@@ -30,8 +30,30 @@ public class WebDirectory
 
 	public string Url { get; set; }
 
+	private sealed record CachedUri(string Url, Uri Uri);
+
+	private CachedUri _cachedUri;
+
+	/// <summary>Cached per Url value: parsing a new Uri on every access added up (several accesses per subdirectory). Url and Uri are swapped together as one immutable object, so concurrent readers never see a mismatched pair.</summary>
 	[JsonIgnore]
-	public Uri Uri => new(Url);
+	public Uri Uri
+	{
+		get
+		{
+			string url = Url;
+			CachedUri cached = _cachedUri;
+
+			if (cached is not null && ReferenceEquals(cached.Url, url))
+			{
+				return cached.Uri;
+			}
+
+			Uri uri = new(url);
+			_cachedUri = new CachedUri(url, uri);
+
+			return uri;
+		}
+	}
 
 	public string Name { get; set; }
 
