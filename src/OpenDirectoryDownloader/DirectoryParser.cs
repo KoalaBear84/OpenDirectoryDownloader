@@ -38,31 +38,8 @@ public static partial class DirectoryParser
 
 	private static readonly SemaphoreSlim SemaphoreSlimBrowser = new(1, 1);
 
-	/// <summary>
-	/// Parses a single line of HTML (e.g. one row of a `&lt;pre&gt;`-style directory listing) the way
-	/// RegexParser1..10 need it - just enough DOM to run QuerySelector against - without constructing a
-	/// full navigable document (Window/Location/History/...) the way <see cref="HtmlParser.ParseDocumentAsync(string, System.Threading.CancellationToken)"/>
-	/// does. Parsing an empty string to get the shell document is effectively free (nothing to tokenize),
-	/// and HTML5 fragment parsing skips the head/body insertion-mode machinery a full document parse goes
-	/// through, so this does meaningfully less work per call. Every call still gets its own brand-new,
-	/// fully independent <see cref="IHtmlDocument"/> (nothing shared across calls or threads), so this is
-	/// exactly as safe to call from the crawler's concurrent worker threads as the document parse it
-	/// replaces.
-	/// </summary>
-	private static IElement ParseLineFragment(string line)
-	{
-		IHtmlDocument shellDocument = HtmlParser.ParseDocument(string.Empty);
-		IElement container = shellDocument.CreateElement("div");
-
-		// ParseFragment's result is live against the nodes it just produced, so it must be snapshotted
-		// (ToArray) before AppendChild mutates things out from under the in-progress enumeration.
-		foreach (AngleSharp.Dom.INode node in HtmlParser.ParseFragment(line, container).ToArray())
-		{
-			container.AppendChild(node);
-		}
-
-		return container;
-	}
+	/// <summary>One row of a `&lt;pre&gt;`-style directory listing as just enough DOM for RegexParser1..10 to query - see <see cref="LineFragmentParser"/>.</summary>
+	private static IElement ParseLineFragment(string line) => LineFragmentParser.Parse(line);
 
 	[GeneratedRegex(@"app\..*\.js")]
 	private static partial Regex FileBrowserScriptRegex();
