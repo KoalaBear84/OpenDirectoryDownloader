@@ -125,12 +125,6 @@ public class WebDirectory
 	private const char FingerprintEntrySeparator = (char)2;
 	private const char FingerprintSectionSeparator = (char)3;
 
-	private const ulong FnvOffsetBasis = 14695981039346656037;
-	private const ulong FnvPrime = 1099511628211;
-	// Second, independent lane (different seed and multiplier) so the two halves of the 128-bit result don't collide together
-	private const ulong SecondLaneOffsetBasis = 0x9E3779B97F4A7C15;
-	private const ulong SecondLanePrime = 0x100000001B3 * 31 + 1;
-
 	/// <summary>
 	/// A 128-bit hash of the direct Files (name + size) and Subdirectories (name), instead of the
 	/// concatenated string it replaced: that string was a second copy of every file name for the whole
@@ -139,54 +133,25 @@ public class WebDirectory
 	/// </summary>
 	public UInt128 ComputeContentFingerprint()
 	{
-		ulong first = FnvOffsetBasis;
-		ulong second = SecondLaneOffsetBasis;
+		Hash128 hash = new();
 
 		foreach (WebFile file in Files)
 		{
-			AddToFingerprint(ref first, ref second, file.FileName);
-			AddToFingerprint(ref first, ref second, FingerprintFieldSeparator);
-			AddToFingerprint(ref first, ref second, file.FileSize ?? -1);
-			AddToFingerprint(ref first, ref second, FingerprintEntrySeparator);
+			hash.Add(file.FileName);
+			hash.Add(FingerprintFieldSeparator);
+			hash.Add(file.FileSize ?? -1);
+			hash.Add(FingerprintEntrySeparator);
 		}
 
-		AddToFingerprint(ref first, ref second, FingerprintSectionSeparator);
+		hash.Add(FingerprintSectionSeparator);
 
 		foreach (WebDirectory subdirectory in Subdirectories)
 		{
-			AddToFingerprint(ref first, ref second, subdirectory.Name);
-			AddToFingerprint(ref first, ref second, FingerprintEntrySeparator);
+			hash.Add(subdirectory.Name);
+			hash.Add(FingerprintEntrySeparator);
 		}
 
-		return new UInt128(first, second);
-	}
-
-	private static void AddToFingerprint(ref ulong first, ref ulong second, string value)
-	{
-		if (value is null)
-		{
-			AddToFingerprint(ref first, ref second, (char)0);
-			return;
-		}
-
-		foreach (char c in value)
-		{
-			AddToFingerprint(ref first, ref second, c);
-		}
-	}
-
-	private static void AddToFingerprint(ref ulong first, ref ulong second, long value)
-	{
-		for (int shift = 0; shift < 64; shift += 16)
-		{
-			AddToFingerprint(ref first, ref second, (char)(value >> shift));
-		}
-	}
-
-	private static void AddToFingerprint(ref ulong first, ref ulong second, char c)
-	{
-		first = (first ^ c) * FnvPrime;
-		second = (second ^ c) * SecondLanePrime;
+		return hash.Result;
 	}
 
 	/// <summary>

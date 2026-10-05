@@ -78,8 +78,8 @@ public class ScanResumeTests : IAsyncLifetime
 		Assert.Equal(3, result.Root.CachedTotalFiles);
 		Assert.Equal(350, result.Root.CachedTotalFileSize);
 		Assert.Equal(1, result.Root.CachedTotalDirectories);
-		Assert.Contains("http://localhost/", result.ProcessedUrls);
-		Assert.Contains("http://localhost/a/", result.ProcessedUrls);
+		Assert.True(result.ProcessedUrls.Contains("http://localhost/"));
+		Assert.True(result.ProcessedUrls.Contains("http://localhost/a/"));
 	}
 
 	[Fact]
@@ -99,7 +99,7 @@ public class ScanResumeTests : IAsyncLifetime
 		Assert.Single(result.DirectoriesToRequeue);
 		Assert.Equal("http://localhost/pending/", result.DirectoriesToRequeue[0].Url);
 		Assert.Equal(1, result.DirectoriesToRequeue[0].PendingWork);
-		Assert.DoesNotContain("http://localhost/pending/", result.ProcessedUrls);
+		Assert.False(result.ProcessedUrls.Contains("http://localhost/pending/"));
 
 		// The finished sibling subtree should still have been restored as a closed stub.
 		WebDirectory doneChild = Assert.Single(result.Root.Subdirectories, sd => sd.Url == "http://localhost/done/");
@@ -176,7 +176,7 @@ public class ScanResumeTests : IAsyncLifetime
 		ScanResume.Result result = await ScanResume.BuildAsync(_scanDatabase, "http://localhost/", skipFileSizeLookups: false);
 
 		Assert.Empty(result.DirectoriesToRequeue);
-		Assert.Contains("http://localhost/bad/", result.ProcessedUrls);
+		Assert.True(result.ProcessedUrls.Contains("http://localhost/bad/"));
 
 		// An errored-but-not-retried directory is still a "dead end" as far as closure is concerned - it
 		// won't ever be revisited, so it (and therefore root, its only child) is eligible for eviction just
@@ -200,7 +200,7 @@ public class ScanResumeTests : IAsyncLifetime
 		Assert.False(requeued.Finished);
 		Assert.False(requeued.Error); // reset for a clean attempt
 		Assert.Equal(1, requeued.PendingWork);
-		Assert.DoesNotContain("http://localhost/bad/", result.ProcessedUrls);
+		Assert.False(result.ProcessedUrls.Contains("http://localhost/bad/"));
 
 		// Retrying one errored leaf must not evict/close the root - it's now an open descendant again.
 		Assert.False(result.Root.ContentEvicted);

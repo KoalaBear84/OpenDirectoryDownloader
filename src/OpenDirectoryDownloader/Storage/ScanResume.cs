@@ -1,3 +1,4 @@
+using OpenDirectoryDownloader.Shared;
 using OpenDirectoryDownloader.Shared.Models;
 
 namespace OpenDirectoryDownloader.Storage;
@@ -30,7 +31,7 @@ namespace OpenDirectoryDownloader.Storage;
 /// </summary>
 public static class ScanResume
 {
-	public sealed record Result(WebDirectory Root, List<WebDirectory> DirectoriesToRequeue, List<WebFile> FilesToRequeueForSize, HashSet<string> ProcessedUrls);
+	public sealed record Result(WebDirectory Root, List<WebDirectory> DirectoriesToRequeue, List<WebFile> FilesToRequeueForSize, ProcessedUrlSet ProcessedUrls);
 
 	/// <param name="retryErrors">
 	/// When true, a directory that finished with Error set (issue #56 phase 6: asked about interactively,
@@ -54,7 +55,7 @@ public static class ScanResume
 
 		Dictionary<string, ScanDatabase.FileAggregate> fileAggregates = await scanDatabase.GetFileAggregatesByDirectoryAsync();
 
-		Result result = new(null, [], [], []);
+		Result result = new(null, [], [], new ProcessedUrlSet());
 
 		async Task<(WebDirectory Node, bool Closed)> BuildAsync(string url, WebDirectory parent)
 		{

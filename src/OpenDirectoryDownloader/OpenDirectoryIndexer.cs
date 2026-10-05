@@ -456,10 +456,7 @@ public partial class OpenDirectoryIndexer
 					{
 						Session.Root = resumeResult.Root;
 
-						foreach (string processedUrl in resumeResult.ProcessedUrls)
-						{
-							Session.ProcessedUrls.Add(processedUrl);
-						}
+						Session.ProcessedUrls = resumeResult.ProcessedUrls;
 
 						ScanDatabase.SessionStatsSnapshot previousStats = await ScanDatabase.GetLatestRunStatsAsync();
 

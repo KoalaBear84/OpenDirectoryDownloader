@@ -31,7 +31,7 @@ public class Session
 	[JsonIgnore]
 	public bool StopLogging { get; set; }
 	[JsonIgnore]
-	public ConcurrentSet<string> ProcessedUrls { get; set; } = [];
+	public ProcessedUrlSet ProcessedUrls { get; set; } = new();
 	[JsonIgnore]
 	public ConcurrentSet<string> ProcessedBrowserUrls { get; set; } = [];
 	[JsonIgnore]
