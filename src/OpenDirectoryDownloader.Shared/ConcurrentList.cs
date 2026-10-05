@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 
 namespace OpenDirectoryDownloader.Shared;
 
@@ -6,50 +6,46 @@ namespace OpenDirectoryDownloader.Shared;
 /// https://stackoverflow.com/a/28508331/951001
 /// Yes, I am using it despite the negative comments. It's only to avoid exception when calculating statistics while still indexing
 /// </summary>
+/// <remarks>
+/// Every WebDirectory owns two of these, and a big scan creates millions of WebDirectory objects, so the
+/// per-instance cost matters: it locks with a plain monitor on the list itself (a ReaderWriterLockSlim per
+/// list cost over 100 bytes each) and starts with the shared empty array instead of allocating one.
+/// The trade-off is that concurrent readers now take turns instead of reading in parallel. Reads are short
+/// and each list is touched by few threads, so that is cheap compared with the memory saved.
+/// </remarks>
 /// <typeparam name="T"></typeparam>
 public class ConcurrentList<T> : IList<T>, IDisposable
 {
-	private ReaderWriterLockSlim _lock = new(LockRecursionPolicy.SupportsRecursion);
+	private const int MinimumGrowCapacity = 4;
+
 	private int _count = 0;
+	private T[] _arr;
 
 	public int Count
 	{
-		get {
-			_lock.EnterReadLock();
-
-			try
+		get
+		{
+			lock (this)
 			{
 				return _count;
-			}
-			finally
-			{
-				_lock.ExitReadLock();
 			}
 		}
 	}
 
 	public int InternalArrayLength
 	{
-		get {
-			_lock.EnterReadLock();
-
-			try
+		get
+		{
+			lock (this)
 			{
 				return _arr.Length;
-			}
-			finally
-			{
-				_lock.ExitReadLock();
 			}
 		}
 	}
 
-	private T[] _arr;
+	public ConcurrentList(int initialCapacity) => _arr = initialCapacity == 0 ? [] : new T[initialCapacity];
 
-	public ConcurrentList(int initialCapacity) => _arr = new T[initialCapacity];
-
-	public ConcurrentList() : this(4)
-	{ }
+	public ConcurrentList() => _arr = [];
 
 	public ConcurrentList(IEnumerable<T> items)
 	{
@@ -59,18 +55,12 @@ public class ConcurrentList<T> : IList<T>, IDisposable
 
 	public void Add(T item)
 	{
-		_lock.EnterWriteLock();
-
-		try
+		lock (this)
 		{
 			int newCount = _count + 1;
 			EnsureCapacity(newCount);
 			_arr[_count] = item;
 			_count = newCount;
-		}
-		finally
-		{
-			_lock.ExitWriteLock();
 		}
 	}
 
@@ -81,19 +71,13 @@ public class ConcurrentList<T> : IList<T>, IDisposable
 			throw new ArgumentNullException("items");
 		}
 
-		_lock.EnterWriteLock();
-
-		try
+		lock (this)
 		{
 			T[] arr = items as T[] ?? items.ToArray();
 			int newCount = _count + arr.Length;
 			EnsureCapacity(newCount);
 			Array.Copy(arr, 0, _arr, _count, arr.Length);
 			_count = newCount;
-		}
-		finally
-		{
-			_lock.ExitWriteLock();
 		}
 	}
 
@@ -118,15 +102,13 @@ public class ConcurrentList<T> : IList<T>, IDisposable
 			}
 		}
 
-		int newLength = Math.Max(doubled, capacity);
+		int newLength = Math.Max(Math.Max(doubled, capacity), MinimumGrowCapacity);
 		Array.Resize(ref _arr, newLength);
 	}
 
 	public bool Remove(T item)
 	{
-		_lock.EnterUpgradeableReadLock();
-
-		try
+		lock (this)
 		{
 			int i = IndexOfInternal(item);
 
@@ -135,38 +117,21 @@ public class ConcurrentList<T> : IList<T>, IDisposable
 				return false;
 			}
 
-			_lock.EnterWriteLock();
-			try
-			{
-				RemoveAtInternal(i);
-				return true;
-			}
-			finally
-			{
-				_lock.ExitWriteLock();
-			}
-		}
-		finally
-		{
-			_lock.ExitUpgradeableReadLock();
+			RemoveAtInternal(i);
+
+			return true;
 		}
 	}
 
 	public IEnumerator<T> GetEnumerator()
 	{
-		_lock.EnterReadLock();
-
-		try
+		// Held for the whole enumeration, like the read lock it replaces: writers wait until it finishes
+		lock (this)
 		{
 			for (int i = 0; i < _count; i++)
 			{
-				// deadlocking potential mitigated by lock recursion enforcement
 				yield return _arr[i];
 			}
-		}
-		finally
-		{
-			_lock.ExitReadLock();
 		}
 	}
 
@@ -177,15 +142,9 @@ public class ConcurrentList<T> : IList<T>, IDisposable
 
 	public int IndexOf(T item)
 	{
-		_lock.EnterReadLock();
-
-		try
+		lock (this)
 		{
 			return IndexOfInternal(item);
-		}
-		finally
-		{
-			_lock.ExitReadLock();
 		}
 	}
 
@@ -196,65 +155,35 @@ public class ConcurrentList<T> : IList<T>, IDisposable
 
 	public void Insert(int index, T item)
 	{
-		_lock.EnterUpgradeableReadLock();
-
-		try
+		lock (this)
 		{
 			if (index > _count)
 			{
 				throw new ArgumentOutOfRangeException("index");
 			}
 
-			_lock.EnterWriteLock();
+			int newCount = _count + 1;
+			EnsureCapacity(newCount);
 
-			try
-			{
-				int newCount = _count + 1;
-				EnsureCapacity(newCount);
+			// shift everything right by one, starting at index
+			Array.Copy(_arr, index, _arr, index + 1, _count - index);
 
-				// shift everything right by one, starting at index
-				Array.Copy(_arr, index, _arr, index + 1, _count - index);
-
-				// insert
-				_arr[index] = item;
-				_count = newCount;
-			}
-			finally
-			{
-				_lock.ExitWriteLock();
-			}
-		}
-		finally
-		{
-			_lock.ExitUpgradeableReadLock();
+			// insert
+			_arr[index] = item;
+			_count = newCount;
 		}
 	}
 
 	public void RemoveAt(int index)
 	{
-		_lock.EnterUpgradeableReadLock();
-
-		try
+		lock (this)
 		{
 			if (index >= _count)
 			{
 				throw new ArgumentOutOfRangeException("index");
 			}
 
-			_lock.EnterWriteLock();
-
-			try
-			{
-				RemoveAtInternal(index);
-			}
-			finally
-			{
-				_lock.ExitWriteLock();
-			}
-		}
-		finally
-		{
-			_lock.ExitUpgradeableReadLock();
+			RemoveAtInternal(index);
 		}
 	}
 
@@ -269,38 +198,24 @@ public class ConcurrentList<T> : IList<T>, IDisposable
 
 	public void Clear()
 	{
-		_lock.EnterWriteLock();
-
-		try
+		lock (this)
 		{
 			Array.Clear(_arr, 0, _count);
 			_count = 0;
-		}
-		finally
-		{
-			_lock.ExitWriteLock();
 		}
 	}
 
 	public bool Contains(T item)
 	{
-		_lock.EnterReadLock();
-
-		try
+		lock (this)
 		{
 			return IndexOfInternal(item) != -1;
-		}
-		finally
-		{
-			_lock.ExitReadLock();
 		}
 	}
 
 	public void CopyTo(T[] array, int arrayIndex)
 	{
-		_lock.EnterReadLock();
-
-		try
+		lock (this)
 		{
 			if (_count > array.Length - arrayIndex)
 			{
@@ -309,20 +224,15 @@ public class ConcurrentList<T> : IList<T>, IDisposable
 
 			Array.Copy(_arr, 0, array, arrayIndex, _count);
 		}
-		finally
-		{
-			_lock.ExitReadLock();
-		}
 	}
 
 	public bool IsReadOnly => false;
 
 	public T this[int index]
 	{
-		get {
-			_lock.EnterReadLock();
-
-			try
+		get
+		{
+			lock (this)
 			{
 				if (index >= _count)
 				{
@@ -331,34 +241,18 @@ public class ConcurrentList<T> : IList<T>, IDisposable
 
 				return _arr[index];
 			}
-			finally
-			{
-				_lock.ExitReadLock();
-			}
 		}
-		set {
-			_lock.EnterUpgradeableReadLock();
-			try
+		set
+		{
+			lock (this)
 			{
-
 				if (index >= _count)
+				{
 					throw new ArgumentOutOfRangeException("index");
-
-				_lock.EnterWriteLock();
-				try
-				{
-					_arr[index] = value;
 				}
-				finally
-				{
-					_lock.ExitWriteLock();
-				}
-			}
-			finally
-			{
-				_lock.ExitUpgradeableReadLock();
-			}
 
+				_arr[index] = value;
+			}
 		}
 	}
 
@@ -373,17 +267,14 @@ public class ConcurrentList<T> : IList<T>, IDisposable
 
 	public TResult GetSync<TResult>(Func<ConcurrentList<T>, TResult> func)
 	{
-		_lock.EnterWriteLock();
-
-		try
+		lock (this)
 		{
 			return func(this);
 		}
-		finally
-		{
-			_lock.ExitWriteLock();
-		}
 	}
 
-	public void Dispose() => _lock.Dispose();
+	/// <summary>Nothing to release any more (it used to dispose its ReaderWriterLockSlim); kept so existing callers still compile.</summary>
+	public void Dispose()
+	{
+	}
 }
