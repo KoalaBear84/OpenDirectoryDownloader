@@ -299,17 +299,32 @@ public static class ScanDatabaseServer
 		{
 			try
 			{
-				ScanDatabase.MirroredDirectory self = await state.QueryAsync(db => db.GetDirectoryAsync(url), cancellationToken);
+				// One gate acquisition for the whole directory view instead of five - see ServerState.QueryAsync.
+				(ScanDatabase.MirroredDirectory self,
+					List<ScanDatabase.MirroredFile> ownFiles,
+					List<ScanDatabase.MirroredDirectory> subdirectories,
+					Dictionary<string, ScanDatabase.SubtreeAggregate> aggregates,
+					List<(string Url, string Name)> ancestors) = await state.QueryAsync(async db =>
+				{
+					ScanDatabase.MirroredDirectory directory = await db.GetDirectoryAsync(url);
+
+					if (directory is null)
+					{
+						return (null, null, null, null, null);
+					}
+
+					return (
+						directory,
+						await db.GetFilesAsync(url),
+						await db.GetSubdirectoriesAsync(url),
+						await db.GetChildSubtreeAggregatesAsync(url),
+						await db.GetAncestorsAsync(url));
+				}, cancellationToken);
 
 				if (self is null)
 				{
 					return Results.NotFound(new { error = $"'{url}' was not found in the loaded database." });
 				}
-
-				List<ScanDatabase.MirroredFile> ownFiles = await state.QueryAsync(db => db.GetFilesAsync(url), cancellationToken);
-				List<ScanDatabase.MirroredDirectory> subdirectories = await state.QueryAsync(db => db.GetSubdirectoriesAsync(url), cancellationToken);
-				Dictionary<string, ScanDatabase.SubtreeAggregate> aggregates = await state.QueryAsync(db => db.GetChildSubtreeAggregatesAsync(url), cancellationToken);
-				List<(string Url, string Name)> ancestors = await state.QueryAsync(db => db.GetAncestorsAsync(url), cancellationToken);
 
 				long ownFilesSize = ownFiles.Sum(file => file.FileSize ?? 0);
 				long subdirectoriesSize = aggregates.Values.Sum(aggregate => aggregate.TotalSize);

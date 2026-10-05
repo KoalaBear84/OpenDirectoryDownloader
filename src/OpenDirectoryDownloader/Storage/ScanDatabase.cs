@@ -57,6 +57,15 @@ public sealed class ScanDatabase : IAsyncDisposable
 	private readonly Dictionary<string, Dictionary<string, SubtreeAggregate>> _subtreeAggregateCache = [];
 	private long _subtreeAggregateCacheDataVersion = -1;
 
+	/// <summary>
+	/// Per-url cache for <see cref="GetAncestorsAsync"/>, keyed the same way as <see cref="_subtreeAggregateCache"/>
+	/// - a deeply nested directory's breadcrumb chain would otherwise be rebuilt via up to 1000 sequential
+	/// single-row queries on every web-viewer navigation into it, even though the chain can't have changed
+	/// since the last write.
+	/// </summary>
+	private readonly Dictionary<string, List<(string Url, string Name)>> _ancestorsCache = [];
+	private long _ancestorsCacheDataVersion = -1;
+
 	private ScanDatabase(SqliteConnection connection, string path, bool startWriter = true, bool ownsSidecarFiles = false)
 	{
 		_connection = connection;
@@ -793,6 +802,18 @@ public sealed class ScanDatabase : IAsyncDisposable
 	{
 		await FlushAsync();
 
+		long dataVersion = await GetDataVersionAsync();
+
+		if (dataVersion != _ancestorsCacheDataVersion)
+		{
+			_ancestorsCache.Clear();
+			_ancestorsCacheDataVersion = dataVersion;
+		}
+		else if (_ancestorsCache.TryGetValue(url, out List<(string Url, string Name)> cached))
+		{
+			return cached;
+		}
+
 		List<(string Url, string Name)> ancestors = [];
 		string currentUrl = url;
 
@@ -817,6 +838,8 @@ public sealed class ScanDatabase : IAsyncDisposable
 			ancestors.Insert(0, (parent.Url, parent.Name));
 			currentUrl = parent.Url;
 		}
+
+		_ancestorsCache[url] = ancestors;
 
 		return ancestors;
 	}
