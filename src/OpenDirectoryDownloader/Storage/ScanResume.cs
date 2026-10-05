@@ -40,26 +40,51 @@ public static class ScanResume
 	/// </param>
 	public static async Task<Result> BuildAsync(ScanDatabase scanDatabase, string rootUrl, bool skipFileSizeLookups, bool retryErrors = false)
 	{
-		List<ScanDatabase.MirroredDirectory> allDirectories = await scanDatabase.GetAllDirectoriesAsync();
-		Dictionary<string, ScanDatabase.MirroredDirectory> byUrl = allDirectories.ToDictionary(d => d.Url);
+		// One compact entry per directory, with its children as a linked list and its file totals attached,
+		// instead of the previous parallel structures (record list, ParentUrl-grouped lists, and a file
+		// aggregate dictionary keyed by yet another copy of every URL string): on a scan with millions of
+		// directories those copies, not the tree itself, were what made resuming spike in memory.
+		Dictionary<string, ResumeEntry> byUrl = [];
+
+		await scanDatabase.ForEachDirectoryAsync(d => byUrl.Add(d.Url, new ResumeEntry
+		{
+			Url = d.Url,
+			Name = d.Name,
+			Description = d.Description,
+			Finished = d.Finished,
+			Error = d.Error
+		}));
 
 		if (!byUrl.ContainsKey(rootUrl))
 		{
 			return null;
 		}
 
-		Dictionary<string, List<ScanDatabase.MirroredDirectory>> childrenByParentUrl = allDirectories
-			.Where(d => d.ParentUrl is not null)
-			.GroupBy(d => d.ParentUrl)
-			.ToDictionary(g => g.Key, g => g.ToList());
+		// Second, lighter pass over the same table (same order) to link children to parents; the ParentUrl
+		// strings are only looked up and then dropped, never kept
+		await scanDatabase.ForEachDirectoryParentAsync((url, parentUrl) =>
+		{
+			if (byUrl.TryGetValue(parentUrl, out ResumeEntry parentEntry))
+			{
+				parentEntry.AddChild(byUrl[url]);
+			}
+		});
 
-		Dictionary<string, ScanDatabase.FileAggregate> fileAggregates = await scanDatabase.GetFileAggregatesByDirectoryAsync();
+		await scanDatabase.ForEachFileAggregateAsync((directoryUrl, aggregate) =>
+		{
+			if (byUrl.TryGetValue(directoryUrl, out ResumeEntry entry))
+			{
+				entry.FileCount = aggregate.Count;
+				entry.FileTotalSize = aggregate.TotalSize;
+				entry.FileNullSizeCount = aggregate.NullSizeCount;
+			}
+		});
 
 		Result result = new(null, [], [], new ProcessedUrlSet());
 
-		async Task<(WebDirectory Node, bool Closed)> BuildAsync(string url, WebDirectory parent)
+		async Task<(WebDirectory Node, bool Closed)> BuildAsync(ResumeEntry record, WebDirectory parent)
 		{
-			ScanDatabase.MirroredDirectory record = byUrl[url];
+			string url = record.Url;
 			bool retrying = record.Finished && record.Error && retryErrors;
 
 			WebDirectory node = new(parent)
@@ -88,15 +113,13 @@ public static class ScanResume
 			node.Finished = true;
 			result.ProcessedUrls.Add(url);
 
-			ScanDatabase.FileAggregate ownFiles = fileAggregates.GetValueOrDefault(url, new ScanDatabase.FileAggregate(0, 0, 0));
-			bool hasOwnPendingFileSizes = !skipFileSizeLookups && ownFiles.NullSizeCount > 0;
+			bool hasOwnPendingFileSizes = !skipFileSizeLookups && record.FileNullSizeCount > 0;
 
-			List<ScanDatabase.MirroredDirectory> childRecords = childrenByParentUrl.GetValueOrDefault(url, []);
 			List<(WebDirectory Node, bool Closed)> children = [];
 
-			foreach (ScanDatabase.MirroredDirectory childRecord in childRecords)
+			for (ResumeEntry childRecord = record.FirstChild; childRecord is not null; childRecord = childRecord.NextSibling)
 			{
-				children.Add(await BuildAsync(childRecord.Url, node));
+				children.Add(await BuildAsync(childRecord, node));
 			}
 
 			bool isClosed = !hasOwnPendingFileSizes && children.All(c => c.Closed);
@@ -104,8 +127,8 @@ public static class ScanResume
 			if (isClosed)
 			{
 				int totalDirectories = children.Count + children.Sum(c => c.Node.CachedTotalDirectories);
-				int totalFiles = (int)ownFiles.Count + children.Sum(c => c.Node.CachedTotalFiles);
-				long totalFileSize = ownFiles.TotalSize + children.Sum(c => c.Node.CachedTotalFileSize);
+				int totalFiles = (int)record.FileCount + children.Sum(c => c.Node.CachedTotalFiles);
+				long totalFileSize = record.FileTotalSize + children.Sum(c => c.Node.CachedTotalFileSize);
 
 				node.RestoreAsClosedStub(totalFiles, totalFileSize, totalDirectories, totalDirectories);
 
@@ -145,8 +168,39 @@ public static class ScanResume
 			return (node, false);
 		}
 
-		(WebDirectory root, bool _) = await BuildAsync(rootUrl, null);
+		(WebDirectory root, bool _) = await BuildAsync(byUrl[rootUrl], null);
 
 		return result with { Root = root };
+	}
+
+	/// <summary>Everything BuildAsync needs to know about one directory while rebuilding, and nothing else.</summary>
+	private sealed class ResumeEntry
+	{
+		public string Url;
+		public string Name;
+		public string Description;
+		public bool Finished;
+		public bool Error;
+		public long FileCount;
+		public long FileTotalSize;
+		public long FileNullSizeCount;
+		public ResumeEntry FirstChild;
+		public ResumeEntry NextSibling;
+		private ResumeEntry _lastChild;
+
+		/// <summary>Appends, so children keep the order the database returned them in</summary>
+		public void AddChild(ResumeEntry child)
+		{
+			if (_lastChild is null)
+			{
+				FirstChild = child;
+			}
+			else
+			{
+				_lastChild.NextSibling = child;
+			}
+
+			_lastChild = child;
+		}
 	}
 }

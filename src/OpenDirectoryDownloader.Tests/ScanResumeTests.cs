@@ -220,4 +220,38 @@ public class ScanResumeTests : IAsyncLifetime
 		Assert.Empty(result.DirectoriesToRequeue);
 		Assert.True(result.Root.ContentEvicted);
 	}
+
+	[Fact]
+	public async Task BuildAsync_KeepsSubdirectoriesInTheOrderTheyWereMirrored()
+	{
+		MirrorDirectory("http://localhost/", null, finished: true);
+		MirrorDirectory("http://localhost/m/", "http://localhost/", finished: true);
+		MirrorDirectory("http://localhost/b/", "http://localhost/", finished: true);
+		MirrorDirectory("http://localhost/z/", "http://localhost/", finished: true);
+		MirrorDirectory("http://localhost/a/", "http://localhost/", finished: false);
+
+		await _scanDatabase.FlushAsync();
+
+		ScanResume.Result result = await ScanResume.BuildAsync(_scanDatabase, "http://localhost/", skipFileSizeLookups: false);
+
+		// The unfinished child keeps the root open, so the root's children are attached - in insertion order, not sorted
+		Assert.Equal(["m", "b", "z", "a"], result.Root.Subdirectories.Select(sd => sd.Name).ToArray());
+	}
+
+	[Fact]
+	public async Task BuildAsync_DirectoryWhoseParentWasNeverMirrored_IsIgnored()
+	{
+		MirrorDirectory("http://localhost/", null, finished: true);
+		MirrorDirectory("http://localhost/child/", "http://localhost/", finished: true);
+		MirrorDirectory("http://localhost/orphan/", "http://localhost/missing/", finished: false);
+
+		await _scanDatabase.FlushAsync();
+
+		ScanResume.Result result = await ScanResume.BuildAsync(_scanDatabase, "http://localhost/", skipFileSizeLookups: false);
+
+		Assert.NotNull(result);
+		Assert.Empty(result.DirectoriesToRequeue);
+		Assert.True(result.Root.ContentEvicted);
+		Assert.Equal(1, result.Root.CachedTotalDirectories);
+	}
 }

@@ -717,9 +717,21 @@ public sealed class ScanDatabase : IAsyncDisposable
 	/// </summary>
 	public async Task<List<MirroredDirectory>> GetAllDirectoriesAsync()
 	{
-		await FlushAsync();
-
 		List<MirroredDirectory> directories = [];
+
+		await ForEachDirectoryAsync(directories.Add);
+
+		return directories;
+	}
+
+	/// <summary>
+	/// Same rows as <see cref="GetAllDirectoriesAsync"/>, in the same order, but handed to the callback one at
+	/// a time instead of collected: a caller that only needs a few fields (or needs to read the table twice)
+	/// no longer has to keep a record, and a separate ParentUrl string, alive for every directory at once.
+	/// </summary>
+	public async Task ForEachDirectoryAsync(Action<MirroredDirectory> onDirectory)
+	{
+		await FlushAsync();
 
 		using SqliteCommand command = _connection.CreateCommand();
 		command.CommandText = "SELECT Url, ParentUrl, Name, Description, Finished, Error FROM Directories";
@@ -728,7 +740,7 @@ public sealed class ScanDatabase : IAsyncDisposable
 
 		while (await reader.ReadAsync())
 		{
-			directories.Add(new MirroredDirectory(
+			onDirectory(new MirroredDirectory(
 				reader.GetString(0),
 				reader.IsDBNull(1) ? null : reader.GetString(1),
 				reader.GetString(2),
@@ -736,8 +748,26 @@ public sealed class ScanDatabase : IAsyncDisposable
 				reader.GetBoolean(4),
 				reader.GetBoolean(5)));
 		}
+	}
 
-		return directories;
+	/// <summary>
+	/// Just the (Url, ParentUrl) pair of every directory that has a parent, in insertion order - the same
+	/// order <see cref="ForEachDirectoryAsync"/> returns them in, made explicit so callers building child lists
+	/// can rely on it. Lighter than ForEachDirectoryAsync when names and descriptions are not needed.
+	/// </summary>
+	public async Task ForEachDirectoryParentAsync(Action<string, string> onDirectory)
+	{
+		await FlushAsync();
+
+		using SqliteCommand command = _connection.CreateCommand();
+		command.CommandText = "SELECT Url, ParentUrl FROM Directories WHERE ParentUrl IS NOT NULL ORDER BY rowid";
+
+		using SqliteDataReader reader = await command.ExecuteReaderAsync();
+
+		while (await reader.ReadAsync())
+		{
+			onDirectory(reader.GetString(0), reader.GetString(1));
+		}
 	}
 
 	/// <summary>
@@ -747,9 +777,17 @@ public sealed class ScanDatabase : IAsyncDisposable
 	/// </summary>
 	public async Task<Dictionary<string, FileAggregate>> GetFileAggregatesByDirectoryAsync()
 	{
-		await FlushAsync();
-
 		Dictionary<string, FileAggregate> aggregates = [];
+
+		await ForEachFileAggregateAsync((directoryUrl, aggregate) => aggregates[directoryUrl] = aggregate);
+
+		return aggregates;
+	}
+
+	/// <summary>Same data as <see cref="GetFileAggregatesByDirectoryAsync"/>, streamed to the callback so the caller can attach it to what it already holds instead of keeping a second URL-keyed dictionary.</summary>
+	public async Task ForEachFileAggregateAsync(Action<string, FileAggregate> onAggregate)
+	{
+		await FlushAsync();
 
 		using SqliteCommand command = _connection.CreateCommand();
 		command.CommandText =
@@ -763,10 +801,8 @@ public sealed class ScanDatabase : IAsyncDisposable
 
 		while (await reader.ReadAsync())
 		{
-			aggregates[reader.GetString(0)] = new FileAggregate(reader.GetInt64(1), reader.GetInt64(2), reader.GetInt64(3));
+			onAggregate(reader.GetString(0), new FileAggregate(reader.GetInt64(1), reader.GetInt64(2), reader.GetInt64(3)));
 		}
-
-		return aggregates;
 	}
 
 	public sealed record FileAggregate(long Count, long TotalSize, long NullSizeCount);
