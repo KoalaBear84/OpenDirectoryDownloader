@@ -125,22 +125,22 @@ public static class Copyparty
 
 		Uri baseUri = new(baseUrl);
 
-		foreach (Dir dir in copypartyListing.Dirs)
+		foreach (Dir dir in copypartyListing?.Dirs ?? [])
 		{
 			parsedWebDirectory.Subdirectories.Add(new WebDirectory(parsedWebDirectory)
 			{
 				Parser = Parser,
 				Url = new Uri(baseUri, dir.Href).ToString(),
-				Name = dir.Name.TrimEnd('/')
+				Name = (dir.Name ?? WebUtility.UrlDecode(dir.Href)).TrimEnd('/')
 			});
 		}
 
-		foreach (Dir file in copypartyListing.Files)
+		foreach (Dir file in copypartyListing?.Files ?? [])
 		{
 			parsedWebDirectory.Files.Add(new WebFile
 			{
 				Url = new Uri(baseUri, file.Href).ToString(),
-				FileName = file.Name,
+				FileName = file.Name ?? Path.GetFileName(WebUtility.UrlDecode(file.Href.Split('?')[0])),
 				FileSize = file.Sz
 			});
 		}

@@ -129,6 +129,12 @@ public class Program
 			}
 		}
 
+		if (string.IsNullOrWhiteSpace(url))
+		{
+			Console.WriteLine("No URL specified");
+			return 1;
+		}
+
 		OpenDirectoryIndexerSettings openDirectoryIndexerSettings = new()
 		{
 			CommandLineOptions = CommandLineOptions

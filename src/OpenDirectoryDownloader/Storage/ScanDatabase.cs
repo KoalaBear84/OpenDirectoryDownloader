@@ -347,6 +347,8 @@ public sealed class ScanDatabase : IAsyncDisposable
 
 	public async Task<long> CountDirectoriesAsync()
 	{
+		await FlushAsync();
+
 		using SqliteCommand command = _connection.CreateCommand();
 		command.CommandText = "SELECT COUNT(*) FROM Directories";
 
@@ -355,6 +357,8 @@ public sealed class ScanDatabase : IAsyncDisposable
 
 	public async Task<long> CountFilesAsync()
 	{
+		await FlushAsync();
+
 		using SqliteCommand command = _connection.CreateCommand();
 		command.CommandText = "SELECT COUNT(*) FROM Files";
 
