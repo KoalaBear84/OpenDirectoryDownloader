@@ -20,6 +20,10 @@ public sealed class FakeDirectoryServer : IAsyncDisposable
 	private long _directoryRequests;
 	private long _fileRequests;
 	private long _failedRequests;
+	private long _inFlight;
+	private long _peakInFlight;
+	private long _handlerTicks;
+	private long _handledRequests;
 
 	public FakeSite Site { get; }
 
@@ -31,6 +35,12 @@ public sealed class FakeDirectoryServer : IAsyncDisposable
 	public long FileRequests => Interlocked.Read(ref _fileRequests);
 
 	public long FailedRequests => Interlocked.Read(ref _failedRequests);
+
+	/// <summary>Most requests the server was handling at the same moment: shows whether the client actually kept it busy.</summary>
+	public long PeakConcurrentRequests => Interlocked.Read(ref _peakInFlight);
+
+	/// <summary>Average time the server spent on one request (generating and writing the response): if this is far below the time between requests, the client is the bottleneck.</summary>
+	public double AverageHandlerMilliseconds => Interlocked.Read(ref _handledRequests) == 0 ? 0 : Interlocked.Read(ref _handlerTicks) * 1000d / System.Diagnostics.Stopwatch.Frequency / Interlocked.Read(ref _handledRequests);
 
 	private FakeDirectoryServer(FakeSite site)
 	{
@@ -56,6 +66,29 @@ public sealed class FakeDirectoryServer : IAsyncDisposable
 	}
 
 	private async Task HandleAsync(HttpContext context)
+	{
+		long inFlight = Interlocked.Increment(ref _inFlight);
+		long peak;
+
+		while (inFlight > (peak = Interlocked.Read(ref _peakInFlight)) && Interlocked.CompareExchange(ref _peakInFlight, inFlight, peak) != peak)
+		{
+		}
+
+		long started = System.Diagnostics.Stopwatch.GetTimestamp();
+
+		try
+		{
+			await HandleCoreAsync(context);
+		}
+		finally
+		{
+			Interlocked.Add(ref _handlerTicks, System.Diagnostics.Stopwatch.GetTimestamp() - started);
+			Interlocked.Increment(ref _handledRequests);
+			Interlocked.Decrement(ref _inFlight);
+		}
+	}
+
+	private async Task HandleCoreAsync(HttpContext context)
 	{
 		if (Site.Options.Latency > TimeSpan.Zero)
 		{

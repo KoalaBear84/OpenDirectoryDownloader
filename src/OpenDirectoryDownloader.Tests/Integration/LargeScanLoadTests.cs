@@ -60,6 +60,7 @@ public sealed class LargeScanLoadTests(ITestOutputHelper output) : IDisposable
 			== {scenario}
 			Files: {result.Session.Root.TotalFiles:N0} (expected {expected.Files:N0}), directories: {expected.Directories:N0}
 			Elapsed: {seconds:F1} s, {expected.Files / Math.Max(seconds, 0.001):N0} files/s, {server.DirectoryRequests:N0} directory requests
+			Server: peak {server.PeakConcurrentRequests} requests at once, {server.AverageHandlerMilliseconds:F2} ms average per request
 			Peak working set: {result.PeakWorkingSetBytes / 1024d / 1024d:N0} MB, managed heap after: {result.ManagedBytesAfter / 1024d / 1024d:N0} MB
 			Errors: {result.Session.Errors}
 			""");

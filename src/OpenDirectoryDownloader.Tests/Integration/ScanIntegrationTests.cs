@@ -133,4 +133,25 @@ public sealed class ScanIntegrationTests : IDisposable
 		Assert.Equal(runsBefore, await after.CountRunsAsync());
 		Assert.Equal(requestsAfterFirstScan, server.DirectoryRequests);
 	}
+
+	[Fact]
+	public async Task Scan_OfASmallTree_FinishesPromptly()
+	{
+		// Workers that found the queue empty used to sleep a full second before looking again, so every
+		// level of a tree waited for them to wake up and a finished scan still waited out its last sleeps:
+		// a 21-directory scan took seconds. The first scan in a process also pays JIT warm-up, so warm up first.
+		await using FakeDirectoryServer server = await FakeDirectoryServer.StartAsync(new FakeSiteOptions
+		{
+			Style = ListingStyle.NginxAutoindex,
+			Depth = 2,
+			SubdirectoriesPerDirectory = 4,
+			FilesPerDirectory = 3
+		});
+
+		await ScanRunner.RunAsync(server.BaseUrl, Path.Combine(_workingDirectory, "warmup"), "--threads", "10");
+		ScanResult result = await ScanRunner.RunAsync(server.BaseUrl, Path.Combine(_workingDirectory, "measured"), "--threads", "10");
+
+		Assert.Equal(server.Site.Expectation().Files, result.Session.Root.TotalFiles);
+		Assert.True(result.Elapsed < TimeSpan.FromSeconds(1.5), $"A scan of 21 tiny directories took {result.Elapsed.TotalSeconds:F1} s, expected well under a second");
+	}
 }
