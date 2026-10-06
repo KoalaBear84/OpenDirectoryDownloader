@@ -49,4 +49,28 @@
   <ItemGroup>
     <InternalsVisibleTo Include="OpenDirectoryDownloader.Tests" />
   </ItemGroup>
+
+  <!--
+    A single file build is one file: the native libraries of the packages (SQLite, HttpCloak) go inside the executable
+    as resources, and are only extracted when they are first needed (see Hosting/EmbeddedNativeLibraries.cs).
+    Set EmbedNativeLibraries to false to publish them next to the executable instead.
+  -->
+  <PropertyGroup>
+    <EmbedNativeLibraries Condition="'$(EmbedNativeLibraries)' == '' And '$(PublishSingleFile)' == 'true' And '$(RuntimeIdentifier)' != ''">true</EmbedNativeLibraries>
+  </PropertyGroup>
+
+  <Target Name="EmbedNativeLibraries" BeforeTargets="PrepareResourceNames" DependsOnTargets="ResolvePackageAssets" Condition="'$(EmbedNativeLibraries)' == 'true'">
+    <ItemGroup>
+      <_EmbeddedNativeLibrary Include="@(NativeCopyLocalItems)" />
+      <EmbeddedResource Include="@(_EmbeddedNativeLibrary)" LogicalName="native/%(Filename)%(Extension)" WithCulture="false" Type="Non-Resx" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="RemoveEmbeddedNativeLibrariesFromPublish" AfterTargets="ComputeResolvedFilesToPublishList" DependsOnTargets="EmbedNativeLibraries" Condition="'$(EmbedNativeLibraries)' == 'true'">
+    <ItemGroup>
+      <ResolvedFileToPublish Remove="@(_EmbeddedNativeLibrary)" />
+      <!-- The IIS in-process module of the ASP.NET Core runtime pack: the scan viewer runs on Kestrel -->
+      <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)" Condition="'%(Filename)%(Extension)' == 'aspnetcorev2_inprocess.dll'" />
+    </ItemGroup>
+  </Target>
 </Project>

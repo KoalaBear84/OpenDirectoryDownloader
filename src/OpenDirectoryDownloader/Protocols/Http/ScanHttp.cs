@@ -70,7 +70,6 @@ public sealed partial class ScanHttp : IDisposable
 				cloakProxy = proxyUriBuilder.Uri.ToString();
 			}
 
-			HttpCloakNativeLibrary.EnsureResolvable();
 			HttpCloak.HttpCloakHandler httpCloakHandler = new(preset: httpOptions.HttpCloakPreset, proxy: cloakProxy);
 			innerHandler = new CookieSyncHandler(httpCloakHandler, Cookies, logger);
 		}

@@ -29,6 +29,8 @@ https://github.com/KoalaBear84/OpenDirectoryDownloader/releases
 
 When using the self-contained releases you don't need to install the .NET (Core) Runtime.
 
+The release is a single executable (plus `OpenDirectoryDownloader.GoogleDrive.json`). The native libraries it needs (SQLite, and HttpCloak for `--http-cloak`) are inside it and only extracted when first needed, to `%TEMP%\.net\OpenDirectoryDownloader` (Windows) or `$TMPDIR/.net/OpenDirectoryDownloader`. Set `DOTNET_BUNDLE_EXTRACT_BASE_DIR` to extract them somewhere else, for example when the temporary directory doesn't allow running code.
+
 ## Prerequisites
 
 When you are NOT using the self-contained releases, you need to install the latest/current Runtime version of .NET 10:

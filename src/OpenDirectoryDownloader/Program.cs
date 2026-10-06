@@ -19,6 +19,9 @@ public static class Program
 {
 	public static async Task<int> Main(string[] args)
 	{
+		// Before anything loads a native library (SQLite, HttpCloak)
+		EmbeddedNativeLibraries.Register();
+
 		ConsoleTitle consoleTitle = new();
 		consoleTitle.Set("OpenDirectoryDownloader");
 
