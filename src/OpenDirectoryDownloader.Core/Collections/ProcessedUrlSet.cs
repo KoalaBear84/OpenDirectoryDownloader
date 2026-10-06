@@ -3,7 +3,7 @@ namespace OpenDirectoryDownloader.Collections;
 /// <summary>
 /// The set of directory URLs the crawler has already started or finished. It holds a 128-bit hash per URL
 /// instead of the URL string: the set lives for the whole scan, and with millions of directories the strings
-/// (typically 100+ bytes each, plus dictionary node overhead) were the largest thing --evict-memory could
+/// (typically 100+ bytes each, plus dictionary node overhead) were the largest thing eviction could
 /// not free. Operations happen once per directory, not per file, so a plain lock is cheaper than a concurrent dictionary.
 /// </summary>
 public sealed class ProcessedUrlSet

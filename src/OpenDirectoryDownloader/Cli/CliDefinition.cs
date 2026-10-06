@@ -55,10 +55,8 @@ public static class CliDefinition
 		AllowMultipleArgumentsPerToken = false
 	};
 
-	public static readonly Option<bool> UseDatabase = new("--use-database") { Description = "Accepted for compatibility: every scan uses a SQLite database now. Use --keep-db to keep it." };
 	public static readonly Option<string> DbPath = new("--db-path") { Description = "Path for the SQLite scan database. Defaults to the output base filename with a .sqlite extension." };
 	public static readonly Option<bool> KeepDb = new("--keep-db") { Description = "Keep the SQLite scan database after a successful scan instead of deleting it." };
-	public static readonly Option<bool> EvictMemory = new("--evict-memory") { Description = "Accepted for compatibility: finished directory subtrees are always dropped from memory and read back from the scan database for output." };
 	public static readonly Option<bool> Resume = new("--resume") { Description = "Continue a previously interrupted scan from the database at --db-path (or the default derived path), instead of starting over. Keeps the database file regardless of --keep-db, so an interrupted resume can itself be resumed again. If no existing database is found, starts a fresh scan as normal." };
 	public static readonly Option<bool> RetryErrors = new("--retry-errors") { Description = "When resuming with --resume, retry directories that errored during the previous run instead of leaving them as-is. Without this, if any are found and the console is interactive, you'll be asked; otherwise they're left alone." };
 	public static readonly Option<bool> Serve = new("--serve") { Description = "Start a local web server to browse a scan database (see 'Web viewer' in the README) instead of scanning a URL." };
@@ -85,7 +83,7 @@ public static class CliDefinition
 			Url, Threads, Timeout, Wait, Quit, Clipboard, Json, NoUrls, Aria2Urls, Aria2RootDir, Aria2UrlDir, NoBrowser, NoReddit,
 			ExactFileSizes, UploadUrls, Speedtest, UserAgent, Username, Password, GitHubToken, OutputFile, FastScan,
 			ProxyAddress, ProxyUsername, ProxyPassword, HttpCloak, FlareSolverrUrl, FlareSolverrDockerName, Header,
-			UseDatabase, DbPath, KeepDb, EvictMemory, Resume, RetryErrors, Serve, ServeDb, ServePort, ServeHost, ServeNoBrowser,
+			DbPath, KeepDb, Resume, RetryErrors, Serve, ServeDb, ServePort, ServeHost, ServeNoBrowser,
 			Database
 		};
 
@@ -197,10 +195,8 @@ public static class CliDefinition
 			},
 			new StorageOptions
 			{
-				UseDatabase = parseResult.GetValue(UseDatabase),
 				DbPath = parseResult.GetValue(DbPath),
 				KeepDb = parseResult.GetValue(KeepDb),
-				EvictMemory = parseResult.GetValue(EvictMemory),
 				Resume = parseResult.GetValue(Resume),
 				RetryErrors = parseResult.GetValue(RetryErrors)
 			},

@@ -172,28 +172,51 @@ public sealed partial class ScanDatabase
 
 	public async Task<long?> GetFileSizeAsync(string url) => (await GetFileInfoAsync(url))?.FileSize;
 
-	/// <summary>The name and size of the file with this URL, or null. The name comes from the listing: for some sites (Google Drive) it is not in the URL.</summary>
+	/// <summary>
+	/// The name and size of the file with this URL, or null. The name comes from the listing: for some sites (Google
+	/// Drive) it is not in the URL. Files have no URL index (it made every insert slower, for this lookup only): a file
+	/// is stored relative to its directory when its URL starts with the directory's, so the directories the URL starts
+	/// with are tried first, the deepest first, and only a link elsewhere needs the whole table.
+	/// </summary>
 	public Task<FileInfoSnapshot> GetFileInfoAsync(string url) => ReadAsync(async connection =>
 	{
-		using SqliteCommand command = Command(connection,
-			"""
-			SELECT f.name, f.size, CASE WHEN f.relative = 1 THEN d.url || f.url ELSE f.url END
-			FROM file f
-			JOIN directory d ON d.id = f.directory_id
-			WHERE f.url_hash = $hash
-			ORDER BY f.id
-			""", ("$hash", UrlHash(url)));
-		using SqliteDataReader reader = await command.ExecuteReaderAsync();
-
-		while (await reader.ReadAsync())
+		for (int end = url.LastIndexOf('/', url.Length - 2); end > 0; end = url.LastIndexOf('/', end - 1))
 		{
-			if (reader.GetString(2) == url)
+			string directoryUrl = url[..(end + 1)];
+			MirroredDirectory directory = await FindDirectoryAsync(connection, directoryUrl);
+
+			if (directory is null)
+			{
+				continue;
+			}
+
+			using SqliteCommand command = Command(connection,
+				"""
+				SELECT name, size FROM file
+				WHERE directory_id = $directoryId AND relative = 1 AND url = $relativeUrl
+				ORDER BY id
+				LIMIT 1
+				""", ("$directoryId", directory.Id), ("$relativeUrl", url[directoryUrl.Length..]));
+			using SqliteDataReader reader = await command.ExecuteReaderAsync();
+
+			if (await reader.ReadAsync())
 			{
 				return new FileInfoSnapshot(reader.GetString(0), reader.IsDBNull(1) ? null : reader.GetInt64(1));
 			}
 		}
 
-		return null;
+		using SqliteCommand scanCommand = Command(connection,
+			"""
+			SELECT f.name, f.size
+			FROM file f
+			JOIN directory d ON d.id = f.directory_id
+			WHERE CASE WHEN f.relative = 1 THEN d.url || f.url ELSE f.url END = $url
+			ORDER BY f.id
+			LIMIT 1
+			""", ("$url", url));
+		using SqliteDataReader scanReader = await scanCommand.ExecuteReaderAsync();
+
+		return await scanReader.ReadAsync() ? new FileInfoSnapshot(scanReader.GetString(0), scanReader.IsDBNull(1) ? null : scanReader.GetInt64(1)) : null;
 	});
 
 	/// <summary>Totals over the whole database, in one query.</summary>

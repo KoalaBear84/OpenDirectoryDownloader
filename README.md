@@ -68,10 +68,8 @@ Command line parameters:
 |       | `--flaresolverr-docker-name` | FlareSolverr Docker container name, e.g. `flaresolverr`. If provided, OpenDirectoryDownloader will also show and save the output from `docker logs -f` for that container.                                      |
 |       | `--no-browser`       | Disallow starting Chromium browser (for Cloudflare)                                                                                                                                                                           |
 |       | `--http-cloak`       | *SLOWER!* *EXPERIMENTAL* Emulate a real browser's TLS/HTTP fingerprint for improved compatibility. See below for more info.                                                                                                            |
-|       | `--use-database`     | Accepted for compatibility: every scan now uses a SQLite database (see [Large scans / low memory](#large-scans--low-memory))                                                                                               |
 |       | `--db-path`          | Path for the scan's SQLite database (default: output base filename with a `.sqlite` extension)                                                                                                  |
 |       | `--keep-db`          | Keep the database file after a successful scan instead of deleting it                                                                                                                                                        |
-|       | `--evict-memory`     | Accepted for compatibility: finished directories are always dropped from memory now                                                                                                                                           |
 |       | `--resume`            | EXPERIMENTAL: Continue a previously interrupted scan from its database instead of starting over (see [Large scans / low memory](#large-scans--low-memory))                                                                   |
 |       | `--retry-errors`     | With `--resume`, retry directories that errored during the previous run instead of leaving them as-is                                                                                                                       |
 |       | `--serve`            | EXPERIMENTAL: Start a local web viewer for a scan database instead of scanning a URL (see [Web viewer for scan databases](#web-viewer-for-scan-databases))                                                                   |
@@ -134,8 +132,6 @@ Every scan is written to a SQLite database as it runs (`--db-path`, default: the
 | `--keep-db`       | Keep the database after a successful scan, for example to browse it with `--serve`. |
 | `--resume`        | Continues a previously interrupted scan using the database at `--db-path` (or the default, derived from the output filename), instead of starting over. Always keeps the database file so an interrupted resume can itself be resumed again. If no matching database is found, starts a fresh scan as normal. |
 | `--retry-errors`  | With `--resume`: retries directories that errored during the previous run. Without it, if any errored directories are found and the console is interactive you'll be asked whether to retry them; in a non-interactive session (e.g. a script) they're left alone unless you pass this. |
-
-`--use-database` and `--evict-memory` are still accepted, but no longer needed.
 
 Example:
 

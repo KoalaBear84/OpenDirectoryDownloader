@@ -70,6 +70,22 @@ public class ExternalUrlSorterTests
 		Assert.Equal(Expected(urls), actual);
 	}
 
+	[Theory]
+	[InlineData(100)]
+	[InlineData(40_000)]
+	[InlineData(100_003)]
+	[InlineData(250_000)]
+	public void ParallelSort_IsTheSameAsOneSort(int count)
+	{
+		List<string> urls = RandomUrls(count, seed: count);
+		List<string> expected = [.. urls];
+		expected.Sort(ExternalUrlSorter.Order);
+
+		ExternalUrlSorter.Sort(urls);
+
+		Assert.Equal(expected, urls);
+	}
+
 	[Fact]
 	public async Task NoUrls_GivesNothing()
 	{

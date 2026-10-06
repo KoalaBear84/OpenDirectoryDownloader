@@ -98,7 +98,7 @@ public sealed class ScanIntegrationTests : IDisposable
 		});
 		FakeSiteExpectation expected = server.Site.Expectation();
 
-		await ScanRunner.RunAsync(server.BaseUrl, _workingDirectory, "--use-database", "--keep-db", "--evict-memory", "--db-path", DatabasePath);
+		await ScanRunner.RunAsync(server.BaseUrl, _workingDirectory, "--keep-db", "--db-path", DatabasePath);
 
 		await using ScanDatabase database = await ScanDatabase.OpenReadOnlyAsync(DatabasePath, TestContext.Current.CancellationToken);
 		Assert.Equal(expected.Files, await database.CountFilesAsync());
@@ -117,7 +117,7 @@ public sealed class ScanIntegrationTests : IDisposable
 			FilesPerDirectory = 4
 		});
 
-		await ScanRunner.RunAsync(server.BaseUrl, _workingDirectory, "--use-database", "--keep-db", "--db-path", DatabasePath);
+		await ScanRunner.RunAsync(server.BaseUrl, _workingDirectory, "--keep-db", "--db-path", DatabasePath);
 		long requestsAfterFirstScan = server.DirectoryRequests;
 
 		long runsBefore;
@@ -127,7 +127,7 @@ public sealed class ScanIntegrationTests : IDisposable
 			runsBefore = await before.CountRunsAsync();
 		}
 
-		await ScanRunner.RunAsync(server.BaseUrl, _workingDirectory, "--use-database", "--resume", "--db-path", DatabasePath);
+		await ScanRunner.RunAsync(server.BaseUrl, _workingDirectory, "--resume", "--db-path", DatabasePath);
 
 		await using ScanDatabase after = await ScanDatabase.OpenReadOnlyAsync(DatabasePath, TestContext.Current.CancellationToken);
 		Assert.Equal(runsBefore, await after.CountRunsAsync());

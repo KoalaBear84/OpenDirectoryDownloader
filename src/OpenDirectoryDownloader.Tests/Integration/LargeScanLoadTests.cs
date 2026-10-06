@@ -106,24 +106,4 @@ public sealed class LargeScanLoadTests(ITestOutputHelper output) : IDisposable
 		Report($"Tree of depth {depth}, 8 subdirectories and 40 files per directory", server, result, expected);
 		Assert.Equal(expected.Files, result.Session.Root.TotalFiles);
 	}
-
-	[LoadFact]
-	public async Task WideAndDeepTree_WithDatabaseAndEviction()
-	{
-		int depth = EnvironmentInt("ODD_LOAD_DEPTH", 4);
-
-		await using FakeDirectoryServer server = await FakeDirectoryServer.StartAsync(new FakeSiteOptions
-		{
-			Style = ListingStyle.HtmlTable,
-			Depth = depth,
-			SubdirectoriesPerDirectory = 8,
-			FilesPerDirectory = 40
-		});
-		FakeSiteExpectation expected = server.Site.Expectation();
-
-		ScanResult result = await ScanRunner.RunAsync(server.BaseUrl, _workingDirectory, "--threads", "20", "--use-database", "--evict-memory", "--db-path", Path.Combine(_workingDirectory, "load.sqlite"));
-
-		Report($"Same tree with --use-database --evict-memory (depth {depth})", server, result, expected);
-		Assert.Equal(expected.Files, result.Session.Root.TotalFiles);
-	}
 }

@@ -360,8 +360,15 @@ public sealed partial class ScanWorker(
 
 		try
 		{
-			scanDatabase.MirrorSessionStats(session);
-			await scanDatabase.DisposeAsync();
+			if (keep)
+			{
+				scanDatabase.MirrorSessionStats(session);
+				await scanDatabase.DisposeAsync();
+			}
+			else
+			{
+				await scanDatabase.DiscardAsync();
+			}
 		}
 		catch (Exception ex)
 		{

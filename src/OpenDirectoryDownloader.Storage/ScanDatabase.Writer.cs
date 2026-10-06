@@ -156,7 +156,7 @@ public sealed partial class ScanDatabase
 		// A file attached to this directory already holds the relative part of its URL
 		if (ReferenceEquals(webFile.ParentDirectory, parentDirectory) && webFile.TryGetRelativeUrl(out string relativeUrl))
 		{
-			return new FileRow(webFile.Id, parentDirectory.Id, relativeUrl, true, UrlHash(directoryUrl, relativeUrl), webFile.FileName ?? string.Empty, webFile.FileSize, webFile.Description);
+			return new FileRow(webFile.Id, parentDirectory.Id, relativeUrl, true, webFile.FileName ?? string.Empty, webFile.FileSize, webFile.Description);
 		}
 
 		string url = webFile.Url;
@@ -167,7 +167,6 @@ public sealed partial class ScanDatabase
 			parentDirectory.Id,
 			relative ? url[directoryUrl.Length..] : url,
 			relative,
-			UrlHash(url),
 			webFile.FileName ?? string.Empty,
 			webFile.FileSize,
 			webFile.Description);
@@ -409,8 +408,8 @@ public sealed partial class ScanDatabase
 
 		private const string InsertFileSql =
 			"""
-			INSERT INTO file (id, directory_id, url, relative, url_hash, name, extension, size, description)
-			VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)
+			INSERT INTO file (id, directory_id, url, relative, name, extension, size, description)
+			VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)
 			""";
 
 		private readonly RawStatement _upsertFile = new(connection.Handle,
@@ -421,7 +420,6 @@ public sealed partial class ScanDatabase
 				directory_id = excluded.directory_id,
 				url = excluded.url,
 				relative = excluded.relative,
-				url_hash = excluded.url_hash,
 				name = excluded.name,
 				extension = excluded.extension,
 				size = excluded.size,
@@ -465,11 +463,10 @@ public sealed partial class ScanDatabase
 			statement.Bind(2, row.DirectoryId);
 			statement.Bind(3, row.Url);
 			statement.Bind(4, row.Relative ? 1 : 0);
-			statement.Bind(5, row.UrlHash);
-			statement.Bind(6, row.Name);
-			statement.Bind(7, Extension(row.Name));
-			statement.Bind(8, row.Size);
-			statement.Bind(9, row.Description);
+			statement.Bind(5, row.Name);
+			statement.Bind(6, Extension(row.Name));
+			statement.Bind(7, row.Size);
+			statement.Bind(8, row.Description);
 			statement.Execute();
 		}
 
@@ -574,7 +571,7 @@ public sealed partial class ScanDatabase
 
 	private sealed record DirectoryRow(long Id, long? ParentId, string Url, string Name, string Description, bool Finished, bool Error, string Parser);
 
-	private sealed record FileRow(long Id, long DirectoryId, string Url, bool Relative, long UrlHash, string Name, long? Size, string Description);
+	private sealed record FileRow(long Id, long DirectoryId, string Url, bool Relative, string Name, long? Size, string Description);
 
 	private sealed record StatsSnapshot(long HttpTraffic, long HttpRequests, long Errors, long Skipped, string StatusCodesJson);
 

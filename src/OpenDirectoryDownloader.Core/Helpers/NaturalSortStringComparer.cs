@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 namespace OpenDirectoryDownloader.Helpers;
 
 public class NaturalSortStringComparer : IComparer<string>
@@ -16,6 +18,8 @@ public class NaturalSortStringComparer : IComparer<string>
 		_comparison = comparison;
 	}
 
+	// Sorting the URL list is one long burst of comparisons: optimized right away instead of starting as unoptimized code
+	[MethodImpl(MethodImplOptions.AggressiveOptimization)]
 	public int Compare(string x, string y)
 	{
 		// Let string.Compare handle the case where x or y is null
@@ -88,6 +92,7 @@ public class NaturalSortStringComparer : IComparer<string>
 	/// earlier position that is a segment boundary in both strings. Everything before that compares equal
 	/// segment by segment, so skipping it gives exactly the same result.
 	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveOptimization)]
 	private static int CommonSegmentStart(string x, string y)
 	{
 		int max = Math.Min(x.Length, y.Length);
@@ -112,6 +117,7 @@ public class NaturalSortStringComparer : IComparer<string>
 	}
 
 	/// <summary>The value long.TryParse gives (0 when it fails), without its culture handling for the plain ASCII digit runs that nearly all numbers are.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveOptimization)]
 	private static long ParseNumber(ReadOnlySpan<char> digits)
 	{
 		if (digits.Length <= 18)
@@ -159,6 +165,7 @@ public class NaturalSortStringComparer : IComparer<string>
 
 		public bool CurrentIsNumber { get; private set; }
 
+		[MethodImpl(MethodImplOptions.AggressiveOptimization)]
 		public bool MoveNext()
 		{
 			int currentPosition = _start >= 0

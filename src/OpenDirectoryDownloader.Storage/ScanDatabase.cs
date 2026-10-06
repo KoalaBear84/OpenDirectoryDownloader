@@ -116,7 +116,8 @@ public sealed partial class ScanDatabase : IAsyncDisposable
 				throw new InvalidOperationException($"'{path}' is a scan database from another version of OpenDirectoryDownloader (schema {existingVersion}, this version uses {SchemaVersion}) and cannot be resumed.");
 			}
 
-			await ExecuteAsync(connection, Schema, cancellationToken);
+			// WAL before the schema, and the schema in one transaction: otherwise every statement is its own
+			// transaction with the default synchronous = FULL, each one waiting for the disk
 			await ExecuteAsync(connection,
 				"""
 				PRAGMA journal_mode = WAL;
@@ -125,6 +126,7 @@ public sealed partial class ScanDatabase : IAsyncDisposable
 				PRAGMA temp_store = MEMORY;
 				PRAGMA wal_autocheckpoint = 10000;
 				""", cancellationToken);
+			await ExecuteAsync(connection, $"BEGIN;\n{Schema}\nCOMMIT;", cancellationToken);
 		}
 		catch
 		{
@@ -223,7 +225,6 @@ public sealed partial class ScanDatabase : IAsyncDisposable
 			directory_id INTEGER NOT NULL,
 			url TEXT NOT NULL,
 			relative INTEGER NOT NULL,
-			url_hash INTEGER NOT NULL,
 			name TEXT NOT NULL,
 			-- lower case, with the dot, empty for none: the statistics group by it
 			extension TEXT NOT NULL,
@@ -232,14 +233,10 @@ public sealed partial class ScanDatabase : IAsyncDisposable
 		);
 
 		CREATE INDEX IF NOT EXISTS file_directory ON file (directory_id);
-		CREATE INDEX IF NOT EXISTS file_url ON file (url_hash);
 		""";
 
 	/// <summary>The 64-bit key a URL is looked up by (the full URL is compared too, so a collision only costs a row read).</summary>
 	internal static long UrlHash(string url) => (long)(ulong)Hash128.Of(url);
-
-	/// <summary>The hash of directoryUrl + relativeUrl</summary>
-	internal static long UrlHash(string directoryUrl, string relativeUrl) => (long)(ulong)Hash128.Of(directoryUrl, relativeUrl);
 
 	/// <summary>Waits until everything queued so far is committed. A no-op on a read-only instance.</summary>
 	public async Task FlushAsync(CancellationToken cancellationToken = default)
@@ -258,7 +255,12 @@ public sealed partial class ScanDatabase : IAsyncDisposable
 	private int _disposed;
 
 	/// <summary>Writes what is queued, closes the connections. Safe to call more than once.</summary>
-	public async ValueTask DisposeAsync()
+	public ValueTask DisposeAsync() => CloseAsync(checkpoint: true);
+
+	/// <summary>Closes a database that is deleted right after: what is queued is still written, but not checkpointed into the database file.</summary>
+	public ValueTask DiscardAsync() => CloseAsync(checkpoint: false);
+
+	private async ValueTask CloseAsync(bool checkpoint)
 	{
 		if (Interlocked.Exchange(ref _disposed, 1) == 1)
 		{
@@ -270,8 +272,11 @@ public sealed partial class ScanDatabase : IAsyncDisposable
 			_channel.Writer.TryComplete();
 
 			await _writerTask;
+		}
 
-			// Leave a clean, self-contained file behind
+		// Leave a clean, self-contained file behind
+		if (!IsReadOnly && checkpoint)
+		{
 			try
 			{
 				await ExecuteAsync(_writeConnection, "PRAGMA wal_checkpoint(TRUNCATE);", CancellationToken.None);
@@ -280,6 +285,11 @@ public sealed partial class ScanDatabase : IAsyncDisposable
 			{
 				_logger.LogDebug(ex, "Could not checkpoint scan database '{path}'", Path);
 			}
+		}
+		else if (!IsReadOnly)
+		{
+			// Closing the last connection checkpoints too
+			SQLitePCL.raw.sqlite3_db_config(_writeConnection.Handle, SQLitePCL.raw.SQLITE_DBCONFIG_NO_CKPT_ON_CLOSE, 1, out _);
 		}
 
 		if (_readConnection is not null)

@@ -71,7 +71,7 @@ public class CliTests
 			"--upload-urls", "--speedtest", "--user-agent", "agent", "--username", "user", "--password", "pass", "--github-token", "token",
 			"--output-file", "out", "--fast-scan", "--proxy-address", "socks5://127.0.0.1:9050", "--proxy-username", "pu", "--proxy-password", "pp",
 			"--flaresolverr-url", "http://127.0.0.1:8191", "--flaresolverr-docker-name", "flaresolverr", "--header", "X-A: 1",
-			"--use-database", "--db-path", "db.sqlite", "--keep-db", "--evict-memory", "--resume", "--retry-errors",
+			"--db-path", "db.sqlite", "--keep-db", "--resume", "--retry-errors",
 			"--serve-port", "9000", "--serve-host", "0.0.0.0", "--serve-no-browser");
 
 		Assert.Equal(7, invocation.Crawl.Threads);
@@ -91,7 +91,7 @@ public class CliTests
 		Assert.Equal("http://127.0.0.1:8191", invocation.Http.FlareSolverrUrl);
 		Assert.Equal("flaresolverr", invocation.Http.FlareSolverrDockerName);
 		Assert.Equal(["X-A: 1"], invocation.Http.Headers);
-		Assert.True(invocation.Storage.UseDatabase && invocation.Storage.KeepDb && invocation.Storage.EvictMemory && invocation.Storage.Resume && invocation.Storage.RetryErrors);
+		Assert.True(invocation.Storage.KeepDb && invocation.Storage.Resume && invocation.Storage.RetryErrors);
 		Assert.Equal("db.sqlite", invocation.Storage.DbPath);
 		Assert.Equal(9000, invocation.Serve.Port);
 		Assert.Equal("0.0.0.0", invocation.Serve.Host);

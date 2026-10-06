@@ -81,15 +81,9 @@ public sealed record OutputOptions
 
 public sealed record StorageOptions
 {
-	/// <summary>Keep the scan database (it is always used, without this it is deleted when the scan is done)</summary>
-	public bool UseDatabase { get; init; }
-
 	public string DbPath { get; init; }
 
 	public bool KeepDb { get; init; }
-
-	/// <summary>Accepted for compatibility: closed subtrees are always dropped from memory now</summary>
-	public bool EvictMemory { get; init; }
 
 	public bool Resume { get; init; }
 

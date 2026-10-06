@@ -39,7 +39,7 @@ internal static class WebAsset
 /// <summary>
 /// Hosts the local web viewer for a scan database (`--serve`, see 'Web viewer' in the README). Read-only:
 /// this never touches the scanning/indexing code path, it only browses an existing (or still-being-written)
-/// database produced by --use-database.
+/// scan database.
 /// </summary>
 public static class ScanDatabaseServer
 {

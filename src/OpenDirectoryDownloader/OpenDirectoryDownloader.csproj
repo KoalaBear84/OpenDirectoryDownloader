@@ -4,6 +4,8 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <!-- Dynamic PGO instruments code before optimizing it; a scan is short and CPU heavy, and was up to 30% slower with it -->
+    <TieredPGO>false</TieredPGO>
     <RuntimeIdentifiers>win-x64;linux-x64;linux-arm;linux-arm64;osx-x64</RuntimeIdentifiers>
     <ApplicationIcon>Resources\Application.ico</ApplicationIcon>
     <!-- The site parsers' JSON models (Dufs, AList, PCloud, HFS, upload sites, ...) still use reflection based System.Text.Json -->

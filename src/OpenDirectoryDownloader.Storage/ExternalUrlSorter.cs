@@ -1,4 +1,4 @@
-using OpenDirectoryDownloader.Helpers;
+﻿using OpenDirectoryDownloader.Helpers;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -12,7 +12,7 @@ namespace OpenDirectoryDownloader.Storage;
 public sealed class ExternalUrlSorter
 {
 	/// <summary>Natural order, ties between different strings broken ordinally: a total order, so the result does not depend on the input order.</summary>
-	public static readonly Comparison<string> Order = (x, y) =>
+	public static readonly Comparison<string> Order = [MethodImpl(MethodImplOptions.AggressiveOptimization)] (x, y) =>
 	{
 		int result = NaturalSortStringComparer.InvariantCulture.Compare(x, y);
 
@@ -53,7 +53,7 @@ public sealed class ExternalUrlSorter
 
 			if (runFiles.Count == 0)
 			{
-				chunk.Sort(Order);
+				Sort(chunk);
 
 				foreach (string url in Distinct(chunk))
 				{
@@ -109,9 +109,87 @@ public sealed class ExternalUrlSorter
 		}
 	}
 
+	/// <summary>
+	/// Sorts parts of the list in parallel and merges them pairwise, also in parallel. The order is total (equal
+	/// means the same string), so the result is exactly what one sort gives.
+	/// </summary>
+	internal static void Sort(List<string> urls)
+	{
+		const int MinimumPartLength = 16_384;
+
+		int parts = Math.Min(Environment.ProcessorCount, urls.Count / MinimumPartLength);
+
+		if (parts < 2)
+		{
+			urls.Sort(Order);
+			return;
+		}
+
+		string[] source = [.. urls];
+		string[] target = new string[source.Length];
+
+		// Part boundaries, merged pairwise until one part is left
+		List<int> bounds = [.. Enumerable.Range(0, parts + 1).Select(part => (int)((long)source.Length * part / parts))];
+
+		Parallel.For(0, parts, part => source.AsSpan(bounds[part], bounds[part + 1] - bounds[part]).Sort(Order));
+
+		while (bounds.Count > 2)
+		{
+			int pairs = (bounds.Count - 1) / 2;
+			string[] from = source;
+			string[] to = target;
+			List<int> current = bounds;
+
+			Parallel.For(0, pairs, pair => Merge(from, current[2 * pair], current[2 * pair + 1], current[2 * pair + 2], to));
+
+			// An odd part out is copied as it is
+			if ((bounds.Count - 1) % 2 == 1)
+			{
+				Array.Copy(source, bounds[^2], target, bounds[^2], bounds[^1] - bounds[^2]);
+			}
+
+			List<int> merged = [];
+
+			for (int i = 0; i < bounds.Count; i += 2)
+			{
+				merged.Add(bounds[i]);
+			}
+
+			if (merged[^1] != bounds[^1])
+			{
+				merged.Add(bounds[^1]);
+			}
+
+			bounds = merged;
+			(source, target) = (target, source);
+		}
+
+		for (int i = 0; i < source.Length; i++)
+		{
+			urls[i] = source[i];
+		}
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveOptimization)]
+	private static void Merge(string[] source, int start, int middle, int end, string[] target)
+	{
+		int left = start;
+		int right = middle;
+		int position = start;
+
+		while (left < middle && right < end)
+		{
+			target[position++] = Order(source[right], source[left]) < 0 ? source[right++] : source[left++];
+		}
+
+		Array.Copy(source, left, target, position, middle - left);
+		position += middle - left;
+		Array.Copy(source, right, target, position, end - right);
+	}
+
 	private async Task<string> WriteRunAsync(List<string> chunk, CancellationToken cancellationToken)
 	{
-		chunk.Sort(Order);
+		Sort(chunk);
 
 		string path = Path.Combine(_temporaryDirectory, $"odd-urls-{Guid.NewGuid():N}.tmp");
 

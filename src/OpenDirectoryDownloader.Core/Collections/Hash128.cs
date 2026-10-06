@@ -62,24 +62,6 @@ public struct Hash128
 		return hash.Result;
 	}
 
-	/// <summary>The same as Of(first + second), without building that string.</summary>
-	public static UInt128 Of(string first, string second)
-	{
-		Hash128 hash = new();
-
-		foreach (char c in first)
-		{
-			hash.Add(c);
-		}
-
-		foreach (char c in second)
-		{
-			hash.Add(c);
-		}
-
-		return hash.Result;
-	}
-
 	/// <summary>MurmurHash3's 64-bit finalizer: spreads every input bit over the whole output.</summary>
 	private static ulong Mix(ulong value)
 	{

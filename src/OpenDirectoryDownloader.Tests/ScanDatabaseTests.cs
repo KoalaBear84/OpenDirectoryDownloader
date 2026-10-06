@@ -171,6 +171,34 @@ public class ScanDatabaseTests : IAsyncLifetime
 		Assert.Equal(12345, fileInfo.FileSize);
 	}
 
+	[Theory]
+	// A link elsewhere is stored as is, found by looking through all files
+	[InlineData("https://example.com/listing/", "https://other.example.com/x.zip")]
+	// Deeper than its directory, stored relative to it ("sub/deeper/x.zip")
+	[InlineData("https://example.com/listing/", "https://example.com/listing/sub/deeper/x.zip")]
+	// A directory with a query
+	[InlineData("https://example.com/index.php?dir=a/", "https://example.com/index.php?dir=a/x.zip")]
+	public async Task GetFileInfoAsync_FindsFilesWhereverTheyAreStored(string directoryUrl, string fileUrl)
+	{
+		WebDirectory root = new(parentWebDirectory: null) { Url = "https://example.com/", Name = "ROOT" };
+		WebDirectory directory = new(root) { Url = directoryUrl, Name = "listing" };
+
+		// A directory the walk up passes first, without the file
+		WebDirectory sibling = new(root) { Url = "https://example.com/listing/sub/", Name = "sub" };
+
+		_scanDatabase.MirrorDirectory(root);
+		_scanDatabase.MirrorDirectory(directory);
+		_scanDatabase.MirrorDirectory(sibling);
+		_scanDatabase.MirrorFile(new WebFile { Url = fileUrl, FileName = "x.zip", FileSize = 7 }, directory);
+		await _scanDatabase.FlushAsync();
+
+		ScanDatabase.FileInfoSnapshot fileInfo = await _scanDatabase.GetFileInfoAsync(fileUrl);
+
+		Assert.NotNull(fileInfo);
+		Assert.Equal(7, fileInfo.FileSize);
+		Assert.Null(await _scanDatabase.GetFileInfoAsync(fileUrl + "2"));
+	}
+
 	[Fact]
 	public async Task GetFileInfoAsync_UnknownUrl_ReturnsNull()
 	{
