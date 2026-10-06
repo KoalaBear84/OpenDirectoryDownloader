@@ -22,7 +22,11 @@ public sealed class LineView
 	/// <summary>The first link's href attribute, null when it has none.</summary>
 	public string Href { get; init; }
 
-	/// <summary>The first link's title attribute, null when it has none or there is no link (what IHtmlAnchorElement.Title returns).</summary>
+	/// <summary>
+	/// The first link's title attribute, "" when it has none, null when there is no link. (AngleSharp's own
+	/// IHtmlAnchorElement.Title returns null for a missing title in older versions and "" in newer ones, so both paths
+	/// normalize it: the only thing asked of it is whether it equals "..".)
+	/// </summary>
 	public string Title { get; init; }
 
 	/// <summary>The first link's text content, null when there is no link.</summary>
@@ -111,7 +115,7 @@ public static class LineFragmentParser
 		{
 			HasLink = link is not null,
 			Href = link?.Attributes["href"]?.Value,
-			Title = link is null ? null : (link as IHtmlAnchorElement)?.Title,
+			Title = link is null ? null : (link as IHtmlAnchorElement)?.Title ?? string.Empty,
 			Text = link?.TextContent
 		};
 
@@ -194,7 +198,7 @@ public static class LineFragmentParser
 				{
 					hasLink = true;
 					href = elementHref;
-					title = elementTitle;
+					title = elementTitle ?? string.Empty;
 					linkText = line.Substring(position, closeStart - position);
 				}
 
