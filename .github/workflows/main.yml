@@ -113,6 +113,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
     - name: Download Artifacts
       uses: actions/download-artifact@v4
       with:
@@ -123,19 +126,38 @@ jobs:
     - name: Get tag info
       id: tag_info
       run: echo "SOURCE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+    - name: Prepare release notes
+      # The notes for a release are the file release-notes/<tag>.md (for example release-notes/v4.1.0.0.md),
+      # committed before the tag is pushed. Without that file the commit message is used, as before.
+      env:
+        COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+        SOURCE_TAG: ${{ steps.tag_info.outputs.SOURCE_TAG }}
+      run: |
+        NOTES_FILE="release-notes/${SOURCE_TAG}.md"
+        if [ -f "$NOTES_FILE" ]; then
+          echo "Using $NOTES_FILE as the release notes"
+          cp "$NOTES_FILE" release-body.md
+        else
+          echo "No $NOTES_FILE found, using the commit message as the release notes"
+          printf '%s\n' "$COMMIT_MESSAGE" > release-body.md
+        fi
+
     - name: Create release
+      # Created as a draft, which sends no notification. The publish job below makes it public once the
+      # Docker images are out too, so the release email goes out once, with the final notes.
       uses: softprops/action-gh-release@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ steps.tag_info.outputs.SOURCE_TAG }}
         name: OpenDirectoryDownloader ${{ steps.tag_info.outputs.SOURCE_TAG }}
-        draft: false
+        draft: true
         prerelease: false
-        body: ${{ github.event.head_commit.message }}
+        body_path: release-body.md
         files: |
           build-artifacts/OpenDirectoryDownloader-*.zip
-    
+
 
   docker:
     needs: [ build ]
@@ -250,3 +272,18 @@ jobs:
           ghcr.io/${{ steps.repo_owner.outputs.REPO_OWNER_LC }}/opendirectorydownloader:linux-x64
           ghcr.io/${{ steps.repo_owner.outputs.REPO_OWNER_LC }}/opendirectorydownloader:linux-arm
           ghcr.io/${{ steps.repo_owner.outputs.REPO_OWNER_LC }}/opendirectorydownloader:linux-arm64
+
+  publish:
+    # Publishing is what sends the release email, so it waits for everything the release mentions: the zip files
+    # (release) and the Docker images (docker, combine). If any of those fails the release stays a draft.
+    needs: [ release, docker, combine ]
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+    - name: Publish the release
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: gh release edit "${GITHUB_REF#refs/tags/}" --repo "$GITHUB_REPOSITORY" --draft=false
