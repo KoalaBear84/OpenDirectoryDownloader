@@ -109,7 +109,10 @@ public static class CliDefinition
 
 		rootCommand.Validators.Add(result =>
 		{
-			if (result.GetValue(Wait) > 0 && result.GetValue(Threads) > 1)
+			// An option that was not given has no result here, its default must be taken into account by hand
+			int threads = result.GetResult(Threads) is OptionResult threadsResult ? threadsResult.GetValueOrDefault<int>() : 5;
+
+			if (result.GetValue(Wait) > 0 && threads > 1)
 			{
 				result.AddError("Using a wait time with more than 1 thread isn't supported, as it would still have multiple threads running.");
 			}

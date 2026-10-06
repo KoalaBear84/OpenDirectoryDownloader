@@ -41,6 +41,12 @@ public sealed class FakeSiteOptions
 
 	public string HostName { get; init; } = "files.example.test";
 
+	/// <summary>When set, a request with another User-Agent gets an empty page (some servers only answer known clients).</summary>
+	public string RequiredUserAgentPrefix { get; init; }
+
+	/// <summary>Return true to make a "directory" answer with something that is not HTML, like a file served without a filename.</summary>
+	public Func<string, bool> NotHtmlDirectory { get; init; }
+
 	/// <summary>Keep each rendered listing around instead of generating it again for every request. Use it when measuring the client (allocation, memory): otherwise the server's own work for a huge listing, in the same process, is counted too.</summary>
 	public bool CacheListings { get; init; }
 }

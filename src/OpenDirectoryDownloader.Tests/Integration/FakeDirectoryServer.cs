@@ -109,6 +109,22 @@ public sealed class FakeDirectoryServer : IAsyncDisposable
 
 			Interlocked.Increment(ref _directoryRequests);
 
+			if (Site.Options.RequiredUserAgentPrefix is string userAgentPrefix && !context.Request.Headers.UserAgent.ToString().StartsWith(userAgentPrefix, StringComparison.Ordinal))
+			{
+				context.Response.ContentType = "text/html;charset=UTF-8";
+				context.Response.ContentLength = 0;
+				return;
+			}
+
+			if (Site.Options.NotHtmlDirectory?.Invoke(path) == true)
+			{
+				context.Response.ContentType = "application/octet-stream";
+				byte[] binary = [.. Enumerable.Range(0, 4096).Select(i => (byte)(i % 7))];
+				context.Response.ContentLength = binary.Length;
+				await context.Response.Body.WriteAsync(binary, context.RequestAborted);
+				return;
+			}
+
 			if (Site.Options.FailDirectory?.Invoke(path) == true)
 			{
 				Interlocked.Increment(ref _failedRequests);

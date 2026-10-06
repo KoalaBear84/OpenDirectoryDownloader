@@ -154,4 +154,50 @@ public sealed class ScanIntegrationTests : IDisposable
 		Assert.Equal(server.Site.Expectation().Files, result.Session.Root.TotalFiles);
 		Assert.True(result.Elapsed < TimeSpan.FromSeconds(1.5), $"A scan of 21 tiny directories took {result.Elapsed.TotalSeconds:F1} s, expected well under a second");
 	}
+
+	[Fact]
+	public async Task Scan_OfAServerThatOnlyAnswersCurl_UsesTheCurlUserAgentForTheWholeScan()
+	{
+		await using FakeDirectoryServer server = await FakeDirectoryServer.StartAsync(new FakeSiteOptions
+		{
+			Style = ListingStyle.NginxAutoindex,
+			Depth = 2,
+			SubdirectoriesPerDirectory = 2,
+			FilesPerDirectory = 3,
+			RequiredUserAgentPrefix = "curl/"
+		});
+		FakeSiteExpectation expected = server.Site.Expectation();
+
+		ScanResult result = await ScanRunner.RunAsync(server.BaseUrl, _workingDirectory);
+
+		Assert.Equal(expected.Files, result.Session.Root.TotalFiles);
+		Assert.Equal(0, result.Session.Counters.Errors);
+
+		// The root twice (without and with the fallback), every other directory once: the fallback stuck
+		Assert.Equal(expected.Directories + 1, server.DirectoryRequests);
+	}
+
+	[Fact]
+	public async Task Scan_ADirectoryThatIsAFile_BecomesAFileOfItsParent()
+	{
+		await using FakeDirectoryServer server = await FakeDirectoryServer.StartAsync(new FakeSiteOptions
+		{
+			Style = ListingStyle.ApachePre,
+			Depth = 1,
+			SubdirectoriesPerDirectory = 3,
+			FilesPerDirectory = 4,
+			NotHtmlDirectory = path => path == "/dir-01/"
+		});
+		FakeSiteExpectation expected = server.Site.Expectation();
+
+		ScanResult result = await ScanRunner.RunAsync(server.BaseUrl, _workingDirectory, "--keep-db", "--db-path", DatabasePath);
+
+		// dir-01 and its 4 files are gone, a file named dir-01 came in its place
+		Assert.Equal(expected.Files - 4 + 1, result.Session.Root.TotalFiles);
+
+		await using ScanDatabase database = await ScanDatabase.OpenReadOnlyAsync(DatabasePath, TestContext.Current.CancellationToken);
+		Assert.Equal(expected.Directories - 1, await database.CountDirectoriesAsync());
+		Assert.Equal(expected.Files - 4 + 1, await database.CountFilesAsync());
+		Assert.NotNull(await database.GetFileInfoAsync($"{server.BaseUrl}dir-01/"));
+	}
 }
