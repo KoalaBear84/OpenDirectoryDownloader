@@ -1,0 +1,940 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  dir http://localhost/$PL▲$H ¢LUB 7-Contact Lens/ | $PL▲$H ¢LUB 7-Contact Lens |  | ParseTablesDirectoryListing
+  dir http://localhost/18 Carat Affair/ | 18 Carat Affair |  | ParseTablesDirectoryListing
+  dir http://localhost/2222 Soft For Life/ | 2222 Soft For Life |  | ParseTablesDirectoryListing
+  dir http://localhost/3D夢/ | 3D夢 |  | ParseTablesDirectoryListing
+  dir http://localhost/4evr ltd/ | 4evr ltd |  | ParseTablesDirectoryListing
+  dir http://localhost/6★VORTEX☆7/ | 6★VORTEX☆7 |  | ParseTablesDirectoryListing
+  dir http://localhost/A Digital Compilation Curated By Captain T.V/ | A Digital Compilation Curated By Captain T.V |  | ParseTablesDirectoryListing
+  dir http://localhost/A l i c e - MIMA!/ | A l i c e - MIMA! |  | ParseTablesDirectoryListing
+  dir http://localhost/AIR Japan/ | AIR Japan |  | ParseTablesDirectoryListing
+  dir http://localhost/AIRLINES TAPES/ | AIRLINES TAPES |  | ParseTablesDirectoryListing
+  dir http://localhost/AMAZON PRIME/ | AMAZON PRIME |  | ParseTablesDirectoryListing
+  dir http://localhost/ANIMAL - MOTHER/ | ANIMAL - MOTHER |  | ParseTablesDirectoryListing
+  dir http://localhost/ATLER music/ | ATLER music |  | ParseTablesDirectoryListing
+  dir http://localhost/AWALthe1$T/ | AWALthe1$T |  | ParseTablesDirectoryListing
+  dir http://localhost/Adolf ☆ Nomura/ | Adolf ☆ Nomura |  | ParseTablesDirectoryListing
+  dir http://localhost/American Online/ | American Online |  | ParseTablesDirectoryListing
+  dir http://localhost/Amun Dragoon/ | Amun Dragoon |  | ParseTablesDirectoryListing
+  dir http://localhost/Aquaxx✪/ | Aquaxx✪ |  | ParseTablesDirectoryListing
+  dir http://localhost/Archon/ | Archon |  | ParseTablesDirectoryListing
+  dir http://localhost/Areas/ | Areas |  | ParseTablesDirectoryListing
+  dir http://localhost/ArtFluids/ | ArtFluids |  | ParseTablesDirectoryListing
+  dir http://localhost/ArtFluids - Umami/ | ArtFluids - Umami |  | ParseTablesDirectoryListing
+  dir http://localhost/AstroShaman/ | AstroShaman |  | ParseTablesDirectoryListing
+  dir http://localhost/Athens Online/ | Athens Online |  | ParseTablesDirectoryListing
+  dir http://localhost/Audi/ | Audi |  | ParseTablesDirectoryListing
+  dir http://localhost/Ayshay/ | Ayshay |  | ParseTablesDirectoryListing
+  dir http://localhost/B o d y l i n e/ | B o d y l i n e |  | ParseTablesDirectoryListing
+  dir http://localhost/BADVICE COLLECTIVE/ | BADVICE COLLECTIVE |  | ParseTablesDirectoryListing
+  dir http://localhost/BEST MUSIC/ | BEST MUSIC |  | ParseTablesDirectoryListing
+  dir http://localhost/BLUNTSIDE/ | BLUNTSIDE |  | ParseTablesDirectoryListing
+  dir http://localhost/BODYGUARD/ | BODYGUARD |  | ParseTablesDirectoryListing
+  dir http://localhost/Based Frequency/ | Based Frequency |  | ParseTablesDirectoryListing
+  dir http://localhost/Bittertv/ | Bittertv |  | ParseTablesDirectoryListing
+  dir http://localhost/Black Moods/ | Black Moods |  | ParseTablesDirectoryListing
+  dir http://localhost/Blank Banshee/ | Blank Banshee |  | ParseTablesDirectoryListing
+  dir http://localhost/Blue Hydrangea/ | Blue Hydrangea |  | ParseTablesDirectoryListing
+  dir http://localhost/Blue Limits/ | Blue Limits |  | ParseTablesDirectoryListing
+  dir http://localhost/CASTING/ | CASTING |  | ParseTablesDirectoryListing
+  dir http://localhost/CHATMM/ | CHATMM |  | ParseTablesDirectoryListing
+  dir http://localhost/CODEMUS2x43/ | CODEMUS2x43 |  | ParseTablesDirectoryListing
+  dir http://localhost/CUSTOMER SERVICE/ | CUSTOMER SERVICE |  | ParseTablesDirectoryListing
+  dir http://localhost/CVLTVRE/ | CVLTVRE |  | ParseTablesDirectoryListing
+  dir http://localhost/CVLTVRΣ/ | CVLTVRΣ |  | ParseTablesDirectoryListing
+  dir http://localhost/CYBEREALITYライフ/ | CYBEREALITYライフ |  | ParseTablesDirectoryListing
+  dir http://localhost/Cara Loft/ | Cara Loft |  | ParseTablesDirectoryListing
+  dir http://localhost/Careless Messenger Recordings✆ (division under Comtex)/ | Careless Messenger Recordings✆ (division under Comtex) |  | ParseTablesDirectoryListing
+  dir http://localhost/Childhood/ | Childhood |  | ParseTablesDirectoryListing
+  dir http://localhost/Chip Jewelry/ | Chip Jewelry |  | ParseTablesDirectoryListing
+  dir http://localhost/Christians Having Sex/ | Christians Having Sex |  | ParseTablesDirectoryListing
+  dir http://localhost/Chuck Person/ | Chuck Person |  | ParseTablesDirectoryListing
+  dir http://localhost/Cleanse光777/ | Cleanse光777 |  | ParseTablesDirectoryListing
+  dir http://localhost/ClearVisionDream Productions/ | ClearVisionDream Productions |  | ParseTablesDirectoryListing
+  dir http://localhost/Clinton Affair/ | Clinton Affair |  | ParseTablesDirectoryListing
+  dir http://localhost/Computer Dreams/ | Computer Dreams |  | ParseTablesDirectoryListing
+  dir http://localhost/Constellation Tatsu/ | Constellation Tatsu |  | ParseTablesDirectoryListing
+  dir http://localhost/Contact Lens/ | Contact Lens |  | ParseTablesDirectoryListing
+  dir http://localhost/Contemporary Shopping/ | Contemporary Shopping |  | ParseTablesDirectoryListing
+  dir http://localhost/Curb Cobain/ | Curb Cobain |  | ParseTablesDirectoryListing
+  dir http://localhost/D R E A M™/ | D R E A M™ |  | ParseTablesDirectoryListing
+  dir http://localhost/D%27Angelord/ | D'Angelord |  | ParseTablesDirectoryListing
+  dir http://localhost/DARKPYRAMID/ | DARKPYRAMID |  | ParseTablesDirectoryListing
+  dir http://localhost/DELTA金TOPCO/ | DELTA金TOPCO |  | ParseTablesDirectoryListing
+  dir http://localhost/DJ Pirâmide/ | DJ Pirâmide |  | ParseTablesDirectoryListing
+  dir http://localhost/DJ Rozwell/ | DJ Rozwell |  | ParseTablesDirectoryListing
+  dir http://localhost/DREAM CATALOGUE™/ | DREAM CATALOGUE™ |  | ParseTablesDirectoryListing
+  dir http://localhost/DRE▲Mz/ | DRE▲Mz |  | ParseTablesDirectoryListing
+  dir http://localhost/Dan Mason/ | Dan Mason |  | ParseTablesDirectoryListing
+  dir http://localhost/Dan Mason ダン·メイソン/ | Dan Mason ダン·メイソン |  | ParseTablesDirectoryListing
+  dir http://localhost/DarkTwaine_/ | DarkTwaine_ |  | ParseTablesDirectoryListing
+  dir http://localhost/Darksleep/ | Darksleep |  | ParseTablesDirectoryListing
+  dir http://localhost/DataDisc Online/ | DataDisc Online |  | ParseTablesDirectoryListing
+  dir http://localhost/Datavis/ | Datavis |  | ParseTablesDirectoryListing
+  dir http://localhost/Datavision Ltd/ | Datavision Ltd |  | ParseTablesDirectoryListing
+  dir http://localhost/David Love Not War/ | David Love Not War |  | ParseTablesDirectoryListing
+  dir http://localhost/DeLorean.88/ | DeLorean.88 |  | ParseTablesDirectoryListing
+  dir http://localhost/Decubellis Dreams/ | Decubellis Dreams |  | ParseTablesDirectoryListing
+  dir http://localhost/Deep Fried Hope/ | Deep Fried Hope |  | ParseTablesDirectoryListing
+  dir http://localhost/Default Browser/ | Default Browser |  | ParseTablesDirectoryListing
+  dir http://localhost/Denoterdamn/ | Denoterdamn |  | ParseTablesDirectoryListing
+  dir http://localhost/Digital Island Fantasy あきた/ | Digital Island Fantasy あきた |  | ParseTablesDirectoryListing
+  dir http://localhost/Dilsun/ | Dilsun |  | ParseTablesDirectoryListing
+  dir http://localhost/Disaster Magic/ | Disaster Magic |  | ParseTablesDirectoryListing
+  dir http://localhost/Disconscious/ | Disconscious |  | ParseTablesDirectoryListing
+  dir http://localhost/Diskette Romances/ | Diskette Romances |  | ParseTablesDirectoryListing
+  dir http://localhost/Dolf Bimmler/ | Dolf Bimmler |  | ParseTablesDirectoryListing
+  dir http://localhost/Donovan Hikaru/ | Donovan Hikaru |  | ParseTablesDirectoryListing
+  dir http://localhost/Dream Monastery/ | Dream Monastery |  | ParseTablesDirectoryListing
+  dir http://localhost/Dreamcoat Fantasies/ | Dreamcoat Fantasies |  | ParseTablesDirectoryListing
+  dir http://localhost/Dreams West/ | Dreams West |  | ParseTablesDirectoryListing
+  dir http://localhost/Drink & Juice/ | Drink & Juice |  | ParseTablesDirectoryListing
+  dir http://localhost/Drip-133/ | Drip-133 |  | ParseTablesDirectoryListing
+  dir http://localhost/D▲RKPYR▲MID/ | D▲RKPYR▲MID |  | ParseTablesDirectoryListing
+  dir http://localhost/ECCO UNLIMITED/ | ECCO UNLIMITED |  | ParseTablesDirectoryListing
+  dir http://localhost/ECO VIRTUAL/ | ECO VIRTUAL |  | ParseTablesDirectoryListing
+  dir http://localhost/ED GAINS/ | ED GAINS |  | ParseTablesDirectoryListing
+  dir http://localhost/EIGHTXNIGHTS/ | EIGHTXNIGHTS |  | ParseTablesDirectoryListing
+  dir http://localhost/ENTER賞/ | ENTER賞 |  | ParseTablesDirectoryListing
+  dir http://localhost/ESPRIT 空想/ | ESPRIT 空想 |  | ParseTablesDirectoryListing
+  dir http://localhost/EULOGY FOR VAPORWAVE (R.I.P.)/ | EULOGY FOR VAPORWAVE (R.I.P.) |  | ParseTablesDirectoryListing
+  dir http://localhost/EXPLORER/ | EXPLORER |  | ParseTablesDirectoryListing
+  dir http://localhost/Ed Asner- Secretary of Defense/ | Ed Asner- Secretary of Defense |  | ParseTablesDirectoryListing
+  dir http://localhost/Employee%236817 - Eulogy/ | Employee#6817 - Eulogy |  | ParseTablesDirectoryListing
+  dir http://localhost/Eternal Dream System/ | Eternal Dream System |  | ParseTablesDirectoryListing
+  dir http://localhost/Eyeliner/ | Eyeliner |  | ParseTablesDirectoryListing
+  dir http://localhost/F O T I S ポルノ/ | F O T I S ポルノ |  | ParseTablesDirectoryListing
+  dir http://localhost/FATAL MEMORY ERROR/ | FATAL MEMORY ERROR |  | ParseTablesDirectoryListing
+  dir http://localhost/Famicom Fountains/ | Famicom Fountains |  | ParseTablesDirectoryListing
+  dir http://localhost/Fatima Al Qadiri/ | Fatima Al Qadiri |  | ParseTablesDirectoryListing
+  dir http://localhost/Faxline/ | Faxline |  | ParseTablesDirectoryListing
+  dir http://localhost/Future City Love Stories/ | Future City Love Stories |  | ParseTablesDirectoryListing
+  dir http://localhost/GLOOMCVLT/ | GLOOMCVLT |  | ParseTablesDirectoryListing
+  dir http://localhost/GNUSWVS/ | GNUSWVS |  | ParseTablesDirectoryListing
+  dir http://localhost/GOATFADER/ | GOATFADER |  | ParseTablesDirectoryListing
+  dir http://localhost/GOLDEN LIVING ROOM/ | GOLDEN LIVING ROOM |  | ParseTablesDirectoryListing
+  dir http://localhost/GOLF SWINGERS/ | GOLF SWINGERS |  | ParseTablesDirectoryListing
+  dir http://localhost/GRΔPE TEQUILΔ/ | GRΔPE TEQUILΔ |  | ParseTablesDirectoryListing
+  dir http://localhost/GR€G/ | GR€G |  | ParseTablesDirectoryListing
+  dir http://localhost/General Translator/ | General Translator |  | ParseTablesDirectoryListing
+  dir http://localhost/Giant Claw/ | Giant Claw |  | ParseTablesDirectoryListing
+  dir http://localhost/Golden Living Room/ | Golden Living Room |  | ParseTablesDirectoryListing
+  dir http://localhost/Goldface/ | Goldface |  | ParseTablesDirectoryListing
+  dir http://localhost/Google Glass/ | Google Glass |  | ParseTablesDirectoryListing
+  dir http://localhost/GōsutoMall/ | GōsutoMall |  | ParseTablesDirectoryListing
+  dir http://localhost/Gran Turismo/ | Gran Turismo |  | ParseTablesDirectoryListing
+  dir http://localhost/HOTEL PARALLAX/ | HOTEL PARALLAX |  | ParseTablesDirectoryListing
+  dir http://localhost/Hantasi/ | Hantasi |  | ParseTablesDirectoryListing
+  dir http://localhost/Hayao Yamaneko/ | Hayao Yamaneko |  | ParseTablesDirectoryListing
+  dir http://localhost/Hong Kong Express/ | Hong Kong Express |  | ParseTablesDirectoryListing
+  dir http://localhost/HyperGanesh/ | HyperGanesh |  | ParseTablesDirectoryListing
+  dir http://localhost/IBUKIいぶき/ | IBUKIいぶき |  | ParseTablesDirectoryListing
+  dir http://localhost/IMMUNE-/ | IMMUNE- |  | ParseTablesDirectoryListing
+  dir http://localhost/INTERNET CLUB/ | INTERNET CLUB |  | ParseTablesDirectoryListing
+  dir http://localhost/Idknesxwfk/ | Idknesxwfk |  | ParseTablesDirectoryListing
+  dir http://localhost/Illuminated Paths/ | Illuminated Paths |  | ParseTablesDirectoryListing
+  dir http://localhost/Incorporeal Visions Deluxe/ | Incorporeal Visions Deluxe |  | ParseTablesDirectoryListing
+  dir http://localhost/Infinite Quazar/ | Infinite Quazar |  | ParseTablesDirectoryListing
+  dir http://localhost/Infinity Frequencies/ | Infinity Frequencies |  | ParseTablesDirectoryListing
+  dir http://localhost/Innerϟpeaker/ | Innerϟpeaker |  | ParseTablesDirectoryListing
+  dir http://localhost/Internet Existence/ | Internet Existence |  | ParseTablesDirectoryListing
+  dir http://localhost/Invisible Robot Hands/ | Invisible Robot Hands |  | ParseTablesDirectoryListing
+  dir http://localhost/J e t S e t/ | J e t S e t |  | ParseTablesDirectoryListing
+  dir http://localhost/JCY001 Various/ | JCY001 Various |  | ParseTablesDirectoryListing
+  dir http://localhost/JU4N/ | JU4N |  | ParseTablesDirectoryListing
+  dir http://localhost/James Ferraro/ | James Ferraro |  | ParseTablesDirectoryListing
+  dir http://localhost/Jarith/ | Jarith |  | ParseTablesDirectoryListing
+  dir http://localhost/Jisatsu自殺/ | Jisatsu自殺 |  | ParseTablesDirectoryListing
+  dir http://localhost/K O N A M I B O Y Z/ | K O N A M I B O Y Z |  | ParseTablesDirectoryListing
+  dir http://localhost/KEATS_COLLECTIVE/ | KEATS_COLLECTIVE |  | ParseTablesDirectoryListing
+  dir http://localhost/Kalidasus/ | Kalidasus |  | ParseTablesDirectoryListing
+  dir http://localhost/Kobayashi Yamato/ | Kobayashi Yamato |  | ParseTablesDirectoryListing
+  dir http://localhost/Kodak Cameo/ | Kodak Cameo |  | ParseTablesDirectoryListing
+  dir http://localhost/LASERDISC VISIONS/ | LASERDISC VISIONS |  | ParseTablesDirectoryListing
+  dir http://localhost/LAY BAC/ | LAY BAC |  | ParseTablesDirectoryListing
+  dir http://localhost/LISPマシン/ | LISPマシン |  | ParseTablesDirectoryListing
+  dir http://localhost/Ladatel/ | Ladatel |  | ParseTablesDirectoryListing
+  dir http://localhost/Lain/ | Lain |  | ParseTablesDirectoryListing
+  dir http://localhost/Lamitina/ | Lamitina |  | ParseTablesDirectoryListing
+  dir http://localhost/Lancaster_/ | Lancaster_ |  | ParseTablesDirectoryListing
+  dir http://localhost/Laptop Salam/ | Laptop Salam |  | ParseTablesDirectoryListing
+  dir http://localhost/Lasership Stereo/ | Lasership Stereo |  | ParseTablesDirectoryListing
+  dir http://localhost/LensCorp™ International/ | LensCorp™ International |  | ParseTablesDirectoryListing
+  dir http://localhost/LifeMod/ | LifeMod |  | ParseTablesDirectoryListing
+  dir http://localhost/Lindsheaven Virtual Plaza/ | Lindsheaven Virtual Plaza |  | ParseTablesDirectoryListing
+  dir http://localhost/Literature/ | Literature |  | ParseTablesDirectoryListing
+  dir http://localhost/Local News/ | Local News |  | ParseTablesDirectoryListing
+  dir http://localhost/Lockbox Union/ | Lockbox Union |  | ParseTablesDirectoryListing
+  dir http://localhost/Lotus Flowers/ | Lotus Flowers |  | ParseTablesDirectoryListing
+  dir http://localhost/Low Tee/ | Low Tee |  | ParseTablesDirectoryListing
+  dir http://localhost/MACINTOSH PLUS/ | MACINTOSH PLUS |  | ParseTablesDirectoryListing
+  dir http://localhost/MAGI SYSTEMS マギ/ | MAGI SYSTEMS マギ |  | ParseTablesDirectoryListing
+  dir http://localhost/MAMAIA_2084/ | MAMAIA_2084 |  | ParseTablesDirectoryListing
+  dir http://localhost/MC JEW/ | MC JEW |  | ParseTablesDirectoryListing
+  dir http://localhost/MILLENNIAL DREAM CORP/ | MILLENNIAL DREAM CORP |  | ParseTablesDirectoryListing
+  dir http://localhost/MONEYHOUSEBLESSINGS/ | MONEYHOUSEBLESSINGS |  | ParseTablesDirectoryListing
+  dir http://localhost/MPD023 tempo extra/ | MPD023 tempo extra |  | ParseTablesDirectoryListing
+  dir http://localhost/MY-PERFECT-STARGLIDER-/ | MY-PERFECT-STARGLIDER- |  | ParseTablesDirectoryListing
+  dir http://localhost/MYSTERIES OF THE WEB/ | MYSTERIES OF THE WEB |  | ParseTablesDirectoryListing
+  dir http://localhost/MacroSoft©/ | MacroSoft© |  | ParseTablesDirectoryListing
+  dir http://localhost/Maison Blanche/ | Maison Blanche |  | ParseTablesDirectoryListing
+  dir http://localhost/Makeshift Nebraska and the Needed Quarantine/ | Makeshift Nebraska and the Needed Quarantine |  | ParseTablesDirectoryListing
+  dir http://localhost/Mallcorp/ | Mallcorp |  | ParseTablesDirectoryListing
+  dir http://localhost/Marcandrea/ | Marcandrea |  | ParseTablesDirectoryListing
+  dir http://localhost/Marcel Foley/ | Marcel Foley |  | ParseTablesDirectoryListing
+  dir http://localhost/Mazda Fabulous/ | Mazda Fabulous |  | ParseTablesDirectoryListing
+  dir http://localhost/Mega Bunneh/ | Mega Bunneh |  | ParseTablesDirectoryListing
+  dir http://localhost/Memory No. 36 Recordings/ | Memory No. 36 Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost/Mensa Group International/ | Mensa Group International |  | ParseTablesDirectoryListing
+  dir http://localhost/Metallic Ghosts/ | Metallic Ghosts |  | ParseTablesDirectoryListing
+  dir http://localhost/Miami Vice/ | Miami Vice |  | ParseTablesDirectoryListing
+  dir http://localhost/Midnight Television/ | Midnight Television |  | ParseTablesDirectoryListing
+  dir http://localhost/Mike Tenay/ | Mike Tenay |  | ParseTablesDirectoryListing
+  dir http://localhost/Mind Crunch (Cereal) Meal/ | Mind Crunch (Cereal) Meal |  | ParseTablesDirectoryListing
+  dir http://localhost/NASA ULTIMA/ | NASA ULTIMA |  | ParseTablesDirectoryListing
+  dir http://localhost/NET NANNY 4.X/ | NET NANNY 4.X |  | ParseTablesDirectoryListing
+  dir http://localhost/NETVERK/ | NETVERK |  | ParseTablesDirectoryListing
+  dir http://localhost/NEVERLETTINGGO/ | NEVERLETTINGGO |  | ParseTablesDirectoryListing
+  dir http://localhost/Napolian + Computer Dreams/ | Napolian   Computer Dreams |  | ParseTablesDirectoryListing
+  dir http://localhost/Neko Furēku/ | Neko Furēku |  | ParseTablesDirectoryListing
+  dir http://localhost/Netscape Forever/ | Netscape Forever |  | ParseTablesDirectoryListing
+  dir http://localhost/New Dreams Ltd/ | New Dreams Ltd |  | ParseTablesDirectoryListing
+  dir http://localhost/Nmesh/ | Nmesh |  | ParseTablesDirectoryListing
+  dir http://localhost/Nouveau Cliché/ | Nouveau Cliché |  | ParseTablesDirectoryListing
+  dir http://localhost/Nouveau Life™/ | Nouveau Life™ |  | ParseTablesDirectoryListing
+  dir http://localhost/NxxxxxS/ | NxxxxxS |  | ParseTablesDirectoryListing
+  dir http://localhost/Nyetscape/ | Nyetscape |  | ParseTablesDirectoryListing
+  dir http://localhost/OMG忍者クジラ/ | OMG忍者クジラ |  | ParseTablesDirectoryListing
+  dir http://localhost/OPPAI LOLI/ | OPPAI LOLI |  | ParseTablesDirectoryListing
+  dir http://localhost/OSIRIS/ | OSIRIS |  | ParseTablesDirectoryListing
+  dir http://localhost/Ocean Spray/ | Ocean Spray |  | ParseTablesDirectoryListing
+  dir http://localhost/Oceania LTD/ | Oceania LTD |  | ParseTablesDirectoryListing
+  dir http://localhost/Old Booth/ | Old Booth |  | ParseTablesDirectoryListing
+  dir http://localhost/Oneohtrix Point Never/ | Oneohtrix Point Never |  | ParseTablesDirectoryListing
+  dir http://localhost/PASTEL LOUNGE LLC/ | PASTEL LOUNGE LLC |  | ParseTablesDirectoryListing
+  dir http://localhost/POCARI ステューシー/ | POCARI ステューシー |  | ParseTablesDirectoryListing
+  dir http://localhost/Patrol1993/ | Patrol1993 |  | ParseTablesDirectoryListing
+  dir http://localhost/Penthouse Apartments/ | Penthouse Apartments |  | ParseTablesDirectoryListing
+  dir http://localhost/Phoenix %232772/ | Phoenix #2772 |  | ParseTablesDirectoryListing
+  dir http://localhost/Please Hold/ | Please Hold |  | ParseTablesDirectoryListing
+  dir http://localhost/PrismCorp Virtual Enterprises/ | PrismCorp Virtual Enterprises |  | ParseTablesDirectoryListing
+  dir http://localhost/Psychic LCD/ | Psychic LCD |  | ParseTablesDirectoryListing
+  dir http://localhost/Pursuing Paradise/ | Pursuing Paradise |  | ParseTablesDirectoryListing
+  dir http://localhost/Pyravid/ | Pyravid |  | ParseTablesDirectoryListing
+  dir http://localhost/R23X/ | R23X |  | ParseTablesDirectoryListing
+  dir http://localhost/REVERB LITE/ | REVERB LITE |  | ParseTablesDirectoryListing
+  dir http://localhost/ROBOT POLICE FORCE/ | ROBOT POLICE FORCE |  | ParseTablesDirectoryListing
+  dir http://localhost/RYZHKND/ | RYZHKND |  | ParseTablesDirectoryListing
+  dir http://localhost/Rad Magma/ | Rad Magma |  | ParseTablesDirectoryListing
+  dir http://localhost/Rec Center/ | Rec Center |  | ParseTablesDirectoryListing
+  dir http://localhost/Renjā/ | Renjā |  | ParseTablesDirectoryListing
+  dir http://localhost/Replica-Federation/ | Replica-Federation |  | ParseTablesDirectoryListing
+  dir http://localhost/Rest In Paradise/ | Rest In Paradise |  | ParseTablesDirectoryListing
+  dir http://localhost/Rez x Oscob/ | Rez x Oscob |  | ParseTablesDirectoryListing
+  dir http://localhost/Rollergirl!/ | Rollergirl! |  | ParseTablesDirectoryListing
+  dir http://localhost/RØBØTAISEN/ | RØBØTAISEN |  | ParseTablesDirectoryListing
+  dir http://localhost/S U R F I N G/ | S U R F I N G |  | ParseTablesDirectoryListing
+  dir http://localhost/SAINT PEPSI/ | SAINT PEPSI |  | ParseTablesDirectoryListing
+  dir http://localhost/SAINT PEPSI & METALLIC GHOSTS/ | SAINT PEPSI & METALLIC GHOSTS |  | ParseTablesDirectoryListing
+  dir http://localhost/SAPHRON SQUARES/ | SAPHRON SQUARES |  | ParseTablesDirectoryListing
+  dir http://localhost/SATURN 無限/ | SATURN 無限 |  | ParseTablesDirectoryListing
+  dir http://localhost/SEGA VR/ | SEGA VR |  | ParseTablesDirectoryListing
+  dir http://localhost/SEIN波/ | SEIN波 |  | ParseTablesDirectoryListing
+  dir http://localhost/SENZU/ | SENZU |  | ParseTablesDirectoryListing
+  dir http://localhost/SEPHORA脳バイブス/ | SEPHORA脳バイブス |  | ParseTablesDirectoryListing
+  dir http://localhost/SERGEY KARASEV/ | SERGEY KARASEV |  | ParseTablesDirectoryListing
+  dir http://localhost/SIMPLE 事態/ | SIMPLE 事態 |  | ParseTablesDirectoryListing
+  dir http://localhost/SKYMALL ENTERTAINMENT/ | SKYMALL ENTERTAINMENT |  | ParseTablesDirectoryListing
+  dir http://localhost/SLEEP CENTER™/ | SLEEP CENTER™ |  | ParseTablesDirectoryListing
+  dir http://localhost/SYLLABUS/ | SYLLABUS |  | ParseTablesDirectoryListing
+  dir http://localhost/Sacred Tapestry/ | Sacred Tapestry |  | ParseTablesDirectoryListing
+  dir http://localhost/Samueltate/ | Samueltate |  | ParseTablesDirectoryListing
+  dir http://localhost/Schizoid/ | Schizoid |  | ParseTablesDirectoryListing
+  dir http://localhost/Sentidos Apuestos/ | Sentidos Apuestos |  | ParseTablesDirectoryListing
+  dir http://localhost/Sheriff Mario RPG/ | Sheriff Mario RPG |  | ParseTablesDirectoryListing
+  dir http://localhost/Shima33/ | Shima33 |  | ParseTablesDirectoryListing
+  dir http://localhost/Shinigami/ | Shinigami |  | ParseTablesDirectoryListing
+  dir http://localhost/Shuvuuia/ | Shuvuuia |  | ParseTablesDirectoryListing
+  dir http://localhost/Siddiq/ | Siddiq |  | ParseTablesDirectoryListing
+  dir http://localhost/SiliconReplicaFederation/ | SiliconReplicaFederation |  | ParseTablesDirectoryListing
+  dir http://localhost/Silver Richards/ | Silver Richards |  | ParseTablesDirectoryListing
+  dir http://localhost/SoniSoft Inc/ | SoniSoft Inc |  | ParseTablesDirectoryListing
+  dir http://localhost/Soul コントローラ Enterprises™/ | Soul コントローラ Enterprises™ |  | ParseTablesDirectoryListing
+  dir http://localhost/Stereo Component/ | Stereo Component |  | ParseTablesDirectoryListing
+  dir http://localhost/Str8 Ice/ | Str8 Ice |  | ParseTablesDirectoryListing
+  dir http://localhost/Subaeris/ | Subaeris |  | ParseTablesDirectoryListing
+  dir http://localhost/Superbook (Vaporwave)/ | Superbook (Vaporwave) |  | ParseTablesDirectoryListing
+  dir http://localhost/T Y/ | T Y |  | ParseTablesDirectoryListing
+  dir http://localhost/T-R-A-P-_MAN_-B-I-T-C-H-/ | T-R-A-P-_MAN_-B-I-T-C-H- |  | ParseTablesDirectoryListing
+  dir http://localhost/TANE IS LOVE/ | TANE IS LOVE |  | ParseTablesDirectoryListing
+  dir http://localhost/TDK Dreams/ | TDK Dreams |  | ParseTablesDirectoryListing
+  dir http://localhost/TELOZKOPE/ | TELOZKOPE |  | ParseTablesDirectoryListing
+  dir http://localhost/THE BABYLON CLUB/ | THE BABYLON CLUB |  | ParseTablesDirectoryListing
+  dir http://localhost/THE DARKEST FUTURE/ | THE DARKEST FUTURE |  | ParseTablesDirectoryListing
+  dir http://localhost/TOYOTAセリカ/ | TOYOTAセリカ |  | ParseTablesDirectoryListing
+  dir http://localhost/TRANCE.BIZ/ | TRANCE.BIZ |  | ParseTablesDirectoryListing
+  dir http://localhost/TRIAD RESEARCH LABORTORIES/ | TRIAD RESEARCH LABORTORIES |  | ParseTablesDirectoryListing
+  dir http://localhost/TRVCXR/ | TRVCXR |  | ParseTablesDirectoryListing
+  dir http://localhost/TVCHILE/ | TVCHILE |  | ParseTablesDirectoryListing
+  dir http://localhost/The Editor/ | The Editor |  | ParseTablesDirectoryListing
+  dir http://localhost/The Innernettes/ | The Innernettes |  | ParseTablesDirectoryListing
+  dir http://localhost/Thomas LaClaire/ | Thomas LaClaire |  | ParseTablesDirectoryListing
+  dir http://localhost/TimesNewRom/ | TimesNewRom |  | ParseTablesDirectoryListing
+  dir http://localhost/Timid Orpheus/ | Timid Orpheus |  | ParseTablesDirectoryListing
+  dir http://localhost/Topaz Gang/ | Topaz Gang |  | ParseTablesDirectoryListing
+  dir http://localhost/Topographic Maps/ | Topographic Maps |  | ParseTablesDirectoryListing
+  dir http://localhost/Tyrnvo/ | Tyrnvo |  | ParseTablesDirectoryListing
+  dir http://localhost/ULTRA ウルトラ/ | ULTRA ウルトラ |  | ParseTablesDirectoryListing
+  dir http://localhost/ULTRACOMPUTER/ | ULTRACOMPUTER |  | ParseTablesDirectoryListing
+  dir http://localhost/USB Eddie/ | USB Eddie |  | ParseTablesDirectoryListing
+  dir http://localhost/UVスペース/ | UVスペース |  | ParseTablesDirectoryListing
+  dir http://localhost/Ultra Ecco Mega/ | Ultra Ecco Mega |  | ParseTablesDirectoryListing
+  dir http://localhost/Universitat de Barcelona/ | Universitat de Barcelona |  | ParseTablesDirectoryListing
+  dir http://localhost/Upscale Loft/ | Upscale Loft |  | ParseTablesDirectoryListing
+  dir http://localhost/Urotsukidōji/ | Urotsukidōji |  | ParseTablesDirectoryListing
+  dir http://localhost/Ursula%27s Cartridges/ | Ursula's Cartridges |  | ParseTablesDirectoryListing
+  dir http://localhost/VECTOR GRAPHICS/ | VECTOR GRAPHICS |  | ParseTablesDirectoryListing
+  dir http://localhost/VHS Dreams/ | VHS Dreams |  | ParseTablesDirectoryListing
+  dir http://localhost/VHS Logos/ | VHS Logos |  | ParseTablesDirectoryListing
+  dir http://localhost/VHS Wave Collection 1 - 9/ | VHS Wave Collection 1 - 9 |  | ParseTablesDirectoryListing
+  dir http://localhost/VHSテープリワインダー/ | VHSテープリワインダー |  | ParseTablesDirectoryListing
+  dir http://localhost/Vaperror/ | Vaperror |  | ParseTablesDirectoryListing
+  dir http://localhost/Vaporwave Fantasies/ | Vaporwave Fantasies |  | ParseTablesDirectoryListing
+  dir http://localhost/Various Artists/ | Various Artists |  | ParseTablesDirectoryListing
+  dir http://localhost/Vektroid/ | Vektroid |  | ParseTablesDirectoryListing
+  dir http://localhost/VentureX/ | VentureX |  | ParseTablesDirectoryListing
+  dir http://localhost/Vestige Vapor/ | Vestige Vapor |  | ParseTablesDirectoryListing
+  dir http://localhost/Video Ezy/ | Video Ezy |  | ParseTablesDirectoryListing
+  dir http://localhost/Vincent Remember/ | Vincent Remember |  | ParseTablesDirectoryListing
+  dir http://localhost/Virtual Disk Systems/ | Virtual Disk Systems |  | ParseTablesDirectoryListing
+  dir http://localhost/Visaプリペイド/ | Visaプリペイド |  | ParseTablesDirectoryListing
+  dir http://localhost/VØID/ | VØID |  | ParseTablesDirectoryListing
+  dir http://localhost/Vｉｒｔｕａｌ/ | Vｉｒｔｕａｌ |  | ParseTablesDirectoryListing
+  dir http://localhost/WASTED NIGHTS/ | WASTED NIGHTS |  | ParseTablesDirectoryListing
+  dir http://localhost/WAVEMASTER/ | WAVEMASTER |  | ParseTablesDirectoryListing
+  dir http://localhost/WEBサイトサファ MOTOROLA/ | WEBサイトサファ MOTOROLA |  | ParseTablesDirectoryListing
+  dir http://localhost/WTF.FM/ | WTF.FM |  | ParseTablesDirectoryListing
+  dir http://localhost/Wakesleep/ | Wakesleep |  | ParseTablesDirectoryListing
+  dir http://localhost/Welcome1/ | Welcome1 |  | ParseTablesDirectoryListing
+  dir http://localhost/White Woods/ | White Woods |  | ParseTablesDirectoryListing
+  dir http://localhost/Windbreaker/ | Windbreaker |  | ParseTablesDirectoryListing
+  dir http://localhost/Windows98の/ | Windows98の |  | ParseTablesDirectoryListing
+  dir http://localhost/Wizard%27s Treats/ | Wizard's Treats |  | ParseTablesDirectoryListing
+  dir http://localhost/Wolfenstein OS X/ | Wolfenstein OS X |  | ParseTablesDirectoryListing
+  dir http://localhost/WΔll Flowers/ | WΔll Flowers |  | ParseTablesDirectoryListing
+  dir http://localhost/Xavier Jackson & person-people/ | Xavier Jackson & person-people |  | ParseTablesDirectoryListing
+  dir http://localhost/YAYA instrumentals/ | YAYA instrumentals |  | ParseTablesDirectoryListing
+  dir http://localhost/YES USB/ | YES USB |  | ParseTablesDirectoryListing
+  dir http://localhost/YUNG BAE/ | YUNG BAE |  | ParseTablesDirectoryListing
+  dir http://localhost/Yakui/ | Yakui |  | ParseTablesDirectoryListing
+  dir http://localhost/Young Muslim/ | Young Muslim |  | ParseTablesDirectoryListing
+  dir http://localhost/Z O L A D O M A I N ゾラドメイ/ | Z O L A D O M A I N ゾラドメイ |  | ParseTablesDirectoryListing
+  dir http://localhost/[ailani]Tropicana/ | [ailani]Tropicana |  | ParseTablesDirectoryListing
+  dir http://localhost/a b s t r u s e/ | a b s t r u s e |  | ParseTablesDirectoryListing
+  dir http://localhost/a215359/ | a215359 |  | ParseTablesDirectoryListing
+  dir http://localhost/ailani-tropicana/ | ailani-tropicana |  | ParseTablesDirectoryListing
+  dir http://localhost/architecture in tokyo/ | architecture in tokyo |  | ParseTablesDirectoryListing
+  dir http://localhost/bbrainz/ | bbrainz |  | ParseTablesDirectoryListing
+  dir http://localhost/be____all/ | be____all |  | ParseTablesDirectoryListing
+  dir http://localhost/bl00dwave/ | bl00dwave |  | ParseTablesDirectoryListing
+  dir http://localhost/bootleg tapes/ | bootleg tapes |  | ParseTablesDirectoryListing
+  dir http://localhost/ccCaffeine/ | ccCaffeine |  | ParseTablesDirectoryListing
+  dir http://localhost/ccool!/ | ccool! |  | ParseTablesDirectoryListing
+  dir http://localhost/cereaʟ/ | cereaʟ |  | ParseTablesDirectoryListing
+  dir http://localhost/chris†††/ | chris††† |  | ParseTablesDirectoryListing
+  dir http://localhost/chuck2k/ | chuck2k |  | ParseTablesDirectoryListing
+  dir http://localhost/cola/ | cola |  | ParseTablesDirectoryListing
+  dir http://localhost/colosseumrecords/ | colosseumrecords |  | ParseTablesDirectoryListing
+  dir http://localhost/cyberlust/ | cyberlust |  | ParseTablesDirectoryListing
+  dir http://localhost/death%27s dynamic shroud.wmv/ | death's dynamic shroud.wmv |  | ParseTablesDirectoryListing
+  dir http://localhost/death%27s dynamic shroud.wmv (Label)/ | death's dynamic shroud.wmv (Label) |  | ParseTablesDirectoryListing
+  dir http://localhost/defkon/ | defkon |  | ParseTablesDirectoryListing
+  dir http://localhost/disk death/ | disk death |  | ParseTablesDirectoryListing
+  dir http://localhost/domino%27s delivery mixtape %2312/ | domino's delivery mixtape #12 |  | ParseTablesDirectoryListing
+  dir http://localhost/don%27t be a square/ | don't be a square |  | ParseTablesDirectoryListing
+  dir http://localhost/doomplaza✌☯/ | doomplaza✌☯ |  | ParseTablesDirectoryListing
+  dir http://localhost/eight なぜ nine/ | eight なぜ nine |  | ParseTablesDirectoryListing
+  dir http://localhost/eleven eastern/ | eleven eastern |  | ParseTablesDirectoryListing
+  dir http://localhost/esc 不在/ | esc 不在 |  | ParseTablesDirectoryListing
+  dir http://localhost/especia/ | especia |  | ParseTablesDirectoryListing
+  dir http://localhost/foodprices/ | foodprices |  | ParseTablesDirectoryListing
+  dir http://localhost/fortune 500 (Label)/ | fortune 500 (Label) |  | ParseTablesDirectoryListing
+  dir http://localhost/fuji grid tv/ | fuji grid tv |  | ParseTablesDirectoryListing
+  dir http://localhost/g h o s t i n g/ | g h o s t i n g |  | ParseTablesDirectoryListing
+  dir http://localhost/g0D%27S sEcRET/ | g0D'S sEcRET |  | ParseTablesDirectoryListing
+  dir http://localhost/galaxyboys/ | galaxyboys |  | ParseTablesDirectoryListing
+  dir http://localhost/generation network/ | generation network |  | ParseTablesDirectoryListing
+  dir http://localhost/gh0stwerk/ | gh0stwerk |  | ParseTablesDirectoryListing
+  dir http://localhost/gorgeous☵gorgias/ | gorgeous☵gorgias |  | ParseTablesDirectoryListing
+  dir http://localhost/haircuts for men/ | haircuts for men |  | ParseTablesDirectoryListing
+  dir http://localhost/jimmybreeze/ | jimmybreeze |  | ParseTablesDirectoryListing
+  dir http://localhost/jpeg Artifacts/ | jpeg Artifacts |  | ParseTablesDirectoryListing
+  dir http://localhost/kyonpalm/ | kyonpalm |  | ParseTablesDirectoryListing
+  dir http://localhost/luxury elite/ | luxury elite |  | ParseTablesDirectoryListing
+  dir http://localhost/luxury elite and SYLLABUS/ | luxury elite and SYLLABUS |  | ParseTablesDirectoryListing
+  dir http://localhost/mediafired/ | mediafired |  | ParseTablesDirectoryListing
+  dir http://localhost/memorex dawn/ | memorex dawn |  | ParseTablesDirectoryListing
+  dir http://localhost/memory gateways/ | memory gateways |  | ParseTablesDirectoryListing
+  dir http://localhost/mentha/ | mentha |  | ParseTablesDirectoryListing
+  dir http://localhost/mintjr/ | mintjr |  | ParseTablesDirectoryListing
+  dir http://localhost/monument XIII/ | monument XIII |  | ParseTablesDirectoryListing
+  dir http://localhost/mrSimon/ | mrSimon |  | ParseTablesDirectoryListing
+  dir http://localhost/namaste_%2795/ | namaste_'95 |  | ParseTablesDirectoryListing
+  dir http://localhost/nano神社 (✪㉨✪)/ | nano神社 (✪㉨✪) |  | ParseTablesDirectoryListing
+  dir http://localhost/nebula/ | nebula |  | ParseTablesDirectoryListing
+  dir http://localhost/newforever/ | newforever |  | ParseTablesDirectoryListing
+  dir http://localhost/orchids&flowers/ | orchids&flowers |  | ParseTablesDirectoryListing
+  dir http://localhost/person-people/ | person-people |  | ParseTablesDirectoryListing
+  dir http://localhost/pier_scum/ | pier_scum |  | ParseTablesDirectoryListing
+  dir http://localhost/plastic response records/ | plastic response records |  | ParseTablesDirectoryListing
+  dir http://localhost/poolside stereo/ | poolside stereo |  | ParseTablesDirectoryListing
+  dir http://localhost/s3nsua1/ | s3nsua1 |  | ParseTablesDirectoryListing
+  dir http://localhost/sbwy/ | sbwy |  | ParseTablesDirectoryListing
+  dir http://localhost/spoookypizza/ | spoookypizza |  | ParseTablesDirectoryListing
+  dir http://localhost/t e l e p a t h テレパシー能力者/ | t e l e p a t h テレパシー能力者 |  | ParseTablesDirectoryListing
+  dir http://localhost/t e l e p a t h テレパシー能力者 and 猫 シ Corp/ | t e l e p a t h テレパシー能力者 and 猫 シ Corp |  | ParseTablesDirectoryListing
+  dir http://localhost/texh/ | texh |  | ParseTablesDirectoryListing
+  dir http://localhost/tidecruz/ | tidecruz |  | ParseTablesDirectoryListing
+  dir http://localhost/touchpoint無限大。/ | touchpoint無限大。 |  | ParseTablesDirectoryListing
+  dir http://localhost/ventla/ | ventla |  | ParseTablesDirectoryListing
+  dir http://localhost/vice-AIRバイス-空気自然の愛/ | vice-AIRバイス-空気自然の愛 |  | ParseTablesDirectoryListing
+  dir http://localhost/waterfront dining/ | waterfront dining |  | ParseTablesDirectoryListing
+  dir http://localhost/windows彡96/ | windows彡96 |  | ParseTablesDirectoryListing
+  dir http://localhost/yeongrak/ | yeongrak |  | ParseTablesDirectoryListing
+  dir http://localhost/~-.Asuka/ | ~-.Asuka |  | ParseTablesDirectoryListing
+  dir http://localhost/§E▲ ▓F D▓G§/ | §E▲ ▓F D▓G§ |  | ParseTablesDirectoryListing
+  dir http://localhost/ɪｎｔəˈｄʒɛｋｔ/ | ɪｎｔəˈｄʒɛｋｔ |  | ParseTablesDirectoryListing
+  dir http://localhost/ʍindƨpring ʍeʍorieƨ™/ | ʍindƨpring ʍeʍorieƨ™ |  | ParseTablesDirectoryListing
+  dir http://localhost/Η Δύναμη/ | Η Δύναμη |  | ParseTablesDirectoryListing
+  dir http://localhost/Σ™/ | Σ™ |  | ParseTablesDirectoryListing
+  dir http://localhost/Л е н ь/ | Л е н ь |  | ParseTablesDirectoryListing
+  dir http://localhost/рмнчитто/ | рмнчитто |  | ParseTablesDirectoryListing
+  dir http://localhost/רעטראָ Jazz ناد/ | רעטראָ Jazz ناد |  | ParseTablesDirectoryListing
+  dir http://localhost/ᴡ ᴇ в s ɪ ᴛ ᴇ ツ/ | ᴡ ᴇ в s ɪ ᴛ ᴇ ツ |  | ParseTablesDirectoryListing
+  dir http://localhost/‡‡welcome_ 美 ₰ou₦ds††/ | ‡‡welcome_ 美 ₰ou₦ds†† |  | ParseTablesDirectoryListing
+  dir http://localhost/‡▲‡/ | ‡▲‡ |  | ParseTablesDirectoryListing
+  dir http://localhost/₥©ℍΣⓩ☢ K-I-J-A-N-A/ | ₥©ℍΣⓩ☢ K-I-J-A-N-A |  | ParseTablesDirectoryListing
+  dir http://localhost/₮.hank.william.₴ ₪₪₪/ | ₮.hank.william.₴ ₪₪₪ |  | ParseTablesDirectoryListing
+  dir http://localhost/ℬℬ☭/ | ℬℬ☭ |  | ParseTablesDirectoryListing
+  dir http://localhost/∆CIDWATER/ | ∆CIDWATER |  | ParseTablesDirectoryListing
+  dir http://localhost/∆∆∆the internet band/ | ∆∆∆the internet band |  | ParseTablesDirectoryListing
+  dir http://localhost/⌤black___⌤/ | ⌤black___⌤ |  | ParseTablesDirectoryListing
+  dir http://localhost/ⓨⓞ ⓛⓐ ⓔⓢⓣⓞⓛⓐ/ | ⓨⓞ ⓛⓐ ⓔⓢⓣⓞⓛⓐ |  | ParseTablesDirectoryListing
+  dir http://localhost/░▒▓【ALL CAPS AND αւτ kεÿ CΘᕸEᔕ™】░▒▓/ | ░▒▓【ALL CAPS AND αւτ kεÿ CΘᕸEᔕ™】░▒▓ |  | ParseTablesDirectoryListing
+  dir http://localhost/░▒▓新しいデラックスライフ▓▒░/ | ░▒▓新しいデラックスライフ▓▒░ |  | ParseTablesDirectoryListing
+  dir http://localhost/░▒▓新しいデラックスライフ▓▒░/ | ░▒▓新しいデラックスライフ▓▒░ |  | ParseTablesDirectoryListing
+  dir http://localhost/◄● ▌▲/ | ◄● ▌▲ |  | ParseTablesDirectoryListing
+  dir http://localhost/「fluence」/ | 「fluence」 |  | ParseTablesDirectoryListing
+  dir http://localhost/アドブロック+/ | アドブロック  |  | ParseTablesDirectoryListing
+  dir http://localhost/コンシャスTHOUGHTS/ | コンシャスTHOUGHTS |  | ParseTablesDirectoryListing
+  dir http://localhost/サイバー %2798/ | サイバー '98 |  | ParseTablesDirectoryListing
+  dir http://localhost/ショッピングワールドjp/ | ショッピングワールドjp |  | ParseTablesDirectoryListing
+  dir http://localhost/シルクP A N G E A/ | シルクP A N G E A |  | ParseTablesDirectoryListing
+  dir http://localhost/スカイ f a u n a/ | スカイ f a u n a |  | ParseTablesDirectoryListing
+  dir http://localhost/ソーラー_ビジョンINC/ | ソーラー_ビジョンINC |  | ParseTablesDirectoryListing
+  dir http://localhost/チェスマスター/ | チェスマスター |  | ParseTablesDirectoryListing
+  dir http://localhost/テンパーTEMPER/ | テンパーTEMPER |  | ParseTablesDirectoryListing
+  dir http://localhost/デジタルフォーチュン/ | デジタルフォーチュン |  | ParseTablesDirectoryListing
+  dir http://localhost/ビッグ·ドン/ | ビッグ·ドン |  | ParseTablesDirectoryListing
+  dir http://localhost/フライドポテト、チーズ、ソース/ | フライドポテト、チーズ、ソース |  | ParseTablesDirectoryListing
+  dir http://localhost/マクロスMACROSS 82-99/ | マクロスMACROSS 82-99 |  | ParseTablesDirectoryListing
+  dir http://localhost/ユーレカ/ | ユーレカ |  | ParseTablesDirectoryListing
+  dir http://localhost/ライフMIDI/ | ライフMIDI |  | ParseTablesDirectoryListing
+  dir http://localhost/ライフMIDI - 多角形 (SW-033)/ | ライフMIDI - 多角形 (SW-033) |  | ParseTablesDirectoryListing
+  dir http://localhost/人以上VANQUISH組み込ま利益/ | 人以上VANQUISH組み込ま利益 |  | ParseTablesDirectoryListing
+  dir http://localhost/仮想- Vを（HS高校-/ | 仮想- Vを（HS高校- |  | ParseTablesDirectoryListing
+  dir http://localhost/仮想- Vを（HS高校- - それを2014年を賞賛し、それを切り開く/ | 仮想- Vを（HS高校- - それを2014年を賞賛し、それを切り開く |  | ParseTablesDirectoryListing
+  dir http://localhost/信仰 and 地球/ | 信仰 and 地球 |  | ParseTablesDirectoryListing
+  dir http://localhost/切腹/ | 切腹 |  | ParseTablesDirectoryListing
+  dir http://localhost/塑臉 SUKI GIRLZ/ | 塑臉 SUKI GIRLZ |  | ParseTablesDirectoryListing
+  dir http://localhost/情報デスクVIRTUAL/ | 情報デスクVIRTUAL |  | ParseTablesDirectoryListing
+  dir http://localhost/断片化された友人 - Ｆｒａｇｍｅｎｔｅｄ Ｍｅｍｏｒｉｅｓ/ | 断片化された友人 - Ｆｒａｇｍｅｎｔｅｄ Ｍｅｍｏｒｉｅｓ |  | ParseTablesDirectoryListing
+  dir http://localhost/日本人 (Japanese)/ | 日本人 (Japanese) |  | ParseTablesDirectoryListing
+  dir http://localhost/日本航空株式会社 ✈ Japan Airlines/ | 日本航空株式会社 ✈ Japan Airlines |  | ParseTablesDirectoryListing
+  dir http://localhost/東京為替/ | 東京為替 |  | ParseTablesDirectoryListing
+  dir http://localhost/死夢VANITY/ | 死夢VANITY |  | ParseTablesDirectoryListing
+  dir http://localhost/猫 シ Corp/ | 猫 シ Corp |  | ParseTablesDirectoryListing
+  dir http://localhost/猫 シ Corp. & Donovan Hikaru/ | 猫 シ Corp. & Donovan Hikaru |  | ParseTablesDirectoryListing
+  dir http://localhost/豊平区民TOYOHIRAKUMIN/ | 豊平区民TOYOHIRAKUMIN |  | ParseTablesDirectoryListing
+  dir http://localhost/音 LIGHT システム/ | 音 LIGHT システム |  | ParseTablesDirectoryListing
+  dir http://localhost/骨架的/ | 骨架的 |  | ParseTablesDirectoryListing
+  dir http://localhost/식료품groceries/ | 식료품groceries |  | ParseTablesDirectoryListing
+  dir http://localhost/회사AUTO/ | 회사AUTO |  | ParseTablesDirectoryListing
+  dir http://localhost/２８１４/ | ２８１４ |  | ParseTablesDirectoryListing
+  dir http://localhost/ＤＯＮＴ_ BＥ_ 正方形/ | ＤＯＮＴ_ BＥ_ 正方形 |  | ParseTablesDirectoryListing
+  dir http://localhost/ＧＡＭＥＳＨＡＲＫ™/ | ＧＡＭＥＳＨＡＲＫ™ |  | ParseTablesDirectoryListing
+  dir http://localhost/ＮＩＧＨＴＰＯＯＬ ＮＥＯＮ/ | ＮＩＧＨＴＰＯＯＬ ＮＥＯＮ |  | ParseTablesDirectoryListing
+  dir http://localhost/Ｐｏｏｌｓｉｄｅ　Ｔｅｍｐｌｅｓ   (mp3)/ | Ｐｏｏｌｓｉｄｅ　Ｔｅｍｐｌｅｓ   (mp3) |  | ParseTablesDirectoryListing
+  dir http://localhost/ＷＡＬＫＭＡＮ 91/ | ＷＡＬＫＭＡＮ 91 |  | ParseTablesDirectoryListing
+  dir http://localhost/ｇｒｅｅｔｉｎｇｓ - あいさつ/ | ｇｒｅｅｔｉｎｇｓ - あいさつ |  | ParseTablesDirectoryListing
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=True
+  dir http://localhost:8086/listing/$PL▲$H ¢LUB 7-Contact Lens/ | $PL▲$H ¢LUB 7-Contact Lens |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/18 Carat Affair/ | 18 Carat Affair |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/2222 Soft For Life/ | 2222 Soft For Life |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/3D夢/ | 3D夢 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/4evr ltd/ | 4evr ltd |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/6★VORTEX☆7/ | 6★VORTEX☆7 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/A Digital Compilation Curated By Captain T.V/ | A Digital Compilation Curated By Captain T.V |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/A l i c e - MIMA!/ | A l i c e - MIMA! |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/AIR Japan/ | AIR Japan |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/AIRLINES TAPES/ | AIRLINES TAPES |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/AMAZON PRIME/ | AMAZON PRIME |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ANIMAL - MOTHER/ | ANIMAL - MOTHER |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ATLER music/ | ATLER music |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/AWALthe1$T/ | AWALthe1$T |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Adolf ☆ Nomura/ | Adolf ☆ Nomura |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/American Online/ | American Online |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Amun Dragoon/ | Amun Dragoon |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Aquaxx✪/ | Aquaxx✪ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Archon/ | Archon |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Areas/ | Areas |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ArtFluids/ | ArtFluids |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ArtFluids - Umami/ | ArtFluids - Umami |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/AstroShaman/ | AstroShaman |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Athens Online/ | Athens Online |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Audi/ | Audi |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ayshay/ | Ayshay |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/B o d y l i n e/ | B o d y l i n e |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/BADVICE COLLECTIVE/ | BADVICE COLLECTIVE |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/BEST MUSIC/ | BEST MUSIC |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/BLUNTSIDE/ | BLUNTSIDE |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/BODYGUARD/ | BODYGUARD |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Based Frequency/ | Based Frequency |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Bittertv/ | Bittertv |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Black Moods/ | Black Moods |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Blank Banshee/ | Blank Banshee |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Blue Hydrangea/ | Blue Hydrangea |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Blue Limits/ | Blue Limits |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/CASTING/ | CASTING |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/CHATMM/ | CHATMM |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/CODEMUS2x43/ | CODEMUS2x43 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/CUSTOMER SERVICE/ | CUSTOMER SERVICE |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/CVLTVRE/ | CVLTVRE |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/CVLTVRΣ/ | CVLTVRΣ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/CYBEREALITYライフ/ | CYBEREALITYライフ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Cara Loft/ | Cara Loft |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Careless Messenger Recordings✆ (division under Comtex)/ | Careless Messenger Recordings✆ (division under Comtex) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Childhood/ | Childhood |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Chip Jewelry/ | Chip Jewelry |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Christians Having Sex/ | Christians Having Sex |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Chuck Person/ | Chuck Person |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Cleanse光777/ | Cleanse光777 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ClearVisionDream Productions/ | ClearVisionDream Productions |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Clinton Affair/ | Clinton Affair |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Computer Dreams/ | Computer Dreams |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Constellation Tatsu/ | Constellation Tatsu |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Contact Lens/ | Contact Lens |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Contemporary Shopping/ | Contemporary Shopping |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Curb Cobain/ | Curb Cobain |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/D R E A M™/ | D R E A M™ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/D%27Angelord/ | D'Angelord |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/DARKPYRAMID/ | DARKPYRAMID |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/DELTA金TOPCO/ | DELTA金TOPCO |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/DJ Pirâmide/ | DJ Pirâmide |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/DJ Rozwell/ | DJ Rozwell |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/DREAM CATALOGUE™/ | DREAM CATALOGUE™ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/DRE▲Mz/ | DRE▲Mz |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Dan Mason/ | Dan Mason |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Dan Mason ダン·メイソン/ | Dan Mason ダン·メイソン |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/DarkTwaine_/ | DarkTwaine_ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Darksleep/ | Darksleep |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/DataDisc Online/ | DataDisc Online |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Datavis/ | Datavis |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Datavision Ltd/ | Datavision Ltd |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/David Love Not War/ | David Love Not War |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/DeLorean.88/ | DeLorean.88 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Decubellis Dreams/ | Decubellis Dreams |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Deep Fried Hope/ | Deep Fried Hope |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Default Browser/ | Default Browser |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Denoterdamn/ | Denoterdamn |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Digital Island Fantasy あきた/ | Digital Island Fantasy あきた |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Dilsun/ | Dilsun |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Disaster Magic/ | Disaster Magic |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Disconscious/ | Disconscious |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Diskette Romances/ | Diskette Romances |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Dolf Bimmler/ | Dolf Bimmler |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Donovan Hikaru/ | Donovan Hikaru |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Dream Monastery/ | Dream Monastery |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Dreamcoat Fantasies/ | Dreamcoat Fantasies |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Dreams West/ | Dreams West |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Drink & Juice/ | Drink & Juice |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Drip-133/ | Drip-133 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/D▲RKPYR▲MID/ | D▲RKPYR▲MID |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ECCO UNLIMITED/ | ECCO UNLIMITED |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ECO VIRTUAL/ | ECO VIRTUAL |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ED GAINS/ | ED GAINS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/EIGHTXNIGHTS/ | EIGHTXNIGHTS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ENTER賞/ | ENTER賞 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ESPRIT 空想/ | ESPRIT 空想 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/EULOGY FOR VAPORWAVE (R.I.P.)/ | EULOGY FOR VAPORWAVE (R.I.P.) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/EXPLORER/ | EXPLORER |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ed Asner- Secretary of Defense/ | Ed Asner- Secretary of Defense |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Employee%236817 - Eulogy/ | Employee#6817 - Eulogy |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Eternal Dream System/ | Eternal Dream System |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Eyeliner/ | Eyeliner |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/F O T I S ポルノ/ | F O T I S ポルノ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/FATAL MEMORY ERROR/ | FATAL MEMORY ERROR |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Famicom Fountains/ | Famicom Fountains |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Fatima Al Qadiri/ | Fatima Al Qadiri |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Faxline/ | Faxline |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Future City Love Stories/ | Future City Love Stories |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/GLOOMCVLT/ | GLOOMCVLT |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/GNUSWVS/ | GNUSWVS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/GOATFADER/ | GOATFADER |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/GOLDEN LIVING ROOM/ | GOLDEN LIVING ROOM |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/GOLF SWINGERS/ | GOLF SWINGERS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/GRΔPE TEQUILΔ/ | GRΔPE TEQUILΔ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/GR€G/ | GR€G |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/General Translator/ | General Translator |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Giant Claw/ | Giant Claw |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Golden Living Room/ | Golden Living Room |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Goldface/ | Goldface |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Google Glass/ | Google Glass |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/GōsutoMall/ | GōsutoMall |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Gran Turismo/ | Gran Turismo |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/HOTEL PARALLAX/ | HOTEL PARALLAX |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Hantasi/ | Hantasi |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Hayao Yamaneko/ | Hayao Yamaneko |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Hong Kong Express/ | Hong Kong Express |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/HyperGanesh/ | HyperGanesh |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/IBUKIいぶき/ | IBUKIいぶき |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/IMMUNE-/ | IMMUNE- |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/INTERNET CLUB/ | INTERNET CLUB |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Idknesxwfk/ | Idknesxwfk |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Illuminated Paths/ | Illuminated Paths |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Incorporeal Visions Deluxe/ | Incorporeal Visions Deluxe |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Infinite Quazar/ | Infinite Quazar |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Infinity Frequencies/ | Infinity Frequencies |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Innerϟpeaker/ | Innerϟpeaker |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Internet Existence/ | Internet Existence |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Invisible Robot Hands/ | Invisible Robot Hands |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/J e t S e t/ | J e t S e t |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/JCY001 Various/ | JCY001 Various |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/JU4N/ | JU4N |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/James Ferraro/ | James Ferraro |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Jarith/ | Jarith |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Jisatsu自殺/ | Jisatsu自殺 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/K O N A M I B O Y Z/ | K O N A M I B O Y Z |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/KEATS_COLLECTIVE/ | KEATS_COLLECTIVE |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Kalidasus/ | Kalidasus |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Kobayashi Yamato/ | Kobayashi Yamato |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Kodak Cameo/ | Kodak Cameo |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/LASERDISC VISIONS/ | LASERDISC VISIONS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/LAY BAC/ | LAY BAC |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/LISPマシン/ | LISPマシン |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ladatel/ | Ladatel |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Lain/ | Lain |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Lamitina/ | Lamitina |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Lancaster_/ | Lancaster_ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Laptop Salam/ | Laptop Salam |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Lasership Stereo/ | Lasership Stereo |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/LensCorp™ International/ | LensCorp™ International |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/LifeMod/ | LifeMod |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Lindsheaven Virtual Plaza/ | Lindsheaven Virtual Plaza |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Literature/ | Literature |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Local News/ | Local News |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Lockbox Union/ | Lockbox Union |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Lotus Flowers/ | Lotus Flowers |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Low Tee/ | Low Tee |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/MACINTOSH PLUS/ | MACINTOSH PLUS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/MAGI SYSTEMS マギ/ | MAGI SYSTEMS マギ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/MAMAIA_2084/ | MAMAIA_2084 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/MC JEW/ | MC JEW |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/MILLENNIAL DREAM CORP/ | MILLENNIAL DREAM CORP |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/MONEYHOUSEBLESSINGS/ | MONEYHOUSEBLESSINGS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/MPD023 tempo extra/ | MPD023 tempo extra |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/MY-PERFECT-STARGLIDER-/ | MY-PERFECT-STARGLIDER- |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/MYSTERIES OF THE WEB/ | MYSTERIES OF THE WEB |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/MacroSoft©/ | MacroSoft© |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Maison Blanche/ | Maison Blanche |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Makeshift Nebraska and the Needed Quarantine/ | Makeshift Nebraska and the Needed Quarantine |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Mallcorp/ | Mallcorp |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Marcandrea/ | Marcandrea |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Marcel Foley/ | Marcel Foley |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Mazda Fabulous/ | Mazda Fabulous |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Mega Bunneh/ | Mega Bunneh |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Memory No. 36 Recordings/ | Memory No. 36 Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Mensa Group International/ | Mensa Group International |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Metallic Ghosts/ | Metallic Ghosts |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Miami Vice/ | Miami Vice |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Midnight Television/ | Midnight Television |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Mike Tenay/ | Mike Tenay |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Mind Crunch (Cereal) Meal/ | Mind Crunch (Cereal) Meal |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/NASA ULTIMA/ | NASA ULTIMA |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/NET NANNY 4.X/ | NET NANNY 4.X |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/NETVERK/ | NETVERK |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/NEVERLETTINGGO/ | NEVERLETTINGGO |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Napolian + Computer Dreams/ | Napolian   Computer Dreams |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Neko Furēku/ | Neko Furēku |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Netscape Forever/ | Netscape Forever |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/New Dreams Ltd/ | New Dreams Ltd |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Nmesh/ | Nmesh |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Nouveau Cliché/ | Nouveau Cliché |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Nouveau Life™/ | Nouveau Life™ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/NxxxxxS/ | NxxxxxS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Nyetscape/ | Nyetscape |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/OMG忍者クジラ/ | OMG忍者クジラ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/OPPAI LOLI/ | OPPAI LOLI |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/OSIRIS/ | OSIRIS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ocean Spray/ | Ocean Spray |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Oceania LTD/ | Oceania LTD |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Old Booth/ | Old Booth |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Oneohtrix Point Never/ | Oneohtrix Point Never |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/PASTEL LOUNGE LLC/ | PASTEL LOUNGE LLC |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/POCARI ステューシー/ | POCARI ステューシー |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Patrol1993/ | Patrol1993 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Penthouse Apartments/ | Penthouse Apartments |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Phoenix %232772/ | Phoenix #2772 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Please Hold/ | Please Hold |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/PrismCorp Virtual Enterprises/ | PrismCorp Virtual Enterprises |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Psychic LCD/ | Psychic LCD |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Pursuing Paradise/ | Pursuing Paradise |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Pyravid/ | Pyravid |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/R23X/ | R23X |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/REVERB LITE/ | REVERB LITE |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ROBOT POLICE FORCE/ | ROBOT POLICE FORCE |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/RYZHKND/ | RYZHKND |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Rad Magma/ | Rad Magma |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Rec Center/ | Rec Center |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Renjā/ | Renjā |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Replica-Federation/ | Replica-Federation |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Rest In Paradise/ | Rest In Paradise |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Rez x Oscob/ | Rez x Oscob |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Rollergirl!/ | Rollergirl! |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/RØBØTAISEN/ | RØBØTAISEN |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/S U R F I N G/ | S U R F I N G |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SAINT PEPSI/ | SAINT PEPSI |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SAINT PEPSI & METALLIC GHOSTS/ | SAINT PEPSI & METALLIC GHOSTS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SAPHRON SQUARES/ | SAPHRON SQUARES |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SATURN 無限/ | SATURN 無限 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SEGA VR/ | SEGA VR |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SEIN波/ | SEIN波 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SENZU/ | SENZU |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SEPHORA脳バイブス/ | SEPHORA脳バイブス |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SERGEY KARASEV/ | SERGEY KARASEV |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SIMPLE 事態/ | SIMPLE 事態 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SKYMALL ENTERTAINMENT/ | SKYMALL ENTERTAINMENT |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SLEEP CENTER™/ | SLEEP CENTER™ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SYLLABUS/ | SYLLABUS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Sacred Tapestry/ | Sacred Tapestry |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Samueltate/ | Samueltate |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Schizoid/ | Schizoid |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Sentidos Apuestos/ | Sentidos Apuestos |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Sheriff Mario RPG/ | Sheriff Mario RPG |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Shima33/ | Shima33 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Shinigami/ | Shinigami |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Shuvuuia/ | Shuvuuia |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Siddiq/ | Siddiq |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SiliconReplicaFederation/ | SiliconReplicaFederation |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Silver Richards/ | Silver Richards |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SoniSoft Inc/ | SoniSoft Inc |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Soul コントローラ Enterprises™/ | Soul コントローラ Enterprises™ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Stereo Component/ | Stereo Component |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Str8 Ice/ | Str8 Ice |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Subaeris/ | Subaeris |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Superbook (Vaporwave)/ | Superbook (Vaporwave) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/T Y/ | T Y |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/T-R-A-P-_MAN_-B-I-T-C-H-/ | T-R-A-P-_MAN_-B-I-T-C-H- |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/TANE IS LOVE/ | TANE IS LOVE |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/TDK Dreams/ | TDK Dreams |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/TELOZKOPE/ | TELOZKOPE |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/THE BABYLON CLUB/ | THE BABYLON CLUB |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/THE DARKEST FUTURE/ | THE DARKEST FUTURE |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/TOYOTAセリカ/ | TOYOTAセリカ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/TRANCE.BIZ/ | TRANCE.BIZ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/TRIAD RESEARCH LABORTORIES/ | TRIAD RESEARCH LABORTORIES |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/TRVCXR/ | TRVCXR |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/TVCHILE/ | TVCHILE |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/The Editor/ | The Editor |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/The Innernettes/ | The Innernettes |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Thomas LaClaire/ | Thomas LaClaire |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/TimesNewRom/ | TimesNewRom |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Timid Orpheus/ | Timid Orpheus |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Topaz Gang/ | Topaz Gang |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Topographic Maps/ | Topographic Maps |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Tyrnvo/ | Tyrnvo |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ULTRA ウルトラ/ | ULTRA ウルトラ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ULTRACOMPUTER/ | ULTRACOMPUTER |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/USB Eddie/ | USB Eddie |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/UVスペース/ | UVスペース |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ultra Ecco Mega/ | Ultra Ecco Mega |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Universitat de Barcelona/ | Universitat de Barcelona |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Upscale Loft/ | Upscale Loft |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Urotsukidōji/ | Urotsukidōji |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ursula%27s Cartridges/ | Ursula's Cartridges |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/VECTOR GRAPHICS/ | VECTOR GRAPHICS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/VHS Dreams/ | VHS Dreams |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/VHS Logos/ | VHS Logos |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/VHS Wave Collection 1 - 9/ | VHS Wave Collection 1 - 9 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/VHSテープリワインダー/ | VHSテープリワインダー |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Vaperror/ | Vaperror |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Vaporwave Fantasies/ | Vaporwave Fantasies |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Various Artists/ | Various Artists |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Vektroid/ | Vektroid |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/VentureX/ | VentureX |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Vestige Vapor/ | Vestige Vapor |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Video Ezy/ | Video Ezy |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Vincent Remember/ | Vincent Remember |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Virtual Disk Systems/ | Virtual Disk Systems |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Visaプリペイド/ | Visaプリペイド |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/VØID/ | VØID |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Vｉｒｔｕａｌ/ | Vｉｒｔｕａｌ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/WASTED NIGHTS/ | WASTED NIGHTS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/WAVEMASTER/ | WAVEMASTER |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/WEBサイトサファ MOTOROLA/ | WEBサイトサファ MOTOROLA |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/WTF.FM/ | WTF.FM |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Wakesleep/ | Wakesleep |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Welcome1/ | Welcome1 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/White Woods/ | White Woods |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Windbreaker/ | Windbreaker |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Windows98の/ | Windows98の |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Wizard%27s Treats/ | Wizard's Treats |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Wolfenstein OS X/ | Wolfenstein OS X |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/WΔll Flowers/ | WΔll Flowers |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Xavier Jackson & person-people/ | Xavier Jackson & person-people |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/YAYA instrumentals/ | YAYA instrumentals |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/YES USB/ | YES USB |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/YUNG BAE/ | YUNG BAE |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Yakui/ | Yakui |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Young Muslim/ | Young Muslim |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Z O L A D O M A I N ゾラドメイ/ | Z O L A D O M A I N ゾラドメイ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/[ailani]Tropicana/ | [ailani]Tropicana |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/a b s t r u s e/ | a b s t r u s e |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/a215359/ | a215359 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ailani-tropicana/ | ailani-tropicana |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/architecture in tokyo/ | architecture in tokyo |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/bbrainz/ | bbrainz |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/be____all/ | be____all |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/bl00dwave/ | bl00dwave |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/bootleg tapes/ | bootleg tapes |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ccCaffeine/ | ccCaffeine |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ccool!/ | ccool! |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/cereaʟ/ | cereaʟ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/chris†††/ | chris††† |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/chuck2k/ | chuck2k |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/cola/ | cola |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/colosseumrecords/ | colosseumrecords |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/cyberlust/ | cyberlust |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/death%27s dynamic shroud.wmv/ | death's dynamic shroud.wmv |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/death%27s dynamic shroud.wmv (Label)/ | death's dynamic shroud.wmv (Label) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/defkon/ | defkon |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/disk death/ | disk death |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/domino%27s delivery mixtape %2312/ | domino's delivery mixtape #12 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/don%27t be a square/ | don't be a square |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/doomplaza✌☯/ | doomplaza✌☯ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/eight なぜ nine/ | eight なぜ nine |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/eleven eastern/ | eleven eastern |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/esc 不在/ | esc 不在 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/especia/ | especia |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/foodprices/ | foodprices |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/fortune 500 (Label)/ | fortune 500 (Label) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/fuji grid tv/ | fuji grid tv |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/g h o s t i n g/ | g h o s t i n g |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/g0D%27S sEcRET/ | g0D'S sEcRET |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/galaxyboys/ | galaxyboys |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/generation network/ | generation network |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/gh0stwerk/ | gh0stwerk |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/gorgeous☵gorgias/ | gorgeous☵gorgias |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/haircuts for men/ | haircuts for men |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/jimmybreeze/ | jimmybreeze |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/jpeg Artifacts/ | jpeg Artifacts |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/kyonpalm/ | kyonpalm |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/luxury elite/ | luxury elite |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/luxury elite and SYLLABUS/ | luxury elite and SYLLABUS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/mediafired/ | mediafired |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/memorex dawn/ | memorex dawn |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/memory gateways/ | memory gateways |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/mentha/ | mentha |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/mintjr/ | mintjr |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/monument XIII/ | monument XIII |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/mrSimon/ | mrSimon |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/namaste_%2795/ | namaste_'95 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/nano神社 (✪㉨✪)/ | nano神社 (✪㉨✪) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/nebula/ | nebula |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/newforever/ | newforever |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/orchids&flowers/ | orchids&flowers |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/person-people/ | person-people |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/pier_scum/ | pier_scum |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/plastic response records/ | plastic response records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/poolside stereo/ | poolside stereo |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/s3nsua1/ | s3nsua1 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/sbwy/ | sbwy |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/spoookypizza/ | spoookypizza |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/t e l e p a t h テレパシー能力者/ | t e l e p a t h テレパシー能力者 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/t e l e p a t h テレパシー能力者 and 猫 シ Corp/ | t e l e p a t h テレパシー能力者 and 猫 シ Corp |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/texh/ | texh |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/tidecruz/ | tidecruz |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/touchpoint無限大。/ | touchpoint無限大。 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ventla/ | ventla |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/vice-AIRバイス-空気自然の愛/ | vice-AIRバイス-空気自然の愛 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/waterfront dining/ | waterfront dining |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/windows彡96/ | windows彡96 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/yeongrak/ | yeongrak |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/~-.Asuka/ | ~-.Asuka |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/§E▲ ▓F D▓G§/ | §E▲ ▓F D▓G§ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ɪｎｔəˈｄʒɛｋｔ/ | ɪｎｔəˈｄʒɛｋｔ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ʍindƨpring ʍeʍorieƨ™/ | ʍindƨpring ʍeʍorieƨ™ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Η Δύναμη/ | Η Δύναμη |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Σ™/ | Σ™ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Л е н ь/ | Л е н ь |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/рмнчитто/ | рмнчитто |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/רעטראָ Jazz ناد/ | רעטראָ Jazz ناد |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ᴡ ᴇ в s ɪ ᴛ ᴇ ツ/ | ᴡ ᴇ в s ɪ ᴛ ᴇ ツ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/‡‡welcome_ 美 ₰ou₦ds††/ | ‡‡welcome_ 美 ₰ou₦ds†† |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/‡▲‡/ | ‡▲‡ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/₥©ℍΣⓩ☢ K-I-J-A-N-A/ | ₥©ℍΣⓩ☢ K-I-J-A-N-A |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/₮.hank.william.₴ ₪₪₪/ | ₮.hank.william.₴ ₪₪₪ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ℬℬ☭/ | ℬℬ☭ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/∆CIDWATER/ | ∆CIDWATER |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/∆∆∆the internet band/ | ∆∆∆the internet band |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/⌤black___⌤/ | ⌤black___⌤ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ⓨⓞ ⓛⓐ ⓔⓢⓣⓞⓛⓐ/ | ⓨⓞ ⓛⓐ ⓔⓢⓣⓞⓛⓐ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/░▒▓【ALL CAPS AND αւτ kεÿ CΘᕸEᔕ™】░▒▓/ | ░▒▓【ALL CAPS AND αւτ kεÿ CΘᕸEᔕ™】░▒▓ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/░▒▓新しいデラックスライフ▓▒░/ | ░▒▓新しいデラックスライフ▓▒░ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/░▒▓新しいデラックスライフ▓▒░/ | ░▒▓新しいデラックスライフ▓▒░ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/◄● ▌▲/ | ◄● ▌▲ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/「fluence」/ | 「fluence」 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/アドブロック+/ | アドブロック  |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/コンシャスTHOUGHTS/ | コンシャスTHOUGHTS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/サイバー %2798/ | サイバー '98 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ショッピングワールドjp/ | ショッピングワールドjp |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/シルクP A N G E A/ | シルクP A N G E A |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/スカイ f a u n a/ | スカイ f a u n a |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ソーラー_ビジョンINC/ | ソーラー_ビジョンINC |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/チェスマスター/ | チェスマスター |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/テンパーTEMPER/ | テンパーTEMPER |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/デジタルフォーチュン/ | デジタルフォーチュン |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ビッグ·ドン/ | ビッグ·ドン |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/フライドポテト、チーズ、ソース/ | フライドポテト、チーズ、ソース |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/マクロスMACROSS 82-99/ | マクロスMACROSS 82-99 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ユーレカ/ | ユーレカ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ライフMIDI/ | ライフMIDI |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ライフMIDI - 多角形 (SW-033)/ | ライフMIDI - 多角形 (SW-033) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/人以上VANQUISH組み込ま利益/ | 人以上VANQUISH組み込ま利益 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/仮想- Vを（HS高校-/ | 仮想- Vを（HS高校- |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/仮想- Vを（HS高校- - それを2014年を賞賛し、それを切り開く/ | 仮想- Vを（HS高校- - それを2014年を賞賛し、それを切り開く |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/信仰 and 地球/ | 信仰 and 地球 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/切腹/ | 切腹 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/塑臉 SUKI GIRLZ/ | 塑臉 SUKI GIRLZ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/情報デスクVIRTUAL/ | 情報デスクVIRTUAL |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/断片化された友人 - Ｆｒａｇｍｅｎｔｅｄ Ｍｅｍｏｒｉｅｓ/ | 断片化された友人 - Ｆｒａｇｍｅｎｔｅｄ Ｍｅｍｏｒｉｅｓ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/日本人 (Japanese)/ | 日本人 (Japanese) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/日本航空株式会社 ✈ Japan Airlines/ | 日本航空株式会社 ✈ Japan Airlines |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/東京為替/ | 東京為替 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/死夢VANITY/ | 死夢VANITY |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/猫 シ Corp/ | 猫 シ Corp |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/猫 シ Corp. & Donovan Hikaru/ | 猫 シ Corp. & Donovan Hikaru |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/豊平区民TOYOHIRAKUMIN/ | 豊平区民TOYOHIRAKUMIN |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/音 LIGHT システム/ | 音 LIGHT システム |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/骨架的/ | 骨架的 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/식료품groceries/ | 식료품groceries |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/회사AUTO/ | 회사AUTO |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/２８１４/ | ２８１４ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ＤＯＮＴ_ BＥ_ 正方形/ | ＤＯＮＴ_ BＥ_ 正方形 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ＧＡＭＥＳＨＡＲＫ™/ | ＧＡＭＥＳＨＡＲＫ™ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ＮＩＧＨＴＰＯＯＬ ＮＥＯＮ/ | ＮＩＧＨＴＰＯＯＬ ＮＥＯＮ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ｐｏｏｌｓｉｄｅ　Ｔｅｍｐｌｅｓ   (mp3)/ | Ｐｏｏｌｓｉｄｅ　Ｔｅｍｐｌｅｓ   (mp3) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ＷＡＬＫＭＡＮ 91/ | ＷＡＬＫＭＡＮ 91 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ｇｒｅｅｔｉｎｇｓ - あいさつ/ | ｇｒｅｅｔｉｎｇｓ - あいさつ |  | ParseTablesDirectoryListing

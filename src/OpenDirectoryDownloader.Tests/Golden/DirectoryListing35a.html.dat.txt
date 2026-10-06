@@ -1,0 +1,76 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/Brain Damage - Out Of The Gord/ | Brain Damage - Out Of The Gord |  | RegexParser1
+  dir http://localhost/Deprivation - 2 Song Promo/ | Deprivation - 2 Song Promo |  | RegexParser1
+  dir http://localhost/Deprivation - 5 Tracks/ | Deprivation - 5 Tracks |  | RegexParser1
+  dir http://localhost/Deprivation - My Shoes Hurt/ | Deprivation - My Shoes Hurt |  | RegexParser1
+  dir http://localhost/Deprivation - The Fake Bloodiest In History/ | Deprivation - The Fake Bloodiest In History |  | RegexParser1
+  dir http://localhost/Disclaimer - 7 Song Demo/ | Disclaimer - 7 Song Demo |  | RegexParser1
+  dir http://localhost/EBS - A Drum For A Donkey/ | EBS - A Drum For A Donkey |  | RegexParser1
+  dir http://localhost/EBS - Macho Business Donkey Wrestler/ | EBS - Macho Business Donkey Wrestler |  | RegexParser1
+  dir http://localhost/EBS - Pack a Picnic/ | EBS - Pack a Picnic |  | RegexParser1
+  dir http://localhost/Field Party - Godfathers Of Style/ | Field Party - Godfathers Of Style |  | RegexParser1
+  dir http://localhost/Frame - The President's Neck Is Missing/ | Frame - The President's Neck Is Missing |  | RegexParser1
+  dir http://localhost/God Awful - 1997-01-18 Live/ | God Awful - 1997-01-18 Live |  | RegexParser1
+  dir http://localhost/God Awful - Town Hall 1/ | God Awful - Town Hall 1 |  | RegexParser1
+  dir http://localhost/God Awful - Town Hall 2 - 7in/ | God Awful - Town Hall 2 - 7in |  | RegexParser1
+  dir http://localhost/God Awful - Town Hall 3/ | God Awful - Town Hall 3 |  | RegexParser1
+  dir http://localhost/Gunslinger - 2 Song Promo/ | Gunslinger - 2 Song Promo |  | RegexParser1
+  dir http://localhost/Life Detecting Coffins/ | Life Detecting Coffins |  | RegexParser1
+  dir http://localhost/Lounge - Lounge/ | Lounge - Lounge |  | RegexParser1
+  dir http://localhost/Lounge - Punk Rock Superheroes/ | Lounge - Punk Rock Superheroes |  | RegexParser1
+  dir http://localhost/Prom Kings - Music To Pass A Stone By - 7in/ | Prom Kings - Music To Pass A Stone By - 7in |  | RegexParser1
+  dir http://localhost/Record Ignite - Making Mountains Out Of Molehills/ | Record Ignite - Making Mountains Out Of Molehills |  | RegexParser1
+  dir http://localhost/Record Ignite - Rebels Promise Change - 7in/ | Record Ignite - Rebels Promise Change - 7in |  | RegexParser1
+  dir http://localhost/Record Ignite! - Unknown/ | Record Ignite! - Unknown |  | RegexParser1
+  dir http://localhost/Split 7in - Karate For Kids - Frame - 7in/ | Split 7in - Karate For Kids - Frame - 7in |  | RegexParser1
+  dir http://localhost/The Emergency - 7 Song Demo/ | The Emergency - 7 Song Demo |  | RegexParser1
+  dir http://localhost/The Locals Are Here/ | The Locals Are Here |  | RegexParser1
+  dir http://localhost/The Sex Machines - The Sex Machines/ | The Sex Machines - The Sex Machines |  | RegexParser1
+  dir http://localhost/The Skells - Live CBGB's 1-24-99/ | The Skells - Live CBGB's 1-24-99 |  | RegexParser1
+  dir http://localhost/The Skells - Unknown-b/ | The Skells - Unknown-b |  | RegexParser1
+  dir http://localhost/The Skells - Unknown/ | The Skells - Unknown |  | RegexParser1
+  dir http://localhost/The Technicalities - Fuck The Bleed/ | The Technicalities - Fuck The Bleed |  | RegexParser1
+  dir http://localhost/The Technicalities - Lewiston Sandwich/ | The Technicalities - Lewiston Sandwich |  | RegexParser1
+  dir http://localhost/The Technicalities - Live At Club Culture 5-9-03/ | The Technicalities - Live At Club Culture 5-9-03 |  | RegexParser1
+  dir http://localhost/The Technicalities - Self Titled/ | The Technicalities - Self Titled |  | RegexParser1
+  dir http://localhost/The Technicalities - Strategery/ | The Technicalities - Strategery |  | RegexParser1
+  file http://localhost/mp3-header.shtml | mp3-header.shtml | 3994 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost:8086/listing/Brain Damage - Out Of The Gord/ | Brain Damage - Out Of The Gord |  | RegexParser1
+  dir http://localhost:8086/listing/Deprivation - 2 Song Promo/ | Deprivation - 2 Song Promo |  | RegexParser1
+  dir http://localhost:8086/listing/Deprivation - 5 Tracks/ | Deprivation - 5 Tracks |  | RegexParser1
+  dir http://localhost:8086/listing/Deprivation - My Shoes Hurt/ | Deprivation - My Shoes Hurt |  | RegexParser1
+  dir http://localhost:8086/listing/Deprivation - The Fake Bloodiest In History/ | Deprivation - The Fake Bloodiest In History |  | RegexParser1
+  dir http://localhost:8086/listing/Disclaimer - 7 Song Demo/ | Disclaimer - 7 Song Demo |  | RegexParser1
+  dir http://localhost:8086/listing/EBS - A Drum For A Donkey/ | EBS - A Drum For A Donkey |  | RegexParser1
+  dir http://localhost:8086/listing/EBS - Macho Business Donkey Wrestler/ | EBS - Macho Business Donkey Wrestler |  | RegexParser1
+  dir http://localhost:8086/listing/EBS - Pack a Picnic/ | EBS - Pack a Picnic |  | RegexParser1
+  dir http://localhost:8086/listing/Field Party - Godfathers Of Style/ | Field Party - Godfathers Of Style |  | RegexParser1
+  dir http://localhost:8086/listing/Frame - The President's Neck Is Missing/ | Frame - The President's Neck Is Missing |  | RegexParser1
+  dir http://localhost:8086/listing/God Awful - 1997-01-18 Live/ | God Awful - 1997-01-18 Live |  | RegexParser1
+  dir http://localhost:8086/listing/God Awful - Town Hall 1/ | God Awful - Town Hall 1 |  | RegexParser1
+  dir http://localhost:8086/listing/God Awful - Town Hall 2 - 7in/ | God Awful - Town Hall 2 - 7in |  | RegexParser1
+  dir http://localhost:8086/listing/God Awful - Town Hall 3/ | God Awful - Town Hall 3 |  | RegexParser1
+  dir http://localhost:8086/listing/Gunslinger - 2 Song Promo/ | Gunslinger - 2 Song Promo |  | RegexParser1
+  dir http://localhost:8086/listing/Life Detecting Coffins/ | Life Detecting Coffins |  | RegexParser1
+  dir http://localhost:8086/listing/Lounge - Lounge/ | Lounge - Lounge |  | RegexParser1
+  dir http://localhost:8086/listing/Lounge - Punk Rock Superheroes/ | Lounge - Punk Rock Superheroes |  | RegexParser1
+  dir http://localhost:8086/listing/Prom Kings - Music To Pass A Stone By - 7in/ | Prom Kings - Music To Pass A Stone By - 7in |  | RegexParser1
+  dir http://localhost:8086/listing/Record Ignite - Making Mountains Out Of Molehills/ | Record Ignite - Making Mountains Out Of Molehills |  | RegexParser1
+  dir http://localhost:8086/listing/Record Ignite - Rebels Promise Change - 7in/ | Record Ignite - Rebels Promise Change - 7in |  | RegexParser1
+  dir http://localhost:8086/listing/Record Ignite! - Unknown/ | Record Ignite! - Unknown |  | RegexParser1
+  dir http://localhost:8086/listing/Split 7in - Karate For Kids - Frame - 7in/ | Split 7in - Karate For Kids - Frame - 7in |  | RegexParser1
+  dir http://localhost:8086/listing/The Emergency - 7 Song Demo/ | The Emergency - 7 Song Demo |  | RegexParser1
+  dir http://localhost:8086/listing/The Locals Are Here/ | The Locals Are Here |  | RegexParser1
+  dir http://localhost:8086/listing/The Sex Machines - The Sex Machines/ | The Sex Machines - The Sex Machines |  | RegexParser1
+  dir http://localhost:8086/listing/The Skells - Live CBGB's 1-24-99/ | The Skells - Live CBGB's 1-24-99 |  | RegexParser1
+  dir http://localhost:8086/listing/The Skells - Unknown-b/ | The Skells - Unknown-b |  | RegexParser1
+  dir http://localhost:8086/listing/The Skells - Unknown/ | The Skells - Unknown |  | RegexParser1
+  dir http://localhost:8086/listing/The Technicalities - Fuck The Bleed/ | The Technicalities - Fuck The Bleed |  | RegexParser1
+  dir http://localhost:8086/listing/The Technicalities - Lewiston Sandwich/ | The Technicalities - Lewiston Sandwich |  | RegexParser1
+  dir http://localhost:8086/listing/The Technicalities - Live At Club Culture 5-9-03/ | The Technicalities - Live At Club Culture 5-9-03 |  | RegexParser1
+  dir http://localhost:8086/listing/The Technicalities - Self Titled/ | The Technicalities - Self Titled |  | RegexParser1
+  dir http://localhost:8086/listing/The Technicalities - Strategery/ | The Technicalities - Strategery |  | RegexParser1
+  file http://localhost:8086/listing/mp3-header.shtml | mp3-header.shtml | 3994 | 

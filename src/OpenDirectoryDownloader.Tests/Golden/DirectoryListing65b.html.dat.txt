@@ -1,0 +1,74 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/S.L, MI (01.03.12) HardRockLPW, Soundgarden-"Superunknown".wav | S.L, MI (01.03.12) HardRockLPW, Soundgarden-"Superunknown".wav | 55574528 | 
+  file http://localhost/S.L, MI (02.02.12) HardRockLPW, Velvet Revolver-"Slither".wav | S.L, MI (02.02.12) HardRockLPW, Velvet Revolver-"Slither".wav | 44040192 | 
+  file http://localhost/S.L, MI (02.05.12) Hard Rock LPW, Gn'R - Nightrain.wav | S.L, MI (02.05.12) Hard Rock LPW, Gn'R - Nightrain.wav | 42991616 | 
+  file http://localhost/S.L, MI (03.01.12) BluesLPW, Etta James-"That's Alright".wav | S.L, MI (03.01.12) BluesLPW, Etta James-"That's Alright".wav | 47185920 | 
+  file http://localhost/S.L, MI (03.07.12) ClassicRockLPW, Led Zeppelin - "Communication Breakdown" (2).wav | S.L, MI (03.07.12) ClassicRockLPW, Led Zeppelin - "Communication Breakdown" (2).wav | 29360128 | 
+  file http://localhost/S.L, MI (04.11.11) MetalLPW, BLS-"Stoned & Drunk".wav | S.L, MI (04.11.11) MetalLPW, BLS-"Stoned & Drunk".wav | 50331648 | 
+  file http://localhost/S.L, MI (05.06.12) BluesLPW, BB King - "The Thrill Is Gone".wav | S.L, MI (05.06.12) BluesLPW, BB King - "The Thrill Is Gone".wav | 50331648 | 
+  file http://localhost/S.L, MI (06.04.12) MetalLPW, Ozzy Osbourne-"Bark At The Moon" (2).wav | S.L, MI (06.04.12) MetalLPW, Ozzy Osbourne-"Bark At The Moon" (2).wav | 45088768 | 
+  file http://localhost/S.L, MI (07.03.12) ClassicRockLPW, Guns N' Roses-"Welcome To The Jungle".wav | S.L, MI (07.03.12) ClassicRockLPW, Guns N' Roses-"Welcome To The Jungle".wav | 50331648 | 
+  file http://localhost/S.L, MI (07.10.11) MetalLPW, Ozzy Osbourne-"Believer".wav | S.L, MI (07.10.11) MetalLPW, Ozzy Osbourne-"Believer".wav | 51380224 | 
+  file http://localhost/S.L, MI (07.11.11) ModernRockLPW, Red Hot Chili Peppers-"Look Around".wav | S.L, MI (07.11.11) ModernRockLPW, Red Hot Chili Peppers-"Look Around".wav | 37748736 | 
+  file http://localhost/S.L, MI (08.05.12) BluesLPW, S.R.Vaughan - "Pride & Joy".wav | S.L, MI (08.05.12) BluesLPW, S.R.Vaughan - "Pride & Joy".wav | 39845888 | 
+  file http://localhost/S.L, MI (09.05.12) HardRockLPW, Godsmack - "Awake".wav | S.L, MI (09.05.12) HardRockLPW, Godsmack - "Awake".wav | 55574528 | 
+  file http://localhost/S.L, MI (1.08.12) Hard Rock LPW, Van Halen-Unchained.wav | S.L, MI (1.08.12) Hard Rock LPW, Van Halen-Unchained.wav | 36700160 | 
+  file http://localhost/S.L, MI (11.01.12) HardRockLPW, Jane's Addiction-"Mountain Song".WAV | S.L, MI (11.01.12) HardRockLPW, Jane's Addiction-"Mountain Song".WAV | 41943040 | 
+  file http://localhost/S.L, MI (11.04.12) HRockLPW, Rob Zombie-"Superbeast".wav | S.L, MI (11.04.12) HRockLPW, Rob Zombie-"Superbeast".wav | 38797312 | 
+  file http://localhost/S.L, MI (11.07.12) HardRockLPW, Nirvana-Breed (2).wav | S.L, MI (11.07.12) HardRockLPW, Nirvana-Breed (2).wav | 31457280 | 
+  file http://localhost/S.L, MI (12.10.12) BrazilLPW, bossa-nova….mp3 | S.L, MI (12.10.12) BrazilLPW, bossa-nova….mp3 | 6501171 | 
+  file http://localhost/S.L, MI (12.10.12) BrazilLPW, Sting-Fields Of Gold.mp3 | S.L, MI (12.10.12) BrazilLPW, Sting-Fields Of Gold.mp3 | 4508877 | 
+  file http://localhost/S.L, MI (12.10.12) ClassicRockLPW, Deep Purple-Hush (3).mp3 | S.L, MI (12.10.12) ClassicRockLPW, Deep Purple-Hush (3).mp3 | 4508877 | 
+  file http://localhost/S.L, MI (12.10.12) MetalLPW, Iron Maiden-2 Minutes To Midnight.mp3 | S.L, MI (12.10.12) MetalLPW, Iron Maiden-2 Minutes To Midnight.mp3 | 7444890 | 
+  file http://localhost/S.L, MI (13.04.12) MetalLPW, Metallica-"For Whom The Bell Tolls".wav | S.L, MI (13.04.12) MetalLPW, Metallica-"For Whom The Bell Tolls".wav | 52428800 | 
+  file http://localhost/S.L, MI (16.05.12) CountryLPW, Shania Twain - "Man, I Feel Like A Woman".wav | S.L, MI (16.05.12) CountryLPW, Shania Twain - "Man, I Feel Like A Woman".wav | 39845888 | 
+  file http://localhost/S.L, MI (18.07.12) HardRockLPW, RHCP-Around The World.wav | S.L, MI (18.07.12) HardRockLPW, RHCP-Around The World.wav | 41943040 | 
+  file http://localhost/S.L, MI (20.01.12) HardRockLPW, Black Sabbath-"Sweet Leaf".wav | S.L, MI (20.01.12) HardRockLPW, Black Sabbath-"Sweet Leaf".wav | 48234496 | 
+  file http://localhost/S.L, MI (22.02.12) ClassicRockLPW, Led Zeppelin-"Since I've Been Loving You" (4).wav | S.L, MI (22.02.12) ClassicRockLPW, Led Zeppelin-"Since I've Been Loving You" (4).wav | 77594624 | 
+  file http://localhost/S.L, MI (22.05.12) ClassicRockLPW, Led Zeppelin - "Ramble On" (2).wav | S.L, MI (22.05.12) ClassicRockLPW, Led Zeppelin - "Ramble On" (2).wav | 46137344 | 
+  file http://localhost/S.L, MI (24.07.12) ClassicRockLPW, Queen-Tie Your Mother Down (2).wav | S.L, MI (24.07.12) ClassicRockLPW, Queen-Tie Your Mother Down (2).wav | 39845888 | 
+  file http://localhost/S.L, MI (27.04.12) MetalLPW, Iron Maiden-"Aces High" (2).wav | S.L, MI (27.04.12) MetalLPW, Iron Maiden-"Aces High" (2).wav | 52428800 | 
+  file http://localhost/S.L, MI (27.07.12) I Love the 80's LPW, Guns N' Roses-Sweet Child O' Mine.wav | S.L, MI (27.07.12) I Love the 80's LPW, Guns N' Roses-Sweet Child O' Mine.wav | 62914560 | 
+  file http://localhost/S.L, MI (27.10.11) HardRockLPW, Motley Crue-"Dr.Feelgood".wav | S.L, MI (27.10.11) HardRockLPW, Motley Crue-"Dr.Feelgood".wav | 58720256 | 
+  file http://localhost/S.L, MI (31.01.12) ClassicRockLPW, AC-DC-"Back In Black".wav | S.L, MI (31.01.12) ClassicRockLPW, AC-DC-"Back In Black".wav | 50331648 | 
+  file http://localhost/S.L, MI (31.10.12) BrazilianLPW, "So Danco Samba".mp3 | S.L, MI (31.10.12) BrazilianLPW, "So Danco Samba".mp3 | 4194304 | 
+  file http://localhost/S.L, MI (31.10.12) HardRockLPW, Foo Fighters-All My Life.mp3 | S.L, MI (31.10.12) HardRockLPW, Foo Fighters-All My Life.mp3 | 5242880 | 
+  file http://localhost/S.L, MI (5.11.10) ModernRockLPW, Shinedown-Unity.mp3 | S.L, MI (5.11.10) ModernRockLPW, Shinedown-Unity.mp3 | 4928307 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost:8086/listing/S.L, MI (01.03.12) HardRockLPW, Soundgarden-"Superunknown".wav | S.L, MI (01.03.12) HardRockLPW, Soundgarden-"Superunknown".wav | 55574528 | 
+  file http://localhost:8086/listing/S.L, MI (02.02.12) HardRockLPW, Velvet Revolver-"Slither".wav | S.L, MI (02.02.12) HardRockLPW, Velvet Revolver-"Slither".wav | 44040192 | 
+  file http://localhost:8086/listing/S.L, MI (02.05.12) Hard Rock LPW, Gn'R - Nightrain.wav | S.L, MI (02.05.12) Hard Rock LPW, Gn'R - Nightrain.wav | 42991616 | 
+  file http://localhost:8086/listing/S.L, MI (03.01.12) BluesLPW, Etta James-"That's Alright".wav | S.L, MI (03.01.12) BluesLPW, Etta James-"That's Alright".wav | 47185920 | 
+  file http://localhost:8086/listing/S.L, MI (03.07.12) ClassicRockLPW, Led Zeppelin - "Communication Breakdown" (2).wav | S.L, MI (03.07.12) ClassicRockLPW, Led Zeppelin - "Communication Breakdown" (2).wav | 29360128 | 
+  file http://localhost:8086/listing/S.L, MI (04.11.11) MetalLPW, BLS-"Stoned & Drunk".wav | S.L, MI (04.11.11) MetalLPW, BLS-"Stoned & Drunk".wav | 50331648 | 
+  file http://localhost:8086/listing/S.L, MI (05.06.12) BluesLPW, BB King - "The Thrill Is Gone".wav | S.L, MI (05.06.12) BluesLPW, BB King - "The Thrill Is Gone".wav | 50331648 | 
+  file http://localhost:8086/listing/S.L, MI (06.04.12) MetalLPW, Ozzy Osbourne-"Bark At The Moon" (2).wav | S.L, MI (06.04.12) MetalLPW, Ozzy Osbourne-"Bark At The Moon" (2).wav | 45088768 | 
+  file http://localhost:8086/listing/S.L, MI (07.03.12) ClassicRockLPW, Guns N' Roses-"Welcome To The Jungle".wav | S.L, MI (07.03.12) ClassicRockLPW, Guns N' Roses-"Welcome To The Jungle".wav | 50331648 | 
+  file http://localhost:8086/listing/S.L, MI (07.10.11) MetalLPW, Ozzy Osbourne-"Believer".wav | S.L, MI (07.10.11) MetalLPW, Ozzy Osbourne-"Believer".wav | 51380224 | 
+  file http://localhost:8086/listing/S.L, MI (07.11.11) ModernRockLPW, Red Hot Chili Peppers-"Look Around".wav | S.L, MI (07.11.11) ModernRockLPW, Red Hot Chili Peppers-"Look Around".wav | 37748736 | 
+  file http://localhost:8086/listing/S.L, MI (08.05.12) BluesLPW, S.R.Vaughan - "Pride & Joy".wav | S.L, MI (08.05.12) BluesLPW, S.R.Vaughan - "Pride & Joy".wav | 39845888 | 
+  file http://localhost:8086/listing/S.L, MI (09.05.12) HardRockLPW, Godsmack - "Awake".wav | S.L, MI (09.05.12) HardRockLPW, Godsmack - "Awake".wav | 55574528 | 
+  file http://localhost:8086/listing/S.L, MI (1.08.12) Hard Rock LPW, Van Halen-Unchained.wav | S.L, MI (1.08.12) Hard Rock LPW, Van Halen-Unchained.wav | 36700160 | 
+  file http://localhost:8086/listing/S.L, MI (11.01.12) HardRockLPW, Jane's Addiction-"Mountain Song".WAV | S.L, MI (11.01.12) HardRockLPW, Jane's Addiction-"Mountain Song".WAV | 41943040 | 
+  file http://localhost:8086/listing/S.L, MI (11.04.12) HRockLPW, Rob Zombie-"Superbeast".wav | S.L, MI (11.04.12) HRockLPW, Rob Zombie-"Superbeast".wav | 38797312 | 
+  file http://localhost:8086/listing/S.L, MI (11.07.12) HardRockLPW, Nirvana-Breed (2).wav | S.L, MI (11.07.12) HardRockLPW, Nirvana-Breed (2).wav | 31457280 | 
+  file http://localhost:8086/listing/S.L, MI (12.10.12) BrazilLPW, bossa-nova….mp3 | S.L, MI (12.10.12) BrazilLPW, bossa-nova….mp3 | 6501171 | 
+  file http://localhost:8086/listing/S.L, MI (12.10.12) BrazilLPW, Sting-Fields Of Gold.mp3 | S.L, MI (12.10.12) BrazilLPW, Sting-Fields Of Gold.mp3 | 4508877 | 
+  file http://localhost:8086/listing/S.L, MI (12.10.12) ClassicRockLPW, Deep Purple-Hush (3).mp3 | S.L, MI (12.10.12) ClassicRockLPW, Deep Purple-Hush (3).mp3 | 4508877 | 
+  file http://localhost:8086/listing/S.L, MI (12.10.12) MetalLPW, Iron Maiden-2 Minutes To Midnight.mp3 | S.L, MI (12.10.12) MetalLPW, Iron Maiden-2 Minutes To Midnight.mp3 | 7444890 | 
+  file http://localhost:8086/listing/S.L, MI (13.04.12) MetalLPW, Metallica-"For Whom The Bell Tolls".wav | S.L, MI (13.04.12) MetalLPW, Metallica-"For Whom The Bell Tolls".wav | 52428800 | 
+  file http://localhost:8086/listing/S.L, MI (16.05.12) CountryLPW, Shania Twain - "Man, I Feel Like A Woman".wav | S.L, MI (16.05.12) CountryLPW, Shania Twain - "Man, I Feel Like A Woman".wav | 39845888 | 
+  file http://localhost:8086/listing/S.L, MI (18.07.12) HardRockLPW, RHCP-Around The World.wav | S.L, MI (18.07.12) HardRockLPW, RHCP-Around The World.wav | 41943040 | 
+  file http://localhost:8086/listing/S.L, MI (20.01.12) HardRockLPW, Black Sabbath-"Sweet Leaf".wav | S.L, MI (20.01.12) HardRockLPW, Black Sabbath-"Sweet Leaf".wav | 48234496 | 
+  file http://localhost:8086/listing/S.L, MI (22.02.12) ClassicRockLPW, Led Zeppelin-"Since I've Been Loving You" (4).wav | S.L, MI (22.02.12) ClassicRockLPW, Led Zeppelin-"Since I've Been Loving You" (4).wav | 77594624 | 
+  file http://localhost:8086/listing/S.L, MI (22.05.12) ClassicRockLPW, Led Zeppelin - "Ramble On" (2).wav | S.L, MI (22.05.12) ClassicRockLPW, Led Zeppelin - "Ramble On" (2).wav | 46137344 | 
+  file http://localhost:8086/listing/S.L, MI (24.07.12) ClassicRockLPW, Queen-Tie Your Mother Down (2).wav | S.L, MI (24.07.12) ClassicRockLPW, Queen-Tie Your Mother Down (2).wav | 39845888 | 
+  file http://localhost:8086/listing/S.L, MI (27.04.12) MetalLPW, Iron Maiden-"Aces High" (2).wav | S.L, MI (27.04.12) MetalLPW, Iron Maiden-"Aces High" (2).wav | 52428800 | 
+  file http://localhost:8086/listing/S.L, MI (27.07.12) I Love the 80's LPW, Guns N' Roses-Sweet Child O' Mine.wav | S.L, MI (27.07.12) I Love the 80's LPW, Guns N' Roses-Sweet Child O' Mine.wav | 62914560 | 
+  file http://localhost:8086/listing/S.L, MI (27.10.11) HardRockLPW, Motley Crue-"Dr.Feelgood".wav | S.L, MI (27.10.11) HardRockLPW, Motley Crue-"Dr.Feelgood".wav | 58720256 | 
+  file http://localhost:8086/listing/S.L, MI (31.01.12) ClassicRockLPW, AC-DC-"Back In Black".wav | S.L, MI (31.01.12) ClassicRockLPW, AC-DC-"Back In Black".wav | 50331648 | 
+  file http://localhost:8086/listing/S.L, MI (31.10.12) BrazilianLPW, "So Danco Samba".mp3 | S.L, MI (31.10.12) BrazilianLPW, "So Danco Samba".mp3 | 4194304 | 
+  file http://localhost:8086/listing/S.L, MI (31.10.12) HardRockLPW, Foo Fighters-All My Life.mp3 | S.L, MI (31.10.12) HardRockLPW, Foo Fighters-All My Life.mp3 | 5242880 | 
+  file http://localhost:8086/listing/S.L, MI (5.11.10) ModernRockLPW, Shinedown-Unity.mp3 | S.L, MI (5.11.10) ModernRockLPW, Shinedown-Unity.mp3 | 4928307 | 

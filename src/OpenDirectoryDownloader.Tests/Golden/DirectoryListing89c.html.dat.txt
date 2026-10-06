@@ -1,0 +1,7 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseListItemsDirectoryListing error=False ok=True
+  dir http://localhost/B:/本子 | 本子 |  | ParseListItemsDirectoryListing
+  dir http://localhost/B:/VIP专区 | VIP专区 |  | ParseListItemsDirectoryListing
+  dir http://localhost/B:/视频 | 视频 |  | ParseListItemsDirectoryListing
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseListItemsDirectoryListing error=False ok=True

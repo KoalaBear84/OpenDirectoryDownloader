@@ -1,0 +1,108 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/interesting_stuff/%231 stupidest search phrase I received from Google - ojibwa casino marquette how to know when the slots are going to hit big/ | #1 stupidest search phrase I received from Google - ojibwa casino marquette how to know when the slots are going to hit big |  | RegexParser6
+  dir http://localhost/interesting_stuff/3M Touchsystems/ | 3M Touchsystems |  | RegexParser6
+  dir http://localhost/interesting_stuff/3Y/ | 3Y |  | RegexParser6
+  dir http://localhost/interesting_stuff/a collection of technical stuff from a technician in Libya/ | a collection of technical stuff from a technician in Libya |  | RegexParser6
+  dir http://localhost/interesting_stuff/aristocrat/ | aristocrat |  | RegexParser6
+  dir http://localhost/interesting_stuff/aruze/ | aruze |  | RegexParser6
+  dir http://localhost/interesting_stuff/asahi seiko/ | asahi seiko |  | RegexParser6
+  dir http://localhost/interesting_stuff/assa desmo/ | assa desmo |  | RegexParser6
+  dir http://localhost/interesting_stuff/atronic/ | atronic |  | RegexParser6
+  dir http://localhost/interesting_stuff/autec/ | autec |  | RegexParser6
+  dir http://localhost/interesting_stuff/bally/ | bally |  | RegexParser6
+  dir http://localhost/interesting_stuff/barcrest/ | barcrest |  | RegexParser6
+  dir http://localhost/interesting_stuff/blowbox/ | blowbox |  | RegexParser6
+  dir http://localhost/interesting_stuff/cashcode/ | cashcode |  | RegexParser6
+  dir http://localhost/interesting_stuff/casino school/ | casino school |  | RegexParser6
+  dir http://localhost/interesting_stuff/casino_school/ | casino_school |  | RegexParser6
+  dir http://localhost/interesting_stuff/casinotech___kortek_in_usa/ | casinotech___kortek_in_usa |  | RegexParser6
+  dir http://localhost/interesting_stuff/cathode ray tube at work vintage book/ | cathode ray tube at work vintage book |  | RegexParser6
+  dir http://localhost/interesting_stuff/ceronix/ | ceronix |  | RegexParser6
+  dir http://localhost/interesting_stuff/check your monitor/ | check your monitor |  | RegexParser6
+  dir http://localhost/interesting_stuff/checklists/ | checklists |  | RegexParser6
+  dir http://localhost/interesting_stuff/chipquick/ | chipquick |  | RegexParser6
+  dir http://localhost/interesting_stuff/CI Innovations/ | CI Innovations |  | RegexParser6
+  dir http://localhost/interesting_stuff/coin mechanisms inc/ | coin mechanisms inc |  | RegexParser6
+  dir http://localhost/interesting_stuff/compudigm/ | compudigm |  | RegexParser6
+  dir http://localhost/interesting_stuff/condor/ | condor |  | RegexParser6
+  dir http://localhost/interesting_stuff/CRT book from 1946/ | CRT book from 1946 |  | RegexParser6
+  dir http://localhost/interesting_stuff/cyberlock/ | cyberlock |  | RegexParser6
+  dir http://localhost/interesting_stuff/Data Sheets/ | Data Sheets |  | RegexParser6
+  dir http://localhost/interesting_stuff/diebold/ | diebold |  | RegexParser6
+  dir http://localhost/interesting_stuff/durel/ | durel |  | RegexParser6
+  dir http://localhost/interesting_stuff/effinet monitors/ | effinet monitors |  | RegexParser6
+  dir http://localhost/interesting_stuff/elotouch/ | elotouch |  | RegexParser6
+  dir http://localhost/interesting_stuff/entropy/ | entropy |  | RegexParser6
+  dir http://localhost/interesting_stuff/futurelogic printers/ | futurelogic printers |  | RegexParser6
+  dir http://localhost/interesting_stuff/Glenview/ | Glenview |  | RegexParser6
+  dir http://localhost/interesting_stuff/global games/ | global games |  | RegexParser6
+  dir http://localhost/interesting_stuff/gpt/ | gpt |  | RegexParser6
+  dir http://localhost/interesting_stuff/gsa/ | gsa |  | RegexParser6
+  dir http://localhost/interesting_stuff/harmonic supression/ | harmonic supression |  | RegexParser6
+  dir http://localhost/interesting_stuff/heber/ | heber |  | RegexParser6
+  dir http://localhost/interesting_stuff/hoppers/ | hoppers |  | RegexParser6
+  dir http://localhost/interesting_stuff/hot/ | hot |  | RegexParser6
+  dir http://localhost/interesting_stuff/ics_gaming/ | ics_gaming |  | RegexParser6
+  dir http://localhost/interesting_stuff/igt/ | igt |  | RegexParser6
+  dir http://localhost/interesting_stuff/ithaca/ | ithaca |  | RegexParser6
+  dir http://localhost/interesting_stuff/jcm/ | jcm |  | RegexParser6
+  dir http://localhost/interesting_stuff/jpm/ | jpm |  | RegexParser6
+  dir http://localhost/interesting_stuff/kortek/ | kortek |  | RegexParser6
+  dir http://localhost/interesting_stuff/kristel/ | kristel |  | RegexParser6
+  dir http://localhost/interesting_stuff/leekseeker/ | leekseeker |  | RegexParser6
+  dir http://localhost/interesting_stuff/logical devices/ | logical devices |  | RegexParser6
+  dir http://localhost/interesting_stuff/machine power requirements/ | machine power requirements |  | RegexParser6
+  dir http://localhost/interesting_stuff/magazine/ | magazine |  | RegexParser6
+  dir http://localhost/interesting_stuff/maygay 2002/ | maygay 2002 |  | RegexParser6
+  dir http://localhost/interesting_stuff/medeco/ | medeco |  | RegexParser6
+  dir http://localhost/interesting_stuff/mei/ | mei |  | RegexParser6
+  dir http://localhost/interesting_stuff/microtouch/ | microtouch |  | RegexParser6
+  dir http://localhost/interesting_stuff/misc/ | misc |  | RegexParser6
+  dir http://localhost/interesting_stuff/misc. LCD and CRT monitor stuff/ | misc. LCD and CRT monitor stuff |  | RegexParser6
+  dir http://localhost/interesting_stuff/money controls/ | money controls |  | RegexParser6
+  dir http://localhost/interesting_stuff/monitor_repair_database/ | monitor_repair_database |  | RegexParser6
+  dir http://localhost/interesting_stuff/MOSFET cross reference guide/ | MOSFET cross reference guide |  | RegexParser6
+  dir http://localhost/interesting_stuff/neotec/ | neotec |  | RegexParser6
+  dir http://localhost/interesting_stuff/New Folder/ | New Folder |  | RegexParser6
+  dir http://localhost/interesting_stuff/NIGA 2008/ | NIGA 2008 |  | RegexParser6
+  dir http://localhost/interesting_stuff/pentranic/ | pentranic |  | RegexParser6
+  dir http://localhost/interesting_stuff/Peter Chou/ | Peter Chou |  | RegexParser6
+  dir http://localhost/interesting_stuff/pm schedule/ | pm schedule |  | RegexParser6
+  dir http://localhost/interesting_stuff/pot of Gold/ | pot of Gold |  | RegexParser6
+  dir http://localhost/interesting_stuff/power supplies/ | power supplies |  | RegexParser6
+  dir http://localhost/interesting_stuff/princeton/ | princeton |  | RegexParser6
+  dir http://localhost/interesting_stuff/Robert Sult/ | Robert Sult |  | RegexParser6
+  dir http://localhost/interesting_stuff/sencore/ | sencore |  | RegexParser6
+  dir http://localhost/interesting_stuff/sigma/ | sigma |  | RegexParser6
+  dir http://localhost/interesting_stuff/sony/ | sony |  | RegexParser6
+  dir http://localhost/interesting_stuff/star printer/ | star printer |  | RegexParser6
+  dir http://localhost/interesting_stuff/stella/ | stella |  | RegexParser6
+  dir http://localhost/interesting_stuff/suzo-happ/ | suzo-happ |  | RegexParser6
+  dir http://localhost/interesting_stuff/tatung/ | tatung |  | RegexParser6
+  dir http://localhost/interesting_stuff/techfest 10 handout/ | techfest 10 handout |  | RegexParser6
+  dir http://localhost/interesting_stuff/TechFest 18 Goodies/ | TechFest 18 Goodies |  | RegexParser6
+  dir http://localhost/interesting_stuff/techfest_10_images/ | techfest_10_images |  | RegexParser6
+  dir http://localhost/interesting_stuff/techfest_11_images/ | techfest_11_images |  | RegexParser6
+  dir http://localhost/interesting_stuff/techfest_4_images/ | techfest_4_images |  | RegexParser6
+  dir http://localhost/interesting_stuff/techfest_5_images/ | techfest_5_images |  | RegexParser6
+  dir http://localhost/interesting_stuff/techfest_6_images/ | techfest_6_images |  | RegexParser6
+  dir http://localhost/interesting_stuff/techfest_7_images/ | techfest_7_images |  | RegexParser6
+  dir http://localhost/interesting_stuff/techfest_9_images/ | techfest_9_images |  | RegexParser6
+  dir http://localhost/interesting_stuff/telcovision/ | telcovision |  | RegexParser6
+  dir http://localhost/interesting_stuff/The Herschel Peeler Collection/ | The Herschel Peeler Collection |  | RegexParser6
+  dir http://localhost/interesting_stuff/The Kevin Noble Collection/ | The Kevin Noble Collection |  | RegexParser6
+  dir http://localhost/interesting_stuff/the_Herschel_Peeler_collection/ | the_Herschel_Peeler_collection |  | RegexParser6
+  dir http://localhost/interesting_stuff/touch international/ | touch international |  | RegexParser6
+  dir http://localhost/interesting_stuff/Tovis Monitor/ | Tovis Monitor |  | RegexParser6
+  dir http://localhost/interesting_stuff/Transact Technologies/ | Transact Technologies |  | RegexParser6
+  dir http://localhost/interesting_stuff/wells-gardner/ | wells-gardner |  | RegexParser6
+  dir http://localhost/interesting_stuff/wms/ | wms |  | RegexParser6
+  dir http://localhost/interesting_stuff/ws_ftp/ | ws_ftp |  | RegexParser6
+  file http://localhost/interesting_stuff/35-36.pdf | 35-36.pdf | 558193 | 
+  file http://localhost/interesting_stuff/Shortcut to ms8schematic.jpg.lnk | Shortcut to ms8schematic.jpg.lnk | 939 | 
+  file http://localhost/interesting_stuff/techfest10_monitor5.asf | techfest10_monitor5.asf | 6852096 | 
+  file http://localhost/interesting_stuff/techfest10_monitor7.avi | techfest10_monitor7.avi | 4677120 | 
+  file http://localhost/interesting_stuff/U2000flo.jpg | U2000flo.jpg | 297728 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True

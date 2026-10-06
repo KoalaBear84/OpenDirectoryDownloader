@@ -1,0 +1,10 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/ODTest/¡¢£¤¥ăĄƃɔʵ̆΅ЄԆԷ اܑऌঋਕએଓஒఎಐഎඐทພ༩ဒႱᄎሓᎷᐖᚖᚸᜃភᠮℕⅨ↦/ | ¡¢£¤¥ăĄƃɔʵ̆΅ЄԆԷ اܑऌঋਕએଓஒఎಐഎඐทພ༩ဒႱᄎሓᎷᐖᚖᚸᜃភᠮℕⅨ↦ |  | ParseTablesDirectoryListing
+  dir http://localhost/ODTest/resources/ | resources |  | ParseTablesDirectoryListing
+  dir http://localhost/ODTest/Test/ | Test |  | ParseTablesDirectoryListing
+  dir http://localhost/ODTest/EmptyFolder/ | EmptyFolder |  | ParseTablesDirectoryListing
+  file http://localhost/ODTest/∌⌀②▄▣☂✄⠅⿴〄.test | ∌⌀②▄▣☂✄⠅⿴〄.test | 19057 | 
+  file http://localhost/ODTest/asciifilename.txt | asciifilename.txt | 0 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True

@@ -1,0 +1,18 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  file http://localhost/paint.zip | paint.zip | 5530 | 
+  file http://localhost/paintv2.zip | paintv2.zip | 8397 | 
+  file http://localhost/paintv2-0-1.zip | paintv2-0-1.zip | 6349 | 
+  file http://localhost/paintv3.zip | paintv3.zip | 8909 | 
+  file http://localhost/QuickSpy.bat | QuickSpy.bat | 1126 | 
+  file http://localhost/vb6 garbage.7z | vb6 garbage.7z | 165786 | 
+  file http://localhost/whatthis.txt | whatthis.txt | 24 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=False
+  file http://localhost:8086/listing/paint.zip | paint.zip | 5530 | 
+  file http://localhost:8086/listing/paintv2.zip | paintv2.zip | 8397 | 
+  file http://localhost:8086/listing/paintv2-0-1.zip | paintv2-0-1.zip | 6349 | 
+  file http://localhost:8086/listing/paintv3.zip | paintv3.zip | 8909 | 
+  file http://localhost:8086/listing/QuickSpy.bat | QuickSpy.bat | 1126 | 
+  file http://localhost:8086/listing/vb6 garbage.7z | vb6 garbage.7z | 165786 | 
+  file http://localhost:8086/listing/whatthis.txt | whatthis.txt | 24 | 

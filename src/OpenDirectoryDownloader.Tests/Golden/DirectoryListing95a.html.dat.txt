@@ -1,0 +1,8 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/DEF CON 1/ | DEF CON 1 |  | RegexParser7
+  dir http://localhost/Music/ | Music |  | RegexParser7
+  dir http://localhost/Videos/ | Videos |  | RegexParser7
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+  file http://localhost:8086/index.html | index.html |  | 

@@ -1,0 +1,24 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/Zelda/ | Zelda |  | ParseTablesDirectoryListing
+  file http://localhost/Jungle Cruise.m4r | Jungle Cruise.m4r | 76800 | 
+  file http://localhost/Let It Be.m4r | Let It Be.m4r | 967680 | 
+  file http://localhost/Renaissance -Alternate.m4r | Renaissance -Alternate.m4r | 243712 | 
+  file http://localhost/Renaissance.m4r | Renaissance.m4r | 258048 | 
+  file http://localhost/Star Tours - Long.m4r | Star Tours - Long.m4r | 101376 | 
+  file http://localhost/Star Tours I.m4r | Star Tours I.m4r | 101376 | 
+  file http://localhost/Star Tours II.m4r | Star Tours II.m4r | 101376 | 
+  file http://localhost/Yo Ho.m4r | Yo Ho.m4r | 186368 | 
+  file http://localhost/it's a small world.m4r | it's a small world.m4r | 710656 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/Zelda/ | Zelda |  | ParseTablesDirectoryListing
+  file http://localhost:8086/listing/Jungle Cruise.m4r | Jungle Cruise.m4r | 76800 | 
+  file http://localhost:8086/listing/Let It Be.m4r | Let It Be.m4r | 967680 | 
+  file http://localhost:8086/listing/Renaissance -Alternate.m4r | Renaissance -Alternate.m4r | 243712 | 
+  file http://localhost:8086/listing/Renaissance.m4r | Renaissance.m4r | 258048 | 
+  file http://localhost:8086/listing/Star Tours - Long.m4r | Star Tours - Long.m4r | 101376 | 
+  file http://localhost:8086/listing/Star Tours I.m4r | Star Tours I.m4r | 101376 | 
+  file http://localhost:8086/listing/Star Tours II.m4r | Star Tours II.m4r | 101376 | 
+  file http://localhost:8086/listing/Yo Ho.m4r | Yo Ho.m4r | 186368 | 
+  file http://localhost:8086/listing/it's a small world.m4r | it's a small world.m4r | 710656 | 

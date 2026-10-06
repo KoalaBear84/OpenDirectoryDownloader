@@ -1,0 +1,12 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/15/ | 15 |  | RegexParser2
+  file http://localhost/_yetishare_test_1521945706.txt | _yetishare_test_1521945706.txt | 20 | 
+  file http://localhost/_yetishare_test_1521946077.txt | _yetishare_test_1521946077.txt | 20 | 
+  file http://localhost/_yetishare_test_1521946370.txt | _yetishare_test_1521946370.txt | 20 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost:8086/listing/15/ | 15 |  | RegexParser2
+  file http://localhost:8086/listing/_yetishare_test_1521945706.txt | _yetishare_test_1521945706.txt | 20 | 
+  file http://localhost:8086/listing/_yetishare_test_1521946077.txt | _yetishare_test_1521946077.txt | 20 | 
+  file http://localhost:8086/listing/_yetishare_test_1521946370.txt | _yetishare_test_1521946370.txt | 20 | 

@@ -1,0 +1,64 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/public/THEMIS/SCI/Pubs/2004_Refereed/ | 2004_Refereed |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/2004_non-refereed/ | 2004_non-refereed |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/2005_Refereed/ | 2005_Refereed |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/2005_non-refereed/ | 2005_non-refereed |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/2006_Refereed/ | 2006_Refereed |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/2006_non-refereed/ | 2006_non-refereed |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/2007_Refereed/ | 2007_Refereed |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/2007_non-refereed/ | 2007_non-refereed |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/2008_Refereed/ | 2008_Refereed |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/2008_Space_Science_Reviews/ | 2008_Space_Science_Reviews |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/2008_non-refereed/ | 2008_non-refereed |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/2009_Refereed/ | 2009_Refereed |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/2009_non-refereed/ | 2009_non-refereed |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/2010_Refereed/ | 2010_Refereed |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/2010_non-refereed/ | 2010_non-refereed |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/2011_Refereed/ | 2011_Refereed |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/Nuggets/ | Nuggets |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/Proposals_and_Reports/ | Proposals_and_Reports |  | ParseTablesDirectoryListing
+  dir http://localhost/public/THEMIS/SCI/Pubs/artemis/ | artemis |  | ParseTablesDirectoryListing
+  file http://localhost/public/THEMIS/SCI/Pubs/APL_logo.jpg | APL_logo.jpg | 10547 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/ESA_ESTEC.gif | ESA_ESTEC.gif | 4506 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/Earth_SPbU_logo.jpg | Earth_SPbU_logo.jpg | 95744 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/IGEP-Logo.300dpi.jpg | IGEP-Logo.300dpi.jpg | 494490 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/IWF.png | IWF.png | 45363 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/LASP.bmp | LASP.bmp | 2970 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/LASP_on_Black.gif | LASP_on_Black.gif | 1946 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/Lasp_white.bmp | Lasp_white.bmp | 48947 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/Logoathens.jpg | Logoathens.jpg | 419328 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/NOAA_logo.png | NOAA_logo.png | 24474 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/SSL-P-color.png | SSL-P-color.png | 14541 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/THEMIS_atmosphere.tif | THEMIS_atmosphere.tif | 132996403 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/Thumbs.db | Thumbs.db | 7578 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/artemisbkgrd.jpg | artemisbkgrd.jpg | 113254 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/artemisbkgrd_blk.jpg | artemisbkgrd_blk.jpg | 143770 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/athens_small.jpg | athens_small.jpg | 341914 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/aurora_bkgrd.jpg | aurora_bkgrd.jpg | 111104 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/cetp.jpg | cetp.jpg | 26419 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/cetp.png | cetp.png | 3891 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/isas-jaxa1.jpg | isas-jaxa1.jpg | 171418 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/logo UNH2.gif | logo UNH2.gif | 4403 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/logo_UNH.gif | logo_UNH.gif | 4301 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/logo_cesr.jpg | logo_cesr.jpg | 45363 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/mps.jpg | mps.jpg | 37786 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/mps_color.jpg | mps_color.jpg | 37786 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/mwf.tif | mwf.tif | 3642880 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/nasa.jpg | nasa.jpg | 32973 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/nasa.pdf | nasa.pdf | 357786 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/stpeters.BMP | stpeters.BMP | 40329011 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/stpeters.png | stpeters.png | 193741 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/ua5_2_green.jpg | ua5_2_green.jpg | 136806 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/ua5_2_green.png | ua5_2_green.png | 27136 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/ucalgary.PNG | ucalgary.PNG | 30720 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/ucla_swb36.gif | ucla_swb36.gif | 307 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/ucla_swb50.gif | ucla_swb50.gif | 410 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/ucla_wb100.gif | ucla_wb100.gif | 819 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/ucla_wb125.gif | ucla_wb125.gif | 1024 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/ucla_wb75.gif | ucla_wb75.gif | 614 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/unh.jpg | unh.jpg | 23347 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/unh.png | unh.png | 26214 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/unh2.png | unh2.png | 6349 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True

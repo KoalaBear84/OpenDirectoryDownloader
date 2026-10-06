@@ -1,0 +1,54 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  dir http://localhost/index.php?dir=1393 | 1393 |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=1394 | 1394 |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=2015 | 2015 |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=2016 | 2016 |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=2017 | 2017 |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=2018 | 2018 |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=2019 | 2019 |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=2020 | 2020 |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=2021 | 2021 |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=admin%20pic | admin pic |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=Album | Album |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=ali | ali |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=Amir | Amir |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=App | App |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=Artist | Artist |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=Blog | Blog |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=hp | hp |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=slid | slid |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=Vizhe | Vizhe |  | ParseJavaScriptDrawn
+  dir http://localhost/index.php?dir=well-known | well-known |  | ParseJavaScriptDrawn
+  file http://localhost/ADM.zip | ADM.zip | 3320114 | 
+  file http://localhost/Hosein Azad - Dige Nist.mp4 | Hosein Azad - Dige Nist.mp4 | 960922035 | 
+  file http://localhost/lantern-installer.zip | lantern-installer.zip | 7140457 | 
+  file http://localhost/web.config | web.config | 586 | 
+  file http://localhost/X-VPN_Installer24.0_172_8c6df70f_2018-08-08-05-35-20.exe | X-VPN_Installer24.0_172_8c6df70f_2018-08-08-05-35-20.exe | 36128936 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=True
+  dir http://localhost:8086/listing/index.php?dir=1393 | 1393 |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=1394 | 1394 |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=2015 | 2015 |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=2016 | 2016 |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=2017 | 2017 |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=2018 | 2018 |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=2019 | 2019 |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=2020 | 2020 |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=2021 | 2021 |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=admin%20pic | admin pic |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=Album | Album |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=ali | ali |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=Amir | Amir |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=App | App |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=Artist | Artist |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=Blog | Blog |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=hp | hp |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=slid | slid |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=Vizhe | Vizhe |  | ParseJavaScriptDrawn
+  dir http://localhost:8086/listing/index.php?dir=well-known | well-known |  | ParseJavaScriptDrawn
+  file http://localhost:8086/listing/ADM.zip | ADM.zip | 3320114 | 
+  file http://localhost:8086/listing/Hosein Azad - Dige Nist.mp4 | Hosein Azad - Dige Nist.mp4 | 960922035 | 
+  file http://localhost:8086/listing/lantern-installer.zip | lantern-installer.zip | 7140457 | 
+  file http://localhost:8086/listing/web.config | web.config | 586 | 
+  file http://localhost:8086/listing/X-VPN_Installer24.0_172_8c6df70f_2018-08-08-05-35-20.exe | X-VPN_Installer24.0_172_8c6df70f_2018-08-08-05-35-20.exe | 36128936 | 

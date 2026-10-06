@@ -1,0 +1,83 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/MEDIA SET/index.php?path=A.+MEDIA_NEWS/ | A. MEDIA_NEWS |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=A.+MINISTRY%2C+EDUCATION/ | A. MINISTRY, EDUCATION |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=A.DATA+SDABG.NET/ | A.DATA SDABG.NET |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Best+of+Christmas+Gospel/ | Best of Christmas Gospel |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=BG+marshove+i+hora/ | BG marshove i hora |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=BG4CHRIST/ | BG4CHRIST |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=BG_+literatura/ | BG_ literatura |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=BIBLE+Audio_BG/ | BIBLE Audio_BG |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=BIBLE+Audio_EN/ | BIBLE Audio_EN |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=BOOKS/ | BOOKS |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=CNL.TV+ru/ | CNL.TV ru |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Collection-national+music/ | Collection-national music |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Colour+Atlas+of+the+BIBLE/ | Colour Atlas of the BIBLE |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Detski+filmi%21/ | Detski filmi! |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=E.G.White-seminar/ | E.G.White-seminar |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Education-Kolej-S.K/ | Education-Kolej-S.K |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=EGW-1-audio+eng/ | EGW-1-audio eng |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=EGW-2-audio+eng/ | EGW-2-audio eng |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Emo/ | Emo |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=forum/ | forum |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=free+players%2C+codecs/ | free players, codecs |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=karcinom/ | karcinom |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Knigi_SDA_BG/ | Knigi_SDA_BG |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Knigi_SDA_EN/ | Knigi_SDA_EN |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Knigi_SDA_RU/ | Knigi_SDA_RU |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Kovshega_na_zaveta/ | Kovshega_na_zaveta |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=LASTNEWS/ | LASTNEWS |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Movies/ | Movies |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Movies_Nature/ | Movies_Nature |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Movies_obrazovatelni/ | Movies_obrazovatelni |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Movies_Science/ | Movies_Science |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Movies_SDA/ | Movies_SDA |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Music_classical/ | Music_classical |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Music_detska/ | Music_detska |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Music_New+Christians/ | Music_New Christians |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Music_new_classical/ | Music_new_classical |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Music_religious%2C+SDA/ | Music_religious, SDA |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Music_religious_mp3/ | Music_religious_mp3 |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Music_Video/ | Music_Video |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Music_video_SDA/ | Music_video_SDA |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=NEW+START+by+Eftim+Parushev/ | NEW START by Eftim Parushev |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=OCHAKVANE/ | OCHAKVANE |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Opravdanie/ | Opravdanie |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Orion_by_Hubble/ | Orion_by_Hubble |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Panorama_na_satvorenieto_avi/ | Panorama_na_satvorenieto_avi |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Paziteli_na_Plamyka_avi/ | Paziteli_na_Plamyka_avi |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Photo_Galerii/ | Photo_Galerii |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=prof.K.Hovind-Satvorenieto/ | prof.K.Hovind-Satvorenieto |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=prof.Walter_Veith/ | prof.Walter_Veith |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Profili/ | Profili |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Propovedi/ | Propovedi |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Rado+Moskov/ | Rado Moskov |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Ruse-14.06.08/ | Ruse-14.06.08 |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=SC+STUDIO/ | SC STUDIO |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=SDA_defence_arhiv/ | SDA_defence_arhiv |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=SOFIA+B/ | SOFIA B |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=The_Great_Controverncy.bg.audio/ | The_Great_Controverncy.bg.audio |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Vazrastta_na_zemqta+avi/ | Vazrastta_na_zemqta avi |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=Warriors/ | Warriors |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=x.New+Publications/ | x.New Publications |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=XXI+century+need+GOD-Efo+Paruchev/ | XXI century need GOD-Efo Paruchev |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=_the+cancer+cute/ | _the cancer cute |  | ParseSnifDirectoryListing
+  dir http://localhost/MEDIA SET/index.php?path=__ZpivejmeHospodinu/ | __ZpivejmeHospodinu |  | ParseSnifDirectoryListing
+  file http://localhost/Cosmic_Conflict_-_The_Origin_of_Evil_HomeCinema.avi | Cosmic_Conflict_-_The_Origin_of_Evil_HomeCinema.avi | 423046686 | 
+  file http://localhost/Do_vseki_dom.wmv | Do_vseki_dom.wmv | 55185495 | 
+  file http://localhost/fgf171.exe | fgf171.exe | 2509740 | 
+  file http://localhost/final-events.png | final-events.png | 235643 | 
+  file http://localhost/SDA Bible.rar | SDA Bible.rar | 296106005 | 
+  file http://localhost/The Final Events.bg.avi | The Final Events.bg.avi | 437891072 | 
+  file http://localhost/Velikata borba - pics.zip | Velikata borba - pics.zip | 82994831 | 
+  file http://localhost/_Second koming.ppt | _Second koming.ppt | 8928768 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=False
+  file http://localhost:8086/listing/Cosmic_Conflict_-_The_Origin_of_Evil_HomeCinema.avi | Cosmic_Conflict_-_The_Origin_of_Evil_HomeCinema.avi | 423046686 | 
+  file http://localhost:8086/listing/Do_vseki_dom.wmv | Do_vseki_dom.wmv | 55185495 | 
+  file http://localhost:8086/listing/fgf171.exe | fgf171.exe | 2509740 | 
+  file http://localhost:8086/listing/final-events.png | final-events.png | 235643 | 
+  file http://localhost:8086/listing/SDA Bible.rar | SDA Bible.rar | 296106005 | 
+  file http://localhost:8086/listing/The Final Events.bg.avi | The Final Events.bg.avi | 437891072 | 
+  file http://localhost:8086/listing/Velikata borba - pics.zip | Velikata borba - pics.zip | 82994831 | 
+  file http://localhost:8086/listing/_Second koming.ppt | _Second koming.ppt | 8928768 | 

@@ -1,0 +1,6 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/winamp_dts.exe | winamp_dts.exe | 181453 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost:8086/listing/winamp_dts.exe | winamp_dts.exe | 181453 | 

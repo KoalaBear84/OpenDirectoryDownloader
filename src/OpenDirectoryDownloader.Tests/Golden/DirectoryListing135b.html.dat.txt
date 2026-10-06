@@ -1,0 +1,14 @@
+== root
+url=http://localhost/ name= desc= parser=pCloud error=False ok=True
+  file http://localhost/BRS%20Behavioral%20Science%208e.epub | BRS Behavioral Science 8e.epub | 11151639 | 
+  file http://localhost/BRS%20Gross%20Anatomy%2010e.epub | BRS Gross Anatomy 10e.epub | 85477380 | 
+  file http://localhost/BRS%20Neuroanatomy%2C%207e.epub | BRS Neuroanatomy, 7e.epub | 57030675 | 
+  file http://localhost/BRS%20Pathology%206e.epub | BRS Pathology 6e.epub | 14775450 | 
+  file http://localhost/BRS%20Physiology%2C%208e.epub | BRS Physiology, 8e.epub | 29076862 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=pCloud error=False ok=True
+  file http://localhost:8086/listing/BRS%20Behavioral%20Science%208e.epub | BRS Behavioral Science 8e.epub | 11151639 | 
+  file http://localhost:8086/listing/BRS%20Gross%20Anatomy%2010e.epub | BRS Gross Anatomy 10e.epub | 85477380 | 
+  file http://localhost:8086/listing/BRS%20Neuroanatomy%2C%207e.epub | BRS Neuroanatomy, 7e.epub | 57030675 | 
+  file http://localhost:8086/listing/BRS%20Pathology%206e.epub | BRS Pathology 6e.epub | 14775450 | 
+  file http://localhost:8086/listing/BRS%20Physiology%2C%208e.epub | BRS Physiology, 8e.epub | 29076862 | 

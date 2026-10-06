@@ -1,0 +1,68 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/Algorithmes/ | Algorithmes |  | RegexParser1
+  dir http://localhost/Cryptanalyse/ | Cryptanalyse |  | RegexParser1
+  dir http://localhost/Cryptographie/ | Cryptographie |  | RegexParser1
+  dir http://localhost/Steganographie/ | Steganographie |  | RegexParser1
+  dir http://localhost/applied-crypto/ | applied-crypto | Full Contents of Bruce Schneier's Applied Cryptography Disks | RegexParser1
+  dir http://localhost/basic_cryptanalysis/ | basic_cryptanalysis | Basic Cryptanalysis | RegexParser1
+  dir http://localhost/codebreakers/ | codebreakers | Cryptanalysis, Algebraic Attacks, Weak Keys, Cracking Ciphers | RegexParser1
+  dir http://localhost/ddjcrypt/ | ddjcrypt | Books on Crypto and Security: 12 complete books | RegexParser1
+  dir http://localhost/hash-lib-algo/ | hash-lib-algo | Algorithms Specifications + code | RegexParser1
+  dir http://localhost/infosoc/ | infosoc | Cryptography's Role in Securing the Information Society | RegexParser1
+  dir http://localhost/papers/ | papers | Devenir un Expert en math et cryptographie en 300 lessons | RegexParser1
+  dir http://localhost/stegano/ | stegano | Data dissimulation techniques | RegexParser1
+  dir http://localhost/wordlists/ | wordlists | Compressed wordlists by subject | RegexParser1
+  file http://localhost/Chosen-Ciphertext Attacks on Optimized NTRU.pdf | Chosen-Ciphertext Attacks on Optimized NTRU.pdf | 153600 | 
+  file http://localhost/Distributing the Encryption and Decryption of a Block Cipher.pdf | Distributing the Encryption and Decryption of a Block Cipher.pdf | 214016 | The
+  file http://localhost/Imperfect Decryption and an Attack on the NTRU Encryption Scheme.pdf | Imperfect Decryption and an Attack on the NTRU Encryption Scheme.pdf | 235520 | The
+  file http://localhost/LinuxChiffrement.pdf | LinuxChiffrement.pdf | 408576 | Chiffrement de donn�es sous GNU/Linux
+  file http://localhost/Proofs of Security for Password-Based Key Exchange (IEEE P1363 AuthA Protocol and Extensions).pdf | Proofs of Security for Password-Based Key Exchange (IEEE P1363 AuthA Protocol and Extensions).pdf | 282624 | The
+  file http://localhost/Public Electronic Contract Protocol.pdf | Public Electronic Contract Protocol.pdf | 1153434 | 
+  file http://localhost/ReplaceNsaKey.zip | ReplaceNsaKey.zip | 86016 | [en Patch] remplace la 'NSAKEY' ou 'NASkey' pr�sente dans advapi.dll analys�e comme backdoor pour la NSA
+  file http://localhost/Simple backdoors to RSA key generation.pdf | Simple backdoors to RSA key generation.pdf | 229376 | 
+  file http://localhost/X509.pdf | X509.pdf | 264192 | [fr] Certificats X509 et infrastructure de gestion de cles
+  file http://localhost/blockCypher.pdf | blockCypher.pdf | 491520 | 
+  file http://localhost/coldfusion_decrypt.c | coldfusion_decrypt.c | 1638 | Decrypter des fichiers via un serveur Coldfusion - DES
+  file http://localhost/crypto.pdf | crypto.pdf | 212992 | 
+  file http://localhost/gnupg-afg-import.jpg | gnupg-afg-import.jpg | 125952 | 
+  file http://localhost/gost-spec.ps | gost-spec.ps | 157696 | Description de GOST (soviet encryption algorithme)
+  file http://localhost/intro_crypto_partie1.txt | intro_crypto_partie1.txt | 17408 | 
+  file http://localhost/intro_crypto_partie2.txt | intro_crypto_partie2.txt | 21504 | 
+  file http://localhost/pkey.pdf | pkey.pdf | 284672 | [en] Certification de cl�s publique &amp; transfert de fichiers securis�s | Public Key Certification &amp; Secure Files Transfer&gt;
+  file http://localhost/readme.cryptarchive.txt | readme.cryptarchive.txt | 2253 | 
+  file http://localhost/samyde_french.pdf | samyde_french.pdf | 64512 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost:8086/listing/Algorithmes/ | Algorithmes |  | RegexParser1
+  dir http://localhost:8086/listing/Cryptanalyse/ | Cryptanalyse |  | RegexParser1
+  dir http://localhost:8086/listing/Cryptographie/ | Cryptographie |  | RegexParser1
+  dir http://localhost:8086/listing/Steganographie/ | Steganographie |  | RegexParser1
+  dir http://localhost:8086/listing/applied-crypto/ | applied-crypto | Full Contents of Bruce Schneier's Applied Cryptography Disks | RegexParser1
+  dir http://localhost:8086/listing/basic_cryptanalysis/ | basic_cryptanalysis | Basic Cryptanalysis | RegexParser1
+  dir http://localhost:8086/listing/codebreakers/ | codebreakers | Cryptanalysis, Algebraic Attacks, Weak Keys, Cracking Ciphers | RegexParser1
+  dir http://localhost:8086/listing/ddjcrypt/ | ddjcrypt | Books on Crypto and Security: 12 complete books | RegexParser1
+  dir http://localhost:8086/listing/hash-lib-algo/ | hash-lib-algo | Algorithms Specifications + code | RegexParser1
+  dir http://localhost:8086/listing/infosoc/ | infosoc | Cryptography's Role in Securing the Information Society | RegexParser1
+  dir http://localhost:8086/listing/papers/ | papers | Devenir un Expert en math et cryptographie en 300 lessons | RegexParser1
+  dir http://localhost:8086/listing/stegano/ | stegano | Data dissimulation techniques | RegexParser1
+  dir http://localhost:8086/listing/wordlists/ | wordlists | Compressed wordlists by subject | RegexParser1
+  file http://localhost:8086/listing/Chosen-Ciphertext Attacks on Optimized NTRU.pdf | Chosen-Ciphertext Attacks on Optimized NTRU.pdf | 153600 | 
+  file http://localhost:8086/listing/Distributing the Encryption and Decryption of a Block Cipher.pdf | Distributing the Encryption and Decryption of a Block Cipher.pdf | 214016 | The
+  file http://localhost:8086/listing/Imperfect Decryption and an Attack on the NTRU Encryption Scheme.pdf | Imperfect Decryption and an Attack on the NTRU Encryption Scheme.pdf | 235520 | The
+  file http://localhost:8086/listing/LinuxChiffrement.pdf | LinuxChiffrement.pdf | 408576 | Chiffrement de donn�es sous GNU/Linux
+  file http://localhost:8086/listing/Proofs of Security for Password-Based Key Exchange (IEEE P1363 AuthA Protocol and Extensions).pdf | Proofs of Security for Password-Based Key Exchange (IEEE P1363 AuthA Protocol and Extensions).pdf | 282624 | The
+  file http://localhost:8086/listing/Public Electronic Contract Protocol.pdf | Public Electronic Contract Protocol.pdf | 1153434 | 
+  file http://localhost:8086/listing/ReplaceNsaKey.zip | ReplaceNsaKey.zip | 86016 | [en Patch] remplace la 'NSAKEY' ou 'NASkey' pr�sente dans advapi.dll analys�e comme backdoor pour la NSA
+  file http://localhost:8086/listing/Simple backdoors to RSA key generation.pdf | Simple backdoors to RSA key generation.pdf | 229376 | 
+  file http://localhost:8086/listing/X509.pdf | X509.pdf | 264192 | [fr] Certificats X509 et infrastructure de gestion de cles
+  file http://localhost:8086/listing/blockCypher.pdf | blockCypher.pdf | 491520 | 
+  file http://localhost:8086/listing/coldfusion_decrypt.c | coldfusion_decrypt.c | 1638 | Decrypter des fichiers via un serveur Coldfusion - DES
+  file http://localhost:8086/listing/crypto.pdf | crypto.pdf | 212992 | 
+  file http://localhost:8086/listing/gnupg-afg-import.jpg | gnupg-afg-import.jpg | 125952 | 
+  file http://localhost:8086/listing/gost-spec.ps | gost-spec.ps | 157696 | Description de GOST (soviet encryption algorithme)
+  file http://localhost:8086/listing/intro_crypto_partie1.txt | intro_crypto_partie1.txt | 17408 | 
+  file http://localhost:8086/listing/intro_crypto_partie2.txt | intro_crypto_partie2.txt | 21504 | 
+  file http://localhost:8086/listing/pkey.pdf | pkey.pdf | 284672 | [en] Certification de cl�s publique &amp; transfert de fichiers securis�s | Public Key Certification &amp; Secure Files Transfer&gt;
+  file http://localhost:8086/listing/readme.cryptarchive.txt | readme.cryptarchive.txt | 2253 | 
+  file http://localhost:8086/listing/samyde_french.pdf | samyde_french.pdf | 64512 | 

@@ -1,0 +1,344 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  dir http://localhost/_INCOMING_/ | _INCOMING_ |  | ParseTablesDirectoryListing
+  dir http://localhost/Not On Label/ | Not On Label |  | ParseTablesDirectoryListing
+  dir http://localhost/L01ICH4O5C0R3/ | L01ICH4O5C0R3 |  | ParseTablesDirectoryListing
+  dir http://localhost/Juno Records/ | Juno Records |  | ParseTablesDirectoryListing
+  dir http://localhost/1707 records/ | 1707 records |  | ParseTablesDirectoryListing
+  dir http://localhost/TulTul Records/ | TulTul Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Otherman Records/ | Otherman Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Suck Puck Records/ | Suck Puck Records |  | ParseTablesDirectoryListing
+  dir http://localhost/For You Sounds/ | For You Sounds |  | ParseTablesDirectoryListing
+  dir http://localhost/Sharpnelsound/ | Sharpnelsound |  | ParseTablesDirectoryListing
+  dir http://localhost/Terraform Music/ | Terraform Music |  | ParseTablesDirectoryListing
+  dir http://localhost/Hardcore TANO＊C/ | Hardcore TANO＊C |  | ParseTablesDirectoryListing
+  dir http://localhost/Buttlegged/ | Buttlegged |  | ParseTablesDirectoryListing
+  dir http://localhost/Bijou Bay/ | Bijou Bay |  | ParseTablesDirectoryListing
+  dir http://localhost/J.W.Records/ | J.W.Records |  | ParseTablesDirectoryListing
+  dir http://localhost/KyokudoCore Records/ | KyokudoCore Records |  | ParseTablesDirectoryListing
+  dir http://localhost/DQN ELECTRONICS/ | DQN ELECTRONICS |  | ParseTablesDirectoryListing
+  dir http://localhost/Jigsore Sound/ | Jigsore Sound |  | ParseTablesDirectoryListing
+  dir http://localhost/SHIT WANK RECORDS/ | SHIT WANK RECORDS |  | ParseTablesDirectoryListing
+  dir http://localhost/MADDEST CHICK%27NDOM/ | MADDEST CHICK'NDOM |  | ParseTablesDirectoryListing
+  dir http://localhost/C.H.S/ | C.H.S |  | ParseTablesDirectoryListing
+  dir http://localhost/Comiket/ | Comiket |  | ParseTablesDirectoryListing
+  dir http://localhost/HOBiRECORDS/ | HOBiRECORDS |  | ParseTablesDirectoryListing
+  dir http://localhost/Guhroovy/ | Guhroovy |  | ParseTablesDirectoryListing
+  dir http://localhost/Exit Tunes/ | Exit Tunes |  | ParseTablesDirectoryListing
+  dir http://localhost/Nihonkokumin/ | Nihonkokumin |  | ParseTablesDirectoryListing
+  dir http://localhost/X-Treme Hard/ | X-Treme Hard |  | ParseTablesDirectoryListing
+  dir http://localhost/Speedking Productions/ | Speedking Productions |  | ParseTablesDirectoryListing
+  dir http://localhost/Shot Music/ | Shot Music |  | ParseTablesDirectoryListing
+  dir http://localhost/Re-Endz.Recordingz/ | Re-Endz.Recordingz |  | ParseTablesDirectoryListing
+  dir http://localhost/Psycho Filth Records/ | Psycho Filth Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Ravin Beatz Japan/ | Ravin Beatz Japan |  | ParseTablesDirectoryListing
+  dir http://localhost/Prismatic Music/ | Prismatic Music |  | ParseTablesDirectoryListing
+  dir http://localhost/Notebook Records/ | Notebook Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Nokore Records/ | Nokore Records |  | ParseTablesDirectoryListing
+  dir http://localhost/NiTEFLARE/ | NiTEFLARE |  | ParseTablesDirectoryListing
+  dir http://localhost/NKS International/ | NKS International |  | ParseTablesDirectoryListing
+  dir http://localhost/Megarave/ | Megarave |  | ParseTablesDirectoryListing
+  dir http://localhost/Mob Squad Tokyo/ | Mob Squad Tokyo |  | ParseTablesDirectoryListing
+  dir http://localhost/Megarex/ | Megarex |  | ParseTablesDirectoryListing
+  dir http://localhost/BURNING CHROME RECORDS/ | BURNING CHROME RECORDS |  | ParseTablesDirectoryListing
+  dir http://localhost/M.P.T./ | M.P.T. |  | ParseTablesDirectoryListing
+  dir http://localhost/Kusemono Records/ | Kusemono Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Holcron Music/ | Holcron Music |  | ParseTablesDirectoryListing
+  dir http://localhost/Murder Channel/ | Murder Channel |  | ParseTablesDirectoryListing
+  dir http://localhost/999 Recordings/ | 999 Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost/Avex Trax/ | Avex Trax |  | ParseTablesDirectoryListing
+  dir http://localhost/Anything Records/ | Anything Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Antinomie BASS/ | Antinomie BASS |  | ParseTablesDirectoryListing
+  dir http://localhost/Allkore/ | Allkore |  | ParseTablesDirectoryListing
+  dir http://localhost/Factory Of Core/ | Factory Of Core |  | ParseTablesDirectoryListing
+  dir http://localhost/Eerik Inpuj Sound/ | Eerik Inpuj Sound |  | ParseTablesDirectoryListing
+  dir http://localhost/LapFox Trax/ | LapFox Trax |  | ParseTablesDirectoryListing
+  dir http://localhost/Lolistyle Gabbers/ | Lolistyle Gabbers |  | ParseTablesDirectoryListing
+  dir http://localhost/Loli Will Noise/ | Loli Will Noise |  | ParseTablesDirectoryListing
+  dir http://localhost/Ыапк not label/ | Ыапк not label |  | ParseTablesDirectoryListing
+  dir http://localhost/endless saturday.mp3/ | endless saturday.mp3 |  | ParseTablesDirectoryListing
+  dir http://localhost/Dochakuso Records/ | Dochakuso Records |  | ParseTablesDirectoryListing
+  dir http://localhost/lolicore.jp/ | lolicore.jp |  | ParseTablesDirectoryListing
+  dir http://localhost/VIPtronic/ | VIPtronic |  | ParseTablesDirectoryListing
+  dir http://localhost/cOmaRecOrdz/ | cOmaRecOrdz |  | ParseTablesDirectoryListing
+  dir http://localhost/Brutal Attack Records/ | Brutal Attack Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Pink Candy Records/ | Pink Candy Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Splitterblast/ | Splitterblast |  | ParseTablesDirectoryListing
+  dir http://localhost/Altema Records/ | Altema Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Bleep-love/ | Bleep-love |  | ParseTablesDirectoryListing
+  dir http://localhost/Underground Core Collective/ | Underground Core Collective |  | ParseTablesDirectoryListing
+  dir http://localhost/Sociopath Recordings/ | Sociopath Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost/GAO/ | GAO |  | ParseTablesDirectoryListing
+  dir http://localhost/Cock Rock Disco/ | Cock Rock Disco |  | ParseTablesDirectoryListing
+  dir http://localhost/Off Me Nut Records/ | Off Me Nut Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Anybody Universe/ | Anybody Universe |  | ParseTablesDirectoryListing
+  dir http://localhost/Splitterkor Rekords Dziwko/ | Splitterkor Rekords Dziwko |  | ParseTablesDirectoryListing
+  dir http://localhost/Tsundere-Violence/ | Tsundere-Violence |  | ParseTablesDirectoryListing
+  dir http://localhost/Breakcore.nl/ | Breakcore.nl |  | ParseTablesDirectoryListing
+  dir http://localhost/The Worst Label/ | The Worst Label |  | ParseTablesDirectoryListing
+  dir http://localhost/Dojiko Records/ | Dojiko Records |  | ParseTablesDirectoryListing
+  dir http://localhost/DanceCorps/ | DanceCorps |  | ParseTablesDirectoryListing
+  dir http://localhost/Annoying Beatz Crew/ | Annoying Beatz Crew |  | ParseTablesDirectoryListing
+  dir http://localhost/Dramacore/ | Dramacore |  | ParseTablesDirectoryListing
+  dir http://localhost/Ringe Raja Records/ | Ringe Raja Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Extratone Rec./ | Extratone Rec. |  | ParseTablesDirectoryListing
+  dir http://localhost/xxxxxxxxrecords/ | xxxxxxxxrecords |  | ParseTablesDirectoryListing
+  dir http://localhost/古式 Records Compilations/ | 古式 Records Compilations |  | ParseTablesDirectoryListing
+  dir http://localhost/noiseaphonic/ | noiseaphonic |  | ParseTablesDirectoryListing
+  dir http://localhost/ma5turbation united records/ | ma5turbation united records |  | ParseTablesDirectoryListing
+  dir http://localhost/W.T.F. Records/ | W.T.F. Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Virtual Disk Systems/ | Virtual Disk Systems |  | ParseTablesDirectoryListing
+  dir http://localhost/Wildness Records/ | Wildness Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Viral Conspiracy Records/ | Viral Conspiracy Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Valencia Terror Corps/ | Valencia Terror Corps |  | ParseTablesDirectoryListing
+  dir http://localhost/United Speedcore Nation/ | United Speedcore Nation |  | ParseTablesDirectoryListing
+  dir http://localhost/Uniflex Records/ | Uniflex Records |  | ParseTablesDirectoryListing
+  dir http://localhost/UGU/ | UGU |  | ParseTablesDirectoryListing
+  dir http://localhost/Turn It Off Recordz/ | Turn It Off Recordz |  | ParseTablesDirectoryListing
+  dir http://localhost/Tsugihagi Records/ | Tsugihagi Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Thunderblast Gabba Records/ | Thunderblast Gabba Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Swaffelcore Records/ | Swaffelcore Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Tales About Nothing/ | Tales About Nothing |  | ParseTablesDirectoryListing
+  dir http://localhost/Sputnik Records/ | Sputnik Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Splatterkore Reckords/ | Splatterkore Reckords |  | ParseTablesDirectoryListing
+  dir http://localhost/Speedcore Worldwide Audio Netlabel/ | Speedcore Worldwide Audio Netlabel |  | ParseTablesDirectoryListing
+  dir http://localhost/Speed Machine Records Mexico/ | Speed Machine Records Mexico |  | ParseTablesDirectoryListing
+  dir http://localhost/Solidbox Records/ | Solidbox Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Schlachthof Productions/ | Schlachthof Productions |  | ParseTablesDirectoryListing
+  dir http://localhost/Speedcore Jihad/ | Speedcore Jihad |  | ParseTablesDirectoryListing
+  dir http://localhost/Satan Inside/ | Satan Inside |  | ParseTablesDirectoryListing
+  dir http://localhost/SRF Audio/ | SRF Audio |  | ParseTablesDirectoryListing
+  dir http://localhost/SmokeSkull/ | SmokeSkull |  | ParseTablesDirectoryListing
+  dir http://localhost/Serious 21 Recordings/ | Serious 21 Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost/Saw Blade Records/ | Saw Blade Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Robotik Speedcore Killers Productions/ | Robotik Speedcore Killers Productions |  | ParseTablesDirectoryListing
+  dir http://localhost/Rigormortis/ | Rigormortis |  | ParseTablesDirectoryListing
+  dir http://localhost/Rest Room Records/ | Rest Room Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Radio Active Hardcore/ | Radio Active Hardcore |  | ParseTablesDirectoryListing
+  dir http://localhost/Rapedtraxx/ | Rapedtraxx |  | ParseTablesDirectoryListing
+  dir http://localhost/Pressanstalt Records/ | Pressanstalt Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Pell:Mell Records/ | Pell:Mell Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Pinkamena Party/ | Pinkamena Party |  | ParseTablesDirectoryListing
+  dir http://localhost/Noisetracz/ | Noisetracz |  | ParseTablesDirectoryListing
+  dir http://localhost/Noise War Records/ | Noise War Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Nizigen Comp/ | Nizigen Comp |  | ParseTablesDirectoryListing
+  dir http://localhost/Noize Masters Recordings/ | Noize Masters Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost/Night Terror Recordings/ | Night Terror Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost/Mechanical Distortion/ | Mechanical Distortion |  | ParseTablesDirectoryListing
+  dir http://localhost/Mecha Yuri/ | Mecha Yuri |  | ParseTablesDirectoryListing
+  dir http://localhost/Massive Speed Records/ | Massive Speed Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Neotine Records/ | Neotine Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Macho Music/ | Macho Music |  | ParseTablesDirectoryListing
+  dir http://localhost/Lolilepsy Records/ | Lolilepsy Records |  | ParseTablesDirectoryListing
+  dir http://localhost/NAHTOD HARDCORE/ | NAHTOD HARDCORE |  | ParseTablesDirectoryListing
+  dir http://localhost/Mindnepping Records/ | Mindnepping Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Loli-Hunter Music/ | Loli-Hunter Music |  | ParseTablesDirectoryListing
+  dir http://localhost/Legs Akimbo Records/ | Legs Akimbo Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Kovaydin.NET/ | Kovaydin.NET |  | ParseTablesDirectoryListing
+  dir http://localhost/Infinite Pandemic/ | Infinite Pandemic |  | ParseTablesDirectoryListing
+  dir http://localhost/Infernal Forces Records/ | Infernal Forces Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Hope Sick Cola/ | Hope Sick Cola |  | ParseTablesDirectoryListing
+  dir http://localhost/Headache Rekords/ | Headache Rekords |  | ParseTablesDirectoryListing
+  dir http://localhost/Hate System/ | Hate System |  | ParseTablesDirectoryListing
+  dir http://localhost/Hakai suru Recordings/ | Hakai suru Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost/HITNECK RECORDS/ | HITNECK RECORDS |  | ParseTablesDirectoryListing
+  dir http://localhost/Horror Decibel/ | Horror Decibel |  | ParseTablesDirectoryListing
+  dir http://localhost/Glisti Official Bulgarian Speedcore Channel/ | Glisti Official Bulgarian Speedcore Channel |  | ParseTablesDirectoryListing
+  dir http://localhost/Gabbaret Records/ | Gabbaret Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Feed Me Glass Records/ | Feed Me Glass Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Edsillfor Recordings/ | Edsillfor Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost/Doujindance/ | Doujindance |  | ParseTablesDirectoryListing
+  dir http://localhost/Extreme Sound Forum/ | Extreme Sound Forum |  | ParseTablesDirectoryListing
+  dir http://localhost/Extermination Recordings/ | Extermination Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost/Eppo Records/ | Eppo Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Destruction Records/ | Destruction Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Death By Hardcore/ | Death By Hardcore |  | ParseTablesDirectoryListing
+  dir http://localhost/D-Trash Records/ | D-Trash Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Contestcore/ | Contestcore |  | ParseTablesDirectoryListing
+  dir http://localhost/Chipdipdrops/ | Chipdipdrops |  | ParseTablesDirectoryListing
+  dir http://localhost/Channel Q Records/ | Channel Q Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Chase Records/ | Chase Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Bubblegum Luv/ | Bubblegum Luv |  | ParseTablesDirectoryListing
+  dir http://localhost/Breaka%27 Breaka!/ | Breaka' Breaka! |  | ParseTablesDirectoryListing
+  dir http://localhost/Braindestruction Recordz/ | Braindestruction Recordz |  | ParseTablesDirectoryListing
+  dir http://localhost/Cathartic Noize Experience/ | Cathartic Noize Experience |  | ParseTablesDirectoryListing
+  dir http://localhost/Braincore Recordings/ | Braincore Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost/Brainkracking Rekords/ | Brainkracking Rekords |  | ParseTablesDirectoryListing
+  dir http://localhost/BREAKPUNK Records/ | BREAKPUNK Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Atomic Annihilation/ | Atomic Annihilation |  | ParseTablesDirectoryListing
+  dir http://localhost/Animals Are The Noize/ | Animals Are The Noize |  | ParseTablesDirectoryListing
+  dir http://localhost/Amenorea Records/ | Amenorea Records |  | ParseTablesDirectoryListing
+  dir http://localhost/Abstract Disco/ | Abstract Disco |  | ParseTablesDirectoryListing
+  dir http://localhost/1000%2b/ | 1000  |  | ParseTablesDirectoryListing
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=True
+  dir http://localhost:8086/listing/_INCOMING_/ | _INCOMING_ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Not On Label/ | Not On Label |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/L01ICH4O5C0R3/ | L01ICH4O5C0R3 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Juno Records/ | Juno Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/1707 records/ | 1707 records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/TulTul Records/ | TulTul Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Otherman Records/ | Otherman Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Suck Puck Records/ | Suck Puck Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/For You Sounds/ | For You Sounds |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Sharpnelsound/ | Sharpnelsound |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Terraform Music/ | Terraform Music |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Hardcore TANO＊C/ | Hardcore TANO＊C |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Buttlegged/ | Buttlegged |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Bijou Bay/ | Bijou Bay |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/J.W.Records/ | J.W.Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/KyokudoCore Records/ | KyokudoCore Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/DQN ELECTRONICS/ | DQN ELECTRONICS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Jigsore Sound/ | Jigsore Sound |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SHIT WANK RECORDS/ | SHIT WANK RECORDS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/MADDEST CHICK%27NDOM/ | MADDEST CHICK'NDOM |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/C.H.S/ | C.H.S |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Comiket/ | Comiket |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/HOBiRECORDS/ | HOBiRECORDS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Guhroovy/ | Guhroovy |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Exit Tunes/ | Exit Tunes |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Nihonkokumin/ | Nihonkokumin |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/X-Treme Hard/ | X-Treme Hard |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Speedking Productions/ | Speedking Productions |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Shot Music/ | Shot Music |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Re-Endz.Recordingz/ | Re-Endz.Recordingz |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Psycho Filth Records/ | Psycho Filth Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ravin Beatz Japan/ | Ravin Beatz Japan |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Prismatic Music/ | Prismatic Music |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Notebook Records/ | Notebook Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Nokore Records/ | Nokore Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/NiTEFLARE/ | NiTEFLARE |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/NKS International/ | NKS International |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Megarave/ | Megarave |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Mob Squad Tokyo/ | Mob Squad Tokyo |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Megarex/ | Megarex |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/BURNING CHROME RECORDS/ | BURNING CHROME RECORDS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/M.P.T./ | M.P.T. |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Kusemono Records/ | Kusemono Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Holcron Music/ | Holcron Music |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Murder Channel/ | Murder Channel |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/999 Recordings/ | 999 Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Avex Trax/ | Avex Trax |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Anything Records/ | Anything Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Antinomie BASS/ | Antinomie BASS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Allkore/ | Allkore |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Factory Of Core/ | Factory Of Core |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Eerik Inpuj Sound/ | Eerik Inpuj Sound |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/LapFox Trax/ | LapFox Trax |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Lolistyle Gabbers/ | Lolistyle Gabbers |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Loli Will Noise/ | Loli Will Noise |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ыапк not label/ | Ыапк not label |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/endless saturday.mp3/ | endless saturday.mp3 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Dochakuso Records/ | Dochakuso Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/lolicore.jp/ | lolicore.jp |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/VIPtronic/ | VIPtronic |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/cOmaRecOrdz/ | cOmaRecOrdz |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Brutal Attack Records/ | Brutal Attack Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Pink Candy Records/ | Pink Candy Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Splitterblast/ | Splitterblast |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Altema Records/ | Altema Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Bleep-love/ | Bleep-love |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Underground Core Collective/ | Underground Core Collective |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Sociopath Recordings/ | Sociopath Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/GAO/ | GAO |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Cock Rock Disco/ | Cock Rock Disco |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Off Me Nut Records/ | Off Me Nut Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Anybody Universe/ | Anybody Universe |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Splitterkor Rekords Dziwko/ | Splitterkor Rekords Dziwko |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Tsundere-Violence/ | Tsundere-Violence |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Breakcore.nl/ | Breakcore.nl |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/The Worst Label/ | The Worst Label |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Dojiko Records/ | Dojiko Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/DanceCorps/ | DanceCorps |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Annoying Beatz Crew/ | Annoying Beatz Crew |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Dramacore/ | Dramacore |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ringe Raja Records/ | Ringe Raja Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Extratone Rec./ | Extratone Rec. |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/xxxxxxxxrecords/ | xxxxxxxxrecords |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/古式 Records Compilations/ | 古式 Records Compilations |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/noiseaphonic/ | noiseaphonic |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ma5turbation united records/ | ma5turbation united records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/W.T.F. Records/ | W.T.F. Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Virtual Disk Systems/ | Virtual Disk Systems |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Wildness Records/ | Wildness Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Viral Conspiracy Records/ | Viral Conspiracy Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Valencia Terror Corps/ | Valencia Terror Corps |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/United Speedcore Nation/ | United Speedcore Nation |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Uniflex Records/ | Uniflex Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/UGU/ | UGU |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Turn It Off Recordz/ | Turn It Off Recordz |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Tsugihagi Records/ | Tsugihagi Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Thunderblast Gabba Records/ | Thunderblast Gabba Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Swaffelcore Records/ | Swaffelcore Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Tales About Nothing/ | Tales About Nothing |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Sputnik Records/ | Sputnik Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Splatterkore Reckords/ | Splatterkore Reckords |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Speedcore Worldwide Audio Netlabel/ | Speedcore Worldwide Audio Netlabel |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Speed Machine Records Mexico/ | Speed Machine Records Mexico |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Solidbox Records/ | Solidbox Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Schlachthof Productions/ | Schlachthof Productions |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Speedcore Jihad/ | Speedcore Jihad |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Satan Inside/ | Satan Inside |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SRF Audio/ | SRF Audio |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/SmokeSkull/ | SmokeSkull |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Serious 21 Recordings/ | Serious 21 Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Saw Blade Records/ | Saw Blade Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Robotik Speedcore Killers Productions/ | Robotik Speedcore Killers Productions |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Rigormortis/ | Rigormortis |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Rest Room Records/ | Rest Room Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Radio Active Hardcore/ | Radio Active Hardcore |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Rapedtraxx/ | Rapedtraxx |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Pressanstalt Records/ | Pressanstalt Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Pell:Mell Records/ | Pell:Mell Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Pinkamena Party/ | Pinkamena Party |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Noisetracz/ | Noisetracz |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Noise War Records/ | Noise War Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Nizigen Comp/ | Nizigen Comp |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Noize Masters Recordings/ | Noize Masters Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Night Terror Recordings/ | Night Terror Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Mechanical Distortion/ | Mechanical Distortion |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Mecha Yuri/ | Mecha Yuri |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Massive Speed Records/ | Massive Speed Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Neotine Records/ | Neotine Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Macho Music/ | Macho Music |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Lolilepsy Records/ | Lolilepsy Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/NAHTOD HARDCORE/ | NAHTOD HARDCORE |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Mindnepping Records/ | Mindnepping Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Loli-Hunter Music/ | Loli-Hunter Music |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Legs Akimbo Records/ | Legs Akimbo Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Kovaydin.NET/ | Kovaydin.NET |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Infinite Pandemic/ | Infinite Pandemic |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Infernal Forces Records/ | Infernal Forces Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Hope Sick Cola/ | Hope Sick Cola |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Headache Rekords/ | Headache Rekords |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Hate System/ | Hate System |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Hakai suru Recordings/ | Hakai suru Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/HITNECK RECORDS/ | HITNECK RECORDS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Horror Decibel/ | Horror Decibel |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Glisti Official Bulgarian Speedcore Channel/ | Glisti Official Bulgarian Speedcore Channel |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Gabbaret Records/ | Gabbaret Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Feed Me Glass Records/ | Feed Me Glass Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Edsillfor Recordings/ | Edsillfor Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Doujindance/ | Doujindance |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Extreme Sound Forum/ | Extreme Sound Forum |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Extermination Recordings/ | Extermination Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Eppo Records/ | Eppo Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Destruction Records/ | Destruction Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Death By Hardcore/ | Death By Hardcore |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/D-Trash Records/ | D-Trash Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Contestcore/ | Contestcore |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Chipdipdrops/ | Chipdipdrops |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Channel Q Records/ | Channel Q Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Chase Records/ | Chase Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Bubblegum Luv/ | Bubblegum Luv |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Breaka%27 Breaka!/ | Breaka' Breaka! |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Braindestruction Recordz/ | Braindestruction Recordz |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Cathartic Noize Experience/ | Cathartic Noize Experience |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Braincore Recordings/ | Braincore Recordings |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Brainkracking Rekords/ | Brainkracking Rekords |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/BREAKPUNK Records/ | BREAKPUNK Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Atomic Annihilation/ | Atomic Annihilation |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Animals Are The Noize/ | Animals Are The Noize |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Amenorea Records/ | Amenorea Records |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Abstract Disco/ | Abstract Disco |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/1000%2b/ | 1000  |  | ParseTablesDirectoryListing

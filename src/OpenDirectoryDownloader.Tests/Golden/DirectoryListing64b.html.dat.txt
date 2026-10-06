@@ -1,0 +1,28 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseLinksDirectoryListing error=False ok=True
+  file http://localhost/Ant.Man.2015.720p.HDRip.x264.AAC-ETRG.mp4 | Ant.Man.2015.720p.HDRip.x264.AAC-ETRG.mp4 |  | 
+  file http://localhost/Army.of.Darkness.1992.1080p.BRrip.x264.YIFY.mp4 | Army.of.Darkness.1992.1080p.BRrip.x264.YIFY.mp4 |  | 
+  file http://localhost/Batman vs Superman (2016) 1080p mHD Blu-ray AAC 5.1 MSubs Ultimate Edition -DDR.mkv | Batman vs Superman (2016) 1080p mHD Blu-ray AAC 5.1 MSubs Ultimate Edition -DDR.mkv |  | 
+  file http://localhost/Bicentennial.Man.1999.WEBRip.x264-RARBG.mp4 | Bicentennial.Man.1999.WEBRip.x264-RARBG.mp4 |  | 
+  file http://localhost/Fantastic.Beasts.and.Where.to.Find.Them.2016.1080p.BRRip.x264.AAC-ETRG.mp4 | Fantastic.Beasts.and.Where.to.Find.Them.2016.1080p.BRRip.x264.AAC-ETRG.mp4 |  | 
+  file http://localhost/Ghost.In.The.Shell.2017.1080p.BluRay.x264-[YTS.AG].mp4 | Ghost.In.The.Shell.2017.1080p.BluRay.x264-[YTS.AG].mp4 |  | 
+  file http://localhost/Green.Lantern.Emerald.Knights.2011.1080p.BRrip.x264.YIFY.mp4 | Green.Lantern.Emerald.Knights.2011.1080p.BRrip.x264.YIFY.mp4 |  | 
+  file http://localhost/Hail Caesar 2016 1080p WEB-DL x264 AC3-JYK.mkv | Hail Caesar 2016 1080p WEB-DL x264 AC3-JYK.mkv |  | 
+  file http://localhost/Spider-Man.Homecoming.2017.1080p.BluRay.x264-[YTS.AG].mp4 | Spider-Man.Homecoming.2017.1080p.BluRay.x264-[YTS.AG].mp4 |  | 
+  file http://localhost/Star.Trek.Into.Darkness.2013.1080p.BluRay.x264.YIFY.mp4 | Star.Trek.Into.Darkness.2013.1080p.BluRay.x264.YIFY.mp4 |  | 
+  file http://localhost/Suicide.Squad.2016.1080p.BluRay.x264-[YTS.AG].mp4 | Suicide.Squad.2016.1080p.BluRay.x264-[YTS.AG].mp4 |  | 
+  file http://localhost/The.Hunger.Games.Mockingjay.Part.2.2015.720p.BRRip.x264.AAC-ETRG.mp4 | The.Hunger.Games.Mockingjay.Part.2.2015.720p.BRRip.x264.AAC-ETRG.mp4 |  | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+  file http://localhost:8086/listing/Ant.Man.2015.720p.HDRip.x264.AAC-ETRG.mp4 | Ant.Man.2015.720p.HDRip.x264.AAC-ETRG.mp4 |  | 
+  file http://localhost:8086/listing/Army.of.Darkness.1992.1080p.BRrip.x264.YIFY.mp4 | Army.of.Darkness.1992.1080p.BRrip.x264.YIFY.mp4 |  | 
+  file http://localhost:8086/listing/Batman vs Superman (2016) 1080p mHD Blu-ray AAC 5.1 MSubs Ultimate Edition -DDR.mkv | Batman vs Superman (2016) 1080p mHD Blu-ray AAC 5.1 MSubs Ultimate Edition -DDR.mkv |  | 
+  file http://localhost:8086/listing/Bicentennial.Man.1999.WEBRip.x264-RARBG.mp4 | Bicentennial.Man.1999.WEBRip.x264-RARBG.mp4 |  | 
+  file http://localhost:8086/listing/Fantastic.Beasts.and.Where.to.Find.Them.2016.1080p.BRRip.x264.AAC-ETRG.mp4 | Fantastic.Beasts.and.Where.to.Find.Them.2016.1080p.BRRip.x264.AAC-ETRG.mp4 |  | 
+  file http://localhost:8086/listing/Ghost.In.The.Shell.2017.1080p.BluRay.x264-[YTS.AG].mp4 | Ghost.In.The.Shell.2017.1080p.BluRay.x264-[YTS.AG].mp4 |  | 
+  file http://localhost:8086/listing/Green.Lantern.Emerald.Knights.2011.1080p.BRrip.x264.YIFY.mp4 | Green.Lantern.Emerald.Knights.2011.1080p.BRrip.x264.YIFY.mp4 |  | 
+  file http://localhost:8086/listing/Hail Caesar 2016 1080p WEB-DL x264 AC3-JYK.mkv | Hail Caesar 2016 1080p WEB-DL x264 AC3-JYK.mkv |  | 
+  file http://localhost:8086/listing/Spider-Man.Homecoming.2017.1080p.BluRay.x264-[YTS.AG].mp4 | Spider-Man.Homecoming.2017.1080p.BluRay.x264-[YTS.AG].mp4 |  | 
+  file http://localhost:8086/listing/Star.Trek.Into.Darkness.2013.1080p.BluRay.x264.YIFY.mp4 | Star.Trek.Into.Darkness.2013.1080p.BluRay.x264.YIFY.mp4 |  | 
+  file http://localhost:8086/listing/Suicide.Squad.2016.1080p.BluRay.x264-[YTS.AG].mp4 | Suicide.Squad.2016.1080p.BluRay.x264-[YTS.AG].mp4 |  | 
+  file http://localhost:8086/listing/The.Hunger.Games.Mockingjay.Part.2.2015.720p.BRRip.x264.AAC-ETRG.mp4 | The.Hunger.Games.Mockingjay.Part.2.2015.720p.BRRip.x264.AAC-ETRG.mp4 |  | 

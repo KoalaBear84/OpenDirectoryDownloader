@@ -1,0 +1,32 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/airborne/ | airborne |  | RegexParser2
+  dir http://localhost/carp/ | carp |  | RegexParser2
+  dir http://localhost/ct_mineplan/ | ct_mineplan |  | RegexParser2
+  dir http://localhost/dominfo/ | dominfo |  | RegexParser2
+  dir http://localhost/doris/ | doris |  | RegexParser2
+  dir http://localhost/gp_base_station/ | gp_base_station |  | RegexParser2
+  dir http://localhost/map_catalogue/ | map_catalogue |  | RegexParser2
+  dir http://localhost/model_3d/ | model_3d |  | RegexParser2
+  dir http://localhost/petxplor/ | petxplor |  | RegexParser2
+  dir http://localhost/public_files/ | public_files |  | RegexParser2
+  dir http://localhost/tasxplor/ | tasxplor |  | RegexParser2
+  dir http://localhost/tenement_chart_catalogue/ | tenement_chart_catalogue |  | RegexParser2
+  dir http://localhost/tenements/ | tenements |  | RegexParser2
+  file http://localhost/README | README | 857 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost:8086/listing/airborne/ | airborne |  | RegexParser2
+  dir http://localhost:8086/listing/carp/ | carp |  | RegexParser2
+  dir http://localhost:8086/listing/ct_mineplan/ | ct_mineplan |  | RegexParser2
+  dir http://localhost:8086/listing/dominfo/ | dominfo |  | RegexParser2
+  dir http://localhost:8086/listing/doris/ | doris |  | RegexParser2
+  dir http://localhost:8086/listing/gp_base_station/ | gp_base_station |  | RegexParser2
+  dir http://localhost:8086/listing/map_catalogue/ | map_catalogue |  | RegexParser2
+  dir http://localhost:8086/listing/model_3d/ | model_3d |  | RegexParser2
+  dir http://localhost:8086/listing/petxplor/ | petxplor |  | RegexParser2
+  dir http://localhost:8086/listing/public_files/ | public_files |  | RegexParser2
+  dir http://localhost:8086/listing/tasxplor/ | tasxplor |  | RegexParser2
+  dir http://localhost:8086/listing/tenement_chart_catalogue/ | tenement_chart_catalogue |  | RegexParser2
+  dir http://localhost:8086/listing/tenements/ | tenements |  | RegexParser2
+  file http://localhost:8086/listing/README | README | 857 | 

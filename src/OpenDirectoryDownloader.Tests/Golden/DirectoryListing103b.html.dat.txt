@@ -1,0 +1,34 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseListItemsDirectoryListing error=False ok=True
+  dir http://localhost/?path=./Comics/MARVEL/Avengers/ | Avengers |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/MARVEL/Black Panther/ | Black Panther |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/MARVEL/Blade/ | Blade |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/MARVEL/Captain America/ | Captain America |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/MARVEL/Captain Marvel/ | Captain Marvel |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/MARVEL/Comics/ | Comics |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/MARVEL/Daredevil/ | Daredevil |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/MARVEL/Deadpool/ | Deadpool |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/MARVEL/Fantastic Four/ | Fantastic Four |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/MARVEL/Ghost Rider/ | Ghost Rider |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/MARVEL/Hulk/ | Hulk |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/MARVEL/Ironman/ | Ironman |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/MARVEL/Spiderman/ | Spiderman |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/MARVEL/Thor/ | Thor |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/MARVEL/X-Men/ | X-Men |  | ParseListItemsDirectoryListing
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseListItemsDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/?path=./Comics/MARVEL/Avengers/ | Avengers |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/MARVEL/Black Panther/ | Black Panther |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/MARVEL/Blade/ | Blade |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/MARVEL/Captain America/ | Captain America |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/MARVEL/Captain Marvel/ | Captain Marvel |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/MARVEL/Comics/ | Comics |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/MARVEL/Daredevil/ | Daredevil |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/MARVEL/Deadpool/ | Deadpool |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/MARVEL/Fantastic Four/ | Fantastic Four |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/MARVEL/Ghost Rider/ | Ghost Rider |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/MARVEL/Hulk/ | Hulk |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/MARVEL/Ironman/ | Ironman |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/MARVEL/Spiderman/ | Spiderman |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/MARVEL/Thor/ | Thor |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/MARVEL/X-Men/ | X-Men |  | ParseListItemsDirectoryListing

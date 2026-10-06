@@ -1,0 +1,13 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  dir http://localhost/Climbing/ | Climbing |  | ParseTablesDirectoryListing
+  dir http://localhost/Movies/ | Movies |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/ | Music |  | ParseTablesDirectoryListing
+  dir http://localhost/Other Videos/ | Other Videos |  | ParseTablesDirectoryListing
+  dir http://localhost/ROMs/ | ROMs |  | ParseTablesDirectoryListing
+  dir http://localhost/TV/ | TV |  | ParseTablesDirectoryListing
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/?download=tar_gz | listing |  | ParseLinksDirectoryListing
+  dir http://localhost:8086/listing/?download=tar | listing |  | ParseLinksDirectoryListing
+  dir http://localhost:8086/listing/ | listing |  | ParseLinksDirectoryListing

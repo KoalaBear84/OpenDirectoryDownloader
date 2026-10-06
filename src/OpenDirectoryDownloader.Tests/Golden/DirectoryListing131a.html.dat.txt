@@ -1,0 +1,18 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/drivers/ | drivers |  | ParseTablesDirectoryListing
+  dir http://localhost/ms-dos/ | ms-dos |  | ParseTablesDirectoryListing
+  dir http://localhost/multipurpose/ | multipurpose |  | ParseTablesDirectoryListing
+  dir http://localhost/oshalved/ | oshalved |  | ParseTablesDirectoryListing
+  dir http://localhost/software/ | software |  | ParseTablesDirectoryListing
+  dir http://localhost/windows/ | windows |  | ParseTablesDirectoryListing
+  file http://localhost/softwarelisting.xlsx | softwarelisting.xlsx | 19251 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/drivers/ | drivers |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ms-dos/ | ms-dos |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/multipurpose/ | multipurpose |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/oshalved/ | oshalved |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/software/ | software |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/windows/ | windows |  | ParseTablesDirectoryListing
+  file http://localhost:8086/listing/softwarelisting.xlsx | softwarelisting.xlsx | 19251 | 

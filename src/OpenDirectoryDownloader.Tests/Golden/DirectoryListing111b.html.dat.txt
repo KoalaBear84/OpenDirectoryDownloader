@@ -1,0 +1,8 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseLinksDirectoryListing error=False ok=True
+  dir http://localhost/eBooks/ | eBooks |  | ParseLinksDirectoryListing
+  dir http://localhost/eBooks/00-NEW-UNSORTED/?sort=n | 00-NEW-UNSORTED |  | ParseLinksDirectoryListing
+  dir http://localhost/eBooks/00-NEW-UNSORTED/?sort=s | 00-NEW-UNSORTED |  | ParseLinksDirectoryListing
+  file http://localhost/eBooks/00-NEW-UNSORTED/~files.lst | ~files.lst |  | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True

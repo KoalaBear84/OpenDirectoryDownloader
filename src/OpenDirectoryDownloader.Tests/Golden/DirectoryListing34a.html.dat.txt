@@ -1,0 +1,14 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  dir http://localhost/Album Art/ | Album Art |  | ParseTablesDirectoryListing
+  dir http://localhost/Icons/ | Icons |  | ParseTablesDirectoryListing
+  dir http://localhost/Infographics/ | Infographics |  | ParseTablesDirectoryListing
+  dir http://localhost/Ringtones/ | Ringtones |  | ParseTablesDirectoryListing
+  dir http://localhost/Wallpapers/ | Wallpapers |  | ParseTablesDirectoryListing
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=True
+  dir http://localhost:8086/listing/Album Art/ | Album Art |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Icons/ | Icons |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Infographics/ | Infographics |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ringtones/ | Ringtones |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Wallpapers/ | Wallpapers |  | ParseTablesDirectoryListing

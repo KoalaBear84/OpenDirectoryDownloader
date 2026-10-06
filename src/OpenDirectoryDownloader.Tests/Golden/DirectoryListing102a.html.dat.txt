@@ -1,0 +1,16 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/?dir=Monkey_King/Trailer/PC | PC |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost/?dir=Monkey_King/Trailer/PS4 EU | PS4 EU |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost/?dir=Monkey_King/Trailer/PS4 US | PS4 US |  | ParseDirectoryListingDoctComDirectoryListing
+  file http://localhost/Monkey_King/Trailer/MonkeyKing_DLC2_Trailer_PC_ESRB_EN.mp4 | MonkeyKing_DLC2_Trailer_PC_ESRB_EN.mp4 | 70254592 | 
+  file http://localhost/Monkey_King/Trailer/Monkey_King_Announcement_Trailer.mp4 | Monkey_King_Announcement_Trailer.mp4 | 296851866 | 
+  file http://localhost/Monkey_King/Trailer/Monkey_King_Uproar_in_Heaven_DLC_Trailer | Monkey_King_Uproar_in_Heaven_DLC_Trailer | 1052266988 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=False
+  dir http://localhost:8086/listing/?dir=Monkey_King/Trailer/PC | PC |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost:8086/listing/?dir=Monkey_King/Trailer/PS4 EU | PS4 EU |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost:8086/listing/?dir=Monkey_King/Trailer/PS4 US | PS4 US |  | ParseDirectoryListingDoctComDirectoryListing
+  file http://localhost:8086/listing/Monkey_King/Trailer/MonkeyKing_DLC2_Trailer_PC_ESRB_EN.mp4 | MonkeyKing_DLC2_Trailer_PC_ESRB_EN.mp4 | 70254592 | 
+  file http://localhost:8086/listing/Monkey_King/Trailer/Monkey_King_Announcement_Trailer.mp4 | Monkey_King_Announcement_Trailer.mp4 | 296851866 | 
+  file http://localhost:8086/listing/Monkey_King/Trailer/Monkey_King_Uproar_in_Heaven_DLC_Trailer | Monkey_King_Uproar_in_Heaven_DLC_Trailer | 1052266988 | 

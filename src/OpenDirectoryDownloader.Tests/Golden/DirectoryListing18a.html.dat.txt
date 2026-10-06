@@ -1,0 +1,56 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/vd/ | vd |  | ParseTablesDirectoryListing
+  dir http://localhost/TDCS_PINGLIN/ | TDCS_PINGLIN |  | ParseTablesDirectoryListing
+  dir http://localhost/TDCS/ | TDCS |  | ParseTablesDirectoryListing
+  dir http://localhost/roadlevel/ | roadlevel |  | ParseTablesDirectoryListing
+  dir http://localhost/icons/ | icons |  | ParseTablesDirectoryListing
+  dir http://localhost/cms/ | cms |  | ParseTablesDirectoryListing
+  dir http://localhost/cctv/ | cctv |  | ParseTablesDirectoryListing
+  file http://localhost/vd_value5.xml.gz | vd_value5.xml.gz | 90112 | 
+  file http://localhost/vd_value.xml.gz | vd_value.xml.gz | 74752 | 
+  file http://localhost/vd_info.xml.gz | vd_info.xml.gz | 76800 | 
+  file http://localhost/style.css | style.css | 2253 | 
+  file http://localhost/roadlevel_value5.xml.gz | roadlevel_value5.xml.gz | 5222 | 
+  file http://localhost/roadlevel_value.xml.gz | roadlevel_value.xml.gz | 5222 | 
+  file http://localhost/roadlevel_threshold.xml.gz | roadlevel_threshold.xml.gz | 365 | 
+  file http://localhost/roadlevel_info.xml.gz | roadlevel_info.xml.gz | 15360 | 
+  file http://localhost/htaccess.txt | htaccess.txt | 178 | 
+  file http://localhost/header.html | header.html | 2355 | 
+  file http://localhost/footer.html | footer.html | 860 | 
+  file http://localhost/cms_value.xml.gz | cms_value.xml.gz | 15360 | 
+  file http://localhost/cms_info.xml.gz | cms_info.xml.gz | 28672 | 
+  file http://localhost/cctv_value.xml.gz | cctv_value.xml.gz | 13312 | 
+  file http://localhost/cctv_info.xml.gz | cctv_info.xml.gz | 30720 | 
+  file http://localhost/avi_value.xml.gz | avi_value.xml.gz | 377 | 
+  file http://localhost/avi_pair.xml.gz | avi_pair.xml.gz | 1638 | 
+  file http://localhost/avi_info.xml.gz | avi_info.xml.gz | 1843 | 
+  file http://localhost/1968_incident.pdf | 1968_incident.pdf | 155648 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/vd/ | vd |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/TDCS_PINGLIN/ | TDCS_PINGLIN |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/TDCS/ | TDCS |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/roadlevel/ | roadlevel |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/icons/ | icons |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/cms/ | cms |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/cctv/ | cctv |  | ParseTablesDirectoryListing
+  file http://localhost:8086/listing/vd_value5.xml.gz | vd_value5.xml.gz | 90112 | 
+  file http://localhost:8086/listing/vd_value.xml.gz | vd_value.xml.gz | 74752 | 
+  file http://localhost:8086/listing/vd_info.xml.gz | vd_info.xml.gz | 76800 | 
+  file http://localhost:8086/listing/style.css | style.css | 2253 | 
+  file http://localhost:8086/listing/roadlevel_value5.xml.gz | roadlevel_value5.xml.gz | 5222 | 
+  file http://localhost:8086/listing/roadlevel_value.xml.gz | roadlevel_value.xml.gz | 5222 | 
+  file http://localhost:8086/listing/roadlevel_threshold.xml.gz | roadlevel_threshold.xml.gz | 365 | 
+  file http://localhost:8086/listing/roadlevel_info.xml.gz | roadlevel_info.xml.gz | 15360 | 
+  file http://localhost:8086/listing/htaccess.txt | htaccess.txt | 178 | 
+  file http://localhost:8086/listing/header.html | header.html | 2355 | 
+  file http://localhost:8086/listing/footer.html | footer.html | 860 | 
+  file http://localhost:8086/listing/cms_value.xml.gz | cms_value.xml.gz | 15360 | 
+  file http://localhost:8086/listing/cms_info.xml.gz | cms_info.xml.gz | 28672 | 
+  file http://localhost:8086/listing/cctv_value.xml.gz | cctv_value.xml.gz | 13312 | 
+  file http://localhost:8086/listing/cctv_info.xml.gz | cctv_info.xml.gz | 30720 | 
+  file http://localhost:8086/listing/avi_value.xml.gz | avi_value.xml.gz | 377 | 
+  file http://localhost:8086/listing/avi_pair.xml.gz | avi_pair.xml.gz | 1638 | 
+  file http://localhost:8086/listing/avi_info.xml.gz | avi_info.xml.gz | 1843 | 
+  file http://localhost:8086/listing/1968_incident.pdf | 1968_incident.pdf | 155648 | 

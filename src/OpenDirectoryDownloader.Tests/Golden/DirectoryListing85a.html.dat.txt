@@ -1,0 +1,22 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  dir http://localhost/?directory=.%2F225_625%2F | 225_625 |  | ParseTablesDirectoryListing
+  dir http://localhost/?directory=.%2F240_640%2F | 240_640 |  | ParseTablesDirectoryListing
+  dir http://localhost/?directory=.%2F615%2F | 615 |  | ParseTablesDirectoryListing
+  dir http://localhost/?directory=.%2F630%2F | 630 |  | ParseTablesDirectoryListing
+  dir http://localhost/?directory=.%2F650%2F | 650 |  | ParseTablesDirectoryListing
+  dir http://localhost/?directory=.%2F680_480%2F | 680_480 |  | ParseTablesDirectoryListing
+  dir http://localhost/?directory=.%2FDocuments%2F | Documents |  | ParseTablesDirectoryListing
+  dir http://localhost/?directory=.%2FLegacy+Products%2F | Legacy Products |  | ParseTablesDirectoryListing
+  dir http://localhost/?directory=.%2FUtilities%2F | Utilities |  | ParseTablesDirectoryListing
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=True
+  dir http://localhost:8086/listing/?directory=.%2F225_625%2F | 225_625 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/?directory=.%2F240_640%2F | 240_640 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/?directory=.%2F615%2F | 615 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/?directory=.%2F630%2F | 630 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/?directory=.%2F650%2F | 650 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/?directory=.%2F680_480%2F | 680_480 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/?directory=.%2FDocuments%2F | Documents |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/?directory=.%2FLegacy+Products%2F | Legacy Products |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/?directory=.%2FUtilities%2F | Utilities |  | ParseTablesDirectoryListing

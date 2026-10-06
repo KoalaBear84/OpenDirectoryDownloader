@@ -1,0 +1,18 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseListItemsDirectoryListing error=False ok=True
+  dir http://localhost/Crystal Maps/ | Crystal Maps |  | ParseListItemsDirectoryListing
+  dir http://localhost/Fire Red Maps/ | Fire Red Maps |  | ParseListItemsDirectoryListing
+  dir http://localhost/Gameboy Advance Emulator and Pokemon ROMs/ | Gameboy Advance Emulator and Pokemon ROMs |  | ParseListItemsDirectoryListing
+  dir http://localhost/Pokemon GBA collection + emulator/ | Pokemon GBA collection   emulator |  | ParseListItemsDirectoryListing
+  dir http://localhost/Pokemon Roms/ | Pokemon Roms |  | ParseListItemsDirectoryListing
+  dir http://localhost/Ruby Maps/ | Ruby Maps |  | ParseListItemsDirectoryListing
+  file http://localhost/Pokemon Crystal.sg1.SGM | Pokemon Crystal.sg1.SGM |  | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseListItemsDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/Crystal Maps/ | Crystal Maps |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/Fire Red Maps/ | Fire Red Maps |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/Gameboy Advance Emulator and Pokemon ROMs/ | Gameboy Advance Emulator and Pokemon ROMs |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/Pokemon GBA collection + emulator/ | Pokemon GBA collection   emulator |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/Pokemon Roms/ | Pokemon Roms |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/Ruby Maps/ | Ruby Maps |  | ParseListItemsDirectoryListing
+  file http://localhost:8086/listing/Pokemon Crystal.sg1.SGM | Pokemon Crystal.sg1.SGM |  | 

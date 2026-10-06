@@ -1,0 +1,7 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/pub/ | pub |  | ParseTablesDirectoryListing
+  file http://localhost/favicon.ico | favicon.ico | 304 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost:8086/favicon.ico | favicon.ico | 304 | 

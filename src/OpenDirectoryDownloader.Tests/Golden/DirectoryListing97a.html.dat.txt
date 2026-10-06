@@ -1,0 +1,4 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False

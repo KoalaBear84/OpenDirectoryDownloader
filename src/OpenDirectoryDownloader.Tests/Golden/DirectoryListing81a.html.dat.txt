@@ -1,0 +1,170 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/n | n |  | ParseTablesDirectoryListing
+  dir http://localhost/2015 | 2015 |  | ParseTablesDirectoryListing
+  dir http://localhost/twillight | twillight |  | ParseTablesDirectoryListing
+  dir http://localhost/-_techno__ | -_techno__ |  | ParseTablesDirectoryListing
+  dir http://localhost/grav | grav |  | ParseTablesDirectoryListing
+  dir http://localhost/mon-mp3 | mon-mp3 |  | ParseTablesDirectoryListing
+  dir http://localhost/diver | diver |  | ParseTablesDirectoryListing
+  dir http://localhost/2016 | 2016 |  | ParseTablesDirectoryListing
+  dir http://localhost/_01cool-_ | _01cool-_ |  | ParseTablesDirectoryListing
+  dir http://localhost/terakaft | terakaft |  | ParseTablesDirectoryListing
+  dir http://localhost/paul-okenford | paul-okenford |  | ParseTablesDirectoryListing
+  dir http://localhost/binaural | binaural |  | ParseTablesDirectoryListing
+  dir http://localhost/sonnerie | sonnerie |  | ParseTablesDirectoryListing
+  dir http://localhost/trance-techno | trance-techno |  | ParseTablesDirectoryListing
+  dir http://localhost/-mod-xm_ | -mod-xm_ |  | ParseTablesDirectoryListing
+  dir http://localhost/_techno__ | _techno__ |  | ParseTablesDirectoryListing
+  file http://localhost/396Hz - Liberation From Fear (Solfeggio Tones).failed-conv.mp4 | 396Hz - Liberation From Fear (Solfeggio Tones).failed-conv.mp4 | 7172260 | 
+  file http://localhost/10_POTATOHEADZ feat. lizyy pattinson  narcotique.mp3 | 10_POTATOHEADZ feat. lizyy pattinson  narcotique.mp3 | 5326766 | 
+  file http://localhost/staged_enduro_avril_2013_-_Google.flv | staged_enduro_avril_2013_-_Google.flv | 1656750 | 
+  file http://localhost/20_On_the_road_again_Jehro_Luce_Yael.mp3 | 20_On_the_road_again_Jehro_Luce_Yael.mp3 | 3565158 | 
+  file http://localhost/Coloured Vision - Virtual Reality..mp3 | Coloured Vision - Virtual Reality..mp3 | 1132462 | 
+  file http://localhost/A STATE OF TRANCE FEMALE VOCALS 2012.failed-conv.flv | A STATE OF TRANCE FEMALE VOCALS 2012.failed-conv.flv | 118814147 | 
+  file http://localhost/528Hz DNA Frequency - UNLOCK Your Codons___.failed-conv.mp4 | 528Hz DNA Frequency - UNLOCK Your Codons___.failed-conv.mp4 | 167352730 | 
+  file http://localhost/trance-vocal-6.mp3 | trance-vocal-6.mp3 | 22219325 | 
+  file http://localhost/852Hz Solfeggio Meditation Video- Pure LOVE and Spiritual Or.failed-conv.mp4 | 852Hz Solfeggio Meditation Video- Pure LOVE and Spiritual Or.failed-conv.mp4 | 230477005 | 
+  file http://localhost/vocal-trance5-a-voir.mp3 | vocal-trance5-a-voir.mp3 | 43264246 | 
+  file http://localhost/paul_oakenfold_-_southern_sun_2004.mp3 | paul_oakenfold_-_southern_sun_2004.mp3 | 4120904 | 
+  file http://localhost/TERAKAFT-amazzagh.wav | TERAKAFT-amazzagh.wav | 44071649 | 
+  file http://localhost/KATTY_PERRY_-_Hot__n_cold_HQ_.mp3 | KATTY_PERRY_-_Hot__n_cold_HQ_.mp3 | 4005560 | 
+  file http://localhost/neural-Relaxing-Music.mp3 | neural-Relaxing-Music.mp3 | 178016748 | 
+  file http://localhost/progressive-Trance.mp3..mp3 | progressive-Trance.mp3..mp3 | 74868326 | 
+  file http://localhost/KatyPerry- I kissed a girl (OFFICAL MUSIC VIDEO).mp3 | KatyPerry- I kissed a girl (OFFICAL MUSIC VIDEO).mp3 | 2967470 | 
+  file http://localhost/ApresLaPluie.mp3 | ApresLaPluie.mp3 | 3334472 | 
+  file http://localhost/trance-vocal-8.mp3..mp3 | trance-vocal-8.mp3..mp3 | 46042972 | 
+  file http://localhost/Melodies-neural.mp3 | Melodies-neural.mp3 | 17521705 | 
+  file http://localhost/Spirit_Relaxation-2-hour-neural.mp3 | Spirit_Relaxation-2-hour-neural.mp3 | 117409055 | 
+  file http://localhost/The Age Of Love (Jam _ Spoon mix)..mp3 | The Age Of Love (Jam _ Spoon mix)..mp3 | 6490685 | 
+  file http://localhost/Beautiful_Trance_March_2014_Mix_6_Paradise.mp3 | Beautiful_Trance_March_2014_Mix_6_Paradise.mp3 | 60932751 | 
+  file http://localhost/Spirit-Relaxation-2h-beau.mp3 | Spirit-Relaxation-2h-beau.mp3 | 117409055 | 
+  file http://localhost/Extremely Powerful Pure Clean Positive .mp3 | Extremely Powerful Pure Clean Positive .mp3 | 28059894 | 
+  file http://localhost/Binaural Beat Mix Ambient Music - Psychedelic Awakening.failed-conv.flv | Binaural Beat Mix Ambient Music - Psychedelic Awakening.failed-conv.flv | 1782579 | 
+  file http://localhost/chakra-guide-avec-archange.mp3 | chakra-guide-avec-archange.mp3 | 57210307 | 
+  file http://localhost/trance-vocal-capela.mp3 | trance-vocal-capela.mp3 | 16798188 | 
+  file http://localhost/528Hz DNA Frequency - UNLOCK Your Codons___.failed-conv.flv | 528Hz DNA Frequency - UNLOCK Your Codons___.failed-conv.flv | 1782579 | 
+  file http://localhost/Ephedra - Eve.mp3 | Ephedra - Eve.mp3 | 5106565 | 
+  file http://localhost/univers-vibration.mp3 | univers-vibration.mp3 | 113036493 | 
+  file http://localhost/BlueStates-Season-Song-28-Days-Later-bon.mp3 | BlueStates-Season-Song-28-Days-Later-bon.mp3 | 4026532 | 
+  file http://localhost/Best Progressive Trance Mix 2013 Vol.mp3 | Best Progressive Trance Mix 2013 Vol.mp3 | 94508155 | 
+  file http://localhost/rita.mp3 | rita.mp3 | 4645192 | 
+  file http://localhost/DEEP HOUSE SET 1 2013.mp3..mp3 | DEEP HOUSE SET 1 2013.mp3..mp3 | 78831944 | 
+  file http://localhost/2004_DANCE-FOUR_TO_THE_FLOOR.mp3 | 2004_DANCE-FOUR_TO_THE_FLOOR.mp3 | 4372562 | 
+  file http://localhost/Best of Female Vocal Trance Volume 11.mp3 | Best of Female Vocal Trance Volume 11.mp3 | 60712550 | 
+  file http://localhost/Deep Sleep _ Binaural Beats Meditation _ Relaxation Music fo.mp3 | Deep Sleep _ Binaural Beats Meditation _ Relaxation Music fo.mp3 | 64246252 | 
+  file http://localhost/Binaural Beats_ Powerful Concentration, Focus _ Manifestatio.mp4 | Binaural Beats_ Powerful Concentration, Focus _ Manifestatio.mp4 | 352982139 | 
+  file http://localhost/Binaural Beats - Subliminal Journey (Best Ever, listen with .mp4 | Binaural Beats - Subliminal Journey (Best Ever, listen with .mp4 | 35274097 | 
+  file http://localhost/Depression Treatment subliminal binaural beats music.mp4 | Depression Treatment subliminal binaural beats music.mp4 | 44826624 | 
+  file http://localhost/Starsailor - Four to the floor .mp3 | Starsailor - Four to the floor .mp3 | 6459228 | 
+  file http://localhost/Goa-2012.flv | Goa-2012.flv | 163200369 | 
+  file http://localhost/396Hz - Liberation From Fear (Solfeggio Tones).mp4 | 396Hz - Liberation From Fear (Solfeggio Tones).mp4 | 7172260 | 
+  file http://localhost/FEMALE-VOCAL-TRANCE.mp3..mp3 | FEMALE-VOCAL-TRANCE.mp3..mp3 | 76629934 | 
+  file http://localhost/jacky-braun-leady-sweetys.mp3 | jacky-braun-leady-sweetys.mp3 | 4676649 | 
+  file http://localhost/Intrance - Te Quierro - (1993).mp3 | Intrance - Te Quierro - (1993).mp3 | 5578424 | 
+  file http://localhost/deep-transe-purple.mp3 | deep-transe-purple.mp3 | 80750838 | 
+  file http://localhost/neural-cool-2014.mp3 | neural-cool-2014.mp3 | 27734835 | 
+  file http://localhost/vocal-trance3.mp3 | vocal-trance3.mp3 | 6857687 | 
+  file http://localhost/trance-fusion.mp3 | trance-fusion.mp3 | 7151288 | 
+  file http://localhost/trance-vocal-9.mp3..mp3 | trance-vocal-9.mp3..mp3 | 28091351 | 
+  file http://localhost/Depression Treatment subliminal binaural beats music.failed-conv.mp4 | Depression Treatment subliminal binaural beats music.failed-conv.mp4 | 44826624 | 
+  file http://localhost/trance-vocal-7.mp3 | trance-vocal-7.mp3 | 54892954 | 
+  file http://localhost/katy-perry-hot-a279023.6.mp3 | katy-perry-hot-a279023.6.mp3 | 4529848 | 
+  file http://localhost/Gautier_-_La_Morte_amoureuse.mp3 | Gautier_-_La_Morte_amoureuse.mp3 | 90198508 | 
+  file http://localhost/BlueStates-Season-Song-28-Days-Le-bon.mp3 | BlueStates-Season-Song-28-Days-Le-bon.mp3 | 4026532 | 
+  file http://localhost/vocal-trance4-bof.mp3 | vocal-trance4-bof.mp3 | 54473523 | 
+  file http://localhost/salma.mp3 | salma.mp3 | 3995075 | 
+  file http://localhost/gotta-feeling.mp3 | gotta-feeling.mp3 | 4676649 | 
+  file http://localhost/11-the_drill-the_drill.mp3 | 11-the_drill-the_drill.mp3 | 4508877 | 
+  file http://localhost/chakres-guide.mp3 | chakres-guide.mp3 | 25732055 | 
+  file http://localhost/best-progressive-trance-vocal.mp3 | best-progressive-trance-vocal.mp3 | 74868326 | 
+  file http://localhost/neural-sleep-cool.mp3 | neural-sleep-cool.mp3 | 73672950 | 
+  file http://localhost/vocal-trance2.mp3 | vocal-trance2.mp3 | 33019658 | 
+  file http://localhost/2013-12-trance-vocal.mp3 | 2013-12-trance-vocal.mp3 | 48664412 | 
+  file http://localhost/jacky-braumn-lady-sweety-ny-pense-meme-pas.mp3 | jacky-braumn-lady-sweety-ny-pense-meme-pas.mp3 | 6585057 | 
+  file http://localhost/Monk%20On%20Acid%20-%20A%20Trip%20To%20Pluto%20 | Monk On Acid - A Trip To Pluto  | 118247916 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/n | n |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/2015 | 2015 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/twillight | twillight |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/-_techno__ | -_techno__ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/grav | grav |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/mon-mp3 | mon-mp3 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/diver | diver |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/2016 | 2016 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/_01cool-_ | _01cool-_ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/terakaft | terakaft |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/paul-okenford | paul-okenford |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/binaural | binaural |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/sonnerie | sonnerie |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/trance-techno | trance-techno |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/-mod-xm_ | -mod-xm_ |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/_techno__ | _techno__ |  | ParseTablesDirectoryListing
+  file http://localhost:8086/listing/396Hz - Liberation From Fear (Solfeggio Tones).failed-conv.mp4 | 396Hz - Liberation From Fear (Solfeggio Tones).failed-conv.mp4 | 7172260 | 
+  file http://localhost:8086/listing/10_POTATOHEADZ feat. lizyy pattinson  narcotique.mp3 | 10_POTATOHEADZ feat. lizyy pattinson  narcotique.mp3 | 5326766 | 
+  file http://localhost:8086/listing/staged_enduro_avril_2013_-_Google.flv | staged_enduro_avril_2013_-_Google.flv | 1656750 | 
+  file http://localhost:8086/listing/20_On_the_road_again_Jehro_Luce_Yael.mp3 | 20_On_the_road_again_Jehro_Luce_Yael.mp3 | 3565158 | 
+  file http://localhost:8086/listing/Coloured Vision - Virtual Reality..mp3 | Coloured Vision - Virtual Reality..mp3 | 1132462 | 
+  file http://localhost:8086/listing/A STATE OF TRANCE FEMALE VOCALS 2012.failed-conv.flv | A STATE OF TRANCE FEMALE VOCALS 2012.failed-conv.flv | 118814147 | 
+  file http://localhost:8086/listing/528Hz DNA Frequency - UNLOCK Your Codons___.failed-conv.mp4 | 528Hz DNA Frequency - UNLOCK Your Codons___.failed-conv.mp4 | 167352730 | 
+  file http://localhost:8086/listing/trance-vocal-6.mp3 | trance-vocal-6.mp3 | 22219325 | 
+  file http://localhost:8086/listing/852Hz Solfeggio Meditation Video- Pure LOVE and Spiritual Or.failed-conv.mp4 | 852Hz Solfeggio Meditation Video- Pure LOVE and Spiritual Or.failed-conv.mp4 | 230477005 | 
+  file http://localhost:8086/listing/vocal-trance5-a-voir.mp3 | vocal-trance5-a-voir.mp3 | 43264246 | 
+  file http://localhost:8086/listing/paul_oakenfold_-_southern_sun_2004.mp3 | paul_oakenfold_-_southern_sun_2004.mp3 | 4120904 | 
+  file http://localhost:8086/listing/TERAKAFT-amazzagh.wav | TERAKAFT-amazzagh.wav | 44071649 | 
+  file http://localhost:8086/listing/KATTY_PERRY_-_Hot__n_cold_HQ_.mp3 | KATTY_PERRY_-_Hot__n_cold_HQ_.mp3 | 4005560 | 
+  file http://localhost:8086/listing/neural-Relaxing-Music.mp3 | neural-Relaxing-Music.mp3 | 178016748 | 
+  file http://localhost:8086/listing/progressive-Trance.mp3..mp3 | progressive-Trance.mp3..mp3 | 74868326 | 
+  file http://localhost:8086/listing/KatyPerry- I kissed a girl (OFFICAL MUSIC VIDEO).mp3 | KatyPerry- I kissed a girl (OFFICAL MUSIC VIDEO).mp3 | 2967470 | 
+  file http://localhost:8086/listing/ApresLaPluie.mp3 | ApresLaPluie.mp3 | 3334472 | 
+  file http://localhost:8086/listing/trance-vocal-8.mp3..mp3 | trance-vocal-8.mp3..mp3 | 46042972 | 
+  file http://localhost:8086/listing/Melodies-neural.mp3 | Melodies-neural.mp3 | 17521705 | 
+  file http://localhost:8086/listing/Spirit_Relaxation-2-hour-neural.mp3 | Spirit_Relaxation-2-hour-neural.mp3 | 117409055 | 
+  file http://localhost:8086/listing/The Age Of Love (Jam _ Spoon mix)..mp3 | The Age Of Love (Jam _ Spoon mix)..mp3 | 6490685 | 
+  file http://localhost:8086/listing/Beautiful_Trance_March_2014_Mix_6_Paradise.mp3 | Beautiful_Trance_March_2014_Mix_6_Paradise.mp3 | 60932751 | 
+  file http://localhost:8086/listing/Spirit-Relaxation-2h-beau.mp3 | Spirit-Relaxation-2h-beau.mp3 | 117409055 | 
+  file http://localhost:8086/listing/Extremely Powerful Pure Clean Positive .mp3 | Extremely Powerful Pure Clean Positive .mp3 | 28059894 | 
+  file http://localhost:8086/listing/Binaural Beat Mix Ambient Music - Psychedelic Awakening.failed-conv.flv | Binaural Beat Mix Ambient Music - Psychedelic Awakening.failed-conv.flv | 1782579 | 
+  file http://localhost:8086/listing/chakra-guide-avec-archange.mp3 | chakra-guide-avec-archange.mp3 | 57210307 | 
+  file http://localhost:8086/listing/trance-vocal-capela.mp3 | trance-vocal-capela.mp3 | 16798188 | 
+  file http://localhost:8086/listing/528Hz DNA Frequency - UNLOCK Your Codons___.failed-conv.flv | 528Hz DNA Frequency - UNLOCK Your Codons___.failed-conv.flv | 1782579 | 
+  file http://localhost:8086/listing/Ephedra - Eve.mp3 | Ephedra - Eve.mp3 | 5106565 | 
+  file http://localhost:8086/listing/univers-vibration.mp3 | univers-vibration.mp3 | 113036493 | 
+  file http://localhost:8086/listing/BlueStates-Season-Song-28-Days-Later-bon.mp3 | BlueStates-Season-Song-28-Days-Later-bon.mp3 | 4026532 | 
+  file http://localhost:8086/listing/Best Progressive Trance Mix 2013 Vol.mp3 | Best Progressive Trance Mix 2013 Vol.mp3 | 94508155 | 
+  file http://localhost:8086/listing/rita.mp3 | rita.mp3 | 4645192 | 
+  file http://localhost:8086/listing/DEEP HOUSE SET 1 2013.mp3..mp3 | DEEP HOUSE SET 1 2013.mp3..mp3 | 78831944 | 
+  file http://localhost:8086/listing/2004_DANCE-FOUR_TO_THE_FLOOR.mp3 | 2004_DANCE-FOUR_TO_THE_FLOOR.mp3 | 4372562 | 
+  file http://localhost:8086/listing/Best of Female Vocal Trance Volume 11.mp3 | Best of Female Vocal Trance Volume 11.mp3 | 60712550 | 
+  file http://localhost:8086/listing/Deep Sleep _ Binaural Beats Meditation _ Relaxation Music fo.mp3 | Deep Sleep _ Binaural Beats Meditation _ Relaxation Music fo.mp3 | 64246252 | 
+  file http://localhost:8086/listing/Binaural Beats_ Powerful Concentration, Focus _ Manifestatio.mp4 | Binaural Beats_ Powerful Concentration, Focus _ Manifestatio.mp4 | 352982139 | 
+  file http://localhost:8086/listing/Binaural Beats - Subliminal Journey (Best Ever, listen with .mp4 | Binaural Beats - Subliminal Journey (Best Ever, listen with .mp4 | 35274097 | 
+  file http://localhost:8086/listing/Depression Treatment subliminal binaural beats music.mp4 | Depression Treatment subliminal binaural beats music.mp4 | 44826624 | 
+  file http://localhost:8086/listing/Starsailor - Four to the floor .mp3 | Starsailor - Four to the floor .mp3 | 6459228 | 
+  file http://localhost:8086/listing/Goa-2012.flv | Goa-2012.flv | 163200369 | 
+  file http://localhost:8086/listing/396Hz - Liberation From Fear (Solfeggio Tones).mp4 | 396Hz - Liberation From Fear (Solfeggio Tones).mp4 | 7172260 | 
+  file http://localhost:8086/listing/FEMALE-VOCAL-TRANCE.mp3..mp3 | FEMALE-VOCAL-TRANCE.mp3..mp3 | 76629934 | 
+  file http://localhost:8086/listing/jacky-braun-leady-sweetys.mp3 | jacky-braun-leady-sweetys.mp3 | 4676649 | 
+  file http://localhost:8086/listing/Intrance - Te Quierro - (1993).mp3 | Intrance - Te Quierro - (1993).mp3 | 5578424 | 
+  file http://localhost:8086/listing/deep-transe-purple.mp3 | deep-transe-purple.mp3 | 80750838 | 
+  file http://localhost:8086/listing/neural-cool-2014.mp3 | neural-cool-2014.mp3 | 27734835 | 
+  file http://localhost:8086/listing/vocal-trance3.mp3 | vocal-trance3.mp3 | 6857687 | 
+  file http://localhost:8086/listing/trance-fusion.mp3 | trance-fusion.mp3 | 7151288 | 
+  file http://localhost:8086/listing/trance-vocal-9.mp3..mp3 | trance-vocal-9.mp3..mp3 | 28091351 | 
+  file http://localhost:8086/listing/Depression Treatment subliminal binaural beats music.failed-conv.mp4 | Depression Treatment subliminal binaural beats music.failed-conv.mp4 | 44826624 | 
+  file http://localhost:8086/listing/trance-vocal-7.mp3 | trance-vocal-7.mp3 | 54892954 | 
+  file http://localhost:8086/listing/katy-perry-hot-a279023.6.mp3 | katy-perry-hot-a279023.6.mp3 | 4529848 | 
+  file http://localhost:8086/listing/Gautier_-_La_Morte_amoureuse.mp3 | Gautier_-_La_Morte_amoureuse.mp3 | 90198508 | 
+  file http://localhost:8086/listing/BlueStates-Season-Song-28-Days-Le-bon.mp3 | BlueStates-Season-Song-28-Days-Le-bon.mp3 | 4026532 | 
+  file http://localhost:8086/listing/vocal-trance4-bof.mp3 | vocal-trance4-bof.mp3 | 54473523 | 
+  file http://localhost:8086/listing/salma.mp3 | salma.mp3 | 3995075 | 
+  file http://localhost:8086/listing/gotta-feeling.mp3 | gotta-feeling.mp3 | 4676649 | 
+  file http://localhost:8086/listing/11-the_drill-the_drill.mp3 | 11-the_drill-the_drill.mp3 | 4508877 | 
+  file http://localhost:8086/listing/chakres-guide.mp3 | chakres-guide.mp3 | 25732055 | 
+  file http://localhost:8086/listing/best-progressive-trance-vocal.mp3 | best-progressive-trance-vocal.mp3 | 74868326 | 
+  file http://localhost:8086/listing/neural-sleep-cool.mp3 | neural-sleep-cool.mp3 | 73672950 | 
+  file http://localhost:8086/listing/vocal-trance2.mp3 | vocal-trance2.mp3 | 33019658 | 
+  file http://localhost:8086/listing/2013-12-trance-vocal.mp3 | 2013-12-trance-vocal.mp3 | 48664412 | 
+  file http://localhost:8086/listing/jacky-braumn-lady-sweety-ny-pense-meme-pas.mp3 | jacky-braumn-lady-sweety-ny-pense-meme-pas.mp3 | 6585057 | 
+  file http://localhost:8086/listing/Monk%20On%20Acid%20-%20A%20Trip%20To%20Pluto%20 | Monk On Acid - A Trip To Pluto  | 118247916 | 

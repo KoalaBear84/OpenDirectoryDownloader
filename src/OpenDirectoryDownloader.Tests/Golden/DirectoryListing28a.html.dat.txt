@@ -1,0 +1,37 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/scores/index.php?path=-+blokfluitensemble/ | - blokfluitensemble |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=-+diversen+en+eigen+noten/ | - diversen en eigen noten |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=-+multivocaal/ | - multivocaal |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=-+Real+Books/ | - Real Books |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=-+varia/ | - varia |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=-+verzamelingen/ | - verzamelingen |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=-+viola/ | - viola |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=A/ | A |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=B/ | B |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=C/ | C |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=D/ | D |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=E/ | E |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=F/ | F |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=G/ | G |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=H/ | H |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=I/ | I |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=J/ | J |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=K/ | K |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=L/ | L |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=M/ | M |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=N/ | N |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=O/ | O |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=P/ | P |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=Q/ | Q |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=R/ | R |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=S/ | S |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=T/ | T |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=U/ | U |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=V/ | V |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=W/ | W |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=X/ | X |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=Y/ | Y |  | ParseSnifDirectoryListing
+  dir http://localhost/scores/index.php?path=Z/ | Z |  | ParseSnifDirectoryListing
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=False

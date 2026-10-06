@@ -1,0 +1,94 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/12 Years a Slave (2013) MULTi (VFF-VO-VFQ) %5B1080p%5D BluRay x264-PopHD/ | 12 Years a Slave (2013) MULTi (VFF-VO-VFQ) [1080p] BluRay x264-PopHD |  | ParseTablesDirectoryListing
+  dir http://localhost/28.Days.Later.2002.MULTi.1080p.BluRay.DTS.x264-KLI/ | 28.Days.Later.2002.MULTi.1080p.BluRay.DTS.x264-KLI |  | ParseTablesDirectoryListing
+  dir http://localhost/Babysitting Duologie French AC3 1080p HDLight x264.GHT/ | Babysitting Duologie French AC3 1080p HDLight x264.GHT |  | ParseTablesDirectoryListing
+  dir http://localhost/Homeland.S08.VOSTFR.1080p.TVRip.H264.AAC-BBC/ | Homeland.S08.VOSTFR.1080p.TVRip.H264.AAC-BBC |  | ParseTablesDirectoryListing
+  dir http://localhost/La Famille Belier (2014) French AC3 BluRay 1080p x264.GHT/ | La Famille Belier (2014) French AC3 BluRay 1080p x264.GHT |  | ParseTablesDirectoryListing
+  dir http://localhost/SimCity Deluxe Edition MULTi10-ElAmigos/ | SimCity Deluxe Edition MULTi10-ElAmigos |  | ParseTablesDirectoryListing
+  dir http://localhost/Taken Trilogie/ | Taken Trilogie |  | ParseTablesDirectoryListing
+  dir http://localhost/The Mandalorian S01 (2019) MULTi VFF 2160p 10bit 4KLight HDR WEBRip x265 AAC 5.1-QTZ/ | The Mandalorian S01 (2019) MULTi VFF 2160p 10bit 4KLight HDR WEBRip x265 AAC 5.1-QTZ |  | ParseTablesDirectoryListing
+  dir http://localhost/The Walking Dead S09 MULTi %5B1080p%5D BluRay x264-PopHD/ | The Walking Dead S09 MULTi [1080p] BluRay x264-PopHD |  | ParseTablesDirectoryListing
+  dir http://localhost/The.Office.US.2005.S02.V2.Multi.VFI.AMZN.WEB-DL.1080p.5.1.HEVC.x265.10bit-Papaya/ | The.Office.US.2005.S02.V2.Multi.VFI.AMZN.WEB-DL.1080p.5.1.HEVC.x265.10bit-Papaya |  | ParseTablesDirectoryListing
+  dir http://localhost/The.Office.US.2005.S04.Multi.VFI.1080p.AMZN.WEB-DL.x265.LION.papaya/ | The.Office.US.2005.S04.Multi.VFI.1080p.AMZN.WEB-DL.x265.LION.papaya |  | ParseTablesDirectoryListing
+  dir http://localhost/The.Office.US.2005.S05.Multi.VFI.1080p.Bluray.x265.LION.papaya/ | The.Office.US.2005.S05.Multi.VFI.1080p.Bluray.x265.LION.papaya |  | ParseTablesDirectoryListing
+  dir http://localhost/The.Office.US.S03.REPACK.Multi.VFI.AMZN.WEB-DL.1080p.5.1.HEVC.x265.10bit-Papaya/ | The.Office.US.S03.REPACK.Multi.VFI.AMZN.WEB-DL.1080p.5.1.HEVC.x265.10bit-Papaya |  | ParseTablesDirectoryListing
+  file http://localhost/1917 (2019) MULTi VFF 2160p 10bit 4KLight HDR10PLUS BluRay AC3 5.1 x265-QTZ.mkv | 1917 (2019) MULTi VFF 2160p 10bit 4KLight HDR10PLUS BluRay AC3 5.1 x265-QTZ.mkv | 5046586573 | 
+  file http://localhost/8 Mile (2002) %5B1080p%5D MULTi BluRay x264-PopHD.mkv | 8 Mile (2002) [1080p] MULTi BluRay x264-PopHD.mkv | 2684354560 | 
+  file http://localhost/Alibi.com (2017) French AC3 1080p HDLight x264.mkv | Alibi.com (2017) French AC3 1080p HDLight x264.mkv | 2040109466 | 
+  file http://localhost/An.Officer.and.a.Spy.2019.1080p.BRRip.AC3.x264.HORiZON-ArtSubs.mkv | An.Officer.and.a.Spy.2019.1080p.BRRip.AC3.x264.HORiZON-ArtSubs.mkv | 2576980378 | 
+  file http://localhost/attestation-deplacement-fr.pdf | attestation-deplacement-fr.pdf | 137626 | 
+  file http://localhost/Avatar Extended 1080p MULTI 2009 BluRay x264 %5BPop%5D.mkv | Avatar Extended 1080p MULTI 2009 BluRay x264 [Pop].mkv | 4509715661 | 
+  file http://localhost/Avengers Endgame 2019 1080p VFF EN X264 AC3-mHDgz.mkv | Avengers Endgame 2019 1080p VFF EN X264 AC3-mHDgz.mkv | 3543348019 | 
+  file http://localhost/Bad Boys for Life (2020) MULTi VFF 2160p 10bit 4KLight HDR BluRay AC3 5.1 x265-QTZ.mkv | Bad Boys for Life (2020) MULTi VFF 2160p 10bit 4KLight HDR BluRay AC3 5.1 x265-QTZ.mkv | 5368709120 | 
+  file http://localhost/Bienvenue chez les chtis (2008) French AC3 BluRay 1080p x264.GHT.mkv | Bienvenue chez les chtis (2008) French AC3 BluRay 1080p x264.GHT.mkv | 2254857830 | 
+  file http://localhost/Braveheart (1995) MULTi VFF 2160p 10bit 4KLight HDR BluRay x265 HE-AAC 5.1 - QTZ.mkv | Braveheart (1995) MULTi VFF 2160p 10bit 4KLight HDR BluRay x265 HE-AAC 5.1 - QTZ.mkv | 6871947674 | 
+  file http://localhost/Contagion (2011) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ.mkv | Contagion (2011) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ.mkv | 2362232013 | 
+  file http://localhost/Dark.Waters.2019.MULTi.TRUEFRENCH.1080p.BluRay.H264-MGD.mkv | Dark.Waters.2019.MULTi.TRUEFRENCH.1080p.BluRay.H264-MGD.mkv | 2899102925 | 
+  file http://localhost/Ford v Ferrari.2019.MULTi.VFF.AC3.1080p.x264-GOLDORAK.mkv | Ford v Ferrari.2019.MULTi.VFF.AC3.1080p.x264-GOLDORAK.mkv | 5368709120 | 
+  file http://localhost/Ibiza.2019.FRENCH.1080p.WEB.H264-PREUMS.mkv | Ibiza.2019.FRENCH.1080p.WEB.H264-PREUMS.mkv | 3221225472 | 
+  file http://localhost/Independence Day (1996) EXTENDED MULTi VFF 2160p 10bit 4KLight HDR BluRay x265 AAC 7.1-QTZ.mkv | Independence Day (1996) EXTENDED MULTi VFF 2160p 10bit 4KLight HDR BluRay x265 AAC 7.1-QTZ.mkv | 5583457485 | 
+  file http://localhost/Intouchables (2011) FR %5B1080p%5D BluRay x264-PopHD.mkv | Intouchables (2011) FR [1080p] BluRay x264-PopHD.mkv | 2362232013 | 
+  file http://localhost/Je suis une legende (2007) PROPER MULTi VFF 2160p 10bit 4KLight HDR BluRay x265 5.1 - QTZ (I Am Legend).mkv | Je suis une legende (2007) PROPER MULTi VFF 2160p 10bit 4KLight HDR BluRay x265 5.1 - QTZ (I Am Legend).mkv | 3972844749 | 
+  file http://localhost/Jojo Rabbit (2019) MULTi VFI 2160p 10bit 4KLight HDR BluRay AC3 5.1 x265-QTZ.mkv | Jojo Rabbit (2019) MULTi VFI 2160p 10bit 4KLight HDR BluRay AC3 5.1 x265-QTZ.mkv | 3650722202 | 
+  file http://localhost/Joker.2019.MULTi.TRUEFRENCH.1080p.HDLight.x264.AC3-TOXIC.mkv | Joker.2019.MULTi.TRUEFRENCH.1080p.HDLight.x264.AC3-TOXIC.mkv | 3113851290 | 
+  file http://localhost/L'Arnacoeur (2010).mkv | L'Arnacoeur (2010).mkv | 1395864371 | 
+  file http://localhost/L'arnacoeur 2010 FRENCH AC3 1080p x264.mkv | L'arnacoeur 2010 FRENCH AC3 1080p x264.mkv | 2254857830 | 
+  file http://localhost/L'OPÉRATION CORNED BEEF %5B1991%5D TrueFrench DVDRip x264 AAC %5BRYO%5D.mkv | L'OPÉRATION CORNED BEEF [1991] TrueFrench DVDRip x264 AAC [RYO].mkv | 2040109466 | 
+  file http://localhost/La Voie de la justice (Just Mercy) (2019).MULTi.VFI.2160p.10bit.4KLight.WEB.HDR10.BluRay.x265.AC3.5.1.Portos.mkv | La Voie de la justice (Just Mercy) (2019).MULTi.VFI.2160p.10bit.4KLight.WEB.HDR10.BluRay.x265.AC3.5.1.Portos.mkv | 7194070221 | 
+  file http://localhost/La.Belle.Epoque.2019.FRENCH.1080p.WEB.H264-FRATERNiTY.mkv | La.Belle.Epoque.2019.FRENCH.1080p.WEB.H264-FRATERNiTY.mkv | 4294967296 | 
+  file http://localhost/Le Loup de Wall Street %5B1080p%5D MULTi 2013 BluRay x264-Pop (the wolf of wall street) .mkv | Le Loup de Wall Street [1080p] MULTi 2013 BluRay x264-Pop (the wolf of wall street) .mkv | 3972844749 | 
+  file http://localhost/Le Prénom.2012.French.1080p.mHD.x264.AC3 5.1-touriste.mkv | Le Prénom.2012.French.1080p.mHD.x264.AC3 5.1-touriste.mkv | 2684354560 | 
+  file http://localhost/Le Sens de la Fete 2017 1080p FR X264 AC3-mHDgz.mkv | Le Sens de la Fete 2017 1080p FR X264 AC3-mHDgz.mkv | 2147483648 | 
+  file http://localhost/Les Visiteurs 1993 French AC3 1080p HDLight x264.GHT.mkv | Les Visiteurs 1993 French AC3 1080p HDLight x264.GHT.mkv | 2469606195 | 
+  file http://localhost/Les.Miserables.2019.FRENCH.1080p.WEB.H264-iTunes.mkv | Les.Miserables.2019.FRENCH.1080p.WEB.H264-iTunes.mkv | 3865470566 | 
+  file http://localhost/Manon.des.Sources.1986.French.1080p.mHD.x264.AC3-touriste.mkv | Manon.des.Sources.1986.French.1080p.mHD.x264.AC3-touriste.mkv | 2791728742 | 
+  file http://localhost/Outbreak (1995) VF2-ENG AC3 BluRay 1080p x264.GHT.mkv | Outbreak (1995) VF2-ENG AC3 BluRay 1080p x264.GHT.mkv | 4187593114 | 
+  file http://localhost/Parasite (2019) MULTi VFI 2160p 10bit 4KLight HDR BluRay AC3 5.1 x265-QTZ.mkv | Parasite (2019) MULTi VFI 2160p 10bit 4KLight HDR BluRay AC3 5.1 x265-QTZ.mkv | 4939212390 | 
+  file http://localhost/Pirates of the Caribbean At World's End (2007) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ.mkv | Pirates of the Caribbean At World's End (2007) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ.mkv | 4617089843 | 
+  file http://localhost/Pirates of the Caribbean Dead Man's Chest (2006) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ.mkv | Pirates of the Caribbean Dead Man's Chest (2006) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ.mkv | 4724464026 | 
+  file http://localhost/Pirates of the Caribbean The Curse of the Black Pearl (2003) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ.mkv | Pirates of the Caribbean The Curse of the Black Pearl (2003) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ.mkv | 3865470566 | 
+  file http://localhost/Prisoners (2013) - VO-VF - BLURAY 1080p HDLIGHT - x265-zone80.mkv | Prisoners (2013) - VO-VF - BLURAY 1080p HDLIGHT - x265-zone80.mkv | 2147483648 | 
+  file http://localhost/Raid Dingue 2016 1080p FR X264 AC3-mHDgz.mkv | Raid Dingue 2016 1080p FR X264 AC3-mHDgz.mkv | 1932735283 | 
+  file http://localhost/Schindlers List (1993) MULTi VFI 2160p 10bit 4KLight HDR BluRay AC3 5.1 x265-QTZ.mkv | Schindlers List (1993) MULTi VFI 2160p 10bit 4KLight HDR BluRay AC3 5.1 x265-QTZ.mkv | 8375186227 | 
+  file http://localhost/The.Departed.2006.MULTi.1080p.BluRay.x265.DTS-AZAZE.mkv | The.Departed.2006.MULTi.1080p.BluRay.x265.DTS-AZAZE.mkv | 9126805504 | 
+  file http://localhost/The.Mule.2018.MULTI.TRUEFRENCH.1080p.HDLight.x264.AC3-EXTREME.mkv | The.Mule.2018.MULTI.TRUEFRENCH.1080p.HDLight.x264.AC3-EXTREME.mkv | 2684354560 | 
+  file http://localhost/Toy Story 4 (2019) MULTi VFF 2160p 10bit 4KLight HDR BluRay x265 AAC 7.1-QTZ.mkv | Toy Story 4 (2019) MULTi VFF 2160p 10bit 4KLight HDR BluRay x265 AAC 7.1-QTZ.mkv | 3435973837 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost:8086/1917 (2019) MULTi VFF 2160p 10bit 4KLight HDR10PLUS BluRay AC3 5.1 x265-QTZ.mkv | 1917 (2019) MULTi VFF 2160p 10bit 4KLight HDR10PLUS BluRay AC3 5.1 x265-QTZ.mkv | 5046586573 | 
+  file http://localhost:8086/Alibi.com (2017) French AC3 1080p HDLight x264.mkv | Alibi.com (2017) French AC3 1080p HDLight x264.mkv | 2040109466 | 
+  file http://localhost:8086/An.Officer.and.a.Spy.2019.1080p.BRRip.AC3.x264.HORiZON-ArtSubs.mkv | An.Officer.and.a.Spy.2019.1080p.BRRip.AC3.x264.HORiZON-ArtSubs.mkv | 2576980378 | 
+  file http://localhost:8086/attestation-deplacement-fr.pdf | attestation-deplacement-fr.pdf | 137626 | 
+  file http://localhost:8086/Avengers Endgame 2019 1080p VFF EN X264 AC3-mHDgz.mkv | Avengers Endgame 2019 1080p VFF EN X264 AC3-mHDgz.mkv | 3543348019 | 
+  file http://localhost:8086/Bad Boys for Life (2020) MULTi VFF 2160p 10bit 4KLight HDR BluRay AC3 5.1 x265-QTZ.mkv | Bad Boys for Life (2020) MULTi VFF 2160p 10bit 4KLight HDR BluRay AC3 5.1 x265-QTZ.mkv | 5368709120 | 
+  file http://localhost:8086/Bienvenue chez les chtis (2008) French AC3 BluRay 1080p x264.GHT.mkv | Bienvenue chez les chtis (2008) French AC3 BluRay 1080p x264.GHT.mkv | 2254857830 | 
+  file http://localhost:8086/Braveheart (1995) MULTi VFF 2160p 10bit 4KLight HDR BluRay x265 HE-AAC 5.1 - QTZ.mkv | Braveheart (1995) MULTi VFF 2160p 10bit 4KLight HDR BluRay x265 HE-AAC 5.1 - QTZ.mkv | 6871947674 | 
+  file http://localhost:8086/Contagion (2011) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ.mkv | Contagion (2011) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ.mkv | 2362232013 | 
+  file http://localhost:8086/Dark.Waters.2019.MULTi.TRUEFRENCH.1080p.BluRay.H264-MGD.mkv | Dark.Waters.2019.MULTi.TRUEFRENCH.1080p.BluRay.H264-MGD.mkv | 2899102925 | 
+  file http://localhost:8086/Ford v Ferrari.2019.MULTi.VFF.AC3.1080p.x264-GOLDORAK.mkv | Ford v Ferrari.2019.MULTi.VFF.AC3.1080p.x264-GOLDORAK.mkv | 5368709120 | 
+  file http://localhost:8086/Ibiza.2019.FRENCH.1080p.WEB.H264-PREUMS.mkv | Ibiza.2019.FRENCH.1080p.WEB.H264-PREUMS.mkv | 3221225472 | 
+  file http://localhost:8086/Independence Day (1996) EXTENDED MULTi VFF 2160p 10bit 4KLight HDR BluRay x265 AAC 7.1-QTZ.mkv | Independence Day (1996) EXTENDED MULTi VFF 2160p 10bit 4KLight HDR BluRay x265 AAC 7.1-QTZ.mkv | 5583457485 | 
+  file http://localhost:8086/Je suis une legende (2007) PROPER MULTi VFF 2160p 10bit 4KLight HDR BluRay x265 5.1 - QTZ (I Am Legend).mkv | Je suis une legende (2007) PROPER MULTi VFF 2160p 10bit 4KLight HDR BluRay x265 5.1 - QTZ (I Am Legend).mkv | 3972844749 | 
+  file http://localhost:8086/Jojo Rabbit (2019) MULTi VFI 2160p 10bit 4KLight HDR BluRay AC3 5.1 x265-QTZ.mkv | Jojo Rabbit (2019) MULTi VFI 2160p 10bit 4KLight HDR BluRay AC3 5.1 x265-QTZ.mkv | 3650722202 | 
+  file http://localhost:8086/Joker.2019.MULTi.TRUEFRENCH.1080p.HDLight.x264.AC3-TOXIC.mkv | Joker.2019.MULTi.TRUEFRENCH.1080p.HDLight.x264.AC3-TOXIC.mkv | 3113851290 | 
+  file http://localhost:8086/L'Arnacoeur (2010).mkv | L'Arnacoeur (2010).mkv | 1395864371 | 
+  file http://localhost:8086/L'arnacoeur 2010 FRENCH AC3 1080p x264.mkv | L'arnacoeur 2010 FRENCH AC3 1080p x264.mkv | 2254857830 | 
+  file http://localhost:8086/La Voie de la justice (Just Mercy) (2019).MULTi.VFI.2160p.10bit.4KLight.WEB.HDR10.BluRay.x265.AC3.5.1.Portos.mkv | La Voie de la justice (Just Mercy) (2019).MULTi.VFI.2160p.10bit.4KLight.WEB.HDR10.BluRay.x265.AC3.5.1.Portos.mkv | 7194070221 | 
+  file http://localhost:8086/La.Belle.Epoque.2019.FRENCH.1080p.WEB.H264-FRATERNiTY.mkv | La.Belle.Epoque.2019.FRENCH.1080p.WEB.H264-FRATERNiTY.mkv | 4294967296 | 
+  file http://localhost:8086/Le Prénom.2012.French.1080p.mHD.x264.AC3 5.1-touriste.mkv | Le Prénom.2012.French.1080p.mHD.x264.AC3 5.1-touriste.mkv | 2684354560 | 
+  file http://localhost:8086/Le Sens de la Fete 2017 1080p FR X264 AC3-mHDgz.mkv | Le Sens de la Fete 2017 1080p FR X264 AC3-mHDgz.mkv | 2147483648 | 
+  file http://localhost:8086/Les Visiteurs 1993 French AC3 1080p HDLight x264.GHT.mkv | Les Visiteurs 1993 French AC3 1080p HDLight x264.GHT.mkv | 2469606195 | 
+  file http://localhost:8086/Les.Miserables.2019.FRENCH.1080p.WEB.H264-iTunes.mkv | Les.Miserables.2019.FRENCH.1080p.WEB.H264-iTunes.mkv | 3865470566 | 
+  file http://localhost:8086/Manon.des.Sources.1986.French.1080p.mHD.x264.AC3-touriste.mkv | Manon.des.Sources.1986.French.1080p.mHD.x264.AC3-touriste.mkv | 2791728742 | 
+  file http://localhost:8086/Outbreak (1995) VF2-ENG AC3 BluRay 1080p x264.GHT.mkv | Outbreak (1995) VF2-ENG AC3 BluRay 1080p x264.GHT.mkv | 4187593114 | 
+  file http://localhost:8086/Parasite (2019) MULTi VFI 2160p 10bit 4KLight HDR BluRay AC3 5.1 x265-QTZ.mkv | Parasite (2019) MULTi VFI 2160p 10bit 4KLight HDR BluRay AC3 5.1 x265-QTZ.mkv | 4939212390 | 
+  file http://localhost:8086/Pirates of the Caribbean At World's End (2007) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ.mkv | Pirates of the Caribbean At World's End (2007) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ.mkv | 4617089843 | 
+  file http://localhost:8086/Pirates of the Caribbean Dead Man's Chest (2006) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ.mkv | Pirates of the Caribbean Dead Man's Chest (2006) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ.mkv | 4724464026 | 
+  file http://localhost:8086/Pirates of the Caribbean The Curse of the Black Pearl (2003) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ.mkv | Pirates of the Caribbean The Curse of the Black Pearl (2003) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ.mkv | 3865470566 | 
+  file http://localhost:8086/Prisoners (2013) - VO-VF - BLURAY 1080p HDLIGHT - x265-zone80.mkv | Prisoners (2013) - VO-VF - BLURAY 1080p HDLIGHT - x265-zone80.mkv | 2147483648 | 
+  file http://localhost:8086/Raid Dingue 2016 1080p FR X264 AC3-mHDgz.mkv | Raid Dingue 2016 1080p FR X264 AC3-mHDgz.mkv | 1932735283 | 
+  file http://localhost:8086/Schindlers List (1993) MULTi VFI 2160p 10bit 4KLight HDR BluRay AC3 5.1 x265-QTZ.mkv | Schindlers List (1993) MULTi VFI 2160p 10bit 4KLight HDR BluRay AC3 5.1 x265-QTZ.mkv | 8375186227 | 
+  file http://localhost:8086/The.Departed.2006.MULTi.1080p.BluRay.x265.DTS-AZAZE.mkv | The.Departed.2006.MULTi.1080p.BluRay.x265.DTS-AZAZE.mkv | 9126805504 | 
+  file http://localhost:8086/The.Mule.2018.MULTI.TRUEFRENCH.1080p.HDLight.x264.AC3-EXTREME.mkv | The.Mule.2018.MULTI.TRUEFRENCH.1080p.HDLight.x264.AC3-EXTREME.mkv | 2684354560 | 
+  file http://localhost:8086/Toy Story 4 (2019) MULTi VFF 2160p 10bit 4KLight HDR BluRay x265 AAC 7.1-QTZ.mkv | Toy Story 4 (2019) MULTi VFF 2160p 10bit 4KLight HDR BluRay x265 AAC 7.1-QTZ.mkv | 3435973837 | 

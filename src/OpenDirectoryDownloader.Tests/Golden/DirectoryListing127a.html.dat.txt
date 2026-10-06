@@ -1,0 +1,610 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/%EF%BF%BD/ | � |  | ParseHfsListing
+  dir http://localhost/%EF%BF%BD flash 8/ | � flash 8 |  | ParseHfsListing
+  dir http://localhost/! !/ | ! ! |  | ParseHfsListing
+  dir http://localhost/! ! ! aliens/ | ! ! ! aliens |  | ParseHfsListing
+  dir http://localhost/! !!/ | ! !! |  | ParseHfsListing
+  dir http://localhost/! Cool C++ Stuff/ | ! Cool C   Stuff |  | ParseHfsListing
+  dir http://localhost/! drem spedrunn musik/ | ! drem spedrunn musik |  | ParseHfsListing
+  dir http://localhost/! Forkie The Game/ | ! Forkie The Game |  | ParseHfsListing
+  dir http://localhost/! Generators/ | ! Generators |  | ParseHfsListing
+  dir http://localhost/! how to dave computers/ | ! how to dave computers |  | ParseHfsListing
+  dir http://localhost/! imagez/ | ! imagez |  | ParseHfsListing
+  dir http://localhost/! july/ | ! july |  | ParseHfsListing
+  dir http://localhost/! june/ | ! june |  | ParseHfsListing
+  dir http://localhost/! sus/ | ! sus |  | ParseHfsListing
+  dir http://localhost/! Web browsers/ | ! Web browsers |  | ParseHfsListing
+  dir http://localhost/! windows 1.0/ | ! windows 1.0 |  | ParseHfsListing
+  dir http://localhost/!!!! USERVMS/ | !!!! USERVMS |  | ParseHfsListing
+  dir http://localhost/!!!!!!!!!!!! read the text inside/ | !!!!!!!!!!!! read the text inside |  | ParseHfsListing
+  dir http://localhost/!aaaaaa/ | !aaaaaa |  | ParseHfsListing
+  dir http://localhost/!wenie%27s mc texture pac/ | !wenie's mc texture pac |  | ParseHfsListing
+  dir http://localhost/1 some memes/ | 1 some memes |  | ParseHfsListing
+  dir http://localhost/10/ | 10 |  | ParseHfsListing
+  dir http://localhost/antifagshit/ | antifagshit |  | ParseHfsListing
+  dir http://localhost/Anydesk for windows 2000 or Older/ | Anydesk for windows 2000 or Older |  | ParseHfsListing
+  dir http://localhost/Art/ | Art |  | ParseHfsListing
+  dir http://localhost/august/ | august |  | ParseHfsListing
+  dir http://localhost/Aye/ | Aye |  | ParseHfsListing
+  dir http://localhost/Binary art/ | Binary art |  | ParseHfsListing
+  dir http://localhost/bouncer gallery/ | bouncer gallery |  | ParseHfsListing
+  dir http://localhost/Bria 6 Aka Phone Number/ | Bria 6 Aka Phone Number |  | ParseHfsListing
+  dir http://localhost/ChangeMyOs/ | ChangeMyOs |  | ParseHfsListing
+  dir http://localhost/Cock and Ball Torture/ | Cock and Ball Torture |  | ParseHfsListing
+  dir http://localhost/CollabOSSkinPack/ | CollabOSSkinPack |  | ParseHfsListing
+  dir http://localhost/collabvm 1.x/ | collabvm 1.x |  | ParseHfsListing
+  dir http://localhost/CollabVM Users folder/ | CollabVM Users folder |  | ParseHfsListing
+  dir http://localhost/cool/ | cool |  | ParseHfsListing
+  dir http://localhost/Cool People Recordings/ | Cool People Recordings |  | ParseHfsListing
+  dir http://localhost/cringe police classified/ | cringe police classified |  | ParseHfsListing
+  dir http://localhost/cvmtheme/ | cvmtheme |  | ParseHfsListing
+  dir http://localhost/da black market/ | da black market |  | ParseHfsListing
+  dir http://localhost/DESKTOP GOOSE tools/ | DESKTOP GOOSE tools |  | ParseHfsListing
+  dir http://localhost/Desktop%27s items/ | Desktop's items |  | ParseHfsListing
+  dir http://localhost/Explorer Collection/ | Explorer Collection |  | ParseHfsListing
+  dir http://localhost/Fake SmartScreen/ | Fake SmartScreen |  | ParseHfsListing
+  dir http://localhost/Fendy%27s File Pack/ | Fendy's File Pack |  | ParseHfsListing
+  dir http://localhost/Flash 9/ | Flash 9 |  | ParseHfsListing
+  dir http://localhost/fork/ | fork |  | ParseHfsListing
+  dir http://localhost/fuckyourdick/ | fuckyourdick |  | ParseHfsListing
+  dir http://localhost/Fun Time%27s Box/ | Fun Time's Box |  | ParseHfsListing
+  dir http://localhost/funni ima ge/ | funni ima ge |  | ParseHfsListing
+  dir http://localhost/Funny XD!/ | Funny XD! |  | ParseHfsListing
+  dir http://localhost/game/ | game |  | ParseHfsListing
+  dir http://localhost/GAMESSSSSSSSS/ | GAMESSSSSSSSS |  | ParseHfsListing
+  dir http://localhost/gfuhft/ | gfuhft |  | ParseHfsListing
+  dir http://localhost/gif/ | gif |  | ParseHfsListing
+  dir http://localhost/GuestGame/ | GuestGame |  | ParseHfsListing
+  dir http://localhost/Help this epic guest/ | Help this epic guest |  | ParseHfsListing
+  dir http://localhost/hrvatskiOSstuff/ | hrvatskiOSstuff |  | ParseHfsListing
+  dir http://localhost/html files/ | html files |  | ParseHfsListing
+  dir http://localhost/ihaveautism69420%27s stuff/ | ihaveautism69420's stuff |  | ParseHfsListing
+  dir http://localhost/important system files in this folder/ | important system files in this folder |  | ParseHfsListing
+  dir http://localhost/inaccesible_boot_device/ | inaccesible_boot_device |  | ParseHfsListing
+  dir http://localhost/inf-engine-10/ | inf-engine-10 |  | ParseHfsListing
+  dir http://localhost/j416/ | j416 |  | ParseHfsListing
+  dir http://localhost/joke/ | joke |  | ParseHfsListing
+  dir http://localhost/Kabecinha11%27s Wallpapers/ | Kabecinha11's Wallpapers |  | ParseHfsListing
+  dir http://localhost/lmos/ | lmos |  | ParseHfsListing
+  dir http://localhost/MacOS/ | MacOS |  | ParseHfsListing
+  dir http://localhost/may/ | may |  | ParseHfsListing
+  dir http://localhost/maybe useful batch files/ | maybe useful batch files |  | ParseHfsListing
+  dir http://localhost/MichaelJacksonHehe/ | MichaelJacksonHehe |  | ParseHfsListing
+  dir http://localhost/Microsoft BOB/ | Microsoft BOB |  | ParseHfsListing
+  dir http://localhost/minecrat/ | minecrat |  | ParseHfsListing
+  dir http://localhost/MODSAREGAY/ | MODSAREGAY |  | ParseHfsListing
+  dir http://localhost/NarnishLight%27s goodies/ | NarnishLight's goodies |  | ParseHfsListing
+  dir http://localhost/newthings/ | newthings |  | ParseHfsListing
+  dir http://localhost/pizzaware/ | pizzaware |  | ParseHfsListing
+  dir http://localhost/public2 — копия/ | public2 — копия |  | ParseHfsListing
+  dir http://localhost/Scripts/ | Scripts |  | ParseHfsListing
+  dir http://localhost/shittedmzpants/ | shittedmzpants |  | ParseHfsListing
+  dir http://localhost/skin pack 7/ | skin pack 7 |  | ParseHfsListing
+  dir http://localhost/SRPSKI Os/ | SRPSKI Os |  | ParseHfsListing
+  dir http://localhost/Sussy Baka/ | Sussy Baka |  | ParseHfsListing
+  dir http://localhost/Sussy_Noobus/ | Sussy_Noobus |  | ParseHfsListing
+  dir http://localhost/System Cleaner/ | System Cleaner |  | ParseHfsListing
+  dir http://localhost/test/ | test |  | ParseHfsListing
+  dir http://localhost/Textic/ | Textic |  | ParseHfsListing
+  dir http://localhost/the four windows lite i found on archive.org/ | the four windows lite i found on archive.org |  | ParseHfsListing
+  dir http://localhost/The Future of CollabVM/ | The Future of CollabVM |  | ParseHfsListing
+  dir http://localhost/the secret Chat Quest/ | the secret Chat Quest |  | ParseHfsListing
+  dir http://localhost/tiny windows/ | tiny windows |  | ParseHfsListing
+  dir http://localhost/To Thief the fucking retard/ | To Thief the fucking retard |  | ParseHfsListing
+  dir http://localhost/UselessShit/ | UselessShit |  | ParseHfsListing
+  dir http://localhost/Videos/ | Videos |  | ParseHfsListing
+  dir http://localhost/Virtual Hard Disks/ | Virtual Hard Disks |  | ParseHfsListing
+  dir http://localhost/VisuaL StyleS/ | VisuaL StyleS |  | ParseHfsListing
+  dir http://localhost/vlc/ | vlc |  | ParseHfsListing
+  dir http://localhost/win10ipxe/ | win10ipxe |  | ParseHfsListing
+  dir http://localhost/Windows 10 9785 system32/ | Windows 10 9785 system32 |  | ParseHfsListing
+  dir http://localhost/Windows 10 for netboot.xyz/ | Windows 10 for netboot.xyz |  | ParseHfsListing
+  dir http://localhost/Windows 11 system32/ | Windows 11 system32 |  | ParseHfsListing
+  dir http://localhost/Windows 11 Wallpaper/ | Windows 11 Wallpaper |  | ParseHfsListing
+  dir http://localhost/Windows 3 on your browser/ | Windows 3 on your browser |  | ParseHfsListing
+  dir http://localhost/windows 8.1 wallp/ | windows 8.1 wallp |  | ParseHfsListing
+  dir http://localhost/Windows ME/ | Windows ME |  | ParseHfsListing
+  dir http://localhost/Windows NT Floppys and ISOS/ | Windows NT Floppys and ISOS |  | ParseHfsListing
+  dir http://localhost/Windows Server 2008/ | Windows Server 2008 |  | ParseHfsListing
+  dir http://localhost/Windows Server 2022/ | Windows Server 2022 |  | ParseHfsListing
+  dir http://localhost/Windows Vista 5435 Demos/ | Windows Vista 5435 Demos |  | ParseHfsListing
+  dir http://localhost/windows98/ | windows98 |  | ParseHfsListing
+  dir http://localhost/wineight/ | wineight |  | ParseHfsListing
+  dir http://localhost/wininit/ | wininit |  | ParseHfsListing
+  dir http://localhost/without_folder/ | without_folder |  | ParseHfsListing
+  dir http://localhost/xpbetas/ | xpbetas |  | ParseHfsListing
+  dir http://localhost/YLF/ | YLF |  | ParseHfsListing
+  file http://localhost/1024x768.jpg | 1024x768.jpg | 67072 | 
+  file http://localhost/1280x800.zip | 1280x800.zip | 39424 | 
+  file http://localhost/16321852883864050306644793242750.jpg | 16321852883864050306644793242750.jpg | 559206 | 
+  file http://localhost/2 bat garbage.zip | 2 bat garbage.zip | 358 | 
+  file http://localhost/2_5235505987829371275.epub | 2_5235505987829371275.epub | 179610 | 
+  file http://localhost/20201229_181013.jpg | 20201229_181013.jpg | 61440 | 
+  file http://localhost/2050 年的技术（史诗！！！）（真实！！！）（中国政府批准）.mp4 | 2050 年的技术（史诗！！！）（真实！！！）（中国政府批准）.mp4 | 1677722 | 
+  file http://localhost/5v6206.jpg | 5v6206.jpg | 57344 | 
+  file http://localhost/a.css | a.css | 247 | 
+  file http://localhost/AAA809BC-F2F0-4674-96E0-D7F3EAACCB8E.jpeg | AAA809BC-F2F0-4674-96E0-D7F3EAACCB8E.jpeg | 2516582 | 
+  file http://localhost/abi-4.15.0-30-generic | abi-4.15.0-30-generic | 1572864 | 
+  file http://localhost/aeztzn.exe | aeztzn.exe | 1468006 | 
+  file http://localhost/Alarm01.wav | Alarm01.wav | 491520 | 
+  file http://localhost/Alarm02.wav | Alarm02.wav | 331059 | 
+  file http://localhost/amogus.otf | amogus.otf | 44851 | 
+  file http://localhost/amogusanime.jpg | amogusanime.jpg | 167014 | 
+  file http://localhost/antiv.sha | antiv.sha | 3379 | 
+  file http://localhost/AnyDesk.exe | AnyDesk.exe | 277504 | 
+  file http://localhost/AutoGUI-Setup.exe | AutoGUI-Setup.exe | 3460301 | 
+  file http://localhost/bashi_desktop_frend_v1.0.0_standalone.exe | bashi_desktop_frend_v1.0.0_standalone.exe | 2621440 | 
+  file http://localhost/basicdisplay.zip | basicdisplay.zip | 77926 | 
+  file http://localhost/BATTLE FOR AOL FREE TRIAL.png | BATTLE FOR AOL FREE TRIAL.png | 10957 | 
+  file http://localhost/be2d87eecc8853b029c557300d4c3fd7[1].jpg | be2d87eecc8853b029c557300d4c3fd7[1].jpg | 167014 | 
+  file http://localhost/bgsky.jpg | bgsky.jpg | 13107 | 
+  file http://localhost/bootshell.7z | bootshell.7z | 498 | 
+  file http://localhost/cat clicker 1.1.sb | cat clicker 1.1.sb | 50381 | 
+  file http://localhost/cat clicker 1.2.sb | cat clicker 1.2.sb | 51712 | 
+  file http://localhost/cat clicker 1.3.sb | cat clicker 1.3.sb | 51917 | 
+  file http://localhost/cat clicker 1.4.sb | cat clicker 1.4.sb | 53146 | 
+  file http://localhost/cat clicker 1.5.sb | cat clicker 1.5.sb | 54579 | 
+  file http://localhost/cat clicker 6.9.sb3 | cat clicker 6.9.sb3 | 1153434 | 
+  file http://localhost/cat clicker 8.0.sb3 | cat clicker 8.0.sb3 | 993280 | 
+  file http://localhost/cat clicker.sb | cat clicker.sb | 48742 | 
+  file http://localhost/chisel.exe | chisel.exe | 8598323 | 
+  file http://localhost/ClassicShellInfected.exe | ClassicShellInfected.exe | 7130317 | 
+  file http://localhost/Classilla.sit | Classilla.sit | 24641536 | 
+  file http://localhost/cleanflash3400192installer.exe | cleanflash3400192installer.exe | 29150413 | 
+  file http://localhost/collabnetlocal.crt | collabnetlocal.crt | 1536 | 
+  file http://localhost/core.ipxe | core.ipxe | 178 | 
+  file http://localhost/created on posready vm.exe | created on posready vm.exe | 8192 | 
+  file http://localhost/cvm_lockdown.exe | cvm_lockdown.exe | 1677722 | 
+  file http://localhost/cvmbypass.bat | cvmbypass.bat | 693 | 
+  file http://localhost/darktaskbar.png | darktaskbar.png | 299 | 
+  file http://localhost/darktheme.txt | darktheme.txt | 215 | 
+  file http://localhost/DismGUI.zip | DismGUI.zip | 7864320 | 
+  file http://localhost/DistortionTrojan18064.exe | DistortionTrojan18064.exe | 106291 | 
+  file http://localhost/dospxe.zip | dospxe.zip | 1048576 | 
+  file http://localhost/dwmaero.zip | dwmaero.zip | 1992294 | 
+  file http://localhost/EasyBCD 2.4.exe | EasyBCD 2.4.exe | 2306867 | 
+  file http://localhost/Email-Worm.Win32.Gruel.a.exe | Email-Worm.Win32.Gruel.a.exe | 102400 | 
+  file http://localhost/exodus-windows-x64-21.8.5.exe | exodus-windows-x64-21.8.5.exe | 152567808 | 
+  file http://localhost/FakeVirusScan.exe | FakeVirusScan.exe | 23040 | 
+  file http://localhost/fard.png | fard.png | 36454 | 
+  file http://localhost/fbird.com | fbird.com | 512 | 
+  file http://localhost/file.blank | file.blank | 15 | 
+  file http://localhost/FMKeygen.zip | FMKeygen.zip | 537498 | 
+  file http://localhost/fork ie.jpg | fork ie.jpg | 427827 | 
+  file http://localhost/fork.exe | fork.exe | 209408 | 
+  file http://localhost/fork.mp4 | fork.mp4 | 50226790 | 
+  file http://localhost/Fork.zip | Fork.zip | 5939 | 
+  file http://localhost/ForkieIcon.ico | ForkieIcon.ico | 9626 | 
+  file http://localhost/forkies.h | forkies.h | 1012 | 
+  file http://localhost/FreemakeVideoDownloaderSetup_f2ce1402-37de-d3c5-d2c0-c81eb049d95d.exe | FreemakeVideoDownloaderSetup_f2ce1402-37de-d3c5-d2c0-c81eb049d95d.exe | 1019290 | 
+  file http://localhost/future fixed.bat | future fixed.bat | 391 | 
+  file http://localhost/future.bat | future.bat | 394 | 
+  file http://localhost/GameMaker 8.1 Pro.zip | GameMaker 8.1 Pro.zip | 42257613 | 
+  file http://localhost/Gigaget.exe | Gigaget.exe | 2097152 | 
+  file http://localhost/Go Go Gadget GDI Fucker.zip | Go Go Gadget GDI Fucker.zip | 444211 | 
+  file http://localhost/goodthing.mp3 | goodthing.mp3 | 241459 | 
+  file http://localhost/Hack.bat | Hack.bat | 75 | 
+  file http://localhost/hamachi.msi | hamachi.msi | 9122611 | 
+  file http://localhost/hello.bat | hello.bat | 130 | 
+  file http://localhost/Hoax.Win32.BadJoke.BlastBtn.a.exe | Hoax.Win32.BadJoke.BlastBtn.a.exe | 385024 | 
+  file http://localhost/Icon Fun!.cpp | Icon Fun!.cpp | 337 | 
+  file http://localhost/idkwhattodo.zip | idkwhattodo.zip | 631603 | 
+  file http://localhost/IDMPatch.exe | IDMPatch.exe | 67072 | 
+  file http://localhost/IE2.zip | IE2.zip | 1153434 | 
+  file http://localhost/ie5win31.iso | ie5win31.iso | 9437184 | 
+  file http://localhost/imagex.exe | imagex.exe | 481690 | 
+  file http://localhost/install_virtualdj_2021_b6677_pc.msi | install_virtualdj_2021_b6677_pc.msi | 194405990 | 
+  file http://localhost/ipxefordos.zip | ipxefordos.zip | 1048576 | 
+  file http://localhost/jre8u51_32.7z | jre8u51_32.7z | 35441869 | 
+  file http://localhost/kidswithanimepics.png | kidswithanimepics.png | 24269 | 
+  file http://localhost/LEARN THE ALPHABET WITH COLLABVM.txt | LEARN THE ALPHABET WITH COLLABVM.txt | 512 | 
+  file http://localhost/Light It Up.mp3 | Light It Up.mp3 | 2936013 | 
+  file http://localhost/lol.mp4 | lol.mp4 | 30618419 | 
+  file http://localhost/lol2.mp4 | lol2.mp4 | 8703181 | 
+  file http://localhost/long_filename.png | long_filename.png | 72397 | 
+  file http://localhost/MASTERPIECE.Theme | MASTERPIECE.Theme | 5939 | 
+  file http://localhost/maze.exe | maze.exe | 1258291 | 
+  file http://localhost/mcy0r1.7z | mcy0r1.7z | 271 | 
+  file http://localhost/meme-sim.exe | meme-sim.exe | 217600 | 
+  file http://localhost/Microsoft Internet Explorer 2.0 (3.5).7z | Microsoft Internet Explorer 2.0 (3.5).7z | 1153434 | 
+  file http://localhost/Minecraft.exe | Minecraft.exe | 3460301 | 
+  file http://localhost/Muffin_Escape.exe | Muffin_Escape.exe | 7025459 | 
+  file http://localhost/multivnc_0.5-win32-setup.exe | multivnc_0.5-win32-setup.exe | 2411725 | 
+  file http://localhost/mysterekmc.pl_images_issue.mp4 | mysterekmc.pl_images_issue.mp4 | 4194304 | 
+  file http://localhost/Netscape Navigator Gold 3.0.zip | Netscape Navigator Gold 3.0.zip | 5557453 | 
+  file http://localhost/ngfjjp.bat | ngfjjp.bat | 7885 | 
+  file http://localhost/NiggaOS 11.iso | NiggaOS 11.iso | 6291456 | 
+  file http://localhost/niggaos11.iso | niggaos11.iso | 6291456 | 
+  file http://localhost/NiggaOS11.zip | NiggaOS11.zip | 3460301 | 
+  file http://localhost/NiggerOS 11.png | NiggerOS 11.png | 11059 | 
+  file http://localhost/no.txt | no.txt | 50 | 
+  file http://localhost/ntldripxe.zip | ntldripxe.zip | 686694 | 
+  file http://localhost/ntlite.zip | ntlite.zip | 35756442 | 
+  file http://localhost/ntpxe.zip | ntpxe.zip | 499405 | 
+  file http://localhost/OPEN ME.py | OPEN ME.py | 689 | 
+  file http://localhost/openstartmenu.exe | openstartmenu.exe | 97280 | 
+  file http://localhost/OS X Leopard.7z | OS X Leopard.7z | 142541 | 
+  file http://localhost/P360Setup.exe | P360Setup.exe | 193252557 | 
+  file http://localhost/PENetwork_OldIcons.icl | PENetwork_OldIcons.icl | 751923 | 
+  file http://localhost/penis.crt | penis.crt | 1024 | 
+  file http://localhost/poopenfarten.exe | poopenfarten.exe | 1258291 | 
+  file http://localhost/PremiumFeatures as of nov 7.txt | PremiumFeatures as of nov 7.txt | 1126 | 
+  file http://localhost/processhacker.exe | processhacker.exe | 2306867 | 
+  file http://localhost/Project1.exe | Project1.exe | 263680 | 
+  file http://localhost/Psychz Networks - Down Low Ft. Young George [mZBWd1Z2yY0].ogg | Psychz Networks - Down Low Ft. Young George [mZBWd1Z2yY0].ogg | 5138022 | 
+  file http://localhost/QtWeb-qtwebkit22.exe | QtWeb-qtwebkit22.exe | 7340032 | 
+  file http://localhost/retrozilla-2.2.en-US.win32.installer.exe | retrozilla-2.2.en-US.win32.installer.exe | 13107200 | 
+  file http://localhost/retrozilla-2.2.en-US.win32.zip | retrozilla-2.2.en-US.win32.zip | 11953766 | 
+  file http://localhost/Rick Astley - Never Gonna Give You Up Official Music Video (1).mp4 | Rick Astley - Never Gonna Give You Up Official Music Video (1).mp4 | 16672358 | 
+  file http://localhost/rickroll.mp4 | rickroll.mp4 | 273203 | 
+  file http://localhost/RoyaleRemixed.exe | RoyaleRemixed.exe | 509645 | 
+  file http://localhost/run-jvnc.bat | run-jvnc.bat | 59 | 
+  file http://localhost/samsung tune.mp3 | samsung tune.mp3 | 319283 | 
+  file http://localhost/science.PNG | science.PNG | 78438 | 
+  file http://localhost/screenshot.png | screenshot.png | 72397 | 
+  file http://localhost/sd.exe | sd.exe | 263680 | 
+  file http://localhost/sex.EXE | sex.EXE | 155750 | 
+  file http://localhost/ShowHideControls.exe | ShowHideControls.exe | 392192 | 
+  file http://localhost/Site Blocked.zip | Site Blocked.zip | 1126 | 
+  file http://localhost/SmartDefragmenter.zip | SmartDefragmenter.zip | 385741 | 
+  file http://localhost/spam.bat | spam.bat | 997 | 
+  file http://localhost/speedrun fixed 2.cmd | speedrun fixed 2.cmd | 470 | 
+  file http://localhost/speedrun fixed.cmd | speedrun fixed.cmd | 132 | 
+  file http://localhost/speedrun.cmd | speedrun.cmd | 128 | 
+  file http://localhost/spike emoji.png | spike emoji.png | 123494 | 
+  file http://localhost/steam_api.dll | steam_api.dll | 876544 | 
+  file http://localhost/stopforking.vbs | stopforking.vbs | 61 | 
+  file http://localhost/stretchy.zip | stretchy.zip | 83866 | 
+  file http://localhost/takeout-20211024T101815Z-001.zip | takeout-20211024T101815Z-001.zip | 509922509 | 
+  file http://localhost/tc4dos.zip | tc4dos.zip | 15833498 | 
+  file http://localhost/tcdos.zip | tcdos.zip | 15833498 | 
+  file http://localhost/thatspain.mp3 | thatspain.mp3 | 5347738 | 
+  file http://localhost/thebots.txt | thebots.txt | 211968 | 
+  file http://localhost/therealway.cmd | therealway.cmd | 335 | 
+  file http://localhost/tightvnc-jviewer.jar | tightvnc-jviewer.jar | 627098 | 
+  file http://localhost/totallyaunixshellnotanetappthatdisplaysapictureofanass.zip | totallyaunixshellnotanetappthatdisplaysapictureofanass.zip | 2936013 | 
+  file http://localhost/twerkamongus.gif | twerkamongus.gif | 174899 | 
+  file http://localhost/unetbootin-windows-681.exe | unetbootin-windows-681.exe | 4823450 | 
+  file http://localhost/Untitled.png | Untitled.png | 16282 | 
+  file http://localhost/usf.exe | usf.exe | 3355443 | 
+  file http://localhost/Vista Activator.exe | Vista Activator.exe | 3460301 | 
+  file http://localhost/vm.pdf | vm.pdf | 523366 | 
+  file http://localhost/vncviewer-1.12.0.exe | vncviewer-1.12.0.exe | 22124954 | 
+  file http://localhost/VNC-Viewer-6.21.920-Windows-32bit[1].exe | VNC-Viewer-6.21.920-Windows-32bit[1].exe | 8703181 | 
+  file http://localhost/vncviewer64-1.12.0.exe | vncviewer64-1.12.0.exe | 25690112 | 
+  file http://localhost/vs_community__617642196.1629287134 (1).exe | vs_community__617642196.1629287134 (1).exe | 1677722 | 
+  file http://localhost/w0shj3nvt8s.zip | w0shj3nvt8s.zip | 2516582 | 
+  file http://localhost/W95.zip | W95.zip | 429811302 | 
+  file http://localhost/wavyurl.js | wavyurl.js | 399 | 
+  file http://localhost/web.config | web.config | 168 | 
+  file http://localhost/wfreerdp.exe | wfreerdp.exe | 2516582 | 
+  file http://localhost/wfreerdp-1.1.zip | wfreerdp-1.1.zip | 1153434 | 
+  file http://localhost/wheeze.png | wheeze.png | 32154 | 
+  file http://localhost/whois.zip | whois.zip | 40448 | 
+  file http://localhost/winaerotweaker.zip | winaerotweaker.zip | 2516582 | 
+  file http://localhost/WinCDEmu-4.1.exe | WinCDEmu-4.1.exe | 1572864 | 
+  file http://localhost/WINDOEZ 10 NEW LOGO.png | WINDOEZ 10 NEW LOGO.png | 8602 | 
+  file http://localhost/Windows 11 Theme for CollabVM.zip | Windows 11 Theme for CollabVM.zip | 37888 | 
+  file http://localhost/windows 11 wow.png | windows 11 wow.png | 46182 | 
+  file http://localhost/Windows Total Protection 2010.exe | Windows Total Protection 2010.exe | 2726298 | 
+  file http://localhost/Windows.7.RU-EN.x86-x64.52in1-Office.2019.by.SmokieBlahBlah.2021.08.24.iso | Windows.7.RU-EN.x86-x64.52in1-Office.2019.by.SmokieBlahBlah.2021.08.24.iso | 4724464026 | 
+  file http://localhost/winecfg.exe | winecfg.exe | 554906 | 
+  file http://localhost/winxpcd.exe | winxpcd.exe | 61030 | 
+  file http://localhost/WoozBG.png | WoozBG.png | 34304 | 
+  file http://localhost/wow.png | wow.png | 436429 | 
+  file http://localhost/WP.jpg | WP.jpg | 417382 | 
+  file http://localhost/x.txt | x.txt | 186 | 
+  file http://localhost/Xtrullor - Tria.mp3 | Xtrullor - Tria.mp3 | 9961472 | 
+  file http://localhost/y8-browser-web-setup-1.0.10.exe | y8-browser-web-setup-1.0.10.exe | 652698 | 
+  file http://localhost/yellows.png | yellows.png | 613 | 
+  file http://localhost/YOUR AN SPY.png | YOUR AN SPY.png | 12186 | 
+  file http://localhost/ZeroTier One.msi | ZeroTier One.msi | 13212058 | 
+  file http://localhost/Идщыы.png | Идщыы.png | 7270 | 
+  file http://localhost/Мои домашние друзья.pptx | Мои домашние друзья.pptx | 16357786 | 
+  file http://localhost/अब केवल भगवान ही हमें बचा सकते हैं.png | अब केवल भगवान ही हमें बचा सकते हैं.png | 42189 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=False
+  dir http://localhost:8086/listing/%EF%BF%BD/ | � |  | ParseHfsListing
+  dir http://localhost:8086/listing/%EF%BF%BD flash 8/ | � flash 8 |  | ParseHfsListing
+  dir http://localhost:8086/listing/! !/ | ! ! |  | ParseHfsListing
+  dir http://localhost:8086/listing/! ! ! aliens/ | ! ! ! aliens |  | ParseHfsListing
+  dir http://localhost:8086/listing/! !!/ | ! !! |  | ParseHfsListing
+  dir http://localhost:8086/listing/! Cool C++ Stuff/ | ! Cool C   Stuff |  | ParseHfsListing
+  dir http://localhost:8086/listing/! drem spedrunn musik/ | ! drem spedrunn musik |  | ParseHfsListing
+  dir http://localhost:8086/listing/! Forkie The Game/ | ! Forkie The Game |  | ParseHfsListing
+  dir http://localhost:8086/listing/! Generators/ | ! Generators |  | ParseHfsListing
+  dir http://localhost:8086/listing/! how to dave computers/ | ! how to dave computers |  | ParseHfsListing
+  dir http://localhost:8086/listing/! imagez/ | ! imagez |  | ParseHfsListing
+  dir http://localhost:8086/listing/! july/ | ! july |  | ParseHfsListing
+  dir http://localhost:8086/listing/! june/ | ! june |  | ParseHfsListing
+  dir http://localhost:8086/listing/! sus/ | ! sus |  | ParseHfsListing
+  dir http://localhost:8086/listing/! Web browsers/ | ! Web browsers |  | ParseHfsListing
+  dir http://localhost:8086/listing/! windows 1.0/ | ! windows 1.0 |  | ParseHfsListing
+  dir http://localhost:8086/listing/!!!! USERVMS/ | !!!! USERVMS |  | ParseHfsListing
+  dir http://localhost:8086/listing/!!!!!!!!!!!! read the text inside/ | !!!!!!!!!!!! read the text inside |  | ParseHfsListing
+  dir http://localhost:8086/listing/!aaaaaa/ | !aaaaaa |  | ParseHfsListing
+  dir http://localhost:8086/listing/!wenie%27s mc texture pac/ | !wenie's mc texture pac |  | ParseHfsListing
+  dir http://localhost:8086/listing/1 some memes/ | 1 some memes |  | ParseHfsListing
+  dir http://localhost:8086/listing/10/ | 10 |  | ParseHfsListing
+  dir http://localhost:8086/listing/antifagshit/ | antifagshit |  | ParseHfsListing
+  dir http://localhost:8086/listing/Anydesk for windows 2000 or Older/ | Anydesk for windows 2000 or Older |  | ParseHfsListing
+  dir http://localhost:8086/listing/Art/ | Art |  | ParseHfsListing
+  dir http://localhost:8086/listing/august/ | august |  | ParseHfsListing
+  dir http://localhost:8086/listing/Aye/ | Aye |  | ParseHfsListing
+  dir http://localhost:8086/listing/Binary art/ | Binary art |  | ParseHfsListing
+  dir http://localhost:8086/listing/bouncer gallery/ | bouncer gallery |  | ParseHfsListing
+  dir http://localhost:8086/listing/Bria 6 Aka Phone Number/ | Bria 6 Aka Phone Number |  | ParseHfsListing
+  dir http://localhost:8086/listing/ChangeMyOs/ | ChangeMyOs |  | ParseHfsListing
+  dir http://localhost:8086/listing/Cock and Ball Torture/ | Cock and Ball Torture |  | ParseHfsListing
+  dir http://localhost:8086/listing/CollabOSSkinPack/ | CollabOSSkinPack |  | ParseHfsListing
+  dir http://localhost:8086/listing/collabvm 1.x/ | collabvm 1.x |  | ParseHfsListing
+  dir http://localhost:8086/listing/CollabVM Users folder/ | CollabVM Users folder |  | ParseHfsListing
+  dir http://localhost:8086/listing/cool/ | cool |  | ParseHfsListing
+  dir http://localhost:8086/listing/Cool People Recordings/ | Cool People Recordings |  | ParseHfsListing
+  dir http://localhost:8086/listing/cringe police classified/ | cringe police classified |  | ParseHfsListing
+  dir http://localhost:8086/listing/cvmtheme/ | cvmtheme |  | ParseHfsListing
+  dir http://localhost:8086/listing/da black market/ | da black market |  | ParseHfsListing
+  dir http://localhost:8086/listing/DESKTOP GOOSE tools/ | DESKTOP GOOSE tools |  | ParseHfsListing
+  dir http://localhost:8086/listing/Desktop%27s items/ | Desktop's items |  | ParseHfsListing
+  dir http://localhost:8086/listing/Explorer Collection/ | Explorer Collection |  | ParseHfsListing
+  dir http://localhost:8086/listing/Fake SmartScreen/ | Fake SmartScreen |  | ParseHfsListing
+  dir http://localhost:8086/listing/Fendy%27s File Pack/ | Fendy's File Pack |  | ParseHfsListing
+  dir http://localhost:8086/listing/Flash 9/ | Flash 9 |  | ParseHfsListing
+  dir http://localhost:8086/listing/fork/ | fork |  | ParseHfsListing
+  dir http://localhost:8086/listing/fuckyourdick/ | fuckyourdick |  | ParseHfsListing
+  dir http://localhost:8086/listing/Fun Time%27s Box/ | Fun Time's Box |  | ParseHfsListing
+  dir http://localhost:8086/listing/funni ima ge/ | funni ima ge |  | ParseHfsListing
+  dir http://localhost:8086/listing/Funny XD!/ | Funny XD! |  | ParseHfsListing
+  dir http://localhost:8086/listing/game/ | game |  | ParseHfsListing
+  dir http://localhost:8086/listing/GAMESSSSSSSSS/ | GAMESSSSSSSSS |  | ParseHfsListing
+  dir http://localhost:8086/listing/gfuhft/ | gfuhft |  | ParseHfsListing
+  dir http://localhost:8086/listing/gif/ | gif |  | ParseHfsListing
+  dir http://localhost:8086/listing/GuestGame/ | GuestGame |  | ParseHfsListing
+  dir http://localhost:8086/listing/Help this epic guest/ | Help this epic guest |  | ParseHfsListing
+  dir http://localhost:8086/listing/hrvatskiOSstuff/ | hrvatskiOSstuff |  | ParseHfsListing
+  dir http://localhost:8086/listing/html files/ | html files |  | ParseHfsListing
+  dir http://localhost:8086/listing/ihaveautism69420%27s stuff/ | ihaveautism69420's stuff |  | ParseHfsListing
+  dir http://localhost:8086/listing/important system files in this folder/ | important system files in this folder |  | ParseHfsListing
+  dir http://localhost:8086/listing/inaccesible_boot_device/ | inaccesible_boot_device |  | ParseHfsListing
+  dir http://localhost:8086/listing/inf-engine-10/ | inf-engine-10 |  | ParseHfsListing
+  dir http://localhost:8086/listing/j416/ | j416 |  | ParseHfsListing
+  dir http://localhost:8086/listing/joke/ | joke |  | ParseHfsListing
+  dir http://localhost:8086/listing/Kabecinha11%27s Wallpapers/ | Kabecinha11's Wallpapers |  | ParseHfsListing
+  dir http://localhost:8086/listing/lmos/ | lmos |  | ParseHfsListing
+  dir http://localhost:8086/listing/MacOS/ | MacOS |  | ParseHfsListing
+  dir http://localhost:8086/listing/may/ | may |  | ParseHfsListing
+  dir http://localhost:8086/listing/maybe useful batch files/ | maybe useful batch files |  | ParseHfsListing
+  dir http://localhost:8086/listing/MichaelJacksonHehe/ | MichaelJacksonHehe |  | ParseHfsListing
+  dir http://localhost:8086/listing/Microsoft BOB/ | Microsoft BOB |  | ParseHfsListing
+  dir http://localhost:8086/listing/minecrat/ | minecrat |  | ParseHfsListing
+  dir http://localhost:8086/listing/MODSAREGAY/ | MODSAREGAY |  | ParseHfsListing
+  dir http://localhost:8086/listing/NarnishLight%27s goodies/ | NarnishLight's goodies |  | ParseHfsListing
+  dir http://localhost:8086/listing/newthings/ | newthings |  | ParseHfsListing
+  dir http://localhost:8086/listing/pizzaware/ | pizzaware |  | ParseHfsListing
+  dir http://localhost:8086/listing/public2 — копия/ | public2 — копия |  | ParseHfsListing
+  dir http://localhost:8086/listing/Scripts/ | Scripts |  | ParseHfsListing
+  dir http://localhost:8086/listing/shittedmzpants/ | shittedmzpants |  | ParseHfsListing
+  dir http://localhost:8086/listing/skin pack 7/ | skin pack 7 |  | ParseHfsListing
+  dir http://localhost:8086/listing/SRPSKI Os/ | SRPSKI Os |  | ParseHfsListing
+  dir http://localhost:8086/listing/Sussy Baka/ | Sussy Baka |  | ParseHfsListing
+  dir http://localhost:8086/listing/Sussy_Noobus/ | Sussy_Noobus |  | ParseHfsListing
+  dir http://localhost:8086/listing/System Cleaner/ | System Cleaner |  | ParseHfsListing
+  dir http://localhost:8086/listing/test/ | test |  | ParseHfsListing
+  dir http://localhost:8086/listing/Textic/ | Textic |  | ParseHfsListing
+  dir http://localhost:8086/listing/the four windows lite i found on archive.org/ | the four windows lite i found on archive.org |  | ParseHfsListing
+  dir http://localhost:8086/listing/The Future of CollabVM/ | The Future of CollabVM |  | ParseHfsListing
+  dir http://localhost:8086/listing/the secret Chat Quest/ | the secret Chat Quest |  | ParseHfsListing
+  dir http://localhost:8086/listing/tiny windows/ | tiny windows |  | ParseHfsListing
+  dir http://localhost:8086/listing/To Thief the fucking retard/ | To Thief the fucking retard |  | ParseHfsListing
+  dir http://localhost:8086/listing/UselessShit/ | UselessShit |  | ParseHfsListing
+  dir http://localhost:8086/listing/Videos/ | Videos |  | ParseHfsListing
+  dir http://localhost:8086/listing/Virtual Hard Disks/ | Virtual Hard Disks |  | ParseHfsListing
+  dir http://localhost:8086/listing/VisuaL StyleS/ | VisuaL StyleS |  | ParseHfsListing
+  dir http://localhost:8086/listing/vlc/ | vlc |  | ParseHfsListing
+  dir http://localhost:8086/listing/win10ipxe/ | win10ipxe |  | ParseHfsListing
+  dir http://localhost:8086/listing/Windows 10 9785 system32/ | Windows 10 9785 system32 |  | ParseHfsListing
+  dir http://localhost:8086/listing/Windows 10 for netboot.xyz/ | Windows 10 for netboot.xyz |  | ParseHfsListing
+  dir http://localhost:8086/listing/Windows 11 system32/ | Windows 11 system32 |  | ParseHfsListing
+  dir http://localhost:8086/listing/Windows 11 Wallpaper/ | Windows 11 Wallpaper |  | ParseHfsListing
+  dir http://localhost:8086/listing/Windows 3 on your browser/ | Windows 3 on your browser |  | ParseHfsListing
+  dir http://localhost:8086/listing/windows 8.1 wallp/ | windows 8.1 wallp |  | ParseHfsListing
+  dir http://localhost:8086/listing/Windows ME/ | Windows ME |  | ParseHfsListing
+  dir http://localhost:8086/listing/Windows NT Floppys and ISOS/ | Windows NT Floppys and ISOS |  | ParseHfsListing
+  dir http://localhost:8086/listing/Windows Server 2008/ | Windows Server 2008 |  | ParseHfsListing
+  dir http://localhost:8086/listing/Windows Server 2022/ | Windows Server 2022 |  | ParseHfsListing
+  dir http://localhost:8086/listing/Windows Vista 5435 Demos/ | Windows Vista 5435 Demos |  | ParseHfsListing
+  dir http://localhost:8086/listing/windows98/ | windows98 |  | ParseHfsListing
+  dir http://localhost:8086/listing/wineight/ | wineight |  | ParseHfsListing
+  dir http://localhost:8086/listing/wininit/ | wininit |  | ParseHfsListing
+  dir http://localhost:8086/listing/without_folder/ | without_folder |  | ParseHfsListing
+  dir http://localhost:8086/listing/xpbetas/ | xpbetas |  | ParseHfsListing
+  dir http://localhost:8086/listing/YLF/ | YLF |  | ParseHfsListing
+  file http://localhost:8086/listing/1024x768.jpg | 1024x768.jpg | 67072 | 
+  file http://localhost:8086/listing/1280x800.zip | 1280x800.zip | 39424 | 
+  file http://localhost:8086/listing/16321852883864050306644793242750.jpg | 16321852883864050306644793242750.jpg | 559206 | 
+  file http://localhost:8086/listing/2 bat garbage.zip | 2 bat garbage.zip | 358 | 
+  file http://localhost:8086/listing/2_5235505987829371275.epub | 2_5235505987829371275.epub | 179610 | 
+  file http://localhost:8086/listing/20201229_181013.jpg | 20201229_181013.jpg | 61440 | 
+  file http://localhost:8086/listing/2050 年的技术（史诗！！！）（真实！！！）（中国政府批准）.mp4 | 2050 年的技术（史诗！！！）（真实！！！）（中国政府批准）.mp4 | 1677722 | 
+  file http://localhost:8086/listing/5v6206.jpg | 5v6206.jpg | 57344 | 
+  file http://localhost:8086/listing/a.css | a.css | 247 | 
+  file http://localhost:8086/listing/AAA809BC-F2F0-4674-96E0-D7F3EAACCB8E.jpeg | AAA809BC-F2F0-4674-96E0-D7F3EAACCB8E.jpeg | 2516582 | 
+  file http://localhost:8086/listing/abi-4.15.0-30-generic | abi-4.15.0-30-generic | 1572864 | 
+  file http://localhost:8086/listing/aeztzn.exe | aeztzn.exe | 1468006 | 
+  file http://localhost:8086/listing/Alarm01.wav | Alarm01.wav | 491520 | 
+  file http://localhost:8086/listing/Alarm02.wav | Alarm02.wav | 331059 | 
+  file http://localhost:8086/listing/amogus.otf | amogus.otf | 44851 | 
+  file http://localhost:8086/listing/amogusanime.jpg | amogusanime.jpg | 167014 | 
+  file http://localhost:8086/listing/antiv.sha | antiv.sha | 3379 | 
+  file http://localhost:8086/listing/AnyDesk.exe | AnyDesk.exe | 277504 | 
+  file http://localhost:8086/listing/AutoGUI-Setup.exe | AutoGUI-Setup.exe | 3460301 | 
+  file http://localhost:8086/listing/bashi_desktop_frend_v1.0.0_standalone.exe | bashi_desktop_frend_v1.0.0_standalone.exe | 2621440 | 
+  file http://localhost:8086/listing/basicdisplay.zip | basicdisplay.zip | 77926 | 
+  file http://localhost:8086/listing/BATTLE FOR AOL FREE TRIAL.png | BATTLE FOR AOL FREE TRIAL.png | 10957 | 
+  file http://localhost:8086/listing/be2d87eecc8853b029c557300d4c3fd7[1].jpg | be2d87eecc8853b029c557300d4c3fd7[1].jpg | 167014 | 
+  file http://localhost:8086/listing/bgsky.jpg | bgsky.jpg | 13107 | 
+  file http://localhost:8086/listing/bootshell.7z | bootshell.7z | 498 | 
+  file http://localhost:8086/listing/cat clicker 1.1.sb | cat clicker 1.1.sb | 50381 | 
+  file http://localhost:8086/listing/cat clicker 1.2.sb | cat clicker 1.2.sb | 51712 | 
+  file http://localhost:8086/listing/cat clicker 1.3.sb | cat clicker 1.3.sb | 51917 | 
+  file http://localhost:8086/listing/cat clicker 1.4.sb | cat clicker 1.4.sb | 53146 | 
+  file http://localhost:8086/listing/cat clicker 1.5.sb | cat clicker 1.5.sb | 54579 | 
+  file http://localhost:8086/listing/cat clicker 6.9.sb3 | cat clicker 6.9.sb3 | 1153434 | 
+  file http://localhost:8086/listing/cat clicker 8.0.sb3 | cat clicker 8.0.sb3 | 993280 | 
+  file http://localhost:8086/listing/cat clicker.sb | cat clicker.sb | 48742 | 
+  file http://localhost:8086/listing/chisel.exe | chisel.exe | 8598323 | 
+  file http://localhost:8086/listing/ClassicShellInfected.exe | ClassicShellInfected.exe | 7130317 | 
+  file http://localhost:8086/listing/Classilla.sit | Classilla.sit | 24641536 | 
+  file http://localhost:8086/listing/cleanflash3400192installer.exe | cleanflash3400192installer.exe | 29150413 | 
+  file http://localhost:8086/listing/collabnetlocal.crt | collabnetlocal.crt | 1536 | 
+  file http://localhost:8086/listing/core.ipxe | core.ipxe | 178 | 
+  file http://localhost:8086/listing/created on posready vm.exe | created on posready vm.exe | 8192 | 
+  file http://localhost:8086/listing/cvm_lockdown.exe | cvm_lockdown.exe | 1677722 | 
+  file http://localhost:8086/listing/cvmbypass.bat | cvmbypass.bat | 693 | 
+  file http://localhost:8086/listing/darktaskbar.png | darktaskbar.png | 299 | 
+  file http://localhost:8086/listing/darktheme.txt | darktheme.txt | 215 | 
+  file http://localhost:8086/listing/DismGUI.zip | DismGUI.zip | 7864320 | 
+  file http://localhost:8086/listing/DistortionTrojan18064.exe | DistortionTrojan18064.exe | 106291 | 
+  file http://localhost:8086/listing/dospxe.zip | dospxe.zip | 1048576 | 
+  file http://localhost:8086/listing/dwmaero.zip | dwmaero.zip | 1992294 | 
+  file http://localhost:8086/listing/EasyBCD 2.4.exe | EasyBCD 2.4.exe | 2306867 | 
+  file http://localhost:8086/listing/Email-Worm.Win32.Gruel.a.exe | Email-Worm.Win32.Gruel.a.exe | 102400 | 
+  file http://localhost:8086/listing/exodus-windows-x64-21.8.5.exe | exodus-windows-x64-21.8.5.exe | 152567808 | 
+  file http://localhost:8086/listing/FakeVirusScan.exe | FakeVirusScan.exe | 23040 | 
+  file http://localhost:8086/listing/fard.png | fard.png | 36454 | 
+  file http://localhost:8086/listing/fbird.com | fbird.com | 512 | 
+  file http://localhost:8086/listing/file.blank | file.blank | 15 | 
+  file http://localhost:8086/listing/FMKeygen.zip | FMKeygen.zip | 537498 | 
+  file http://localhost:8086/listing/fork ie.jpg | fork ie.jpg | 427827 | 
+  file http://localhost:8086/listing/fork.exe | fork.exe | 209408 | 
+  file http://localhost:8086/listing/fork.mp4 | fork.mp4 | 50226790 | 
+  file http://localhost:8086/listing/Fork.zip | Fork.zip | 5939 | 
+  file http://localhost:8086/listing/ForkieIcon.ico | ForkieIcon.ico | 9626 | 
+  file http://localhost:8086/listing/forkies.h | forkies.h | 1012 | 
+  file http://localhost:8086/listing/FreemakeVideoDownloaderSetup_f2ce1402-37de-d3c5-d2c0-c81eb049d95d.exe | FreemakeVideoDownloaderSetup_f2ce1402-37de-d3c5-d2c0-c81eb049d95d.exe | 1019290 | 
+  file http://localhost:8086/listing/future fixed.bat | future fixed.bat | 391 | 
+  file http://localhost:8086/listing/future.bat | future.bat | 394 | 
+  file http://localhost:8086/listing/GameMaker 8.1 Pro.zip | GameMaker 8.1 Pro.zip | 42257613 | 
+  file http://localhost:8086/listing/Gigaget.exe | Gigaget.exe | 2097152 | 
+  file http://localhost:8086/listing/Go Go Gadget GDI Fucker.zip | Go Go Gadget GDI Fucker.zip | 444211 | 
+  file http://localhost:8086/listing/goodthing.mp3 | goodthing.mp3 | 241459 | 
+  file http://localhost:8086/listing/Hack.bat | Hack.bat | 75 | 
+  file http://localhost:8086/listing/hamachi.msi | hamachi.msi | 9122611 | 
+  file http://localhost:8086/listing/hello.bat | hello.bat | 130 | 
+  file http://localhost:8086/listing/Hoax.Win32.BadJoke.BlastBtn.a.exe | Hoax.Win32.BadJoke.BlastBtn.a.exe | 385024 | 
+  file http://localhost:8086/listing/Icon Fun!.cpp | Icon Fun!.cpp | 337 | 
+  file http://localhost:8086/listing/idkwhattodo.zip | idkwhattodo.zip | 631603 | 
+  file http://localhost:8086/listing/IDMPatch.exe | IDMPatch.exe | 67072 | 
+  file http://localhost:8086/listing/IE2.zip | IE2.zip | 1153434 | 
+  file http://localhost:8086/listing/ie5win31.iso | ie5win31.iso | 9437184 | 
+  file http://localhost:8086/listing/imagex.exe | imagex.exe | 481690 | 
+  file http://localhost:8086/listing/install_virtualdj_2021_b6677_pc.msi | install_virtualdj_2021_b6677_pc.msi | 194405990 | 
+  file http://localhost:8086/listing/ipxefordos.zip | ipxefordos.zip | 1048576 | 
+  file http://localhost:8086/listing/jre8u51_32.7z | jre8u51_32.7z | 35441869 | 
+  file http://localhost:8086/listing/kidswithanimepics.png | kidswithanimepics.png | 24269 | 
+  file http://localhost:8086/listing/LEARN THE ALPHABET WITH COLLABVM.txt | LEARN THE ALPHABET WITH COLLABVM.txt | 512 | 
+  file http://localhost:8086/listing/Light It Up.mp3 | Light It Up.mp3 | 2936013 | 
+  file http://localhost:8086/listing/lol.mp4 | lol.mp4 | 30618419 | 
+  file http://localhost:8086/listing/lol2.mp4 | lol2.mp4 | 8703181 | 
+  file http://localhost:8086/listing/long_filename.png | long_filename.png | 72397 | 
+  file http://localhost:8086/listing/MASTERPIECE.Theme | MASTERPIECE.Theme | 5939 | 
+  file http://localhost:8086/listing/maze.exe | maze.exe | 1258291 | 
+  file http://localhost:8086/listing/mcy0r1.7z | mcy0r1.7z | 271 | 
+  file http://localhost:8086/listing/meme-sim.exe | meme-sim.exe | 217600 | 
+  file http://localhost:8086/listing/Microsoft Internet Explorer 2.0 (3.5).7z | Microsoft Internet Explorer 2.0 (3.5).7z | 1153434 | 
+  file http://localhost:8086/listing/Minecraft.exe | Minecraft.exe | 3460301 | 
+  file http://localhost:8086/listing/Muffin_Escape.exe | Muffin_Escape.exe | 7025459 | 
+  file http://localhost:8086/listing/multivnc_0.5-win32-setup.exe | multivnc_0.5-win32-setup.exe | 2411725 | 
+  file http://localhost:8086/listing/mysterekmc.pl_images_issue.mp4 | mysterekmc.pl_images_issue.mp4 | 4194304 | 
+  file http://localhost:8086/listing/Netscape Navigator Gold 3.0.zip | Netscape Navigator Gold 3.0.zip | 5557453 | 
+  file http://localhost:8086/listing/ngfjjp.bat | ngfjjp.bat | 7885 | 
+  file http://localhost:8086/listing/NiggaOS 11.iso | NiggaOS 11.iso | 6291456 | 
+  file http://localhost:8086/listing/niggaos11.iso | niggaos11.iso | 6291456 | 
+  file http://localhost:8086/listing/NiggaOS11.zip | NiggaOS11.zip | 3460301 | 
+  file http://localhost:8086/listing/NiggerOS 11.png | NiggerOS 11.png | 11059 | 
+  file http://localhost:8086/listing/no.txt | no.txt | 50 | 
+  file http://localhost:8086/listing/ntldripxe.zip | ntldripxe.zip | 686694 | 
+  file http://localhost:8086/listing/ntlite.zip | ntlite.zip | 35756442 | 
+  file http://localhost:8086/listing/ntpxe.zip | ntpxe.zip | 499405 | 
+  file http://localhost:8086/listing/OPEN ME.py | OPEN ME.py | 689 | 
+  file http://localhost:8086/listing/openstartmenu.exe | openstartmenu.exe | 97280 | 
+  file http://localhost:8086/listing/OS X Leopard.7z | OS X Leopard.7z | 142541 | 
+  file http://localhost:8086/listing/P360Setup.exe | P360Setup.exe | 193252557 | 
+  file http://localhost:8086/listing/PENetwork_OldIcons.icl | PENetwork_OldIcons.icl | 751923 | 
+  file http://localhost:8086/listing/penis.crt | penis.crt | 1024 | 
+  file http://localhost:8086/listing/poopenfarten.exe | poopenfarten.exe | 1258291 | 
+  file http://localhost:8086/listing/PremiumFeatures as of nov 7.txt | PremiumFeatures as of nov 7.txt | 1126 | 
+  file http://localhost:8086/listing/processhacker.exe | processhacker.exe | 2306867 | 
+  file http://localhost:8086/listing/Project1.exe | Project1.exe | 263680 | 
+  file http://localhost:8086/listing/Psychz Networks - Down Low Ft. Young George [mZBWd1Z2yY0].ogg | Psychz Networks - Down Low Ft. Young George [mZBWd1Z2yY0].ogg | 5138022 | 
+  file http://localhost:8086/listing/QtWeb-qtwebkit22.exe | QtWeb-qtwebkit22.exe | 7340032 | 
+  file http://localhost:8086/listing/retrozilla-2.2.en-US.win32.installer.exe | retrozilla-2.2.en-US.win32.installer.exe | 13107200 | 
+  file http://localhost:8086/listing/retrozilla-2.2.en-US.win32.zip | retrozilla-2.2.en-US.win32.zip | 11953766 | 
+  file http://localhost:8086/listing/Rick Astley - Never Gonna Give You Up Official Music Video (1).mp4 | Rick Astley - Never Gonna Give You Up Official Music Video (1).mp4 | 16672358 | 
+  file http://localhost:8086/listing/rickroll.mp4 | rickroll.mp4 | 273203 | 
+  file http://localhost:8086/listing/RoyaleRemixed.exe | RoyaleRemixed.exe | 509645 | 
+  file http://localhost:8086/listing/run-jvnc.bat | run-jvnc.bat | 59 | 
+  file http://localhost:8086/listing/samsung tune.mp3 | samsung tune.mp3 | 319283 | 
+  file http://localhost:8086/listing/science.PNG | science.PNG | 78438 | 
+  file http://localhost:8086/listing/screenshot.png | screenshot.png | 72397 | 
+  file http://localhost:8086/listing/sd.exe | sd.exe | 263680 | 
+  file http://localhost:8086/listing/sex.EXE | sex.EXE | 155750 | 
+  file http://localhost:8086/listing/ShowHideControls.exe | ShowHideControls.exe | 392192 | 
+  file http://localhost:8086/listing/Site Blocked.zip | Site Blocked.zip | 1126 | 
+  file http://localhost:8086/listing/SmartDefragmenter.zip | SmartDefragmenter.zip | 385741 | 
+  file http://localhost:8086/listing/spam.bat | spam.bat | 997 | 
+  file http://localhost:8086/listing/speedrun fixed 2.cmd | speedrun fixed 2.cmd | 470 | 
+  file http://localhost:8086/listing/speedrun fixed.cmd | speedrun fixed.cmd | 132 | 
+  file http://localhost:8086/listing/speedrun.cmd | speedrun.cmd | 128 | 
+  file http://localhost:8086/listing/spike emoji.png | spike emoji.png | 123494 | 
+  file http://localhost:8086/listing/steam_api.dll | steam_api.dll | 876544 | 
+  file http://localhost:8086/listing/stopforking.vbs | stopforking.vbs | 61 | 
+  file http://localhost:8086/listing/stretchy.zip | stretchy.zip | 83866 | 
+  file http://localhost:8086/listing/takeout-20211024T101815Z-001.zip | takeout-20211024T101815Z-001.zip | 509922509 | 
+  file http://localhost:8086/listing/tc4dos.zip | tc4dos.zip | 15833498 | 
+  file http://localhost:8086/listing/tcdos.zip | tcdos.zip | 15833498 | 
+  file http://localhost:8086/listing/thatspain.mp3 | thatspain.mp3 | 5347738 | 
+  file http://localhost:8086/listing/thebots.txt | thebots.txt | 211968 | 
+  file http://localhost:8086/listing/therealway.cmd | therealway.cmd | 335 | 
+  file http://localhost:8086/listing/tightvnc-jviewer.jar | tightvnc-jviewer.jar | 627098 | 
+  file http://localhost:8086/listing/totallyaunixshellnotanetappthatdisplaysapictureofanass.zip | totallyaunixshellnotanetappthatdisplaysapictureofanass.zip | 2936013 | 
+  file http://localhost:8086/listing/twerkamongus.gif | twerkamongus.gif | 174899 | 
+  file http://localhost:8086/listing/unetbootin-windows-681.exe | unetbootin-windows-681.exe | 4823450 | 
+  file http://localhost:8086/listing/Untitled.png | Untitled.png | 16282 | 
+  file http://localhost:8086/listing/usf.exe | usf.exe | 3355443 | 
+  file http://localhost:8086/listing/Vista Activator.exe | Vista Activator.exe | 3460301 | 
+  file http://localhost:8086/listing/vm.pdf | vm.pdf | 523366 | 
+  file http://localhost:8086/listing/vncviewer-1.12.0.exe | vncviewer-1.12.0.exe | 22124954 | 
+  file http://localhost:8086/listing/VNC-Viewer-6.21.920-Windows-32bit[1].exe | VNC-Viewer-6.21.920-Windows-32bit[1].exe | 8703181 | 
+  file http://localhost:8086/listing/vncviewer64-1.12.0.exe | vncviewer64-1.12.0.exe | 25690112 | 
+  file http://localhost:8086/listing/vs_community__617642196.1629287134 (1).exe | vs_community__617642196.1629287134 (1).exe | 1677722 | 
+  file http://localhost:8086/listing/w0shj3nvt8s.zip | w0shj3nvt8s.zip | 2516582 | 
+  file http://localhost:8086/listing/W95.zip | W95.zip | 429811302 | 
+  file http://localhost:8086/listing/wavyurl.js | wavyurl.js | 399 | 
+  file http://localhost:8086/listing/web.config | web.config | 168 | 
+  file http://localhost:8086/listing/wfreerdp.exe | wfreerdp.exe | 2516582 | 
+  file http://localhost:8086/listing/wfreerdp-1.1.zip | wfreerdp-1.1.zip | 1153434 | 
+  file http://localhost:8086/listing/wheeze.png | wheeze.png | 32154 | 
+  file http://localhost:8086/listing/whois.zip | whois.zip | 40448 | 
+  file http://localhost:8086/listing/winaerotweaker.zip | winaerotweaker.zip | 2516582 | 
+  file http://localhost:8086/listing/WinCDEmu-4.1.exe | WinCDEmu-4.1.exe | 1572864 | 
+  file http://localhost:8086/listing/WINDOEZ 10 NEW LOGO.png | WINDOEZ 10 NEW LOGO.png | 8602 | 
+  file http://localhost:8086/listing/Windows 11 Theme for CollabVM.zip | Windows 11 Theme for CollabVM.zip | 37888 | 
+  file http://localhost:8086/listing/windows 11 wow.png | windows 11 wow.png | 46182 | 
+  file http://localhost:8086/listing/Windows Total Protection 2010.exe | Windows Total Protection 2010.exe | 2726298 | 
+  file http://localhost:8086/listing/Windows.7.RU-EN.x86-x64.52in1-Office.2019.by.SmokieBlahBlah.2021.08.24.iso | Windows.7.RU-EN.x86-x64.52in1-Office.2019.by.SmokieBlahBlah.2021.08.24.iso | 4724464026 | 
+  file http://localhost:8086/listing/winecfg.exe | winecfg.exe | 554906 | 
+  file http://localhost:8086/listing/winxpcd.exe | winxpcd.exe | 61030 | 
+  file http://localhost:8086/listing/WoozBG.png | WoozBG.png | 34304 | 
+  file http://localhost:8086/listing/wow.png | wow.png | 436429 | 
+  file http://localhost:8086/listing/WP.jpg | WP.jpg | 417382 | 
+  file http://localhost:8086/listing/x.txt | x.txt | 186 | 
+  file http://localhost:8086/listing/Xtrullor - Tria.mp3 | Xtrullor - Tria.mp3 | 9961472 | 
+  file http://localhost:8086/listing/y8-browser-web-setup-1.0.10.exe | y8-browser-web-setup-1.0.10.exe | 652698 | 
+  file http://localhost:8086/listing/yellows.png | yellows.png | 613 | 
+  file http://localhost:8086/listing/YOUR AN SPY.png | YOUR AN SPY.png | 12186 | 
+  file http://localhost:8086/listing/ZeroTier One.msi | ZeroTier One.msi | 13212058 | 
+  file http://localhost:8086/listing/Идщыы.png | Идщыы.png | 7270 | 
+  file http://localhost:8086/listing/Мои домашние друзья.pptx | Мои домашние друзья.pptx | 16357786 | 
+  file http://localhost:8086/listing/अब केवल भगवान ही हमें बचा सकते हैं.png | अब केवल भगवान ही हमें बचा सकते हैं.png | 42189 | 

@@ -1,0 +1,12 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/db/0/0/89.179.242.201/Music/5.1 | 5.1 |  | ParseTablesDirectoryListing
+  dir http://localhost/db/0/0/89.179.242.201/Music/Disk | Disk |  | ParseTablesDirectoryListing
+  dir http://localhost/db/0/0/89.179.242.201/Music/Flac | Flac |  | ParseTablesDirectoryListing
+  dir http://localhost/db/0/0/89.179.242.201/Music/iTunes | iTunes |  | ParseTablesDirectoryListing
+  dir http://localhost/db/0/0/89.179.242.201/Music/Midi | Midi |  | ParseTablesDirectoryListing
+  dir http://localhost/db/0/0/89.179.242.201/Music/MOD_XM_S3M_IT | MOD_XM_S3M_IT |  | ParseTablesDirectoryListing
+  dir http://localhost/db/0/0/89.179.242.201/Music/MP3 | MP3 |  | ParseTablesDirectoryListing
+  dir http://localhost/db/0/0/89.179.242.201/Music/WindowsPhone | WindowsPhone |  | ParseTablesDirectoryListing
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True

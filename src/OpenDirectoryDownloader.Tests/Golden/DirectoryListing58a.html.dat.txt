@@ -1,0 +1,8 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/files/Old-Calculator-RPGs-Headquarter-Archive/ | Old-Calculator-RPGs-Headquarter-Archive | Old Calculator RPGs Headquarter Archive | ParseTablesDirectoryListing
+  dir http://localhost/files/Our-TI-PC-Products-Music-and-Calculator-Videos/ | Our-TI-PC-Products-Music-and-Calculator-Videos | Our TI, PC Products, Music and Calculator Videos | ParseTablesDirectoryListing
+  dir http://localhost/files/User-Contributed-Calculator-Games-amp-Development-Tools/ | User-Contributed-Calculator-Games-amp-Development-Tools | User-Contributed Calculator Games & Development Tools | ParseTablesDirectoryListing
+  file http://localhost/files/master.index | master.index |  | Index of all downloads on www.omnimaga.org
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True

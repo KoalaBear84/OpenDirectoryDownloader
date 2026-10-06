@@ -1,0 +1,24 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/?dir=%24RECYCLE.BIN | $RECYCLE.BIN |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost/?dir=Animation | Animation |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost/?dir=Anime | Anime |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost/?dir=Anime Movie | Anime Movie |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost/?dir=E | E |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost/?dir=music | music |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost/?dir=New | New |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost/?dir=Oda Nobuna No Yabou | Oda Nobuna No Yabou |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost/?dir=System Volume Information | System Volume Information |  | ParseDirectoryListingDoctComDirectoryListing
+  file http://localhost/Accel World.zip | Accel World.zip | 396841 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=False
+  dir http://localhost:8086/listing/?dir=%24RECYCLE.BIN | $RECYCLE.BIN |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost:8086/listing/?dir=Animation | Animation |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost:8086/listing/?dir=Anime | Anime |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost:8086/listing/?dir=Anime Movie | Anime Movie |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost:8086/listing/?dir=E | E |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost:8086/listing/?dir=music | music |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost:8086/listing/?dir=New | New |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost:8086/listing/?dir=Oda Nobuna No Yabou | Oda Nobuna No Yabou |  | ParseDirectoryListingDoctComDirectoryListing
+  dir http://localhost:8086/listing/?dir=System Volume Information | System Volume Information |  | ParseDirectoryListingDoctComDirectoryListing
+  file http://localhost:8086/listing/Accel World.zip | Accel World.zip | 396841 | 

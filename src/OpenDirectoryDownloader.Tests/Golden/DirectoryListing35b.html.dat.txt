@@ -1,0 +1,20 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost/Brain Damage - 01.mp3 | Brain Damage - 01.mp3 | 2411725 | MPEG Layer 3 Format
+  file http://localhost/Brain Damage - 02.mp3 | Brain Damage - 02.mp3 | 1677722 | MPEG Layer 3 Format
+  file http://localhost/Brain Damage - 03.mp3 | Brain Damage - 03.mp3 | 2306867 | MPEG Layer 3 Format
+  file http://localhost/Brain Damage - 04.mp3 | Brain Damage - 04.mp3 | 2516582 | MPEG Layer 3 Format
+  file http://localhost/Brain Damage - 05.mp3 | Brain Damage - 05.mp3 | 1887437 | MPEG Layer 3 Format
+  file http://localhost/Brain Damage - 06.mp3 | Brain Damage - 06.mp3 | 1677722 | MPEG Layer 3 Format
+  file http://localhost/Brain Damage - 07.mp3 | Brain Damage - 07.mp3 | 5347738 | MPEG Layer 3 Format
+  file http://localhost/Brain Damage - 08.mp3 | Brain Damage - 08.mp3 | 4089446 | MPEG Layer 3 Format
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost:8086/listing/Brain Damage - 01.mp3 | Brain Damage - 01.mp3 | 2411725 | MPEG Layer 3 Format
+  file http://localhost:8086/listing/Brain Damage - 02.mp3 | Brain Damage - 02.mp3 | 1677722 | MPEG Layer 3 Format
+  file http://localhost:8086/listing/Brain Damage - 03.mp3 | Brain Damage - 03.mp3 | 2306867 | MPEG Layer 3 Format
+  file http://localhost:8086/listing/Brain Damage - 04.mp3 | Brain Damage - 04.mp3 | 2516582 | MPEG Layer 3 Format
+  file http://localhost:8086/listing/Brain Damage - 05.mp3 | Brain Damage - 05.mp3 | 1887437 | MPEG Layer 3 Format
+  file http://localhost:8086/listing/Brain Damage - 06.mp3 | Brain Damage - 06.mp3 | 1677722 | MPEG Layer 3 Format
+  file http://localhost:8086/listing/Brain Damage - 07.mp3 | Brain Damage - 07.mp3 | 5347738 | MPEG Layer 3 Format
+  file http://localhost:8086/listing/Brain Damage - 08.mp3 | Brain Damage - 08.mp3 | 4089446 | MPEG Layer 3 Format

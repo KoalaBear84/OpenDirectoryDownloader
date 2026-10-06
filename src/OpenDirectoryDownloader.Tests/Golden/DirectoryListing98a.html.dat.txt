@@ -1,0 +1,58 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/Dj Vela/ | Dj Vela |  | RegexParser2
+  dir http://localhost/ED2000/ | ED2000 |  | RegexParser2
+  dir http://localhost/FX/ | FX |  | RegexParser2
+  dir http://localhost/Illy Vanilly/ | Illy Vanilly |  | RegexParser2
+  dir http://localhost/Joernchen/ | Joernchen |  | RegexParser2
+  dir http://localhost/Mumpi/ | Mumpi |  | RegexParser2
+  dir http://localhost/Nicolas/ | Nicolas |  | RegexParser2
+  dir http://localhost/Phonoelit Allstars/ | Phonoelit Allstars |  | RegexParser2
+  dir http://localhost/Soulhunter/ | Soulhunter |  | RegexParser2
+  dir http://localhost/The Booth Out Sessions/ | The Booth Out Sessions |  | RegexParser2
+  dir http://localhost/The Henrik Maneuver/ | The Henrik Maneuver |  | RegexParser2
+  dir http://localhost/TimeCoderz/ | TimeCoderz |  | RegexParser2
+  dir http://localhost/Toggs/ | Toggs |  | RegexParser2
+  dir http://localhost/Videos/ | Videos |  | RegexParser2
+  dir http://localhost/annalist/ | annalist |  | RegexParser2
+  dir http://localhost/aroma/ | aroma |  | RegexParser2
+  dir http://localhost/astera/ | astera |  | RegexParser2
+  dir http://localhost/binary_punks/ | binary_punks |  | RegexParser2
+  dir http://localhost/brain/ | brain |  | RegexParser2
+  dir http://localhost/dOleire/ | dOleire |  | RegexParser2
+  dir http://localhost/des/ | des |  | RegexParser2
+  dir http://localhost/dizzy/ | dizzy |  | RegexParser2
+  dir http://localhost/jaycieh/ | jaycieh |  | RegexParser2
+  dir http://localhost/misc/ | misc |  | RegexParser2
+  dir http://localhost/ph-neutral/ | ph-neutral |  | RegexParser2
+  dir http://localhost/rev_moon/ | rev_moon |  | RegexParser2
+  dir http://localhost/scusi/ | scusi |  | RegexParser2
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost:8086/listing/Dj Vela/ | Dj Vela |  | RegexParser2
+  dir http://localhost:8086/listing/ED2000/ | ED2000 |  | RegexParser2
+  dir http://localhost:8086/listing/FX/ | FX |  | RegexParser2
+  dir http://localhost:8086/listing/Illy Vanilly/ | Illy Vanilly |  | RegexParser2
+  dir http://localhost:8086/listing/Joernchen/ | Joernchen |  | RegexParser2
+  dir http://localhost:8086/listing/Mumpi/ | Mumpi |  | RegexParser2
+  dir http://localhost:8086/listing/Nicolas/ | Nicolas |  | RegexParser2
+  dir http://localhost:8086/listing/Phonoelit Allstars/ | Phonoelit Allstars |  | RegexParser2
+  dir http://localhost:8086/listing/Soulhunter/ | Soulhunter |  | RegexParser2
+  dir http://localhost:8086/listing/The Booth Out Sessions/ | The Booth Out Sessions |  | RegexParser2
+  dir http://localhost:8086/listing/The Henrik Maneuver/ | The Henrik Maneuver |  | RegexParser2
+  dir http://localhost:8086/listing/TimeCoderz/ | TimeCoderz |  | RegexParser2
+  dir http://localhost:8086/listing/Toggs/ | Toggs |  | RegexParser2
+  dir http://localhost:8086/listing/Videos/ | Videos |  | RegexParser2
+  dir http://localhost:8086/listing/annalist/ | annalist |  | RegexParser2
+  dir http://localhost:8086/listing/aroma/ | aroma |  | RegexParser2
+  dir http://localhost:8086/listing/astera/ | astera |  | RegexParser2
+  dir http://localhost:8086/listing/binary_punks/ | binary_punks |  | RegexParser2
+  dir http://localhost:8086/listing/brain/ | brain |  | RegexParser2
+  dir http://localhost:8086/listing/dOleire/ | dOleire |  | RegexParser2
+  dir http://localhost:8086/listing/des/ | des |  | RegexParser2
+  dir http://localhost:8086/listing/dizzy/ | dizzy |  | RegexParser2
+  dir http://localhost:8086/listing/jaycieh/ | jaycieh |  | RegexParser2
+  dir http://localhost:8086/listing/misc/ | misc |  | RegexParser2
+  dir http://localhost:8086/listing/ph-neutral/ | ph-neutral |  | RegexParser2
+  dir http://localhost:8086/listing/rev_moon/ | rev_moon |  | RegexParser2
+  dir http://localhost:8086/listing/scusi/ | scusi |  | RegexParser2

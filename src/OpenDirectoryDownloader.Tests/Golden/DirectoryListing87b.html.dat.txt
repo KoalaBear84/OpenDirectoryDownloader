@@ -1,0 +1,68 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/10.0000@newleftreview.org@3150.pdf | 10.0000@newleftreview.org@3150.pdf | 665600 | 
+  file http://localhost/10.1.1.405.5725.pdf | 10.1.1.405.5725.pdf | 117760 | 
+  file http://localhost/10.1093@pastj@gtx057.pdf | 10.1093@pastj@gtx057.pdf | 740352 | 
+  file http://localhost/10.2307@40277315.pdf | 10.2307@40277315.pdf | 1048576 | 
+  file http://localhost/2008stellaphd.pdf | 2008stellaphd.pdf | 1048576 | 
+  file http://localhost/2011_reflecting_on_social_move.PDF | 2011_reflecting_on_social_move.PDF | 4194304 | 
+  file http://localhost/2015_Norwegian_Extraterritoriality_in_C.pdf | 2015_Norwegian_Extraterritoriality_in_C.pdf | 5242880 | 
+  file http://localhost/ADA511037.pdf | ADA511037.pdf | 3145728 | 
+  file http://localhost/An_equal_share_in_inequality_Alexandra.docx | An_equal_share_in_inequality_Alexandra.docx | 51200 | 
+  file http://localhost/Article5.pdf | Article5.pdf | 296960 | 
+  file http://localhost/CHALLENGING_THE_OLD_ORDER-CAUSES_CLAUSES.pdf | CHALLENGING_THE_OLD_ORDER-CAUSES_CLAUSES.pdf | 126976 | 
+  file http://localhost/CIA Air Operation in Laos 1955 to 1974.pdf | CIA Air Operation in Laos 1955 to 1974.pdf | 880640 | 
+  file http://localhost/Camb. J. Econ.-2005-Jossa-3-18.pdf | Camb. J. Econ.-2005-Jossa-3-18.pdf | 117760 | 
+  file http://localhost/Chen_Precariousness.pdf | Chen_Precariousness.pdf | 978944 | 
+  file http://localhost/Colonialism_Two-Spirit_Identity_and_the.pdf | Colonialism_Two-Spirit_Identity_and_the.pdf | 233472 | 
+  file http://localhost/Decentering the Subject.pdf | Decentering the Subject.pdf | 175104 | 
+  file http://localhost/Decolonization Is Not a Metaphor.pdf | Decolonization Is Not a Metaphor.pdf | 1048576 | 
+  file http://localhost/Empire_of_scholars_universities_networks.pdf | Empire_of_scholars_universities_networks.pdf | 89088 | 
+  file http://localhost/Form_versus_Matter_Miraculous_Relics_an.pdf | Form_versus_Matter_Miraculous_Relics_an.pdf | 303104 | 
+  file http://localhost/Foucault_Must_Not_Be_Defended.doc | Foucault_Must_Not_Be_Defended.doc | 90112 | 
+  file http://localhost/From_Africa_to_Ifriqiya_Settlement_and_S.pdf | From_Africa_to_Ifriqiya_Settlement_and_S.pdf | 578560 | 
+  file http://localhost/Hans Asperger National Socialism and race hygiene in Nazi-era Vienna.pdf | Hans Asperger National Socialism and race hygiene in Nazi-era Vienna.pdf | 3145728 | 
+  file http://localhost/Holmstrom hotel bristol affair.pdf | Holmstrom hotel bristol affair.pdf | 5242880 | 
+  file http://localhost/Oh_Youre_A_Racist_Ive_Got_a_Cure_for_Tha.pdf | Oh_Youre_A_Racist_Ive_Got_a_Cure_for_Tha.pdf | 148480 | 
+  file http://localhost/Quartermasters of Stadiums and Cemetaries - Moufawad-Paul.pdf | Quartermasters of Stadiums and Cemetaries - Moufawad-Paul.pdf | 183296 | 
+  file http://localhost/Roberts, Bruce Slave Exploitation in Neoclassical Economics - Criticism and an Alternative Direction.pdf | Roberts, Bruce Slave Exploitation in Neoclassical Economics - Criticism and an Alternative Direction.pdf | 93184 | 
+  file http://localhost/Rosen, Stanley %27The Idea of Hegel%27s %27Science of Logic%27.pdf | Rosen, Stanley 'The Idea of Hegel's 'Science of Logic'.pdf | 1048576 | 
+  file http://localhost/Why Did the Swedish Model Fail - Meidner.pdf | Why Did the Swedish Model Fail - Meidner.pdf | 162816 | 
+  file http://localhost/autoritarians.pdf | autoritarians.pdf | 2097152 | 
+  file http://localhost/bel-2010-nazi-privatizations1.pdf | bel-2010-nazi-privatizations1.pdf | 189440 | 
+  file http://localhost/british plans for the partition of palestine 1929-1938.pdf | british plans for the partition of palestine 1929-1938.pdf | 3145728 | 
+  file http://localhost/the-silicon-ideology.pdf | the-silicon-ideology.pdf | 178176 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost:8086/listing/10.0000@newleftreview.org@3150.pdf | 10.0000@newleftreview.org@3150.pdf | 665600 | 
+  file http://localhost:8086/listing/10.1.1.405.5725.pdf | 10.1.1.405.5725.pdf | 117760 | 
+  file http://localhost:8086/listing/10.1093@pastj@gtx057.pdf | 10.1093@pastj@gtx057.pdf | 740352 | 
+  file http://localhost:8086/listing/10.2307@40277315.pdf | 10.2307@40277315.pdf | 1048576 | 
+  file http://localhost:8086/listing/2008stellaphd.pdf | 2008stellaphd.pdf | 1048576 | 
+  file http://localhost:8086/listing/2011_reflecting_on_social_move.PDF | 2011_reflecting_on_social_move.PDF | 4194304 | 
+  file http://localhost:8086/listing/2015_Norwegian_Extraterritoriality_in_C.pdf | 2015_Norwegian_Extraterritoriality_in_C.pdf | 5242880 | 
+  file http://localhost:8086/listing/ADA511037.pdf | ADA511037.pdf | 3145728 | 
+  file http://localhost:8086/listing/An_equal_share_in_inequality_Alexandra.docx | An_equal_share_in_inequality_Alexandra.docx | 51200 | 
+  file http://localhost:8086/listing/Article5.pdf | Article5.pdf | 296960 | 
+  file http://localhost:8086/listing/CHALLENGING_THE_OLD_ORDER-CAUSES_CLAUSES.pdf | CHALLENGING_THE_OLD_ORDER-CAUSES_CLAUSES.pdf | 126976 | 
+  file http://localhost:8086/listing/CIA Air Operation in Laos 1955 to 1974.pdf | CIA Air Operation in Laos 1955 to 1974.pdf | 880640 | 
+  file http://localhost:8086/listing/Camb. J. Econ.-2005-Jossa-3-18.pdf | Camb. J. Econ.-2005-Jossa-3-18.pdf | 117760 | 
+  file http://localhost:8086/listing/Chen_Precariousness.pdf | Chen_Precariousness.pdf | 978944 | 
+  file http://localhost:8086/listing/Colonialism_Two-Spirit_Identity_and_the.pdf | Colonialism_Two-Spirit_Identity_and_the.pdf | 233472 | 
+  file http://localhost:8086/listing/Decentering the Subject.pdf | Decentering the Subject.pdf | 175104 | 
+  file http://localhost:8086/listing/Decolonization Is Not a Metaphor.pdf | Decolonization Is Not a Metaphor.pdf | 1048576 | 
+  file http://localhost:8086/listing/Empire_of_scholars_universities_networks.pdf | Empire_of_scholars_universities_networks.pdf | 89088 | 
+  file http://localhost:8086/listing/Form_versus_Matter_Miraculous_Relics_an.pdf | Form_versus_Matter_Miraculous_Relics_an.pdf | 303104 | 
+  file http://localhost:8086/listing/Foucault_Must_Not_Be_Defended.doc | Foucault_Must_Not_Be_Defended.doc | 90112 | 
+  file http://localhost:8086/listing/From_Africa_to_Ifriqiya_Settlement_and_S.pdf | From_Africa_to_Ifriqiya_Settlement_and_S.pdf | 578560 | 
+  file http://localhost:8086/listing/Hans Asperger National Socialism and race hygiene in Nazi-era Vienna.pdf | Hans Asperger National Socialism and race hygiene in Nazi-era Vienna.pdf | 3145728 | 
+  file http://localhost:8086/listing/Holmstrom hotel bristol affair.pdf | Holmstrom hotel bristol affair.pdf | 5242880 | 
+  file http://localhost:8086/listing/Oh_Youre_A_Racist_Ive_Got_a_Cure_for_Tha.pdf | Oh_Youre_A_Racist_Ive_Got_a_Cure_for_Tha.pdf | 148480 | 
+  file http://localhost:8086/listing/Quartermasters of Stadiums and Cemetaries - Moufawad-Paul.pdf | Quartermasters of Stadiums and Cemetaries - Moufawad-Paul.pdf | 183296 | 
+  file http://localhost:8086/listing/Roberts, Bruce Slave Exploitation in Neoclassical Economics - Criticism and an Alternative Direction.pdf | Roberts, Bruce Slave Exploitation in Neoclassical Economics - Criticism and an Alternative Direction.pdf | 93184 | 
+  file http://localhost:8086/listing/Rosen, Stanley %27The Idea of Hegel%27s %27Science of Logic%27.pdf | Rosen, Stanley 'The Idea of Hegel's 'Science of Logic'.pdf | 1048576 | 
+  file http://localhost:8086/listing/Why Did the Swedish Model Fail - Meidner.pdf | Why Did the Swedish Model Fail - Meidner.pdf | 162816 | 
+  file http://localhost:8086/listing/autoritarians.pdf | autoritarians.pdf | 2097152 | 
+  file http://localhost:8086/listing/bel-2010-nazi-privatizations1.pdf | bel-2010-nazi-privatizations1.pdf | 189440 | 
+  file http://localhost:8086/listing/british plans for the partition of palestine 1929-1938.pdf | british plans for the partition of palestine 1929-1938.pdf | 3145728 | 
+  file http://localhost:8086/listing/the-silicon-ideology.pdf | the-silicon-ideology.pdf | 178176 | 

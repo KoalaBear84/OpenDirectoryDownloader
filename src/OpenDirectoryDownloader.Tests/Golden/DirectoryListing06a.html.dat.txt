@@ -1,0 +1,36 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/content/classic_skin_dark/ | classic_skin_dark |  | RegexParser1
+  dir http://localhost/content/classic_skin_white/ | classic_skin_white |  | RegexParser1
+  dir http://localhost/content/hex_dark/ | hex_dark |  | RegexParser1
+  dir http://localhost/content/hex_white/ | hex_white |  | RegexParser1
+  dir http://localhost/content/java/ | java |  | RegexParser1
+  dir http://localhost/content/main/ | main |  | RegexParser1
+  dir http://localhost/content/metal_skin_dark/ | metal_skin_dark |  | RegexParser1
+  dir http://localhost/content/metal_skin_white/ | metal_skin_white |  | RegexParser1
+  dir http://localhost/content/minimal_skin_dark/ | minimal_skin_dark |  | RegexParser1
+  dir http://localhost/content/minimal_skin_white/ | minimal_skin_white |  | RegexParser1
+  dir http://localhost/content/modern_skin_dark/ | modern_skin_dark |  | RegexParser1
+  dir http://localhost/content/modern_skin_white/ | modern_skin_white |  | RegexParser1
+  dir http://localhost/content/mp3/ | mp3 |  | RegexParser1
+  dir http://localhost/content/mp3_Halloween/ | mp3_Halloween |  | RegexParser1
+  dir http://localhost/content/mp3_mix_900/ | mp3_mix_900 |  | RegexParser1
+  dir http://localhost/content/thumbnails/ | thumbnails |  | RegexParser1
+  dir http://localhost/content/videos/ | videos |  | RegexParser1
+  file http://localhost/content/downloader.php | downloader.php | 4096 | 
+  file http://localhost/content/error_log | error_log | 61440 | 
+  file http://localhost/content/example.pls | example.pls | 4096 | 
+  file http://localhost/content/flashlsChromeless.swf | flashlsChromeless.swf | 86016 | 
+  file http://localhost/content/global.css | global.css | 4096 | 
+  file http://localhost/content/hls.js | hls.js | 217088 | 
+  file http://localhost/content/mp3.html | mp3.html | 24576 | 
+  file http://localhost/content/mp3.php | mp3.php | 4096 | 
+  file http://localhost/content/playlist.pls | playlist.pls | 4096 | 
+  file http://localhost/content/playlist1.xml | playlist1.xml | 8192 | 
+  file http://localhost/content/proxy.php | proxy.php | 4096 | 
+  file http://localhost/content/proxyFolder.php | proxyFolder.php | 4096 | 
+  file http://localhost/content/sendMail.php | sendMail.php | 4096 | 
+  file http://localhost/content/swf.swf | swf.swf | 36864 | 
+  file http://localhost/content/test.xml | test.xml | 4096 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True

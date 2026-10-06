@@ -1,0 +1,18 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/7ar_bonarlinjan_001123_Ellen Jorgen Mohlin.mp3 | 7ar_bonarlinjan_001123_Ellen Jorgen Mohlin.mp3 | 34812723 | 
+  file http://localhost/7ar_bonarlinjan_010614_LeivurLeivsson_Jenis.mp3 | 7ar_bonarlinjan_010614_LeivurLeivsson_Jenis.mp3 | 51589939 | 
+  file http://localhost/7ar_bonarlinjan_040318_Muslimar_ConnieDanielsen_jenis.mp3 | 7ar_bonarlinjan_040318_Muslimar_ConnieDanielsen_jenis.mp3 | 51275366 | 
+  file http://localhost/7ar_bonarlinjan_050428_TorbjornJacobsen_jenis.mp3 | 7ar_bonarlinjan_050428_TorbjornJacobsen_jenis.mp3 | 79901491 | 
+  file http://localhost/7ar_gestur_i_stovuni_000415_BrittRasmussen_preben.mp3 | 7ar_gestur_i_stovuni_000415_BrittRasmussen_preben.mp3 | 212231782 | 
+  file http://localhost/7ar_gestur_i_stovuni_000415_BrittRasmussen_preben.wav | 7ar_gestur_i_stovuni_000415_BrittRasmussen_preben.wav | 169764454 | 
+  file http://localhost/7ar_leygarkv_i_lind_060311_JanHanvold.mp3 | 7ar_leygarkv_i_lind_060311_JanHanvold.mp3 | 27577549 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost:8086/listing/7ar_bonarlinjan_001123_Ellen Jorgen Mohlin.mp3 | 7ar_bonarlinjan_001123_Ellen Jorgen Mohlin.mp3 | 34812723 | 
+  file http://localhost:8086/listing/7ar_bonarlinjan_010614_LeivurLeivsson_Jenis.mp3 | 7ar_bonarlinjan_010614_LeivurLeivsson_Jenis.mp3 | 51589939 | 
+  file http://localhost:8086/listing/7ar_bonarlinjan_040318_Muslimar_ConnieDanielsen_jenis.mp3 | 7ar_bonarlinjan_040318_Muslimar_ConnieDanielsen_jenis.mp3 | 51275366 | 
+  file http://localhost:8086/listing/7ar_bonarlinjan_050428_TorbjornJacobsen_jenis.mp3 | 7ar_bonarlinjan_050428_TorbjornJacobsen_jenis.mp3 | 79901491 | 
+  file http://localhost:8086/listing/7ar_gestur_i_stovuni_000415_BrittRasmussen_preben.mp3 | 7ar_gestur_i_stovuni_000415_BrittRasmussen_preben.mp3 | 212231782 | 
+  file http://localhost:8086/listing/7ar_gestur_i_stovuni_000415_BrittRasmussen_preben.wav | 7ar_gestur_i_stovuni_000415_BrittRasmussen_preben.wav | 169764454 | 
+  file http://localhost:8086/listing/7ar_leygarkv_i_lind_060311_JanHanvold.mp3 | 7ar_leygarkv_i_lind_060311_JanHanvold.mp3 | 27577549 | 

@@ -1,0 +1,6 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/G_Men_1935_720p_WEB-DL_Unknown_TINYMZ.mkv | G_Men_1935_720p_WEB-DL_Unknown_TINYMZ.mkv | 907542528 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost:8086/listing/G_Men_1935_720p_WEB-DL_Unknown_TINYMZ.mkv | G_Men_1935_720p_WEB-DL_Unknown_TINYMZ.mkv | 907542528 | 

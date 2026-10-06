@@ -1,0 +1,7 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/DATA/index.php?dir=NAS1%2FBangladeshi-Natok-UP%2FBinodoni%20Kinba%20Kobi%2F&file=Bangla%20New_Latest%20Natok%20March%202013%20-%20Binodoni%20Kinba%20Kobi%20%2528HQ%2529%20by%20-%20%255BMim%252CMilon%255D-thumb.jpg | Bangla New_Latest Natok March 2013 - Binodoni Kinba Kobi %28HQ%29 by - %5BMim%2CMilon%5D-thumb.jpg | 21094 | 
+  file http://localhost/DATA/index.php?dir=NAS1%2FBangladeshi-Natok-UP%2FBinodoni%20Kinba%20Kobi%2F&file=Bangla%20New_Latest%20Natok%20March%202013%20-%20Binodoni%20Kinba%20Kobi%20%2528HQ%2529%20by%20-%20%255BMim%252CMilon%255D.MP4 | Bangla New_Latest Natok March 2013 - Binodoni Kinba Kobi %28HQ%29 by - %5BMim%2CMilon%5D.MP4 | 120795955 | 
+  file http://localhost/DATA/index.php?dir=NAS1%2FBangladeshi-Natok-UP%2FBinodoni%20Kinba%20Kobi%2F&file=Bangla%20New_Latest%20Natok%20March%202013%20-%20Binodoni%20Kinba%20Kobi%20%2528HQ%2529%20by%20-%20%255BMim%252CMilon%255D.nfo | Bangla New_Latest Natok March 2013 - Binodoni Kinba Kobi %28HQ%29 by - %5BMim%2CMilon%5D.nfo | 1434 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True

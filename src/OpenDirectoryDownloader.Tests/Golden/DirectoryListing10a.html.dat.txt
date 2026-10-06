@@ -1,0 +1,187 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/music/Music/(WWW.HiLToWN-MuSiC.DL.AM)/ | (WWW.HiLToWN-MuSiC.DL.AM) |  | RegexParser4
+  dir http://localhost/music/Music/2Pac/ | 2Pac |  | RegexParser4
+  dir http://localhost/music/Music/30 Seconds to Mars/ | 30 Seconds to Mars |  | RegexParser4
+  dir http://localhost/music/Music/50 Cent/ | 50 Cent |  | RegexParser4
+  dir http://localhost/music/Music/Akon/ | Akon |  | RegexParser4
+  dir http://localhost/music/Music/Avril Lavigne/ | Avril Lavigne |  | RegexParser4
+  dir http://localhost/music/Music/AWOLNATION/ | AWOLNATION |  | RegexParser4
+  dir http://localhost/music/Music/Bastille/ | Bastille |  | RegexParser4
+  dir http://localhost/music/Music/Beck/ | Beck |  | RegexParser4
+  dir http://localhost/music/Music/Benny Benassi/ | Benny Benassi |  | RegexParser4
+  dir http://localhost/music/Music/Benny Benassi & Gary Go/ | Benny Benassi & Gary Go |  | RegexParser4
+  dir http://localhost/music/Music/Big Sean/ | Big Sean |  | RegexParser4
+  dir http://localhost/music/Music/Billy Currington/ | Billy Currington |  | RegexParser4
+  dir http://localhost/music/Music/Birdman & Lil' Wayne/ | Birdman & Lil' Wayne |  | RegexParser4
+  dir http://localhost/music/Music/Black Eyed Peas/ | Black Eyed Peas |  | RegexParser4
+  dir http://localhost/music/Music/Blake Shelton/ | Blake Shelton |  | RegexParser4
+  dir http://localhost/music/Music/Bon Jovi/ | Bon Jovi |  | RegexParser4
+  dir http://localhost/music/Music/Bret Michaels/ | Bret Michaels |  | RegexParser4
+  dir http://localhost/music/Music/Brooks & Dunn/ | Brooks & Dunn |  | RegexParser4
+  dir http://localhost/music/Music/Brooks And Dunn/ | Brooks And Dunn |  | RegexParser4
+  dir http://localhost/music/Music/Bruno Mars/ | Bruno Mars |  | RegexParser4
+  dir http://localhost/music/Music/Busta Rhymes/ | Busta Rhymes |  | RegexParser4
+  dir http://localhost/music/Music/Butthole Surfers/ | Butthole Surfers |  | RegexParser4
+  dir http://localhost/music/Music/Cam'ron/ | Cam'ron |  | RegexParser4
+  dir http://localhost/music/Music/Cam'ron & The U.N_/ | Cam'ron & The U.N_ |  | RegexParser4
+  dir http://localhost/music/Music/Cam'ron Presents Dukedagod/ | Cam'ron Presents Dukedagod |  | RegexParser4
+  dir http://localhost/music/Music/CAMRON/ | CAMRON |  | RegexParser4
+  dir http://localhost/music/Music/Capital Cities/ | Capital Cities |  | RegexParser4
+  dir http://localhost/music/Music/Cashis/ | Cashis |  | RegexParser4
+  dir http://localhost/music/Music/Chairlift/ | Chairlift |  | RegexParser4
+  dir http://localhost/music/Music/Chris Young/ | Chris Young |  | RegexParser4
+  dir http://localhost/music/Music/Collective Soul/ | Collective Soul |  | RegexParser4
+  dir http://localhost/music/Music/Compilations/ | Compilations |  | RegexParser4
+  dir http://localhost/music/Music/Curren$y & Wiz Khalifa/ | Curren$y & Wiz Khalifa |  | RegexParser4
+  dir http://localhost/music/Music/D12/ | D12 |  | RegexParser4
+  dir http://localhost/music/Music/Dance Clube Remix/ | Dance Clube Remix |  | RegexParser4
+  dir http://localhost/music/Music/Darius Rucker/ | Darius Rucker |  | RegexParser4
+  dir http://localhost/music/Music/Dave Matthews/ | Dave Matthews |  | RegexParser4
+  dir http://localhost/music/Music/Dave Matthews Band/ | Dave Matthews Band |  | RegexParser4
+  dir http://localhost/music/Music/David Guetta/ | David Guetta |  | RegexParser4
+  dir http://localhost/music/Music/Diddy & Dirty Money/ | Diddy & Dirty Money |  | RegexParser4
+  dir http://localhost/music/Music/Dj Ant-Lo/ | Dj Ant-Lo |  | RegexParser4
+  dir http://localhost/music/Music/DJ Earworm/ | DJ Earworm |  | RegexParser4
+  dir http://localhost/music/Music/DJ Green Lantern/ | DJ Green Lantern |  | RegexParser4
+  dir http://localhost/music/Music/DJ Khaled/ | DJ Khaled |  | RegexParser4
+  dir http://localhost/music/Music/DJ Tiesto Ft. Imogen Heap/ | DJ Tiesto Ft. Imogen Heap |  | RegexParser4
+  dir http://localhost/music/Music/DMB - Lillywhite Sessions - 02/ | DMB - Lillywhite Sessions - 02 |  | RegexParser4
+  dir http://localhost/music/Music/DMB - Lillywhite Sessions - 03/ | DMB - Lillywhite Sessions - 03 |  | RegexParser4
+  dir http://localhost/music/Music/DMB - Lillywhite Sessions - 05/ | DMB - Lillywhite Sessions - 05 |  | RegexParser4
+  dir http://localhost/music/Music/DMB - Lillywhite Sessions - 07/ | DMB - Lillywhite Sessions - 07 |  | RegexParser4
+  dir http://localhost/music/Music/DMB - Lillywhite Sessions - 08/ | DMB - Lillywhite Sessions - 08 |  | RegexParser4
+  dir http://localhost/music/Music/DMB - Lillywhite Sessions - 09/ | DMB - Lillywhite Sessions - 09 |  | RegexParser4
+  dir http://localhost/music/Music/DMB - Lillywhite Sessions - 10/ | DMB - Lillywhite Sessions - 10 |  | RegexParser4
+  dir http://localhost/music/Music/DMB - Lillywhite Sessions - 11/ | DMB - Lillywhite Sessions - 11 |  | RegexParser4
+  dir http://localhost/music/Music/Drake/ | Drake |  | RegexParser4
+  dir http://localhost/music/Music/Eminem/ | Eminem |  | RegexParser4
+  dir http://localhost/music/Music/Eminem Ft. Dr. Dre/ | Eminem Ft. Dr. Dre |  | RegexParser4
+  dir http://localhost/music/Music/Enya/ | Enya |  | RegexParser4
+  dir http://localhost/music/Music/Eric B. & Rakim/ | Eric B. & Rakim |  | RegexParser4
+  dir http://localhost/music/Music/Everlast/ | Everlast |  | RegexParser4
+  dir http://localhost/music/Music/Fallen To/ | Fallen To |  | RegexParser4
+  dir http://localhost/music/Music/Feat Too Short/ | Feat Too Short |  | RegexParser4
+  dir http://localhost/music/Music/Fetty Wap/ | Fetty Wap |  | RegexParser4
+  dir http://localhost/music/Music/Fetty Wap I Am Fetty/ | Fetty Wap I Am Fetty |  | RegexParser4
+  dir http://localhost/music/Music/Flo Rida Ft David Guetta/ | Flo Rida Ft David Guetta |  | RegexParser4
+  dir http://localhost/music/Music/GANGS OF BALLET/ | GANGS OF BALLET |  | RegexParser4
+  dir http://localhost/music/Music/Gary Allan/ | Gary Allan |  | RegexParser4
+  dir http://localhost/music/Music/George Strait/ | George Strait |  | RegexParser4
+  dir http://localhost/music/Music/Gnarls Barkley/ | Gnarls Barkley |  | RegexParser4
+  dir http://localhost/music/Music/Green Day/ | Green Day |  | RegexParser4
+  dir http://localhost/music/Music/Guns 'n Roses/ | Guns 'n Roses |  | RegexParser4
+  dir http://localhost/music/Music/Guns 'N' Roses/ | Guns 'N' Roses |  | RegexParser4
+  dir http://localhost/music/Music/Guns N' Roses/ | Guns N' Roses |  | RegexParser4
+  dir http://localhost/music/Music/Hootie & The Blowfish/ | Hootie & The Blowfish |  | RegexParser4
+  dir http://localhost/music/Music/Iggy Pop/ | Iggy Pop |  | RegexParser4
+  dir http://localhost/music/Music/Imagine Dragons/ | Imagine Dragons |  | RegexParser4
+  dir http://localhost/music/Music/Imogen Heap/ | Imogen Heap |  | RegexParser4
+  dir http://localhost/music/Music/J Cole/ | J Cole |  | RegexParser4
+  dir http://localhost/music/Music/J.cole/ | J.cole |  | RegexParser4
+  dir http://localhost/music/Music/Jack Johnson/ | Jack Johnson |  | RegexParser4
+  dir http://localhost/music/Music/James Blunt/ | James Blunt |  | RegexParser4
+  dir http://localhost/music/Music/Jason Aldean/ | Jason Aldean |  | RegexParser4
+  dir http://localhost/music/Music/Jason Mraz/ | Jason Mraz |  | RegexParser4
+  dir http://localhost/music/Music/Jay-Z & Kanye West feat. Mr Hudson)/ | Jay-Z & Kanye West feat. Mr Hudson) |  | RegexParser4
+  dir http://localhost/music/Music/Jay-Z ft. Mr. Hudson/ | Jay-Z ft. Mr. Hudson |  | RegexParser4
+  dir http://localhost/music/Music/Jeremy Camp/ | Jeremy Camp |  | RegexParser4
+  dir http://localhost/music/Music/Jerrod Niemann/ | Jerrod Niemann |  | RegexParser4
+  dir http://localhost/music/Music/Jimi Hendrix/ | Jimi Hendrix |  | RegexParser4
+  dir http://localhost/music/Music/Joan Jett/ | Joan Jett |  | RegexParser4
+  dir http://localhost/music/Music/John Lennon/ | John Lennon |  | RegexParser4
+  dir http://localhost/music/Music/Johnny Cash/ | Johnny Cash |  | RegexParser4
+  dir http://localhost/music/Music/Justin Beiber/ | Justin Beiber |  | RegexParser4
+  dir http://localhost/music/Music/Justin Beiber Feat. Ludacris/ | Justin Beiber Feat. Ludacris |  | RegexParser4
+  dir http://localhost/music/Music/Justin Moore/ | Justin Moore |  | RegexParser4
+  dir http://localhost/music/Music/Kelly Clarkson/ | Kelly Clarkson |  | RegexParser4
+  dir http://localhost/music/Music/Kenny Chesney/ | Kenny Chesney |  | RegexParser4
+  dir http://localhost/music/Music/Kid Cudi/ | Kid Cudi |  | RegexParser4
+  dir http://localhost/music/Music/Kings of Leon/ | Kings of Leon |  | RegexParser4
+  dir http://localhost/music/Music/Led Zeppelin/ | Led Zeppelin |  | RegexParser4
+  dir http://localhost/music/Music/Lil Wayne/ | Lil Wayne |  | RegexParser4
+  dir http://localhost/music/Music/Lil Wayne Feat Eminem/ | Lil Wayne Feat Eminem |  | RegexParser4
+  dir http://localhost/music/Music/Lil Wayne ft. Drake & Future/ | Lil Wayne ft. Drake & Future |  | RegexParser4
+  dir http://localhost/music/Music/Lupe Fiasco/ | Lupe Fiasco |  | RegexParser4
+  dir http://localhost/music/Music/Martin Solveig feat. Dragonette/ | Martin Solveig feat. Dragonette |  | RegexParser4
+  dir http://localhost/music/Music/Matchbox Twenty/ | Matchbox Twenty |  | RegexParser4
+  dir http://localhost/music/Music/MGMT/ | MGMT |  | RegexParser4
+  dir http://localhost/music/Music/MIA/ | MIA |  | RegexParser4
+  dir http://localhost/music/Music/Michael Franti & Spearhead/ | Michael Franti & Spearhead |  | RegexParser4
+  dir http://localhost/music/Music/Miguel/ | Miguel |  | RegexParser4
+  dir http://localhost/music/Music/Mike Posner ft. Lil Wayne/ | Mike Posner ft. Lil Wayne |  | RegexParser4
+  dir http://localhost/music/Music/MixFiend.com _ MixtapeTorrent.com/ | MixFiend.com _ MixtapeTorrent.com |  | RegexParser4
+  dir http://localhost/music/Music/Modest Mouse/ | Modest Mouse |  | RegexParser4
+  dir http://localhost/music/Music/Moldy Peaches/ | Moldy Peaches |  | RegexParser4
+  dir http://localhost/music/Music/Mumford & Sons/ | Mumford & Sons |  | RegexParser4
+  dir http://localhost/music/Music/Muse/ | Muse |  | RegexParser4
+  dir http://localhost/music/Music/Nicki Minaj/ | Nicki Minaj |  | RegexParser4
+  dir http://localhost/music/Music/Obie Trice/ | Obie Trice |  | RegexParser4
+  dir http://localhost/music/Music/Old Crow Medicine Show/ | Old Crow Medicine Show |  | RegexParser4
+  dir http://localhost/music/Music/Onerepublic/ | Onerepublic |  | RegexParser4
+  dir http://localhost/music/Music/Original Soundtrack/ | Original Soundtrack |  | RegexParser4
+  dir http://localhost/music/Music/Piano Tribute Players/ | Piano Tribute Players |  | RegexParser4
+  dir http://localhost/music/Music/Pink/ | Pink |  | RegexParser4
+  dir http://localhost/music/Music/Pink Floyd/ | Pink Floyd |  | RegexParser4
+  dir http://localhost/music/Music/Pitbull/ | Pitbull |  | RegexParser4
+  dir http://localhost/music/Music/Public Enemy/ | Public Enemy |  | RegexParser4
+  dir http://localhost/music/Music/Puff Daddy feat. Fait Evans/ | Puff Daddy feat. Fait Evans |  | RegexParser4
+  dir http://localhost/music/Music/Queen/ | Queen |  | RegexParser4
+  dir http://localhost/music/Music/Red Hot Chili Peppers/ | Red Hot Chili Peppers |  | RegexParser4
+  dir http://localhost/music/Music/Ronnie Dunn/ | Ronnie Dunn |  | RegexParser4
+  dir http://localhost/music/Music/Simply Red/ | Simply Red |  | RegexParser4
+  dir http://localhost/music/Music/Smash Mouth/ | Smash Mouth |  | RegexParser4
+  dir http://localhost/music/Music/Social Distortion/ | Social Distortion |  | RegexParser4
+  dir http://localhost/music/Music/Soul Asylum/ | Soul Asylum |  | RegexParser4
+  dir http://localhost/music/Music/Soundtrack/ | Soundtrack |  | RegexParser4
+  dir http://localhost/music/Music/Steve Miller/ | Steve Miller |  | RegexParser4
+  dir http://localhost/music/Music/Steve Miller Band/ | Steve Miller Band |  | RegexParser4
+  dir http://localhost/music/Music/Sublime/ | Sublime |  | RegexParser4
+  dir http://localhost/music/Music/T.I. & Eminem/ | T.I. & Eminem |  | RegexParser4
+  dir http://localhost/music/Music/T.I. & Jay-Z/ | T.I. & Jay-Z |  | RegexParser4
+  dir http://localhost/music/Music/T.I. & Nelly/ | T.I. & Nelly |  | RegexParser4
+  dir http://localhost/music/Music/T.I. & Wyclef Jean/ | T.I. & Wyclef Jean |  | RegexParser4
+  dir http://localhost/music/Music/T.I., Alfa Mega & Busta Rhymes/ | T.I., Alfa Mega & Busta Rhymes |  | RegexParser4
+  dir http://localhost/music/Music/T.I_/ | T.I_ |  | RegexParser4
+  dir http://localhost/music/Music/The Black Keys/ | The Black Keys |  | RegexParser4
+  dir http://localhost/music/Music/The Diplomats/ | The Diplomats |  | RegexParser4
+  dir http://localhost/music/Music/The Game/ | The Game |  | RegexParser4
+  dir http://localhost/music/Music/The High & Mighty/ | The High & Mighty |  | RegexParser4
+  dir http://localhost/music/Music/The Notorious B.I.G/ | The Notorious B.I.G |  | RegexParser4
+  dir http://localhost/music/Music/The Notorious B.I.G_/ | The Notorious B.I.G_ |  | RegexParser4
+  dir http://localhost/music/Music/The O'Jays/ | The O'Jays |  | RegexParser4
+  dir http://localhost/music/Music/The Red Hot Chili Peppers/ | The Red Hot Chili Peppers |  | RegexParser4
+  dir http://localhost/music/Music/The Rolling Stones/ | The Rolling Stones |  | RegexParser4
+  dir http://localhost/music/Music/The Steve Miller Band/ | The Steve Miller Band |  | RegexParser4
+  dir http://localhost/music/Music/Thompson Square/ | Thompson Square |  | RegexParser4
+  dir http://localhost/music/Music/TI/ | TI |  | RegexParser4
+  dir http://localhost/music/Music/Timber/ | Timber |  | RegexParser4
+  dir http://localhost/music/Music/Trace Adkins/ | Trace Adkins |  | RegexParser4
+  dir http://localhost/music/Music/Train/ | Train |  | RegexParser4
+  dir http://localhost/music/Music/U2/ | U2 |  | RegexParser4
+  dir http://localhost/music/Music/U2_Passengers/ | U2_Passengers |  | RegexParser4
+  dir http://localhost/music/Music/Unknown Artist/ | Unknown Artist |  | RegexParser4
+  dir http://localhost/music/Music/Usher  feat. Beyonce & Lil' Wayne/ | Usher  feat. Beyonce & Lil' Wayne |  | RegexParser4
+  dir http://localhost/music/Music/Usher Feat. Beyonce & Lil Wayne/ | Usher Feat. Beyonce & Lil Wayne |  | RegexParser4
+  dir http://localhost/music/Music/V.Morrison,L.Donegan &C.Barber/ | V.Morrison,L.Donegan &C.Barber |  | RegexParser4
+  dir http://localhost/music/Music/Van Morrison/ | Van Morrison |  | RegexParser4
+  dir http://localhost/music/Music/Van Morrison_Lonnie Donegan_Chris Barber/ | Van Morrison_Lonnie Donegan_Chris Barber |  | RegexParser4
+  dir http://localhost/music/Music/Various Artists/ | Various Artists |  | RegexParser4
+  dir http://localhost/music/Music/Wale/ | Wale |  | RegexParser4
+  dir http://localhost/music/Music/Wesley Silva 35/ | Wesley Silva 35 |  | RegexParser4
+  dir http://localhost/music/Music/Wiz Khalifa/ | Wiz Khalifa |  | RegexParser4
+  dir http://localhost/music/Music/www.djleak.com/ | www.djleak.com |  | RegexParser4
+  dir http://localhost/music/Music/www.MzHipHop.com/ | www.MzHipHop.com |  | RegexParser4
+  dir http://localhost/music/Music/www.RnB4U.dl.am/ | www.RnB4U.dl.am |  | RegexParser4
+  dir http://localhost/music/Music/Wyclef Jean Ft. Akon, Lil Wayne & Nia/ | Wyclef Jean Ft. Akon, Lil Wayne & Nia |  | RegexParser4
+  dir http://localhost/music/Music/X Ambassadors/ | X Ambassadors |  | RegexParser4
+  dir http://localhost/music/Music/Ying Yang Twins Feat Pitbull/ | Ying Yang Twins Feat Pitbull |  | RegexParser4
+  dir http://localhost/music/Music/Young Jeezy/ | Young Jeezy |  | RegexParser4
+  dir http://localhost/music/Music/Young Money/ | Young Money |  | RegexParser4
+  dir http://localhost/music/Music/Young Money Ft. Birdman/ | Young Money Ft. Birdman |  | RegexParser4
+  dir http://localhost/music/Music/Young Money Ft. Clyde McKnight/ | Young Money Ft. Clyde McKnight |  | RegexParser4
+  dir http://localhost/music/Music/Young Money Ft. Gucci Mane/ | Young Money Ft. Gucci Mane |  | RegexParser4
+  dir http://localhost/music/Music/Young Money Ft. Lloyd/ | Young Money Ft. Lloyd |  | RegexParser4
+  dir http://localhost/music/Music/Young Money Ft. Shawt Dawg/ | Young Money Ft. Shawt Dawg |  | RegexParser4
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True

@@ -1,0 +1,28 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/Tool/SSR/ | SSR |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/Tool/TeamViewer/ | TeamViewer |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/Tool/Xshell/ | Xshell |  | ParseMaterialDesignListItemsDirectoryListing
+  file http://localhost/Tool/【Bh-Vip】大牛助手VIP破解版.apk | 【Bh-Vip】大牛助手VIP破解版.apk | 10407748 | 
+  file http://localhost/Tool/CCleaner-setup547pro.exe | CCleaner-setup547pro.exe | 16794816 | 
+  file http://localhost/Tool/frp.bat | frp.bat | 3943 | 
+  file http://localhost/Tool/IDM6.30.6.zip | IDM6.30.6.zip | 6280294 | 
+  file http://localhost/Tool/MiniServer.rar | MiniServer.rar | 25016618 | 
+  file http://localhost/Tool/netdrivepjb_1539.zip | netdrivepjb_1539.zip | 70493681 | 
+  file http://localhost/Tool/Notepad%2B%2B×64位 7.5.5 中文绿色便携版.rar | Notepad++×64位 7.5.5 中文绿色便携版.rar | 5087010 | 
+  file http://localhost/Tool/Office_KMS_Activation_V2_1.bat | Office_KMS_Activation_V2_1.bat | 7401 | 
+  file http://localhost/Tool/RA4WVPN Client.zip | RA4WVPN Client.zip | 1988350 | 
+  file http://localhost/Tool/RaiDrive_1.3.8.exe | RaiDrive_1.3.8.exe | 17899920 | 
+  file http://localhost/Tool/Skype绿色版.rar | Skype绿色版.rar | 39513312 | 
+  file http://localhost/Tool/SSTap-beta-setup-1.0.9.7.7z | SSTap-beta-setup-1.0.9.7.7z | 6954829 | 
+  file http://localhost/Tool/SSTap-beta-setup-1.1.0.1.exe.7z | SSTap-beta-setup-1.1.0.1.exe.7z | 7156629 | 
+  file http://localhost/Tool/SSTap-全局规则绿色版.zip | SSTap-全局规则绿色版.zip | 9728458 | 
+  file http://localhost/Tool/Windows KMS.cmd | Windows KMS.cmd | 8960 | 
+  file http://localhost/Tool/Windows品牌机序列号查看工具.exe | Windows品牌机序列号查看工具.exe | 9216 | 
+  file http://localhost/Tool/Wing FTP Server v5.1.3 企业版.rar | Wing FTP Server v5.1.3 企业版.rar | 10908906 | 
+  file http://localhost/Tool/WinRAR_5.40_x64_SC.exe | WinRAR_5.40_x64_SC.exe | 2282927 | 
+  file http://localhost/Tool/迅雷5不限速典藏版5.8.14.706绿色不和谐版.rar | 迅雷5不限速典藏版5.8.14.706绿色不和谐版.rar | 6389449 | 
+  file http://localhost/Tool/迅雷U享版%2Bv3.0.1.96%2Bv6%2B小俊.7z | 迅雷U享版+v3.0.1.96+v6+小俊.7z | 9816589 | 
+  file http://localhost/Tool/迅雷极速版%2Bv1.0.35.366%2BFinal%2B小俊.7z | 迅雷极速版+v1.0.35.366+Final+小俊.7z | 11065794 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=False

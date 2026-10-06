@@ -1,0 +1,12 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=Dufs error=False ok=True
+  dir http://localhost/EmptyFolder | EmptyFolder |  | Dufs
+  dir http://localhost/¡¢£¤¥ăĄƃɔʵ̆΅ЄԆԷ اܑऌঋਕએଓஒఎಐഎඐทພ༩ဒႱᄎሓᎷᐖᚖᚸᜃភᠮℕⅨ↦ | ¡¢£¤¥ăĄƃɔʵ̆΅ЄԆԷ اܑऌঋਕએଓஒఎಐഎඐทພ༩ဒႱᄎሓᎷᐖᚖᚸᜃភᠮℕⅨ↦ |  | Dufs
+  file http://localhost/asciifilename.txt | asciifilename.txt | 4 | 
+  file http://localhost/∌⌀②▄▣☂✄⠅⿴〄 | ∌⌀②▄▣☂✄⠅⿴〄 | 18611 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=Dufs error=False ok=True
+  dir http://localhost:8086/listing/EmptyFolder | EmptyFolder |  | Dufs
+  dir http://localhost:8086/listing/¡¢£¤¥ăĄƃɔʵ̆΅ЄԆԷ اܑऌঋਕએଓஒఎಐഎඐทພ༩ဒႱᄎሓᎷᐖᚖᚸᜃភᠮℕⅨ↦ | ¡¢£¤¥ăĄƃɔʵ̆΅ЄԆԷ اܑऌঋਕએଓஒఎಐഎඐทພ༩ဒႱᄎሓᎷᐖᚖᚸᜃភᠮℕⅨ↦ |  | Dufs
+  file http://localhost:8086/listing/asciifilename.txt | asciifilename.txt | 4 | 
+  file http://localhost:8086/listing/∌⌀②▄▣☂✄⠅⿴〄 | ∌⌀②▄▣☂✄⠅⿴〄 | 18611 | 

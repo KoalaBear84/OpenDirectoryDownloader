@@ -1,0 +1,12 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/aspnet_client/ | aspnet_client |  | RegexParser5
+  dir http://localhost/Comercial/ | Comercial |  | RegexParser5
+  dir http://localhost/ComicBooks/ | ComicBooks |  | RegexParser5
+  dir http://localhost/Lecture/ | Lecture |  | RegexParser5
+  dir http://localhost/Movie/ | Movie |  | RegexParser5
+  dir http://localhost/Music/ | Music |  | RegexParser5
+  file http://localhost/web.config | web.config | 168 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost:8086/web.config | web.config | 168 | 

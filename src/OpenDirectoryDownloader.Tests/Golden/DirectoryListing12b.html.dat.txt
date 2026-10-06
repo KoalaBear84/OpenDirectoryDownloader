@@ -1,0 +1,35 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/MEDIA SET/index.php?path=A.+MEDIA_NEWS%2FPUBLICATIONS%2F0.E.Velinov-+avtora_files/ | 0.E.Velinov- avtora_files |  | ParseSnifDirectoryListing
+  file http://localhost/A. MEDIA_NEWS/PUBLICATIONS/0.E.Velinov- avtora.doc | 0.E.Velinov- avtora.doc | 50688 | 
+  file http://localhost/A. MEDIA_NEWS/PUBLICATIONS/0.E.Velinov- avtora.htm | 0.E.Velinov- avtora.htm | 0 | 
+  file http://localhost/A. MEDIA_NEWS/PUBLICATIONS/1.Klasitseski Doctini.doc | 1.Klasitseski Doctini.doc | 79872 | 
+  file http://localhost/A. MEDIA_NEWS/PUBLICATIONS/1.Klasitseski Doctini.htm | 1.Klasitseski Doctini.htm | 0 | 
+  file http://localhost/A. MEDIA_NEWS/PUBLICATIONS/2.Adventnata Doctrina.doc | 2.Adventnata Doctrina.doc | 62464 | 
+  file http://localhost/A. MEDIA_NEWS/PUBLICATIONS/2.Adventnata Doctrina.htm | 2.Adventnata Doctrina.htm | 0 | 
+  file http://localhost/A. MEDIA_NEWS/PUBLICATIONS/3.Opravdanie Pavel.doc | 3.Opravdanie Pavel.doc | 46592 | 
+  file http://localhost/A. MEDIA_NEWS/PUBLICATIONS/3.Opravdanie Pavel.htm | 3.Opravdanie Pavel.htm | 0 | 
+  file http://localhost/A. MEDIA_NEWS/PUBLICATIONS/4. E.W. Vavedenie.doc | 4. E.W. Vavedenie.doc | 55808 | 
+  file http://localhost/A. MEDIA_NEWS/PUBLICATIONS/4. E.W. Vavedenie.htm | 4. E.W. Vavedenie.htm | 0 | 
+  file http://localhost/A. MEDIA_NEWS/PUBLICATIONS/5.Kritika E.W..doc | 5.Kritika E.W..doc | 40960 | 
+  file http://localhost/A. MEDIA_NEWS/PUBLICATIONS/5.Kritika E.W..htm | 5.Kritika E.W..htm | 0 | 
+  file http://localhost/A. MEDIA_NEWS/PUBLICATIONS/6.Harakteristiki na Otkrovenieto.doc | 6.Harakteristiki na Otkrovenieto.doc | 79872 | 
+  file http://localhost/A. MEDIA_NEWS/PUBLICATIONS/6.Harakteristiki na Otkrovenieto.htm | 6.Harakteristiki na Otkrovenieto.htm | 0 | 
+  file http://localhost/A. MEDIA_NEWS/PUBLICATIONS/uch%5B1%5D.urok_4.2007.doc | uch[1].urok_4.2007.doc | 432128 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=False
+  file http://localhost:8086/listing/A. MEDIA_NEWS/PUBLICATIONS/0.E.Velinov- avtora.doc | 0.E.Velinov- avtora.doc | 50688 | 
+  file http://localhost:8086/listing/A. MEDIA_NEWS/PUBLICATIONS/0.E.Velinov- avtora.htm | 0.E.Velinov- avtora.htm | 0 | 
+  file http://localhost:8086/listing/A. MEDIA_NEWS/PUBLICATIONS/1.Klasitseski Doctini.doc | 1.Klasitseski Doctini.doc | 79872 | 
+  file http://localhost:8086/listing/A. MEDIA_NEWS/PUBLICATIONS/1.Klasitseski Doctini.htm | 1.Klasitseski Doctini.htm | 0 | 
+  file http://localhost:8086/listing/A. MEDIA_NEWS/PUBLICATIONS/2.Adventnata Doctrina.doc | 2.Adventnata Doctrina.doc | 62464 | 
+  file http://localhost:8086/listing/A. MEDIA_NEWS/PUBLICATIONS/2.Adventnata Doctrina.htm | 2.Adventnata Doctrina.htm | 0 | 
+  file http://localhost:8086/listing/A. MEDIA_NEWS/PUBLICATIONS/3.Opravdanie Pavel.doc | 3.Opravdanie Pavel.doc | 46592 | 
+  file http://localhost:8086/listing/A. MEDIA_NEWS/PUBLICATIONS/3.Opravdanie Pavel.htm | 3.Opravdanie Pavel.htm | 0 | 
+  file http://localhost:8086/listing/A. MEDIA_NEWS/PUBLICATIONS/4. E.W. Vavedenie.doc | 4. E.W. Vavedenie.doc | 55808 | 
+  file http://localhost:8086/listing/A. MEDIA_NEWS/PUBLICATIONS/4. E.W. Vavedenie.htm | 4. E.W. Vavedenie.htm | 0 | 
+  file http://localhost:8086/listing/A. MEDIA_NEWS/PUBLICATIONS/5.Kritika E.W..doc | 5.Kritika E.W..doc | 40960 | 
+  file http://localhost:8086/listing/A. MEDIA_NEWS/PUBLICATIONS/5.Kritika E.W..htm | 5.Kritika E.W..htm | 0 | 
+  file http://localhost:8086/listing/A. MEDIA_NEWS/PUBLICATIONS/6.Harakteristiki na Otkrovenieto.doc | 6.Harakteristiki na Otkrovenieto.doc | 79872 | 
+  file http://localhost:8086/listing/A. MEDIA_NEWS/PUBLICATIONS/6.Harakteristiki na Otkrovenieto.htm | 6.Harakteristiki na Otkrovenieto.htm | 0 | 
+  file http://localhost:8086/listing/A. MEDIA_NEWS/PUBLICATIONS/uch%5B1%5D.urok_4.2007.doc | uch[1].urok_4.2007.doc | 432128 | 

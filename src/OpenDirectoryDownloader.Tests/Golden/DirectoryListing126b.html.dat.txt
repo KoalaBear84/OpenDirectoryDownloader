@@ -1,0 +1,8 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  file http://localhost/Kako Band - Paradise [128].mp3 | Kako Band - Paradise [128].mp3 | 3022848 | 
+  file http://localhost/Kako Band - The Loneliest (Live Version) [128].mp3 | Kako Band - The Loneliest (Live Version) [128].mp3 | 3571584 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=True
+  file http://localhost:8086/listing/Kako Band - Paradise [128].mp3 | Kako Band - Paradise [128].mp3 | 3022848 | 
+  file http://localhost:8086/listing/Kako Band - The Loneliest (Live Version) [128].mp3 | Kako Band - The Loneliest (Live Version) [128].mp3 | 3571584 | 

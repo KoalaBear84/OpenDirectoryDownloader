@@ -1,0 +1,16 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/Nginx-Fancyindex-Theme__example1.png | Nginx-Fancyindex-Theme__example1.png | 216064 | A open-source, clean and pretty theme for the FancyIndex module for the nginx webserver
+  file http://localhost/Nginx-Fancyindex-Theme__example2.png | Nginx-Fancyindex-Theme__example2.png | 71680 | A open-source, clean and pretty theme for the FancyIndex module for the nginx webserver
+  file http://localhost/Nginx-Fancyindex-Theme__example3.png | Nginx-Fancyindex-Theme__example3.png | 36864 | A open-source, clean and pretty theme for the FancyIndex module for the nginx webserver
+  file http://localhost/Nginx-Fancyindex-Theme__example4.png | Nginx-Fancyindex-Theme__example4.png | 81920 | A open-source, clean and pretty theme for the FancyIndex module for the nginx webserver
+  file http://localhost/Nginx-Fancyindex-Theme__example5.png | Nginx-Fancyindex-Theme__example5.png | 81920 | A open-source, clean and pretty theme for the FancyIndex module for the nginx webserver
+  file http://localhost/Nginx-Fancyindex-Theme__example6.png | Nginx-Fancyindex-Theme__example6.png | 71680 | A open-source, clean and pretty theme for the FancyIndex module for the nginx webserver
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost:8086/listing/Nginx-Fancyindex-Theme__example1.png | Nginx-Fancyindex-Theme__example1.png | 216064 | A open-source, clean and pretty theme for the FancyIndex module for the nginx webserver
+  file http://localhost:8086/listing/Nginx-Fancyindex-Theme__example2.png | Nginx-Fancyindex-Theme__example2.png | 71680 | A open-source, clean and pretty theme for the FancyIndex module for the nginx webserver
+  file http://localhost:8086/listing/Nginx-Fancyindex-Theme__example3.png | Nginx-Fancyindex-Theme__example3.png | 36864 | A open-source, clean and pretty theme for the FancyIndex module for the nginx webserver
+  file http://localhost:8086/listing/Nginx-Fancyindex-Theme__example4.png | Nginx-Fancyindex-Theme__example4.png | 81920 | A open-source, clean and pretty theme for the FancyIndex module for the nginx webserver
+  file http://localhost:8086/listing/Nginx-Fancyindex-Theme__example5.png | Nginx-Fancyindex-Theme__example5.png | 81920 | A open-source, clean and pretty theme for the FancyIndex module for the nginx webserver
+  file http://localhost:8086/listing/Nginx-Fancyindex-Theme__example6.png | Nginx-Fancyindex-Theme__example6.png | 71680 | A open-source, clean and pretty theme for the FancyIndex module for the nginx webserver

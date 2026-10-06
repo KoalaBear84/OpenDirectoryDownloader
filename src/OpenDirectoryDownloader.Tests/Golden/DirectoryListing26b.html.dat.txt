@@ -1,0 +1,6 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost/onlyyou.txt | onlyyou.txt | 875 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost:8086/listing/onlyyou.txt | onlyyou.txt | 875 | 

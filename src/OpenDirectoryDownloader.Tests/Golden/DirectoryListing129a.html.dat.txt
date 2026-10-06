@@ -1,0 +1,24 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/ghostpdl/ | ghostpdl |  | RegexParser10
+  file http://localhost/Easy Effortless Fix for Your Dowagers Hump!-A_hSiiLtKeU.mp4 | Easy Effortless Fix for Your Dowagers Hump!-A_hSiiLtKeU.mp4 | 14680064 | 
+  file http://localhost/Firmware 14.1.1.zip | Firmware 14.1.1.zip | 335544320 | 
+  file http://localhost/How to Fix a Neck Hump at Home (FAST) _ With FREE Exercise Sheet!-T43753AfaKY.mp4 | How to Fix a Neck Hump at Home (FAST) _ With FREE Exercise Sheet!-T43753AfaKY.mp4 | 44040192 | 
+  file http://localhost/How to improve hunchback posture while you sleep - the best sleeping position-OTktJvum7cs.mp4 | How to improve hunchback posture while you sleep - the best sleeping position-OTktJvum7cs.mp4 | 25165824 | 
+  file http://localhost/How to sleep with Anterior Pelvic Tilt - the best sleeping positions for anterior tilt and back pain-0O-pnhwqReE.mp4 | How to sleep with Anterior Pelvic Tilt - the best sleeping positions for anterior tilt and back pain-0O-pnhwqReE.mp4 | 15728640 | 
+  file http://localhost/Yo-Kai Watch (USA).7z | Yo-Kai Watch (USA).7z | 911212544 | 
+  file http://localhost/gba_bios.zip | gba_bios.zip | 13312 | 
+  file http://localhost/ghostpdl.tar.xz | ghostpdl.tar.xz | 256901120 | 
+  file http://localhost/ps4remoteplayinstaller.zip | ps4remoteplayinstaller.zip | 10485760 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost:8086/listing/ghostpdl/ | ghostpdl |  | RegexParser10
+  file http://localhost:8086/listing/Easy Effortless Fix for Your Dowagers Hump!-A_hSiiLtKeU.mp4 | Easy Effortless Fix for Your Dowagers Hump!-A_hSiiLtKeU.mp4 | 14680064 | 
+  file http://localhost:8086/listing/Firmware 14.1.1.zip | Firmware 14.1.1.zip | 335544320 | 
+  file http://localhost:8086/listing/How to Fix a Neck Hump at Home (FAST) _ With FREE Exercise Sheet!-T43753AfaKY.mp4 | How to Fix a Neck Hump at Home (FAST) _ With FREE Exercise Sheet!-T43753AfaKY.mp4 | 44040192 | 
+  file http://localhost:8086/listing/How to improve hunchback posture while you sleep - the best sleeping position-OTktJvum7cs.mp4 | How to improve hunchback posture while you sleep - the best sleeping position-OTktJvum7cs.mp4 | 25165824 | 
+  file http://localhost:8086/listing/How to sleep with Anterior Pelvic Tilt - the best sleeping positions for anterior tilt and back pain-0O-pnhwqReE.mp4 | How to sleep with Anterior Pelvic Tilt - the best sleeping positions for anterior tilt and back pain-0O-pnhwqReE.mp4 | 15728640 | 
+  file http://localhost:8086/listing/Yo-Kai Watch (USA).7z | Yo-Kai Watch (USA).7z | 911212544 | 
+  file http://localhost:8086/listing/gba_bios.zip | gba_bios.zip | 13312 | 
+  file http://localhost:8086/listing/ghostpdl.tar.xz | ghostpdl.tar.xz | 256901120 | 
+  file http://localhost:8086/listing/ps4remoteplayinstaller.zip | ps4remoteplayinstaller.zip | 10485760 | 

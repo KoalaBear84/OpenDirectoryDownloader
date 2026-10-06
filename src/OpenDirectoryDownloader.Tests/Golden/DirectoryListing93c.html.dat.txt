@@ -1,0 +1,92 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  dir http://localhost/4.40%2C 4.41%2C 4.46 and 4.50 PS3 Key | 4.40, 4.41, 4.46 and 4.50 PS3 Key |  | ParseTablesDirectoryListing
+  dir http://localhost/4.46 Keys | 4.46 Keys |  | ParseTablesDirectoryListing
+  dir http://localhost/4.50 Keys | 4.50 Keys |  | ParseTablesDirectoryListing
+  dir http://localhost/4.53 Keys | 4.53 Keys |  | ParseTablesDirectoryListing
+  dir http://localhost/4.55 Keys | 4.55 Keys |  | ParseTablesDirectoryListing
+  dir http://localhost/4.60 Keys | 4.60 Keys |  | ParseTablesDirectoryListing
+  dir http://localhost/4.65 Keys | 4.65 Keys |  | ParseTablesDirectoryListing
+  dir http://localhost/CP Update Crypt | CP Update Crypt |  | ParseTablesDirectoryListing
+  dir http://localhost/Eleganz | Eleganz |  | ParseTablesDirectoryListing
+  dir http://localhost/Gitbrew | Gitbrew |  | ParseTablesDirectoryListing
+  dir http://localhost/Graf%27s Payload | Graf's Payload |  | ParseTablesDirectoryListing
+  dir http://localhost/HVdebug | HVdebug |  | ParseTablesDirectoryListing
+  dir http://localhost/Hypervisor Bible | Hypervisor Bible |  | ParseTablesDirectoryListing
+  dir http://localhost/IrisManager | IrisManager |  | ParseTablesDirectoryListing
+  dir http://localhost/MFW Tasks %28Custom%29 | MFW Tasks (Custom) |  | ParseTablesDirectoryListing
+  dir http://localhost/PKG-SPKG_Tools | PKG-SPKG_Tools |  | ParseTablesDirectoryListing
+  dir http://localhost/PS3 Tools | PS3 Tools |  | ParseTablesDirectoryListing
+  dir http://localhost/PS3 Tools Full | PS3 Tools Full |  | ParseTablesDirectoryListing
+  dir http://localhost/PS3mlib | PS3mlib |  | ParseTablesDirectoryListing
+  dir http://localhost/PSGrade | PSGrade |  | ParseTablesDirectoryListing
+  dir http://localhost/PSL1GHT SDK | PSL1GHT SDK |  | ParseTablesDirectoryListing
+  dir http://localhost/PSVita | PSVita |  | ParseTablesDirectoryListing
+  dir http://localhost/Playstation 3 | Playstation 3 |  | ParseTablesDirectoryListing
+  dir http://localhost/Ps3 4.41 Pub %2B Priv Keys | Ps3 4.41 Pub + Priv Keys |  | ParseTablesDirectoryListing
+  dir http://localhost/Simple PS3 Tools | Simple PS3 Tools |  | ParseTablesDirectoryListing
+  dir http://localhost/ThatOtherDev-Projects | ThatOtherDev-Projects |  | ParseTablesDirectoryListing
+  dir http://localhost/YA2D library for PS3 | YA2D library for PS3 |  | ParseTablesDirectoryListing
+  dir http://localhost/g5freebsd | g5freebsd |  | ParseTablesDirectoryListing
+  dir http://localhost/g5linux | g5linux |  | ParseTablesDirectoryListing
+  dir http://localhost/libps3gui | libps3gui |  | ParseTablesDirectoryListing
+  dir http://localhost/lv0tool | lv0tool |  | ParseTablesDirectoryListing
+  dir http://localhost/lv2patcher | lv2patcher |  | ParseTablesDirectoryListing
+  dir http://localhost/memdump | memdump |  | ParseTablesDirectoryListing
+  dir http://localhost/multiman | multiman |  | ParseTablesDirectoryListing
+  dir http://localhost/payloader3 | payloader3 |  | ParseTablesDirectoryListing
+  dir http://localhost/playground | playground |  | ParseTablesDirectoryListing
+  dir http://localhost/ps2classic | ps2classic |  | ParseTablesDirectoryListing
+  dir http://localhost/ps3freebsd | ps3freebsd |  | ParseTablesDirectoryListing
+  dir http://localhost/ps3keys | ps3keys |  | ParseTablesDirectoryListing
+  dir http://localhost/ps3linux | ps3linux |  | ParseTablesDirectoryListing
+  dir http://localhost/ps3openwrt | ps3openwrt |  | ParseTablesDirectoryListing
+  dir http://localhost/ps3otheros | ps3otheros |  | ParseTablesDirectoryListing
+  dir http://localhost/reversing | reversing |  | ParseTablesDirectoryListing
+  dir http://localhost/spu | spu |  | ParseTablesDirectoryListing
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=True
+  dir http://localhost:8086/listing/4.40%2C 4.41%2C 4.46 and 4.50 PS3 Key | 4.40, 4.41, 4.46 and 4.50 PS3 Key |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/4.46 Keys | 4.46 Keys |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/4.50 Keys | 4.50 Keys |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/4.53 Keys | 4.53 Keys |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/4.55 Keys | 4.55 Keys |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/4.60 Keys | 4.60 Keys |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/4.65 Keys | 4.65 Keys |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/CP Update Crypt | CP Update Crypt |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Eleganz | Eleganz |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Gitbrew | Gitbrew |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Graf%27s Payload | Graf's Payload |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/HVdebug | HVdebug |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Hypervisor Bible | Hypervisor Bible |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/IrisManager | IrisManager |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/MFW Tasks %28Custom%29 | MFW Tasks (Custom) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/PKG-SPKG_Tools | PKG-SPKG_Tools |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/PS3 Tools | PS3 Tools |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/PS3 Tools Full | PS3 Tools Full |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/PS3mlib | PS3mlib |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/PSGrade | PSGrade |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/PSL1GHT SDK | PSL1GHT SDK |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/PSVita | PSVita |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Playstation 3 | Playstation 3 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ps3 4.41 Pub %2B Priv Keys | Ps3 4.41 Pub + Priv Keys |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Simple PS3 Tools | Simple PS3 Tools |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ThatOtherDev-Projects | ThatOtherDev-Projects |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/YA2D library for PS3 | YA2D library for PS3 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/g5freebsd | g5freebsd |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/g5linux | g5linux |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/libps3gui | libps3gui |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/lv0tool | lv0tool |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/lv2patcher | lv2patcher |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/memdump | memdump |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/multiman | multiman |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/payloader3 | payloader3 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/playground | playground |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ps2classic | ps2classic |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ps3freebsd | ps3freebsd |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ps3keys | ps3keys |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ps3linux | ps3linux |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ps3openwrt | ps3openwrt |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/ps3otheros | ps3otheros |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/reversing | reversing |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/spu | spu |  | ParseTablesDirectoryListing

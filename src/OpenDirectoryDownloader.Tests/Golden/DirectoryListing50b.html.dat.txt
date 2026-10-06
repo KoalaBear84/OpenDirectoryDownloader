@@ -1,0 +1,10 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/old/ | old |  | ParseTablesDirectoryListing
+  file http://localhost/Inheritance-0.15.5.tar.gz | Inheritance-0.15.5.tar.gz | 27648 | 
+  file http://localhost/TRDemo-0.15.5.tar.gz | TRDemo-0.15.5.tar.gz | 21504 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/old/ | old |  | ParseTablesDirectoryListing
+  file http://localhost:8086/listing/Inheritance-0.15.5.tar.gz | Inheritance-0.15.5.tar.gz | 27648 | 
+  file http://localhost:8086/listing/TRDemo-0.15.5.tar.gz | TRDemo-0.15.5.tar.gz | 21504 | 

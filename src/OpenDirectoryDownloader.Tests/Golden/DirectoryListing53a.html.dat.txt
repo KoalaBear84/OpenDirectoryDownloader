@@ -1,0 +1,31 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/music/dun-dun-dun.m4a | dun-dun-dun.m4a | 99154 | 
+  file http://localhost/music/dun-dun-dun.mp3 | dun-dun-dun.mp3 | 114975 | 
+  file http://localhost/music/dun-dun-dun.wav | dun-dun-dun.wav | 984648 | 
+  file http://localhost/music/gong.m4a | gong.m4a | 442993 | 
+  file http://localhost/music/gong.mp3 | gong.mp3 | 323942 | 
+  file http://localhost/music/gong.wav | gong.wav | 2831155 | 
+  file http://localhost/music/intro.m4a | intro.m4a | 856740 | 
+  file http://localhost/music/intro.mp3 | intro.mp3 | 641597 | 
+  file http://localhost/music/intro.wav | intro.wav | 5630853 | 
+  file http://localhost/music/pick-paddle.m4a | pick-paddle.m4a | 511836 | 
+  file http://localhost/music/pick-paddle.mp3 | pick-paddle.mp3 | 321341 | 
+  file http://localhost/music/pick-paddle.wav | pick-paddle.wav | 2799698 | 
+  file http://localhost/music/retro-crime-movie.m4a | retro-crime-movie.m4a | 779735 | 
+  file http://localhost/music/retro-crime-movie.mp3 | retro-crime-movie.mp3 | 486441 | 
+  file http://localhost/music/retro-crime-movie.wav | retro-crime-movie.wav | 8514437 | 
+  file http://localhost/music/settings.m4a | settings.m4a | 1960837 | 
+  file http://localhost/music/settings.mp3 | settings.mp3 | 1195377 | 
+  file http://localhost/music/settings.wav | settings.wav | 10559160 | 
+  file http://localhost/music/slayer-seasons-in-the-abyss.m4a | slayer-seasons-in-the-abyss.m4a | 7675576 | 
+  file http://localhost/music/slayer-seasons-in-the-abyss.mp3 | slayer-seasons-in-the-abyss.mp3 | 4236247 | 
+  file http://localhost/music/slayer-seasons-in-the-abyss.wav | slayer-seasons-in-the-abyss.wav | 37381734 | 
+  file http://localhost/music/story.m4a | story.m4a | 556012 | 
+  file http://localhost/music/story.mp3 | story.mp3 | 417987 | 
+  file http://localhost/music/story.wav | story.wav | 3659530 | 
+  file http://localhost/music/tournament.m4a | tournament.m4a | 666604 | 
+  file http://localhost/music/tournament.mp3 | tournament.mp3 | 407542 | 
+  file http://localhost/music/tournament.wav | tournament.wav | 3565158 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True

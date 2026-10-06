@@ -1,0 +1,14 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/1. Sprawl Trilogy/ | 1. Sprawl Trilogy |  | RegexParser1
+  dir http://localhost/2. Bridge Trilogy/ | 2. Bridge Trilogy |  | RegexParser1
+  dir http://localhost/3. Bigend Trilogy/ | 3. Bigend Trilogy |  | RegexParser1
+  dir http://localhost/4. Short story anthology/ | 4. Short story anthology |  | RegexParser1
+  dir http://localhost/5. Collaboration/ | 5. Collaboration |  | RegexParser1
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost:8086/listing/1. Sprawl Trilogy/ | 1. Sprawl Trilogy |  | RegexParser1
+  dir http://localhost:8086/listing/2. Bridge Trilogy/ | 2. Bridge Trilogy |  | RegexParser1
+  dir http://localhost:8086/listing/3. Bigend Trilogy/ | 3. Bigend Trilogy |  | RegexParser1
+  dir http://localhost:8086/listing/4. Short story anthology/ | 4. Short story anthology |  | RegexParser1
+  dir http://localhost:8086/listing/5. Collaboration/ | 5. Collaboration |  | RegexParser1

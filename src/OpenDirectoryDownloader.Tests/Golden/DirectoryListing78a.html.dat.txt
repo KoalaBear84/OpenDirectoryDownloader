@@ -1,0 +1,28 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  dir http://localhost/Archives/edgar/data/19617/000089109219002813 | 000089109219002813 |  | ParseTablesDirectoryListing
+  dir http://localhost/Archives/edgar/data/19617/000161577419003994 | 000161577419003994 |  | ParseTablesDirectoryListing
+  dir http://localhost/Archives/edgar/data/19617/000089109219002790 | 000089109219002790 |  | ParseTablesDirectoryListing
+  dir http://localhost/Archives/edgar/data/19617/000161577419003973 | 000161577419003973 |  | ParseTablesDirectoryListing
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseListItemsDirectoryListing error=False ok=True
+  file http://localhost:8086/about.shtml | about.shtml |  | 
+  file http://localhost:8086/jobs.shtml | jobs.shtml |  | 
+  file http://localhost:8086/contact.shtml | contact.shtml |  | 
+  file http://localhost:8086/divisions.shtml | divisions.shtml |  | 
+  file http://localhost:8086/divisions.shtml | divisions.shtml |  | 
+  file http://localhost:8086/litigation.shtml | litigation.shtml |  | 
+  file http://localhost:8086/alj.shtml | alj.shtml |  | 
+  file http://localhost:8086/rules.shtml | rules.shtml |  | 
+  file http://localhost:8086/interps.shtml | interps.shtml |  | 
+  file http://localhost:8086/investor.shtml | investor.shtml |  | 
+  file http://localhost:8086/answers.shtml | answers.shtml |  | 
+  file http://localhost:8086/edgar.shtml | edgar.shtml |  | 
+  file http://localhost:8086/sitemap.shtml | sitemap.shtml |  | 
+  file http://localhost:8086/privacy.htm | privacy.htm |  | 
+  file http://localhost:8086/jobs.shtml | jobs.shtml |  | 
+  file http://localhost:8086/contact.shtml | contact.shtml |  | 
+  file http://localhost:8086/foia.shtml | foia.shtml |  | 
+  file http://localhost:8086/eeoinfo.shtml | eeoinfo.shtml |  | 
+  file http://localhost:8086/plainwriting.shtml | plainwriting.shtml |  | 
+  file http://localhost:8086/links.shtml | links.shtml |  | 

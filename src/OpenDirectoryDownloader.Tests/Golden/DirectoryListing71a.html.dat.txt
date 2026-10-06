@@ -1,0 +1,38 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/12.04.5/ | 12.04.5 | Ubuntu 12.04.5 LTS (Precise Pangolin) | RegexParser1
+  dir http://localhost/12.04/ | 12.04 | Ubuntu 12.04.5 LTS (Precise Pangolin) | RegexParser1
+  dir http://localhost/14.04.5/ | 14.04.5 | Ubuntu 14.04.5 LTS (Trusty Tahr) | RegexParser1
+  dir http://localhost/14.04/ | 14.04 | Ubuntu 14.04.5 LTS (Trusty Tahr) | RegexParser1
+  dir http://localhost/16.04.5/ | 16.04.5 | Ubuntu 16.04.5 LTS (Xenial Xerus) | RegexParser1
+  dir http://localhost/16.04/ | 16.04 | Ubuntu 16.04.5 LTS (Xenial Xerus) | RegexParser1
+  dir http://localhost/18.04.1.0/ | 18.04.1.0 | Ubuntu 18.04.1 LTS (Bionic Beaver) | RegexParser1
+  dir http://localhost/18.04.1/ | 18.04.1 | Ubuntu 18.04.1 LTS (Bionic Beaver) | RegexParser1
+  dir http://localhost/18.04/ | 18.04 | Ubuntu 18.04.1 LTS (Bionic Beaver) | RegexParser1
+  dir http://localhost/18.10/ | 18.10 | Ubuntu 18.10 (Cosmic Cuttlefish) | RegexParser1
+  dir http://localhost/bionic/ | bionic | Ubuntu 18.04.1 LTS (Bionic Beaver) | RegexParser1
+  dir http://localhost/cosmic/ | cosmic | Ubuntu 18.10 (Cosmic Cuttlefish) | RegexParser1
+  dir http://localhost/precise/ | precise | Ubuntu 12.04.5 LTS (Precise Pangolin) | RegexParser1
+  dir http://localhost/project/ | project |  | RegexParser1
+  dir http://localhost/trusty/ | trusty | Ubuntu 14.04.5 LTS (Trusty Tahr) | RegexParser1
+  dir http://localhost/ubuntu-core/ | ubuntu-core |  | RegexParser1
+  dir http://localhost/xenial/ | xenial | Ubuntu 16.04.5 LTS (Xenial Xerus) | RegexParser1
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost:8086/listing/12.04.5/ | 12.04.5 | Ubuntu 12.04.5 LTS (Precise Pangolin) | RegexParser1
+  dir http://localhost:8086/listing/12.04/ | 12.04 | Ubuntu 12.04.5 LTS (Precise Pangolin) | RegexParser1
+  dir http://localhost:8086/listing/14.04.5/ | 14.04.5 | Ubuntu 14.04.5 LTS (Trusty Tahr) | RegexParser1
+  dir http://localhost:8086/listing/14.04/ | 14.04 | Ubuntu 14.04.5 LTS (Trusty Tahr) | RegexParser1
+  dir http://localhost:8086/listing/16.04.5/ | 16.04.5 | Ubuntu 16.04.5 LTS (Xenial Xerus) | RegexParser1
+  dir http://localhost:8086/listing/16.04/ | 16.04 | Ubuntu 16.04.5 LTS (Xenial Xerus) | RegexParser1
+  dir http://localhost:8086/listing/18.04.1.0/ | 18.04.1.0 | Ubuntu 18.04.1 LTS (Bionic Beaver) | RegexParser1
+  dir http://localhost:8086/listing/18.04.1/ | 18.04.1 | Ubuntu 18.04.1 LTS (Bionic Beaver) | RegexParser1
+  dir http://localhost:8086/listing/18.04/ | 18.04 | Ubuntu 18.04.1 LTS (Bionic Beaver) | RegexParser1
+  dir http://localhost:8086/listing/18.10/ | 18.10 | Ubuntu 18.10 (Cosmic Cuttlefish) | RegexParser1
+  dir http://localhost:8086/listing/bionic/ | bionic | Ubuntu 18.04.1 LTS (Bionic Beaver) | RegexParser1
+  dir http://localhost:8086/listing/cosmic/ | cosmic | Ubuntu 18.10 (Cosmic Cuttlefish) | RegexParser1
+  dir http://localhost:8086/listing/precise/ | precise | Ubuntu 12.04.5 LTS (Precise Pangolin) | RegexParser1
+  dir http://localhost:8086/listing/project/ | project |  | RegexParser1
+  dir http://localhost:8086/listing/trusty/ | trusty | Ubuntu 14.04.5 LTS (Trusty Tahr) | RegexParser1
+  dir http://localhost:8086/listing/ubuntu-core/ | ubuntu-core |  | RegexParser1
+  dir http://localhost:8086/listing/xenial/ | xenial | Ubuntu 16.04.5 LTS (Xenial Xerus) | RegexParser1

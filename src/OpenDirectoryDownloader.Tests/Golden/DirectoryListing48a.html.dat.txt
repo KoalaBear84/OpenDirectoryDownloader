@@ -1,0 +1,6 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseLinksDirectoryListing error=False ok=True
+  dir http://localhost/DirectoryList.asp?SD=United Kingdom and Ireland/AGA/2. AGA Discontinued/Aga electric cookers/AGA 6-4 Ceramic Hob Pre Oven Efficiency/ | AGA 6-4 Ceramic Hob Pre Oven Efficiency |  | ParseLinksDirectoryListing
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/DirectoryList.asp?SD=United Kingdom and Ireland/AGA/2. AGA Discontinued/Aga electric cookers/AGA 6-4 Ceramic Hob Pre Oven Efficiency/ | AGA 6-4 Ceramic Hob Pre Oven Efficiency |  | ParseLinksDirectoryListing

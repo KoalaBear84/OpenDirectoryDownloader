@@ -1,0 +1,32 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseListItemsDirectoryListing error=False ok=True
+  file http://localhost/12Monkeys/s1/12.Monkeys.S01E01.480p.mkv | 12.Monkeys.S01E01.480p.mkv | 195305472 | 
+  file http://localhost/12Monkeys/s1/12.Monkeys.S01E02.480p.mkv | 12.Monkeys.S01E02.480p.mkv | 164727808 | 
+  file http://localhost/12Monkeys/s1/12.Monkeys.S01E03.480p.mkv | 12.Monkeys.S01E03.480p.mkv | 213146624 | 
+  file http://localhost/12Monkeys/s1/12.Monkeys.S01E04.480p.mkv | 12.Monkeys.S01E04.480p.mkv | 180466688 | 
+  file http://localhost/12Monkeys/s1/12.Monkeys.S01E05.480p.mkv | 12.Monkeys.S01E05.480p.mkv | 156086272 | 
+  file http://localhost/12Monkeys/s1/12.Monkeys.S01E06.480p.mkv | 12.Monkeys.S01E06.480p.mkv | 157021184 | 
+  file http://localhost/12Monkeys/s1/12.Monkeys.S01E07.480p.mkv | 12.Monkeys.S01E07.480p.mkv | 166665216 | 
+  file http://localhost/12Monkeys/s1/12.Monkeys.S01E08.480p.mkv | 12.Monkeys.S01E08.480p.mkv | 157131776 | 
+  file http://localhost/12Monkeys/s1/12.Monkeys.S01E09.480p.mkv | 12.Monkeys.S01E09.480p.mkv | 190525440 | 
+  file http://localhost/12Monkeys/s1/12.Monkeys.S01E10.INTERNAL.480p.mkv | 12.Monkeys.S01E10.INTERNAL.480p.mkv | 167533568 | 
+  file http://localhost/12Monkeys/s1/12.Monkeys.S01E11.INTERNAL.480p.mkv | 12.Monkeys.S01E11.INTERNAL.480p.mkv | 170424320 | 
+  file http://localhost/12Monkeys/s1/12.Monkeys.S01E12.480p.mkv | 12.Monkeys.S01E12.480p.mkv | 164551680 | 
+  file http://localhost/12Monkeys/s1/12.Monkeys.S01E13.480p.mkv | 12.Monkeys.S01E13.480p.mkv | 162867200 | 
+  file http://localhost/12Monkeys/s1/download.php | download.php | 4096 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseListItemsDirectoryListing error=False ok=True
+  file http://localhost:8086/listing/12Monkeys/s1/12.Monkeys.S01E01.480p.mkv | 12.Monkeys.S01E01.480p.mkv | 195305472 | 
+  file http://localhost:8086/listing/12Monkeys/s1/12.Monkeys.S01E02.480p.mkv | 12.Monkeys.S01E02.480p.mkv | 164727808 | 
+  file http://localhost:8086/listing/12Monkeys/s1/12.Monkeys.S01E03.480p.mkv | 12.Monkeys.S01E03.480p.mkv | 213146624 | 
+  file http://localhost:8086/listing/12Monkeys/s1/12.Monkeys.S01E04.480p.mkv | 12.Monkeys.S01E04.480p.mkv | 180466688 | 
+  file http://localhost:8086/listing/12Monkeys/s1/12.Monkeys.S01E05.480p.mkv | 12.Monkeys.S01E05.480p.mkv | 156086272 | 
+  file http://localhost:8086/listing/12Monkeys/s1/12.Monkeys.S01E06.480p.mkv | 12.Monkeys.S01E06.480p.mkv | 157021184 | 
+  file http://localhost:8086/listing/12Monkeys/s1/12.Monkeys.S01E07.480p.mkv | 12.Monkeys.S01E07.480p.mkv | 166665216 | 
+  file http://localhost:8086/listing/12Monkeys/s1/12.Monkeys.S01E08.480p.mkv | 12.Monkeys.S01E08.480p.mkv | 157131776 | 
+  file http://localhost:8086/listing/12Monkeys/s1/12.Monkeys.S01E09.480p.mkv | 12.Monkeys.S01E09.480p.mkv | 190525440 | 
+  file http://localhost:8086/listing/12Monkeys/s1/12.Monkeys.S01E10.INTERNAL.480p.mkv | 12.Monkeys.S01E10.INTERNAL.480p.mkv | 167533568 | 
+  file http://localhost:8086/listing/12Monkeys/s1/12.Monkeys.S01E11.INTERNAL.480p.mkv | 12.Monkeys.S01E11.INTERNAL.480p.mkv | 170424320 | 
+  file http://localhost:8086/listing/12Monkeys/s1/12.Monkeys.S01E12.480p.mkv | 12.Monkeys.S01E12.480p.mkv | 164551680 | 
+  file http://localhost:8086/listing/12Monkeys/s1/12.Monkeys.S01E13.480p.mkv | 12.Monkeys.S01E13.480p.mkv | 162867200 | 
+  file http://localhost:8086/listing/12Monkeys/s1/download.php | download.php | 4096 | 

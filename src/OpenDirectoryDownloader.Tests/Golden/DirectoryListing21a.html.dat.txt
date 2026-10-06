@@ -1,0 +1,26 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/artgfx/ | artgfx | artcore labyrinthe gfx demos | RegexParser1
+  dir http://localhost/coding/ | coding | prog docs sources rezo asm c/c++ perl | RegexParser1
+  dir http://localhost/crypto/ | crypto | analysis algo stegano wordlists | RegexParser1
+  dir http://localhost/emags/ | emags | ~2001] les vieux emags hpcav | RegexParser1
+  dir http://localhost/esprit/ | esprit | le maitre des âmes | RegexParser1
+  dir http://localhost/racine/ | racine |  | RegexParser1
+  dir http://localhost/reseau/ | reseau | sekurité, monitor et défense réseau | RegexParser1
+  dir http://localhost/sysadm/ | sysadm | unix guides admin seku kernel | RegexParser1
+  dir http://localhost/tech/ | tech |  | RegexParser1
+  dir http://localhost/windoz/ | windoz | magicien d'oz et univers microsoft | RegexParser1
+  file http://localhost/repositorium.html | repositorium.html | 4915 | ��`����,��,����`����,��,����`����,��,����`�����`����,��,����`����,��,�
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost:8086/listing/artgfx/ | artgfx | artcore labyrinthe gfx demos | RegexParser1
+  dir http://localhost:8086/listing/coding/ | coding | prog docs sources rezo asm c/c++ perl | RegexParser1
+  dir http://localhost:8086/listing/crypto/ | crypto | analysis algo stegano wordlists | RegexParser1
+  dir http://localhost:8086/listing/emags/ | emags | ~2001] les vieux emags hpcav | RegexParser1
+  dir http://localhost:8086/listing/esprit/ | esprit | le maitre des âmes | RegexParser1
+  dir http://localhost:8086/listing/racine/ | racine |  | RegexParser1
+  dir http://localhost:8086/listing/reseau/ | reseau | sekurité, monitor et défense réseau | RegexParser1
+  dir http://localhost:8086/listing/sysadm/ | sysadm | unix guides admin seku kernel | RegexParser1
+  dir http://localhost:8086/listing/tech/ | tech |  | RegexParser1
+  dir http://localhost:8086/listing/windoz/ | windoz | magicien d'oz et univers microsoft | RegexParser1
+  file http://localhost:8086/listing/repositorium.html | repositorium.html | 4915 | ��`����,��,����`����,��,����`����,��,����`�����`����,��,����`����,��,�

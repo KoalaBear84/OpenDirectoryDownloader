@@ -1,0 +1,24 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/Music/index.php?dir=Musica/Abril 2012/17-4-2012/ | 17-4-2012 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Abril 2012/23-4-2012/ | 23-4-2012 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Abril 2012/Musica urbana 2012/ | Musica urbana 2012 |  | ParseTablesDirectoryListing
+  file http://localhost/Music/index.php?dir=Musica%2FAbril%202012%2F&file=Alex%20Bueno%20-%20Mi%20Razon%20%2528Tema%20New%202012%2529.mp3 | Alex Bueno - Mi Razon %28Tema New 2012%29.mp3 | 3565158 | 
+  file http://localhost/Music/index.php?dir=Musica%2FAbril%202012%2F&file=Chimbala%20-%20Te%20Prendo%20Nuevo%202012.mp3 | Chimbala - Te Prendo Nuevo 2012.mp3 | 2726298 | 
+  file http://localhost/Music/index.php?dir=Musica%2FAbril%202012%2F&file=Chino%20%2526%20Nacho%20Ft%20Jay%20Sean%20-%20Bebe%20Bonita%20%2528Techno%20Remix%2529.mp3 | Chino %26 Nacho Ft Jay Sean - Bebe Bonita %28Techno Remix%29.mp3 | 9646899 | 
+  file http://localhost/Music/index.php?dir=Musica%2FAbril%202012%2F&file=Coldplay%20Feat.%20Rihanna%20-%20Princess%20Of%20China%20%2528Final%2529.mp3 | Coldplay Feat. Rihanna - Princess Of China %28Final%29.mp3 | 3460301 | 
+  file http://localhost/Music/index.php?dir=Musica%2FAbril%202012%2F&file=Flo%20Rida%20-%20Whistle.mp3 | Flo Rida - Whistle.mp3 | 3565158 | 
+  file http://localhost/Music/index.php?dir=Musica%2FAbril%202012%2F&file=Havana%20Brown%20-%20City%20Of%20Darkness.mp3 | Havana Brown - City Of Darkness.mp3 | 3355443 | 
+  file http://localhost/Music/index.php?dir=Musica%2FAbril%202012%2F&file=K-Milo%20-%20Me%20Robaste%20El%20Corazon%20Nuevo%202012.mp3 | K-Milo - Me Robaste El Corazon Nuevo 2012.mp3 | 3250586 | 
+  file http://localhost/Music/index.php?dir=Musica%2FAbril%202012%2F&file=Michel%20Telo%20Ft.%202NYCe%20-%20Ai%20Se%20Eu%20Te%20Pego%20%2528Official%20Remix%2529.mp3 | Michel Telo Ft. 2NYCe - Ai Se Eu Te Pego %28Official Remix%29.mp3 | 7025459 | 
+  file http://localhost/Music/index.php?dir=Musica%2FAbril%202012%2F&file=Michel%20Telo%20Ft%20Pitbull%20-%20Ai%20Se%20Eu%20Te%20Pego%20%2528Remix%2529.mp3 | Michel Telo Ft Pitbull - Ai Se Eu Te Pego %28Remix%29.mp3 | 6501171 | 
+  file http://localhost/Music/index.php?dir=Musica%2FAbril%202012%2F&file=Miguel%20Adames%20-%20No%20Hay%20Manera.mp3 | Miguel Adames - No Hay Manera.mp3 | 4299162 | 
+  file http://localhost/Music/index.php?dir=Musica%2FAbril%202012%2F&file=Mike%201%20-%20No%20Excuse.mp3 | Mike 1 - No Excuse.mp3 | 4089446 | 
+  file http://localhost/Music/index.php?dir=Musica%2FAbril%202012%2F&file=Omega%20El%20Fuerte%20-%20Un%20Dia%20De%20Suerte%20En%20Vivola.mp3 | Omega El Fuerte - Un Dia De Suerte En Vivola.mp3 | 6081741 | 
+  file http://localhost/Music/index.php?dir=Musica%2FAbril%202012%2F&file=Rihanna%20-%20Where%20Have%20You%20Been%20%2528Album%20Version%2529%20%255BITunes%20Plus%255D.mp3 | Rihanna - Where Have You Been %28Album Version%29 %5BITunes Plus%5D.mp3 | 3879731 | 
+  file http://localhost/Music/index.php?dir=Musica%2FAbril%202012%2F&file=Sensato%20Del%20Patio%20Ft.%20Pitbull%20-%20Crazy%20People%2528Gente%20Loca%2529%20Remix.mp3 | Sensato Del Patio Ft. Pitbull - Crazy People%28Gente Loca%29 Remix.mp3 | 6396314 | 
+  file http://localhost/Music/index.php?dir=Musica%2FAbril%202012%2F&file=Super%20Don%20Miguelo%20-%20Si%20Tu%20Te%20Murieras%20%2528Original%2529.mp3 | Super Don Miguelo - Si Tu Te Murieras %28Original%29.mp3 | 3460301 | 
+  file http://localhost/Music/index.php?dir=Musica%2FAbril%202012%2F&file=Usher%20-%20Climax%20Contest.mp3 | Usher - Climax Contest.mp3 | 3879731 | 
+  file http://localhost/Music/index.php?dir=Musica%2FAbril%202012%2F&file=Vakero%20Ft%20Karina%20Pasian%20-%20No%20Me%20Vuelvo%20A%20Enamorar.mp3 | Vakero Ft Karina Pasian - No Me Vuelvo A Enamorar.mp3 | 3355443 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True

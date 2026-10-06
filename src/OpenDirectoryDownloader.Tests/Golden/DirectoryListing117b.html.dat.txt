@@ -1,0 +1,18 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseDirectoryLister01DirectoryListing error=False ok=False
+  file http://localhost/Music/Metallica/19 Albums - 23 CDs - 1983-2008/Metallica - 1984 - Jump In The Fire/Metallica - 1984 - Jump In The Fire - Front.jpg | Metallica - 1984 - Jump In The Fire - Front.jpg | 141701 | 
+  file http://localhost/Music/Metallica/19 Albums - 23 CDs - 1983-2008/Metallica - 1984 - Jump In The Fire/Sound 1.mp3 | Sound 1.mp3 | 9510584 | 
+  file http://localhost/Music/Metallica/19 Albums - 23 CDs - 1983-2008/Metallica - 1984 - Jump In The Fire/Sound 2.mp3 | Sound 2.mp3 | 11293164 | 
+  file http://localhost/Music/Metallica/19 Albums - 23 CDs - 1983-2008/Metallica - 1984 - Jump In The Fire/Sound 3.mp3 | Sound 3.mp3 | 5200937 | 
+  file http://localhost/Music/Metallica/19 Albums - 23 CDs - 1983-2008/Metallica - 1984 - Jump In The Fire/Sound 4.mp3 | Sound 4.mp3 | 6773801 | 
+  file http://localhost/Music/Metallica/19 Albums - 23 CDs - 1983-2008/Metallica - 1984 - Jump In The Fire/Sound 5.mp3 | Sound 5.mp3 | 10150216 | 
+  file http://localhost/Music/Metallica/19 Albums - 23 CDs - 1983-2008/Metallica - 1984 - Jump In The Fire/Sound 6.mp3 | Sound 6.mp3 | 7077888 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseDirectoryLister01DirectoryListing error=False ok=False
+  file http://localhost:8086/listing/Music/Metallica/19 Albums - 23 CDs - 1983-2008/Metallica - 1984 - Jump In The Fire/Metallica - 1984 - Jump In The Fire - Front.jpg | Metallica - 1984 - Jump In The Fire - Front.jpg | 141701 | 
+  file http://localhost:8086/listing/Music/Metallica/19 Albums - 23 CDs - 1983-2008/Metallica - 1984 - Jump In The Fire/Sound 1.mp3 | Sound 1.mp3 | 9510584 | 
+  file http://localhost:8086/listing/Music/Metallica/19 Albums - 23 CDs - 1983-2008/Metallica - 1984 - Jump In The Fire/Sound 2.mp3 | Sound 2.mp3 | 11293164 | 
+  file http://localhost:8086/listing/Music/Metallica/19 Albums - 23 CDs - 1983-2008/Metallica - 1984 - Jump In The Fire/Sound 3.mp3 | Sound 3.mp3 | 5200937 | 
+  file http://localhost:8086/listing/Music/Metallica/19 Albums - 23 CDs - 1983-2008/Metallica - 1984 - Jump In The Fire/Sound 4.mp3 | Sound 4.mp3 | 6773801 | 
+  file http://localhost:8086/listing/Music/Metallica/19 Albums - 23 CDs - 1983-2008/Metallica - 1984 - Jump In The Fire/Sound 5.mp3 | Sound 5.mp3 | 10150216 | 
+  file http://localhost:8086/listing/Music/Metallica/19 Albums - 23 CDs - 1983-2008/Metallica - 1984 - Jump In The Fire/Sound 6.mp3 | Sound 6.mp3 | 7077888 | 

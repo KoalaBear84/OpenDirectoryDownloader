@@ -1,0 +1,37 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/1128urmc013FHD/宣傳文件 | 宣傳文件 |  | ParseTablesDirectoryListing
+  file http://localhost/1128urmc013FHD/★★★★美女裸聊，免费试看加QQ群616731437★★★★.gif | ★★★★美女裸聊，免费试看加QQ群616731437★★★★.gif | 2411725 | 
+  file http://localhost/1128urmc013FHD/★★★★美女裸聊，免费试看加QQ群616731437★★★★.mp4 | ★★★★美女裸聊，免费试看加QQ群616731437★★★★.mp4 | 27577549 | 
+  file http://localhost/1128urmc013FHD/【魔王の家】~最新最快的資訊平台,dio8899.net.url | 【魔王の家】~最新最快的資訊平台,dio8899.net.url | 226 | 
+  file http://localhost/1128urmc013FHD/【魔王の家】~魔王在線防屏蔽發布器.rar | 【魔王の家】~魔王在線防屏蔽發布器.rar | 26931 | 
+  file http://localhost/1128urmc013FHD/【魔王在線】~給您無限的AV快感(javccdd.net).txt | 【魔王在線】~給您無限的AV快感(javccdd.net).txt | 50 | 
+  file http://localhost/1128urmc013FHD/【魔王在線】~給您無限的AV快感(javccdd.net).url | 【魔王在線】~給您無限的AV快感(javccdd.net).url | 176 | 
+  file http://localhost/1128urmc013FHD/台湾uu祼聊室，注册成为会员免费送50点，指挥妹子露波露B.mp4 | 台湾uu祼聊室，注册成为会员免费送50点，指挥妹子露波露B.mp4 | 18664653 | 
+  file http://localhost/1128urmc013FHD/同城交友KKM56.COM.gif | 同城交友KKM56.COM.gif | 245043 | 
+  file http://localhost/1128urmc013FHD/嫑嫑聯盟—原創新品牌biao88.net.url | 嫑嫑聯盟—原創新品牌biao88.net.url | 107 | 
+  file http://localhost/1128urmc013FHD/嫑嫑聯盟文宣biao88.net.jpg | 嫑嫑聯盟文宣biao88.net.jpg | 475341 | 
+  file http://localhost/1128urmc013FHD/嫑嫑聯盟視頻文宣biao88.net.mp4 | 嫑嫑聯盟視頻文宣biao88.net.mp4 | 7549747 | 
+  file http://localhost/1128urmc013FHD/最新成人AV X8B9.COM.gif | 最新成人AV X8B9.COM.gif | 1677722 | 
+  file http://localhost/1128urmc013FHD/澳门皇冠赌场~vip447.url | 澳门皇冠赌场~vip447.url | 252 | 
+  file http://localhost/1128urmc013FHD/神話~最新AV免費播放~點擊即看不囉嗦~sav888.net.url | 神話~最新AV免費播放~點擊即看不囉嗦~sav888.net.url | 165 | 
+  file http://localhost/1128urmc013FHD/美女荷官自拍被干vip447.mp4 | 美女荷官自拍被干vip447.mp4 | 12478054 | 
+  file http://localhost/1128urmc013FHD/裸聊直播,可以指揮潮吹表演 YYAA2.COM.mp4 | 裸聊直播,可以指揮潮吹表演 YYAA2.COM.mp4 | 13946061 | 
+  file http://localhost/1128urmc013FHD/1024草榴社區 t66y.com.jpg | 1024草榴社區 t66y.com.jpg | 159539 | 
+  file http://localhost/1128urmc013FHD/1128urmc013FHD.mp4 | 1128urmc013FHD.mp4 | 6335076762 | 
+  file http://localhost/1128urmc013FHD/AV Day-綜合站.url | AV Day-綜合站.url | 127 | 
+  file http://localhost/1128urmc013FHD/AVDVD 成人光碟.url | AVDVD 成人光碟.url | 166 | 
+  file http://localhost/1128urmc013FHD/UU裸聊AY456.COM.gif | UU裸聊AY456.COM.gif | 1992294 | 
+  file http://localhost/1128urmc013FHD/mmbo1.me - 广大淫民最爱的最快最新AV成人色情电影下载和免费在线观看网站.url | mmbo1.me - 广大淫民最爱的最快最新AV成人色情电影下载和免费在线观看网站.url | 151 | 
+  file http://localhost/1128urmc013FHD/mmbo1.me_最新成人高清店長推薦強片天天更新.gif | mmbo1.me_最新成人高清店長推薦強片天天更新.gif | 28672 | 
+  file http://localhost/1128urmc013FHD/mo9999.net~最新最快的AV影片每日更新.url | mo9999.net~最新最快的AV影片每日更新.url | 207 | 
+  file http://localhost/1128urmc013FHD/mo9999.net~自由な成人映画、最も速く&最新ポルノ映画サイト.jpg | mo9999.net~自由な成人映画、最も速く&最新ポルノ映画サイト.jpg | 2097152 | 
+  file http://localhost/1128urmc013FHD/mo9999.net~Free Adult Movie, Fastest & Newest Porn Movie Site.jpg | mo9999.net~Free Adult Movie, Fastest & Newest Porn Movie Site.jpg | 2097152 | 
+  file http://localhost/1128urmc013FHD/ty997.com~激情裸聊隨時看.gif | ty997.com~激情裸聊隨時看.gif | 46080 | 
+  file http://localhost/1128urmc013FHD/www.99132.com 澳门神话大赌场~在线真人真钱赌博.txt | www.99132.com 澳门神话大赌场~在线真人真钱赌博.txt | 106 | 
+  file http://localhost/1128urmc013FHD/www.99132.com 澳门神话大赌场~在线真人真钱赌博.url | www.99132.com 澳门神话大赌场~在线真人真钱赌博.url | 155 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/?download=tar_gz | listing |  | ParseLinksDirectoryListing
+  dir http://localhost:8086/listing/?download=tar | listing |  | ParseLinksDirectoryListing
+  dir http://localhost:8086/listing/ | listing |  | ParseLinksDirectoryListing

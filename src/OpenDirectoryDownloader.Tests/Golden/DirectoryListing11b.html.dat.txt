@@ -1,0 +1,23 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/Lecture/[통기타]어쿠스틱 기타 강좌/ | [통기타]어쿠스틱 기타 강좌 |  | RegexParser5
+  dir http://localhost/Lecture/Essential Boxing Techniques/ | Essential Boxing Techniques |  | RegexParser5
+  dir http://localhost/Lecture/Guitar/ | Guitar |  | RegexParser5
+  dir http://localhost/Lecture/기타 강좌 - 기초에서 프로까지 (교재와 화보 강의)/ | 기타 강좌 - 기초에서 프로까지 (교재와 화보 강의) |  | RegexParser5
+  dir http://localhost/Lecture/기타강의-From_Listener/ | 기타강의-From_Listener |  | RegexParser5
+  dir http://localhost/Lecture/김명기 보컬 강의 (김명기 보컬 강좌, 1회~38회)/ | 김명기 보컬 강의 (김명기 보컬 강좌, 1회~38회) |  | RegexParser5
+  dir http://localhost/Lecture/당구 - 4구 강좌/ | 당구 - 4구 강좌 |  | RegexParser5
+  dir http://localhost/Lecture/리눅스 마스터/ | 리눅스 마스터 |  | RegexParser5
+  dir http://localhost/Lecture/베이스 기타 강좌/ | 베이스 기타 강좌 |  | RegexParser5
+  dir http://localhost/Lecture/스포츠 마사지 강좌/ | 스포츠 마사지 강좌 |  | RegexParser5
+  dir http://localhost/Lecture/영어 AFKN 듣기 훈련 MP3_신기한 리스닝 나라 강좌_강사 배진용/ | 영어 AFKN 듣기 훈련 MP3_신기한 리스닝 나라 강좌_강사 배진용 |  | RegexParser5
+  dir http://localhost/Lecture/오라클 강의/ | 오라클 강의 |  | RegexParser5
+  dir http://localhost/Lecture/일렉 기타 - 강좌 문서 및 악보 모음/ | 일렉 기타 - 강좌 문서 및 악보 모음 |  | RegexParser5
+  dir http://localhost/Lecture/일렉 기타 강좌[25강완] - 동영상/ | 일렉 기타 강좌[25강완] - 동영상 |  | RegexParser5
+  dir http://localhost/Lecture/정보과학대학원 JAVA 교육 자료/ | 정보과학대학원 JAVA 교육 자료 |  | RegexParser5
+  dir http://localhost/Lecture/컴퓨터 보안 이론 강의/ | 컴퓨터 보안 이론 강의 |  | RegexParser5
+  dir http://localhost/Lecture/통기타 기초 강좌/ | 통기타 기초 강좌 |  | RegexParser5
+  dir http://localhost/Lecture/하버드 강의/ | 하버드 강의 |  | RegexParser5
+  dir http://localhost/Lecture/함춘호 기타 강의/ | 함춘호 기타 강의 |  | RegexParser5
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True

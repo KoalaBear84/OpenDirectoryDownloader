@@ -1,0 +1,16 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/.well-known/ | .well-known |  | ParseTablesDirectoryListing
+  dir http://localhost/pub/ | pub |  | ParseTablesDirectoryListing
+  dir http://localhost/sitemaps/ | sitemaps |  | ParseTablesDirectoryListing
+  file http://localhost/README.txt | README.txt | 922 | 
+  file http://localhost/du.txt | du.txt | 1946 | 
+  file http://localhost/robots.txt | robots.txt | 102 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/.well-known/ | .well-known |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/pub/ | pub |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/sitemaps/ | sitemaps |  | ParseTablesDirectoryListing
+  file http://localhost:8086/listing/README.txt | README.txt | 922 | 
+  file http://localhost:8086/listing/du.txt | du.txt | 1946 | 
+  file http://localhost:8086/listing/robots.txt | robots.txt | 102 | 

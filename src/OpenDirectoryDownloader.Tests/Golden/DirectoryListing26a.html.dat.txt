@@ -1,0 +1,12 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/Bass/ | Bass |  | RegexParser1
+  dir http://localhost/Drum/ | Drum |  | RegexParser1
+  dir http://localhost/Guitar/ | Guitar |  | RegexParser1
+  dir http://localhost/New/ | New |  | RegexParser1
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost:8086/listing/Bass/ | Bass |  | RegexParser1
+  dir http://localhost:8086/listing/Drum/ | Drum |  | RegexParser1
+  dir http://localhost:8086/listing/Guitar/ | Guitar |  | RegexParser1
+  dir http://localhost:8086/listing/New/ | New |  | RegexParser1

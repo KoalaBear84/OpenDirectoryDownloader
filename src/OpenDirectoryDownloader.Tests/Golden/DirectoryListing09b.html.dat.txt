@@ -1,0 +1,13 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost/Part_00/01_Beam Breakers/01-Main Theme.mp3 | 01-Main Theme.mp3 | 7580646 | 
+  file http://localhost/Part_00/01_Beam Breakers/02-Track 02.mp3 | 02-Track 02.mp3 | 7137122 | 
+  file http://localhost/Part_00/01_Beam Breakers/03-Track 03.mp3 | 03-Track 03.mp3 | 6620642 | 
+  file http://localhost/Part_00/01_Beam Breakers/04-Track 04.mp3 | 04-Track 04.mp3 | 7638242 | 
+  file http://localhost/Part_00/01_Beam Breakers/05-Track 05.mp3 | 05-Track 05.mp3 | 5930402 | 
+  file http://localhost/Part_00/01_Beam Breakers/06-Track 06.mp3 | 06-Track 06.mp3 | 7169762 | 
+  file http://localhost/Part_00/01_Beam Breakers/07-Track 07.mp3 | 07-Track 07.mp3 | 6073442 | 
+  file http://localhost/Part_00/01_Beam Breakers/08-Track 08.mp3 | 08-Track 08.mp3 | 7770722 | 
+  file http://localhost/Part_00/01_Beam Breakers/09-Track 09.mp3 | 09-Track 09.mp3 | 7230242 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True

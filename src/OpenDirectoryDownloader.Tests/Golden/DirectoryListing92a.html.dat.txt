@@ -1,0 +1,8 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseDirectoryLister01DirectoryListing error=False ok=False
+  dir http://localhost/?dir=ACS/Season%201 | Season 1 |  | ParseDirectoryLister01DirectoryListing
+  dir http://localhost/?dir=ACS/Season%202 | Season 2 |  | ParseDirectoryLister01DirectoryListing
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseDirectoryLister01DirectoryListing error=False ok=False
+  dir http://localhost:8086/listing/?dir=ACS/Season%201 | Season 1 |  | ParseDirectoryLister01DirectoryListing
+  dir http://localhost:8086/listing/?dir=ACS/Season%202 | Season 2 |  | ParseDirectoryLister01DirectoryListing

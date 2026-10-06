@@ -1,0 +1,12 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/0.3-3/ | 0.3-3 |  | RegexParser2
+  file http://localhost/maven-metadata.xml | maven-metadata.xml | 212 | 
+  file http://localhost/maven-metadata.xml.md5 | maven-metadata.xml.md5 | 77 | 
+  file http://localhost/maven-metadata.xml.sha1 | maven-metadata.xml.sha1 | 132 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost:8086/listing/0.3-3/ | 0.3-3 |  | RegexParser2
+  file http://localhost:8086/listing/maven-metadata.xml | maven-metadata.xml | 212 | 
+  file http://localhost:8086/listing/maven-metadata.xml.md5 | maven-metadata.xml.md5 | 77 | 
+  file http://localhost:8086/listing/maven-metadata.xml.sha1 | maven-metadata.xml.sha1 | 132 | 

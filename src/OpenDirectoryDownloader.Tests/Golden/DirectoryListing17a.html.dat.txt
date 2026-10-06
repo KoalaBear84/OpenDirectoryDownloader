@@ -1,0 +1,112 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/new/ | new |  | ParseTablesDirectoryListing
+  file http://localhost/0028 - Kirby - Canvas Curse (U)_trim.nds | 0028 - Kirby - Canvas Curse (U)_trim.nds | 52953088 | 
+  file http://localhost/0037 - Super Mario 64 DS (U).nds | 0037 - Super Mario 64 DS (U).nds | 16777216 | 
+  file http://localhost/0061 - Bomberman (U)_trim.nds | 0061 - Bomberman (U)_trim.nds | 7235174 | 
+  file http://localhost/0088 - Advance Wars - Dual Strike (U)_trim.nds | 0088 - Advance Wars - Dual Strike (U)_trim.nds | 28521267 | 
+  file http://localhost/0122 - Trauma Center - Under the Knife (U).nds | 0122 - Trauma Center - Under the Knife (U).nds | 16777216 | 
+  file http://localhost/0122 - Trauma Center - Under the Knife (U)_trim.nds | 0122 - Trauma Center - Under the Knife (U)_trim.nds | 14260634 | 
+  file http://localhost/0127 - Phoenix Wright - Ace Attorney (U).nds | 0127 - Phoenix Wright - Ace Attorney (U).nds | 67108864 | 
+  file http://localhost/0154 - Nintendogs - Best Friends (U)_trim.nds | 0154 - Nintendogs - Best Friends (U)_trim.nds | 29150413 | 
+  file http://localhost/0164 - Harry Potter and the Goblet of Fire ds_trim.nds | 0164 - Harry Potter and the Goblet of Fire ds_trim.nds | 58720256 | 
+  file http://localhost/0168 - Mario Kart DS (USA)_trim.nds | 0168 - Mario Kart DS (USA)_trim.nds | 25480397 | 
+  file http://localhost/0223 - Animal Crossing - Wild World (U).nds | 0223 - Animal Crossing - Wild World (U).nds | 33554432 | 
+  file http://localhost/0262 - Electroplankton (USA)_trim.nds | 0262 - Electroplankton (USA)_trim.nds | 11639194 | 
+  file http://localhost/0427 - Lostmagic (U).nds | 0427 - Lostmagic (U).nds | 16777216 | 
+  file http://localhost/0434 - New Super Mario Bros. (U)_trim.nds | 0434 - New Super Mario Bros. (U)_trim.nds | 20552090 | 
+  file http://localhost/0560 - Cooking Mama (U).nds | 0560 - Cooking Mama (U).nds | 33554432 | 
+  file http://localhost/0566 - Pokemon Mystery Dungeon - Blue Rescue Team (U)_trim.nds | 0566 - Pokemon Mystery Dungeon - Blue Rescue Team (U)_trim.nds | 31037850 | 
+  file http://localhost/0591 - Nintendo DS Browser (E).zip | 0591 - Nintendo DS Browser (E).zip | 3460301 | 
+  file http://localhost/0644 - Pokemon Ranger (U)_trim.nds | 0644 - Pokemon Ranger (U)_trim.nds | 27577549 | 
+  file http://localhost/0655 - Elite Beat Agents (U)_trim.nds | 0655 - Elite Beat Agents (U)_trim.nds | 128660275 | 
+  file http://localhost/0661 - Yoshi%27s Island DS (U).nds | 0661 - Yoshi's Island DS (U).nds | 31876710 | 
+  file http://localhost/0681 - Final Fantasy III (U).7z | 0681 - Final Fantasy III (U).7z | 62914560 | 
+  file http://localhost/0681 - Final Fantasy III (U)_trim.nds | 0681 - Final Fantasy III (U)_trim.nds | 102655590 | 
+  file http://localhost/0732 - Kirby Squeak Squad (U)_trim.nds | 0732 - Kirby Squeak Squad (U)_trim.nds | 51694797 | 
+  file http://localhost/0735 - Castlevania pos_trim.nds | 0735 - Castlevania pos_trim.nds | 47081062 | 
+  file http://localhost/0820 - Phoenix Wright Ace Attorney - Justice For All (U)_trim.nds | 0820 - Phoenix Wright Ace Attorney - Justice For All (U)_trim.nds | 24222106 | 
+  file http://localhost/0823 - Hotel Dusk - Room 215 (U)_trim.nds | 0823 - Hotel Dusk - Room 215 (U)_trim.nds | 116811366 | 
+  file http://localhost/0936 - Puzzle Quest - Challenge of the Warlords (U)_trim.nds | 0936 - Puzzle Quest - Challenge of the Warlords (U)_trim.nds | 14994637 | 
+  file http://localhost/1015 - pokemon Diamond.nds | 1015 - pokemon Diamond.nds | 67108864 | 
+  file http://localhost/1016 - pokemon pearl_trim.nds | 1016 - pokemon pearl_trim.nds | 61131981 | 
+  file http://localhost/1081 - Moero Nekketsu Rhythm Damashii Osu Tatakae Ouendan 2 (J)(iND)_trim.nds | 1081 - Moero Nekketsu Rhythm Damashii Osu Tatakae Ouendan 2 (J)(iND)_trim.nds | 131491430 | 
+  file http://localhost/1084 - Etrian_Odissey_trim.nds | 1084 - Etrian_Odissey_trim.nds | 16252928 | 
+  file http://localhost/1093 - Touch The Dead (U)_trim.nds | 1093 - Touch The Dead (U)_trim.nds | 13631488 | 
+  file http://localhost/1150 - Zendoku_trim.nds | 1150 - Zendoku_trim.nds | 14680064 | 
+  file http://localhost/1170 - Sim City DS_trim.nds | 1170 - Sim City DS_trim.nds | 55889101 | 
+  file http://localhost/1218 - Harry Potter and the Order of the Phoenix _trim.nds | 1218 - Harry Potter and the Order of the Phoenix _trim.nds | 63753421 | 
+  file http://localhost/1330 - Luminous Arc (U)_trim.nds | 1330 - Luminous Arc (U)_trim.nds | 117964800 | 
+  file http://localhost/1398 - Drawn To Life (U)_trim.nds | 1398 - Drawn To Life (U)_trim.nds | 31142707 | 
+  file http://localhost/1456 - The Legend of Zelda - Phantom Hourglass (U)_trim.nds | 1456 - The Legend of Zelda - Phantom Hourglass (U)_trim.nds | 65326285 | 
+  file http://localhost/1548 - Front Mission (U)(Xenophobia).zip | 1548 - Front Mission (U)(Xenophobia).zip | 25375539 | 
+  file http://localhost/1551 - Phoenix Wright - Ace Attorney Trials And Tribulations (U)(Xenophobia).zip | 1551 - Phoenix Wright - Ace Attorney Trials And Tribulations (U)(Xenophobia).zip | 13316915 | 
+  file http://localhost/1567 - Dementium_The_Ward_USA_NDS-XPA.zip | 1567 - Dementium_The_Ward_USA_NDS-XPA.zip | 21600666 | 
+  file http://localhost/1630 - Dragon Quest Monsters - Joker.nds | 1630 - Dragon Quest Monsters - Joker.nds | 87556096 | 
+  file http://localhost/1695 - Final Fantasy XII - Revenant Wings (U)(Micronauts).zip | 1695 - Final Fantasy XII - Revenant Wings (U)(Micronauts).zip | 62285414 | 
+  file http://localhost/1964 - Advance Wars - Days of Ruin.nds | 1964 - Advance Wars - Days of Ruin.nds | 53267661 | 
+  file http://localhost/2002 - Professor Layton And The Curious Village.nds | 2002 - Professor Layton And The Curious Village.nds | 65221427 | 
+  file http://localhost/Dokidoki Majo Shinpan!.jpg | Dokidoki Majo Shinpan!.jpg | 145408 | 
+  file http://localhost/Dokidoki Majo Shinpan!.nds | Dokidoki Majo Shinpan!.nds | 134217728 | 
+  file http://localhost/Geomatry Wars Galaxies_trim.nds | Geomatry Wars Galaxies_trim.nds | 53582234 | 
+  file http://localhost/Lego Star Wars The Complete Saga.nds | Lego Star Wars The Complete Saga.nds | 67108864 | 
+  file http://localhost/Lifesigns Surgical Unit.nds | Lifesigns Surgical Unit.nds | 33554432 | 
+  file http://localhost/Rune Factory.nds | Rune Factory.nds | 112721920 | 
+  file http://localhost/Taiko no Tatsujin DS Touch de Dokodon.jpg | Taiko no Tatsujin DS Touch de Dokodon.jpg | 119091 | 
+  file http://localhost/Taiko no Tatsujin DS Touch de Dokodon.nds | Taiko no Tatsujin DS Touch de Dokodon.nds | 33554432 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/new/ | new |  | ParseTablesDirectoryListing
+  file http://localhost:8086/listing/0028 - Kirby - Canvas Curse (U)_trim.nds | 0028 - Kirby - Canvas Curse (U)_trim.nds | 52953088 | 
+  file http://localhost:8086/listing/0037 - Super Mario 64 DS (U).nds | 0037 - Super Mario 64 DS (U).nds | 16777216 | 
+  file http://localhost:8086/listing/0061 - Bomberman (U)_trim.nds | 0061 - Bomberman (U)_trim.nds | 7235174 | 
+  file http://localhost:8086/listing/0088 - Advance Wars - Dual Strike (U)_trim.nds | 0088 - Advance Wars - Dual Strike (U)_trim.nds | 28521267 | 
+  file http://localhost:8086/listing/0122 - Trauma Center - Under the Knife (U).nds | 0122 - Trauma Center - Under the Knife (U).nds | 16777216 | 
+  file http://localhost:8086/listing/0122 - Trauma Center - Under the Knife (U)_trim.nds | 0122 - Trauma Center - Under the Knife (U)_trim.nds | 14260634 | 
+  file http://localhost:8086/listing/0127 - Phoenix Wright - Ace Attorney (U).nds | 0127 - Phoenix Wright - Ace Attorney (U).nds | 67108864 | 
+  file http://localhost:8086/listing/0154 - Nintendogs - Best Friends (U)_trim.nds | 0154 - Nintendogs - Best Friends (U)_trim.nds | 29150413 | 
+  file http://localhost:8086/listing/0164 - Harry Potter and the Goblet of Fire ds_trim.nds | 0164 - Harry Potter and the Goblet of Fire ds_trim.nds | 58720256 | 
+  file http://localhost:8086/listing/0168 - Mario Kart DS (USA)_trim.nds | 0168 - Mario Kart DS (USA)_trim.nds | 25480397 | 
+  file http://localhost:8086/listing/0223 - Animal Crossing - Wild World (U).nds | 0223 - Animal Crossing - Wild World (U).nds | 33554432 | 
+  file http://localhost:8086/listing/0262 - Electroplankton (USA)_trim.nds | 0262 - Electroplankton (USA)_trim.nds | 11639194 | 
+  file http://localhost:8086/listing/0427 - Lostmagic (U).nds | 0427 - Lostmagic (U).nds | 16777216 | 
+  file http://localhost:8086/listing/0434 - New Super Mario Bros. (U)_trim.nds | 0434 - New Super Mario Bros. (U)_trim.nds | 20552090 | 
+  file http://localhost:8086/listing/0560 - Cooking Mama (U).nds | 0560 - Cooking Mama (U).nds | 33554432 | 
+  file http://localhost:8086/listing/0566 - Pokemon Mystery Dungeon - Blue Rescue Team (U)_trim.nds | 0566 - Pokemon Mystery Dungeon - Blue Rescue Team (U)_trim.nds | 31037850 | 
+  file http://localhost:8086/listing/0591 - Nintendo DS Browser (E).zip | 0591 - Nintendo DS Browser (E).zip | 3460301 | 
+  file http://localhost:8086/listing/0644 - Pokemon Ranger (U)_trim.nds | 0644 - Pokemon Ranger (U)_trim.nds | 27577549 | 
+  file http://localhost:8086/listing/0655 - Elite Beat Agents (U)_trim.nds | 0655 - Elite Beat Agents (U)_trim.nds | 128660275 | 
+  file http://localhost:8086/listing/0661 - Yoshi%27s Island DS (U).nds | 0661 - Yoshi's Island DS (U).nds | 31876710 | 
+  file http://localhost:8086/listing/0681 - Final Fantasy III (U).7z | 0681 - Final Fantasy III (U).7z | 62914560 | 
+  file http://localhost:8086/listing/0681 - Final Fantasy III (U)_trim.nds | 0681 - Final Fantasy III (U)_trim.nds | 102655590 | 
+  file http://localhost:8086/listing/0732 - Kirby Squeak Squad (U)_trim.nds | 0732 - Kirby Squeak Squad (U)_trim.nds | 51694797 | 
+  file http://localhost:8086/listing/0735 - Castlevania pos_trim.nds | 0735 - Castlevania pos_trim.nds | 47081062 | 
+  file http://localhost:8086/listing/0820 - Phoenix Wright Ace Attorney - Justice For All (U)_trim.nds | 0820 - Phoenix Wright Ace Attorney - Justice For All (U)_trim.nds | 24222106 | 
+  file http://localhost:8086/listing/0823 - Hotel Dusk - Room 215 (U)_trim.nds | 0823 - Hotel Dusk - Room 215 (U)_trim.nds | 116811366 | 
+  file http://localhost:8086/listing/0936 - Puzzle Quest - Challenge of the Warlords (U)_trim.nds | 0936 - Puzzle Quest - Challenge of the Warlords (U)_trim.nds | 14994637 | 
+  file http://localhost:8086/listing/1015 - pokemon Diamond.nds | 1015 - pokemon Diamond.nds | 67108864 | 
+  file http://localhost:8086/listing/1016 - pokemon pearl_trim.nds | 1016 - pokemon pearl_trim.nds | 61131981 | 
+  file http://localhost:8086/listing/1081 - Moero Nekketsu Rhythm Damashii Osu Tatakae Ouendan 2 (J)(iND)_trim.nds | 1081 - Moero Nekketsu Rhythm Damashii Osu Tatakae Ouendan 2 (J)(iND)_trim.nds | 131491430 | 
+  file http://localhost:8086/listing/1084 - Etrian_Odissey_trim.nds | 1084 - Etrian_Odissey_trim.nds | 16252928 | 
+  file http://localhost:8086/listing/1093 - Touch The Dead (U)_trim.nds | 1093 - Touch The Dead (U)_trim.nds | 13631488 | 
+  file http://localhost:8086/listing/1150 - Zendoku_trim.nds | 1150 - Zendoku_trim.nds | 14680064 | 
+  file http://localhost:8086/listing/1170 - Sim City DS_trim.nds | 1170 - Sim City DS_trim.nds | 55889101 | 
+  file http://localhost:8086/listing/1218 - Harry Potter and the Order of the Phoenix _trim.nds | 1218 - Harry Potter and the Order of the Phoenix _trim.nds | 63753421 | 
+  file http://localhost:8086/listing/1330 - Luminous Arc (U)_trim.nds | 1330 - Luminous Arc (U)_trim.nds | 117964800 | 
+  file http://localhost:8086/listing/1398 - Drawn To Life (U)_trim.nds | 1398 - Drawn To Life (U)_trim.nds | 31142707 | 
+  file http://localhost:8086/listing/1456 - The Legend of Zelda - Phantom Hourglass (U)_trim.nds | 1456 - The Legend of Zelda - Phantom Hourglass (U)_trim.nds | 65326285 | 
+  file http://localhost:8086/listing/1548 - Front Mission (U)(Xenophobia).zip | 1548 - Front Mission (U)(Xenophobia).zip | 25375539 | 
+  file http://localhost:8086/listing/1551 - Phoenix Wright - Ace Attorney Trials And Tribulations (U)(Xenophobia).zip | 1551 - Phoenix Wright - Ace Attorney Trials And Tribulations (U)(Xenophobia).zip | 13316915 | 
+  file http://localhost:8086/listing/1567 - Dementium_The_Ward_USA_NDS-XPA.zip | 1567 - Dementium_The_Ward_USA_NDS-XPA.zip | 21600666 | 
+  file http://localhost:8086/listing/1630 - Dragon Quest Monsters - Joker.nds | 1630 - Dragon Quest Monsters - Joker.nds | 87556096 | 
+  file http://localhost:8086/listing/1695 - Final Fantasy XII - Revenant Wings (U)(Micronauts).zip | 1695 - Final Fantasy XII - Revenant Wings (U)(Micronauts).zip | 62285414 | 
+  file http://localhost:8086/listing/1964 - Advance Wars - Days of Ruin.nds | 1964 - Advance Wars - Days of Ruin.nds | 53267661 | 
+  file http://localhost:8086/listing/2002 - Professor Layton And The Curious Village.nds | 2002 - Professor Layton And The Curious Village.nds | 65221427 | 
+  file http://localhost:8086/listing/Dokidoki Majo Shinpan!.jpg | Dokidoki Majo Shinpan!.jpg | 145408 | 
+  file http://localhost:8086/listing/Dokidoki Majo Shinpan!.nds | Dokidoki Majo Shinpan!.nds | 134217728 | 
+  file http://localhost:8086/listing/Geomatry Wars Galaxies_trim.nds | Geomatry Wars Galaxies_trim.nds | 53582234 | 
+  file http://localhost:8086/listing/Lego Star Wars The Complete Saga.nds | Lego Star Wars The Complete Saga.nds | 67108864 | 
+  file http://localhost:8086/listing/Lifesigns Surgical Unit.nds | Lifesigns Surgical Unit.nds | 33554432 | 
+  file http://localhost:8086/listing/Rune Factory.nds | Rune Factory.nds | 112721920 | 
+  file http://localhost:8086/listing/Taiko no Tatsujin DS Touch de Dokodon.jpg | Taiko no Tatsujin DS Touch de Dokodon.jpg | 119091 | 
+  file http://localhost:8086/listing/Taiko no Tatsujin DS Touch de Dokodon.nds | Taiko no Tatsujin DS Touch de Dokodon.nds | 33554432 | 

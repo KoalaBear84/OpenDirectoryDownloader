@@ -1,0 +1,112 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/Music/index.php?dir=Musica/Abril 2012/ | Abril 2012 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Abril 2015/ | Abril 2015 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Abril 2016/ | Abril 2016 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Abril 2017/ | Abril 2017 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/ABRIL 2018/ | ABRIL 2018 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Agosto 2012/ | Agosto 2012 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/AGOSTO 2013/ | AGOSTO 2013 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Agosto 2014/ | Agosto 2014 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Agosto 2015/ | Agosto 2015 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/AGOSTO 2016/ | AGOSTO 2016 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/AGOSTO 2017/ | AGOSTO 2017 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Agosto 2018/ | Agosto 2018 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/AMERICANA/ | AMERICANA |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Bachata/ | Bachata |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Balada/ | Balada |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/ColladoMusical.Com/ | ColladoMusical.Com |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/DEMBOW/ | DEMBOW |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Diciembre 2011/ | Diciembre 2011 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Diciembre 2012/ | Diciembre 2012 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Diciembre 2013/ | Diciembre 2013 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Diciembre 2014/ | Diciembre 2014 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/DICIEMBRE 2015/ | DICIEMBRE 2015 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/DICIEMBRE 2016/ | DICIEMBRE 2016 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Diciembre 2017/ | Diciembre 2017 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/DISCOGRAFIAS/ | DISCOGRAFIAS |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Enero 2012/ | Enero 2012 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Enero 2013/ | Enero 2013 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Enero 2014/ | Enero 2014 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Enero 2015/ | Enero 2015 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Enero 2016/ | Enero 2016 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Enero 2017/ | Enero 2017 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Enero 2019/ | Enero 2019 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Febrero 2012/ | Febrero 2012 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Febrero 2013/ | Febrero 2013 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Febrero 2014/ | Febrero 2014 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Febrero 2015/ | Febrero 2015 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Febrero 2016/ | Febrero 2016 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/FEBRERO 2017/ | FEBRERO 2017 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Febrero 2018/ | Febrero 2018 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Fiestas En Vivo 2012/ | Fiestas En Vivo 2012 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Fiestas En Vivo 2013/ | Fiestas En Vivo 2013 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Fiestas En Vivo 2014/ | Fiestas En Vivo 2014 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Fiestas En Vivo 2015/ | Fiestas En Vivo 2015 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Fiestas En Vivo 2016/ | Fiestas En Vivo 2016 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Fiestas En Vivo 2017/ | Fiestas En Vivo 2017 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Fiestas En Vivo 2018/ | Fiestas En Vivo 2018 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Julio 2012/ | Julio 2012 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Julio 2013/ | Julio 2013 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Julio 2014/ | Julio 2014 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Julio 2015/ | Julio 2015 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Julio 2016/ | Julio 2016 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/JULIO 2018/ | JULIO 2018 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Junio 2012/ | Junio 2012 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/JUNIO 2014/ | JUNIO 2014 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/JUNIO 2015/ | JUNIO 2015 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Junio 2016/ | Junio 2016 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Junio 2017/ | Junio 2017 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/JUNIO 2018/ | JUNIO 2018 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Marzo 2012/ | Marzo 2012 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Marzo 2013/ | Marzo 2013 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Marzo 2014/ | Marzo 2014 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Marzo 2015/ | Marzo 2015 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Marzo 2016/ | Marzo 2016 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/MARZO 2017/ | MARZO 2017 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Marzo 2018/ | Marzo 2018 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Mayo 2012/ | Mayo 2012 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/MAYO 2014/ | MAYO 2014 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Mayo 2015/ | Mayo 2015 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Mayo 2017/ | Mayo 2017 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/MAYO 2018/ | MAYO 2018 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Merengue/ | Merengue |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/MERENGUES CLASICOS/ | MERENGUES CLASICOS |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/NAVIDAD/ | NAVIDAD |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/nicol pe%F1a/ | nicol peña |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Noviembre 2011/ | Noviembre 2011 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/NOVIEMBRE 2013/ | NOVIEMBRE 2013 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Noviembre 2013/ | Noviembre 2013 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Noviembre 2014/ | Noviembre 2014 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Noviembre 2015/ | Noviembre 2015 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Noviembre 2017/ | Noviembre 2017 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Noviembre 2018/ | Noviembre 2018 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Octubre 2012/ | Octubre 2012 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/OCTUBRE 2014/ | OCTUBRE 2014 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Octubre 2015/ | Octubre 2015 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/OCTUBRE 2016/ | OCTUBRE 2016 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Octubre 2017/ | Octubre 2017 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/OCTUBRE 2018/ | OCTUBRE 2018 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Octubre 2018/ | Octubre 2018 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Patronales De Janico/ | Patronales De Janico |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/PRESTIGE/ | PRESTIGE |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/PROMO/ | PROMO |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Reguee/ | Reguee |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Salsa/ | Salsa |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Septiembre 2014/ | Septiembre 2014 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/SEPTIEMBRE 2016/ | SEPTIEMBRE 2016 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Septiembre 2016/ | Septiembre 2016 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/SON VARIADOS/ | SON VARIADOS |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Tecno Nuevos/ | Tecno Nuevos |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/TIPICAZO NAVIDE%D1O 2012/ | TIPICAZO NAVIDEÑO 2012 |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/Tipico/ | Tipico |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/TIPICOS/ | TIPICOS |  | ParseTablesDirectoryListing
+  dir http://localhost/Music/index.php?dir=Musica/TOMA TIPICO VOL.1/ | TOMA TIPICO VOL.1 |  | ParseTablesDirectoryListing
+  file http://localhost/Music/index.php?dir=Musica%2F&file=BONCHEDIGITAL.COM_5002673.apk | BONCHEDIGITAL.COM_5002673.apk | 5976883 | 
+  file http://localhost/Music/index.php?dir=Musica%2F&file=COLLADOMUSICAL_4996952.apk | COLLADOMUSICAL_4996952.apk | 5872026 | 
+  file http://localhost/Music/index.php?dir=Musica%2F&file=norte%20bao%20janico.jpg | norte bao janico.jpg | 951706 | 
+  file http://localhost/Music/index.php?dir=Musica%2F&file=programa%20pa%20foto.rar | programa pa foto.rar | 128869990 | 
+  file http://localhost/Music/index.php?dir=Musica%2F&file=Sound%201.mp3 | Sound 1.mp3 | 6710886 | 
+  file http://localhost/Music/index.php?dir=Musica%2F&file=TOMA%20TIPICO%20VOL.1.rar | TOMA TIPICO VOL.1.rar | 101187584 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True

@@ -1,0 +1,24 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/algo/ | algo |  | RegexParser2
+  dir http://localhost/clevo-mirror/ | clevo-mirror |  | RegexParser2
+  dir http://localhost/esprit/ | esprit |  | RegexParser2
+  dir http://localhost/hacking/ | hacking |  | RegexParser2
+  dir http://localhost/repositories/ | repositories |  | RegexParser2
+  dir http://localhost/réseaux/ | réseaux |  | RegexParser2
+  dir http://localhost/scripts/ | scripts |  | RegexParser2
+  file http://localhost/lefrido.pdf | lefrido.pdf | 9437184 | 
+  file http://localhost/readme.txt | readme.txt | 360 | 
+  file http://localhost/robots.txt | robots.txt | 190 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost:8086/listing/algo/ | algo |  | RegexParser2
+  dir http://localhost:8086/listing/clevo-mirror/ | clevo-mirror |  | RegexParser2
+  dir http://localhost:8086/listing/esprit/ | esprit |  | RegexParser2
+  dir http://localhost:8086/listing/hacking/ | hacking |  | RegexParser2
+  dir http://localhost:8086/listing/repositories/ | repositories |  | RegexParser2
+  dir http://localhost:8086/listing/réseaux/ | réseaux |  | RegexParser2
+  dir http://localhost:8086/listing/scripts/ | scripts |  | RegexParser2
+  file http://localhost:8086/listing/lefrido.pdf | lefrido.pdf | 9437184 | 
+  file http://localhost:8086/listing/readme.txt | readme.txt | 360 | 
+  file http://localhost:8086/listing/robots.txt | robots.txt | 190 | 

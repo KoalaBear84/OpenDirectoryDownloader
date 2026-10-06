@@ -1,0 +1,10 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseListItemsDirectoryListing error=False ok=True
+  dir http://localhost/?dir=./Develop/Microcontroller hardware | Microcontroller hardware |  | ParseListItemsDirectoryListing
+  dir http://localhost/?dir=./Develop/PC interfaces | PC interfaces |  | ParseListItemsDirectoryListing
+  file http://localhost/Develop/PEAK-System_EULA_for free of charge software_files.txt | PEAK-System_EULA_for free of charge software_files.txt | 6144 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseListItemsDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/?dir=./Develop/Microcontroller hardware | Microcontroller hardware |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?dir=./Develop/PC interfaces | PC interfaces |  | ParseListItemsDirectoryListing
+  file http://localhost:8086/listing/Develop/PEAK-System_EULA_for free of charge software_files.txt | PEAK-System_EULA_for free of charge software_files.txt | 6144 | 

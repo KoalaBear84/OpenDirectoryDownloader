@@ -1,0 +1,8 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/ANALYSIS MAPS.pub | ANALYSIS MAPS.pub | 357376 | 
+  file http://localhost/Application.pdf | Application.pdf | 974848 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost:8086/listing/ANALYSIS MAPS.pub | ANALYSIS MAPS.pub | 357376 | 
+  file http://localhost:8086/listing/Application.pdf | Application.pdf | 974848 | 

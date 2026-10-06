@@ -1,0 +1,10 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/Scripts | Scripts |  | ParseTablesDirectoryListing
+  dir http://localhost/gitorious.ps3dev.net | gitorious.ps3dev.net |  | ParseTablesDirectoryListing
+  file http://localhost/aldostools-ps3netsrv-20170310-a61f9354a2d122e92f9336ac6f110d911ad0e629.tar.gz | aldostools-ps3netsrv-20170310-a61f9354a2d122e92f9336ac6f110d911ad0e629.tar.gz | 27341 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/Scripts | Scripts |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/gitorious.ps3dev.net | gitorious.ps3dev.net |  | ParseTablesDirectoryListing
+  file http://localhost:8086/listing/aldostools-ps3netsrv-20170310-a61f9354a2d122e92f9336ac6f110d911ad0e629.tar.gz | aldostools-ps3netsrv-20170310-a61f9354a2d122e92f9336ac6f110d911ad0e629.tar.gz | 27341 | 

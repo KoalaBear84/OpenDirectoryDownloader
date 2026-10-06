@@ -1,0 +1,16 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost/A.Discovery.Of.Witches.S01E01.1080p.x265.MeGusta_%28_FinalMovie_%29.mkv | A.Discovery.Of.Witches.S01E01.1080p.x265.MeGusta_(_FinalMovie_).mkv | 461670917 | 
+  file http://localhost/A.Discovery.Of.Witches.S01E02.1080p.x265.MeGusta_%28_FinalMovie_%29.mkv | A.Discovery.Of.Witches.S01E02.1080p.x265.MeGusta_(_FinalMovie_).mkv | 446842784 | 
+  file http://localhost/A.Discovery.Of.Witches.S01E03.1080p.x265.MeGusta_%28_FinalMovie_%29.mkv | A.Discovery.Of.Witches.S01E03.1080p.x265.MeGusta_(_FinalMovie_).mkv | 434854703 | 
+  file http://localhost/A.Discovery.Of.Witches.S01E04.1080p.x265.MeGusta_%28_FinalMovie_%29.mkv | A.Discovery.Of.Witches.S01E04.1080p.x265.MeGusta_(_FinalMovie_).mkv | 392752062 | 
+  file http://localhost/A.Discovery.Of.Witches.S01E05.1080p.x265.MeGusta_%28_FinalMovie_%29.mkv | A.Discovery.Of.Witches.S01E05.1080p.x265.MeGusta_(_FinalMovie_).mkv | 415731045 | 
+  file http://localhost/A.Discovery.Of.Witches.S01E06.1080p.x265.MeGusta_%28_FinalMovie_%29.mkv | A.Discovery.Of.Witches.S01E06.1080p.x265.MeGusta_(_FinalMovie_).mkv | 451646682 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost:8086/listing/A.Discovery.Of.Witches.S01E01.1080p.x265.MeGusta_%28_FinalMovie_%29.mkv | A.Discovery.Of.Witches.S01E01.1080p.x265.MeGusta_(_FinalMovie_).mkv | 461670917 | 
+  file http://localhost:8086/listing/A.Discovery.Of.Witches.S01E02.1080p.x265.MeGusta_%28_FinalMovie_%29.mkv | A.Discovery.Of.Witches.S01E02.1080p.x265.MeGusta_(_FinalMovie_).mkv | 446842784 | 
+  file http://localhost:8086/listing/A.Discovery.Of.Witches.S01E03.1080p.x265.MeGusta_%28_FinalMovie_%29.mkv | A.Discovery.Of.Witches.S01E03.1080p.x265.MeGusta_(_FinalMovie_).mkv | 434854703 | 
+  file http://localhost:8086/listing/A.Discovery.Of.Witches.S01E04.1080p.x265.MeGusta_%28_FinalMovie_%29.mkv | A.Discovery.Of.Witches.S01E04.1080p.x265.MeGusta_(_FinalMovie_).mkv | 392752062 | 
+  file http://localhost:8086/listing/A.Discovery.Of.Witches.S01E05.1080p.x265.MeGusta_%28_FinalMovie_%29.mkv | A.Discovery.Of.Witches.S01E05.1080p.x265.MeGusta_(_FinalMovie_).mkv | 415731045 | 
+  file http://localhost:8086/listing/A.Discovery.Of.Witches.S01E06.1080p.x265.MeGusta_%28_FinalMovie_%29.mkv | A.Discovery.Of.Witches.S01E06.1080p.x265.MeGusta_(_FinalMovie_).mkv | 451646682 | 

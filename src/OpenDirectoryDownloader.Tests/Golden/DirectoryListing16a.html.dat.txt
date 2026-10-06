@@ -1,0 +1,18 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/Animation/ | Animation |  | RegexParser2
+  dir http://localhost/Movie/ | Movie |  | RegexParser2
+  dir http://localhost/Movie Trailer/ | Movie Trailer |  | RegexParser2
+  dir http://localhost/Music/ | Music |  | RegexParser2
+  dir http://localhost/Programs/ | Programs |  | RegexParser2
+  dir http://localhost/Series/ | Series |  | RegexParser2
+  dir http://localhost/Series Trailer/ | Series Trailer |  | RegexParser2
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost:8086/listing/Animation/ | Animation |  | RegexParser2
+  dir http://localhost:8086/listing/Movie/ | Movie |  | RegexParser2
+  dir http://localhost:8086/listing/Movie Trailer/ | Movie Trailer |  | RegexParser2
+  dir http://localhost:8086/listing/Music/ | Music |  | RegexParser2
+  dir http://localhost:8086/listing/Programs/ | Programs |  | RegexParser2
+  dir http://localhost:8086/listing/Series/ | Series |  | RegexParser2
+  dir http://localhost:8086/listing/Series Trailer/ | Series Trailer |  | RegexParser2

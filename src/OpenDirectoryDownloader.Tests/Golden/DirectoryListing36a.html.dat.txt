@@ -1,0 +1,16 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/holybooks/ | holybooks |  | ParseTablesDirectoryListing
+  dir http://localhost/section1/ | section1 |  | ParseTablesDirectoryListing
+  dir http://localhost/section2/ | section2 |  | ParseTablesDirectoryListing
+  file http://localhost/Notes to This Distribution.txt | Notes to This Distribution.txt | 2048 | 
+  file http://localhost/Syllabus of Official Instructions.pdf | Syllabus of Official Instructions.pdf | 292864 | 
+  file http://localhost/UR-OTO.txt | UR-OTO.txt | 2048 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/holybooks/ | holybooks |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/section1/ | section1 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/section2/ | section2 |  | ParseTablesDirectoryListing
+  file http://localhost:8086/listing/Notes to This Distribution.txt | Notes to This Distribution.txt | 2048 | 
+  file http://localhost:8086/listing/Syllabus of Official Instructions.pdf | Syllabus of Official Instructions.pdf | 292864 | 
+  file http://localhost:8086/listing/UR-OTO.txt | UR-OTO.txt | 2048 | 

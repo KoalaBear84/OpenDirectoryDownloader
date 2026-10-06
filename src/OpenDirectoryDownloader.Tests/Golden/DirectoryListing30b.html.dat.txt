@@ -1,0 +1,12 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost/Count Zero - William Gibson.epub | Count Zero - William Gibson.epub | 321536 | 
+  file http://localhost/Count Zero - William Gibson.mobi | Count Zero - William Gibson.mobi | 496640 | 
+  file http://localhost/cover.jpg | cover.jpg | 36864 | 
+  file http://localhost/metadata.opf | metadata.opf | 1229 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost:8086/listing/Count Zero - William Gibson.epub | Count Zero - William Gibson.epub | 321536 | 
+  file http://localhost:8086/listing/Count Zero - William Gibson.mobi | Count Zero - William Gibson.mobi | 496640 | 
+  file http://localhost:8086/listing/cover.jpg | cover.jpg | 36864 | 
+  file http://localhost:8086/listing/metadata.opf | metadata.opf | 1229 | 

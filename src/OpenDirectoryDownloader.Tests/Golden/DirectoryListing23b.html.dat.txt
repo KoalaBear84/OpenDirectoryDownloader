@@ -1,0 +1,70 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/BMP3.0 Support Banners/ | BMP3.0 Support Banners |  | ParseTablesDirectoryListing
+  dir http://localhost/BMP4.5 Support Banners 500px/ | BMP4.5 Support Banners 500px |  | ParseTablesDirectoryListing
+  dir http://localhost/BMPArt/ | BMPArt |  | ParseTablesDirectoryListing
+  dir http://localhost/BMPRPG/ | BMPRPG |  | ParseTablesDirectoryListing
+  dir http://localhost/LMPArt/ | LMPArt |  | ParseTablesDirectoryListing
+  file http://localhost/3.5Petabytes.png | 3.5Petabytes.png | 31744 | 
+  file http://localhost/3.5Petabytes2.png | 3.5Petabytes2.png | 36864 | 
+  file http://localhost/403.png | 403.png | 238592 | 
+  file http://localhost/404.png | 404.png | 229376 | 
+  file http://localhost/background-2560-1765.jpg | background-2560-1765.jpg | 236544 | 
+  file http://localhost/BMP3.0.png | BMP3.0.png | 180224 | 
+  file http://localhost/BMP4.0 Banners and Favicons.zip | BMP4.0 Banners and Favicons.zip | 1887437 | 
+  file http://localhost/BMP4.0 Favicon by JMMB.ico | BMP4.0 Favicon by JMMB.ico | 2355 | 
+  file http://localhost/BMP4.0 Favicon by JMMB.png | BMP4.0 Favicon by JMMB.png | 4915 | 
+  file http://localhost/BMP4.0.png | BMP4.0.png | 319488 | 
+  file http://localhost/BMP4.5 Banners.zip | BMP4.5 Banners.zip | 1572864 | 
+  file http://localhost/BMP4.5 GDoc Screenshot.png | BMP4.5 GDoc Screenshot.png | 132096 | 
+  file http://localhost/BMP4.5.png | BMP4.5.png | 351232 | 
+  file http://localhost/BMP5.0 Banner Transparency.png | BMP5.0 Banner Transparency.png | 166912 | 
+  file http://localhost/BMP5.0 Banner.png | BMP5.0 Banner.png | 129024 | 
+  file http://localhost/BMP5.0 Banners.zip | BMP5.0 Banners.zip | 8178893 | 
+  file http://localhost/BMP5.0 Full Screen Blank Homepage.png | BMP5.0 Full Screen Blank Homepage.png | 207872 | 
+  file http://localhost/BMP5.0 Full Screen Screenshot.png | BMP5.0 Full Screen Screenshot.png | 1258291 | 
+  file http://localhost/BMP5.0 Logo.png | BMP5.0 Logo.png | 233472 | 
+  file http://localhost/BMP5.0 Milestone List.png | BMP5.0 Milestone List.png | 910336 | 
+  file http://localhost/BMP5.0 Screenshot.png | BMP5.0 Screenshot.png | 1153434 | 
+  file http://localhost/BMP5.5 Milestone List.png | BMP5.5 Milestone List.png | 438272 | 
+  file http://localhost/BMP5.5Milestone.png | BMP5.5Milestone.png | 2831155 | 
+  file http://localhost/BMP5.5MilestoneBackground.png | BMP5.5MilestoneBackground.png | 3145728 | 
+  file http://localhost/BMP5.5MilestoneFrame.png | BMP5.5MilestoneFrame.png | 2936013 | 
+  file http://localhost/greg_man_answers.png | greg_man_answers.png | 33792 | 
+  file http://localhost/greg_man_answers2.png | greg_man_answers2.png | 39936 | 
+  file http://localhost/logowithbackgrounnd100.png | logowithbackgrounnd100.png | 47104 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/BMP3.0 Support Banners/ | BMP3.0 Support Banners |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/BMP4.5 Support Banners 500px/ | BMP4.5 Support Banners 500px |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/BMPArt/ | BMPArt |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/BMPRPG/ | BMPRPG |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/LMPArt/ | LMPArt |  | ParseTablesDirectoryListing
+  file http://localhost:8086/listing/3.5Petabytes.png | 3.5Petabytes.png | 31744 | 
+  file http://localhost:8086/listing/3.5Petabytes2.png | 3.5Petabytes2.png | 36864 | 
+  file http://localhost:8086/listing/403.png | 403.png | 238592 | 
+  file http://localhost:8086/listing/404.png | 404.png | 229376 | 
+  file http://localhost:8086/listing/background-2560-1765.jpg | background-2560-1765.jpg | 236544 | 
+  file http://localhost:8086/listing/BMP3.0.png | BMP3.0.png | 180224 | 
+  file http://localhost:8086/listing/BMP4.0 Banners and Favicons.zip | BMP4.0 Banners and Favicons.zip | 1887437 | 
+  file http://localhost:8086/listing/BMP4.0 Favicon by JMMB.ico | BMP4.0 Favicon by JMMB.ico | 2355 | 
+  file http://localhost:8086/listing/BMP4.0 Favicon by JMMB.png | BMP4.0 Favicon by JMMB.png | 4915 | 
+  file http://localhost:8086/listing/BMP4.0.png | BMP4.0.png | 319488 | 
+  file http://localhost:8086/listing/BMP4.5 Banners.zip | BMP4.5 Banners.zip | 1572864 | 
+  file http://localhost:8086/listing/BMP4.5 GDoc Screenshot.png | BMP4.5 GDoc Screenshot.png | 132096 | 
+  file http://localhost:8086/listing/BMP4.5.png | BMP4.5.png | 351232 | 
+  file http://localhost:8086/listing/BMP5.0 Banner Transparency.png | BMP5.0 Banner Transparency.png | 166912 | 
+  file http://localhost:8086/listing/BMP5.0 Banner.png | BMP5.0 Banner.png | 129024 | 
+  file http://localhost:8086/listing/BMP5.0 Banners.zip | BMP5.0 Banners.zip | 8178893 | 
+  file http://localhost:8086/listing/BMP5.0 Full Screen Blank Homepage.png | BMP5.0 Full Screen Blank Homepage.png | 207872 | 
+  file http://localhost:8086/listing/BMP5.0 Full Screen Screenshot.png | BMP5.0 Full Screen Screenshot.png | 1258291 | 
+  file http://localhost:8086/listing/BMP5.0 Logo.png | BMP5.0 Logo.png | 233472 | 
+  file http://localhost:8086/listing/BMP5.0 Milestone List.png | BMP5.0 Milestone List.png | 910336 | 
+  file http://localhost:8086/listing/BMP5.0 Screenshot.png | BMP5.0 Screenshot.png | 1153434 | 
+  file http://localhost:8086/listing/BMP5.5 Milestone List.png | BMP5.5 Milestone List.png | 438272 | 
+  file http://localhost:8086/listing/BMP5.5Milestone.png | BMP5.5Milestone.png | 2831155 | 
+  file http://localhost:8086/listing/BMP5.5MilestoneBackground.png | BMP5.5MilestoneBackground.png | 3145728 | 
+  file http://localhost:8086/listing/BMP5.5MilestoneFrame.png | BMP5.5MilestoneFrame.png | 2936013 | 
+  file http://localhost:8086/listing/greg_man_answers.png | greg_man_answers.png | 33792 | 
+  file http://localhost:8086/listing/greg_man_answers2.png | greg_man_answers2.png | 39936 | 
+  file http://localhost:8086/listing/logowithbackgrounnd100.png | logowithbackgrounnd100.png | 47104 | 

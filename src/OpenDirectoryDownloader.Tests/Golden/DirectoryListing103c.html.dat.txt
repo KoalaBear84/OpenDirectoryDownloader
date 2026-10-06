@@ -1,0 +1,28 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseListItemsDirectoryListing error=False ok=True
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Amazon.cbr | Amazon.cbr |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Assassins.cbr | Assassins.cbr |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Bat-Thing.cbz | Bat-Thing.cbz |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Bruce Wayne Agent of Shield.cbr | Bruce Wayne Agent of Shield.cbr |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Bullets %26 Bracelets.cbr | Bullets & Bracelets.cbr |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Challengers of the Fantastic.cbz | Challengers of the Fantastic.cbz |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Dark Claw Adventures.cbz | Dark Claw Adventures.cbz |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Dr Strange Fate.cbr | Dr Strange Fate.cbr |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Exciting X-Patrol.cbz | Exciting X-Patrol.cbz |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Generation Hex.cbz | Generation Hex.cbz |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Iron Lantern.cbr | Iron Lantern.cbr |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/JLX Unleashed.cbz | JLX Unleashed.cbz |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/JLX.cbz | JLX.cbz |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Legends of The Dark Claw.cbz | Legends of The Dark Claw.cbz |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Lobo the Duck.cbr | Lobo the Duck.cbr |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Magnetic Men featuring Magneto.cbz | Magnetic Men featuring Magneto.cbz |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Magneto and the Magnetic Men.cbr | Magneto and the Magnetic Men.cbr |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Speed Demon.cbz | Speed Demon.cbz |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Spider-Boy Team-Up.cbr | Spider-Boy Team-Up.cbr |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Spider-Boy.cbz | Spider-Boy.cbz |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Super Soldier - Man Of War.cbr | Super Soldier - Man Of War.cbr |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Super-Soldier.cbz | Super-Soldier.cbz |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/Thorion of the New Asgods.cbz | Thorion of the New Asgods.cbz |  | 
+  file http://localhost/Comics/Crossovers/Amalgam Comics/X-Patrol.cbz | X-Patrol.cbz |  | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseListItemsDirectoryListing error=False ok=True

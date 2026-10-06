@@ -1,0 +1,18 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/720p/ | 720p |  | ParseTablesDirectoryListing
+  dir http://localhost/MP4-AAC/ | MP4-AAC |  | ParseTablesDirectoryListing
+  file http://localhost/My.Little.Pony.Friendship.is.Magic.S09E01.The.Beginning.of.the.End.Part.1.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | My.Little.Pony.Friendship.is.Magic.S09E01.The.Beginning.of.the.End.Part.1.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | 904921088 | 
+  file http://localhost/My.Little.Pony.Friendship.is.Magic.S09E02.The.Beginning.of.the.End.Part.2.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | My.Little.Pony.Friendship.is.Magic.S09E02.The.Beginning.of.the.End.Part.2.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | 903872512 | 
+  file http://localhost/My.Little.Pony.Friendship.is.Magic.S09E03.Uprooted.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | My.Little.Pony.Friendship.is.Magic.S09E03.Uprooted.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | 908066816 | 
+  file http://localhost/My.Little.Pony.Friendship.is.Magic.S09E04.Twilights.Seven.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | My.Little.Pony.Friendship.is.Magic.S09E04.Twilights.Seven.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | 915406848 | 
+  file http://localhost/My.Little.Pony.Friendship.is.Magic.S09E05.The.Point.of.No.Return.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | My.Little.Pony.Friendship.is.Magic.S09E05.The.Point.of.No.Return.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | 914358272 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/720p/ | 720p |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/MP4-AAC/ | MP4-AAC |  | ParseTablesDirectoryListing
+  file http://localhost:8086/listing/My.Little.Pony.Friendship.is.Magic.S09E01.The.Beginning.of.the.End.Part.1.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | My.Little.Pony.Friendship.is.Magic.S09E01.The.Beginning.of.the.End.Part.1.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | 904921088 | 
+  file http://localhost:8086/listing/My.Little.Pony.Friendship.is.Magic.S09E02.The.Beginning.of.the.End.Part.2.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | My.Little.Pony.Friendship.is.Magic.S09E02.The.Beginning.of.the.End.Part.2.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | 903872512 | 
+  file http://localhost:8086/listing/My.Little.Pony.Friendship.is.Magic.S09E03.Uprooted.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | My.Little.Pony.Friendship.is.Magic.S09E03.Uprooted.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | 908066816 | 
+  file http://localhost:8086/listing/My.Little.Pony.Friendship.is.Magic.S09E04.Twilights.Seven.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | My.Little.Pony.Friendship.is.Magic.S09E04.Twilights.Seven.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | 915406848 | 
+  file http://localhost:8086/listing/My.Little.Pony.Friendship.is.Magic.S09E05.The.Point.of.No.Return.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | My.Little.Pony.Friendship.is.Magic.S09E05.The.Point.of.No.Return.1080p.iT.WEB-DL.DD5.1.H.264-iT00NZ.mkv | 914358272 | 

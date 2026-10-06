@@ -1,0 +1,338 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/zone51/ | zone51 |  | RegexParser1
+  dir http://localhost/underwayy/ | underwayy | Ed: Psyko/Underwayy - Philo Excellente (n0.2), Niveau : Mouvant | RegexParser1
+  dir http://localhost/thelastclik/ | thelastclik |  | RegexParser1
+  dir http://localhost/tcdiaries/ | tcdiaries |  | RegexParser1
+  dir http://localhost/t-s63/ | t-s63 |  | RegexParser1
+  dir http://localhost/silmarillon/ | silmarillon |  | RegexParser1
+  dir http://localhost/securimag/ | securimag |  | RegexParser1
+  dir http://localhost/rcn/ | rcn |  | RegexParser1
+  dir http://localhost/pirage/ | pirage |  | RegexParser1
+  dir http://localhost/phrack/ | phrack |  | RegexParser1
+  dir http://localhost/nopast/ | nopast |  | RegexParser1
+  dir http://localhost/nofutur/ | nofutur |  | RegexParser1
+  dir http://localhost/nightz04/ | nightz04 |  | RegexParser1
+  dir http://localhost/n0name/ | n0name |  | RegexParser1
+  dir http://localhost/memento/ | memento |  | RegexParser1
+  dir http://localhost/mcours/ | mcours |  | RegexParser1
+  dir http://localhost/magattack/ | magattack |  | RegexParser1
+  dir http://localhost/macmillam/ | macmillam |  | RegexParser1
+  dir http://localhost/lotfree/ | lotfree |  | RegexParser1
+  dir http://localhost/kiing/ | kiing |  | RegexParser1
+  dir http://localhost/jci/ | jci |  | RegexParser1
+  dir http://localhost/intrusion/ | intrusion | Ed: Ramouz - Texte en .DOC, Made in Microsoft Word 97.. | RegexParser1
+  dir http://localhost/insecuremag/ | insecuremag |  | RegexParser1
+  dir http://localhost/xtc/ | xtc |  | RegexParser1
+  dir http://localhost/xiii/ | xiii |  | RegexParser1
+  dir http://localhost/xgj/ | xgj |  | RegexParser1
+  dir http://localhost/underhack/ | underhack |  | RegexParser1
+  dir http://localhost/underdark/ | underdark |  | RegexParser1
+  dir http://localhost/uha/ | uha |  | RegexParser1
+  dir http://localhost/tua/ | tua |  | RegexParser1
+  dir http://localhost/tsa/ | tsa |  | RegexParser1
+  dir http://localhost/tradefr/ | tradefr |  | RegexParser1
+  dir http://localhost/totalctrl/ | totalctrl |  | RegexParser1
+  dir http://localhost/theultimate/ | theultimate |  | RegexParser1
+  dir http://localhost/tdcmag/ | tdcmag |  | RegexParser1
+  dir http://localhost/snap/ | snap |  | RegexParser1
+  dir http://localhost/sleazywind/ | sleazywind |  | RegexParser1
+  dir http://localhost/secuinfo/ | secuinfo |  | RegexParser1
+  dir http://localhost/hohs/ | hohs |  | RegexParser1
+  dir http://localhost/haqch/ | haqch |  | RegexParser1
+  dir http://localhost/hackzine/ | hackzine |  | RegexParser1
+  dir http://localhost/gsm_codes/ | gsm_codes |  | RegexParser1
+  dir http://localhost/firewall/ | firewall | Comprendre les FireWall, par Trom | RegexParser1
+  dir http://localhost/drapeaunoir/ | drapeaunoir |  | RegexParser1
+  dir http://localhost/dhmag/ | dhmag |  | RegexParser1
+  dir http://localhost/deadend/ | deadend |  | RegexParser1
+  dir http://localhost/cours/ | cours |  | RegexParser1
+  dir http://localhost/coredump/ | coredump |  | RegexParser1
+  dir http://localhost/cgi_hole/ | cgi_hole |  | RegexParser1
+  dir http://localhost/cee/ | cee |  | RegexParser1
+  dir http://localhost/bfz/ | bfz |  | RegexParser1
+  dir http://localhost/anathema/ | anathema |  | RegexParser1
+  dir http://localhost/alternative/ | alternative |  | RegexParser1
+  dir http://localhost/912hd/ | 912hd |  | RegexParser1
+  dir http://localhost/rtcmag/ | rtcmag |  | RegexParser1
+  dir http://localhost/row/ | row |  | RegexParser1
+  dir http://localhost/revolution/ | revolution |  | RegexParser1
+  dir http://localhost/qha/ | qha |  | RegexParser1
+  dir http://localhost/pyrofreak/ | pyrofreak |  | RegexParser1
+  dir http://localhost/prograzine/ | prograzine |  | RegexParser1
+  dir http://localhost/polio/ | polio |  | RegexParser1
+  dir http://localhost/phreakaz/ | phreakaz |  | RegexParser1
+  dir http://localhost/pgk/ | pgk |  | RegexParser1
+  dir http://localhost/organiks/ | organiks | textes de bon niveau au veritable arome de C.. arf ca c'est du mag! ;) | RegexParser1
+  dir http://localhost/npc/ | npc |  | RegexParser1
+  dir http://localhost/nowhere/ | nowhere |  | RegexParser1
+  dir http://localhost/noway/ | noway |  | RegexParser1
+  dir http://localhost/nowall/ | nowall |  | RegexParser1
+  dir http://localhost/noroute/ | noroute |  | RegexParser1
+  dir http://localhost/nopeace/ | nopeace |  | RegexParser1
+  dir http://localhost/nopasswd/ | nopasswd |  | RegexParser1
+  dir http://localhost/mj13/ | mj13 |  | RegexParser1
+  dir http://localhost/mindkind/ | mindkind |  | RegexParser1
+  dir http://localhost/malicia/ | malicia |  | RegexParser1
+  dir http://localhost/lutin/ | lutin |  | RegexParser1
+  dir http://localhost/liberte/ | liberte |  | RegexParser1
+  dir http://localhost/le_reporter/ | le_reporter | fanzine old-school sympa oriente programmation [aaz] | RegexParser1
+  dir http://localhost/lddm/ | lddm |  | RegexParser1
+  dir http://localhost/larsen/ | larsen | Larsen, auteur des mags H.V.U. et pote a moi | RegexParser1
+  dir http://localhost/kye/ | kye |  | RegexParser1
+  dir http://localhost/jokers/ | jokers |  | RegexParser1
+  dir http://localhost/jambon/ | jambon |  | RegexParser1
+  dir http://localhost/ioc/ | ioc |  | RegexParser1
+  dir http://localhost/immortal/ | immortal |  | RegexParser1
+  dir http://localhost/iga/ | iga |  | RegexParser1
+  dir http://localhost/hvu/ | hvu |  | RegexParser1
+  dir http://localhost/hccc/ | hccc |  | RegexParser1
+  dir http://localhost/hcb/ | hcb |  | RegexParser1
+  dir http://localhost/hackview/ | hackview |  | RegexParser1
+  dir http://localhost/hackoff/ | hackoff |  | RegexParser1
+  dir http://localhost/hackerstorm/ | hackerstorm |  | RegexParser1
+  dir http://localhost/hack25/ | hack25 |  | RegexParser1
+  dir http://localhost/h=edm2/ | h=edm2 |  | RegexParser1
+  dir http://localhost/gogo/ | gogo | le chat du dr.gang | RegexParser1
+  dir http://localhost/frhack/ | frhack |  | RegexParser1
+  dir http://localhost/fantom/ | fantom |  | RegexParser1
+  dir http://localhost/dsk/ | dsk |  | RegexParser1
+  dir http://localhost/deathlyby/ | deathlyby |  | RegexParser1
+  dir http://localhost/cybz/ | cybz | cybz.madchat | enorme de docs sys et coding en bon francois | RegexParser1
+  dir http://localhost/cryptel/ | cryptel |  | RegexParser1
+  dir http://localhost/counterstrike/ | counterstrike |  | RegexParser1
+  dir http://localhost/cleozine/ | cleozine |  | RegexParser1
+  dir http://localhost/chg/ | chg |  | RegexParser1
+  dir http://localhost/casio/ | casio |  | RegexParser1
+  dir http://localhost/busted/ | busted |  | RegexParser1
+  dir http://localhost/blacklotus/ | blacklotus |  | RegexParser1
+  dir http://localhost/bhz/ | bhz |  | RegexParser1
+  dir http://localhost/bama/ | bama |  | RegexParser1
+  dir http://localhost/asm/ | asm | asm x86 bootstrap | RegexParser1
+  dir http://localhost/apocalypse/ | apocalypse |  | RegexParser1
+  dir http://localhost/alcibiade/ | alcibiade |  | RegexParser1
+  dir http://localhost/akt/ | akt |  | RegexParser1
+  dir http://localhost/3d13/ | 3d13 |  | RegexParser1
+  dir http://localhost/2020Hacker/ | 2020Hacker |  | RegexParser1
+  file http://localhost/xhmag.zip | xhmag.zip | 28672 | Linux, SE, NFS, Delires
+  file http://localhost/wwa.zip | wwa.zip | 68608 | White-Wolf Army : Securite, drugs et Demomaking - 1: Fire Effect (Asm), Legislation Francaise, SoftIce, ICQ Spy, Cryptage (1), GHB, Crypteur Telephone [04/00]
+  file http://localhost/wickedcity.htm | wickedcity.htm | 56320 | wickedcity
+  file http://localhost/wargames.zip | wargames.zip | 6349 | 
+  file http://localhost/vmb_admin.zip | vmb_admin.zip | 18432 | Manuel-expert VMB Alcatel 42xx
+  file http://localhost/usn.zip | usn.zip | 129024 | Compil. textes &amp; exploits (Anglais), Excellent niveau
+  file http://localhost/textes.zip | textes.zip | 243712 | Compil de txt interessants
+  file http://localhost/tdc.zip | tdc.zip | 360448 | 
+  file http://localhost/tcp.zip | tcp.zip | 64512 | TCP/IP en langage C
+  file http://localhost/tc-s63.zip | tc-s63.zip | 26624 | Infos sur certains autocoms
+  file http://localhost/t-s63-4.zip | t-s63-4.zip | 26624 | Mil. Telecom
+  file http://localhost/shogun.zip | shogun.zip | 29696 | Fun &amp; trash 1:  No I.N.S.E.E (Secu), Crash Car, Hack machines a monnaie&gt;
+  file http://localhost/sevensynkopmag-opus1.tar.gz | sevensynkopmag-opus1.tar.gz | 191488 | Failles PHP, WSH, Cracking
+  file http://localhost/deadend_1.rar | deadend_1.rar | 687104 | 
+  file http://localhost/HackTeamLzine1.rar | HackTeamLzine1.rar | 1363149 | 
+  file http://localhost/putois.zip | putois.zip | 2560 | Special IExplorer 4/5
+  file http://localhost/pksd003.zip | pksd003.zip | 14336 | 
+  file http://localhost/pksd002.zip | pksd002.zip | 10240 | 
+  file http://localhost/pksd001.zip | pksd001.zip | 7885 | 
+  file http://localhost/phylof.zip | phylof.zip | 1536 | Ed: 'Vincent' [[ADM]] - Texte realiste sur l'underground
+  file http://localhost/phrack61.tar.gz | phrack61.tar.gz | 352256 | 
+  file http://localhost/phrack60-fr.tar.gz | phrack60-fr.tar.gz | 531456 | 
+  file http://localhost/ph34r-mag.txt | ph34r-mag.txt | 103424 | 
+  file http://localhost/penelope.zip | penelope.zip | 140288 | 
+  file http://localhost/p62.tar.gz | p62.tar.gz | 134144 | 
+  file http://localhost/nozep.zip | nozep.zip | 8499 | Netbios, Mailbox, Icq
+  file http://localhost/norb-wrz.zip | norb-wrz.zip | 10138 | Werez: Presentation, Tests, Distro
+  file http://localhost/nc0.tgz | nc0.tgz | 74752 | 
+  file http://localhost/mvm1.zip | mvm1.zip | 55296 | BeigeBox, AOL, VMB, Cracking, SE
+  file http://localhost/morbidedark1.zip | morbidedark1.zip | 3174 | Win95 registry
+  file http://localhost/memento.zip | memento.zip | 241664 | Ed: Shmeit Corp. - [.HTML] Cours de crack illustres et progressifs 1: 5 Cours Crack, Creer un patch en TP
+  file http://localhost/lamah1.zip | lamah1.zip | 79872 | 
+  file http://localhost/kdbzine1.zip | kdbzine1.zip | 38912 | 
+  file http://localhost/kaotix-01.zip | kaotix-01.zip | 34816 | Ed: iXtlan - Parano et Sympa comme il faut ! 1: .htaccess, hack SMTP, Tribe, Nukers, Virus...
+  file http://localhost/improving1.zip | improving1.zip | 10240 | Ed: The Cripple - Ameliorer la Securite de Votre System en le Piratant
+  file http://localhost/icztrad.zip | icztrad.zip | 234496 | 
+  file http://localhost/guide.zip | guide.zip | 18432 | Le guide satirique pour devenir un vrai hacker...
+  file http://localhost/golio.zip | golio.zip | 13312 | Le hpc pour les golios ! 1: panorama hacking fr
+  file http://localhost/efs.zip | efs.zip | 5530 | Chiffrement de donnees EFS dans Windows NT
+  file http://localhost/dns-1034.zip | dns-1034.zip | 52224 | 
+  file http://localhost/cybpunk.zip | cybpunk.zip | 65536 | 
+  file http://localhost/bsc01.zip | bsc01.zip | 48128 | Brain Storm Crew : Scene, H/P et delires - SE, Backdoor IRC, Web engineering, Hack Tripod, Passwd, Wingates, protocole IP, (T)FTP, PABC/VMB, Prog Batch  [09/00]
+  file http://localhost/blast.zip | blast.zip | 17408 | 1: Warez, BIOS pass, Phf, wwwboards
+  file http://localhost/beef13.zip | beef13.zip | 57344 | Beef13 Corp : hackers amateurs - 1: Virus, Anonymail, Boxing
+  file http://localhost/bases12.zip | bases12.zip | 3789 | Base du hacking (newbies)
+  file http://localhost/asf_tuto.zip | asf_tuto.zip | 123904 | Ed: SeMPai - Scene ASF Warez : Release de Movies - Passer du Camescope au CD avec le soft Wmodp
+  file http://localhost/aohmag1.zip | aohmag1.zip | 13312 | Misc newbies tutorials - 1: Coditel, Hacking basics, GSM
+  file http://localhost/an101495.zip | an101495.zip | 44032 | 
+  file http://localhost/an020995.zip | an020995.zip | 31744 | 
+  file http://localhost/allianx.zip | allianx.zip | 63488 | Beige boxing, VMB File Transfert, Open source, Secu Linux, IRC Scripting, Prog Shell, TCP/IP, TPascal, CoreWar  [07/00]
+  file http://localhost/M.I.B Mag %231(2).zip | M.I.B Mag #1(2).zip | 456704 | 
+  file http://localhost/3644.zip | 3644.zip | 2765 | France Telecom : Numeros en 3644
+  file http://localhost/2d3dfx.zip | 2d3dfx.zip | 1048576 | Demomaking : Effets 2D/3D en C++
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost:8086/listing/zone51/ | zone51 |  | RegexParser1
+  dir http://localhost:8086/listing/underwayy/ | underwayy | Ed: Psyko/Underwayy - Philo Excellente (n0.2), Niveau : Mouvant | RegexParser1
+  dir http://localhost:8086/listing/thelastclik/ | thelastclik |  | RegexParser1
+  dir http://localhost:8086/listing/tcdiaries/ | tcdiaries |  | RegexParser1
+  dir http://localhost:8086/listing/t-s63/ | t-s63 |  | RegexParser1
+  dir http://localhost:8086/listing/silmarillon/ | silmarillon |  | RegexParser1
+  dir http://localhost:8086/listing/securimag/ | securimag |  | RegexParser1
+  dir http://localhost:8086/listing/rcn/ | rcn |  | RegexParser1
+  dir http://localhost:8086/listing/pirage/ | pirage |  | RegexParser1
+  dir http://localhost:8086/listing/phrack/ | phrack |  | RegexParser1
+  dir http://localhost:8086/listing/nopast/ | nopast |  | RegexParser1
+  dir http://localhost:8086/listing/nofutur/ | nofutur |  | RegexParser1
+  dir http://localhost:8086/listing/nightz04/ | nightz04 |  | RegexParser1
+  dir http://localhost:8086/listing/n0name/ | n0name |  | RegexParser1
+  dir http://localhost:8086/listing/memento/ | memento |  | RegexParser1
+  dir http://localhost:8086/listing/mcours/ | mcours |  | RegexParser1
+  dir http://localhost:8086/listing/magattack/ | magattack |  | RegexParser1
+  dir http://localhost:8086/listing/macmillam/ | macmillam |  | RegexParser1
+  dir http://localhost:8086/listing/lotfree/ | lotfree |  | RegexParser1
+  dir http://localhost:8086/listing/kiing/ | kiing |  | RegexParser1
+  dir http://localhost:8086/listing/jci/ | jci |  | RegexParser1
+  dir http://localhost:8086/listing/intrusion/ | intrusion | Ed: Ramouz - Texte en .DOC, Made in Microsoft Word 97.. | RegexParser1
+  dir http://localhost:8086/listing/insecuremag/ | insecuremag |  | RegexParser1
+  dir http://localhost:8086/listing/xtc/ | xtc |  | RegexParser1
+  dir http://localhost:8086/listing/xiii/ | xiii |  | RegexParser1
+  dir http://localhost:8086/listing/xgj/ | xgj |  | RegexParser1
+  dir http://localhost:8086/listing/underhack/ | underhack |  | RegexParser1
+  dir http://localhost:8086/listing/underdark/ | underdark |  | RegexParser1
+  dir http://localhost:8086/listing/uha/ | uha |  | RegexParser1
+  dir http://localhost:8086/listing/tua/ | tua |  | RegexParser1
+  dir http://localhost:8086/listing/tsa/ | tsa |  | RegexParser1
+  dir http://localhost:8086/listing/tradefr/ | tradefr |  | RegexParser1
+  dir http://localhost:8086/listing/totalctrl/ | totalctrl |  | RegexParser1
+  dir http://localhost:8086/listing/theultimate/ | theultimate |  | RegexParser1
+  dir http://localhost:8086/listing/tdcmag/ | tdcmag |  | RegexParser1
+  dir http://localhost:8086/listing/snap/ | snap |  | RegexParser1
+  dir http://localhost:8086/listing/sleazywind/ | sleazywind |  | RegexParser1
+  dir http://localhost:8086/listing/secuinfo/ | secuinfo |  | RegexParser1
+  dir http://localhost:8086/listing/hohs/ | hohs |  | RegexParser1
+  dir http://localhost:8086/listing/haqch/ | haqch |  | RegexParser1
+  dir http://localhost:8086/listing/hackzine/ | hackzine |  | RegexParser1
+  dir http://localhost:8086/listing/gsm_codes/ | gsm_codes |  | RegexParser1
+  dir http://localhost:8086/listing/firewall/ | firewall | Comprendre les FireWall, par Trom | RegexParser1
+  dir http://localhost:8086/listing/drapeaunoir/ | drapeaunoir |  | RegexParser1
+  dir http://localhost:8086/listing/dhmag/ | dhmag |  | RegexParser1
+  dir http://localhost:8086/listing/deadend/ | deadend |  | RegexParser1
+  dir http://localhost:8086/listing/cours/ | cours |  | RegexParser1
+  dir http://localhost:8086/listing/coredump/ | coredump |  | RegexParser1
+  dir http://localhost:8086/listing/cgi_hole/ | cgi_hole |  | RegexParser1
+  dir http://localhost:8086/listing/cee/ | cee |  | RegexParser1
+  dir http://localhost:8086/listing/bfz/ | bfz |  | RegexParser1
+  dir http://localhost:8086/listing/anathema/ | anathema |  | RegexParser1
+  dir http://localhost:8086/listing/alternative/ | alternative |  | RegexParser1
+  dir http://localhost:8086/listing/912hd/ | 912hd |  | RegexParser1
+  dir http://localhost:8086/listing/rtcmag/ | rtcmag |  | RegexParser1
+  dir http://localhost:8086/listing/row/ | row |  | RegexParser1
+  dir http://localhost:8086/listing/revolution/ | revolution |  | RegexParser1
+  dir http://localhost:8086/listing/qha/ | qha |  | RegexParser1
+  dir http://localhost:8086/listing/pyrofreak/ | pyrofreak |  | RegexParser1
+  dir http://localhost:8086/listing/prograzine/ | prograzine |  | RegexParser1
+  dir http://localhost:8086/listing/polio/ | polio |  | RegexParser1
+  dir http://localhost:8086/listing/phreakaz/ | phreakaz |  | RegexParser1
+  dir http://localhost:8086/listing/pgk/ | pgk |  | RegexParser1
+  dir http://localhost:8086/listing/organiks/ | organiks | textes de bon niveau au veritable arome de C.. arf ca c'est du mag! ;) | RegexParser1
+  dir http://localhost:8086/listing/npc/ | npc |  | RegexParser1
+  dir http://localhost:8086/listing/nowhere/ | nowhere |  | RegexParser1
+  dir http://localhost:8086/listing/noway/ | noway |  | RegexParser1
+  dir http://localhost:8086/listing/nowall/ | nowall |  | RegexParser1
+  dir http://localhost:8086/listing/noroute/ | noroute |  | RegexParser1
+  dir http://localhost:8086/listing/nopeace/ | nopeace |  | RegexParser1
+  dir http://localhost:8086/listing/nopasswd/ | nopasswd |  | RegexParser1
+  dir http://localhost:8086/listing/mj13/ | mj13 |  | RegexParser1
+  dir http://localhost:8086/listing/mindkind/ | mindkind |  | RegexParser1
+  dir http://localhost:8086/listing/malicia/ | malicia |  | RegexParser1
+  dir http://localhost:8086/listing/lutin/ | lutin |  | RegexParser1
+  dir http://localhost:8086/listing/liberte/ | liberte |  | RegexParser1
+  dir http://localhost:8086/listing/le_reporter/ | le_reporter | fanzine old-school sympa oriente programmation [aaz] | RegexParser1
+  dir http://localhost:8086/listing/lddm/ | lddm |  | RegexParser1
+  dir http://localhost:8086/listing/larsen/ | larsen | Larsen, auteur des mags H.V.U. et pote a moi | RegexParser1
+  dir http://localhost:8086/listing/kye/ | kye |  | RegexParser1
+  dir http://localhost:8086/listing/jokers/ | jokers |  | RegexParser1
+  dir http://localhost:8086/listing/jambon/ | jambon |  | RegexParser1
+  dir http://localhost:8086/listing/ioc/ | ioc |  | RegexParser1
+  dir http://localhost:8086/listing/immortal/ | immortal |  | RegexParser1
+  dir http://localhost:8086/listing/iga/ | iga |  | RegexParser1
+  dir http://localhost:8086/listing/hvu/ | hvu |  | RegexParser1
+  dir http://localhost:8086/listing/hccc/ | hccc |  | RegexParser1
+  dir http://localhost:8086/listing/hcb/ | hcb |  | RegexParser1
+  dir http://localhost:8086/listing/hackview/ | hackview |  | RegexParser1
+  dir http://localhost:8086/listing/hackoff/ | hackoff |  | RegexParser1
+  dir http://localhost:8086/listing/hackerstorm/ | hackerstorm |  | RegexParser1
+  dir http://localhost:8086/listing/hack25/ | hack25 |  | RegexParser1
+  dir http://localhost:8086/listing/h=edm2/ | h=edm2 |  | RegexParser1
+  dir http://localhost:8086/listing/gogo/ | gogo | le chat du dr.gang | RegexParser1
+  dir http://localhost:8086/listing/frhack/ | frhack |  | RegexParser1
+  dir http://localhost:8086/listing/fantom/ | fantom |  | RegexParser1
+  dir http://localhost:8086/listing/dsk/ | dsk |  | RegexParser1
+  dir http://localhost:8086/listing/deathlyby/ | deathlyby |  | RegexParser1
+  dir http://localhost:8086/listing/cybz/ | cybz | cybz.madchat | enorme de docs sys et coding en bon francois | RegexParser1
+  dir http://localhost:8086/listing/cryptel/ | cryptel |  | RegexParser1
+  dir http://localhost:8086/listing/counterstrike/ | counterstrike |  | RegexParser1
+  dir http://localhost:8086/listing/cleozine/ | cleozine |  | RegexParser1
+  dir http://localhost:8086/listing/chg/ | chg |  | RegexParser1
+  dir http://localhost:8086/listing/casio/ | casio |  | RegexParser1
+  dir http://localhost:8086/listing/busted/ | busted |  | RegexParser1
+  dir http://localhost:8086/listing/blacklotus/ | blacklotus |  | RegexParser1
+  dir http://localhost:8086/listing/bhz/ | bhz |  | RegexParser1
+  dir http://localhost:8086/listing/bama/ | bama |  | RegexParser1
+  dir http://localhost:8086/listing/asm/ | asm | asm x86 bootstrap | RegexParser1
+  dir http://localhost:8086/listing/apocalypse/ | apocalypse |  | RegexParser1
+  dir http://localhost:8086/listing/alcibiade/ | alcibiade |  | RegexParser1
+  dir http://localhost:8086/listing/akt/ | akt |  | RegexParser1
+  dir http://localhost:8086/listing/3d13/ | 3d13 |  | RegexParser1
+  dir http://localhost:8086/listing/2020Hacker/ | 2020Hacker |  | RegexParser1
+  file http://localhost:8086/listing/xhmag.zip | xhmag.zip | 28672 | Linux, SE, NFS, Delires
+  file http://localhost:8086/listing/wwa.zip | wwa.zip | 68608 | White-Wolf Army : Securite, drugs et Demomaking - 1: Fire Effect (Asm), Legislation Francaise, SoftIce, ICQ Spy, Cryptage (1), GHB, Crypteur Telephone [04/00]
+  file http://localhost:8086/listing/wickedcity.htm | wickedcity.htm | 56320 | wickedcity
+  file http://localhost:8086/listing/wargames.zip | wargames.zip | 6349 | 
+  file http://localhost:8086/listing/vmb_admin.zip | vmb_admin.zip | 18432 | Manuel-expert VMB Alcatel 42xx
+  file http://localhost:8086/listing/usn.zip | usn.zip | 129024 | Compil. textes &amp; exploits (Anglais), Excellent niveau
+  file http://localhost:8086/listing/textes.zip | textes.zip | 243712 | Compil de txt interessants
+  file http://localhost:8086/listing/tdc.zip | tdc.zip | 360448 | 
+  file http://localhost:8086/listing/tcp.zip | tcp.zip | 64512 | TCP/IP en langage C
+  file http://localhost:8086/listing/tc-s63.zip | tc-s63.zip | 26624 | Infos sur certains autocoms
+  file http://localhost:8086/listing/t-s63-4.zip | t-s63-4.zip | 26624 | Mil. Telecom
+  file http://localhost:8086/listing/shogun.zip | shogun.zip | 29696 | Fun &amp; trash 1:  No I.N.S.E.E (Secu), Crash Car, Hack machines a monnaie&gt;
+  file http://localhost:8086/listing/sevensynkopmag-opus1.tar.gz | sevensynkopmag-opus1.tar.gz | 191488 | Failles PHP, WSH, Cracking
+  file http://localhost:8086/listing/deadend_1.rar | deadend_1.rar | 687104 | 
+  file http://localhost:8086/listing/HackTeamLzine1.rar | HackTeamLzine1.rar | 1363149 | 
+  file http://localhost:8086/listing/putois.zip | putois.zip | 2560 | Special IExplorer 4/5
+  file http://localhost:8086/listing/pksd003.zip | pksd003.zip | 14336 | 
+  file http://localhost:8086/listing/pksd002.zip | pksd002.zip | 10240 | 
+  file http://localhost:8086/listing/pksd001.zip | pksd001.zip | 7885 | 
+  file http://localhost:8086/listing/phylof.zip | phylof.zip | 1536 | Ed: 'Vincent' [[ADM]] - Texte realiste sur l'underground
+  file http://localhost:8086/listing/phrack61.tar.gz | phrack61.tar.gz | 352256 | 
+  file http://localhost:8086/listing/phrack60-fr.tar.gz | phrack60-fr.tar.gz | 531456 | 
+  file http://localhost:8086/listing/ph34r-mag.txt | ph34r-mag.txt | 103424 | 
+  file http://localhost:8086/listing/penelope.zip | penelope.zip | 140288 | 
+  file http://localhost:8086/listing/p62.tar.gz | p62.tar.gz | 134144 | 
+  file http://localhost:8086/listing/nozep.zip | nozep.zip | 8499 | Netbios, Mailbox, Icq
+  file http://localhost:8086/listing/norb-wrz.zip | norb-wrz.zip | 10138 | Werez: Presentation, Tests, Distro
+  file http://localhost:8086/listing/nc0.tgz | nc0.tgz | 74752 | 
+  file http://localhost:8086/listing/mvm1.zip | mvm1.zip | 55296 | BeigeBox, AOL, VMB, Cracking, SE
+  file http://localhost:8086/listing/morbidedark1.zip | morbidedark1.zip | 3174 | Win95 registry
+  file http://localhost:8086/listing/memento.zip | memento.zip | 241664 | Ed: Shmeit Corp. - [.HTML] Cours de crack illustres et progressifs 1: 5 Cours Crack, Creer un patch en TP
+  file http://localhost:8086/listing/lamah1.zip | lamah1.zip | 79872 | 
+  file http://localhost:8086/listing/kdbzine1.zip | kdbzine1.zip | 38912 | 
+  file http://localhost:8086/listing/kaotix-01.zip | kaotix-01.zip | 34816 | Ed: iXtlan - Parano et Sympa comme il faut ! 1: .htaccess, hack SMTP, Tribe, Nukers, Virus...
+  file http://localhost:8086/listing/improving1.zip | improving1.zip | 10240 | Ed: The Cripple - Ameliorer la Securite de Votre System en le Piratant
+  file http://localhost:8086/listing/icztrad.zip | icztrad.zip | 234496 | 
+  file http://localhost:8086/listing/guide.zip | guide.zip | 18432 | Le guide satirique pour devenir un vrai hacker...
+  file http://localhost:8086/listing/golio.zip | golio.zip | 13312 | Le hpc pour les golios ! 1: panorama hacking fr
+  file http://localhost:8086/listing/efs.zip | efs.zip | 5530 | Chiffrement de donnees EFS dans Windows NT
+  file http://localhost:8086/listing/dns-1034.zip | dns-1034.zip | 52224 | 
+  file http://localhost:8086/listing/cybpunk.zip | cybpunk.zip | 65536 | 
+  file http://localhost:8086/listing/bsc01.zip | bsc01.zip | 48128 | Brain Storm Crew : Scene, H/P et delires - SE, Backdoor IRC, Web engineering, Hack Tripod, Passwd, Wingates, protocole IP, (T)FTP, PABC/VMB, Prog Batch  [09/00]
+  file http://localhost:8086/listing/blast.zip | blast.zip | 17408 | 1: Warez, BIOS pass, Phf, wwwboards
+  file http://localhost:8086/listing/beef13.zip | beef13.zip | 57344 | Beef13 Corp : hackers amateurs - 1: Virus, Anonymail, Boxing
+  file http://localhost:8086/listing/bases12.zip | bases12.zip | 3789 | Base du hacking (newbies)
+  file http://localhost:8086/listing/asf_tuto.zip | asf_tuto.zip | 123904 | Ed: SeMPai - Scene ASF Warez : Release de Movies - Passer du Camescope au CD avec le soft Wmodp
+  file http://localhost:8086/listing/aohmag1.zip | aohmag1.zip | 13312 | Misc newbies tutorials - 1: Coditel, Hacking basics, GSM
+  file http://localhost:8086/listing/an101495.zip | an101495.zip | 44032 | 
+  file http://localhost:8086/listing/an020995.zip | an020995.zip | 31744 | 
+  file http://localhost:8086/listing/allianx.zip | allianx.zip | 63488 | Beige boxing, VMB File Transfert, Open source, Secu Linux, IRC Scripting, Prog Shell, TCP/IP, TPascal, CoreWar  [07/00]
+  file http://localhost:8086/listing/M.I.B Mag %231(2).zip | M.I.B Mag #1(2).zip | 456704 | 
+  file http://localhost:8086/listing/3644.zip | 3644.zip | 2765 | France Telecom : Numeros en 3644
+  file http://localhost:8086/listing/2d3dfx.zip | 2d3dfx.zip | 1048576 | Demomaking : Effets 2D/3D en C++

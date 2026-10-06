@@ -1,0 +1,60 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/Bridge Bookshop (12-10-87)/ | Bridge Bookshop (12-10-87) |  | ParseTablesDirectoryListing
+  dir http://localhost/Ear Inn Reading (1-25-85)/ | Ear Inn Reading (1-25-85) |  | ParseTablesDirectoryListing
+  dir http://localhost/Ear Inn Reading (10-13-84)/ | Ear Inn Reading (10-13-84) |  | ParseTablesDirectoryListing
+  dir http://localhost/Ear Inn Reading (10-20-84)/ | Ear Inn Reading (10-20-84) |  | ParseTablesDirectoryListing
+  dir http://localhost/Ear Inn Reading (10-6-84)/ | Ear Inn Reading (10-6-84) |  | ParseTablesDirectoryListing
+  dir http://localhost/Ear Inn Reading (1985)/ | Ear Inn Reading (1985) |  | ParseTablesDirectoryListing
+  dir http://localhost/Giotto Cafe (1-12-86)/ | Giotto Cafe (1-12-86) |  | ParseTablesDirectoryListing
+  dir http://localhost/Granary Books (2-20-92)/ | Granary Books (2-20-92) |  | ParseTablesDirectoryListing
+  dir http://localhost/Granary Books (3-12-92)/ | Granary Books (3-12-92) |  | ParseTablesDirectoryListing
+  dir http://localhost/Granary Books (3-19-92)/ | Granary Books (3-19-92) |  | ParseTablesDirectoryListing
+  dir http://localhost/Granary Books (3-26-92)/ | Granary Books (3-26-92) |  | ParseTablesDirectoryListing
+  dir http://localhost/Granary Books (3-28-91)/ | Granary Books (3-28-91) |  | ParseTablesDirectoryListing
+  dir http://localhost/Granary Books (5-1-91)/ | Granary Books (5-1-91) |  | ParseTablesDirectoryListing
+  dir http://localhost/Granary Books (5-9-91)/ | Granary Books (5-9-91) |  | ParseTablesDirectoryListing
+  dir http://localhost/Greg Succop and David Rattray/ | Greg Succop and David Rattray |  | ParseTablesDirectoryListing
+  dir http://localhost/Ken Irby, NYC, 4-6-81/ | Ken Irby, NYC, 4-6-81 |  | ParseTablesDirectoryListing
+  dir http://localhost/Kim Lyons and Lewis Warsh at Giotto Cafe (4-8-86)/ | Kim Lyons and Lewis Warsh at Giotto Cafe (4-8-86) |  | ParseTablesDirectoryListing
+  dir http://localhost/NeitherNor (4-20-86)/ | NeitherNor (4-20-86) |  | ParseTablesDirectoryListing
+  dir http://localhost/Rattray and Oppen/ | Rattray and Oppen |  | ParseTablesDirectoryListing
+  dir http://localhost/Rothenberg (Bridge Bookstore)/ | Rothenberg (Bridge Bookstore) |  | ParseTablesDirectoryListing
+  dir http://localhost/Tangents Reading, Outpost Performance Space (2-18-93)/ | Tangents Reading, Outpost Performance Space (2-18-93) |  | ParseTablesDirectoryListing
+  dir http://localhost/Tangents Series (6-5-94)/ | Tangents Series (6-5-94) |  | ParseTablesDirectoryListing
+  dir http://localhost/Tangents Series, Outpost (3-11-93)/ | Tangents Series, Outpost (3-11-93) |  | ParseTablesDirectoryListing
+  dir http://localhost/Tangents, Outpost (5-6-93)/ | Tangents, Outpost (5-6-93) |  | ParseTablesDirectoryListing
+  dir http://localhost/Writers House Visit (3-19-14)/ | Writers House Visit (3-19-14) |  | ParseTablesDirectoryListing
+  file http://localhost/Abel-David.jpg | Abel-David.jpg | 315392 | 
+  file http://localhost/barTest | barTest | 805 | 
+  file http://localhost/North-Charles-and-Mullen-Harryette_Side-A_St-Marks_5-3-91.wav | North-Charles-and-Mullen-Harryette_Side-A_St-Marks_5-3-91.wav | 207618048 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/Bridge Bookshop (12-10-87)/ | Bridge Bookshop (12-10-87) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ear Inn Reading (1-25-85)/ | Ear Inn Reading (1-25-85) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ear Inn Reading (10-13-84)/ | Ear Inn Reading (10-13-84) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ear Inn Reading (10-20-84)/ | Ear Inn Reading (10-20-84) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ear Inn Reading (10-6-84)/ | Ear Inn Reading (10-6-84) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ear Inn Reading (1985)/ | Ear Inn Reading (1985) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Giotto Cafe (1-12-86)/ | Giotto Cafe (1-12-86) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Granary Books (2-20-92)/ | Granary Books (2-20-92) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Granary Books (3-12-92)/ | Granary Books (3-12-92) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Granary Books (3-19-92)/ | Granary Books (3-19-92) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Granary Books (3-26-92)/ | Granary Books (3-26-92) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Granary Books (3-28-91)/ | Granary Books (3-28-91) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Granary Books (5-1-91)/ | Granary Books (5-1-91) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Granary Books (5-9-91)/ | Granary Books (5-9-91) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Greg Succop and David Rattray/ | Greg Succop and David Rattray |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Ken Irby, NYC, 4-6-81/ | Ken Irby, NYC, 4-6-81 |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Kim Lyons and Lewis Warsh at Giotto Cafe (4-8-86)/ | Kim Lyons and Lewis Warsh at Giotto Cafe (4-8-86) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/NeitherNor (4-20-86)/ | NeitherNor (4-20-86) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Rattray and Oppen/ | Rattray and Oppen |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Rothenberg (Bridge Bookstore)/ | Rothenberg (Bridge Bookstore) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Tangents Reading, Outpost Performance Space (2-18-93)/ | Tangents Reading, Outpost Performance Space (2-18-93) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Tangents Series (6-5-94)/ | Tangents Series (6-5-94) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Tangents Series, Outpost (3-11-93)/ | Tangents Series, Outpost (3-11-93) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Tangents, Outpost (5-6-93)/ | Tangents, Outpost (5-6-93) |  | ParseTablesDirectoryListing
+  dir http://localhost:8086/listing/Writers House Visit (3-19-14)/ | Writers House Visit (3-19-14) |  | ParseTablesDirectoryListing
+  file http://localhost:8086/listing/Abel-David.jpg | Abel-David.jpg | 315392 | 
+  file http://localhost:8086/listing/barTest | barTest | 805 | 
+  file http://localhost:8086/listing/North-Charles-and-Mullen-Harryette_Side-A_St-Marks_5-3-91.wav | North-Charles-and-Mullen-Harryette_Side-A_St-Marks_5-3-91.wav | 207618048 | 

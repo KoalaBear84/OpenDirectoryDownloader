@@ -1,0 +1,20 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/Remote Tools 2015 %28x64%29.zip | Remote Tools 2015 (x64).zip | 62285414 | 
+  file http://localhost/Remote Tools 2015.zip | Remote Tools 2015.zip | 34498150 | 
+  file http://localhost/Remote Tools 2017 %28x64%29.zip | Remote Tools 2017 (x64).zip | 94057267 | 
+  file http://localhost/Remote Tools 2017.zip | Remote Tools 2017.zip | 59978547 | 
+  file http://localhost/Remote Tools 2019 %28x64%29.zip | Remote Tools 2019 (x64).zip | 96468992 | 
+  file http://localhost/Remote Tools 2019.zip | Remote Tools 2019.zip | 61131981 | 
+  file http://localhost/Remote Tools 2022 %28x64%29.zip | Remote Tools 2022 (x64).zip | 95734989 | 
+  file http://localhost/Remote Tools 2022.zip | Remote Tools 2022.zip | 60712550 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost:8086/listing/Remote Tools 2015 %28x64%29.zip | Remote Tools 2015 (x64).zip | 62285414 | 
+  file http://localhost:8086/listing/Remote Tools 2015.zip | Remote Tools 2015.zip | 34498150 | 
+  file http://localhost:8086/listing/Remote Tools 2017 %28x64%29.zip | Remote Tools 2017 (x64).zip | 94057267 | 
+  file http://localhost:8086/listing/Remote Tools 2017.zip | Remote Tools 2017.zip | 59978547 | 
+  file http://localhost:8086/listing/Remote Tools 2019 %28x64%29.zip | Remote Tools 2019 (x64).zip | 96468992 | 
+  file http://localhost:8086/listing/Remote Tools 2019.zip | Remote Tools 2019.zip | 61131981 | 
+  file http://localhost:8086/listing/Remote Tools 2022 %28x64%29.zip | Remote Tools 2022 (x64).zip | 95734989 | 
+  file http://localhost:8086/listing/Remote Tools 2022.zip | Remote Tools 2022.zip | 60712550 | 

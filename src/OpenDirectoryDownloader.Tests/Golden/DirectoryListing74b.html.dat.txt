@@ -1,0 +1,9 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/server/events/Adobe Acrobat Pro IX/Crack/ | Crack |  | RegexParser7
+  file http://localhost/server/events/Adobe Acrobat Pro IX/AcrobatPro.exe | AcrobatPro.exe | 525508520 | 
+  file http://localhost/server/events/Adobe Acrobat Pro IX/How To Install %26 Register.txt | How To Install & Register.txt | 2062 | 
+  file http://localhost/server/events/Adobe Acrobat Pro IX/How To Use Keygen.txt | How To Use Keygen.txt | 2286 | 
+  file http://localhost/server/events/Adobe Acrobat Pro IX/Update-20181228T115532Z-001.zip | Update-20181228T115532Z-001.zip | 250145236 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True

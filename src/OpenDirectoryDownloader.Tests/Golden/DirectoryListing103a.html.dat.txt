@@ -1,0 +1,71 @@
+== root
+url=http://localhost/ name=ROOT desc= parser=ParseListItemsDirectoryListing error=False ok=True
+  dir http://localhost/?path=./Comics/%40eaDir/ | @eaDir |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/Crossovers/ | Crossovers |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/DC/ | DC |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/MARVEL/ | MARVEL |  | ParseListItemsDirectoryListing
+  dir http://localhost/?path=./Comics/OTHER/ | OTHER |  | ParseListItemsDirectoryListing
+  file http://localhost/Comics/2020 Force Works 002 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | 2020 Force Works 002 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Action Comics 1021%282020%29%28Webrip%29%28The Last Kryptonian-DCP%29.cbr | Action Comics 1021(2020)(Webrip)(The Last Kryptonian-DCP).cbr |  | 
+  file http://localhost/Comics/Amazing Spider-Man 042 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Amazing Spider-Man 042 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Amethyst 002 %282020%29 %28digital%29 %28Son of Ultron-Empire%29.cbr | Amethyst 002 (2020) (digital) (Son of Ultron-Empire).cbr |  | 
+  file http://localhost/Comics/Ash %26 Thorn 001 %282020%29 %28digital%29 %28Son of Ultron-Empire%29.cbr | Ash & Thorn 001 (2020) (digital) (Son of Ultron-Empire).cbr |  | 
+  file http://localhost/Comics/Basketful of Heads 006 %282020%29 %282 covers%29 %28Digital%29 %28Riptorn-SWA%29.cbr | Basketful of Heads 006 (2020) (2 covers) (Digital) (Riptorn-SWA).cbr |  | 
+  file http://localhost/Comics/Batgirl 045 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Batgirl 045 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Batman Beyond 042 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Batman Beyond 042 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Batman Curse Of The White Knight 08%28of 08%29%282020%29%28Webrip%29%28The Last Kryptonian-DCP%29.cbr | Batman Curse Of The White Knight 08(of 08)(2020)(Webrip)(The Last Kryptonian-DCP).cbr |  | 
+  file http://localhost/Comics/Batman Superman 008%282020%29%28Webrip%29%28The Last Kryptonian-DCP%29.cbr | Batman Superman 008(2020)(Webrip)(The Last Kryptonian-DCP).cbr |  | 
+  file http://localhost/Comics/Batman The Adventures Continue 001%282020%29%28Digital%29%28Zone-Empire%29.cbr | Batman The Adventures Continue 001(2020)(Digital)(Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Belle Oath of Thorns 06%28of 06%29%282020%29%28digital%29%28The Seeker-Empire%29.cbr | Belle Oath of Thorns 06(of 06)(2020)(digital)(The Seeker-Empire).cbr |  | 
+  file http://localhost/Comics/Black Panther 022 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Black Panther 022 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Books of Magic 018 %282020%29 %28digital%29 %28Son of Ultron-Empire%29.cbr | Books of Magic 018 (2020) (digital) (Son of Ultron-Empire).cbr |  | 
+  file http://localhost/Comics/Cosmo the Mighty Martian 005%282020%29%28digital%29%28Salem-Empire%29.cbr | Cosmo the Mighty Martian 005(2020)(digital)(Salem-Empire).cbr |  | 
+  file http://localhost/Comics/DC Previews 24 %28Apr 2020 for June 2020%29 %28webrip by Lusiphur-DCP%29.pdf | DC Previews 24 (Apr 2020 for June 2020) (webrip by Lusiphur-DCP).pdf |  | 
+  file http://localhost/Comics/Detective Comics 1021%282020%29%28Webrip%29%28The Last Kryptonian-DCP%29.cbr | Detective Comics 1021(2020)(Webrip)(The Last Kryptonian-DCP).cbr |  | 
+  file http://localhost/Comics/Falcon %26 Winter Soldier 002 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Falcon & Winter Soldier 002 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Fantastic Four - Marvels Snapshot 001 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Fantastic Four - Marvels Snapshot 001 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Far Sector 005 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Far Sector 005 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Giant-Size X-Men - Nightcrawler 001 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Giant-Size X-Men - Nightcrawler 001 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Hellions 001 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Hellions 001 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Immortal Hulk 033%282020%29%28GreenGiant-DCP%29.cbr | Immortal Hulk 033(2020)(GreenGiant-DCP).cbr |  | 
+  file http://localhost/Comics/Jessica Jones - Blind Spot 006 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Jessica Jones - Blind Spot 006 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/John Constantine - Hellblazer 005 %282020%29 %28Digital-Empire%29.cbr | John Constantine - Hellblazer 005 (2020) (Digital-Empire).cbr |  | 
+  file http://localhost/Comics/Justice League Dark 021%282020%29%28Webrip%29%28The Last Kryptonian-DCP%29.cbr | Justice League Dark 021(2020)(Webrip)(The Last Kryptonian-DCP).cbr |  | 
+  file http://localhost/Comics/Legion of Superheroes 05%282020%29%28Webrip%29%28The Last Kryptonian-DCP%29.cbr | Legion of Superheroes 05(2020)(Webrip)(The Last Kryptonian-DCP).cbr |  | 
+  file http://localhost/Comics/Lucifer%27s Knight 001 %282020%29 %28Digital%29 %28Mephisto-Empire%29.cbr | Lucifer's Knight 001 (2020) (Digital) (Mephisto-Empire).cbr |  | 
+  file http://localhost/Comics/Marvel%27s Avengers - Black Widow 001 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Marvel's Avengers - Black Widow 001 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Punisher - Soviet 006 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Punisher - Soviet 006 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Ravencroft 003 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Ravencroft 003 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Red Agent Island of Dr Moreau 04%28of 05%29%282020%29%28digital%29%28The Seeker-Empire%29.cbr | Red Agent Island of Dr Moreau 04(of 05)(2020)(digital)(The Seeker-Empire).cbr |  | 
+  file http://localhost/Comics/Red Hood - Outlaw 044 %282020%29 %282 covers%29 %28Digital%29 %28Oracle-SWA%29.cbr | Red Hood - Outlaw 044 (2020) (2 covers) (Digital) (Oracle-SWA).cbr |  | 
+  file http://localhost/Comics/Revenge of the Cosmic Ghost Rider 004 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Revenge of the Cosmic Ghost Rider 004 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Road to Empyre - The Kree-Skrull War 001 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Road to Empyre - The Kree-Skrull War 001 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Sabrina Something Wicked 001%282020%29%28digital%29%28Salem-Empire%29.cbr | Sabrina Something Wicked 001(2020)(digital)(Salem-Empire).cbr |  | 
+  file http://localhost/Comics/Scream - Curse of Carnage 005 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Scream - Curse of Carnage 005 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Star 003 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Star 003 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Star Trek Magazine 075 %282020-05%29 %28PDF-rip%29 %28Random Stranger-DCP%29.cbr | Star Trek Magazine 075 (2020-05) (PDF-rip) (Random Stranger-DCP).cbr |  | 
+  file http://localhost/Comics/Star Wars - Bounty Hunters 002 %282020%29 %28Digital%29 %28Kileko-Empire%29.cbz | Star Wars - Bounty Hunters 002 (2020) (Digital) (Kileko-Empire).cbz |  | 
+  file http://localhost/Comics/Star Wars Insider 196 %282020-04%29 %28PDF-rip%29 %28Random Stranger-DCP%29.cbr | Star Wars Insider 196 (2020-04) (PDF-rip) (Random Stranger-DCP).cbr |  | 
+  file http://localhost/Comics/Suicide Squad 004 %282020%29 %28digital%29 %28Son of Ultron-Empire%29.cbr | Suicide Squad 004 (2020) (digital) (Son of Ultron-Empire).cbr |  | 
+  file http://localhost/Comics/Supergirl 040 %282020%29 %28Digital-Empire%29.cbr | Supergirl 040 (2020) (Digital-Empire).cbr |  | 
+  file http://localhost/Comics/Tarot 004 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Tarot 004 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Teen Titans Go%21 To Camp 005 %282020%29 %28digital%29 %28Son of Ultron-Empire%29.cbr | Teen Titans Go! To Camp 005 (2020) (digital) (Son of Ultron-Empire).cbr |  | 
+  file http://localhost/Comics/Teen Titans Go%21 To Camp 006%282020%29%28digital%29%28Son of Ultron-Empire%29.cbr | Teen Titans Go! To Camp 006(2020)(digital)(Son of Ultron-Empire).cbr |  | 
+  file http://localhost/Comics/The Flash 752 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | The Flash 752 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/The Last God 006 %282020%29 %28Digital%29 %28Oracle-SWA%29.cbr | The Last God 006 (2020) (Digital) (Oracle-SWA).cbr |  | 
+  file http://localhost/Comics/Wolverine 002 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | Wolverine 002 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/Wonder Woman 754 %282020%29 %28Digital-Empire%29.cbr | Wonder Woman 754 (2020) (Digital-Empire).cbr |  | 
+  file http://localhost/Comics/X-Men - Fantastic Four 003 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | X-Men - Fantastic Four 003 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/X-Men 009 %282020%29 %28Digital%29 %28Zone-Empire%29.cbr | X-Men 009 (2020) (Digital) (Zone-Empire).cbr |  | 
+  file http://localhost/Comics/X-Men Milestones - Operation Zero Tolerance %282020%29 %28Digital%29 %28Kileko-Empire%29.cbz | X-Men Milestones - Operation Zero Tolerance (2020) (Digital) (Kileko-Empire).cbz |  | 
+  file http://localhost/Comics/X-Men Milestones - Phalanx Covenant %282019%29 %28Digital%29 %28Kileko-Empire%29.cbz | X-Men Milestones - Phalanx Covenant (2019) (Digital) (Kileko-Empire).cbz |  | 
+  file http://localhost/Comics/Zombie Tramp 069 %282020%29 %28Digital%29 %28Raven%29.cbr | Zombie Tramp 069 (2020) (Digital) (Raven).cbr |  | 
+  file http://localhost/Comics/gen-Lock 013 %282020%29 %28digital%29 %28Son of Ultron-Empire%29.cbr | gen-Lock 013 (2020) (digital) (Son of Ultron-Empire).cbr |  | 
+  file http://localhost/Comics/gen-Lock 014 %282020%29 %28digital%29 %28Son of Ultron-Empire%29.cbr | gen-Lock 014 (2020) (digital) (Son of Ultron-Empire).cbr |  | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser=ParseListItemsDirectoryListing error=False ok=True
+  dir http://localhost:8086/listing/?path=./Comics/%40eaDir/ | @eaDir |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/Crossovers/ | Crossovers |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/DC/ | DC |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/MARVEL/ | MARVEL |  | ParseListItemsDirectoryListing
+  dir http://localhost:8086/listing/?path=./Comics/OTHER/ | OTHER |  | ParseListItemsDirectoryListing
