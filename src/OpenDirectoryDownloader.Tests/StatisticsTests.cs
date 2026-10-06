@@ -1,3 +1,4 @@
+using OpenDirectoryDownloader.Reporting;
 using OpenDirectoryDownloader.Storage;
 using Xunit;
 

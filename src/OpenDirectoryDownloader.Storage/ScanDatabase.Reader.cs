@@ -299,7 +299,10 @@ public sealed partial class ScanDatabase
 			using SqliteCommand subdirectoriesCommand = Command(connection, "SELECT d.url, p.url, d.name, d.description, d.finished, d.error, d.id FROM directory d JOIN directory p ON p.id = d.parent_id WHERE d.parent_id = $id ORDER BY d.id", ("$id", 0L));
 			using SqliteCommand filesCommand = Command(connection, "SELECT CASE WHEN f.relative = 1 THEN d.url || f.url ELSE f.url END, f.name, f.size, f.description, f.id FROM file f JOIN directory d ON d.id = f.directory_id WHERE f.directory_id = $id ORDER BY f.id", ("$id", 0L));
 
-			async Task WalkAsync(MirroredDirectory directory)
+			// Iterative: a tree can be thousands of levels deep, recursion would run out of stack
+			Stack<WalkFrame> path = new();
+
+			async Task EnterAsync(MirroredDirectory directory)
 			{
 				cancellationToken.ThrowIfCancellationRequested();
 
@@ -329,20 +332,37 @@ public sealed partial class ScanDatabase
 
 				await visitor.BeginSubdirectoriesAsync(directory);
 
-				foreach (MirroredDirectory subdirectory in subdirectories)
-				{
-					await WalkAsync(subdirectory);
-				}
-
-				await visitor.LeaveDirectoryAsync(directory);
+				path.Push(new WalkFrame(directory, subdirectories));
 			}
 
-			await WalkAsync(root);
+			await EnterAsync(root);
+
+			while (path.TryPeek(out WalkFrame frame))
+			{
+				if (frame.Next < frame.Subdirectories.Count)
+				{
+					await EnterAsync(frame.Subdirectories[frame.Next++]);
+				}
+				else
+				{
+					path.Pop();
+					await visitor.LeaveDirectoryAsync(frame.Directory);
+				}
+			}
 		}
 		finally
 		{
 			_readLock.Release();
 		}
+	}
+
+	private sealed class WalkFrame(MirroredDirectory directory, List<MirroredDirectory> subdirectories)
+	{
+		public MirroredDirectory Directory { get; } = directory;
+
+		public List<MirroredDirectory> Subdirectories { get; } = subdirectories;
+
+		public int Next { get; set; }
 	}
 
 	/// <summary>Every directory with its parent id, in discovery order (for --resume).</summary>

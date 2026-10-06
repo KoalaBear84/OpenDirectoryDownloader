@@ -54,7 +54,11 @@ public static class ScanResume
 
 		Result result = new(null, [], [], new ProcessedUrlSet());
 
-		async Task<(WebDirectory Node, bool Closed)> BuildAsync(ResumeEntry entry, WebDirectory parent)
+		// Directories that stay open, in the order their files are loaded below (children before their parent)
+		List<(WebDirectory Node, ScanDatabase.StoredDirectory Record, int OpenChildren)> openDirectories = [];
+
+		// Synchronous: a deep tree must not cost a large async state machine per level
+		(WebDirectory Node, bool Closed) Build(ResumeEntry entry, WebDirectory parent)
 		{
 			ScanDatabase.StoredDirectory record = entry.Directory;
 			bool retrying = record.Finished && record.Error && retryErrors;
@@ -94,7 +98,7 @@ public static class ScanResume
 
 			for (ResumeEntry child = entry.FirstChild; child is not null; child = child.NextSibling)
 			{
-				children.Add(await BuildAsync(child, node));
+				children.Add(Build(child, node));
 			}
 
 			if (!hasOwnPendingFileSizes && children.TrueForAll(c => c.Closed))
@@ -108,6 +112,20 @@ public static class ScanResume
 				return (node, true);
 			}
 
+			foreach ((WebDirectory childNode, bool _) in children)
+			{
+				node.Subdirectories.Add(childNode);
+			}
+
+			openDirectories.Add((node, record, children.Count(c => !c.Closed)));
+
+			return (node, false);
+		}
+
+		(WebDirectory root, bool _) = Build(rootEntry, null);
+
+		foreach ((WebDirectory node, ScanDatabase.StoredDirectory record, int openChildren) in openDirectories)
+		{
 			int pendingFileSizeCount = 0;
 
 			foreach (ScanDatabase.MirroredFile file in await scanDatabase.GetFilesByDirectoryIdAsync(record.Id))
@@ -131,18 +149,9 @@ public static class ScanResume
 				}
 			}
 
-			foreach ((WebDirectory childNode, bool _) in children)
-			{
-				node.Subdirectories.Add(childNode);
-			}
-
 			node.ContentFingerprint = node.ComputeContentFingerprint();
-			node.PendingWork = children.Count(c => !c.Closed) + pendingFileSizeCount;
-
-			return (node, false);
+			node.PendingWork = openChildren + pendingFileSizeCount;
 		}
-
-		(WebDirectory root, bool _) = await BuildAsync(rootEntry, null);
 
 		return result with { Root = root };
 	}

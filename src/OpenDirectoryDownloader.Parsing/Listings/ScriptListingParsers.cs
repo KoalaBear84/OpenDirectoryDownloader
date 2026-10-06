@@ -78,12 +78,12 @@ internal static partial class JavaScriptDrawnParser
 }
 
 /// <summary>An unknown listing that loads its whole tree as JSON (div.filemanager with a script.js doing $.get('...')).</summary>
-internal static partial class DirectoryListingModel01Parser
+public static partial class DirectoryListingModel01Parser
 {
 	public const string Parser = "DirectoryListingModel01";
 
 	/// <returns>Whether the page was this listing and its result replaced <paramref name="parsedWebDirectory"/>'s content</returns>
-	public static async Task<bool> TryParseAsync(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, HttpClient httpClient)
+	internal static async Task<bool> TryParseAsync(string baseUrl, WebDirectory parsedWebDirectory, IHtmlDocument htmlDocument, HttpClient httpClient)
 	{
 		IElement fileManager = htmlDocument.QuerySelector("div.filemanager");
 

@@ -552,7 +552,7 @@ public static partial class PreListingParser
 
 		bool isFile = !string.IsNullOrWhiteSpace(fileSizeString) && fileSizeString.Trim() != "-" &&
 			            // This is not perfect.. Specific block sizes
-			            (fileSize is not 32768 or 65536);
+			            (fileSize is not (32768 or 65536));
 
 		if (!isFile)
 		{

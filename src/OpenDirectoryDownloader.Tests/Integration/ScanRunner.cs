@@ -1,30 +1,28 @@
-using CommandLine;
-using Serilog;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using OpenDirectoryDownloader.Cli;
+using OpenDirectoryDownloader.Hosting;
+using OpenDirectoryDownloader.Scanning;
+using System.CommandLine;
 using System.Diagnostics;
 using Xunit;
 
 namespace OpenDirectoryDownloader.Tests.Integration;
 
 public sealed record ScanResult(
-	Session Session,
-	OpenDirectoryIndexer Indexer,
+	ScanSession Session,
 	string DatabasePath,
 	TimeSpan Elapsed,
 	long PeakWorkingSetBytes,
 	long ManagedBytesAfter);
 
 /// <summary>
-/// Runs the real <see cref="OpenDirectoryIndexer"/> (the same code path as Program.Main, minus the console
-/// prompts) against a URL. The indexer keeps its session in a static, so scans must never run in parallel:
-/// every test class using this belongs to <see cref="ScanCollection"/>.
+/// Runs a real scan of a URL: the same host and services as the application (command line included), minus the
+/// console keys and prompts. Scans run one at a time (<see cref="ScanCollection"/>) so their timings and memory
+/// numbers don't disturb each other.
 /// </summary>
 public static class ScanRunner
 {
-	static ScanRunner()
-	{
-		// Program.Main normally sets these up; the tests don't want log files, only silence
-	}
-
 	public static async Task<ScanResult> RunAsync(string url, string workingDirectory, params string[] extraArguments)
 	{
 		Directory.CreateDirectory(workingDirectory);
@@ -41,42 +39,28 @@ public static class ScanRunner
 			.. extraArguments
 		];
 
-		CommandLineOptions options = null;
-		Parser.Default.ParseArguments<CommandLineOptions>(arguments).WithParsed(o => options = o);
-		Assert.True(options is not null, "Command line options did not parse: " + string.Join(' ', arguments));
+		ParseResult parseResult = CliDefinition.Parse(arguments);
+		Assert.True(parseResult.Errors.Count == 0, "Command line options did not parse: " + string.Join(' ', arguments) + " " + string.Join(", ", parseResult.Errors.Select(e => e.Message)));
 
-		OpenDirectoryIndexerSettings settings = new()
-		{
-			Url = Library.FixUrl(url),
-			CommandLineOptions = options,
-			Threads = options.Threads,
-			Timeout = options.Timeout
-		};
-
-		OpenDirectoryIndexer indexer = new(settings);
+		CliInvocation invocation = CliDefinition.Bind(parseResult);
 
 		Process process = Process.GetCurrentProcess();
 		Stopwatch stopwatch = Stopwatch.StartNew();
 
-		indexer.StartIndexingAsync();
+		using IHost host = await ScanApp.BuildAsync(invocation, Urls.UrlHelper.FixUrl(url), logger: null, interactiveConsole: false, TestContext.Current.CancellationToken);
 
-		// StartIndexingAsync is async void: IndexingTask only exists once it has got past its database setup
-		for (int attempt = 0; attempt < 600 && indexer.IndexingTask is null; attempt++)
-		{
-			await Task.Delay(50);
-		}
-
-		Assert.NotNull(indexer.IndexingTask);
-		await indexer.IndexingTask.WaitAsync(TimeSpan.FromMinutes(30));
+		await host.StartAsync(TestContext.Current.CancellationToken);
+		await host.Services.GetRequiredService<ScanController>().Completion.WaitAsync(TimeSpan.FromMinutes(30), TestContext.Current.CancellationToken);
 		stopwatch.Stop();
+
+		await host.StopAsync(TestContext.Current.CancellationToken);
 
 		process.Refresh();
 
-		string databasePath = options.DbPath ?? outputBase + ".sqlite";
+		string databasePath = host.Services.GetRequiredService<ScanDatabaseFile>().Path;
 
 		return new ScanResult(
-			OpenDirectoryIndexer.Session,
-			indexer,
+			host.Services.GetRequiredService<ScanSession>(),
 			databasePath,
 			stopwatch.Elapsed,
 			process.PeakWorkingSet64,
@@ -84,7 +68,7 @@ public static class ScanRunner
 	}
 }
 
-/// <summary>The indexer's session is static, so scan tests share one collection and never run concurrently.</summary>
+/// <summary>Scans run one at a time: they measure time and memory.</summary>
 [CollectionDefinition(Name, DisableParallelization = true)]
 public sealed class ScanCollection
 {

@@ -15,14 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OpenDirectoryDownloader.Core\OpenDirectoryDownloader.Core.csproj" />
-    <ProjectReference Include="..\OpenDirectoryDownloader.Parsing\OpenDirectoryDownloader.Parsing.csproj" />
-    <ProjectReference Include="..\OpenDirectoryDownloader.Storage\OpenDirectoryDownloader.Storage.csproj" />
-  </ItemGroup>
-
-  <!-- TEMPORARY while the rest is rebuilt -->
-  <ItemGroup>
-    <Compile Remove="Integration\ScanRunner.cs;Integration\ScanIntegrationTests.cs;Integration\LargeScanLoadTests.cs;Integration\FakeDirectoryServer.cs;GetHtmlStringTests.cs;DirectoryZipServiceTests.cs;StatisticsTests.cs;SessionJsonTests.cs" />
+    <ProjectReference Include="..\OpenDirectoryDownloader\OpenDirectoryDownloader.csproj" />
   </ItemGroup>
 
   <ItemGroup>

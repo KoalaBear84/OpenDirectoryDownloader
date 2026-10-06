@@ -5,17 +5,28 @@
   </Configurations>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
   </Folder>
+  <Project Path="OpenDirectoryDownloader.Core/OpenDirectoryDownloader.Core.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="OpenDirectoryDownloader.Parsing/OpenDirectoryDownloader.Parsing.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="OpenDirectoryDownloader.Storage/OpenDirectoryDownloader.Storage.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="OpenDirectoryDownloader.Server/OpenDirectoryDownloader.Server.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
   <Project Path="OpenDirectoryDownloader.GoogleDrive/OpenDirectoryDownloader.GoogleDrive.csproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
-  <Project Path="OpenDirectoryDownloader.Shared/OpenDirectoryDownloader.Shared.csproj">
+  <Project Path="OpenDirectoryDownloader/OpenDirectoryDownloader.csproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
   <Project Path="OpenDirectoryDownloader.Tests/OpenDirectoryDownloader.Tests.csproj">
     <Platform Solution="Debug|x64" Project="x64" />
-  </Project>
-  <Project Path="OpenDirectoryDownloader/OpenDirectoryDownloader.csproj">
-    <Platform Solution="*|x64" Project="x64" />
   </Project>
 </Solution>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>OpenDirectoryDownloader - Scan viewer</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/clusterize.js@1.0.0/clusterize.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="nav-progress" class="nav-progress" hidden></div>
+	<div id="drop-overlay" hidden>Drop a .sqlite scan database to open it&hellip;</div>
+
+	<header>
+		<h1>OpenDirectoryDownloader</h1>
+		<button type="button" id="up-btn" class="up-btn" hidden title="Go up one folder" aria-label="Go up one folder">&uarr; Up</button>
+		<nav class="breadcrumbs" id="breadcrumbs"></nav>
+		<div class="toolbar" id="toolbar" hidden>
+			<div class="search-box">
+				<input type="search" id="search-input" placeholder="Search files and folders&hellip;" autocomplete="off">
+				<button type="button" id="search-clear-btn" class="clear-btn" hidden aria-label="Clear search">&times;</button>
+			</div>
+			<label class="gallery-toggle">
+				<input type="checkbox" id="gallery-toggle">
+				Gallery view
+			</label>
+			<button type="button" id="stats-btn" class="secondary">Statistics</button>
+			<button type="button" id="zip-current-btn" class="secondary">Download folder as ZIP</button>
+		</div>
+	</header>
+
+	<div class="subheader" id="session-info" hidden></div>
+
+	<main>
+		<div id="initial-loading">Loading&hellip;</div>
+
+		<div id="empty-state" hidden>
+			<p>No scan database is loaded yet.</p>
+			<div class="dropzone">Drag a <code>.sqlite</code> scan database file here, or start the app with <code>--serve-db &lt;path&gt;</code>, or drag one onto the .exe.</div>
+			<p id="upload-status"></p>
+		</div>
+
+		<div id="browser" hidden>
+			<p class="summary" id="summary"></p>
+			<div class="gallery-grid" id="gallery" hidden></div>
+			<div class="entry-list" id="entry-list"></div>
+			<div id="global-results" hidden>
+				<h2 class="section-title">Elsewhere in this scan</h2>
+				<div class="entry-list" id="global-results-list"></div>
+				<p class="global-results-note" id="global-results-note" hidden></p>
+			</div>
+		</div>
+	</main>
+
+	<div id="progress-panel" hidden>
+		<h2 id="progress-title">Building ZIP&hellip;</h2>
+		<div class="bar"><span id="progress-bar-fill" style="width: 0%"></span></div>
+		<div class="file" id="progress-detail"></div>
+	</div>
+
+	<div id="toast" hidden></div>
+
+	<div id="stats-modal" class="modal-overlay" hidden>
+		<div class="modal" role="dialog" aria-modal="true" aria-label="Scan statistics">
+			<div class="modal-header">
+				<h2>Statistics</h2>
+				<button type="button" id="stats-close-btn" class="modal-close-btn" aria-label="Close">&times;</button>
+			</div>
+			<div class="modal-body" id="stats-body"></div>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/clusterize.js@1.0.0/clusterize.min.js"></script>
+	<script src="app.js"></script>
+</body>
+</html>

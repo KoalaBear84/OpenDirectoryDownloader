@@ -1,19 +1,17 @@
 using System.Net.Http.Headers;
-using System.Reflection;
+using OpenDirectoryDownloader.Protocols.Http;
 using System.Text;
 using Xunit;
 
 namespace OpenDirectoryDownloader.Tests;
 
 /// <summary>
-/// OpenDirectoryIndexer.GetHtmlString decides whether a response body is HTML and returns its text. It replaced a
+/// BodyReader.ReadHtmlAsync decides whether a response body is HTML and returns its text. It replaced a
 /// pipeline that decoded the body, re-encoded it into a MemoryStream and decoded it again; these pin down what
 /// callers rely on, so the single decode has to give the same answers.
 /// </summary>
 public class GetHtmlStringTests
 {
-	private static readonly MethodInfo GetHtmlString = typeof(OpenDirectoryIndexer).GetMethod("GetHtmlString", BindingFlags.NonPublic | BindingFlags.Static)!;
-
 	private static async Task<string> Read(byte[] body, string charSet = null, bool lieAboutLength = false)
 	{
 		using HttpResponseMessage response = new() { Content = new ByteArrayContent(body) };
@@ -24,7 +22,7 @@ public class GetHtmlStringTests
 			response.Content.Headers.ContentLength = 1_000_000_000;
 		}
 
-		return await (Task<string>)GetHtmlString.Invoke(null, [response])!;
+		return await BodyReader.ReadHtmlAsync(response, TestContext.Current.CancellationToken);
 	}
 
 	private const string Page = "<html><head><title>Index of /</title></head><body><a href=\"movie.mkv\">movie.mkv</a> café über</body></html>";

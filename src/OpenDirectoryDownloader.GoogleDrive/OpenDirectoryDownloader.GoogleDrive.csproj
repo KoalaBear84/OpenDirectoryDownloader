@@ -1,18 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <ApplicationIcon />
     <OutputType>Library</OutputType>
-    <StartupObject />
-    <ImplicitUsings>enable</ImplicitUsings>
-    <LangVersion>latest</LangVersion>
-    <Platforms>AnyCPU;x64</Platforms>
+    <!-- The Google API client is not annotated for trimming -->
+    <IsTrimmable>false</IsTrimmable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Apis.Drive.v3" Version="1.77.0.4276" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
+    <PackageReference Include="Google.Apis.Drive.v3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenDirectoryDownloader.Core\OpenDirectoryDownloader.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

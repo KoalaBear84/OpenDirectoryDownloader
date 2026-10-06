@@ -250,8 +250,16 @@ public sealed partial class ScanDatabase : IAsyncDisposable
 		await flushCompleted.Task.WaitAsync(cancellationToken);
 	}
 
+	private int _disposed;
+
+	/// <summary>Writes what is queued, closes the connections. Safe to call more than once.</summary>
 	public async ValueTask DisposeAsync()
 	{
+		if (Interlocked.Exchange(ref _disposed, 1) == 1)
+		{
+			return;
+		}
+
 		if (!IsReadOnly)
 		{
 			_channel.Writer.TryComplete();

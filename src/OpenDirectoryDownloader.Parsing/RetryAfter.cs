@@ -10,7 +10,8 @@ public static class RetryAfter
 	/// When the server says when to come back (Retry-After), waits that long and throws a <see cref="SilentException"/>
 	/// so the caller's retry tries again without logging it twice. Does nothing without the header.
 	/// </summary>
-	public static async Task WaitIfAskedAsync(ILogger logger, string threadName, WebDirectory webDirectory, HttpResponseMessage httpResponseMessage, CancellationToken cancellationToken = default)
+	/// <param name="extendTimeout">Called with the wait, so a time limit around the request can be moved</param>
+	public static async Task WaitIfAskedAsync(ILogger logger, string threadName, WebDirectory webDirectory, HttpResponseMessage httpResponseMessage, Action<TimeSpan> extendTimeout = null, CancellationToken cancellationToken = default)
 	{
 		if (httpResponseMessage.Headers.RetryAfter is not RetryConditionHeaderValue retryConditionHeaderValue)
 		{
@@ -35,6 +36,9 @@ public static class RetryAfter
 		}
 
 		httpResponseMessage.Dispose();
+
+		// The directory's own time limit must not run out while it waits as asked
+		extendTimeout?.Invoke(wait);
 
 		if (wait > TimeSpan.Zero)
 		{

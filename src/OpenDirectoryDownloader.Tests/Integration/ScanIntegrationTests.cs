@@ -1,3 +1,4 @@
+using OpenDirectoryDownloader.Scanning;
 using OpenDirectoryDownloader.Storage;
 using Xunit;
 
@@ -43,10 +44,10 @@ public sealed class ScanIntegrationTests : IDisposable
 
 		ScanResult result = await ScanRunner.RunAsync(server.BaseUrl, _workingDirectory);
 
-		Session session = result.Session;
+		ScanSession session = result.Session;
 		Assert.Equal(expected.Files, session.Root.TotalFiles);
 		Assert.Equal(expected.Directories, session.Root.TotalDirectories + 1);
-		Assert.Equal(0, session.Errors);
+		Assert.Equal(0, session.Counters.Errors);
 		Assert.Equal(expected.Directories, server.DirectoryRequests);
 		AssertTotalSize(style, expected.TotalBytes, session.Root.TotalFileSize);
 	}
@@ -82,7 +83,7 @@ public sealed class ScanIntegrationTests : IDisposable
 		ScanResult result = await ScanRunner.RunAsync(server.BaseUrl, _workingDirectory);
 
 		Assert.Equal(expected.Files, result.Session.Root.TotalFiles);
-		Assert.Equal(0, result.Session.Errors);
+		Assert.Equal(0, result.Session.Counters.Errors);
 	}
 
 	[Fact]

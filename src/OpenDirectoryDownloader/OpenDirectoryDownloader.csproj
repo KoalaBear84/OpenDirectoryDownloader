@@ -1,62 +1,50 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- The application: command line, hosting, the crawl engine and its protocols, outputs and the console -->
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
     <RuntimeIdentifiers>win-x64;linux-x64;linux-arm;linux-arm64;osx-x64</RuntimeIdentifiers>
-    <LangVersion>latest</LangVersion>
     <ApplicationIcon>Resources\Application.ico</ApplicationIcon>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Platforms>AnyCPU;x64</Platforms>
-    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
-    <!-- The self-contained release builds are published with PublishTrimmed=true, which by default
-         disables reflection-based System.Text.Json serialization. All of the JSON models (session,
-         Dufs, AList, PCloud, HFS, file upload parsers, site parsers, ...) rely on reflection-based
-         (de)serialization, so force it back on rather than converting every model to source generators. -->
+    <!-- The site parsers' JSON models (Dufs, AList, PCloud, HFS, upload sites, ...) still use reflection based System.Text.Json -->
     <JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <PlatformTarget>x64</PlatformTarget>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <Optimize>False</Optimize>
     <DebugType>full</DebugType>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Optimize>False</Optimize>
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <Optimize>True</Optimize>
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <Optimize>True</Optimize>
     <DebugType>full</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="FlareSolverrSharp" />
+    <PackageReference Include="FluentFTP" />
+    <PackageReference Include="HttpCloak" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <PackageReference Include="Polly.Core" />
+    <PackageReference Include="PuppeteerExtraSharp" />
+    <PackageReference Include="PuppeteerSharp" />
+    <PackageReference Include="Serilog.Extensions.Hosting" />
+    <PackageReference Include="Serilog.Sinks.Async" />
+    <PackageReference Include="Serilog.Sinks.Console" />
+    <PackageReference Include="Serilog.Sinks.File" />
+    <PackageReference Include="System.CommandLine" />
+    <PackageReference Include="TextCopy" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AngleSharp" Version="1.8.3" />
-    <PackageReference Include="CommandLineParser" Version="2.9.1" />
-    <PackageReference Include="FlareSolverrSharp" Version="4.0.0" />
-    <PackageReference Include="FluentFTP" Version="55.0.0" />
-    <PackageReference Include="HttpCloak" Version="1.7.2" />
-    <PackageReference Include="Jint" Version="4.16.4" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.12" />
-    <PackageReference Include="Polly" Version="8.8.0" />
-    <PackageReference Include="PuppeteerExtraSharp" Version="3.1.1" />
-    <PackageReference Include="PuppeteerSharp" Version="25.12.0" />
-    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-    <PackageReference Include="TextCopy" Version="6.2.1" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\OpenDirectoryDownloader.Core\OpenDirectoryDownloader.Core.csproj" />
     <ProjectReference Include="..\OpenDirectoryDownloader.GoogleDrive\OpenDirectoryDownloader.GoogleDrive.csproj" />
+    <ProjectReference Include="..\OpenDirectoryDownloader.Parsing\OpenDirectoryDownloader.Parsing.csproj" />
+    <ProjectReference Include="..\OpenDirectoryDownloader.Server\OpenDirectoryDownloader.Server.csproj" />
+    <ProjectReference Include="..\OpenDirectoryDownloader.Storage\OpenDirectoryDownloader.Storage.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="OpenDirectoryDownloader.Tests" />
   </ItemGroup>
 </Project>
