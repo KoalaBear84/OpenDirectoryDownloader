@@ -48,8 +48,6 @@ public sealed partial class ScanDatabase
 			await pragmaCommand.ExecuteNonQueryAsync(cancellationToken);
 		}
 
-		connection.CreateFunction("FileExtension", (string fileName) => System.IO.Path.GetExtension(fileName ?? string.Empty).ToLowerInvariant());
-
 		_readConnection = connection;
 
 		return connection;
@@ -214,12 +212,12 @@ public sealed partial class ScanDatabase
 		return new OverallStats(reader.GetInt64(0), reader.GetInt64(1), reader.GetInt64(2));
 	});
 
-	/// <summary>Count and size per (lower case) file extension, grouped by SQLite itself.</summary>
+	/// <summary>Count and size per (lower case) file extension, grouped by SQLite on the stored extension.</summary>
 	public Task<Dictionary<string, ExtensionStats>> GetExtensionStatsAsync() => ReadAsync(async connection =>
 	{
 		Dictionary<string, ExtensionStats> stats = [];
 
-		using SqliteCommand command = Command(connection, "SELECT FileExtension(name), COUNT(*), COALESCE(SUM(size), 0) FROM file GROUP BY FileExtension(name)");
+		using SqliteCommand command = Command(connection, "SELECT extension, COUNT(*), COALESCE(SUM(size), 0) FROM file GROUP BY extension");
 		using SqliteDataReader reader = await command.ExecuteReaderAsync();
 
 		while (await reader.ReadAsync())

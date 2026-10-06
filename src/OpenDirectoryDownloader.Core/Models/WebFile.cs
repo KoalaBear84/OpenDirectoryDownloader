@@ -55,6 +55,14 @@ public sealed class WebFile
 		}
 	}
 
+	/// <summary>The part of the URL after the parent directory's URL, when the file is below it (no allocation).</summary>
+	public bool TryGetRelativeUrl(out string relativeUrl)
+	{
+		relativeUrl = _relativeToParent ? _url : null;
+
+		return _relativeToParent;
+	}
+
 	/// <summary>A copy of Url/FileName/FileSize/Description, see WebDirectory.Clone().</summary>
 	public WebFile Clone()
 	{

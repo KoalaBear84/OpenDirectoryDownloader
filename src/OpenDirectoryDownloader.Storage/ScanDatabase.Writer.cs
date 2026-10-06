@@ -1,5 +1,6 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
+using SQLitePCL;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Scanning;
 using System.Text.Json;
@@ -150,8 +151,15 @@ public sealed partial class ScanDatabase
 			webFile.Id = Interlocked.Increment(ref _lastFileId);
 		}
 
-		string url = webFile.Url;
 		string directoryUrl = parentDirectory.Url;
+
+		// A file attached to this directory already holds the relative part of its URL
+		if (ReferenceEquals(webFile.ParentDirectory, parentDirectory) && webFile.TryGetRelativeUrl(out string relativeUrl))
+		{
+			return new FileRow(webFile.Id, parentDirectory.Id, relativeUrl, true, UrlHash(directoryUrl, relativeUrl), webFile.FileName ?? string.Empty, webFile.FileSize, webFile.Description);
+		}
+
+		string url = webFile.Url;
 		bool relative = directoryUrl is not null && url.Length > directoryUrl.Length && url.StartsWith(directoryUrl, StringComparison.Ordinal);
 
 		return new FileRow(
@@ -202,7 +210,6 @@ public sealed partial class ScanDatabase
 				List<TaskCompletionSource> flushesToComplete = null;
 
 				using SqliteTransaction transaction = _writeConnection.BeginTransaction();
-				commands.SetTransaction(transaction);
 
 				int rows = 0;
 
@@ -241,36 +248,34 @@ public sealed partial class ScanDatabase
 		}
 	}
 
+	/// <remarks>The frequent statements run synchronously: this is the writer's own task, and SQLite's async methods are synchronous underneath anyway, with a task allocated per row.</remarks>
 	private static async Task<int> ApplyAsync(WriteCommands commands, SqliteTransaction transaction, IScanRecord record)
 	{
 		switch (record)
 		{
 			case DirectoryRecord directoryRecord:
-				await commands.UpsertDirectoryAsync(directoryRecord.Directory);
+				commands.UpsertDirectory(directoryRecord.Directory);
 				return 1;
 			case FileRecord fileRecord:
-				await commands.UpsertFileAsync(fileRecord.File);
+				commands.UpsertFile(fileRecord.File);
 				return 1;
 			case DirectoryListingRecord listingRecord:
-				await commands.UpsertDirectoryAsync(listingRecord.Directory);
+				commands.UpsertDirectory(listingRecord.Directory);
 
-				foreach (FileRow file in listingRecord.Files)
-				{
-					await commands.UpsertFileAsync(file);
-				}
+				commands.InsertFiles(listingRecord.Files);
 
 				foreach (DirectoryRow subdirectory in listingRecord.Subdirectories)
 				{
-					await commands.UpsertDirectoryAsync(subdirectory);
+					commands.UpsertDirectory(subdirectory);
 				}
 
 				return 1 + listingRecord.Files.Length + listingRecord.Subdirectories.Length;
 			case DirectoryBecameFileRecord becameFileRecord:
 				await ExecuteAsync(transaction, "DELETE FROM directory WHERE id = $id", ("$id", becameFileRecord.DirectoryId));
-				await commands.UpsertFileAsync(becameFileRecord.File);
+				commands.UpsertFile(becameFileRecord.File);
 				return 2;
 			case FileSizeRecord fileSizeRecord:
-				await commands.UpdateFileSizeAsync(fileSizeRecord.Id, fileSizeRecord.FileSize);
+				commands.UpdateFileSize(fileSizeRecord.Id, fileSizeRecord.FileSize);
 				return 1;
 			case ResetSubtreeRecord resetSubtreeRecord:
 				await ExecuteAsync(transaction,
@@ -380,115 +385,188 @@ public sealed partial class ScanDatabase
 		await command.ExecuteNonQueryAsync();
 	}
 
-	/// <summary>The writer's frequent statements, prepared once and reused for every row.</summary>
-	private sealed class WriteCommands : IDisposable
+	/// <summary>
+	/// The writer's statements that run once per row, prepared once and bound by position straight on SQLite: through
+	/// SqliteCommand every row costs a parameter lookup by name and a boxed value per column, most of a row's cost.
+	/// They run in whatever transaction the connection has open.
+	/// </summary>
+	private sealed class WriteCommands(SqliteConnection connection) : IDisposable
 	{
-		private readonly SqliteCommand _upsertDirectory;
-		private readonly SqliteCommand _upsertFile;
-		private readonly SqliteCommand _updateFileSize;
+		private readonly RawStatement _upsertDirectory = new(connection.Handle,
+			"""
+			INSERT INTO directory (id, parent_id, url, url_hash, name, description, finished, error, parser)
+			VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)
+			ON CONFLICT(id) DO UPDATE SET
+				parent_id = excluded.parent_id,
+				url = excluded.url,
+				url_hash = excluded.url_hash,
+				name = excluded.name,
+				description = excluded.description,
+				finished = excluded.finished,
+				error = excluded.error,
+				parser = excluded.parser;
+			""");
 
-		public WriteCommands(SqliteConnection connection)
+		private const string InsertFileSql =
+			"""
+			INSERT INTO file (id, directory_id, url, relative, url_hash, name, extension, size, description)
+			VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)
+			""";
+
+		private readonly RawStatement _upsertFile = new(connection.Handle,
+			InsertFileSql +
+			"""
+
+			ON CONFLICT(id) DO UPDATE SET
+				directory_id = excluded.directory_id,
+				url = excluded.url,
+				relative = excluded.relative,
+				url_hash = excluded.url_hash,
+				name = excluded.name,
+				extension = excluded.extension,
+				size = excluded.size,
+				description = excluded.description;
+			""");
+
+		// The files of a new listing are new rows
+		private readonly RawStatement _insertFile = new(connection.Handle, InsertFileSql);
+
+		private readonly RawStatement _updateFileSize = new(connection.Handle, "UPDATE file SET size = ?2 WHERE id = ?1;");
+
+		public void UpsertDirectory(DirectoryRow row)
 		{
-			_upsertDirectory = Create(connection,
-				"""
-				INSERT INTO directory (id, parent_id, url, url_hash, name, description, finished, error, parser)
-				VALUES ($id, $parentId, $url, $urlHash, $name, $description, $finished, $error, $parser)
-				ON CONFLICT(id) DO UPDATE SET
-					parent_id = excluded.parent_id,
-					url = excluded.url,
-					url_hash = excluded.url_hash,
-					name = excluded.name,
-					description = excluded.description,
-					finished = excluded.finished,
-					error = excluded.error,
-					parser = excluded.parser;
-				""",
-				("$id", SqliteType.Integer), ("$parentId", SqliteType.Integer), ("$url", SqliteType.Text), ("$urlHash", SqliteType.Integer),
-				("$name", SqliteType.Text), ("$description", SqliteType.Text), ("$finished", SqliteType.Integer), ("$error", SqliteType.Integer), ("$parser", SqliteType.Text));
-
-			_upsertFile = Create(connection,
-				"""
-				INSERT INTO file (id, directory_id, url, relative, url_hash, name, size, description)
-				VALUES ($id, $directoryId, $url, $relative, $urlHash, $name, $size, $description)
-				ON CONFLICT(id) DO UPDATE SET
-					directory_id = excluded.directory_id,
-					url = excluded.url,
-					relative = excluded.relative,
-					url_hash = excluded.url_hash,
-					name = excluded.name,
-					size = excluded.size,
-					description = excluded.description;
-				""",
-				("$id", SqliteType.Integer), ("$directoryId", SqliteType.Integer), ("$url", SqliteType.Text), ("$relative", SqliteType.Integer),
-				("$urlHash", SqliteType.Integer), ("$name", SqliteType.Text), ("$size", SqliteType.Integer), ("$description", SqliteType.Text));
-
-			_updateFileSize = Create(connection, "UPDATE file SET size = $size WHERE id = $id;", ("$id", SqliteType.Integer), ("$size", SqliteType.Integer));
+			_upsertDirectory.Bind(1, row.Id);
+			_upsertDirectory.Bind(2, row.ParentId);
+			_upsertDirectory.Bind(3, row.Url);
+			_upsertDirectory.Bind(4, UrlHash(row.Url));
+			_upsertDirectory.Bind(5, row.Name);
+			_upsertDirectory.Bind(6, row.Description);
+			_upsertDirectory.Bind(7, row.Finished ? 1 : 0);
+			_upsertDirectory.Bind(8, row.Error ? 1 : 0);
+			_upsertDirectory.Bind(9, row.Parser);
+			_upsertDirectory.Execute();
 		}
 
-		public void SetTransaction(SqliteTransaction transaction)
+		public void UpsertFile(FileRow row) => Execute(_upsertFile, row);
+
+		public void InsertFile(FileRow row) => Execute(_insertFile, row);
+
+		public void InsertFiles(FileRow[] rows)
 		{
-			_upsertDirectory.Transaction = transaction;
-			_upsertFile.Transaction = transaction;
-			_updateFileSize.Transaction = transaction;
+			foreach (FileRow row in rows)
+			{
+				Execute(_insertFile, row);
+			}
 		}
 
-		public Task<int> UpsertDirectoryAsync(DirectoryRow row)
+		private static void Execute(RawStatement statement, FileRow row)
 		{
-			SqliteParameterCollection parameters = _upsertDirectory.Parameters;
-			parameters[0].Value = row.Id;
-			parameters[1].Value = (object)row.ParentId ?? DBNull.Value;
-			parameters[2].Value = row.Url;
-			parameters[3].Value = UrlHash(row.Url);
-			parameters[4].Value = row.Name;
-			parameters[5].Value = (object)row.Description ?? DBNull.Value;
-			parameters[6].Value = row.Finished;
-			parameters[7].Value = row.Error;
-			parameters[8].Value = (object)row.Parser ?? DBNull.Value;
-
-			return _upsertDirectory.ExecuteNonQueryAsync();
+			statement.Bind(1, row.Id);
+			statement.Bind(2, row.DirectoryId);
+			statement.Bind(3, row.Url);
+			statement.Bind(4, row.Relative ? 1 : 0);
+			statement.Bind(5, row.UrlHash);
+			statement.Bind(6, row.Name);
+			statement.Bind(7, Extension(row.Name));
+			statement.Bind(8, row.Size);
+			statement.Bind(9, row.Description);
+			statement.Execute();
 		}
 
-		public Task<int> UpsertFileAsync(FileRow row)
+		/// <summary>Lower case extension with the dot</summary>
+		private static string Extension(string name)
 		{
-			SqliteParameterCollection parameters = _upsertFile.Parameters;
-			parameters[0].Value = row.Id;
-			parameters[1].Value = row.DirectoryId;
-			parameters[2].Value = row.Url;
-			parameters[3].Value = row.Relative;
-			parameters[4].Value = row.UrlHash;
-			parameters[5].Value = row.Name;
-			parameters[6].Value = (object)row.Size ?? DBNull.Value;
-			parameters[7].Value = (object)row.Description ?? DBNull.Value;
+			ReadOnlySpan<char> extension = System.IO.Path.GetExtension(name.AsSpan());
 
-			return _upsertFile.ExecuteNonQueryAsync();
+			if (extension.IsEmpty)
+			{
+				return string.Empty;
+			}
+
+			foreach (char c in extension)
+			{
+				if (char.IsUpper(c))
+				{
+					return extension.ToString().ToLowerInvariant();
+				}
+			}
+
+			return Extensions.GetOrAdd(extension);
 		}
 
-		public Task<int> UpdateFileSizeAsync(long id, long? size)
+		public void UpdateFileSize(long id, long? size)
 		{
-			_updateFileSize.Parameters[0].Value = id;
-			_updateFileSize.Parameters[1].Value = (object)size ?? DBNull.Value;
-
-			return _updateFileSize.ExecuteNonQueryAsync();
+			_updateFileSize.Bind(1, id);
+			_updateFileSize.Bind(2, size);
+			_updateFileSize.Execute();
 		}
 
 		public void Dispose()
 		{
 			_upsertDirectory.Dispose();
 			_upsertFile.Dispose();
+			_insertFile.Dispose();
 			_updateFileSize.Dispose();
 		}
+	}
 
-		private static SqliteCommand Create(SqliteConnection connection, string sql, params (string Name, SqliteType Type)[] parameters)
+	/// <summary>A prepared SQLite statement with positional parameters (?1, ?2, ...).</summary>
+	private sealed class RawStatement : IDisposable
+	{
+		private readonly sqlite3 _database;
+		private readonly sqlite3_stmt _statement;
+
+		public RawStatement(sqlite3 database, string sql)
 		{
-			SqliteCommand command = connection.CreateCommand();
-			command.CommandText = sql;
+			_database = database;
+			Check(raw.sqlite3_prepare_v2(database, sql, out _statement));
+		}
 
-			foreach ((string name, SqliteType type) in parameters)
+		public void Bind(int index, long value) => Check(raw.sqlite3_bind_int64(_statement, index, value));
+
+		public void Bind(int index, long? value) => Check(value is long number ? raw.sqlite3_bind_int64(_statement, index, number) : raw.sqlite3_bind_null(_statement, index));
+
+		public void Bind(int index, string value) => Check(value is null ? raw.sqlite3_bind_null(_statement, index) : raw.sqlite3_bind_text(_statement, index, value));
+
+		public void Execute()
+		{
+			int result = raw.sqlite3_step(_statement);
+			raw.sqlite3_reset(_statement);
+
+			if (result != raw.SQLITE_DONE)
 			{
-				command.Parameters.Add(name, type);
+				Check(result);
+			}
+		}
+
+		private void Check(int result)
+		{
+			if (result is not (raw.SQLITE_OK or raw.SQLITE_DONE or raw.SQLITE_ROW))
+			{
+				throw new SqliteException(raw.sqlite3_errmsg(_database).utf8_to_string(), result);
+			}
+		}
+
+		public void Dispose() => _statement.Dispose();
+	}
+
+	/// <summary>Extension strings, shared instead of one per file row (a scan has a few hundred different ones)</summary>
+	private static class Extensions
+	{
+		private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, string> Known = new(StringComparer.Ordinal);
+		private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, string>.AlternateLookup<ReadOnlySpan<char>> Lookup = Known.GetAlternateLookup<ReadOnlySpan<char>>();
+
+		public static string GetOrAdd(ReadOnlySpan<char> extension)
+		{
+			if (Lookup.TryGetValue(extension, out string known))
+			{
+				return known;
 			}
 
-			return command;
+			string value = extension.ToString();
+
+			// Bounded: a pathological scan can't fill it forever
+			return Known.Count < 10_000 ? Known.GetOrAdd(value, value) : value;
 		}
 	}
 

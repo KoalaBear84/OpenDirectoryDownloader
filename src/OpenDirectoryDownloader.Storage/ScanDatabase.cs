@@ -225,6 +225,8 @@ public sealed partial class ScanDatabase : IAsyncDisposable
 			relative INTEGER NOT NULL,
 			url_hash INTEGER NOT NULL,
 			name TEXT NOT NULL,
+			-- lower case, with the dot, empty for none: the statistics group by it
+			extension TEXT NOT NULL,
 			size INTEGER NULL,
 			description TEXT NULL
 		);
@@ -235,6 +237,9 @@ public sealed partial class ScanDatabase : IAsyncDisposable
 
 	/// <summary>The 64-bit key a URL is looked up by (the full URL is compared too, so a collision only costs a row read).</summary>
 	internal static long UrlHash(string url) => (long)(ulong)Hash128.Of(url);
+
+	/// <summary>The hash of directoryUrl + relativeUrl</summary>
+	internal static long UrlHash(string directoryUrl, string relativeUrl) => (long)(ulong)Hash128.Of(directoryUrl, relativeUrl);
 
 	/// <summary>Waits until everything queued so far is committed. A no-op on a read-only instance.</summary>
 	public async Task FlushAsync(CancellationToken cancellationToken = default)
