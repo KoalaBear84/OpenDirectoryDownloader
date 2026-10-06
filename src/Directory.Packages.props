@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageVersion Include="Acornima" Version="1.1.1" />
     <PackageVersion Include="AngleSharp" Version="1.8.3" />
     <PackageVersion Include="FlareSolverrSharp" Version="4.0.0" />
     <PackageVersion Include="FluentFTP" Version="55.0.0" />

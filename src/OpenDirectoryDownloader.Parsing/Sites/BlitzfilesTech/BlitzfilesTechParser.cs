@@ -87,7 +87,7 @@ public static class BlitzfilesTechParser
 
 			do
 			{
-				services.Logger.LogWarning("Retrieving listings for '{url}' with password: {password}, page {pageIndex + 1}", webDirectory.Uri, services.Session.SiteState.Get<IndexPasswordState>().Password);
+				services.Logger.LogWarning("Retrieving listings for '{url}' with password: {password}, page {page}", webDirectory.Uri, services.Session.SiteState.Get<IndexPasswordState>().Password, pageIndex + 1);
 
 				HttpResponseMessage httpResponseMessage = await services.Http.GetAsync(GetFolderUrl(driveHash, entryHash, pageIndex));
 

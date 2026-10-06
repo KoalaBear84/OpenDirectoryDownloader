@@ -55,7 +55,7 @@ public static class CliDefinition
 		AllowMultipleArgumentsPerToken = false
 	};
 
-	public static readonly Option<bool> UseDatabase = new("--use-database") { Description = "Keep the scan's SQLite database (every scan uses one) next to the other output files, or at --db-path." };
+	public static readonly Option<bool> UseDatabase = new("--use-database") { Description = "Accepted for compatibility: every scan uses a SQLite database now. Use --keep-db to keep it." };
 	public static readonly Option<string> DbPath = new("--db-path") { Description = "Path for the SQLite scan database. Defaults to the output base filename with a .sqlite extension." };
 	public static readonly Option<bool> KeepDb = new("--keep-db") { Description = "Keep the SQLite scan database after a successful scan instead of deleting it." };
 	public static readonly Option<bool> EvictMemory = new("--evict-memory") { Description = "Accepted for compatibility: finished directory subtrees are always dropped from memory and read back from the scan database for output." };

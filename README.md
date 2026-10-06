@@ -49,7 +49,7 @@ Command line parameters:
 | `-c`  | `--clipboard`        | Automatically copy the Reddits stats once the scan is done                                                                                                                                                                    |
 | `-j`  | `--json`             | Save JSON file                                                                                                                                                                                                                |
 | `-f`  | `--no-urls`          | Do not save URLs file                                                                                                                                                                                                         |
-| `-f`  | `--aria2-urls`       | Save aria2 urls files (with directory support)                                                                                                                                                                                |
+| `-i`  | `--aria2-urls`       | Save aria2 urls files (with directory support)                                                                                                                                                                                |
 | `-r`  | `--no-reddit`        | Do not show Reddit stats markdown                                                                                                                                                                                             |
 | `-l`  | `--upload-urls`      | Uploads urls file                                                                                                                                                                                                             |
 | `-e`  | `--exact-file-sizes` | Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server)                                                                                                                                |
@@ -68,10 +68,10 @@ Command line parameters:
 |       | `--flaresolverr-docker-name` | FlareSolverr Docker container name, e.g. `flaresolverr`. If provided, OpenDirectoryDownloader will also show and save the output from `docker logs -f` for that container.                                      |
 |       | `--no-browser`       | Disallow starting Chromium browser (for Cloudflare)                                                                                                                                                                           |
 |       | `--http-cloak`       | *SLOWER!* *EXPERIMENTAL* Emulate a real browser's TLS/HTTP fingerprint for improved compatibility. See below for more info.                                                                                                            |
-|       | `--use-database`     | EXPERIMENTAL: Mirror the scan to a SQLite database as it runs, for `--resume` (see [Large scans / low memory](#large-scans--low-memory))                                                                                     |
-|       | `--db-path`          | Path for the SQLite database used by `--use-database`/`--resume` (default: output base filename with a `.sqlite` extension)                                                                                                  |
+|       | `--use-database`     | Accepted for compatibility: every scan now uses a SQLite database (see [Large scans / low memory](#large-scans--low-memory))                                                                                               |
+|       | `--db-path`          | Path for the scan's SQLite database (default: output base filename with a `.sqlite` extension)                                                                                                  |
 |       | `--keep-db`          | Keep the database file after a successful scan instead of deleting it                                                                                                                                                        |
-|       | `--evict-memory`     | EXPERIMENTAL: Requires `--use-database`. Actually reduces peak memory on very large scans by dropping finished directories from memory (see [Large scans / low memory](#large-scans--low-memory))                           |
+|       | `--evict-memory`     | Accepted for compatibility: finished directories are always dropped from memory now                                                                                                                                           |
 |       | `--resume`            | EXPERIMENTAL: Continue a previously interrupted scan from its database instead of starting over (see [Large scans / low memory](#large-scans--low-memory))                                                                   |
 |       | `--retry-errors`     | With `--resume`, retry directories that errored during the previous run instead of leaving them as-is                                                                                                                       |
 |       | `--serve`            | EXPERIMENTAL: Start a local web viewer for a scan database instead of scanning a URL (see [Web viewer for scan databases](#web-viewer-for-scan-databases))                                                                   |
@@ -111,6 +111,10 @@ This means you can easily "fake" a browser request:
 
 Setting some options like `--username` or `--user-agent` might override some headers, as explicit options take precedence. Option order does **not** matter (this applies to OpenDirectoryDownloader in general).  
 
+### Combining short options
+
+Short options without a value can be combined like on Linux: `-qcj` is the same as `-q -c -j`. Values can be given as `--threads 10` or `--threads=10`.
+
 ### Copying on Linux
 
 When you want to copy (`C` key or `-c` flag) the stats at the end on Linux you need to have xclip installed.
@@ -123,21 +127,20 @@ For others see: https://docs.microsoft.com/en-us/dotnet/core/install/linux
 
 ## Large scans / low memory
 
-*EXPERIMENTAL!*
-
-Scanning a very large open directory (millions of files) can use a lot of memory, since the whole listing is normally kept in memory until the scan finishes. `--use-database` and `--evict-memory` reduce that, and `--resume` lets you pick a scan back up instead of starting over:
+Every scan is written to a SQLite database as it runs (`--db-path`, default: the output base filename with a `.sqlite` extension). Once a directory (and everything under it) has finished scanning, its data is dropped from memory and read back from the database for the outputs, so memory stays low even for millions of files. The database is deleted after a successful scan unless you pass `--keep-db`.
 
 | Flag              | What it does                                                                                                          |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `--use-database`  | Mirrors the scan to a SQLite database as it runs. On its own this doesn't reduce memory usage yet, but is required for the other flags below. |
-| `--evict-memory`  | Requires `--use-database`. Once a directory (and everything under it) has finished scanning, its data is dropped from memory and read back from the database when needed - this is what actually caps peak memory. |
-| `--resume`        | Continues a previously interrupted scan using the database at `--db-path` (or the default, derived from the output filename), instead of starting over. Implies `--use-database`, and always keeps the database file so an interrupted resume can itself be resumed again. If no matching database is found, starts a fresh scan as normal. |
+| `--keep-db`       | Keep the database after a successful scan, for example to browse it with `--serve`. |
+| `--resume`        | Continues a previously interrupted scan using the database at `--db-path` (or the default, derived from the output filename), instead of starting over. Always keeps the database file so an interrupted resume can itself be resumed again. If no matching database is found, starts a fresh scan as normal. |
 | `--retry-errors`  | With `--resume`: retries directories that errored during the previous run. Without it, if any errored directories are found and the console is interactive you'll be asked whether to retry them; in a non-interactive session (e.g. a script) they're left alone unless you pass this. |
+
+`--use-database` and `--evict-memory` are still accepted, but no longer needed.
 
 Example:
 
 ```
-OpenDirectoryDownloader --url "https://myopendirectory.com" --use-database --evict-memory --resume
+OpenDirectoryDownloader --url "https://myopendirectory.com" --resume
 ```
 
 If you need to stop a scan early, press **`P`** to pause: it finishes any in-flight requests, safely saves the database, and exits - unlike a hard kill (`Ctrl+C`, closing the window), this guarantees the database is in a consistent, resumable state. Run the same command again with `--resume` added to continue where you left off.
@@ -152,15 +155,15 @@ Successfully resumed from database: myopendirectory.sqlite
   Queued: 3 directories to (re)process, 0 file sizes to look up.
 ```
 
-These flags don't change the JSON/URLs/aria2 output format - resuming a scan produces the exact same output as if it had never been interrupted.
+Resuming doesn't change the JSON/URLs/aria2 output - resuming a scan produces the exact same output as if it had never been interrupted.
 
-A `--use-database` database can also be browsed interactively afterwards - see [Web viewer for scan databases](#web-viewer-for-scan-databases) below.
+A kept database can also be browsed interactively afterwards - see [Web viewer for scan databases](#web-viewer-for-scan-databases) below.
 
 ## Web viewer for scan databases
 
 *EXPERIMENTAL!*
 
-Any `.sqlite` database produced by `--use-database` (finished or not - see [Large scans / low memory](#large-scans--low-memory) above) can be browsed in your browser instead of only reading the JSON/TXT/aria2 output files: a tree view with size-proportional progress bars, an optional image gallery, and per-file or per-directory (as a ZIP) downloads straight from the original site.
+Any `.sqlite` scan database (finished or not - see [Large scans / low memory](#large-scans--low-memory) above) can be browsed in your browser instead of only reading the JSON/TXT/aria2 output files: a tree view with size-proportional progress bars, an optional image gallery, and per-file or per-directory (as a ZIP) downloads straight from the original site.
 
 Start the server:
 
