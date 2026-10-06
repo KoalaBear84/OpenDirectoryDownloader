@@ -29,6 +29,87 @@ public class ScanDatabaseTests : IAsyncLifetime
 	}
 
 	[Fact]
+	public async Task Reads_WhileListingsAreWritten_DoNotFail()
+	{
+		// The S key and the statistics read while the crawl writes: the old version read on the writer's connection
+		// and failed with "Execute requires the command to have a transaction object" while a transaction was open
+		WebDirectory root = new(parentWebDirectory: null) { Url = "https://example.com/", Name = "ROOT" };
+		_scanDatabase.MirrorDirectory(root);
+
+		Task writes = Task.Run(async () =>
+		{
+			for (int i = 0; i < 200; i++)
+			{
+				WebDirectory directory = new(root) { Url = $"https://example.com/dir-{i}/", Name = $"dir-{i}" };
+
+				for (int file = 0; file < 200; file++)
+				{
+					directory.Files.Add(new WebFile { Url = $"https://example.com/dir-{i}/file-{file}.txt", FileName = $"file-{file}.txt", FileSize = file });
+				}
+
+				_scanDatabase.MirrorDirectory(directory);
+				await _scanDatabase.MirrorDirectoryListingAsync(directory, []);
+			}
+		}, TestContext.Current.CancellationToken);
+
+		while (!writes.IsCompleted)
+		{
+			await _scanDatabase.GetExtensionStatsAsync();
+			await _scanDatabase.GetOverallStatsAsync();
+		}
+
+		await writes;
+
+		Assert.Equal(40_000, (await _scanDatabase.GetExtensionStatsAsync())[".txt"].Count);
+	}
+
+	[Fact]
+	public async Task ARecordThatCannotBeWritten_IsSkipped_TheOthersAreWritten()
+	{
+		WebDirectory root = new(parentWebDirectory: null) { Url = "https://example.com/", Name = "ROOT" };
+		WebDirectory broken = new(root) { Url = null, Name = "broken" };
+
+		_scanDatabase.MirrorDirectory(root);
+		_scanDatabase.MirrorDirectory(broken);
+		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/a.txt", FileName = "a.txt", FileSize = 1 }, root);
+		await _scanDatabase.FlushAsync();
+
+		Assert.Equal(1, await _scanDatabase.CountDirectoriesAsync());
+		Assert.Equal(1, await _scanDatabase.CountFilesAsync());
+
+		// And it keeps writing
+		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/b.txt", FileName = "b.txt", FileSize = 1 }, root);
+		Assert.Equal(2, await _scanDatabase.CountFilesAsync());
+	}
+
+	[Fact]
+	public async Task ADatabaseThatCannotBeWritten_NeverBlocksTheScan()
+	{
+		WebDirectory root = new(parentWebDirectory: null) { Url = "https://example.com/", Name = "ROOT" };
+		_scanDatabase.MirrorDirectory(root);
+
+		// More failing records than it accepts in a row, then more than the queue holds
+		for (int i = 0; i < 10_000; i++)
+		{
+			_scanDatabase.MirrorDirectory(new WebDirectory(root) { Url = null, Name = "broken" });
+		}
+
+		await Assert.ThrowsAsync<IOException>(() => _scanDatabase.FlushAsync(TestContext.Current.CancellationToken));
+	}
+
+	[Fact]
+	public async Task WritesAfterClosing_AreDropped()
+	{
+		await _scanDatabase.DisposeAsync();
+
+		_scanDatabase.MirrorSessionStats(new ScanSession(new WebDirectory(null) { Url = "https://example.com/" }, 5));
+		_scanDatabase.MirrorDirectory(new WebDirectory(null) { Url = "https://example.com/" });
+		await _scanDatabase.MirrorDirectoryListingAsync(new WebDirectory(null) { Url = "https://example.com/x/" }, [], TestContext.Current.CancellationToken);
+
+		await Assert.ThrowsAsync<ObjectDisposedException>(() => _scanDatabase.FlushAsync(TestContext.Current.CancellationToken));
+	}
+
+	[Fact]
 	public async Task CreateAsync_CreatesEmptyDatabase()
 	{
 		Assert.True(File.Exists(_dbPath));

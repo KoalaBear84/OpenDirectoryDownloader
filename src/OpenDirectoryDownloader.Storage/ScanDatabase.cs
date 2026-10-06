@@ -246,6 +246,8 @@ public sealed partial class ScanDatabase : IAsyncDisposable
 			return;
 		}
 
+		ObjectDisposedException.ThrowIf(Volatile.Read(ref _disposed) == 1, this);
+
 		TaskCompletionSource flushCompleted = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
 		await _channel.Writer.WriteAsync(new FlushMarker(flushCompleted), cancellationToken);

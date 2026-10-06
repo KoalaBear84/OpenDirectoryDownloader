@@ -1,3 +1,5 @@
+using OpenDirectoryDownloader.Reporting;
+
 namespace OpenDirectoryDownloader.Hosting;
 
 /// <summary>The running scan, as the console keys see it: pause it, wait for it, know whether it is done.</summary>
@@ -13,6 +15,9 @@ public sealed class ScanController
 
 	/// <summary>The crawl and the outputs are done</summary>
 	public bool Finished { get; private set; }
+
+	/// <summary>The statistics of the finished scan, for the keys pressed after it (the database may be gone by then)</summary>
+	public ScanReport FinalReport { get; internal set; }
 
 	/// <summary>Completes when the scan (and its outputs) ended, however it ended</summary>
 	public Task Completion => _completed.Task;

@@ -13,6 +13,9 @@ public sealed partial class ScanDatabase
 	/// <summary>Rows written per transaction at most; one transaction per batch is what makes SQLite fast here.</summary>
 	private const int MaxRowsPerTransaction = 20_000;
 
+	/// <summary>After this many records in a row could not be written, the database is given up on</summary>
+	private const int MaxFailedRecordsInARow = 50;
+
 	/// <summary>Stores <paramref name="webDirectory"/> (assigning its id the first time) or updates it. Its parent is stored first when it is not yet.</summary>
 	public void MirrorDirectory(WebDirectory webDirectory)
 	{
@@ -182,68 +185,188 @@ public sealed partial class ScanDatabase
 	/// <summary>Queues a record without waiting, unless the writer is far behind (the channel is full).</summary>
 	private void Write(IScanRecord record)
 	{
-		if (_channel.Writer.TryWrite(record))
+		if (_channel.Writer.TryWrite(record) || IsClosed(record))
 		{
 			return;
 		}
 
 		// Back pressure: only when the disk can't keep up
-		_channel.Writer.WriteAsync(record).AsTask().GetAwaiter().GetResult();
+		try
+		{
+			_channel.Writer.WriteAsync(record).AsTask().GetAwaiter().GetResult();
+		}
+		catch (ChannelClosedException)
+		{
+			IsClosed(record);
+		}
 	}
 
-	private ValueTask WriteAsync(IScanRecord record, CancellationToken cancellationToken = default)
+	private async ValueTask WriteAsync(IScanRecord record, CancellationToken cancellationToken = default)
 	{
-		return _channel.Writer.TryWrite(record) ? ValueTask.CompletedTask : _channel.Writer.WriteAsync(record, cancellationToken);
-	}
-
-	private async Task WriterLoopAsync()
-	{
-		ChannelReader<IScanRecord> reader = _channel.Reader;
+		if (_channel.Writer.TryWrite(record) || IsClosed(record))
+		{
+			return;
+		}
 
 		try
 		{
-			using WriteCommands commands = new(_writeConnection);
+			await _channel.Writer.WriteAsync(record, cancellationToken);
+		}
+		catch (ChannelClosedException)
+		{
+			IsClosed(record);
+		}
+	}
 
-			while (await reader.WaitToReadAsync())
-			{
-				List<TaskCompletionSource> flushesToComplete = null;
+	/// <summary>Whether the database was closed already: what comes after that (a late statistics tick) is dropped.</summary>
+	private bool IsClosed(IScanRecord record)
+	{
+		if (Volatile.Read(ref _disposed) == 0)
+		{
+			return false;
+		}
 
-				using SqliteTransaction transaction = _writeConnection.BeginTransaction();
+		_logger.LogDebug("Scan database '{path}' is closed, {record} not written", Path, record.GetType().Name);
+		(record as BeginRunRecord)?.RunNumberResult.TrySetException(new ObjectDisposedException(nameof(ScanDatabase)));
 
-				int rows = 0;
+		return true;
+	}
 
-				while (rows < MaxRowsPerTransaction && reader.TryRead(out IScanRecord record))
-				{
-					if (record is FlushMarker flushMarker)
-					{
-						(flushesToComplete ??= []).Add(flushMarker.Completed);
-						continue;
-					}
+	/// <summary>
+	/// The single writer: everything queued goes in transactions of up to <see cref="MaxRowsPerTransaction"/> rows.
+	/// A scan never fails or waits on its database: a failed transaction is tried again record by record and a
+	/// record that fails on its own is skipped. When nothing can be written anymore (disk full, file gone) the
+	/// queue is still emptied, so nobody waits on it, and flushes fail so readers know the data is incomplete.
+	/// </summary>
+	private async Task WriterLoopAsync()
+	{
+		ChannelReader<IScanRecord> reader = _channel.Reader;
+		List<IScanRecord> batch = [];
+		List<TaskCompletionSource> flushes = [];
+		Exception unwritable = null;
+		int failedRecordsInARow = 0;
+		WriteCommands commands = null;
 
-					rows += await ApplyAsync(commands, transaction, record);
-				}
-
-				await transaction.CommitAsync();
-
-				if (flushesToComplete is not null)
-				{
-					foreach (TaskCompletionSource flush in flushesToComplete)
-					{
-						flush.TrySetResult();
-					}
-				}
-			}
+		try
+		{
+			commands = new WriteCommands(_writeConnection);
 		}
 		catch (Exception ex)
 		{
-			_logger.LogError(ex, "Error writing to scan database '{path}'", Path);
+			unwritable = new IOException($"Scan database '{Path}' can't be written, the scan continues without it", ex);
+			_logger.LogError(ex, "{message}", unwritable.Message);
+		}
 
-			// Nothing will be written anymore: don't leave anyone waiting for a flush
-			while (reader.TryRead(out IScanRecord record))
+		using WriteCommands disposeCommands = commands;
+
+		while (await reader.WaitToReadAsync())
+		{
+			batch.Clear();
+			flushes.Clear();
+
+			int rows = 0;
+
+			while (rows < MaxRowsPerTransaction && reader.TryRead(out IScanRecord record))
 			{
-				(record as FlushMarker)?.Completed.TrySetException(ex);
-				(record as BeginRunRecord)?.RunNumberResult.TrySetException(ex);
+				if (record is FlushMarker flushMarker)
+				{
+					flushes.Add(flushMarker.Completed);
+					continue;
+				}
+
+				batch.Add(record);
+				rows += record is DirectoryListingRecord listing ? listing.Files.Length + listing.Subdirectories.Length + 1 : 1;
 			}
+
+			if (unwritable is null && batch.Count > 0 && !await TryApplyAsync(commands, batch))
+			{
+				// One by one, so one bad record doesn't lose the others
+				foreach (IScanRecord record in batch)
+				{
+					if (await TryApplyAsync(commands, [record]))
+					{
+						failedRecordsInARow = 0;
+						continue;
+					}
+
+					if (++failedRecordsInARow >= MaxFailedRecordsInARow)
+					{
+						unwritable = new IOException($"Scan database '{Path}' can't be written anymore, the scan continues without it");
+						_logger.LogError("{message}", unwritable.Message);
+						break;
+					}
+				}
+			}
+
+			if (unwritable is not null)
+			{
+				foreach (IScanRecord record in batch)
+				{
+					(record as BeginRunRecord)?.RunNumberResult.TrySetException(unwritable);
+				}
+			}
+
+			foreach (TaskCompletionSource flush in flushes)
+			{
+				if (unwritable is null)
+				{
+					flush.TrySetResult();
+				}
+				else
+				{
+					flush.TrySetException(unwritable);
+				}
+			}
+		}
+	}
+
+	/// <summary>Applies the records in one transaction, or nothing of them.</summary>
+	private async Task<bool> TryApplyAsync(WriteCommands commands, List<IScanRecord> records)
+	{
+		SqliteTransaction transaction = null;
+
+		try
+		{
+			transaction = _writeConnection.BeginTransaction();
+
+			foreach (IScanRecord record in records)
+			{
+				await ApplyAsync(commands, transaction, record);
+			}
+
+			await transaction.CommitAsync();
+
+			return true;
+		}
+		catch (Exception ex)
+		{
+			try
+			{
+				if (transaction?.Connection is not null)
+				{
+					await transaction.RollbackAsync();
+				}
+			}
+			catch (Exception rollbackException)
+			{
+				_logger.LogDebug(rollbackException, "Rollback failed on scan database '{path}'", Path);
+			}
+
+			if (records.Count == 1)
+			{
+				_logger.LogError(ex, "Error writing {record} to scan database '{path}', skipped", records[0].GetType().Name, Path);
+				(records[0] as BeginRunRecord)?.RunNumberResult.TrySetException(ex);
+			}
+			else
+			{
+				_logger.LogWarning(ex, "Error writing {count} records to scan database '{path}', trying them one by one", records.Count, Path);
+			}
+
+			return false;
+		}
+		finally
+		{
+			transaction?.Dispose();
 		}
 	}
 

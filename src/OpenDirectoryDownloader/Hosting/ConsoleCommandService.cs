@@ -137,7 +137,7 @@ public sealed class ConsoleCommandService(
 				ShowInfoAndCommands();
 				break;
 			case 'S':
-				Console.WriteLine(Statistics.GetSessionStats(session, await ScanReport.CreateAsync(scanDatabase), includeExtensions: true));
+				Console.WriteLine(Statistics.GetSessionStats(session, await GetReportAsync(), includeExtensions: true));
 				Console.WriteLine(ScanWorker.QueueStatus(crawlEngine));
 				break;
 			case 'T':
@@ -161,7 +161,7 @@ public sealed class ConsoleCommandService(
 			case 'C':
 				if (controller.Finished)
 				{
-					if (ClipboardWriter.TrySetText(Statistics.GetSessionStats(session, await ScanReport.CreateAsync(scanDatabase), includeExtensions: true, onlyRedditStats: true, totalDirectories: session.Counters.DirectoriesFinished)))
+					if (ClipboardWriter.TrySetText(Statistics.GetSessionStats(session, await GetReportAsync(), includeExtensions: true, onlyRedditStats: true, totalDirectories: session.Counters.DirectoriesFinished)))
 					{
 						Console.WriteLine("Copied Reddit stats to clipboard!");
 					}
@@ -176,6 +176,9 @@ public sealed class ConsoleCommandService(
 				break;
 		}
 	}
+
+	/// <summary>During the scan from the database, after it the final one: the database may be closed and deleted by then.</summary>
+	private async Task<ScanReport> GetReportAsync() => controller.FinalReport ?? await ScanReport.TryCreateAsync(scanDatabase, logger);
 
 	private async Task SaveUrlsAsync(CancellationToken cancellationToken)
 	{

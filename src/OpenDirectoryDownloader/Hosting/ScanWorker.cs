@@ -105,7 +105,7 @@ public sealed partial class ScanWorker(
 			{
 				Session = session,
 				Database = scanDatabase,
-				Report = await ScanReport.CreateAsync(scanDatabase),
+				Report = controller.FinalReport = await ScanReport.TryCreateAsync(scanDatabase, logger),
 				TotalDirectories = totalDirectories,
 				ResumeNothingToDo = resumeNothingToDo,
 				SpeedtestRestored = speedtestRestored
@@ -331,14 +331,21 @@ public sealed partial class ScanWorker(
 			{
 				await Task.Delay(crawlEngine.CrawlingDirectories ? StatisticsInterval : FileSizeStatisticsInterval, cancellationToken);
 
-				scanDatabase.MirrorSessionStats(session);
-
-				if (session.StatisticsSuppressed || !crawlEngine.Running)
+				try
 				{
-					continue;
-				}
+					scanDatabase.MirrorSessionStats(session);
 
-				logger.LogWarning("{statistics}", $"{Statistics.GetSessionStats(session)}{Environment.NewLine}{QueueStatus(crawlEngine)}");
+					if (session.StatisticsSuppressed || !crawlEngine.Running)
+					{
+						continue;
+					}
+
+					logger.LogWarning("{statistics}", $"{Statistics.GetSessionStats(session)}{Environment.NewLine}{QueueStatus(crawlEngine)}");
+				}
+				catch (Exception ex) when (ex is not OperationCanceledException)
+				{
+					logger.LogError(ex, "Error showing statistics");
+				}
 			}
 		}
 		catch (OperationCanceledException)

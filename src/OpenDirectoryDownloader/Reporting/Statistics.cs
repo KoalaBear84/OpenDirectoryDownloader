@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using OpenDirectoryDownloader.Helpers;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Scanning;
@@ -14,6 +15,20 @@ public sealed record ScanReport(Dictionary<string, ExtensionStats> Extensions)
 	public static async Task<ScanReport> CreateAsync(ScanDatabase scanDatabase)
 	{
 		return new ScanReport(await Statistics.GetExtensionsAsync(scanDatabase));
+	}
+
+	/// <summary>The report, or one without the extensions when the database can't be read: statistics never fail a scan.</summary>
+	public static async Task<ScanReport> TryCreateAsync(ScanDatabase scanDatabase, ILogger logger)
+	{
+		try
+		{
+			return await CreateAsync(scanDatabase);
+		}
+		catch (Exception ex)
+		{
+			logger.LogWarning(ex, "Could not read the extension statistics from the scan database");
+			return new ScanReport([]);
+		}
 	}
 }
 
