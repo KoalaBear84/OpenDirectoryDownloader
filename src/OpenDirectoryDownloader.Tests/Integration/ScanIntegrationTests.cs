@@ -1,4 +1,3 @@
-using OpenDirectoryDownloader.Shared.Models;
 using OpenDirectoryDownloader.Storage;
 using Xunit;
 

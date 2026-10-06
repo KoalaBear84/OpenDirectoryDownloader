@@ -18,3 +18,13 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/curses3.html | curses3.html | 43008 | 
   file http://localhost:8086/listing/curses4.html | curses4.html | 40960 | 
   file http://localhost:8086/listing/index.html%3fS=A | index.html?S=A | 2048 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/curses.html | curses.html | 13312 | 
+  file http://localhost/curses.pdf | curses.pdf | 29696 | 
+  file http://localhost/curses_howto.html | curses_howto.html | 28672 | 
+  file http://localhost/curses_l-python6.pdf | curses_l-python6.pdf | 89088 | 
+  file http://localhost/curses2.html | curses2.html | 7168 | 
+  file http://localhost/curses3.html | curses3.html | 43008 | 
+  file http://localhost/curses4.html | curses4.html | 40960 | 
+  file http://localhost/index.html%3fS=A | index.html?S=A | 2048 | 

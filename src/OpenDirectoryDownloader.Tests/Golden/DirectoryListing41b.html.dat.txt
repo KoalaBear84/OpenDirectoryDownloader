@@ -11,3 +11,14 @@ url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=F
   file http://localhost/public/THEMIS/SCI/Pubs/Nuggets/2009_nuggets/runov/runov.html | runov.html | 8704 | 
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/public/THEMIS/SCI/Pubs/Nuggets/2009_nuggets/runov/aurora.jpg | aurora.jpg | 38912 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/Nuggets/2009_nuggets/runov/fig1.png | fig1.png | 22426 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/Nuggets/2009_nuggets/runov/fig1_thumb.png | fig1_thumb.png | 75366 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/Nuggets/2009_nuggets/runov/fig2.png | fig2.png | 52122 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/Nuggets/2009_nuggets/runov/fig2_thumb.png | fig2_thumb.png | 130150 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/Nuggets/2009_nuggets/runov/fig3.png | fig3.png | 5427 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/Nuggets/2009_nuggets/runov/fig3_thumb.png | fig3_thumb.png | 71987 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/Nuggets/2009_nuggets/runov/letter_32.gif | letter_32.gif | 922 | 
+  file http://localhost/public/THEMIS/SCI/Pubs/Nuggets/2009_nuggets/runov/runov.html | runov.html | 8704 | 

@@ -74,3 +74,41 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/index.html | index.html | 8488 | 
   file http://localhost:8086/listing/ls-lR.gz | ls-lR.gz | 7340032 | 
   file http://localhost:8086/listing/robots.txt | robots.txt | 78 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/_modules/ | _modules |  | ParseTablesDirectoryListing
+  dir http://localhost/authors/ | authors |  | ParseTablesDirectoryListing
+  dir http://localhost/clpa/ | clpa |  | ParseTablesDirectoryListing
+  dir http://localhost/doc/ | doc |  | ParseTablesDirectoryListing
+  dir http://localhost/indices/ | indices |  | ParseTablesDirectoryListing
+  dir http://localhost/misc/ | misc |  | ParseTablesDirectoryListing
+  dir http://localhost/modules/ | modules |  | ParseTablesDirectoryListing
+  dir http://localhost/ports/ | ports |  | ParseTablesDirectoryListing
+  dir http://localhost/project/ | project |  | ParseTablesDirectoryListing
+  dir http://localhost/scripts/ | scripts |  | ParseTablesDirectoryListing
+  dir http://localhost/src/ | src |  | ParseTablesDirectoryListing
+  file http://localhost/CPAN.html | CPAN.html | 10240 | 
+  file http://localhost/ENDINGS | ENDINGS | 3954 | 
+  file http://localhost/MIRRORED.BY | MIRRORED.BY | 128000 | 
+  file http://localhost/MIRRORING.FROM | MIRRORING.FROM | 335 | 
+  file http://localhost/README | README | 1878 | 
+  file http://localhost/README.html | README.html | 8488 | 
+  file http://localhost/RECENT | RECENT | 71680 | 
+  file http://localhost/RECENT-1M.json | RECENT-1M.json | 1004544 | 
+  file http://localhost/RECENT-1Q.json | RECENT-1Q.json | 3145728 | 
+  file http://localhost/RECENT-1W.json | RECENT-1W.json | 185344 | 
+  file http://localhost/RECENT-1Y.json | RECENT-1Y.json | 12582912 | 
+  file http://localhost/RECENT-1d.json | RECENT-1d.json | 33792 | 
+  file http://localhost/RECENT-1h.json | RECENT-1h.json | 6082 | 
+  file http://localhost/RECENT-6h.json | RECENT-6h.json | 14336 | 
+  file http://localhost/RECENT-Z.json | RECENT-Z.json | 74448896 | 
+  file http://localhost/RECENT.html | RECENT.html | 166912 | 
+  file http://localhost/RECENT.recent | RECENT.recent | 6082 | 
+  file http://localhost/ROADMAP | ROADMAP | 1197 | 
+  file http://localhost/ROADMAP.html | ROADMAP.html | 1678 | 
+  file http://localhost/SITES | SITES | 608 | 
+  file http://localhost/SITES.html | SITES.html | 46080 | 
+  file http://localhost/disclaimer.html | disclaimer.html | 4485 | 
+  file http://localhost/index.html | index.html | 8488 | 
+  file http://localhost/ls-lR.gz | ls-lR.gz | 7340032 | 
+  file http://localhost/robots.txt | robots.txt | 78 | 

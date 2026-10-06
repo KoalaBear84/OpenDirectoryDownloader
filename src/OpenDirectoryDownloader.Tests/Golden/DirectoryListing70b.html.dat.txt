@@ -52,3 +52,55 @@ url=http://localhost/ name=ROOT desc= parser= error=False ok=False
   file http://localhost/A:/upload10/4-smbd-34-arisa-kuroki-s-model-vol-34_sh.mp4 | 4-smbd-34-arisa-kuroki-s-model-vol-34_sh.mp4 | 481506099 | 
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=False
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  file http://localhost/A:/upload10/1-lafbd-63-misaki-tsubasa-laforet-girl-63_sh.mp4 | 1-lafbd-63-misaki-tsubasa-laforet-girl-63_sh.mp4 | 1610612736 | 
+  file http://localhost/A:/upload10/1-mkbd-06-hina-tokisaka-kirari-6_sh.mp4 | 1-mkbd-06-hina-tokisaka-kirari-6_sh.mp4 | 698141901 | 
+  file http://localhost/A:/upload10/1-sky-220-suzu-minamoto-sky-angel-vol-139_sh.mp4 | 1-sky-220-suzu-minamoto-sky-angel-vol-139_sh.mp4 | 492306432 | 
+  file http://localhost/A:/upload10/1-sky-276-nonoka-kaede-sky-angel-vol-165_sh.mp4 | 1-sky-276-nonoka-kaede-sky-angel-vol-165_sh.mp4 | 534983475 | 
+  file http://localhost/A:/upload10/1-sky-302-airi-mizusawa-sky-angel-vol-182_sh.mp4 | 1-sky-302-airi-mizusawa-sky-angel-vol-182_sh.mp4 | 480142950 | 
+  file http://localhost/A:/upload10/1-sky-307-mei-ashikawa-sky-angel-vol-184_sh.mp4 | 1-sky-307-mei-ashikawa-sky-angel-vol-184_sh.mp4 | 326945997 | 
+  file http://localhost/A:/upload10/1-skyhd075-saori-sky-angel-blue-vol-75_sh.mp4 | 1-skyhd075-saori-sky-angel-blue-vol-75_sh.mp4 | 607230362 | 
+  file http://localhost/A:/upload10/1-skyhd-106-marina-matsumoto-sky-angel-blue-vol-106_sh.mp4 | 1-skyhd-106-marina-matsumoto-sky-angel-blue-vol-106_sh.mp4 | 234671309 | 
+  file http://localhost/A:/upload10/1-twm-37742-namiko-little-asian-cocksuckers-18_sh.mp4 | 1-twm-37742-namiko-little-asian-cocksuckers-18_sh.mp4 | 653262848 | 
+  file http://localhost/A:/upload10/2-mcb3dbd-19-nao-mizuki-merci-beaucoup-19-seductive-tutor_sh.mp4 | 2-mcb3dbd-19-nao-mizuki-merci-beaucoup-19-seductive-tutor_sh.mp4 | 512334234 | 
+  file http://localhost/A:/upload10/2-s2m-023-serika-kawamoto-encore-vol-23_sh.mp4 | 2-s2m-023-serika-kawamoto-encore-vol-23_sh.mp4 | 1073741824 | 
+  file http://localhost/A:/upload10/2-s2mhn-04-mariko-hunter-file-04_sh.mp4 | 2-s2mhn-04-mariko-hunter-file-04_sh.mp4 | 1610612736 | 
+  file http://localhost/A:/upload10/14-mkbd-s19-hinata-tachibana-kirari-vol-19_sh.mp4 | 14-mkbd-s19-hinata-tachibana-kirari-vol-19_sh.mp4 | 421317837 | 
+  file http://localhost/A:/upload10/1-lafbd-027-reika-kashiwakura-laforet-girl-27_sh.mp4 | 1-lafbd-027-reika-kashiwakura-laforet-girl-27_sh.mp4 | 1181116006 | 
+  file http://localhost/A:/upload10/1-mcb3dbd-02-hina-misaki-3d-merci-beaucoup-2_sh.mp4 | 1-mcb3dbd-02-hina-misaki-3d-merci-beaucoup-2_sh.mp4 | 1181116006 | 
+  file http://localhost/A:/upload10/1-mcb3dbd-27-reina-hashimoto-3d-merci-beaucoup-27_sh.mp4 | 1-mcb3dbd-27-reina-hashimoto-3d-merci-beaucoup-27_sh.mp4 | 1932735283 | 
+  file http://localhost/A:/upload10/1-mkbd-s050-yui-kasuga-kirari-50_sh.mp4 | 1-mkbd-s050-yui-kasuga-kirari-50_sh.mp4 | 1070176666 | 
+  file http://localhost/A:/upload10/1-muso-074-imai-yoshimi-beauty-body-close-the-school-ibekon_sh.mp4 | 1-muso-074-imai-yoshimi-beauty-body-close-the-school-ibekon_sh.mp4 | 847144550 | 
+  file http://localhost/A:/upload10/1-sky130-suzuki-chao-gives-sensual-blowjob_sh.mp4 | 1-sky130-suzuki-chao-gives-sensual-blowjob_sh.mp4 | 290350694 | 
+  file http://localhost/A:/upload10/1-sky-177-roosa-kawashima-dirty-minded-wife-advent-13_sh.mp4 | 1-sky-177-roosa-kawashima-dirty-minded-wife-advent-13_sh.mp4 | 703699354 | 
+  file http://localhost/A:/upload10/1-sky-329-aizawa-haruka-dirty-minded-wife-advent-57_sh.mp4 | 1-sky-329-aizawa-haruka-dirty-minded-wife-advent-57_sh.mp4 | 568118477 | 
+  file http://localhost/A:/upload10/1-smbd-086-mikuru-shiina-s-model-86_sh.mp4 | 1-smbd-086-mikuru-shiina-s-model-86_sh.mp4 | 1181116006 | 
+  file http://localhost/A:/upload10/1-smbd-23-tsubasa-aihara-s-model-vol-23_sh.mp4 | 1-smbd-23-tsubasa-aihara-s-model-vol-23_sh.mp4 | 471544627 | 
+  file http://localhost/A:/upload10/1-smbd-43-kanna-itou-s-model-vol-43_sh.mp4 | 1-smbd-43-kanna-itou-s-model-vol-43_sh.mp4 | 567699046 | 
+  file http://localhost/A:/upload10/2-lafbd-41-miku-ohashi-laforet-girl-41_sh.mp4 | 2-lafbd-41-miku-ohashi-laforet-girl-41_sh.mp4 | 1932735283 | 
+  file http://localhost/A:/upload10/2-lafbd-42-maya-mizuki-laforet-girl-42_sh.mp4 | 2-lafbd-42-maya-mizuki-laforet-girl-42_sh.mp4 | 356725555 | 
+  file http://localhost/A:/upload10/2-mcb3dbd-07-kanako-kimura-merci-beaucoup-7-hard-fucked-office-lady_sh.mp4 | 2-mcb3dbd-07-kanako-kimura-merci-beaucoup-7-hard-fucked-office-lady_sh.mp4 | 634912768 | 
+  file http://localhost/A:/upload10/2-mcdv-011-anna-anjo-merci-beaucoup-dv-vol-11-her-beautiful-legs_sh.mp4 | 2-mcdv-011-anna-anjo-merci-beaucoup-dv-vol-11-her-beautiful-legs_sh.mp4 | 418696397 | 
+  file http://localhost/A:/upload10/2-mcdv-44-honoka-orihara-merci-beaucoup-dv-44_sh.mp4 | 2-mcdv-44-honoka-orihara-merci-beaucoup-dv-44_sh.mp4 | 303772467 | 
+  file http://localhost/A:/upload10/2-muso-105-umita-saki-mastering-the-insult-as-long-as-the-breath_sh.mp4 | 2-muso-105-umita-saki-mastering-the-insult-as-long-as-the-breath_sh.mp4 | 1610612736 | 
+  file http://localhost/A:/upload10/2-red-168-jun-mamiya-red-hot-fetish-collection-104_sh.mp4 | 2-red-168-jun-mamiya-red-hot-fetish-collection-104_sh.mp4 | 336488038 | 
+  file http://localhost/A:/upload10/2-red-178-maki-takei-red-hot-fetish-collection-vol-107_sh.mp4 | 2-red-178-maki-takei-red-hot-fetish-collection-vol-107_sh.mp4 | 654625997 | 
+  file http://localhost/A:/upload10/2-s2m-025-marin-koyanagi-encore-vol-25_sh.mp4 | 2-s2m-025-marin-koyanagi-encore-vol-25_sh.mp4 | 402967757 | 
+  file http://localhost/A:/upload10/2-s2m-041-miina-kanno-encore-vol-41_sh.mp4 | 2-s2m-041-miina-kanno-encore-vol-41_sh.mp4 | 963955917 | 
+  file http://localhost/A:/upload10/4-skyhd076-megumi-shino-sky-angel-blue-vol-76_sh.mp4 | 4-skyhd076-megumi-shino-sky-angel-blue-vol-76_sh.mp4 | 463470592 | 
+  file http://localhost/A:/upload10/4-skyhd081-hina-maeda-sky-angel-blue-vol-81_sh.mp4 | 4-skyhd081-hina-maeda-sky-angel-blue-vol-81_sh.mp4 | 1073741824 | 
+  file http://localhost/A:/upload10/4-sm3d2dbd-10-maomi-nagasawa-s-model-10_sh.mp4 | 4-sm3d2dbd-10-maomi-nagasawa-s-model-10_sh.mp4 | 371195904 | 
+  file http://localhost/A:/upload10/4-sm3d2dbd-24-reira-aisaki-s-model-dv-24_sh.mp4 | 4-sm3d2dbd-24-reira-aisaki-s-model-dv-24_sh.mp4 | 285317530 | 
+  file http://localhost/A:/upload10/4-sm3d2dbd-25-kana-matsui-s-model-dv-25_sh.mp4 | 4-sm3d2dbd-25-kana-matsui-s-model-dv-25_sh.mp4 | 1043437978 | 
+  file http://localhost/A:/upload10/4-smbd04-kanade-otowa-s-model-04_sh.mp4 | 4-smbd04-kanade-otowa-s-model-04_sh.mp4 | 1288490189 | 
+  file http://localhost/A:/upload10/4-smbd-077-yui-uehara-s-model-77_sh.mp4 | 4-smbd-077-yui-uehara-s-model-77_sh.mp4 | 433166746 | 
+  file http://localhost/A:/upload10/4-smbd-084-kaede-niiyama-s-model-84_sh.mp4 | 4-smbd-084-kaede-niiyama-s-model-84_sh.mp4 | 198600294 | 
+  file http://localhost/A:/upload10/4-smbd-092-reiko-kobayakawa-s-model-92_sh.mp4 | 4-smbd-092-reiko-kobayakawa-s-model-92_sh.mp4 | 731591475 | 
+  file http://localhost/A:/upload10/4-smbd-11-aoi-yuuki-s-model-11_sh.mp4 | 4-smbd-11-aoi-yuuki-s-model-11_sh.mp4 | 613626675 | 
+  file http://localhost/A:/upload10/4-smbd-128-karin-aizawa-s-model-128_sh.mp4 | 4-smbd-128-karin-aizawa-s-model-128_sh.mp4 | 507405926 | 
+  file http://localhost/A:/upload10/4-smbd-162-kokone-mizutani-s-model-162_sh.mp4 | 4-smbd-162-kokone-mizutani-s-model-162_sh.mp4 | 839489946 | 
+  file http://localhost/A:/upload10/4-smbd-18-konatsu-aozora-s-model-18_sh.mp4 | 4-smbd-18-konatsu-aozora-s-model-18_sh.mp4 | 812226970 | 
+  file http://localhost/A:/upload10/4-smbd-20-mariru-amamiya-s-model-20_sh.mp4 | 4-smbd-20-mariru-amamiya-s-model-20_sh.mp4 | 1181116006 | 
+  file http://localhost/A:/upload10/4-smbd-27-momokarin-s-model-vol-27_sh.mp4 | 4-smbd-27-momokarin-s-model-vol-27_sh.mp4 | 1007681536 | 
+  file http://localhost/A:/upload10/4-smbd-34-arisa-kuroki-s-model-vol-34_sh.mp4 | 4-smbd-34-arisa-kuroki-s-model-vol-34_sh.mp4 | 481506099 | 

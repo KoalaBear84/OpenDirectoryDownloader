@@ -6,3 +6,7 @@ url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=F
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
   file http://localhost:8086/listing/800-10-801_Pre-Bid.wrf | 800-10-801_Pre-Bid.wrf | 6396314 | 
   file http://localhost:8086/listing/Presentation_800-10-801_Pre-Bid.pdf | Presentation_800-10-801_Pre-Bid.pdf | 125952 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/800-10-801_Pre-Bid.wrf | 800-10-801_Pre-Bid.wrf | 6396314 | 
+  file http://localhost/Presentation_800-10-801_Pre-Bid.pdf | Presentation_800-10-801_Pre-Bid.pdf | 125952 | 

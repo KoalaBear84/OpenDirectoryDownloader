@@ -4,3 +4,6 @@ url=http://localhost/ name=ROOT desc= parser= error=False ok=True
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=True
   dir http://localhost:8086/listing/ubuntu-13.04 | ubuntu-13.04 |  | ParseTablesDirectoryListing
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  dir http://localhost/ubuntu-13.04 | ubuntu-13.04 |  | ParseTablesDirectoryListing

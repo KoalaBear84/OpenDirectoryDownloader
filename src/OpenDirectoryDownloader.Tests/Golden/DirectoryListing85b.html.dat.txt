@@ -24,3 +24,16 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/Documents/J2 White Paper AC Power Conditioning Urban Myths Ver 1.0.pdf | J2 White Paper AC Power Conditioning Urban Myths Ver 1.0.pdf | 329728 | 
   file http://localhost:8086/listing/Documents/J2 White Paper Solid State Drives Ver1.0.pdf | J2 White Paper Solid State Drives Ver1.0.pdf | 140288 | 
   file http://localhost:8086/listing/Documents/J2 White Paper%2C Embedded Operating Systems March 09.pdf | J2 White Paper, Embedded Operating Systems March 09.pdf | 116736 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/?directory=.%2FDocuments%2FEnglishDocs%2F | EnglishDocs |  | ParseTablesDirectoryListing
+  dir http://localhost/?directory=.%2FDocuments%2FFrenchDocs%2F | FrenchDocs |  | ParseTablesDirectoryListing
+  dir http://localhost/?directory=.%2FDocuments%2FGermanDocs%2F | GermanDocs |  | ParseTablesDirectoryListing
+  dir http://localhost/?directory=.%2FDocuments%2FOldDocs%2F | OldDocs |  | ParseTablesDirectoryListing
+  dir http://localhost/?directory=.%2FDocuments%2FReplace+LCDs%2F | Replace LCDs |  | ParseTablesDirectoryListing
+  dir http://localhost/?directory=.%2FDocuments%2FSpanishDocs%2F | SpanishDocs |  | ParseTablesDirectoryListing
+  dir http://localhost/?directory=.%2FDocuments%2FTechnicalDocs%2F | TechnicalDocs |  | ParseTablesDirectoryListing
+  file http://localhost/Documents/J2 Products Comparison.pdf | J2 Products Comparison.pdf | 72704 | 
+  file http://localhost/Documents/J2 White Paper AC Power Conditioning Urban Myths Ver 1.0.pdf | J2 White Paper AC Power Conditioning Urban Myths Ver 1.0.pdf | 329728 | 
+  file http://localhost/Documents/J2 White Paper Solid State Drives Ver1.0.pdf | J2 White Paper Solid State Drives Ver1.0.pdf | 140288 | 
+  file http://localhost/Documents/J2 White Paper%2C Embedded Operating Systems March 09.pdf | J2 White Paper, Embedded Operating Systems March 09.pdf | 116736 | 

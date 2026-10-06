@@ -30,3 +30,19 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/12. DJ TECHNORCH — Gothic System %28Sue%27s Lolita Nation Remix%29.ogg | 12. DJ TECHNORCH — Gothic System (Sue's Lolita Nation Remix).ogg | 7340032 | 
   file http://localhost:8086/listing/13. DJ TECHNORCH — Gothic System %28RaverRose Remix%29.ogg | 13. DJ TECHNORCH — Gothic System (RaverRose Remix).ogg | 11534336 | 
   file http://localhost:8086/listing/cover.jpg | cover.jpg | 100352 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/01. DJ TECHNORCH — 極楽鳥 %28Oldskool mix%29.ogg | 01. DJ TECHNORCH — 極楽鳥 (Oldskool mix).ogg | 7340032 | 
+  file http://localhost/02. DJ TECHNORCH — Gothic System %282005 Re-Edit%29.ogg | 02. DJ TECHNORCH — Gothic System (2005 Re-Edit).ogg | 10485760 | 
+  file http://localhost/03. DJ TECHNORCH — 暗転.ogg | 03. DJ TECHNORCH — 暗転.ogg | 7340032 | 
+  file http://localhost/04. DJ TECHNORCH — Nathasia %28Tcn99 Remix%29.ogg | 04. DJ TECHNORCH — Nathasia (Tcn99 Remix).ogg | 6291456 | 
+  file http://localhost/05. DJ TECHNORCH — The Cosmosmith.ogg | 05. DJ TECHNORCH — The Cosmosmith.ogg | 9437184 | 
+  file http://localhost/06. DJ TECHNORCH — PARANOiA TCN ～Dirty Mix～.ogg | 06. DJ TECHNORCH — PARANOiA TCN ～Dirty Mix～.ogg | 9437184 | 
+  file http://localhost/07. DJ TECHNORCH — 桃源郷.ogg | 07. DJ TECHNORCH — 桃源郷.ogg | 9437184 | 
+  file http://localhost/08. DJ TECHNORCH — Machine%27s EXtream.ogg | 08. DJ TECHNORCH — Machine's EXtream.ogg | 7340032 | 
+  file http://localhost/09. DJ TECHNORCH — Gothic System %28M-Project Remix%29.ogg | 09. DJ TECHNORCH — Gothic System (M-Project Remix).ogg | 9437184 | 
+  file http://localhost/10. DJ TECHNORCH — Gothic System %28REDALiCE Remix 2%29.ogg | 10. DJ TECHNORCH — Gothic System (REDALiCE Remix 2).ogg | 9437184 | 
+  file http://localhost/11. DJ TECHNORCH — Gothic System %28kenta-v.ez. vs t%2bpazolite%27s TURNTABLERIOTER rEm!x 2k5%29.ogg | 11. DJ TECHNORCH — Gothic System (kenta-v.ez. vs t+pazolite's TURNTABLERIOTER rEm!x 2k5).ogg | 7340032 | 
+  file http://localhost/12. DJ TECHNORCH — Gothic System %28Sue%27s Lolita Nation Remix%29.ogg | 12. DJ TECHNORCH — Gothic System (Sue's Lolita Nation Remix).ogg | 7340032 | 
+  file http://localhost/13. DJ TECHNORCH — Gothic System %28RaverRose Remix%29.ogg | 13. DJ TECHNORCH — Gothic System (RaverRose Remix).ogg | 11534336 | 
+  file http://localhost/cover.jpg | cover.jpg | 100352 | 

@@ -34,3 +34,21 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/720 (SP-294 1st Printing) [Schematic Package] [English].pdf | 720 (SP-294 1st Printing) [Schematic Package] [English].pdf | 2097152 | 
   file http://localhost:8086/listing/720 [Joystick Parts Diagram] [English].pdf | 720 [Joystick Parts Diagram] [English].pdf | 278528 | 
   file http://localhost:8086/listing/800 Fathoms [Technical] [English].pdf | 800 Fathoms [Technical] [English].pdf | 1153434 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/1942 [Instruction] [English].pdf | 1942 [Instruction] [English].pdf | 2936013 | 
+  file http://localhost/1943 - The Battle Of Midway [Kit Instruction] [English].pdf | 1943 - The Battle Of Midway [Kit Instruction] [English].pdf | 786432 | 
+  file http://localhost/1943 [Schematics] [English].pdf | 1943 [Schematics] [English].pdf | 1782579 | 
+  file http://localhost/1944 - The Loop Master [Japanese].pdf | 1944 - The Loop Master [Japanese].pdf | 1363149 | 
+  file http://localhost/1945 K III [English].pdf | 1945 K III [English].pdf | 22528 | 
+  file http://localhost/19K6102-5835A 19in Color Graphic Display [Schematics] [English].pdf | 19K6102-5835A 19in Color Graphic Display [Schematics] [English].pdf | 229376 | 
+  file http://localhost/19XX - The War Against Destiny [Operator's] [English].pdf | 19XX - The War Against Destiny [Operator's] [English].pdf | 1153434 | 
+  file http://localhost/4 Player Football (DP-139 1st Printing) [Drawing Package] [English].pdf | 4 Player Football (DP-139 1st Printing) [Drawing Package] [English].pdf | 1363149 | 
+  file http://localhost/500GP (3 in 1) [Supplement Manual] [English].pdf | 500GP (3 in 1) [Supplement Manual] [English].pdf | 950272 | 
+  file http://localhost/500GP Deluxe [Operator's] [English].pdf | 500GP Deluxe [Operator's] [English].pdf | 1258291 | 
+  file http://localhost/500GP Standard [Operator's] [English].pdf | 500GP Standard [Operator's] [English].pdf | 1363149 | 
+  file http://localhost/6400 19in Color Graphic Display [Schematics] [English].pdf | 6400 19in Color Graphic Display [Schematics] [English].pdf | 1572864 | 
+  file http://localhost/69x1251 Color Monitor [Setup Instructions] [English].pdf | 69x1251 Color Monitor [Setup Instructions] [English].pdf | 88064 | 
+  file http://localhost/720 (SP-294 1st Printing) [Schematic Package] [English].pdf | 720 (SP-294 1st Printing) [Schematic Package] [English].pdf | 2097152 | 
+  file http://localhost/720 [Joystick Parts Diagram] [English].pdf | 720 [Joystick Parts Diagram] [English].pdf | 278528 | 
+  file http://localhost/800 Fathoms [Technical] [English].pdf | 800 Fathoms [Technical] [English].pdf | 1153434 | 

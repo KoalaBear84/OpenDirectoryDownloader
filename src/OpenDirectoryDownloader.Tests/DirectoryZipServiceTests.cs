@@ -19,7 +19,6 @@ public class DirectoryZipServiceTests
 		// WriteZipAsync logs skipped files through Program.Logger, normally set up by Program.Main, which
 		// doesn't run under the test host (without this the test only passed when another test class
 		// happened to initialize it first).
-		Program.Logger ??= new LoggerConfiguration().CreateLogger();
 	}
 
 	private const string RootUrl = "https://example.com/folder/";

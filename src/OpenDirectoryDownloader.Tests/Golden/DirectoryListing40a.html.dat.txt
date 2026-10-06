@@ -11,3 +11,14 @@ url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=F
   file http://localhost/primary/computer/xsl/merp_shell.xsl | merp_shell.xsl | 19046 | 
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/primary/computer/xsl/assessment/ | assessment |  | ParseTablesDirectoryListing
+  dir http://localhost/primary/computer/xsl/category/ | category |  | ParseTablesDirectoryListing
+  dir http://localhost/primary/computer/xsl/chart/ | chart |  | ParseTablesDirectoryListing
+  dir http://localhost/primary/computer/xsl/input/ | input |  | ParseTablesDirectoryListing
+  dir http://localhost/primary/computer/xsl/question_bank/ | question_bank |  | ParseTablesDirectoryListing
+  dir http://localhost/primary/computer/xsl/result_set_page/ | result_set_page |  | ParseTablesDirectoryListing
+  file http://localhost/primary/computer/xsl/merp_interface_shell.xsl | merp_interface_shell.xsl | 9011 | 
+  file http://localhost/primary/computer/xsl/merp_popup_shell.xsl | merp_popup_shell.xsl | 3584 | 
+  file http://localhost/primary/computer/xsl/merp_shell.xsl | merp_shell.xsl | 19046 | 

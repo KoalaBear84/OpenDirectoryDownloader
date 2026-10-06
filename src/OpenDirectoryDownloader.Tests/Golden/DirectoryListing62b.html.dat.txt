@@ -55,3 +55,58 @@ url=http://localhost/ name=ROOT desc= parser= error=False ok=False
   file http://localhost/utfiles/index.php?dir=Admin%2F&file=ZSZNameLock.rar | ZSZNameLock.rar | 2970 | 
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/utfiles/index.php?dir=Admin/ActorCLP/ | ActorCLP |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/AdminSS/ | AdminSS |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/AdminTool/ | AdminTool |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/AdvancedWebAdmin/ | AdvancedWebAdmin |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/AKA/ | AKA |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/AntiFlood/ | AntiFlood |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/AutoChangeMaps/ | AutoChangeMaps |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/AutoSettings/ | AutoSettings |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/ChatLoggers/ | ChatLoggers |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/EasyMute/ | EasyMute |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/HiddenAdmin/ | HiddenAdmin |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/HostnameBan/ | HostnameBan |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/IpToCountry/ | IpToCountry |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/KickIdlers/ | KickIdlers |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/LamerBuster/ | LamerBuster |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/NickNameBan/ | NickNameBan |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/RedirectChecker/ | RedirectChecker |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/ServerAdmin/ | ServerAdmin |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/ServerFix/ | ServerFix |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/SuperWebAdmin/ | SuperWebAdmin |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/Teamspeak/ | Teamspeak |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Admin/valhallaAvatar/ | valhallaAvatar |  | ParseTablesDirectoryListing
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=ActorEditor.rar | ActorEditor.rar | 12698 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=ActorEditor0.1.zip | ActorEditor0.1.zip | 23654 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=BanHappy.zip | BanHappy.zip | 26522 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=box2.zip | box2.zip | 5325 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=ClickBoard2.zip | ClickBoard2.zip | 6349 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=CommandSystem_v0.9b.rar | CommandSystem_v0.9b.rar | 24269 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=Core.rar | Core.rar | 201830 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=DefaultSkin.zip | DefaultSkin.zip | 4198 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=FCon100.zip | FCon100.zip | 23142 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=LamerReporter_138.zip | LamerReporter_138.zip | 176128 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=LinkedList.zip | LinkedList.zip | 9114 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=linux-multi-server-controller-1j_including-source.rar | linux-multi-server-controller-1j_including-source.rar | 5325 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=linux-multi-server-controller-v1h.rar | linux-multi-server-controller-v1h.rar | 20890 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=MessageAdmin.rar | MessageAdmin.rar | 2970 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=opban04.zip | opban04.zip | 50278 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=OpenMapVote.zip | OpenMapVote.zip | 2355 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=PlayerCnt_v2.0.zip | PlayerCnt_v2.0.zip | 3482 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=provote71.zip | provote71.zip | 356147 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=semiadmin026a.zip | semiadmin026a.zip | 172134 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=SendToWebsite_v05.zip | SendToWebsite_v05.zip | 25805 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=SendTo_v07c.zip | SendTo_v07c.zip | 31744 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=ServerScroll.zip | ServerScroll.zip | 28877 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=ServerScroll_Beta_V2.zip | ServerScroll_Beta_V2.zip | 28877 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=ShutUp.rar | ShutUp.rar | 3789 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=silentadmin.zip | silentadmin.zip | 1741 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=stealthadmin.zip | stealthadmin.zip | 2253 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=TransparentSkin.zip | TransparentSkin.zip | 1946 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=ucontrol_b4.zip | ucontrol_b4.zip | 1153434 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=UTGLv01b-UTGLAv03d.zip | UTGLv01b-UTGLAv03d.zip | 71782 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=UTPolicies02.zip | UTPolicies02.zip | 50893 | 
+  file http://localhost/utfiles/index.php?dir=Admin%2F&file=ZSZNameLock.rar | ZSZNameLock.rar | 2970 | 

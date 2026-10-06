@@ -72,3 +72,40 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   file http://localhost:8086/listing/ubuntu-14.04.5-server-i386.metalink | ubuntu-14.04.5-server-i386.metalink | 44032 | Ubuntu 14.04.5 LTS (Trusty Tahr)
   file http://localhost:8086/listing/ubuntu-14.04.5-server-i386.template | ubuntu-14.04.5-server-i386.template | 67108864 | Server install image for 32-bit PC (i386) computers (<a href="http://atterer.org/jigdo">jigdo</a> template)
   file http://localhost:8086/listing/wubi.exe | wubi.exe | 2516582 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost/MD5SUMS | MD5SUMS | 307 | 
+  file http://localhost/MD5SUMS-metalink | MD5SUMS-metalink | 568 | 
+  file http://localhost/MD5SUMS-metalink.gpg | MD5SUMS-metalink.gpg | 933 | 
+  file http://localhost/MD5SUMS.gpg | MD5SUMS.gpg | 933 | 
+  file http://localhost/SHA1SUMS | SHA1SUMS | 347 | 
+  file http://localhost/SHA1SUMS.gpg | SHA1SUMS.gpg | 933 | 
+  file http://localhost/SHA256SUMS | SHA256SUMS | 467 | 
+  file http://localhost/SHA256SUMS.gpg | SHA256SUMS.gpg | 933 | 
+  file http://localhost/ubuntu-14.04.5-desktop-amd64.iso | ubuntu-14.04.5-desktop-amd64.iso | 1073741824 | Desktop image for 64-bit PC (AMD64) computers (standard download)
+  file http://localhost/ubuntu-14.04.5-desktop-amd64.iso.torrent | ubuntu-14.04.5-desktop-amd64.iso.torrent | 41984 | Desktop image for 64-bit PC (AMD64) computers (<a href="https://help.ubuntu.com/community/BitTorrent">BitTorrent</a> download)
+  file http://localhost/ubuntu-14.04.5-desktop-amd64.iso.zsync | ubuntu-14.04.5-desktop-amd64.iso.zsync | 2202010 | Desktop image for 64-bit PC (AMD64) computers (<a href="http://zsync.moria.org.uk/">zsync</a> metafile)
+  file http://localhost/ubuntu-14.04.5-desktop-amd64.list | ubuntu-14.04.5-desktop-amd64.list | 4608 | Desktop image for 64-bit PC (AMD64) computers (file listing)
+  file http://localhost/ubuntu-14.04.5-desktop-amd64.manifest | ubuntu-14.04.5-desktop-amd64.manifest | 61440 | Desktop image for 64-bit PC (AMD64) computers (contents of live filesystem)
+  file http://localhost/ubuntu-14.04.5-desktop-amd64.metalink | ubuntu-14.04.5-desktop-amd64.metalink | 45056 | Ubuntu 14.04.5 LTS (Trusty Tahr)
+  file http://localhost/ubuntu-14.04.5-desktop-i386.iso | ubuntu-14.04.5-desktop-i386.iso | 1073741824 | Desktop image for 32-bit PC (i386) computers (standard download)
+  file http://localhost/ubuntu-14.04.5-desktop-i386.iso.torrent | ubuntu-14.04.5-desktop-i386.iso.torrent | 43008 | Desktop image for 32-bit PC (i386) computers (<a href="https://help.ubuntu.com/community/BitTorrent">BitTorrent</a> download)
+  file http://localhost/ubuntu-14.04.5-desktop-i386.iso.zsync | ubuntu-14.04.5-desktop-i386.iso.zsync | 2202010 | Desktop image for 32-bit PC (i386) computers (<a href="http://zsync.moria.org.uk/">zsync</a> metafile)
+  file http://localhost/ubuntu-14.04.5-desktop-i386.list | ubuntu-14.04.5-desktop-i386.list | 3891 | Desktop image for 32-bit PC (i386) computers (file listing)
+  file http://localhost/ubuntu-14.04.5-desktop-i386.manifest | ubuntu-14.04.5-desktop-i386.manifest | 60416 | Desktop image for 32-bit PC (i386) computers (contents of live filesystem)
+  file http://localhost/ubuntu-14.04.5-desktop-i386.metalink | ubuntu-14.04.5-desktop-i386.metalink | 45056 | Ubuntu 14.04.5 LTS (Trusty Tahr)
+  file http://localhost/ubuntu-14.04.5-server-amd64.iso | ubuntu-14.04.5-server-amd64.iso | 649068544 | Server install image for 64-bit PC (AMD64) computers (standard download)
+  file http://localhost/ubuntu-14.04.5-server-amd64.iso.torrent | ubuntu-14.04.5-server-amd64.iso.torrent | 25600 | Server install image for 64-bit PC (AMD64) computers (<a href="https://help.ubuntu.com/community/BitTorrent">BitTorrent</a> download)
+  file http://localhost/ubuntu-14.04.5-server-amd64.iso.zsync | ubuntu-14.04.5-server-amd64.iso.zsync | 1258291 | Server install image for 64-bit PC (AMD64) computers (<a href="http://zsync.moria.org.uk/">zsync</a> metafile)
+  file http://localhost/ubuntu-14.04.5-server-amd64.jigdo | ubuntu-14.04.5-server-amd64.jigdo | 130048 | Server install image for 64-bit PC (AMD64) computers (<a href="http://atterer.org/jigdo">jigdo</a> download)
+  file http://localhost/ubuntu-14.04.5-server-amd64.list | ubuntu-14.04.5-server-amd64.list | 94208 | Server install image for 64-bit PC (AMD64) computers (file listing)
+  file http://localhost/ubuntu-14.04.5-server-amd64.metalink | ubuntu-14.04.5-server-amd64.metalink | 45056 | Ubuntu 14.04.5 LTS (Trusty Tahr)
+  file http://localhost/ubuntu-14.04.5-server-amd64.template | ubuntu-14.04.5-server-amd64.template | 71303168 | Server install image for 64-bit PC (AMD64) computers (<a href="http://atterer.org/jigdo">jigdo</a> template)
+  file http://localhost/ubuntu-14.04.5-server-i386.iso | ubuntu-14.04.5-server-i386.iso | 623902720 | Server install image for 32-bit PC (i386) computers (standard download)
+  file http://localhost/ubuntu-14.04.5-server-i386.iso.torrent | ubuntu-14.04.5-server-i386.iso.torrent | 24576 | Server install image for 32-bit PC (i386) computers (<a href="https://help.ubuntu.com/community/BitTorrent">BitTorrent</a> download)
+  file http://localhost/ubuntu-14.04.5-server-i386.iso.zsync | ubuntu-14.04.5-server-i386.iso.zsync | 1258291 | Server install image for 32-bit PC (i386) computers (<a href="http://zsync.moria.org.uk/">zsync</a> metafile)
+  file http://localhost/ubuntu-14.04.5-server-i386.jigdo | ubuntu-14.04.5-server-i386.jigdo | 126976 | Server install image for 32-bit PC (i386) computers (<a href="http://atterer.org/jigdo">jigdo</a> download)
+  file http://localhost/ubuntu-14.04.5-server-i386.list | ubuntu-14.04.5-server-i386.list | 91136 | Server install image for 32-bit PC (i386) computers (file listing)
+  file http://localhost/ubuntu-14.04.5-server-i386.metalink | ubuntu-14.04.5-server-i386.metalink | 44032 | Ubuntu 14.04.5 LTS (Trusty Tahr)
+  file http://localhost/ubuntu-14.04.5-server-i386.template | ubuntu-14.04.5-server-i386.template | 67108864 | Server install image for 32-bit PC (i386) computers (<a href="http://atterer.org/jigdo">jigdo</a> template)
+  file http://localhost/wubi.exe | wubi.exe | 2516582 | 

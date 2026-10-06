@@ -1,6 +1,4 @@
 using Microsoft.Data.Sqlite;
-using OpenDirectoryDownloader.Shared;
-using OpenDirectoryDownloader.Shared.Models;
 using OpenDirectoryDownloader.Storage;
 using Xunit;
 

@@ -1178,3 +1178,14 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseListItemsDirec
   file http://localhost:8086/listing/ussr-white-hat.jpg | ussr-white-hat.jpg |  | 
   file http://localhost:8086/listing/west-wall.jpg | west-wall.jpg |  | 
   file http://localhost:8086/listing/wmc-no-swords.jpg | wmc-no-swords.jpg |  | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseLinksDirectoryListing error=False ok=True
+  file http://www.diggerhistory.info/pages-reference/one-million.htm | one-million.htm |  | 
+  file http://www.diggerhistory.info/pages-tributes/special-days.htm | special-days.htm |  | 
+  file http://www.diggerhistory.info/pages-help/site_search.htm | site_search.htm |  | 
+  file http://www.diggerhistory.info/00-pages-top-level/master-index.htm | master-index.htm |  | 
+  file http://www.diggerhistory.info/pages-help/newspage.htm | newspage.htm |  | 
+  file http://www.diggerhistory.info/sound/lastpost.mid | lastpost.mid |  | 
+  file http://www.diggerhistory.info/sound/ode[1].wav | ode[1].wav |  | 
+  file http://www.diggerhistory.info/pages-help/faq.htm | faq.htm |  | 
+  file http://www.diggerhistory.info/pages-help/newspage.htm | newspage.htm |  | 

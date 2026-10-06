@@ -27,3 +27,18 @@ url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=Fal
   file http://localhost:8086/listing/- multivocaal/potterrap.pdf | potterrap.pdf | 91411 | 
   file http://localhost:8086/listing/- multivocaal/stobaeus-hochzeitlied-satbsatb.pdf | stobaeus-hochzeitlied-satbsatb.pdf | 95652 | 
   file http://localhost:8086/listing/- multivocaal/Vluchten kan niet meer.pdf | Vluchten kan niet meer.pdf | 30672 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/scores/index.php?path=-+multivocaal%2Falt-tenor-bas/ | alt-tenor-bas |  | ParseSnifDirectoryListing
+  file http://localhost/- multivocaal/bangles-manicmonday.pdf | bangles-manicmonday.pdf | 102594 | 
+  file http://localhost/- multivocaal/clemens-fortuyne-satb.pdf | clemens-fortuyne-satb.pdf | 41790 | 
+  file http://localhost/- multivocaal/dowland-flowmytears-satb.pdf | dowland-flowmytears-satb.pdf | 103013 | 
+  file http://localhost/- multivocaal/downintherivertopray-ing.pdf | downintherivertopray-ing.pdf | 112682 | 
+  file http://localhost/- multivocaal/elefantenkanon.pdf | elefantenkanon.pdf | 27807 | 
+  file http://localhost/- multivocaal/fire-ttbb.pdf | fire-ttbb.pdf | 60728 | 
+  file http://localhost/- multivocaal/hellogoodbye-ssatb.pdf | hellogoodbye-ssatb.pdf | 59484 | 
+  file http://localhost/- multivocaal/i_got_rhythm-satb.pdf | i_got_rhythm-satb.pdf | 131220 | 
+  file http://localhost/- multivocaal/natte_gruk-satb.pdf | natte_gruk-satb.pdf | 61794 | 
+  file http://localhost/- multivocaal/potterrap.pdf | potterrap.pdf | 91411 | 
+  file http://localhost/- multivocaal/stobaeus-hochzeitlied-satbsatb.pdf | stobaeus-hochzeitlied-satbsatb.pdf | 95652 | 
+  file http://localhost/- multivocaal/Vluchten kan niet meer.pdf | Vluchten kan niet meer.pdf | 30672 | 

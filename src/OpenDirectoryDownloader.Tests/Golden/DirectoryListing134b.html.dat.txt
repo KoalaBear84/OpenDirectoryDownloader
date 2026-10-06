@@ -3,3 +3,6 @@ url=http://localhost/ name=ROOT desc= parser= error=False ok=True
   dir http://localhost/ODTest/ | ODTest |  | ParseTablesDirectoryListing
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  dir http://localhost/ODTest/ | ODTest |  | ParseTablesDirectoryListing

@@ -14,3 +14,11 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/discussions-190107.osm.bz2.md5 | discussions-190107.osm.bz2.md5 | 102 | 
   file http://localhost:8086/listing/planet-190107.osm.bz2 | planet-190107.osm.bz2 | 78597901517 | 
   file http://localhost:8086/listing/planet-190107.osm.bz2.md5 | planet-190107.osm.bz2.md5 | 102 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/changesets-190107.osm.bz2 | changesets-190107.osm.bz2 | 2684354560 | 
+  file http://localhost/changesets-190107.osm.bz2.md5 | changesets-190107.osm.bz2.md5 | 102 | 
+  file http://localhost/discussions-190107.osm.bz2 | discussions-190107.osm.bz2 | 2684354560 | 
+  file http://localhost/discussions-190107.osm.bz2.md5 | discussions-190107.osm.bz2.md5 | 102 | 
+  file http://localhost/planet-190107.osm.bz2 | planet-190107.osm.bz2 | 78597901517 | 
+  file http://localhost/planet-190107.osm.bz2.md5 | planet-190107.osm.bz2.md5 | 102 | 

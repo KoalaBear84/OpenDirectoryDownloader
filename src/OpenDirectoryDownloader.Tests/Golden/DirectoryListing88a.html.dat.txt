@@ -52,3 +52,30 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/Radio.pls | Radio.pls | 3277 | 
   file http://localhost:8086/listing/xmplay.pls | xmplay.pls | 2970 | 
   file http://localhost:8086/listing/yuve.m3u | yuve.m3u | 69 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/A/ | A |  | ParseTablesDirectoryListing
+  dir http://localhost/B/ | B |  | ParseTablesDirectoryListing
+  dir http://localhost/C/ | C |  | ParseTablesDirectoryListing
+  dir http://localhost/D/ | D |  | ParseTablesDirectoryListing
+  dir http://localhost/E/ | E |  | ParseTablesDirectoryListing
+  dir http://localhost/F/ | F |  | ParseTablesDirectoryListing
+  dir http://localhost/G/ | G |  | ParseTablesDirectoryListing
+  dir http://localhost/H/ | H |  | ParseTablesDirectoryListing
+  dir http://localhost/I/ | I |  | ParseTablesDirectoryListing
+  dir http://localhost/J/ | J |  | ParseTablesDirectoryListing
+  dir http://localhost/K/ | K |  | ParseTablesDirectoryListing
+  dir http://localhost/L/ | L |  | ParseTablesDirectoryListing
+  dir http://localhost/M/ | M |  | ParseTablesDirectoryListing
+  dir http://localhost/N/ | N |  | ParseTablesDirectoryListing
+  dir http://localhost/O/ | O |  | ParseTablesDirectoryListing
+  dir http://localhost/P/ | P |  | ParseTablesDirectoryListing
+  dir http://localhost/R/ | R |  | ParseTablesDirectoryListing
+  dir http://localhost/S/ | S |  | ParseTablesDirectoryListing
+  dir http://localhost/T/ | T |  | ParseTablesDirectoryListing
+  dir http://localhost/U/ | U |  | ParseTablesDirectoryListing
+  dir http://localhost/V/ | V |  | ParseTablesDirectoryListing
+  dir http://localhost/Z/ | Z |  | ParseTablesDirectoryListing
+  file http://localhost/Radio.pls | Radio.pls | 3277 | 
+  file http://localhost/xmplay.pls | xmplay.pls | 2970 | 
+  file http://localhost/yuve.m3u | yuve.m3u | 69 | 

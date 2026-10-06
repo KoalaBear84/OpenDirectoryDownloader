@@ -32,3 +32,35 @@ url=http://localhost/ name=ROOT desc= parser= error=False ok=False
   file http://localhost/A:/index.html | index.html | 24 | 
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=False
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/A:/upload10 | upload10 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload11 | upload11 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload12 | upload12 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload13 | upload13 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload14 | upload14 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload15 | upload15 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload16 | upload16 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload17 | upload17 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload18 | upload18 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload19 | upload19 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload20 | upload20 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload21 | upload21 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload22 | upload22 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload23 | upload23 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload24 | upload24 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload25 | upload25 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload26 | upload26 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload27 | upload27 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload28 | upload28 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload3 | upload3 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload4 | upload4 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload5 | upload5 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload6 | upload6 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload7 | upload7 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload8 | upload8 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload9 | upload9 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload1 | upload1 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload2 | upload2 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/A:/upload | upload |  | ParseMaterialDesignListItemsDirectoryListing
+  file http://localhost/A:/index.html | index.html | 24 | 

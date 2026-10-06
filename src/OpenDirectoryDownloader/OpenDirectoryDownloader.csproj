@@ -58,6 +58,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OpenDirectoryDownloader.GoogleDrive\OpenDirectoryDownloader.GoogleDrive.csproj" />
-    <ProjectReference Include="..\OpenDirectoryDownloader.Shared\OpenDirectoryDownloader.Shared.csproj" />
   </ItemGroup>
 </Project>

@@ -22,3 +22,15 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/warsp251.zip | warsp251.zip | 797442 | 
   file http://localhost:8086/listing/z80-305.zip | z80-305.zip | 249904 | 
   file http://localhost:8086/listing/z80.zip | z80.zip | 1256668 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/SPECTACULATOR80.ZIP | SPECTACULATOR80.ZIP | 4789380 | 
+  file http://localhost/SPIN061.zip | SPIN061.zip | 1431568 | 
+  file http://localhost/SpecEmu28-b101009.zip | SpecEmu28-b101009.zip | 475196 | 
+  file http://localhost/ZXSpin_07i.zip | ZXSpin_07i.zip | 1882729 | 
+  file http://localhost/amic_emu.jar | amic_emu.jar | 56153 | 
+  file http://localhost/fuse-hc.zip | fuse-hc.zip | 4125342 | 
+  file http://localhost/fuse-hc2000-hacks.7z | fuse-hc2000-hacks.7z | 3243455 | 
+  file http://localhost/warsp251.zip | warsp251.zip | 797442 | 
+  file http://localhost/z80-305.zip | z80-305.zip | 249904 | 
+  file http://localhost/z80.zip | z80.zip | 1256668 | 

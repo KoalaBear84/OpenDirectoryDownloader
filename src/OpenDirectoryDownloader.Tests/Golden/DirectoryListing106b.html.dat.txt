@@ -6,3 +6,9 @@ url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=Fals
   file http://localhost/srv1/Black Hat/2018 USA/2018 USA.part4.rar | 2018 USA.part4.rar | 2992168377 | 
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost/srv1/Black Hat/2018 USA/2018 USA.part1.rar | 2018 USA.part1.rar | 3221225472 | 
+  file http://localhost/srv1/Black Hat/2018 USA/2018 USA.part2.rar | 2018 USA.part2.rar | 3221225472 | 
+  file http://localhost/srv1/Black Hat/2018 USA/2018 USA.part3.rar | 2018 USA.part3.rar | 3221225472 | 
+  file http://localhost/srv1/Black Hat/2018 USA/2018 USA.part4.rar | 2018 USA.part4.rar | 2992168377 | 

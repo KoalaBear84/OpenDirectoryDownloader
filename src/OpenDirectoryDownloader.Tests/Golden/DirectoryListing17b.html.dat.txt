@@ -26,3 +26,17 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/2673 - Dragon Quest IV - The Chapters of the Chosen (U).nds | 2673 - Dragon Quest IV - The Chapters of the Chosen (U).nds | 109785907 | 
   file http://localhost:8086/listing/3055 - Chrono Trigger (U)(FIXED)(Xenophobia).zip | 3055 - Chrono Trigger (U)(FIXED)(Xenophobia).zip | 63438848 | 
   file http://localhost:8086/listing/Finalfantasy4.nds | Finalfantasy4.nds | 129813709 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/0121 - Castlevania - Dawn of Sorrow (U).nds | 0121 - Castlevania - Dawn of Sorrow (U).nds | 49702502 | 
+  file http://localhost/0142 - Metroid Prime Pinball (U).nds | 0142 - Metroid Prime Pinball (U).nds | 33344717 | 
+  file http://localhost/0367 - Metroid Prime Hunters (U).nds | 0367 - Metroid Prime Hunters (U).nds | 66060288 | 
+  file http://localhost/0735 - Castlevania pos.nds | 0735 - Castlevania pos.nds | 47081062 | 
+  file http://localhost/1964 - Advance Wars - Days of Ruin.nds | 1964 - Advance Wars - Days of Ruin.nds | 53267661 | 
+  file http://localhost/2252 - The World Ends With You.nds | 2252 - The World Ends With You.nds | 127401984 | 
+  file http://localhost/2384 - Final Fantasy Tactics A2 Grimoire of the Rift (U).nds | 2384 - Final Fantasy Tactics A2 Grimoire of the Rift (U).nds | 128869990 | 
+  file http://localhost/2595 - N%2b (US).nds | 2595 - N+ (US).nds | 7969178 | 
+  file http://localhost/2609 - Harvest Moon DS - Island of Happiness (US).nds | 2609 - Harvest Moon DS - Island of Happiness (US).nds | 47605350 | 
+  file http://localhost/2673 - Dragon Quest IV - The Chapters of the Chosen (U).nds | 2673 - Dragon Quest IV - The Chapters of the Chosen (U).nds | 109785907 | 
+  file http://localhost/3055 - Chrono Trigger (U)(FIXED)(Xenophobia).zip | 3055 - Chrono Trigger (U)(FIXED)(Xenophobia).zip | 63438848 | 
+  file http://localhost/Finalfantasy4.nds | Finalfantasy4.nds | 129813709 | 

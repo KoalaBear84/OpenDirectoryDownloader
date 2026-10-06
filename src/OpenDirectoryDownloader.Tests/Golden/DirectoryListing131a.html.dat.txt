@@ -16,3 +16,12 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   dir http://localhost:8086/listing/software/ | software |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/windows/ | windows |  | ParseTablesDirectoryListing
   file http://localhost:8086/listing/softwarelisting.xlsx | softwarelisting.xlsx | 19251 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/drivers/ | drivers |  | ParseTablesDirectoryListing
+  dir http://localhost/ms-dos/ | ms-dos |  | ParseTablesDirectoryListing
+  dir http://localhost/multipurpose/ | multipurpose |  | ParseTablesDirectoryListing
+  dir http://localhost/oshalved/ | oshalved |  | ParseTablesDirectoryListing
+  dir http://localhost/software/ | software |  | ParseTablesDirectoryListing
+  dir http://localhost/windows/ | windows |  | ParseTablesDirectoryListing
+  file http://localhost/softwarelisting.xlsx | softwarelisting.xlsx | 19251 | 

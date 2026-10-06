@@ -16,3 +16,12 @@ url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=Fal
   file http://localhost:8086/listing/∌⌀②▄▣☂✄⠅⿴〄.test | ∌⌀②▄▣☂✄⠅⿴〄.test | 18637 | 
   file http://localhost:8086/listing/asciifilename.txt | asciifilename.txt | 0 | 
   file http://localhost:8086/listing/index.php | index.php | 1331 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/¡¢£¤¥ăĄƃɔʵ̆΅ЄԆԷ اܑऌঋਕએଓஒఎಐഎඐทພ༩ဒႱᄎሓᎷᐖᚖᚸᜃភᠮℕⅨ↦/ | ¡¢£¤¥ăĄƃɔʵ̆΅ЄԆԷ اܑऌঋਕએଓஒఎಐഎඐทພ༩ဒႱᄎሓᎷᐖᚖᚸᜃភᠮℕⅨ↦ |  | ParseHfsListing
+  dir http://localhost/EmptyFolder/ | EmptyFolder |  | ParseHfsListing
+  dir http://localhost/resources/ | resources |  | ParseHfsListing
+  dir http://localhost/Test/ | Test |  | ParseHfsListing
+  file http://localhost/∌⌀②▄▣☂✄⠅⿴〄.test | ∌⌀②▄▣☂✄⠅⿴〄.test | 18637 | 
+  file http://localhost/asciifilename.txt | asciifilename.txt | 0 | 
+  file http://localhost/index.php | index.php | 1331 | 

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Turns a page (or a site's API) into a WebDirectory: the ordered HTML listing pipeline, the generic listing parsers and the site parsers -->
+
+  <ItemGroup>
+    <PackageReference Include="AngleSharp" />
+    <PackageReference Include="Jint" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Polly.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenDirectoryDownloader.Core\OpenDirectoryDownloader.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="OpenDirectoryDownloader.Tests" />
+  </ItemGroup>
+
+</Project>

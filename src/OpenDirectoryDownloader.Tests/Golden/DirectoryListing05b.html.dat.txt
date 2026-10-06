@@ -24,3 +24,16 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseListItemsDirec
   file http://localhost:8086/listing/Pokemon Ranger.zip | Pokemon Ranger.zip |  | 
   file http://localhost:8086/listing/Pokemon Trozei.zip | Pokemon Trozei.zip |  | 
   file http://localhost:8086/listing/Readme - How to use.txt | Readme - How to use.txt |  | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseListItemsDirectoryListing error=False ok=True
+  dir http://localhost/Nintendo DS/ | Nintendo DS |  | ParseListItemsDirectoryListing
+  dir http://localhost/Pokemon Dash/ | Pokemon Dash |  | ParseListItemsDirectoryListing
+  dir http://localhost/Pokemon Mystery Dungeon Blue/ | Pokemon Mystery Dungeon Blue |  | ParseListItemsDirectoryListing
+  dir http://localhost/Pokemon Pearl/ | Pokemon Pearl |  | ParseListItemsDirectoryListing
+  file http://localhost/Pokemon Dash.zip | Pokemon Dash.zip |  | 
+  file http://localhost/Pokemon Diamond.rar | Pokemon Diamond.rar |  | 
+  file http://localhost/Pokemon Mystery Dungeon Blue.zip | Pokemon Mystery Dungeon Blue.zip |  | 
+  file http://localhost/Pokemon Pearl.zip | Pokemon Pearl.zip |  | 
+  file http://localhost/Pokemon Ranger.zip | Pokemon Ranger.zip |  | 
+  file http://localhost/Pokemon Trozei.zip | Pokemon Trozei.zip |  | 
+  file http://localhost/Readme - How to use.txt | Readme - How to use.txt |  | 

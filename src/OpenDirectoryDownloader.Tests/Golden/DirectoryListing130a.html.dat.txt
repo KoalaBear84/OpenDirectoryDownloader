@@ -628,3 +628,318 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   file http://localhost:8086/listing/Interstellar.2014.TRUEFRENCH.BRRip.x264.AC3-SVR.mkv | Interstellar.2014.TRUEFRENCH.BRRip.x264.AC3-SVR.mkv | 1437711157 | 
   file http://localhost:8086/listing/Les.Maitres.Du.Temps.1981.FRENCH.DVDRiP.x264.AAC-LM23.mp4 | Les.Maitres.Du.Temps.1981.FRENCH.DVDRiP.x264.AAC-LM23.mp4 | 733911411 | 
   file http://localhost:8086/listing/Windows 10 LTSC v1809 3in1 Fr x64 %2812 Avril 2019%29.iso | Windows 10 LTSC v1809 3in1 Fr x64 (12 Avril 2019).iso | 3544322048 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/30.Rock.iNTEGRALE.FRENCH.WEB.H264-FRATERNiTY | 30.Rock.iNTEGRALE.FRENCH.WEB.H264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/Albator.78.REMASTERED.MULTI.DVDRiP.x264-BOOLZ | Albator.78.REMASTERED.MULTI.DVDRiP.x264-BOOLZ |  | RegexParser8
+  dir http://localhost/Albator.84.COMPLETE.MULTi.DVDRiP.x264-NoFear | Albator.84.COMPLETE.MULTi.DVDRiP.x264-NoFear |  | RegexParser8
+  dir http://localhost/Albator.Corsaire.De.L.Espace.2013.TRUEFRENCH.BRRip.x264-GHZ | Albator.Corsaire.De.L.Espace.2013.TRUEFRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Alexandre.Astier.Que.Ma.Joie.Demeure.FRENCH.720p.BluRay.x264-FiDELiO %28xthor%29 | Alexandre.Astier.Que.Ma.Joie.Demeure.FRENCH.720p.BluRay.x264-FiDELiO (xthor) |  | RegexParser8
+  dir http://localhost/American Dad.S01.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | American Dad.S01.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/American Dad.S02.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | American Dad.S02.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/American Dad.S03.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | American Dad.S03.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/American Dad.S04.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | American Dad.S04.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/American Dad.S05.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | American Dad.S05.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/American Dad.S06.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | American Dad.S06.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/American Dad.S07.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | American Dad.S07.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/American Dad.S08.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | American Dad.S08.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/American Dad.S09.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | American Dad.S09.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/American Dad.S11.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | American Dad.S11.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/American Dad.S12.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | American Dad.S12.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/American Dad.S13.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | American Dad.S13.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/American.Dad.S10.MULTi.DVDRip.x264-DEMON | American.Dad.S10.MULTi.DVDRip.x264-DEMON |  | RegexParser8
+  dir http://localhost/Arcane.League.of.Legends.S01.FRENCH.WEB.x264-STRINGERBELL | Arcane.League.of.Legends.S01.FRENCH.WEB.x264-STRINGERBELL |  | RegexParser8
+  dir http://localhost/Archer.2009.S01.FRENCH.720p.WEBRiP.x264-AZR | Archer.2009.S01.FRENCH.720p.WEBRiP.x264-AZR |  | RegexParser8
+  dir http://localhost/Archer.2009.S02.FRENCH.720p.WEBRiP.x264-AZR | Archer.2009.S02.FRENCH.720p.WEBRiP.x264-AZR |  | RegexParser8
+  dir http://localhost/Archer.2009.S03.FRENCH.720p.WEBRiP.x264-AZR | Archer.2009.S03.FRENCH.720p.WEBRiP.x264-AZR |  | RegexParser8
+  dir http://localhost/Archer.2009.S04.FRENCH.720p.WEBRip.x264-AMB3R | Archer.2009.S04.FRENCH.720p.WEBRip.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Archer.2009.S05.FRENCH.720p.WEBRip.x264-AMB3R | Archer.2009.S05.FRENCH.720p.WEBRip.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Archer.2009.S06.FRENCH.720p.WEBRip.x264-AMB3R | Archer.2009.S06.FRENCH.720p.WEBRip.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Archer.2009.S07.FRENCH.720p.WEB-DL.DD5.1.H264-LiBERTY | Archer.2009.S07.FRENCH.720p.WEB-DL.DD5.1.H264-LiBERTY |  | RegexParser8
+  dir http://localhost/Archer.2009.S08.FRENCH.720p.WEBRip.x264-AMB3R | Archer.2009.S08.FRENCH.720p.WEBRip.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Archer.2009.S09.REPACK.FRENCH.720p.AMZN.WEB-DL.DD5.1.H264-FRATERNiTY | Archer.2009.S09.REPACK.FRENCH.720p.AMZN.WEB-DL.DD5.1.H264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/Arrested.Development.S01.FRENCH.720p.WEB.x264-CiELOS | Arrested.Development.S01.FRENCH.720p.WEB.x264-CiELOS |  | RegexParser8
+  dir http://localhost/Arrested.Development.S02.FRENCH.720p.WEB.x264-CiELOS | Arrested.Development.S02.FRENCH.720p.WEB.x264-CiELOS |  | RegexParser8
+  dir http://localhost/Arrested.Development.S03.FRENCH.720p.WEB.x264-CiELOS | Arrested.Development.S03.FRENCH.720p.WEB.x264-CiELOS |  | RegexParser8
+  dir http://localhost/Arrested.Development.S04.REMiX.FRENCH.720p.WEB.x264-CiELOS | Arrested.Development.S04.REMiX.FRENCH.720p.WEB.x264-CiELOS |  | RegexParser8
+  dir http://localhost/Asterix.Et.Obelix.Mission.Cleopatre.2002.FRENCH.BDRip.x264-DELiCiOUS | Asterix.Et.Obelix.Mission.Cleopatre.2002.FRENCH.BDRip.x264-DELiCiOUS |  | RegexParser8
+  dir http://localhost/Asterix.Le.Secret.de.la.Potion.Magique.2018.FRENCH.720p.BluRay.x264-Ulysse | Asterix.Le.Secret.de.la.Potion.Magique.2018.FRENCH.720p.BluRay.x264-Ulysse |  | RegexParser8
+  dir http://localhost/Atlantis.2013.S01.FRENCH.AHDTV.x264-AZR | Atlantis.2013.S01.FRENCH.AHDTV.x264-AZR |  | RegexParser8
+  dir http://localhost/Atypical.S01.FRENCH.720p.WEBRip.x264-AMB3R | Atypical.S01.FRENCH.720p.WEBRip.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Atypical.S02.FRENCH.WEBRip.x264-AMB3R | Atypical.S02.FRENCH.WEBRip.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Atypical.S03.FRENCH.WEBRiP.x264-atypical | Atypical.S03.FRENCH.WEBRiP.x264-atypical |  | RegexParser8
+  dir http://localhost/Atypical.S03E01.FRENCH.WEBRiP.x264-atypical | Atypical.S03E01.FRENCH.WEBRiP.x264-atypical |  | RegexParser8
+  dir http://localhost/Atypical.S04.FRENCH.WEB.x264-STRINGERBELL | Atypical.S04.FRENCH.WEB.x264-STRINGERBELL |  | RegexParser8
+  dir http://localhost/Au.Service.De.La.France.S01.FRENCH.720p.BluRay.x264-AiRTV %28xthor%29 | Au.Service.De.La.France.S01.FRENCH.720p.BluRay.x264-AiRTV (xthor) |  | RegexParser8
+  dir http://localhost/Au.Service.De.La.France.S02.FRENCH.720p.WEB.H264-CiELOS | Au.Service.De.La.France.S02.FRENCH.720p.WEB.H264-CiELOS |  | RegexParser8
+  dir http://localhost/Bernie.1996.FRENCH.1080p.BluRay.x264-FHD | Bernie.1996.FRENCH.1080p.BluRay.x264-FHD |  | RegexParser8
+  dir http://localhost/Bernie.1996.FRENCH.720p.BluRay.x264-FHD %28xthor%29 | Bernie.1996.FRENCH.720p.BluRay.x264-FHD (xthor) |  | RegexParser8
+  dir http://localhost/Black.Mirror.Christmas.Special.2018.Bandersnatch.FRENCH.WEB.x264-FRATERNiTY | Black.Mirror.Christmas.Special.2018.Bandersnatch.FRENCH.WEB.x264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/Black.Mirror.S03.FRENCH.720p.NF.WEBRip.DD5.1.x264-FRATERNiTY | Black.Mirror.S03.FRENCH.720p.NF.WEBRip.DD5.1.x264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/Black.Mirror.S04.FRENCH.720p.WEBRip.DD5.1.x264-FRATERNiTY | Black.Mirror.S04.FRENCH.720p.WEBRip.DD5.1.x264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/Black.Mirror.S05.MULTi.720p.NF.WEB-DL.DD5.1.x264-AXWELL | Black.Mirror.S05.MULTi.720p.NF.WEB-DL.DD5.1.x264-AXWELL |  | RegexParser8
+  dir http://localhost/Breaking.Bad.COMPLETE.FRENCH.BRRip.x264-CHiLL | Breaking.Bad.COMPLETE.FRENCH.BRRip.x264-CHiLL |  | RegexParser8
+  dir http://localhost/Brooklyn.Nine-Nine.S01.FRENCH.DVDRip.x264-SRiZ | Brooklyn.Nine-Nine.S01.FRENCH.DVDRip.x264-SRiZ |  | RegexParser8
+  dir http://localhost/Brooklyn.Nine-Nine.S02.FRENCH.LD.WEB-DL.x264-LiBERTY | Brooklyn.Nine-Nine.S02.FRENCH.LD.WEB-DL.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Brooklyn.Nine-Nine.S03.FRENCH.LD.WEB-DL.x264-LiBERTY | Brooklyn.Nine-Nine.S03.FRENCH.LD.WEB-DL.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Brooklyn.Nine-Nine.S04.FRENCH.HDTV.x264-SCENE | Brooklyn.Nine-Nine.S04.FRENCH.HDTV.x264-SCENE |  | RegexParser8
+  dir http://localhost/Brooklyn.Nine-Nine.S05.REPACK.FRENCH.LD.AMZN.WEB-DL.x264-FRATERNiTY | Brooklyn.Nine-Nine.S05.REPACK.FRENCH.LD.AMZN.WEB-DL.x264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/Brooklyn.Nine-Nine.S06.MULTi.720p.WEB.H264-CiELOS | Brooklyn.Nine-Nine.S06.MULTi.720p.WEB.H264-CiELOS |  | RegexParser8
+  dir http://localhost/Brooklyn.Nine-Nine.S07.FRENCH.LD.AMZN.WEB-DL.x264-FRATERNiTY | Brooklyn.Nine-Nine.S07.FRENCH.LD.AMZN.WEB-DL.x264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/Brooklyn.Nine-Nine.S08.FRENCH.WEBRip.x264-CHiLL | Brooklyn.Nine-Nine.S08.FRENCH.WEBRip.x264-CHiLL |  | RegexParser8
+  dir http://localhost/Children.Of.Dune.2003.MULTi.BRRip.x264.AAC-LM23 | Children.Of.Dune.2003.MULTi.BRRip.x264.AAC-LM23 |  | RegexParser8
+  dir http://localhost/City.Hunter.iNTEGRALE.MULTi.DVDRip.x264-MANGACiTY | City.Hunter.iNTEGRALE.MULTi.DVDRip.x264-MANGACiTY |  | RegexParser8
+  dir http://localhost/Clerks.1994.FRENCH.BRRip.x264-GHZ | Clerks.1994.FRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Clerks.II.2006.FRENCH.BRRip.x264-GHZ | Clerks.II.2006.FRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Coco.2017.TRUEFRENCH.720p.BluRay.x264-LOST | Coco.2017.TRUEFRENCH.720p.BluRay.x264-LOST |  | RegexParser8
+  dir http://localhost/Community.S01.FRENCH.WEBRip.x264-CHiLL | Community.S01.FRENCH.WEBRip.x264-CHiLL |  | RegexParser8
+  dir http://localhost/Community.S02.FRENCH.WEBRip.x264-CHiLL | Community.S02.FRENCH.WEBRip.x264-CHiLL |  | RegexParser8
+  dir http://localhost/Community.S03.FRENCH.LD.DVDRip.x264-MiND | Community.S03.FRENCH.LD.DVDRip.x264-MiND |  | RegexParser8
+  dir http://localhost/Community.S04.FRENCH.720p.WEB.H264-CiELOS | Community.S04.FRENCH.720p.WEB.H264-CiELOS |  | RegexParser8
+  dir http://localhost/Community.S05.FRENCH.WEB.H264-CiELOS | Community.S05.FRENCH.WEB.H264-CiELOS |  | RegexParser8
+  dir http://localhost/Community.S06.FRENCH.720p.WEB.H264-CiELOS | Community.S06.FRENCH.720p.WEB.H264-CiELOS |  | RegexParser8
+  dir http://localhost/Continuum.S01.FRENCH.DVDRip.x264-JMT | Continuum.S01.FRENCH.DVDRip.x264-JMT |  | RegexParser8
+  dir http://localhost/Continuum.S02.FRENCH.DVDRip.x264-MiND | Continuum.S02.FRENCH.DVDRip.x264-MiND |  | RegexParser8
+  dir http://localhost/Continuum.S03.FRENCH.720p.HDTV.x264-LiBERTY | Continuum.S03.FRENCH.720p.HDTV.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Continuum.S04.FRENCH.1080i.HDTV.H264-LiBERTY | Continuum.S04.FRENCH.1080i.HDTV.H264-LiBERTY |  | RegexParser8
+  dir http://localhost/Dark.Matter.S01.FRENCH.LD.WEB-DL.x264-LiBERTY | Dark.Matter.S01.FRENCH.LD.WEB-DL.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Dark.Matter.S02.FRENCH.LD.WEB-DL.x264-LiBERTY | Dark.Matter.S02.FRENCH.LD.WEB-DL.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Dark.Matter.S03.FRENCH.HDTV.x264-MULTiGRPS | Dark.Matter.S03.FRENCH.HDTV.x264-MULTiGRPS |  | RegexParser8
+  dir http://localhost/Dark.S01.FRENCH.WEBRip.x264-AMB3R | Dark.S01.FRENCH.WEBRip.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Dark.S02.FRENCH.WEBRip.x264-AMB3R | Dark.S02.FRENCH.WEBRip.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Dark.S03.FRENCH.WEB.x264-AMB3R | Dark.S03.FRENCH.WEB.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Dexter.New.Blood.S01.FRENCH.LD.AMZN.WEB-DL.x264-FRATERNiTY | Dexter.New.Blood.S01.FRENCH.LD.AMZN.WEB-DL.x264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/Dexter.S01.FRENCH.BRRip.x264-TORRiD | Dexter.S01.FRENCH.BRRip.x264-TORRiD |  | RegexParser8
+  dir http://localhost/Dexter.S02.FRENCH.BRRip.x264-TORRiD | Dexter.S02.FRENCH.BRRip.x264-TORRiD |  | RegexParser8
+  dir http://localhost/Dexter.S03.FRENCH.BRRip.x264-TORRiD | Dexter.S03.FRENCH.BRRip.x264-TORRiD |  | RegexParser8
+  dir http://localhost/Dexter.S04.FRENCH.BRRip.x264-TORRiD | Dexter.S04.FRENCH.BRRip.x264-TORRiD |  | RegexParser8
+  dir http://localhost/Dexter.S05.FRENCH.BRRip.x264-TORRiD | Dexter.S05.FRENCH.BRRip.x264-TORRiD |  | RegexParser8
+  dir http://localhost/Dexter.S06.FRENCH.BRRip.x264-TORRiD | Dexter.S06.FRENCH.BRRip.x264-TORRiD |  | RegexParser8
+  dir http://localhost/Dexter.S07.FRENCH.BRRip.x264-TORRiD | Dexter.S07.FRENCH.BRRip.x264-TORRiD |  | RegexParser8
+  dir http://localhost/Dexter.S08.FRENCH.BRRip.x264-TORRiD | Dexter.S08.FRENCH.BRRip.x264-TORRiD |  | RegexParser8
+  dir http://localhost/Dominion.S01.FRENCH.HDTV.x264-LiBERTY | Dominion.S01.FRENCH.HDTV.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Dominion.S02.FRENCH.HDTV.x264-LiBERTY | Dominion.S02.FRENCH.HDTV.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Dont.Trust.the.Bitch.in.Apartment.23.S02.MULTi.1080p.WEB.x264-CiELOS | Dont.Trust.the.Bitch.in.Apartment.23.S02.MULTi.1080p.WEB.x264-CiELOS |  | RegexParser8
+  dir http://localhost/Dune.1984.FRENCH.BRRip.x264-GHZ | Dune.1984.FRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Dune.2000.MULTi.BRRip.x264.AAC-LM23 | Dune.2000.MULTi.BRRip.x264.AAC-LM23 |  | RegexParser8
+  dir http://localhost/Dune.2021.CUSTOM.MULTi.TRUEFRENCH.WEBRip.x264.AAC-LM23 | Dune.2021.CUSTOM.MULTi.TRUEFRENCH.WEBRip.x264.AAC-LM23 |  | RegexParser8
+  dir http://localhost/Elementary.S01.FRENCH.WEBRip.x264-CHiLL | Elementary.S01.FRENCH.WEBRip.x264-CHiLL |  | RegexParser8
+  dir http://localhost/Elementary.S02.FRENCH.WEBRip.x264-CHiLL | Elementary.S02.FRENCH.WEBRip.x264-CHiLL |  | RegexParser8
+  dir http://localhost/Elementary.S03.FRENCH.WEBRip.x264-CHiLL | Elementary.S03.FRENCH.WEBRip.x264-CHiLL |  | RegexParser8
+  dir http://localhost/Elementary.S04.FRENCH.LD.WEB-DL.x264-LiBERTY | Elementary.S04.FRENCH.LD.WEB-DL.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Elementary.S05.FRENCH.WEBRip.x264-CHiLL | Elementary.S05.FRENCH.WEBRip.x264-CHiLL |  | RegexParser8
+  dir http://localhost/Elementary.S06.FRENCH.WEBRip.x264-CHiLL | Elementary.S06.FRENCH.WEBRip.x264-CHiLL |  | RegexParser8
+  dir http://localhost/Elementary.S07.FRENCH.HDTV.x264-CHiLL | Elementary.S07.FRENCH.HDTV.x264-CHiLL |  | RegexParser8
+  dir http://localhost/Falling.Skies.S05.FRENCH.BDRip.x264-VENUE | Falling.Skies.S05.FRENCH.BDRip.x264-VENUE |  | RegexParser8
+  dir http://localhost/GLOW.S01.FRENCH.WEBRip.x264-AMB3R | GLOW.S01.FRENCH.WEBRip.x264-AMB3R |  | RegexParser8
+  dir http://localhost/GLOW.S03.FRENCH.WEBRip.x264-AMB3R | GLOW.S03.FRENCH.WEBRip.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Glow.S02.FRENCH.WEBRip.x264-CHiLL | Glow.S02.FRENCH.WEBRip.x264-CHiLL |  | RegexParser8
+  dir http://localhost/Good.Omens.S01.FRENCH.720p.WEBRip.x264-BRiNK | Good.Omens.S01.FRENCH.720p.WEBRip.x264-BRiNK |  | RegexParser8
+  dir http://localhost/House.S01.FRENCH.DVDRiP.XviD | House.S01.FRENCH.DVDRiP.XviD |  | RegexParser8
+  dir http://localhost/House.S02.FRENCH.DVDRiP.XviD | House.S02.FRENCH.DVDRiP.XviD |  | RegexParser8
+  dir http://localhost/House.S03.FRENCH.DVDRiP.XviD | House.S03.FRENCH.DVDRiP.XviD |  | RegexParser8
+  dir http://localhost/House.S04.FRENCH.DVDRip.XviD-FiXi0N | House.S04.FRENCH.DVDRip.XviD-FiXi0N |  | RegexParser8
+  dir http://localhost/How.I.Met.Your.Mother.COMPLETE.FRENCH.WEBRip.x264-CHiLL | How.I.Met.Your.Mother.COMPLETE.FRENCH.WEBRip.x264-CHiLL |  | RegexParser8
+  dir http://localhost/I.Am.Not.Okay.With.This.S01.FRENCH.720p.WEB.x264-FRATERNiTY | I.Am.Not.Okay.With.This.S01.FRENCH.720p.WEB.x264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/Jane.The.Virgin.S01.FRENCH.HDTV.x264-LiBERTY | Jane.The.Virgin.S01.FRENCH.HDTV.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Jay.And.Silent.Bob.Reboot.2019.TRUEFRENCH.BDRip.x264-WEEDS | Jay.And.Silent.Bob.Reboot.2019.TRUEFRENCH.BDRip.x264-WEEDS |  | RegexParser8
+  dir http://localhost/Jay.and.Silent.Bob.Strike.Back.2001.CUSTOM.FRENCH.BRRip.x264-GHZ | Jay.and.Silent.Bob.Strike.Back.2001.CUSTOM.FRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Kaamelott Intégrale | Kaamelott Intégrale |  | RegexParser8
+  dir http://localhost/Les.Inconnus.L%27Integrale.FRENCH.DVDRIP.X264.NoTag | Les.Inconnus.L'Integrale.FRENCH.DVDRIP.X264.NoTag |  | RegexParser8
+  dir http://localhost/Lucifer.S01.FRENCH.720p.HDTV.x264-MULTiGRPS %28xthor%29 | Lucifer.S01.FRENCH.720p.HDTV.x264-MULTiGRPS (xthor) |  | RegexParser8
+  dir http://localhost/Lucifer.S02.FRENCH.HDTV.x264-SH0W | Lucifer.S02.FRENCH.HDTV.x264-SH0W |  | RegexParser8
+  dir http://localhost/Lucifer.S03.FRENCH.HDTV.x264-SCENE | Lucifer.S03.FRENCH.HDTV.x264-SCENE |  | RegexParser8
+  dir http://localhost/Lucifer.S04.FRENCH.WEBRiP.XviD-ReBoT | Lucifer.S04.FRENCH.WEBRiP.XviD-ReBoT |  | RegexParser8
+  dir http://localhost/Lucifer.S05.FRENCH.WEBRip.x264-CHiLL | Lucifer.S05.FRENCH.WEBRip.x264-CHiLL |  | RegexParser8
+  dir http://localhost/Lucifer.S05.PART1.FRENCH.WEBRip.x264-NEO | Lucifer.S05.PART1.FRENCH.WEBRip.x264-NEO |  | RegexParser8
+  dir http://localhost/Lucifer.S06.FRENCH.WEB.x264-STRINGERBELL | Lucifer.S06.FRENCH.WEB.x264-STRINGERBELL |  | RegexParser8
+  dir http://localhost/Malcolm.In.The.Middle.iNTEGRALE.FRENCH.DVDRip.x264-HYBRiS | Malcolm.In.The.Middle.iNTEGRALE.FRENCH.DVDRip.x264-HYBRiS |  | RegexParser8
+  dir http://localhost/Mallrats.1995.FRENCH.BRRip.x264-GHZ | Mallrats.1995.FRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Merci.Patron.2016.DOC.FRENCH.1080p.WEB.H264-SPACEDHD | Merci.Patron.2016.DOC.FRENCH.1080p.WEB.H264-SPACEDHD |  | RegexParser8
+  dir http://localhost/Mon.voisin.Totoro.1988.FRENCH.720p.BluRay.x264-ULSHD | Mon.voisin.Totoro.1988.FRENCH.720p.BluRay.x264-ULSHD |  | RegexParser8
+  dir http://localhost/Mr.Robot.S01.FRENCH.BDRiP.x264-Visual | Mr.Robot.S01.FRENCH.BDRiP.x264-Visual |  | RegexParser8
+  dir http://localhost/Mr.Robot.S02.FRENCH.HDTV.x264-MULTiGRPS | Mr.Robot.S02.FRENCH.HDTV.x264-MULTiGRPS |  | RegexParser8
+  dir http://localhost/My.Name.Is.Earl.Saison02.FRENCH.DVDRiP.XViD-ANDR0S | My.Name.Is.Earl.Saison02.FRENCH.DVDRiP.XViD-ANDR0S |  | RegexParser8
+  dir http://localhost/My.Name.Is.Earl.Saison03.FRENCH.LD.HDTV.XviD-JMT | My.Name.Is.Earl.Saison03.FRENCH.LD.HDTV.XviD-JMT |  | RegexParser8
+  dir http://localhost/My.Name.is.Earl.S01.FRENCH.DVDRiP.XViD-ANDR0S | My.Name.is.Earl.S01.FRENCH.DVDRiP.XViD-ANDR0S |  | RegexParser8
+  dir http://localhost/My.Name.is.Earl.Saison04.FRENCH.LD.HDTV.XviD-JMT | My.Name.is.Earl.Saison04.FRENCH.LD.HDTV.XviD-JMT |  | RegexParser8
+  dir http://localhost/New.Girl.S01.FRENCH.DVDRip.XviD-JMT | New.Girl.S01.FRENCH.DVDRip.XviD-JMT |  | RegexParser8
+  dir http://localhost/New.Girl.S02.FRENCH.LD.DVDRip.XviD-MiND | New.Girl.S02.FRENCH.LD.DVDRip.XviD-MiND |  | RegexParser8
+  dir http://localhost/New.Girl.S03.FRENCH.LD.DVDRip.x264-AUTHORiTY | New.Girl.S03.FRENCH.LD.DVDRip.x264-AUTHORiTY |  | RegexParser8
+  dir http://localhost/New.Girl.S04.MULTi.1080p.WEB.x264-CiELOS | New.Girl.S04.MULTi.1080p.WEB.x264-CiELOS |  | RegexParser8
+  dir http://localhost/New.Girl.S05.MULTi.1080p.WEB.x264-CiELOS | New.Girl.S05.MULTi.1080p.WEB.x264-CiELOS |  | RegexParser8
+  dir http://localhost/New.Girl.S06.FRENCH.720p.WEB-DL.DD5.1.H264-FRATERNiTY | New.Girl.S06.FRENCH.720p.WEB-DL.DD5.1.H264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/New.Girl.S07.FRENCH.720p.WEB.H264-CiELOS | New.Girl.S07.FRENCH.720p.WEB.H264-CiELOS |  | RegexParser8
+  dir http://localhost/Obi-Wan.Kenobi.S01.TRUEFRENCH.DSNP.WEB.AAC2.0.H264-NEO | Obi-Wan.Kenobi.S01.TRUEFRENCH.DSNP.WEB.AAC2.0.H264-NEO |  | RegexParser8
+  dir http://localhost/Orphan.Black.S01.FRENCH.WEB-DL.x264-LiBERTY | Orphan.Black.S01.FRENCH.WEB-DL.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Orphan.Black.S02.FRENCH.DVDRip.x264-LiBERTY | Orphan.Black.S02.FRENCH.DVDRip.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Orphan.Black.S03.FRENCH.LD.BDRip.x264-LiBERTY | Orphan.Black.S03.FRENCH.LD.BDRip.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Orphan.Black.S04.FRENCH.WEB-DL.x264-BRAD | Orphan.Black.S04.FRENCH.WEB-DL.x264-BRAD |  | RegexParser8
+  dir http://localhost/Orphan.Black.S05.FRENCH.WEBRip.x264-AMB3R | Orphan.Black.S05.FRENCH.WEBRip.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Parks.And.Recreation.S01.FRENCH.HDTV.x264-LiBERTY | Parks.And.Recreation.S01.FRENCH.HDTV.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Parks.And.Recreation.S02.FRENCH.HDTV.x264-LiBERTY | Parks.And.Recreation.S02.FRENCH.HDTV.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Parks.And.Recreation.S03.FRENCH.HDTV.x264-LiBERTY | Parks.And.Recreation.S03.FRENCH.HDTV.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Parks.And.Recreation.S04.FRENCH.HDTV.x264-LiBERTY | Parks.And.Recreation.S04.FRENCH.HDTV.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Parks.And.Recreation.S05.FRENCH.HDTV.x264-LiBERTY | Parks.And.Recreation.S05.FRENCH.HDTV.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Parks.And.Recreation.S06.FRENCH.HDTV.x264-LiBERTY | Parks.And.Recreation.S06.FRENCH.HDTV.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Parks.And.Recreation.S07.FRENCH.HDTV.x264-MULTiGPRS %28xthor%29 | Parks.And.Recreation.S07.FRENCH.HDTV.x264-MULTiGPRS (xthor) |  | RegexParser8
+  dir http://localhost/Princess.Mononoke.1997.FRENCH.720p.BluRay.x264-ULSHD | Princess.Mononoke.1997.FRENCH.720p.BluRay.x264-ULSHD |  | RegexParser8
+  dir http://localhost/Psych.S01.FRENCH.LD.DVDRiP.XViD-EPZ | Psych.S01.FRENCH.LD.DVDRiP.XViD-EPZ |  | RegexParser8
+  dir http://localhost/Psych.S02.FRENCH.LD.DVDRiP.XViD-EPZ | Psych.S02.FRENCH.LD.DVDRiP.XViD-EPZ |  | RegexParser8
+  dir http://localhost/Psych.S03.FRENCH.LD.DVDRiP.XViD-EPZ | Psych.S03.FRENCH.LD.DVDRiP.XViD-EPZ |  | RegexParser8
+  dir http://localhost/Psych.S04.FRENCH.LD.DVDRip.XviD-JMT | Psych.S04.FRENCH.LD.DVDRip.XviD-JMT |  | RegexParser8
+  dir http://localhost/Psych.S05.FRENCH.LD.DVDRiP.XViD-EPZ | Psych.S05.FRENCH.LD.DVDRiP.XViD-EPZ |  | RegexParser8
+  dir http://localhost/Psych.S06.FRENCH.WEBRip.x264-TORRiD | Psych.S06.FRENCH.WEBRip.x264-TORRiD |  | RegexParser8
+  dir http://localhost/Psych.S07.FRENCH.HDTV.x264-SRiZ | Psych.S07.FRENCH.HDTV.x264-SRiZ |  | RegexParser8
+  dir http://localhost/Psych.S08.FRENCH.WEBRip.x264-TORRiD | Psych.S08.FRENCH.WEBRip.x264-TORRiD |  | RegexParser8
+  dir http://localhost/RRRrrrr.2004.FRENCH.1080p.WEB.H264-SiGeRiS | RRRrrrr.2004.FRENCH.1080p.WEB.H264-SiGeRiS |  | RegexParser8
+  dir http://localhost/Raising Hope S02.FRENCH.WEB-DL.H264-CHiLL | Raising Hope S02.FRENCH.WEB-DL.H264-CHiLL |  | RegexParser8
+  dir http://localhost/Raising.Hope.S01.FRENCH.WEB-DL.H264-CHiLL | Raising.Hope.S01.FRENCH.WEB-DL.H264-CHiLL |  | RegexParser8
+  dir http://localhost/Raising.Hope.S03.FRENCH.WEB-DL.H264-CHiLL | Raising.Hope.S03.FRENCH.WEB-DL.H264-CHiLL |  | RegexParser8
+  dir http://localhost/Raising.Hope.S04.FRENCH.WEB-DL.H264-CHiLL | Raising.Hope.S04.FRENCH.WEB-DL.H264-CHiLL |  | RegexParser8
+  dir http://localhost/Rogue.One.A.Star.Wars.Story.2016.TRUEFRENCH.BRRip.x264-GHZ | Rogue.One.A.Star.Wars.Story.2016.TRUEFRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Russian.Doll.S01.FRENCH.WEBRip.x264-FRATERNiTY | Russian.Doll.S01.FRENCH.WEBRip.x264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/Russian.Doll.S02.FRENCH.NF.WEB.AAC2.0.x264-NEO | Russian.Doll.S02.FRENCH.NF.WEB.AAC2.0.x264-NEO |  | RegexParser8
+  dir http://localhost/Scrubs.iNTEGRALE.FRENCH.DVDRip.x264-DUFF | Scrubs.iNTEGRALE.FRENCH.DVDRip.x264-DUFF |  | RegexParser8
+  dir http://localhost/Sense8.S01.FRENCH.WEBRip.x264-LiBERTY | Sense8.S01.FRENCH.WEBRip.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Sense8.S02.FRENCH.WEBRip.x264-AMB3R | Sense8.S02.FRENCH.WEBRip.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Severance.2022.S01.FRENCH.WEBRip.x264-CHiLL | Severance.2022.S01.FRENCH.WEBRip.x264-CHiLL |  | RegexParser8
+  dir http://localhost/Sex.Education.2019.S01.FRENCH.WEB.x264-FRATERNiTY | Sex.Education.2019.S01.FRENCH.WEB.x264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/Sex.Education.S02.FRENCH.WEBRip.x264-FRATERNiTY | Sex.Education.S02.FRENCH.WEBRip.x264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/Sex.Education.S03.FRENCH.WEBRip.x264-CHiLL | Sex.Education.S03.FRENCH.WEBRip.x264-CHiLL |  | RegexParser8
+  dir http://localhost/Sherlock.S01.FRENCH.LD.DVDRiP.XViD-EPZ | Sherlock.S01.FRENCH.LD.DVDRiP.XViD-EPZ |  | RegexParser8
+  dir http://localhost/Sherlock.S02.FRENCH.BDRip.XviD-JMT | Sherlock.S02.FRENCH.BDRip.XviD-JMT |  | RegexParser8
+  dir http://localhost/Sherlock.S03.FRENCH.LD.BDRip.XviD-AUTHORiTY | Sherlock.S03.FRENCH.LD.BDRip.XviD-AUTHORiTY |  | RegexParser8
+  dir http://localhost/Solo.A.Star.Wars.Story.2018.TRUEFRENCH.BRRip.x264-GHZ | Solo.A.Star.Wars.Story.2018.TRUEFRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/South Park.S01.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | South Park.S01.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S02.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | South Park.S02.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S03.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | South Park.S03.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S04.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | South Park.S04.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S05.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | South Park.S05.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S06.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | South Park.S06.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S07.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | South Park.S07.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S08.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | South Park.S08.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S09.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | South Park.S09.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S10.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | South Park.S10.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S11.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD | South Park.S11.TRUEFRENCH.720p.WEB-DL.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S12.TRUEFRENCH.720p.BluRay.x264-FTMVHD | South Park.S12.TRUEFRENCH.720p.BluRay.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S13.TRUEFRENCH.720p.BluRay.x264-FTMVHD | South Park.S13.TRUEFRENCH.720p.BluRay.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S14.TRUEFRENCH.720p.BluRay.x264-FTMVHD | South Park.S14.TRUEFRENCH.720p.BluRay.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S15.TRUEFRENCH.720p.BluRay.x264-FTMVHD | South Park.S15.TRUEFRENCH.720p.BluRay.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S16.TRUEFRENCH.720p.BluRay.x264-FTMVHD | South Park.S16.TRUEFRENCH.720p.BluRay.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S18.TRUEFRENCH.720p.BluRay.x264-FTMVHD | South Park.S18.TRUEFRENCH.720p.BluRay.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S19.TRUEFRENCH.720p.BluRay.x264-FTMVHD | South Park.S19.TRUEFRENCH.720p.BluRay.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S20.TRUEFRENCH.720p.BluRay.x264-FTMVHD | South Park.S20.TRUEFRENCH.720p.BluRay.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S21.TRUEFRENCH.1080p.BluRay.x264-FTMVHD | South Park.S21.TRUEFRENCH.1080p.BluRay.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South Park.S22.TRUEFRENCH.1080p.BluRay.x264-FTMVHD | South Park.S22.TRUEFRENCH.1080p.BluRay.x264-FTMVHD |  | RegexParser8
+  dir http://localhost/South.Park.S17.FRENCH.720p.WEB-DL.H264-LiBERTY | South.Park.S17.FRENCH.720p.WEB-DL.H264-LiBERTY |  | RegexParser8
+  dir http://localhost/South.Park.S23.FRENCH.1080p.WEB.H264-FRATERNiTY | South.Park.S23.FRENCH.1080p.WEB.H264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/Spy.X.Family.S01.MULTi.1080p.WEB.x264-T3KASHi | Spy.X.Family.S01.MULTi.1080p.WEB.x264-T3KASHi |  | RegexParser8
+  dir http://localhost/Squid.Game.S01.RERiP.FRENCH.WEBRip.x264-GHZ | Squid.Game.S01.RERiP.FRENCH.WEBRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Star.Trek.2009.TRUEFRENCH.BRRip.x264-GHZ | Star.Trek.2009.TRUEFRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Star.Trek.Beyond.2016.REPACK.TRUEFRENCH.BDRip.x264-MELBA | Star.Trek.Beyond.2016.REPACK.TRUEFRENCH.BDRip.x264-MELBA |  | RegexParser8
+  dir http://localhost/Star.Trek.Discovery.S01.FRENCH.WEBRip.x264-AMB3R | Star.Trek.Discovery.S01.FRENCH.WEBRip.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Star.Trek.Discovery.S02.FRENCH.WEBRip.x264-AMB3R | Star.Trek.Discovery.S02.FRENCH.WEBRip.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Star.Trek.Discovery.S03.FRENCH.720p.AMZN.WEB-DL.DD5.1.H264-FRATERNiTY | Star.Trek.Discovery.S03.FRENCH.720p.AMZN.WEB-DL.DD5.1.H264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/Star.Trek.Into.Darkness.2013.TRUEFRENCH.BRRip.x264-GHZ | Star.Trek.Into.Darkness.2013.TRUEFRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Star.Trek.Picard.S01.FRENCH.WEBRip.x264-BRiNK | Star.Trek.Picard.S01.FRENCH.WEBRip.x264-BRiNK |  | RegexParser8
+  dir http://localhost/Star.Trek.Picard.S02.FRENCH.AMZN.WEB.AAC.H264-NEO | Star.Trek.Picard.S02.FRENCH.AMZN.WEB.AAC.H264-NEO |  | RegexParser8
+  dir http://localhost/Star.Wars.Episode.I.The.Phantom.Menace.1999.FRENCH.BRRip.x264-GHZ | Star.Wars.Episode.I.The.Phantom.Menace.1999.FRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Star.Wars.Episode.II.Attack.of.the.Clones.2002.FRENCH.BRRip.x264-GHZ | Star.Wars.Episode.II.Attack.of.the.Clones.2002.FRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Star.Wars.Episode.III.Revenge.of.the.Sith.2005.FRENCH.BRRip.x264-GHZ | Star.Wars.Episode.III.Revenge.of.the.Sith.2005.FRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Star.Wars.Episode.IV.A.New.Hope.1977.FRENCH.BRRip.x264-GHZ | Star.Wars.Episode.IV.A.New.Hope.1977.FRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Star.Wars.Episode.IX.The.Rise.of.Skywalker.2019.TRUEFRENCH.BDRip.x264-PRiDEHD | Star.Wars.Episode.IX.The.Rise.of.Skywalker.2019.TRUEFRENCH.BDRip.x264-PRiDEHD |  | RegexParser8
+  dir http://localhost/Star.Wars.Episode.V.The.Empire.Strikes.Back.1980.FRENCH.BRRip.x264-GHZ | Star.Wars.Episode.V.The.Empire.Strikes.Back.1980.FRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Star.Wars.Episode.VI.Return.of.the.Jedi.1983.FRENCH.BRRip.x264-GHZ | Star.Wars.Episode.VI.Return.of.the.Jedi.1983.FRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Star.Wars.Episode.VII.The.Force.Awakens.2015.PROPER.TRUEFRENCH.BDRip.x264-RUDE | Star.Wars.Episode.VII.The.Force.Awakens.2015.PROPER.TRUEFRENCH.BDRip.x264-RUDE |  | RegexParser8
+  dir http://localhost/Star.Wars.Rebels.S01.FRENCH.BDRip.x264-LOUVRE | Star.Wars.Rebels.S01.FRENCH.BDRip.x264-LOUVRE |  | RegexParser8
+  dir http://localhost/Star.Wars.The.Clone.Wars.2008.FRENCH.BRRip.x264-GHZ | Star.Wars.The.Clone.Wars.2008.FRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Star.Wars.The.Clone.Wars.S01.FRENCH.DVDrip.XviD-PiMS %28xthor%29 | Star.Wars.The.Clone.Wars.S01.FRENCH.DVDrip.XviD-PiMS (xthor) |  | RegexParser8
+  dir http://localhost/Star.Wars.The.Clone.Wars.S02.FRENCH.BDRip.XviD-JMT %28xthor%29 | Star.Wars.The.Clone.Wars.S02.FRENCH.BDRip.XviD-JMT (xthor) |  | RegexParser8
+  dir http://localhost/Star.Wars.The.Clone.Wars.S03.FRENCH.BDRip.XviD-JMT %28xthor%29 | Star.Wars.The.Clone.Wars.S03.FRENCH.BDRip.XviD-JMT (xthor) |  | RegexParser8
+  dir http://localhost/Star.Wars.The.Clone.Wars.S04.FRENCH.720p.BluRay.x264-JMT | Star.Wars.The.Clone.Wars.S04.FRENCH.720p.BluRay.x264-JMT |  | RegexParser8
+  dir http://localhost/Star.Wars.The.Clone.Wars.S05.TRUEFRENCH.720p.BluRay.x264-MEAZONE | Star.Wars.The.Clone.Wars.S05.TRUEFRENCH.720p.BluRay.x264-MEAZONE |  | RegexParser8
+  dir http://localhost/Star.Wars.The.Clone.Wars.S06.FRENCH.720p.BluRay.x264-SRiZ | Star.Wars.The.Clone.Wars.S06.FRENCH.720p.BluRay.x264-SRiZ |  | RegexParser8
+  dir http://localhost/Star.Wars.The.Clone.Wars.S07.FRENCH.720p.WEB.H264-SCENE | Star.Wars.The.Clone.Wars.S07.FRENCH.720p.WEB.H264-SCENE |  | RegexParser8
+  dir http://localhost/Star.Wars.The.Last.Jedi.2017.TRUEFRENCH.BDRip.x264-LOST | Star.Wars.The.Last.Jedi.2017.TRUEFRENCH.BDRip.x264-LOST |  | RegexParser8
+  dir http://localhost/Starship.Troopers.1997.FRENCH.BRRip.x264-GHZ | Starship.Troopers.1997.FRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/Stranger.Things.2016.S01.FRENCH.WEBRiP.XviD-ReBoT | Stranger.Things.2016.S01.FRENCH.WEBRiP.XviD-ReBoT |  | RegexParser8
+  dir http://localhost/Stranger.Things.S02.FRENCH.WEBRiP.XviD-ReBoT | Stranger.Things.S02.FRENCH.WEBRiP.XviD-ReBoT |  | RegexParser8
+  dir http://localhost/Stranger.Things.S03.FRENCH.WEBRiP.XviD-ReBoT | Stranger.Things.S03.FRENCH.WEBRiP.XviD-ReBoT |  | RegexParser8
+  dir http://localhost/Stranger.Things.S04.FRENCH.NF.WEB.AAC2.0.x264-NEO | Stranger.Things.S04.FRENCH.NF.WEB.AAC2.0.x264-NEO |  | RegexParser8
+  dir http://localhost/Superstore.S01.FRENCH.HDTV.x264-AMB3R | Superstore.S01.FRENCH.HDTV.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Superstore.S02.FRENCH.HDTV.x264-AMB3R | Superstore.S02.FRENCH.HDTV.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Superstore.S03.FRENCH.WEBRip.x264-CHiLL | Superstore.S03.FRENCH.WEBRip.x264-CHiLL |  | RegexParser8
+  dir http://localhost/Superstore.S04.FRENCH.WEBRip.x264-CHiLL | Superstore.S04.FRENCH.WEBRip.x264-CHiLL |  | RegexParser8
+  dir http://localhost/Superstore.S05.FRENCH.WEB.x264 | Superstore.S05.FRENCH.WEB.x264 |  | RegexParser8
+  dir http://localhost/Superstore.S06.FRENCH.WEB.x264-STRINGERBELL | Superstore.S06.FRENCH.WEB.x264-STRINGERBELL |  | RegexParser8
+  dir http://localhost/Teen.Wolf.S01.FRENCH.LD.HDTV.XViD-EPZ | Teen.Wolf.S01.FRENCH.LD.HDTV.XViD-EPZ |  | RegexParser8
+  dir http://localhost/Teen.Wolf.S02.FRENCH.WEB-DL.XviD-CeD | Teen.Wolf.S02.FRENCH.WEB-DL.XviD-CeD |  | RegexParser8
+  dir http://localhost/Teen.Wolf.S04.FRENCH.LD.WEB-DL.x264-LiBERTY | Teen.Wolf.S04.FRENCH.LD.WEB-DL.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Teen.Wolf.S05.FRENCH.LD.WEB-DL.x264-LiBERTY | Teen.Wolf.S05.FRENCH.LD.WEB-DL.x264-LiBERTY |  | RegexParser8
+  dir http://localhost/Teen.Wolf.S06.FRENCH.HDTV.x264-AMB3R | Teen.Wolf.S06.FRENCH.HDTV.x264-AMB3R |  | RegexParser8
+  dir http://localhost/The.Big.Bang.Theory.COMPLETE.FRENCH.BRRip.x264-CHiLL | The.Big.Bang.Theory.COMPLETE.FRENCH.BRRip.x264-CHiLL |  | RegexParser8
+  dir http://localhost/The.Code.S01.FRENCH.AHDTV.x264-AZR | The.Code.S01.FRENCH.AHDTV.x264-AZR |  | RegexParser8
+  dir http://localhost/The.End.Of.The.Fucking.World.S02.FRENCH.WEBRip.x264-NEO | The.End.Of.The.Fucking.World.S02.FRENCH.WEBRip.x264-NEO |  | RegexParser8
+  dir http://localhost/The.End.of.the.Fucking.World.S01.FRENCH.WEBRip.x264 AMB3R | The.End.of.the.Fucking.World.S01.FRENCH.WEBRip.x264 AMB3R |  | RegexParser8
+  dir http://localhost/The.Expanse.S01.FRENCH.720p.WEB.x264-CiELOS %28xthor%29 | The.Expanse.S01.FRENCH.720p.WEB.x264-CiELOS (xthor) |  | RegexParser8
+  dir http://localhost/The.Expanse.S02.FRENCH.720p.WEB.x264-CiELOS %28xthor%29 | The.Expanse.S02.FRENCH.720p.WEB.x264-CiELOS (xthor) |  | RegexParser8
+  dir http://localhost/The.Expanse.S03.FRENCH.720p.BluRay.x264-FRATERNiTY | The.Expanse.S03.FRENCH.720p.BluRay.x264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/The.Expanse.S04.FRENCH.720p.WEB.H264-CiELOS | The.Expanse.S04.FRENCH.720p.WEB.H264-CiELOS |  | RegexParser8
+  dir http://localhost/The.Expanse.S05.FRENCH.WEB.H264-FRATERNiTY | The.Expanse.S05.FRENCH.WEB.H264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/The.Good.Place.S01.FRENCH.720p.WEBRip.x264-SCENE | The.Good.Place.S01.FRENCH.720p.WEBRip.x264-SCENE |  | RegexParser8
+  dir http://localhost/The.Good.Place.S02.MULTi.720p.NF.WEB-DL.DD5.1.x264-ARK01 | The.Good.Place.S02.MULTi.720p.NF.WEB-DL.DD5.1.x264-ARK01 |  | RegexParser8
+  dir http://localhost/The.Good.Place.S03.MULTi.720p.NF.WEB-DL.DD5.1.x264-ARK01 | The.Good.Place.S03.MULTi.720p.NF.WEB-DL.DD5.1.x264-ARK01 |  | RegexParser8
+  dir http://localhost/The.Good.Place.S04.FRENCH.WEBRip.x264-AMB3R | The.Good.Place.S04.FRENCH.WEBRip.x264-AMB3R |  | RegexParser8
+  dir http://localhost/The.Handmaids.Tale.S01.FRENCH.HDTV.x264-AMB3R | The.Handmaids.Tale.S01.FRENCH.HDTV.x264-AMB3R |  | RegexParser8
+  dir http://localhost/The.Handmaids.Tale.S02.FRENCH.HDTV.x264-AMB3R | The.Handmaids.Tale.S02.FRENCH.HDTV.x264-AMB3R |  | RegexParser8
+  dir http://localhost/The.Handmaids.Tale.S03.FRENCH.BDRip.x264-THiNK | The.Handmaids.Tale.S03.FRENCH.BDRip.x264-THiNK |  | RegexParser8
+  dir http://localhost/The.Hitchhikers.Guide.To.The.Galaxy.2005.FRENCH.BRRip.x264-GHZ | The.Hitchhikers.Guide.To.The.Galaxy.2005.FRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/The.Kominsky.Method.S01.FRENCH.720p.WEBRip.x264-BRiNK | The.Kominsky.Method.S01.FRENCH.720p.WEBRip.x264-BRiNK |  | RegexParser8
+  dir http://localhost/The.Kominsky.Method.S02.FRENCH.WEBRip.x264-BRiNK | The.Kominsky.Method.S02.FRENCH.WEBRip.x264-BRiNK |  | RegexParser8
+  dir http://localhost/The.Kominsky.Method.S03.FRENCH.720p.WEB.x264-STRINGERBELL | The.Kominsky.Method.S03.FRENCH.720p.WEB.x264-STRINGERBELL |  | RegexParser8
+  dir http://localhost/The.Mandalorian.S01.FRENCH.WEBRip.x264-BRiNK | The.Mandalorian.S01.FRENCH.WEBRip.x264-BRiNK |  | RegexParser8
+  dir http://localhost/The.Mandalorian.S02.FRENCH.720p.WEB.DDP5.1.H264-FRATERNiTY | The.Mandalorian.S02.FRENCH.720p.WEB.DDP5.1.H264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/The.Martian.2015.TRUEFRENCH.BRRip.x264-GHZ | The.Martian.2015.TRUEFRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/The.Matrix.1999.Remastered.FRENCH.BRRip.x264-GHZ | The.Matrix.1999.Remastered.FRENCH.BRRip.x264-GHZ |  | RegexParser8
+  dir http://localhost/The.Mentalist.iNTEGRALE.FRENCH.WEBRip.x264-TORRiD | The.Mentalist.iNTEGRALE.FRENCH.WEBRip.x264-TORRiD |  | RegexParser8
+  dir http://localhost/The.Middle.S03.FRENCH.WEBRip.x264-TORRiD | The.Middle.S03.FRENCH.WEBRip.x264-TORRiD |  | RegexParser8
+  dir http://localhost/The.Middle.S04.FRENCH.LD.HDTV.XviD-MiND | The.Middle.S04.FRENCH.LD.HDTV.XviD-MiND |  | RegexParser8
+  dir http://localhost/The.Middle.S06.FRENCH.720p.WEB-DL.H264-LiBERTY | The.Middle.S06.FRENCH.720p.WEB-DL.H264-LiBERTY |  | RegexParser8
+  dir http://localhost/The.Middle.S07.FRENCH.LD.WEB-DL.x264-FRATERNiTY | The.Middle.S07.FRENCH.LD.WEB-DL.x264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/The.Middle.S08.FRENCH.HDTV.x264-AMB3R | The.Middle.S08.FRENCH.HDTV.x264-AMB3R |  | RegexParser8
+  dir http://localhost/The.Middle.S09.FRENCH.HDTV.x264-AMB3R | The.Middle.S09.FRENCH.HDTV.x264-AMB3R |  | RegexParser8
+  dir http://localhost/The.OA.S01.FRENCH.720p.WEB.x264-CiELOS%5bEliteT%5d | The.OA.S01.FRENCH.720p.WEB.x264-CiELOS[EliteT] |  | RegexParser8
+  dir http://localhost/The.OA.S02.FRENCH.720p.WEB.x264-FRATERNiTY | The.OA.S02.FRENCH.720p.WEB.x264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/The.Queens.Gambit.S01.FRENCH.720p.WEB.x264-FRATERNiTY | The.Queens.Gambit.S01.FRENCH.720p.WEB.x264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/The.Resident.S01.FRENCH.HDTV.x264-AMB3R | The.Resident.S01.FRENCH.HDTV.x264-AMB3R |  | RegexParser8
+  dir http://localhost/The.Simpsons.S24.FRENCH.LD.HDTV.x264-MULTiTEAMS | The.Simpsons.S24.FRENCH.LD.HDTV.x264-MULTiTEAMS |  | RegexParser8
+  dir http://localhost/The.Simpsons.S26.FRENCH.720p.HDTV.x264-PANZeR | The.Simpsons.S26.FRENCH.720p.HDTV.x264-PANZeR |  | RegexParser8
+  dir http://localhost/The.Simpsons.S27.FRENCH.720p.HDTV.x264-SH0W | The.Simpsons.S27.FRENCH.720p.HDTV.x264-SH0W |  | RegexParser8
+  dir http://localhost/The.Simpsons.S28.FRENCH.720p.HDTV.x264-SH0W | The.Simpsons.S28.FRENCH.720p.HDTV.x264-SH0W |  | RegexParser8
+  dir http://localhost/The.Simpsons.S31.FRENCH.WEBRip.x264-FRATERNiTY | The.Simpsons.S31.FRENCH.WEBRip.x264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/The.Simpsons.S32.REPACK.FRENCH.WEB-DL.H264-BraD | The.Simpsons.S32.REPACK.FRENCH.WEB-DL.H264-BraD |  | RegexParser8
+  dir http://localhost/The.Umbrella.Academy.S01.iNTERNAL.FRENCH.WEBRip.x264-PHoQUE | The.Umbrella.Academy.S01.iNTERNAL.FRENCH.WEBRip.x264-PHoQUE |  | RegexParser8
+  dir http://localhost/The.Umbrella.Academy.S02.FRENCH.WEB.x264-AMB3R | The.Umbrella.Academy.S02.FRENCH.WEB.x264-AMB3R |  | RegexParser8
+  dir http://localhost/The.middle.S01.FRENCH.HDTV.x264-CHiLL | The.middle.S01.FRENCH.HDTV.x264-CHiLL |  | RegexParser8
+  dir http://localhost/The.middle.S02.FRENCH.HDTV.x264-CHiLL | The.middle.S02.FRENCH.HDTV.x264-CHiLL |  | RegexParser8
+  dir http://localhost/Valide.S01.iNTERNAL.FRENCH.720p.WEB.H264-CiELOS | Valide.S01.iNTERNAL.FRENCH.720p.WEB.H264-CiELOS |  | RegexParser8
+  dir http://localhost/Weird.Science.1985.FRENCH.BRRip.x264-TORRiD | Weird.Science.1985.FRENCH.BRRip.x264-TORRiD |  | RegexParser8
+  dir http://localhost/Westworld.S01.FRENCH.HDTV.x264-SCENE | Westworld.S01.FRENCH.HDTV.x264-SCENE |  | RegexParser8
+  dir http://localhost/Why.Women.Kill.S01.FRENCH.720p.WEB.H264-CiELOS | Why.Women.Kill.S01.FRENCH.720p.WEB.H264-CiELOS |  | RegexParser8
+  dir http://localhost/Windows 7 x64 %2b SP2 | Windows 7 x64 + SP2 |  | RegexParser8
+  dir http://localhost/Windows Arium 10.LTSC.3.1-1906 %28x64 Entreprise LTSC%29 | Windows Arium 10.LTSC.3.1-1906 (x64 Entreprise LTSC) |  | RegexParser8
+  dir http://localhost/Wrecked.S01.FRENCH.HDTV.x264-AMB3R | Wrecked.S01.FRENCH.HDTV.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Wrecked.S02.FRENCH.720p.HDTV.x264-SH0W | Wrecked.S02.FRENCH.720p.HDTV.x264-SH0W |  | RegexParser8
+  dir http://localhost/Wrecked.S03.FRENCH.HDTV.x264-AMB3R | Wrecked.S03.FRENCH.HDTV.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Young.Sheldon.S01.FRENCH.HDTV.x264-AMB3R | Young.Sheldon.S01.FRENCH.HDTV.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Young.Sheldon.S02.FRENCH.HDTV.x264-AMB3R | Young.Sheldon.S02.FRENCH.HDTV.x264-AMB3R |  | RegexParser8
+  dir http://localhost/Young.Sheldon.S03.FRENCH.LD.AMZN.WEB-DL.x264-FRATERNiTY | Young.Sheldon.S03.FRENCH.LD.AMZN.WEB-DL.x264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/Young.Sheldon.S04.FRENCH.LD.BDRip.x264-FRATERNiTY | Young.Sheldon.S04.FRENCH.LD.BDRip.x264-FRATERNiTY |  | RegexParser8
+  dir http://localhost/%5bFULL%5dFalling.Skies.S04.FRENCH.WEBRiP.x264-KiRa | [FULL]Falling.Skies.S04.FRENCH.WEBRiP.x264-KiRa |  | RegexParser8
+  dir http://localhost/%5bFULL%5dTeen.Wolf.S03.FRENCH.LD.HDTV.XviD-MulTiGR | [FULL]Teen.Wolf.S03.FRENCH.LD.HDTV.XviD-MulTiGR |  | RegexParser8
+  dir http://localhost/%5bFULL%5dThe.Code.S02.FRENCH.720p.HDTV.x264-KiRa | [FULL]The.Code.S02.FRENCH.720p.HDTV.x264-KiRa |  | RegexParser8
+  dir http://localhost/workaholics s01 | workaholics s01 |  | RegexParser8
+  file http://localhost/Interstellar.2014.TRUEFRENCH.BRRip.x264.AC3-SVR.mkv | Interstellar.2014.TRUEFRENCH.BRRip.x264.AC3-SVR.mkv | 1437711157 | 
+  file http://localhost/Les.Maitres.Du.Temps.1981.FRENCH.DVDRiP.x264.AAC-LM23.mp4 | Les.Maitres.Du.Temps.1981.FRENCH.DVDRiP.x264.AAC-LM23.mp4 | 733911411 | 
+  file http://localhost/Windows 10 LTSC v1809 3in1 Fr x64 %2812 Avril 2019%29.iso | Windows 10 LTSC v1809 3in1 Fr x64 (12 Avril 2019).iso | 3544322048 | 

@@ -63,3 +63,61 @@ url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=Fal
   file http://localhost:8086/favicon.ico | favicon.ico | 1024 | 
   file http://localhost:8086/Gravity Wells.png | Gravity Wells.png | 622592 | 
   file http://localhost:8086/relaxing evening.jpg | relaxing evening.jpg | 79872 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/4chan/ | 4chan |  | ParseH5aiDirectoryListing
+  dir http://localhost/Advice/ | Advice |  | ParseH5aiDirectoryListing
+  dir http://localhost/Anatomy/ | Anatomy |  | ParseH5aiDirectoryListing
+  dir http://localhost/Animals/ | Animals |  | ParseH5aiDirectoryListing
+  dir http://localhost/Architecture/ | Architecture |  | ParseH5aiDirectoryListing
+  dir http://localhost/Art/ | Art |  | ParseH5aiDirectoryListing
+  dir http://localhost/Astronomy/ | Astronomy |  | ParseH5aiDirectoryListing
+  dir http://localhost/awstats-icon/ | awstats-icon |  | ParseH5aiDirectoryListing
+  dir http://localhost/awstatsicons/ | awstatsicons |  | ParseH5aiDirectoryListing
+  dir http://localhost/Blogging Guide/ | Blogging Guide |  | ParseH5aiDirectoryListing
+  dir http://localhost/Charts/ | Charts |  | ParseH5aiDirectoryListing
+  dir http://localhost/Computers/ | Computers |  | ParseH5aiDirectoryListing
+  dir http://localhost/Countries/ | Countries |  | ParseH5aiDirectoryListing
+  dir http://localhost/Desktop and Wallpaper Guides/ | Desktop and Wallpaper Guides |  | ParseH5aiDirectoryListing
+  dir http://localhost/dlf/ | dlf |  | ParseH5aiDirectoryListing
+  dir http://localhost/Do it Yourself/ | Do it Yourself |  | ParseH5aiDirectoryListing
+  dir http://localhost/Economics/ | Economics |  | ParseH5aiDirectoryListing
+  dir http://localhost/Electronics/ | Electronics |  | ParseH5aiDirectoryListing
+  dir http://localhost/Entertainment/ | Entertainment |  | ParseH5aiDirectoryListing
+  dir http://localhost/Facts/ | Facts |  | ParseH5aiDirectoryListing
+  dir http://localhost/Fashion/ | Fashion |  | ParseH5aiDirectoryListing
+  dir http://localhost/Fighting and Combat/ | Fighting and Combat |  | ParseH5aiDirectoryListing
+  dir http://localhost/Fitness/ | Fitness |  | ParseH5aiDirectoryListing
+  dir http://localhost/Foods/ | Foods |  | ParseH5aiDirectoryListing
+  dir http://localhost/Government and Politics/ | Government and Politics |  | ParseH5aiDirectoryListing
+  dir http://localhost/Health/ | Health |  | ParseH5aiDirectoryListing
+  dir http://localhost/History/ | History |  | ParseH5aiDirectoryListing
+  dir http://localhost/icon/ | icon |  | ParseH5aiDirectoryListing
+  dir http://localhost/infopics/ | infopics |  | ParseH5aiDirectoryListing
+  dir http://localhost/instaoldfagkit/ | instaoldfagkit |  | ParseH5aiDirectoryListing
+  dir http://localhost/Internet/ | Internet |  | ParseH5aiDirectoryListing
+  dir http://localhost/Language/ | Language |  | ParseH5aiDirectoryListing
+  dir http://localhost/Literature/ | Literature |  | ParseH5aiDirectoryListing
+  dir http://localhost/Math/ | Math |  | ParseH5aiDirectoryListing
+  dir http://localhost/Music/ | Music |  | ParseH5aiDirectoryListing
+  dir http://localhost/Paranormal/ | Paranormal |  | ParseH5aiDirectoryListing
+  dir http://localhost/PDF Library/ | PDF Library |  | ParseH5aiDirectoryListing
+  dir http://localhost/Periodic tables/ | Periodic tables |  | ParseH5aiDirectoryListing
+  dir http://localhost/Photoshop And Colors/ | Photoshop And Colors |  | ParseH5aiDirectoryListing
+  dir http://localhost/Piracy/ | Piracy |  | ParseH5aiDirectoryListing
+  dir http://localhost/Religion/ | Religion |  | ParseH5aiDirectoryListing
+  dir http://localhost/Science/ | Science |  | ParseH5aiDirectoryListing
+  dir http://localhost/stats/ | stats |  | ParseH5aiDirectoryListing
+  dir http://localhost/Stoners Guide/ | Stoners Guide |  | ParseH5aiDirectoryListing
+  dir http://localhost/Survival/ | Survival |  | ParseH5aiDirectoryListing
+  dir http://localhost/Technology/ | Technology |  | ParseH5aiDirectoryListing
+  dir http://localhost/The World/ | The World |  | ParseH5aiDirectoryListing
+  dir http://localhost/Thieves/ | Thieves |  | ParseH5aiDirectoryListing
+  dir http://localhost/Troll/ | Troll |  | ParseH5aiDirectoryListing
+  dir http://localhost/Video Games and Gaming/ | Video Games and Gaming |  | ParseH5aiDirectoryListing
+  dir http://localhost/Weapons and Military/ | Weapons and Military |  | ParseH5aiDirectoryListing
+  file http://localhost/Contribushun Game.png | Contribushun Game.png | 545792 | 
+  file http://localhost/DOWNLOAD AS CIVIL DISOBEDIENCE.png | DOWNLOAD AS CIVIL DISOBEDIENCE.png | 922624 | 
+  file http://localhost/favicon.ico | favicon.ico | 1024 | 
+  file http://localhost/Gravity Wells.png | Gravity Wells.png | 622592 | 
+  file http://localhost/relaxing evening.jpg | relaxing evening.jpg | 79872 | 

@@ -1,5 +1,3 @@
-using OpenDirectoryDownloader.Shared.Models;
-using Serilog;
 using Xunit;
 
 namespace OpenDirectoryDownloader.Tests;
@@ -17,7 +15,6 @@ public class CheckSymlinksTests
 	{
 		// DirectoryParser.CheckSymlinks logs through Program.Logger when it detects a loop; that logger
 		// is normally set up by Program.Main, which doesn't run under the test host.
-		Program.Logger ??= new LoggerConfiguration().CreateLogger();
 	}
 
 	private static WebDirectory CreateFinishedDirectory(WebDirectory parent, string url, string name, IEnumerable<(string FileName, long FileSize)> files, IEnumerable<string> subdirectoryNames = null)

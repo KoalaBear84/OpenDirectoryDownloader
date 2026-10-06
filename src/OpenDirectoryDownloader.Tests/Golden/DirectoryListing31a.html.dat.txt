@@ -40,3 +40,43 @@ url=http://localhost/ name=ROOT desc= parser=ParseLinksDirectoryListing error=Fa
   dir http://localhost/xbmc | xbmc |  | ParseLinksDirectoryListing
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseLinksDirectoryListing error=False ok=True
+  dir http://localhost/CPAN | CPAN |  | ParseLinksDirectoryListing
+  dir http://localhost/alpine | alpine |  | ParseLinksDirectoryListing
+  dir http://localhost/antergos | antergos |  | ParseLinksDirectoryListing
+  dir http://localhost/apache | apache |  | ParseLinksDirectoryListing
+  dir http://localhost/archlinux | archlinux |  | ParseLinksDirectoryListing
+  dir http://localhost/centos | centos |  | ParseLinksDirectoryListing
+  dir http://localhost/centos-vault | centos-vault |  | ParseLinksDirectoryListing
+  dir http://localhost/dag | dag |  | ParseLinksDirectoryListing
+  dir http://localhost/debian | debian |  | ParseLinksDirectoryListing
+  dir http://localhost/debian-backports | debian-backports |  | ParseLinksDirectoryListing
+  dir http://localhost/debian-cd | debian-cd |  | ParseLinksDirectoryListing
+  dir http://localhost/devuan | devuan |  | ParseLinksDirectoryListing
+  dir http://localhost/dotdeb | dotdeb |  | ParseLinksDirectoryListing
+  dir http://localhost/epel | epel |  | ParseLinksDirectoryListing
+  dir http://localhost/fedora | fedora |  | ParseLinksDirectoryListing
+  dir http://localhost/freebsd | freebsd |  | ParseLinksDirectoryListing
+  dir http://localhost/gentoo | gentoo |  | ParseLinksDirectoryListing
+  dir http://localhost/gentoo-portage | gentoo-portage |  | ParseLinksDirectoryListing
+  dir http://localhost/grml | grml |  | ParseLinksDirectoryListing
+  dir http://localhost/hirensbootcd | hirensbootcd |  | ParseLinksDirectoryListing
+  dir http://localhost/ipxe-files | ipxe-files |  | ParseLinksDirectoryListing
+  dir http://localhost/kernel | kernel |  | ParseLinksDirectoryListing
+  dir http://localhost/knoppix | knoppix |  | ParseLinksDirectoryListing
+  dir http://localhost/knoppix-dvd | knoppix-dvd |  | ParseLinksDirectoryListing
+  dir http://localhost/libreoffice | libreoffice |  | ParseLinksDirectoryListing
+  dir http://localhost/mysql | mysql |  | ParseLinksDirectoryListing
+  dir http://localhost/openbsd | openbsd |  | ParseLinksDirectoryListing
+  dir http://localhost/openoffice | openoffice |  | ParseLinksDirectoryListing
+  dir http://localhost/opensuse | opensuse |  | ParseLinksDirectoryListing
+  dir http://localhost/opnsense | opnsense |  | ParseLinksDirectoryListing
+  dir http://localhost/raspbian | raspbian |  | ParseLinksDirectoryListing
+  dir http://localhost/rpmfusion | rpmfusion |  | ParseLinksDirectoryListing
+  dir http://localhost/slackware | slackware |  | ParseLinksDirectoryListing
+  dir http://localhost/ubuntu | ubuntu |  | ParseLinksDirectoryListing
+  dir http://localhost/ubuntu-cdimage | ubuntu-cdimage |  | ParseLinksDirectoryListing
+  dir http://localhost/ubuntu-releases | ubuntu-releases |  | ParseLinksDirectoryListing
+  dir http://localhost/videolan | videolan |  | ParseLinksDirectoryListing
+  dir http://localhost/xbmc | xbmc |  | ParseLinksDirectoryListing

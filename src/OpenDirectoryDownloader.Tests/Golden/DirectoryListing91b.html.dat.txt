@@ -20,3 +20,14 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   file http://localhost:8086/listing/maven-metadata.xml | maven-metadata.xml | 119 | 
   file http://localhost:8086/listing/maven-metadata.xml.md5 | maven-metadata.xml.md5 | 83 | 
   file http://localhost:8086/listing/maven-metadata.xml.sha1 | maven-metadata.xml.sha1 | 138 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost/HTTPClient-0.3-3.jar | HTTPClient-0.3-3.jar | 733741 | 
+  file http://localhost/HTTPClient-0.3-3.jar.md5 | HTTPClient-0.3-3.jar.md5 | 32 | 
+  file http://localhost/HTTPClient-0.3-3.jar.sha1 | HTTPClient-0.3-3.jar.sha1 | 40 | 
+  file http://localhost/HTTPClient-0.3-3.pom | HTTPClient-0.3-3.pom | 154 | 
+  file http://localhost/HTTPClient-0.3-3.pom.md5 | HTTPClient-0.3-3.pom.md5 | 141 | 
+  file http://localhost/HTTPClient-0.3-3.pom.sha1 | HTTPClient-0.3-3.pom.sha1 | 149 | 
+  file http://localhost/maven-metadata.xml | maven-metadata.xml | 119 | 
+  file http://localhost/maven-metadata.xml.md5 | maven-metadata.xml.md5 | 83 | 
+  file http://localhost/maven-metadata.xml.sha1 | maven-metadata.xml.sha1 | 138 | 

@@ -8,3 +8,11 @@ url=http://localhost/ name=ROOT desc= parser=ParseListItemsDirectoryListing erro
   dir http://localhost/prism/ | prism |  | ParseListItemsDirectoryListing
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseListItemsDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseListItemsDirectoryListing error=False ok=True
+  dir http://localhost/bootstrap/ | bootstrap |  | ParseListItemsDirectoryListing
+  dir http://localhost/fontawesome/ | fontawesome |  | ParseListItemsDirectoryListing
+  dir http://localhost/fonts/ | fonts |  | ParseListItemsDirectoryListing
+  dir http://localhost/images/ | images |  | ParseListItemsDirectoryListing
+  dir http://localhost/jquery/ | jquery |  | ParseListItemsDirectoryListing
+  dir http://localhost/prism/ | prism |  | ParseListItemsDirectoryListing

@@ -16,3 +16,16 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectory
   dir http://localhost:8086/listing/?download=tar_gz | listing |  | ParseLinksDirectoryListing
   dir http://localhost:8086/listing/?download=tar | listing |  | ParseLinksDirectoryListing
   dir http://localhost:8086/listing/ | listing |  | ParseLinksDirectoryListing
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/ABP-918/★线上影音★ gan8.in 最新网址.url | ★线上影音★ gan8.in 最新网址.url | 114 | 
+  file http://localhost/ABP-918/★线上影音★ skrav.com.url | ★线上影音★ skrav.com.url | 57 | 
+  file http://localhost/ABP-918/★线上影音导航★.txt | ★线上影音导航★.txt | 1126 | 
+  file http://localhost/ABP-918/★线上影音 永久地址发布★.url | ★线上影音 永久地址发布★.url | 44 | 
+  file http://localhost/ABP-918/★速看影城★ sk999.me.url | ★速看影城★ sk999.me.url | 43 | 
+  file http://localhost/ABP-918/★速看影城导航★.txt | ★速看影城导航★.txt | 650 | 
+  file http://localhost/ABP-918/新文字文件.txt | 新文字文件.txt | 68 | 
+  file http://localhost/ABP-918/ABP-918-c.jpg | ABP-918-c.jpg | 518246 | 
+  file http://localhost/ABP-918/ABP-918-s.jpg | ABP-918-s.jpg | 378061 | 
+  file http://localhost/ABP-918/ABP-918.jpg | ABP-918.jpg | 177869 | 
+  file http://localhost/ABP-918/ABP-918.mp4 | ABP-918.mp4 | 1395864371 | 

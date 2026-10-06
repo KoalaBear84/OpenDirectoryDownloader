@@ -24,3 +24,16 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   dir http://localhost:8086/listing/tech/ | tech |  | RegexParser1
   dir http://localhost:8086/listing/windoz/ | windoz | magicien d'oz et univers microsoft | RegexParser1
   file http://localhost:8086/listing/repositorium.html | repositorium.html | 4915 | ��`����,��,����`����,��,����`����,��,����`�����`����,��,����`����,��,�
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/artgfx/ | artgfx | artcore labyrinthe gfx demos | RegexParser1
+  dir http://localhost/coding/ | coding | prog docs sources rezo asm c/c++ perl | RegexParser1
+  dir http://localhost/crypto/ | crypto | analysis algo stegano wordlists | RegexParser1
+  dir http://localhost/emags/ | emags | ~2001] les vieux emags hpcav | RegexParser1
+  dir http://localhost/esprit/ | esprit | le maitre des âmes | RegexParser1
+  dir http://localhost/racine/ | racine |  | RegexParser1
+  dir http://localhost/reseau/ | reseau | sekurité, monitor et défense réseau | RegexParser1
+  dir http://localhost/sysadm/ | sysadm | unix guides admin seku kernel | RegexParser1
+  dir http://localhost/tech/ | tech |  | RegexParser1
+  dir http://localhost/windoz/ | windoz | magicien d'oz et univers microsoft | RegexParser1
+  file http://localhost/repositorium.html | repositorium.html | 4915 | ��`����,��,����`����,��,����`����,��,����`�����`����,��,����`����,��,�

@@ -80,3 +80,44 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/windows ce midi samples.7z | windows ce midi samples.7z | 355467264 | 
   file http://localhost:8086/listing/windows me oem wavs.7z | windows me oem wavs.7z | 37748736 | 
   file http://localhost:8086/listing/windows screensaver sounds.7z | windows screensaver sounds.7z | 844800 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/Gabriel's Podcast intros/ | Gabriel's Podcast intros |  | ParseTablesDirectoryListing
+  dir http://localhost/TECH CHAT/ | TECH CHAT |  | ParseTablesDirectoryListing
+  dir http://localhost/cgi-bin/ | cgi-bin |  | ParseTablesDirectoryListing
+  dir http://localhost/dosbox/ | dosbox |  | ParseTablesDirectoryListing
+  dir http://localhost/fm midi music/ | fm midi music |  | ParseTablesDirectoryListing
+  dir http://localhost/games/ | games |  | ParseTablesDirectoryListing
+  dir http://localhost/metblast_comp/ | metblast_comp |  | ParseTablesDirectoryListing
+  dir http://localhost/multisample midi music/ | multisample midi music |  | ParseTablesDirectoryListing
+  dir http://localhost/nvda/ | nvda |  | ParseTablesDirectoryListing
+  dir http://localhost/old_keysoft_files/ | old_keysoft_files |  | ParseTablesDirectoryListing
+  dir http://localhost/old jaws versions/ | old jaws versions |  | ParseTablesDirectoryListing
+  dir http://localhost/pc recordings/ | pc recordings |  | ParseTablesDirectoryListing
+  dir http://localhost/podcasts/ | podcasts |  | ParseTablesDirectoryListing
+  dir http://localhost/prank call recordings/ | prank call recordings |  | ParseTablesDirectoryListing
+  dir http://localhost/racism in america/ | racism in america |  | ParseTablesDirectoryListing
+  dir http://localhost/robotics source code/ | robotics source code |  | ParseTablesDirectoryListing
+  dir http://localhost/tts/ | tts |  | ParseTablesDirectoryListing
+  dir http://localhost/utilities/ | utilities |  | ParseTablesDirectoryListing
+  dir http://localhost/vmware/ | vmware |  | ParseTablesDirectoryListing
+  file http://localhost/BGZ Audio Archive.7z | BGZ Audio Archive.7z | 8160437862 | 
+  file http://localhost/CTEBVI 2016 NVDA presentation.zip | CTEBVI 2016 NVDA presentation.zip | 1782579 | 
+  file http://localhost/Lesson4_MediaAssets_Filmmaking_in_Africa_AUDIO_ONLY.7z | Lesson4_MediaAssets_Filmmaking_in_Africa_AUDIO_ONLY.7z | 71303168 | 
+  file http://localhost/Midi.7z | Midi.7z | 11534336 | 
+  file http://localhost/Phone Sound Pack.7z | Phone Sound Pack.7z | 20971520 | 
+  file http://localhost/Simon's M4R Collection.7z | Simon's M4R Collection.7z | 295698432 | 
+  file http://localhost/The mition to making clear OPL3 recordings.docx | The mition to making clear OPL3 recordings.docx | 14336 | 
+  file http://localhost/braillePlus sounds.7z | braillePlus sounds.7z | 955392 | 
+  file http://localhost/creating noise from silence.7z | creating noise from silence.7z | 1887437 | 
+  file http://localhost/drue recordings.7z | drue recordings.7z | 166723584 | 
+  file http://localhost/foley library.7z | foley library.7z | 15728640 | 
+  file http://localhost/midi files.7z | midi files.7z | 964689920 | 
+  file http://localhost/opl3 midis.7z | opl3 midis.7z | 206569472 | 
+  file http://localhost/song001remix.zip | song001remix.zip | 4299162 | 
+  file http://localhost/soundfonts.7z | soundfonts.7z | 937426944 | 
+  file http://localhost/wav.7z | wav.7z | 425721856 | 
+  file http://localhost/waves.7z | waves.7z | 56623104 | 
+  file http://localhost/windows ce midi samples.7z | windows ce midi samples.7z | 355467264 | 
+  file http://localhost/windows me oem wavs.7z | windows me oem wavs.7z | 37748736 | 
+  file http://localhost/windows screensaver sounds.7z | windows screensaver sounds.7z | 844800 | 

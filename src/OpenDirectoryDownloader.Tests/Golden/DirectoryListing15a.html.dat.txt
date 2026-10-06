@@ -128,3 +128,68 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/Wrox.Python.Create.Modify.Reuse.Jul.2008.pdf | Wrox.Python.Create.Modify.Reuse.Jul.2008.pdf | 6606029 | 
   file http://localhost:8086/listing/xwindows.chm | xwindows.chm | 89088 | 
   file http://localhost:8086/listing/0_LINKS.txt | 0_LINKS.txt | 1126 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/curses_module/ | curses_module |  | ParseTablesDirectoryListing
+  dir http://localhost/net_thread/ | net_thread |  | ParseTablesDirectoryListing
+  dir http://localhost/wx_in_action_RU/ | wx_in_action_RU |  | ParseTablesDirectoryListing
+  file http://localhost/%5bOReilly%5d.Python.Programming.on.Win32.chm | [OReilly].Python.Programming.on.Win32.chm | 5138022 | 
+  file http://localhost/Addison.Wesley.-.Perl.To.Python.Migration.-.2001.-.(By.Laxxuss).chm | Addison.Wesley.-.Perl.To.Python.Migration.-.2001.-.(By.Laxxuss).chm | 436224 | 
+  file http://localhost/Advanced_Python_Programming_David_M.BeazleyOReilly_Open_Source_Conference_2000.pdf | Advanced_Python_Programming_David_M.BeazleyOReilly_Open_Source_Conference_2000.pdf | 198656 | 
+  file http://localhost/an-introduction-to-tkinter.pdf | an-introduction-to-tkinter.pdf | 750592 | 
+  file http://localhost/Apress.Beginning.Python.From.Novice.to.Professional.Sep.2005.pdf | Apress.Beginning.Python.From.Novice.to.Professional.Sep.2005.pdf | 13631488 | 
+  file http://localhost/beginning-game-development-with-python-and-pygame-from-novice-to-professional.9781590598726.29808.pdf | beginning-game-development-with-python-and-pygame-from-novice-to-professional.9781590598726.29808.pdf | 8493466 | 
+  file http://localhost/byteofpython_120.pdf | byteofpython_120.pdf | 345088 | 
+  file http://localhost/diveintopython-pdf-5.4.zip | diveintopython-pdf-5.4.zip | 782336 | 
+  file http://localhost/GUI_Programming_with_Python_-_QT_Edition %5bmiex.org%5d.chm | GUI_Programming_with_Python_-_QT_Edition [miex.org].chm | 803840 | 
+  file http://localhost/How_To_Think_Like_A_Computer_Scientist-Learning_With_Python-2002.pdf | How_To_Think_Like_A_Computer_Scientist-Learning_With_Python-2002.pdf | 883712 | 
+  file http://localhost/John.Wiley.and.Sons.Making.Use.of.Python.eBook-LinG.pdf | John.Wiley.and.Sons.Making.Use.of.Python.eBook-LinG.pdf | 5557453 | 
+  file http://localhost/Manning.Publications.wxPython.in.Action.Mar.2006.pdf | Manning.Publications.wxPython.in.Action.Mar.2006.pdf | 13631488 | 
+  file http://localhost/O'Reilly,.Twisted.Network.Programming.Essentials.(2005).DDU.LotB.chm | O'Reilly,.Twisted.Network.Programming.Essentials.(2005).DDU.LotB.chm | 1258291 | 
+  file http://localhost/oodesign.pdf | oodesign.pdf | 1782579 | 
+  file http://localhost/OReilly - Core Python Programming.pdf | OReilly - Core Python Programming.pdf | 8178893 | 
+  file http://localhost/OReilly - Python & XML.pdf | OReilly - Python & XML.pdf | 2097152 | 
+  file http://localhost/OReilly - Python Standard Library.chm | OReilly - Python Standard Library.chm | 364544 | 
+  file http://localhost/OReilly.-.Python.Developers.Handbook.7z | OReilly.-.Python.Developers.Handbook.7z | 1677722 | 
+  file http://localhost/OReilly.Learning.Python.3rd.Edition.Oct.2007.eBook-BBL.rar | OReilly.Learning.Python.3rd.Edition.Oct.2007.eBook-BBL.rar | 3040870 | 
+  file http://localhost/OReilly.Next.Generation.Web.Frameworks.in.Python.Apr.2007.chm | OReilly.Next.Generation.Web.Frameworks.in.Python.Apr.2007.chm | 489472 | 
+  file http://localhost/OReilly.Programming.Python.3rd.Edition.Aug.2006.chm | OReilly.Programming.Python.3rd.Edition.Aug.2006.chm | 10171187 | 
+  file http://localhost/Oreilly.Python.Cookbook.2nd.edition.Jun.2005.eBook-LiB.chm | Oreilly.Python.Cookbook.2nd.edition.Jun.2005.eBook-LiB.chm | 1572864 | 
+  file http://localhost/OReilly.Python.for.Unix.and.Linux.System.Administration.Sep.2008.pdf | OReilly.Python.for.Unix.and.Linux.System.Administration.Sep.2008.pdf | 3565158 | 
+  file http://localhost/OReilly.Python.in.a.Nutshell.2nd.Edition.Jul.2006.chm | OReilly.Python.in.a.Nutshell.2nd.Edition.Jul.2006.chm | 1153434 | 
+  file http://localhost/Packt.Publishing.CherryPy.Essentials.Rapid.Python.Web.Application.Development.Mar.2007.eBook-BBL.rar | Packt.Publishing.CherryPy.Essentials.Rapid.Python.Web.Application.Development.Mar.2007.eBook-BBL.rar | 3040870 | 
+  file http://localhost/Packt.Publishing.Learning.Website.Development.with.Django.Mar.2008.pdf | Packt.Publishing.Learning.Website.Development.with.Django.Mar.2008.pdf | 5976883 | 
+  file http://localhost/pil-handbook.pdf | pil-handbook.pdf | 497664 | 
+  file http://localhost/Preiss,_B.R._-_Data_Structures_and_Algorithms_in_Python_(2004) %5bmiex.org%5d.chm | Preiss,_B.R._-_Data_Structures_and_Algorithms_in_Python_(2004) [miex.org].chm | 3460301 | 
+  file http://localhost/Premier.Press,.Python.Programming.for.the.Absolute.Beginner.(2003).LiB.ShareConnector %5bmiex.org%5d.chm | Premier.Press,.Python.Programming.for.the.Absolute.Beginner.(2003).LiB.ShareConnector [miex.org].chm | 5767168 | 
+  file http://localhost/Premier.Press.-.Game.Programming.with.Python,.Lua.and.Ruby.-.2003.-.(By.Laxxuss).chm | Premier.Press.-.Game.Programming.with.Python,.Lua.and.Ruby.-.2003.-.(By.Laxxuss).chm | 2202010 | 
+  file http://localhost/Prentice.Hall.Rapid.Web.Applications.with.TurboGears.Nov.2006.chm.tar.bz2 | Prentice.Hall.Rapid.Web.Applications.with.TurboGears.Nov.2006.chm.tar.bz2 | 6501171 | 
+  file http://localhost/Python - Database Application Programming Interface.pdf | Python - Database Application Programming Interface.pdf | 1048576 | 
+  file http://localhost/Python Essential Reference, Second Edition.rar | Python Essential Reference, Second Edition.rar | 548864 | 
+  file http://localhost/Python Pocket Reference.chm | Python Pocket Reference.chm | 179200 | 
+  file http://localhost/python 2.1 bible.pdf.bz2 | python 2.1 bible.pdf.bz2 | 5033165 | 
+  file http://localhost/python-for-perl-hackers.pdf | python-for-perl-hackers.pdf | 20480 | 
+  file http://localhost/python-scripting-for-computational-science-texts-in-computational-science-and-engineering.tar.bz2 | python-scripting-for-computational-science-texts-in-computational-science-and-engineering.tar.bz2 | 3774874 | 
+  file http://localhost/python_intuit.RU.zip | python_intuit.RU.zip | 1153434 | 
+  file http://localhost/python_lectionsRU.rar | python_lectionsRU.rar | 306176 | 
+  file http://localhost/python_otkidach_ru.pdf | python_otkidach_ru.pdf | 1468006 | 
+  file http://localhost/python_quick_tour.pdf | python_quick_tour.pdf | 51200 | 
+  file http://localhost/pythonbook-2.5.pdf | pythonbook-2.5.pdf | 4823450 | 
+  file http://localhost/PythonWindowsTutorial.doc | PythonWindowsTutorial.doc | 1992294 | 
+  file http://localhost/pytut.pdf | pytut.pdf | 1677722 | 
+  file http://localhost/Rapid GUI Programming with Python and Qt - Oct.2008-Prentice Hall.rar | Rapid GUI Programming with Python and Qt - Oct.2008-Prentice Hall.rar | 4718592 | 
+  file http://localhost/ru_Zope3.pdf | ru_Zope3.pdf | 1887437 | 
+  file http://localhost/Ruby Vs Perl And Python.pdf | Ruby Vs Perl And Python.pdf | 134144 | 
+  file http://localhost/Sams.Python.Phrasebook.Nov.2006.eBook-BBL.rar | Sams.Python.Phrasebook.Nov.2006.eBook-BBL.rar | 776192 | 
+  file http://localhost/Springer.Python.Scripting.for.Computational.Science.3rd.Edition.Jan.2008.eBook-BBL.pdf | Springer.Python.Scripting.for.Computational.Science.3rd.Edition.Jan.2008.eBook-BBL.pdf | 6606029 | 
+  file http://localhost/start_with_pythonRU.pdf | start_with_pythonRU.pdf | 769024 | 
+  file http://localhost/The Definitive Guide to Django - Apress.pdf | The Definitive Guide to Django - Apress.pdf | 4299162 | 
+  file http://localhost/thinkCSpy.pdf | thinkCSpy.pdf | 891904 | 
+  file http://localhost/thinkCSpy2.tgz | thinkCSpy2.tgz | 1048576 | 
+  file http://localhost/tkinter.pdf | tkinter.pdf | 816128 | 
+  file http://localhost/tutor.pdf | tutor.pdf | 732160 | 
+  file http://localhost/Wrox.Beginning.Python.Jul.2005.eBook-LinG.pdf | Wrox.Beginning.Python.Jul.2005.eBook-LinG.pdf | 15728640 | 
+  file http://localhost/Wrox.Professional.Python.Frameworks.Web.2.0.Programming.with.Django.and.TurboGears.Oct.2007.eBook-BBL.rar | Wrox.Professional.Python.Frameworks.Web.2.0.Programming.with.Django.and.TurboGears.Oct.2007.eBook-BBL.rar | 5033165 | 
+  file http://localhost/Wrox.Python.Create.Modify.Reuse.Jul.2008.pdf | Wrox.Python.Create.Modify.Reuse.Jul.2008.pdf | 6606029 | 
+  file http://localhost/xwindows.chm | xwindows.chm | 89088 | 
+  file http://localhost/0_LINKS.txt | 0_LINKS.txt | 1126 | 

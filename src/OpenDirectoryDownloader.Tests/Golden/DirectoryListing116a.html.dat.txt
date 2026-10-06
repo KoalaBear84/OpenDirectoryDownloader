@@ -22,3 +22,15 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/사장님 귀는 당나귀 귀.E96.210221.720p-NEXT.mp4 | 사장님 귀는 당나귀 귀.E96.210221.720p-NEXT.mp4 | 1921005660 | 
   file http://localhost:8086/listing/사장님 귀는 당나귀 귀.E98.210307.720p-NEXT.mp4 | 사장님 귀는 당나귀 귀.E98.210307.720p-NEXT.mp4 | 1762443602 | 
   file http://localhost:8086/listing/펜트하우스 2.E06.210306.720p-NEXT.mp4 | 펜트하우스 2.E06.210306.720p-NEXT.mp4 | 1540794880 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/The.Penthouse.S02E03.KOREAN.1080p.WEBRip.AAC2.0.x264-AppleTor[rartv] | The.Penthouse.S02E03.KOREAN.1080p.WEBRip.AAC2.0.x264-AppleTor[rartv] |  | ParseTablesDirectoryListing
+  file http://localhost/AnySign_Installer (1).exe | AnySign_Installer (1).exe | 11514460 | 
+  file http://localhost/AnySign_Installer.exe | AnySign_Installer.exe | 11514460 | 
+  file http://localhost/desktop.ini | desktop.ini | 287 | 
+  file http://localhost/veraport-g3-x64-sha2 (1).exe | veraport-g3-x64-sha2 (1).exe | 6793421 | 
+  file http://localhost/veraport-g3-x64-sha2 (2).exe | veraport-g3-x64-sha2 (2).exe | 6793421 | 
+  file http://localhost/veraport-g3-x64-sha2.exe | veraport-g3-x64-sha2.exe | 6793421 | 
+  file http://localhost/사장님 귀는 당나귀 귀.E96.210221.720p-NEXT.mp4 | 사장님 귀는 당나귀 귀.E96.210221.720p-NEXT.mp4 | 1921005660 | 
+  file http://localhost/사장님 귀는 당나귀 귀.E98.210307.720p-NEXT.mp4 | 사장님 귀는 당나귀 귀.E98.210307.720p-NEXT.mp4 | 1762443602 | 
+  file http://localhost/펜트하우스 2.E06.210306.720p-NEXT.mp4 | 펜트하우스 2.E06.210306.720p-NEXT.mp4 | 1540794880 | 

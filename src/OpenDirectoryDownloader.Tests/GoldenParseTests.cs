@@ -1,4 +1,3 @@
-using OpenDirectoryDownloader.Shared.Models;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Xunit;
@@ -11,11 +10,6 @@ namespace OpenDirectoryDownloader.Tests;
 /// </summary>
 public class GoldenParseTests
 {
-	public GoldenParseTests()
-	{
-		Program.Logger ??= new Serilog.LoggerConfiguration().CreateLogger();
-	}
-
 	private static string GoldenDirectory([CallerFilePath] string path = "") => Path.Combine(Path.GetDirectoryName(path), "Golden");
 
 	public static IEnumerable<TheoryDataRow<string>> Samples()
@@ -63,6 +57,16 @@ public class GoldenParseTests
 			text.Append("== nested\n");
 			WebDirectory directory = new(new WebDirectory(null) { Url = "http://localhost:8086/", Name = "root" }) { Url = "http://localhost:8086/listing/", Name = "listing" };
 			text.Append(Describe(await DirectoryParser.ParseHtml(directory, html)));
+		}
+		catch (Exception ex)
+		{
+			text.Append("EXCEPTION " + ex.GetType().Name + "\n");
+		}
+
+		try
+		{
+			text.Append("== root, entries outside the directory kept\n");
+			text.Append(Describe(await DirectoryParser.ParseHtml(new WebDirectory(null) { Url = "http://localhost/" }, html, checkParents: false)));
 		}
 		catch (Exception ex)
 		{

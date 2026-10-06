@@ -5,3 +5,7 @@ url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=F
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
   file http://localhost:8086/favicon.ico | favicon.ico | 304 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/pub/ | pub |  | ParseTablesDirectoryListing
+  file http://localhost/favicon.ico | favicon.ico | 304 | 

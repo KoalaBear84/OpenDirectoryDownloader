@@ -98,3 +98,53 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   file http://localhost:8086/listing/jindroush.atari.org.zip | jindroush.atari.org.zip | 12582912 | 
   file http://localhost:8086/listing/nectarine-oneliner-160803.png | nectarine-oneliner-160803.png | 282624 | 
   file http://localhost:8086/listing/wokoder.mp3 | wokoder.mp3 | 74752 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/Aladin/ | Aladin |  | RegexParser1
+  dir http://localhost/Atari ATR (Czech Republic)/ | Atari ATR (Czech Republic) |  | RegexParser1
+  dir http://localhost/DynablasterXE/ | DynablasterXE |  | RegexParser1
+  dir http://localhost/Falcon fonts/ | Falcon fonts |  | RegexParser1
+  dir http://localhost/MAE/ | MAE |  | RegexParser1
+  dir http://localhost/Phonemark/ | Phonemark |  | RegexParser1
+  dir http://localhost/Random_ATRs/ | Random_ATRs |  | RegexParser1
+  dir http://localhost/SDG-AtariOnline/ | SDG-AtariOnline |  | RegexParser1
+  dir http://localhost/SIDE/ | SIDE |  | RegexParser1
+  dir http://localhost/SKANY/ | SKANY |  | RegexParser1
+  dir http://localhost/ST FILMY/ | ST FILMY |  | RegexParser1
+  dir http://localhost/Spy_vs_spy/ | Spy_vs_spy |  | RegexParser1
+  dir http://localhost/TT_SystemV_R4/ | TT_SystemV_R4 |  | RegexParser1
+  dir http://localhost/The Brainwasher - Eagles/ | The Brainwasher - Eagles |  | RegexParser1
+  dir http://localhost/barymag 1 dzialajacy/ | barymag 1 dzialajacy |  | RegexParser1
+  dir http://localhost/detox_pentagram/ | detox_pentagram |  | RegexParser1
+  dir http://localhost/elwro/ | elwro |  | RegexParser1
+  dir http://localhost/frm_DRC/ | frm_DRC |  | RegexParser1
+  dir http://localhost/from VLX/ | from VLX |  | RegexParser1
+  dir http://localhost/machinae_supremacy/ | machinae_supremacy |  | RegexParser1
+  dir http://localhost/magicpc/ | magicpc |  | RegexParser1
+  dir http://localhost/misc/ | misc |  | RegexParser1
+  dir http://localhost/mystic_bytes/ | mystic_bytes |  | RegexParser1
+  dir http://localhost/odra1305/ | odra1305 |  | RegexParser1
+  dir http://localhost/robbojava/ | robbojava |  | RegexParser1
+  dir http://localhost/satandisk image card/ | satandisk image card |  | RegexParser1
+  dir http://localhost/spacola/ | spacola |  | RegexParser1
+  dir http://localhost/strykercas/ | strykercas |  | RegexParser1
+  dir http://localhost/temp/ | temp |  | RegexParser1
+  dir http://localhost/viktor/ | viktor |  | RegexParser1
+  dir http://localhost/vulgar/ | vulgar |  | RegexParser1
+  dir http://localhost/w_mediach/ | w_mediach |  | RegexParser1
+  dir http://localhost/xe video mod photo/ | xe video mod photo |  | RegexParser1
+  file http://localhost/Atarian_ttf_font.zip | Atarian_ttf_font.zip | 104448 | 
+  file http://localhost/BlackD0t-Tribute to Atari.rar | BlackD0t-Tribute to Atari.rar | 19922944 | 
+  file http://localhost/Falcon_schematy_pliki_zrodlowe.7z | Falcon_schematy_pliki_zrodlowe.7z | 111149056 | 
+  file http://localhost/Falcon_schematy_pliki_zrodlowe_wersja_GIF.7z | Falcon_schematy_pliki_zrodlowe_wersja_GIF.7z | 16777216 | 
+  file http://localhost/GameMidi_for_PolyPhones.zip | GameMidi_for_PolyPhones.zip | 97280 | 
+  file http://localhost/MR.MO - MAH NA MAH NA.mp3 | MR.MO - MAH NA MAH NA.mp3 | 4089446 | 
+  file http://localhost/Misja finished in 15min39sec ver 1.0.rar | Misja finished in 15min39sec ver 1.0.rar | 44040192 | 
+  file http://localhost/OS.rar | OS.rar | 186368 | 
+  file http://localhost/PECUS.ZIP | PECUS.ZIP | 73728 | 
+  file http://localhost/bael_mac_zrodla_calosc.rar | bael_mac_zrodla_calosc.rar | 13631488 | 
+  file http://localhost/heyhey16k.swf | heyhey16k.swf | 2097152 | 
+  file http://localhost/in_sc68.dll | in_sc68.dll | 217088 | 
+  file http://localhost/jindroush.atari.org.zip | jindroush.atari.org.zip | 12582912 | 
+  file http://localhost/nectarine-oneliner-160803.png | nectarine-oneliner-160803.png | 282624 | 
+  file http://localhost/wokoder.mp3 | wokoder.mp3 | 74752 | 

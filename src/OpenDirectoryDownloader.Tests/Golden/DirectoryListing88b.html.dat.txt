@@ -110,3 +110,59 @@ url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=Tru
   dir http://localhost:8086/listing/AVDO AHMETOVIC-2006/ | AVDO AHMETOVIC-2006 |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/AYSELA-2006/ | AYSELA-2006 |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/AZEMINA GRBIC-1989/ | AZEMINA GRBIC-1989 |  | ParseTablesDirectoryListing
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  dir http://localhost/ABID SAKALAS-2005/ | ABID SAKALAS-2005 |  | ParseTablesDirectoryListing
+  dir http://localhost/ACA ALICIC-2005/ | ACA ALICIC-2005 |  | ParseTablesDirectoryListing
+  dir http://localhost/ACA LUKAS/ | ACA LUKAS |  | ParseTablesDirectoryListing
+  dir http://localhost/ACKO NEZIROVIC-1994/ | ACKO NEZIROVIC-1994 |  | ParseTablesDirectoryListing
+  dir http://localhost/ACO BABIC-2005/ | ACO BABIC-2005 |  | ParseTablesDirectoryListing
+  dir http://localhost/ACO PAUNOVIC-2004/ | ACO PAUNOVIC-2004 |  | ParseTablesDirectoryListing
+  dir http://localhost/ACO REGINA-2004/ | ACO REGINA-2004 |  | ParseTablesDirectoryListing
+  dir http://localhost/ADELA-2006/ | ADELA-2006 |  | ParseTablesDirectoryListing
+  dir http://localhost/ADELISA HODZIC/ | ADELISA HODZIC |  | ParseTablesDirectoryListing
+  dir http://localhost/ADELISA-2006/ | ADELISA-2006 |  | ParseTablesDirectoryListing
+  dir http://localhost/ADIL PARATUSIC-2005/ | ADIL PARATUSIC-2005 |  | ParseTablesDirectoryListing
+  dir http://localhost/ADIN CALKIC-2005/ | ADIN CALKIC-2005 |  | ParseTablesDirectoryListing
+  dir http://localhost/ADNAN GOLIC-2006/ | ADNAN GOLIC-2006 |  | ParseTablesDirectoryListing
+  dir http://localhost/ADO GEDAJ/ | ADO GEDAJ |  | ParseTablesDirectoryListing
+  dir http://localhost/AHIRA HASIC-2004/ | AHIRA HASIC-2004 |  | ParseTablesDirectoryListing
+  dir http://localhost/AHIRA HASIC-2006/ | AHIRA HASIC-2006 |  | ParseTablesDirectoryListing
+  dir http://localhost/AHMET BAJRIC-2005/ | AHMET BAJRIC-2005 |  | ParseTablesDirectoryListing
+  dir http://localhost/AJNUR SERBEZOVSKI/ | AJNUR SERBEZOVSKI |  | ParseTablesDirectoryListing
+  dir http://localhost/ALEKSANDAR ILIC/ | ALEKSANDAR ILIC |  | ParseTablesDirectoryListing
+  dir http://localhost/ALEN ISLAMOVIC/ | ALEN ISLAMOVIC |  | ParseTablesDirectoryListing
+  dir http://localhost/ALEN MEHMEDAGIC-2005/ | ALEN MEHMEDAGIC-2005 |  | ParseTablesDirectoryListing
+  dir http://localhost/ALEN OSMANOVIC/ | ALEN OSMANOVIC |  | ParseTablesDirectoryListing
+  dir http://localhost/ALIJA HAJDAREVIC-2004/ | ALIJA HAJDAREVIC-2004 |  | ParseTablesDirectoryListing
+  dir http://localhost/ALKA VUICA/ | ALKA VUICA |  | ParseTablesDirectoryListing
+  dir http://localhost/ALMA ALTA-1984/ | ALMA ALTA-1984 |  | ParseTablesDirectoryListing
+  dir http://localhost/ALMA ALTA-1985/ | ALMA ALTA-1985 |  | ParseTablesDirectoryListing
+  dir http://localhost/ALMA TUCAKOVIC-2005/ | ALMA TUCAKOVIC-2005 |  | ParseTablesDirectoryListing
+  dir http://localhost/ALMASA MEHANOVIC-1997/ | ALMASA MEHANOVIC-1997 |  | ParseTablesDirectoryListing
+  dir http://localhost/ALMASA-2004/ | ALMASA-2004 |  | ParseTablesDirectoryListing
+  dir http://localhost/ALMIR-2006/ | ALMIR-2006 |  | ParseTablesDirectoryListing
+  dir http://localhost/AMELA SEHOVIC-2006/ | AMELA SEHOVIC-2006 |  | ParseTablesDirectoryListing
+  dir http://localhost/AMELA ZUKOVIC/ | AMELA ZUKOVIC |  | ParseTablesDirectoryListing
+  dir http://localhost/AMIL BISCANIN-2005/ | AMIL BISCANIN-2005 |  | ParseTablesDirectoryListing
+  dir http://localhost/AMIR KAZIC-LEO/ | AMIR KAZIC-LEO |  | ParseTablesDirectoryListing
+  dir http://localhost/AMIR SMAJIC-2005/ | AMIR SMAJIC-2005 |  | ParseTablesDirectoryListing
+  dir http://localhost/AMIRA MEDUNJANIN-2005/ | AMIRA MEDUNJANIN-2005 |  | ParseTablesDirectoryListing
+  dir http://localhost/AMRA ARNAUT/ | AMRA ARNAUT |  | ParseTablesDirectoryListing
+  dir http://localhost/AMRA HALEBIC/ | AMRA HALEBIC |  | ParseTablesDirectoryListing
+  dir http://localhost/ANA ANA-2006/ | ANA ANA-2006 |  | ParseTablesDirectoryListing
+  dir http://localhost/ANA BEKUTA/ | ANA BEKUTA |  | ParseTablesDirectoryListing
+  dir http://localhost/ANA NIKOLIC-2006/ | ANA NIKOLIC-2006 |  | ParseTablesDirectoryListing
+  dir http://localhost/ANCI/ | ANCI |  | ParseTablesDirectoryListing
+  dir http://localhost/ANDJELA ANDJELIC/ | ANDJELA ANDJELIC |  | ParseTablesDirectoryListing
+  dir http://localhost/ANDRIJANA-2005/ | ANDRIJANA-2005 |  | ParseTablesDirectoryListing
+  dir http://localhost/APCE AHMEDOVSKI/ | APCE AHMEDOVSKI |  | ParseTablesDirectoryListing
+  dir http://localhost/ARMIN SAKOVIC/ | ARMIN SAKOVIC |  | ParseTablesDirectoryListing
+  dir http://localhost/ASIM BAJRIC/ | ASIM BAJRIC |  | ParseTablesDirectoryListing
+  dir http://localhost/ASIM BRKAN/ | ASIM BRKAN |  | ParseTablesDirectoryListing
+  dir http://localhost/ASIM MUJCIC/ | ASIM MUJCIC |  | ParseTablesDirectoryListing
+  dir http://localhost/ASKA SLJIVAR/ | ASKA SLJIVAR |  | ParseTablesDirectoryListing
+  dir http://localhost/ASLIJA SLJIVAR-ASKA-2004/ | ASLIJA SLJIVAR-ASKA-2004 |  | ParseTablesDirectoryListing
+  dir http://localhost/AVDO AHMETOVIC-2006/ | AVDO AHMETOVIC-2006 |  | ParseTablesDirectoryListing
+  dir http://localhost/AYSELA-2006/ | AYSELA-2006 |  | ParseTablesDirectoryListing
+  dir http://localhost/AZEMINA GRBIC-1989/ | AZEMINA GRBIC-1989 |  | ParseTablesDirectoryListing

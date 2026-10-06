@@ -6,3 +6,9 @@ url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=Fals
   file http://localhost/interesting_stuff/magazine/june07_lores.pdf | june07_lores.pdf | 9096445 | 
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/interesting_stuff/magazine/advertising/ | advertising |  | RegexParser6
+  file http://localhost/interesting_stuff/magazine/august 2012.pdf | august 2012.pdf | 34002210 | 
+  file http://localhost/interesting_stuff/magazine/august 2012lores.pdf | august 2012lores.pdf | 1957507 | 
+  file http://localhost/interesting_stuff/magazine/june07_lores.pdf | june07_lores.pdf | 9096445 | 

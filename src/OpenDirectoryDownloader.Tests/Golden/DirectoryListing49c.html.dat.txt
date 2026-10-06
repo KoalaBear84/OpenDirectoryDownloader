@@ -26,3 +26,29 @@ url=http://localhost/ name=ROOT desc= parser= error=False ok=False
   file http://localhost/Public-Inquiries/PIM Image.jpg | PIM Image.jpg | 356065 | 
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/?dir=Public-Inquiries%2FA4194-Herefordshire | A4194-Herefordshire |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2FA465-English | A465-English |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2FA465-Welsh | A465-Welsh |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2FBarking Riverside | Barking Riverside |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2FBrent Cross | Brent Cross |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2FBrent Cross No. 3 | Brent Cross No. 3 |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2FCambridge | Cambridge |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2FChippenham Gardens | Chippenham Gardens |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2FCorby | Corby |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2FEssex | Essex |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2FM4 - Revised | M4 - Revised |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2FM4-Casnewydd | M4-Casnewydd |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2FM4-Newport | M4-Newport |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2FRattys Lane - Hoddesdon | Rattys Lane - Hoddesdon |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2FSuffolk | Suffolk |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2Faylesbury-estate | aylesbury-estate |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2Fcanterbury | canterbury |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2Feast-west-rail | east-west-rail |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2Fprocedures | procedures |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2Friver-arun | river-arun |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2Frother-valley | rother-valley |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Public-Inquiries%2Fseven-sisters | seven-sisters |  | ParseTablesDirectoryListing
+  file http://localhost/Public-Inquiries/25.10.18-Programme.pdf | 25.10.18-Programme.pdf | 262124 | 
+  file http://localhost/Public-Inquiries/PIM Image.jpg | PIM Image.jpg | 356065 | 

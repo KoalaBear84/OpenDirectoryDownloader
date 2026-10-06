@@ -10,3 +10,9 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseDirectoryListe
   dir http://localhost:8086/listing/?dir=ROMS | ROMS |  | ParseDirectoryLister01DirectoryListing
   dir http://localhost:8086/listing/?dir=Software | Software |  | ParseDirectoryLister01DirectoryListing
   file http://localhost:8086/listing/README.md | README.md | 303 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseDirectoryLister01DirectoryListing error=False ok=False
+  dir http://localhost/?dir=Music | Music |  | ParseDirectoryLister01DirectoryListing
+  dir http://localhost/?dir=ROMS | ROMS |  | ParseDirectoryLister01DirectoryListing
+  dir http://localhost/?dir=Software | Software |  | ParseDirectoryLister01DirectoryListing
+  file http://localhost/README.md | README.md | 303 | 

@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OpenDirectoryDownloader.Shared\OpenDirectoryDownloader.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="OpenDirectoryDownloader.GoogleDrive.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

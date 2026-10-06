@@ -2,3 +2,34 @@
 url=http://localhost/ name=ROOT desc= parser=ParseLinksDirectoryListing error=False ok=True
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file https://1fichier.com/?xil1oltb8xzxqjx6keg5 | Cosmos.A.Space.Time.Odyssey.S01E01.480p.mkv | 158198661 | 
+  file https://1fichier.com/?cm9z3mrcw65x23124dsz | Cosmos.A.Space.Time.Odyssey.S01E01.720p.FardaDownload.mkv | 314583286 | 
+  file https://1fichier.com/?7528yfqmgajg8v59hl0s | Cosmos.A.Space.Time.Odyssey.S01E02.480p.mkv | 158114775 | 
+  file https://1fichier.com/?ktvi78yfmu3fsujxpg2r | Cosmos.A.Space.Time.Odyssey.S01E02.720p.mkv | 314824458 | 
+  file https://1fichier.com/?rl8ob26c6bauiiwyeaz9 | Cosmos.A.Space.Time.Odyssey.S01E03.480p.mkv | 188334735 | 
+  file https://1fichier.com/?h4kdptx8t8gdagv89bbx | Cosmos.A.Space.Time.Odyssey.S01E03.720p.mkv | 314834944 | 
+  file https://1fichier.com/?uk9l1o61zn81vy9rycr3 | Cosmos.A.Space.Time.Odyssey.S01E04.480p.mkv | 215901798 | 
+  file https://1fichier.com/?bg6xrh6mide916eu8ogr | Cosmos.A.Space.Time.Odyssey.S01E04.720p.mkv | 314751058 | 
+  file https://1fichier.com/?2b74o38e0kdtk3obzyvq | Cosmos.A.Space.Time.Odyssey.S01E05.480p.mkv | 249707889 | 
+  file https://1fichier.com/?svlr7arljbry2l7rg3kq | Cosmos.A.Space.Time.Odyssey.S01E05.720p.mkv | 315013202 | 
+  file https://1fichier.com/?cvrjhcmd75hmifnygjfg | Cosmos.A.Space.Time.Odyssey.S01E06.480p.mkv | 293538365 | 
+  file https://1fichier.com/?pivksk0pj6jedth2k9ed | Cosmos.A.Space.Time.Odyssey.S01E06.720p.mkv | 314971259 | 
+  file https://1fichier.com/?kww6a28s6kj4m4au5ucp | Cosmos.A.Space.Time.Odyssey.S01E07.480p.mkv | 158376919 | 
+  file https://1fichier.com/?1s15teh9jz8ckw0uhybm | Cosmos.A.Space.Time.Odyssey.S01E07.720p.mkv | 314667172 | 
+  file https://1fichier.com/?yozbl2sp669m8jy8d4ub | Cosmos.A.Space.Time.Odyssey.S01E08.480p.mkv | 174724219 | 
+  file https://1fichier.com/?onlhowjhcqdo9te42yvv | Cosmos.A.Space.Time.Odyssey.S01E08.720p.mkv | 314813972 | 
+  file https://1fichier.com/?9xzb3noopw5dkjc5cgho | Cosmos.A.Space.Time.Odyssey.S01E09.480p.mkv | 213364244 | 
+  file https://1fichier.com/?soi3erub3wb2zjwkoxk0 | Cosmos.A.Space.Time.Odyssey.S01E09.720p.mkv | 315013202 | 
+  file https://1fichier.com/?o2nbz6f8f5p5zk0irdot | Cosmos.A.Space.Time.Odyssey.S01E10.480p.mkv | 179767869 | 
+  file https://1fichier.com/?4vgv384xe0ovlhqrsl99 | Cosmos.A.Space.Time.Odyssey.S01E10.720p.mkv | 307473940 | 
+  file https://1fichier.com/?2h0gxrq4uzg9um8z25up | Cosmos.A.Space.Time.Odyssey.S01E11.720p.mkv | 314698629 | 
+  file https://1fichier.com/?4q4dzoi2zqy245b59yz6 | Cosmos.A.Space.Time.Odyssey.S01E12.480p.mkv | 221343908 | 
+  file https://1fichier.com/?ayzqn52nczjdbjwcxa6a | Cosmos.A.Space.Time.Odyssey.S01E12.720p.mkv | 314887373 | 
+  file https://1fichier.com/?0g2fmaels0piebtkxyi7 | Cosmos.A.Space.Time.Odyssey.S01E13.480p.mkv | 210187059 | 
+  file https://1fichier.com/?7soiwylw020r3t9k76ys | Cosmos.A.Space.Time.Odyssey.S01E13.720p.FardaDownload.mkv | 314782515 | 
+  file https://1fichier.com/?w4l2090f10acpfn036bi | HIM Dream Cars Special Spy Cars 480p HDTV x264_AVADL.CoM.mkv | 413432545 | 
+  file https://1fichier.com/?euu4rvuf14jfks1tfnmx | How It's Made Dream Cars - S01E04 - Audi R8 - 720P.HDTV.X265-O69.mkv | 143340339 | 
+  file https://1fichier.com/?qz7nzp24yn13wauoszuo | How It's Made Dream Cars - S02E01 - Bugatti Veyron - 720P.HDTV.X265-O69.mkv | 151026401 | 
+  file https://1fichier.com/?khnx8cgy1mzcc48swb4n | Steven.Universe.2013.Web-DLRip.1080p.S01E03.(Avadl.org).mp4 | 173780500 | 

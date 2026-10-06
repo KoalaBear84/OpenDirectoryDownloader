@@ -170,3 +170,89 @@ url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=Fal
   file http://localhost:8086/listing/Magazine E-book/XMCO ActuSecu 32.pdf | XMCO ActuSecu 32.pdf | 18874368 | 
   file http://localhost:8086/listing/Magazine E-book/ZI Hackademy - Newbie 3.pdf | ZI Hackademy - Newbie 3.pdf | 32505856 | 
   file http://localhost:8086/listing/Magazine E-book/Zope_Plone_ed2_v1.pdf | Zope_Plone_ed2_v1.pdf | 6291456 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/?dir=./Magazine E-book/ActuSecu | ActuSecu |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./Magazine E-book/Belgian Hackers Zone | Belgian Hackers Zone |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./Magazine E-book/Cryptel | Cryptel |  | ParseTablesDirectoryListing
+  dir http://localhost/Magazine E-book/Rafale | Rafale |  | ParseTablesDirectoryListing
+  file http://localhost/Magazine E-book/Android Hacker's Handbook.pdf | Android Hacker's Handbook.pdf | 9437184 | 
+  file http://localhost/Magazine E-book/Android_Security_Internals-An_In-Depth_Guide_to_Android_s_Security_Architecture.pdf | Android_Security_Internals-An_In-Depth_Guide_to_Android_s_Security_Architecture.pdf | 8388608 | 
+  file http://localhost/Magazine E-book/Antivirus hackers handbook.pdf | Antivirus hackers handbook.pdf | 6291456 | 
+  file http://localhost/Magazine E-book/BlackHat-DC-2010-Medina-Abusing-insecure-features-of-Internet-Explorer-wp.pdf | BlackHat-DC-2010-Medina-Abusing-insecure-features-of-Internet-Explorer-wp.pdf | 588800 | 
+  file http://localhost/Magazine E-book/Du bon usage de la Piraterie.pdf | Du bon usage de la Piraterie.pdf | 2097152 | 
+  file http://localhost/Magazine E-book/E-BOOK-FRHACK-v2.2.pdf | E-BOOK-FRHACK-v2.2.pdf | 3145728 | 
+  file http://localhost/Magazine E-book/EN-Certified Ethical Hacker 3.0 Official Course.pdf | EN-Certified Ethical Hacker 3.0 Official Course.pdf | 27262976 | 
+  file http://localhost/Magazine E-book/EN-Ethical Hacking.pdf | EN-Ethical Hacking.pdf | 27262976 | 
+  file http://localhost/Magazine E-book/EN-GCC The Complete Guide Reference.pdf | EN-GCC The Complete Guide Reference.pdf | 6291456 | 
+  file http://localhost/Magazine E-book/EN-Google Hacking- Making Competitive Intelligence Work for You.pdf | EN-Google Hacking- Making Competitive Intelligence Work for You.pdf | 5242880 | 
+  file http://localhost/Magazine E-book/EN-Hacking for Dummies.pdf | EN-Hacking for Dummies.pdf | 7340032 | 
+  file http://localhost/Magazine E-book/EN-Hacking Gmail.pdf | EN-Hacking Gmail.pdf | 5242880 | 
+  file http://localhost/Magazine E-book/EN-Hacking Intranet Website From The Outside.pdf | EN-Hacking Intranet Website From The Outside.pdf | 5242880 | 
+  file http://localhost/Magazine E-book/EN-Hacking jBoss.pdf | EN-Hacking jBoss.pdf | 524288 | 
+  file http://localhost/Magazine E-book/EN-Hacking Matter.pdf | EN-Hacking Matter.pdf | 2097152 | 
+  file http://localhost/Magazine E-book/EN-Hacking PSP.pdf | EN-Hacking PSP.pdf | 12582912 | 
+  file http://localhost/Magazine E-book/EN-Hacking Securite Hand-Book.pdf | EN-Hacking Securite Hand-Book.pdf | 4194304 | 
+  file http://localhost/Magazine E-book/EN-Hacking The Cable Modem.pdf | EN-Hacking The Cable Modem.pdf | 23068672 | 
+  file http://localhost/Magazine E-book/EN-Hacking VoIP Exposed.pdf | EN-Hacking VoIP Exposed.pdf | 4194304 | 
+  file http://localhost/Magazine E-book/EN-Hacking Web Applications.pdf | EN-Hacking Web Applications.pdf | 6291456 | 
+  file http://localhost/Magazine E-book/EN-Hack It Security Through Penetration Testing.pdf | EN-Hack It Security Through Penetration Testing.pdf | 12582912 | 
+  file http://localhost/Magazine E-book/EN-Hardware Hacking - Have Fun While Voiding Your Warranty (2004).pdf | EN-Hardware Hacking - Have Fun While Voiding Your Warranty (2004).pdf | 40894464 | 
+  file http://localhost/Magazine E-book/EN-INSECURE-Mag-25.Penetration testing.pdf | EN-INSECURE-Mag-25.Penetration testing.pdf | 9437184 | 
+  file http://localhost/Magazine E-book/EN-Rule Set Based Access Control (RSBAC).pdf | EN-Rule Set Based Access Control (RSBAC).pdf | 147456 | 
+  file http://localhost/Magazine E-book/EN-SAP Penetration testing_Black-H_Europe.pdf | EN-SAP Penetration testing_Black-H_Europe.pdf | 3145728 | 
+  file http://localhost/Magazine E-book/ezine 50-1337.pdf | ezine 50-1337.pdf | 14680064 | 
+  file http://localhost/Magazine E-book/Fluide glacial Le Guide Informatique.pdf | Fluide glacial Le Guide Informatique.pdf | 23068672 | 
+  file http://localhost/Magazine E-book/Gestion de projet vers les methodes agiles.pdf | Gestion de projet vers les methodes agiles.pdf | 4194304 | 
+  file http://localhost/Magazine E-book/Google Hacking for Penetration Testers Volume2 - Nov 2007.pdf | Google Hacking for Penetration Testers Volume2 - Nov 2007.pdf | 15728640 | 
+  file http://localhost/Magazine E-book/Gray Hat Python - Python Programming for Hackers and Reverse Engineers (2009).pdf | Gray Hat Python - Python Programming for Hackers and Reverse Engineers (2009).pdf | 3145728 | 
+  file http://localhost/Magazine E-book/Guide PRATIQUE  10 conseils essentiels sur la Securite Informatique .pdf | Guide PRATIQUE  10 conseils essentiels sur la Securite Informatique .pdf | 570368 | 
+  file http://localhost/Magazine E-book/Hackademy - The Hackademy Prg n2 Ebook Fr-Library.pdf | Hackademy - The Hackademy Prg n2 Ebook Fr-Library.pdf | 17825792 | 
+  file http://localhost/Magazine E-book/Hackademy_cours Newbie +.pdf | Hackademy_cours Newbie  .pdf | 20971520 | 
+  file http://localhost/Magazine E-book/Hackademy_cours Newbie.pdf | Hackademy_cours Newbie.pdf | 31457280 | 
+  file http://localhost/Magazine E-book/Hackademy_MagazineN5.pdf | Hackademy_MagazineN5.pdf | 589824 | 
+  file http://localhost/Magazine E-book/Hacker_2020-Cours_De_Hacking.pdf | Hacker_2020-Cours_De_Hacking.pdf | 1048576 | 
+  file http://localhost/Magazine E-book/Hackin9 GSM Qui peut ecouter mon portable.pdf | Hackin9 GSM Qui peut ecouter mon portable.pdf | 598016 | 
+  file http://localhost/Magazine E-book/Hackin9 La securite des smarthphones.pdf | Hackin9 La securite des smarthphones.pdf | 5242880 | 
+  file http://localhost/Magazine E-book/hackin9_numero4_juillet-aout-2005.pdf | hackin9_numero4_juillet-aout-2005.pdf | 25165824 | 
+  file http://localhost/Magazine E-book/Hacking- The Art of Exploitation (2nd ed. 2008) - Erickson.pdf | Hacking- The Art of Exploitation (2nd ed. 2008) - Erickson.pdf | 4194304 | 
+  file http://localhost/Magazine E-book/Hacking For Profit.pdf | Hacking For Profit.pdf | 688128 | 
+  file http://localhost/Magazine E-book/Hacking The Genome.pdf | Hacking The Genome.pdf | 308224 | 
+  file http://localhost/Magazine E-book/Hakin9_03_2009__FR.pdf | Hakin9_03_2009__FR.pdf | 11534336 | 
+  file http://localhost/Magazine E-book/Hakin9_05_2009_e_book.pdf | Hakin9_05_2009_e_book.pdf | 4194304 | 
+  file http://localhost/Magazine E-book/Hakin9_06_2009__FR.pdf | Hakin9_06_2009__FR.pdf | 18874368 | 
+  file http://localhost/Magazine E-book/hakin9_2006_FR.pdf | hakin9_2006_FR.pdf | 11534336 | 
+  file http://localhost/Magazine E-book/HITB Ezine Issue 6 2011.pdf | HITB Ezine Issue 6 2011.pdf | 32505856 | 
+  file http://localhost/Magazine E-book/hzv-ezine_01.pdf | hzv-ezine_01.pdf | 6291456 | 
+  file http://localhost/Magazine E-book/hzv-ezine_02.pdf | hzv-ezine_02.pdf | 13631488 | 
+  file http://localhost/Magazine E-book/hzv-ezine_03.pdf | hzv-ezine_03.pdf | 15728640 | 
+  file http://localhost/Magazine E-book/Information Security Magazine JulyAug2012-SharePoint.pdf | Information Security Magazine JulyAug2012-SharePoint.pdf | 395264 | 
+  file http://localhost/Magazine E-book/iOS Hacker's Handbook.pdf | iOS Hacker's Handbook.pdf | 7340032 | 
+  file http://localhost/Magazine E-book/Kevin_Mitnick_-_The_Art_of_Deception.pdf | Kevin_Mitnick_-_The_Art_of_Deception.pdf | 5242880 | 
+  file http://localhost/Magazine E-book/Kevin_Mitnick_-_The_Art_of_Intrusion.pdf | Kevin_Mitnick_-_The_Art_of_Intrusion.pdf | 3145728 | 
+  file http://localhost/Magazine E-book/L art de la supercherie.pdf | L art de la supercherie.pdf | 234881024 | 
+  file http://localhost/Magazine E-book/MISC - janvier-fevrier 09 - La cybercriminalite.pdf | MISC - janvier-fevrier 09 - La cybercriminalite.pdf | 397312 | 
+  file http://localhost/Magazine E-book/MISC-N42.pdf | MISC-N42.pdf | 28311552 | 
+  file http://localhost/Magazine E-book/NC-mag1-2004- Le chemin du hacker.pdf | NC-mag1-2004- Le chemin du hacker.pdf | 2097152 | 
+  file http://localhost/Magazine E-book/OS X For_Hackers_At_Heart_2005.pdf | OS X For_Hackers_At_Heart_2005.pdf | 15728640 | 
+  file http://localhost/Magazine E-book/Penetration Testing - A hands-on introduction to Hacking.pdf | Penetration Testing - A hands-on introduction to Hacking.pdf | 12582912 | 
+  file http://localhost/Magazine E-book/Pirate Informatique - N1 - septembre octobre 2009.pdf.pdf | Pirate Informatique - N1 - septembre octobre 2009.pdf.pdf | 6291456 | 
+  file http://localhost/Magazine E-book/Rafale-password.txt | Rafale-password.txt | 38 | 
+  file http://localhost/Magazine E-book/RFID_handbook.pdf | RFID_handbook.pdf | 5242880 | 
+  file http://localhost/Magazine E-book/Securite Informatique - Ethical Hacking.pdf | Securite Informatique - Ethical Hacking.pdf | 32505856 | 
+  file http://localhost/Magazine E-book/The hackademy Hors Serie 1.pdf | The hackademy Hors Serie 1.pdf | 12582912 | 
+  file http://localhost/Magazine E-book/The hackademy Hors Serie 2.pdf | The hackademy Hors Serie 2.pdf | 19922944 | 
+  file http://localhost/Magazine E-book/The hackademy Hors Serie 3.pdf | The hackademy Hors Serie 3.pdf | 14680064 | 
+  file http://localhost/Magazine E-book/The Hackademy School - Hack Newbie.pdf | The Hackademy School - Hack Newbie.pdf | 3145728 | 
+  file http://localhost/Magazine E-book/The Hackademy School - Mini guide anonymat.pdf | The Hackademy School - Mini guide anonymat.pdf | 2097152 | 
+  file http://localhost/Magazine E-book/The Hackademy School - Newbie - part 1.pdf | The Hackademy School - Newbie - part 1.pdf | 10485760 | 
+  file http://localhost/Magazine E-book/The Hackademy School - Newbie - part 2.pdf | The Hackademy School - Newbie - part 2.pdf | 10485760 | 
+  file http://localhost/Magazine E-book/The Hackademy School - Newbie - part 3.pdf | The Hackademy School - Newbie - part 3.pdf | 11534336 | 
+  file http://localhost/Magazine E-book/The Hackademy School - Newbie - part 4.pdf | The Hackademy School - Newbie - part 4.pdf | 9437184 | 
+  file http://localhost/Magazine E-book/The Hackers Handbook.pdf | The Hackers Handbook.pdf | 18874368 | 
+  file http://localhost/Magazine E-book/The Mac Hacker's Handbook.pdf | The Mac Hacker's Handbook.pdf | 7340032 | 
+  file http://localhost/Magazine E-book/The web application hackers handbook finding and exploiting security flaws -ed2 2011.pdf | The web application hackers handbook finding and exploiting security flaws -ed2 2011.pdf | 15728640 | 
+  file http://localhost/Magazine E-book/XMCO-ActuSecu-22-Vol-d-identite.pdf | XMCO-ActuSecu-22-Vol-d-identite.pdf | 5242880 | 
+  file http://localhost/Magazine E-book/XMCO ActuSecu 32.pdf | XMCO ActuSecu 32.pdf | 18874368 | 
+  file http://localhost/Magazine E-book/ZI Hackademy - Newbie 3.pdf | ZI Hackademy - Newbie 3.pdf | 32505856 | 
+  file http://localhost/Magazine E-book/Zope_Plone_ed2_v1.pdf | Zope_Plone_ed2_v1.pdf | 6291456 | 

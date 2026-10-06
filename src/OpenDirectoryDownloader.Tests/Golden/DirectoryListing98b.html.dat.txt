@@ -22,3 +22,15 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   file http://localhost:8086/listing/dj Vela - STEREO33 - 131116.mp3 | dj Vela - STEREO33 - 131116.mp3 | 526385152 | 
   file http://localhost:8086/listing/dj Vela - WRONG45.mp3 | dj Vela - WRONG45.mp3 | 179306496 | 
   file http://localhost:8086/listing/dj Vela at FUSION 2013.mp3 | dj Vela at FUSION 2013.mp3 | 91226112 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/short promo mixes/ | short promo mixes |  | RegexParser2
+  dir http://localhost/wallpapers/ | wallpapers |  | RegexParser2
+  file http://localhost/DJ VELA & ROLLIN THUNDER 20.9.2014 in Tresor .mp3 | DJ VELA & ROLLIN THUNDER 20.9.2014 in Tresor .mp3 | 288358400 | 
+  file http://localhost/Dj Vela @ Tresor ft. Rollin Thunder on the 3rd turntable - 29.12.11.mp3 | Dj Vela @ Tresor ft. Rollin Thunder on the 3rd turntable - 29.12.11.mp3 | 184549376 | 
+  file http://localhost/Dj Vela at Tresor ft. Rollin Thunder on the 3rd turntable - 29.12.11.mp3 | Dj Vela at Tresor ft. Rollin Thunder on the 3rd turntable - 29.12.11.mp3 | 184549376 | 
+  file http://localhost/Zoetrope.mp4 | Zoetrope.mp4 | 28311552 | 
+  file http://localhost/dj Vela & Rollin' Thunder at DD, TRESOR 28.9.13.mp3 | dj Vela & Rollin' Thunder at DD, TRESOR 28.9.13.mp3 | 212860928 | 
+  file http://localhost/dj Vela - STEREO33 - 131116.mp3 | dj Vela - STEREO33 - 131116.mp3 | 526385152 | 
+  file http://localhost/dj Vela - WRONG45.mp3 | dj Vela - WRONG45.mp3 | 179306496 | 
+  file http://localhost/dj Vela at FUSION 2013.mp3 | dj Vela at FUSION 2013.mp3 | 91226112 | 

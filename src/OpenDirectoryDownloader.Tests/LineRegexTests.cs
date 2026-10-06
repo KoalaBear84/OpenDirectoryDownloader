@@ -17,7 +17,7 @@ public class LineRegexTests
 	private static readonly Regex LineSeparator = new(@"\r\n|\r|\n|<br\S*>|<hr>");
 
 	private static List<Regex> GeneratedRegexes() =>
-		[.. Enumerable.Range(1, 10).Select(i => (Regex)typeof(DirectoryParser).GetMethod($"RegexRegexParser{i}", BindingFlags.NonPublic | BindingFlags.Static)!.Invoke(null, null)!)];
+		[.. Enumerable.Range(1, 10).Select(i => (Regex)typeof(PreListingParser).GetMethod($"RegexRegexParser{i}", BindingFlags.NonPublic | BindingFlags.Static)!.Invoke(null, null)!)];
 
 	private static List<string> CorpusLines()
 	{

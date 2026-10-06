@@ -6,3 +6,7 @@ url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=F
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
   file http://localhost:8086/listing/Anaren_Letter.gif | Anaren_Letter.gif | 47104 | 
   file http://localhost:8086/listing/Anaren_Plaque.jpg | Anaren_Plaque.jpg | 41984 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/Anaren_Letter.gif | Anaren_Letter.gif | 47104 | 
+  file http://localhost/Anaren_Plaque.jpg | Anaren_Plaque.jpg | 41984 | 

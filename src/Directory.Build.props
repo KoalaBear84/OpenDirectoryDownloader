@@ -1,0 +1,20 @@
+<Project>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <!-- The libraries are trimmed into the self-contained single-file release, so let the analyzers say what would break -->
+  <PropertyGroup Condition="'$(IsTestProject)' != 'true' And '$(OutputType)' != 'Exe'">
+    <IsTrimmable>true</IsTrimmable>
+  </PropertyGroup>
+
+</Project>

@@ -8,3 +8,8 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/020_1.txt | 020_1.txt | 28672 | 
   file http://localhost:8086/listing/020_2.txt | 020_2.txt | 45056 | 
   file http://localhost:8086/listing/020_3.txt | 020_3.txt | 34816 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/020_1.txt | 020_1.txt | 28672 | 
+  file http://localhost/020_2.txt | 020_2.txt | 45056 | 
+  file http://localhost/020_3.txt | 020_3.txt | 34816 | 

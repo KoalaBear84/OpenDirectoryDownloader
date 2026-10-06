@@ -51,3 +51,53 @@ url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=Fals
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
   file http://localhost:8086/index.html | index.html |  | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/Videos/2005 - Avatar The Last Airbender S01-S03/ | 2005 - Avatar The Last Airbender S01-S03 |  | RegexParser7
+  dir http://localhost/Videos/2008 - Generation Kill/ | 2008 - Generation Kill |  | RegexParser7
+  dir http://localhost/Videos/Anime/ | Anime |  | RegexParser7
+  dir http://localhost/Videos/CHROMA/ | CHROMA |  | RegexParser7
+  dir http://localhost/Videos/CROSSED/ | CROSSED |  | RegexParser7
+  dir http://localhost/Videos/Captures/ | Captures |  | RegexParser7
+  dir http://localhost/Videos/Castlevania/ | Castlevania |  | RegexParser7
+  dir http://localhost/Videos/Clear Skies/ | Clear Skies |  | RegexParser7
+  dir http://localhost/Videos/Criminal Minds/ | Criminal Minds |  | RegexParser7
+  dir http://localhost/Videos/DC/ | DC |  | RegexParser7
+  dir http://localhost/Videos/Defcon/ | Defcon |  | RegexParser7
+  dir http://localhost/Videos/Documentaries/ | Documentaries |  | RegexParser7
+  dir http://localhost/Videos/Evan Royalty/ | Evan Royalty |  | RegexParser7
+  dir http://localhost/Videos/Footage/ | Footage |  | RegexParser7
+  dir http://localhost/Videos/Forged in Fire/ | Forged in Fire |  | RegexParser7
+  dir http://localhost/Videos/Gamematics/ | Gamematics |  | RegexParser7
+  dir http://localhost/Videos/Harry Potter/ | Harry Potter |  | RegexParser7
+  dir http://localhost/Videos/Internet Historian/ | Internet Historian |  | RegexParser7
+  dir http://localhost/Videos/John Wick/ | John Wick |  | RegexParser7
+  dir http://localhost/Videos/Kitchen Nightmares/ | Kitchen Nightmares |  | RegexParser7
+  dir http://localhost/Videos/Leaks/ | Leaks |  | RegexParser7
+  dir http://localhost/Videos/MCU/ | MCU |  | RegexParser7
+  dir http://localhost/Videos/Marvels Agents of S.H.I.E.L.D/ | Marvels Agents of S.H.I.E.L.D |  | RegexParser7
+  dir http://localhost/Videos/Marvels Daredevil/ | Marvels Daredevil |  | RegexParser7
+  dir http://localhost/Videos/Marvels Inhumans/ | Marvels Inhumans |  | RegexParser7
+  dir http://localhost/Videos/Mind Field/ | Mind Field |  | RegexParser7
+  dir http://localhost/Videos/The Lord of the Rings/ | The Lord of the Rings |  | RegexParser7
+  dir http://localhost/Videos/timtam60/ | timtam60 |  | RegexParser7
+  file http://localhost/Videos/1980 - The Final Countdown.mkv | 1980 - The Final Countdown.mkv | 1370035176 | 
+  file http://localhost/Videos/1999 - Fight Club.mp4 | 1999 - Fight Club.mp4 | 4281963710 | 
+  file http://localhost/Videos/2001 - Black Hawk Down.mp4 | 2001 - Black Hawk Down.mp4 | 2035672859 | 
+  file http://localhost/Videos/2001 - Black Hawk Down.srt | 2001 - Black Hawk Down.srt | 103157 | 
+  file http://localhost/Videos/2006 - Idiocracy.mkv | 2006 - Idiocracy.mkv | 2533413506 | 
+  file http://localhost/Videos/2012 - Act Of Valor.mkv | 2012 - Act Of Valor.mkv | 3619722125 | 
+  file http://localhost/Videos/2012 - Battle Star Galactica Blood and Chrome.mkv | 2012 - Battle Star Galactica Blood and Chrome.mkv | 1847237357 | 
+  file http://localhost/Videos/2012 - Zero Dark Thirty.mkv | 2012 - Zero Dark Thirty.mkv | 21206470020 | 
+  file http://localhost/Videos/2013 - Lone Survivor.mkv | 2013 - Lone Survivor.mkv | 4253713770 | 
+  file http://localhost/Videos/2013 - Pacific Rim.mp4 | 2013 - Pacific Rim.mp4 | 2092482749 | 
+  file http://localhost/Videos/2014 - American Sniper.mkv | 2014 - American Sniper.mkv | 3912019069 | 
+  file http://localhost/Videos/2016 - X-Men Apocalypse.mp4 | 2016 - X-Men Apocalypse.mp4 | 2362991508 | 
+  file http://localhost/Videos/2017 - Ghost in the Shell.mkv | 2017 - Ghost in the Shell.mkv | 18478536762 | 
+  file http://localhost/Videos/2018 - Sicario Day Of The Soldado.mp4 | 2018 - Sicario Day Of The Soldado.mp4 | 2121134119 | 
+  file http://localhost/Videos/2018 - Spider Man Into The Spider Verse.mp4 | 2018 - Spider Man Into The Spider Verse.mp4 | 2007245013 | 
+  file http://localhost/Videos/2018 - Ticket Zero.mkv | 2018 - Ticket Zero.mkv | 491642354 | 
+  file http://localhost/Videos/2019 - Pokemon Detective Pikachu.mkv | 2019 - Pokemon Detective Pikachu.mkv | 3787610026 | 
+  file http://localhost/Videos/2019 - The Wandering Earth.mp4 | 2019 - The Wandering Earth.mp4 | 2162137702 | 
+  file http://localhost/Videos/Rings of Saturn Godless Times Cover.mp4 | Rings of Saturn Godless Times Cover.mp4 | 30837623 | 
+  file http://localhost/Videos/The most adorable duck I have ever seen.mp4 | The most adorable duck I have ever seen.mp4 | 5755350 | 

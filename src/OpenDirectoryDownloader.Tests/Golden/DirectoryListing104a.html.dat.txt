@@ -392,3 +392,200 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   file http://localhost:8086/listing/us4664.nordvpn.com.udp.ovpn | us4664.nordvpn.com.udp.ovpn | 2811 | 
   file http://localhost:8086/listing/us4874.nordvpn.com.udp.ovpn | us4874.nordvpn.com.udp.ovpn | 2809 | 
   file http://localhost:8086/listing/us5101.nordvpn.com.udp.ovpn | us5101.nordvpn.com.udp.ovpn | 2808 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/1917.2019.DVDSCR.x264-TOPKEK%5BTGx%5D | 1917.2019.DVDSCR.x264-TOPKEK[TGx] |  | RegexParser9
+  dir http://localhost/28.Days.Later.2002.720p.BluRay.H264.AAC-RARBG | 28.Days.Later.2002.720p.BluRay.H264.AAC-RARBG |  | RegexParser9
+  dir http://localhost/365 Days %282020%29 %5B720p%5D %5BWEBRip%5D %5BYTS.MX%5D | 365 Days (2020) [720p] [WEBRip] [YTS.MX] |  | RegexParser9
+  dir http://localhost/6.Underground.2019.720p.NF.WEBRip.900MB.x264-GalaxyRG%5BTGx%5D | 6.Underground.2019.720p.NF.WEBRip.900MB.x264-GalaxyRG[TGx] |  | RegexParser9
+  dir http://localhost/9-1-1.S03E01.WEB.x264-TBS%5Brarbg%5D | 9-1-1.S03E01.WEB.x264-TBS[rarbg] |  | RegexParser9
+  dir http://localhost/9-1-1.S03E02.WEB.x264-TBS%5Brarbg%5D | 9-1-1.S03E02.WEB.x264-TBS[rarbg] |  | RegexParser9
+  dir http://localhost/9-1-1.S03E03.WEBRip.x264-ION10 | 9-1-1.S03E03.WEBRip.x264-ION10 |  | RegexParser9
+  dir http://localhost/9-1-1.S03E04.WEBRip.x264-ION10 | 9-1-1.S03E04.WEBRip.x264-ION10 |  | RegexParser9
+  dir http://localhost/9-1-1.S03E05.WEBRip.x264-ION10 | 9-1-1.S03E05.WEBRip.x264-ION10 |  | RegexParser9
+  dir http://localhost/9-1-1.S03E06.WEBRip.x264-ION10 | 9-1-1.S03E06.WEBRip.x264-ION10 |  | RegexParser9
+  dir http://localhost/9-1-1.S03E07.WEBRip.x264-ION10 | 9-1-1.S03E07.WEBRip.x264-ION10 |  | RegexParser9
+  dir http://localhost/9-1-1.S03E08.WEB.x264-TBS%5Bettv%5D | 9-1-1.S03E08.WEB.x264-TBS[ettv] |  | RegexParser9
+  dir http://localhost/9-1-1.S03E09.WEB.x264-PHOENiX%5BTGx%5D | 9-1-1.S03E09.WEB.x264-PHOENiX[TGx] |  | RegexParser9
+  dir http://localhost/9-1-1.S03E10.WEB.x264-TBS%5Bettv%5D | 9-1-1.S03E10.WEB.x264-TBS[ettv] |  | RegexParser9
+  dir http://localhost/9-1-1.Season.2.S02.1080p.AMZN.x265.10bit.6CH.ReEnc-LUMI | 9-1-1.Season.2.S02.1080p.AMZN.x265.10bit.6CH.ReEnc-LUMI |  | RegexParser9
+  dir http://localhost/A Quiet Place %282018%29 %5BBluRay%5D %5B720p%5D %5BYTS.AM%5D | A Quiet Place (2018) [BluRay] [720p] [YTS.AM] |  | RegexParser9
+  dir http://localhost/Ad.Astra.2019.HDRip.XviD.AC3-EVO%5BTGx%5D | Ad.Astra.2019.HDRip.XviD.AC3-EVO[TGx] |  | RegexParser9
+  dir http://localhost/Air Crash Imvestigation S19 | Air Crash Imvestigation S19 |  | RegexParser9
+  dir http://localhost/Angel Has Fallen %282019%29 %5BBluRay%5D %5B1080p%5D %5BYTS.LT%5D | Angel Has Fallen (2019) [BluRay] [1080p] [YTS.LT] |  | RegexParser9
+  dir http://localhost/Animal Kingdom %282010%29 %5BBluRay%5D %5B720p%5D %5BYTS.AM%5D | Animal Kingdom (2010) [BluRay] [720p] [YTS.AM] |  | RegexParser9
+  dir http://localhost/Apocalypse Now %281979%29 %5BBluRay%5D %5B720p%5D %5BYTS.AM%5D | Apocalypse Now (1979) [BluRay] [720p] [YTS.AM] |  | RegexParser9
+  dir http://localhost/Arrow.S08E01.720p.HDTV.x265-MiNX%5BTGx%5D | Arrow.S08E01.720p.HDTV.x265-MiNX[TGx] |  | RegexParser9
+  dir http://localhost/Arrow.S08E02.720p.HDTV.x265-MiNX%5BTGx%5D | Arrow.S08E02.720p.HDTV.x265-MiNX[TGx] |  | RegexParser9
+  dir http://localhost/Arrow.S08E04.720p.HDTV.x265-MiNX%5BTGx%5D | Arrow.S08E04.720p.HDTV.x265-MiNX[TGx] |  | RegexParser9
+  dir http://localhost/Arrow.S08E05.720p.HDTV.x265-MiNX%5BTGx%5D | Arrow.S08E05.720p.HDTV.x265-MiNX[TGx] |  | RegexParser9
+  dir http://localhost/Arrow.S08E06.HDTV.x264-SVA%5Bettv%5D | Arrow.S08E06.HDTV.x264-SVA[ettv] |  | RegexParser9
+  dir http://localhost/Arrow.S08E07.HDTV.x264-SVA%5Bettv%5D | Arrow.S08E07.HDTV.x264-SVA[ettv] |  | RegexParser9
+  dir http://localhost/Arrow.S08E09.HDTV.x264-SVA%5Bettv%5D | Arrow.S08E09.HDTV.x264-SVA[ettv] |  | RegexParser9
+  dir http://localhost/Arrow.S08E10.720p.HDTV.x265-MiNX%5BTGx%5D | Arrow.S08E10.720p.HDTV.x265-MiNX[TGx] |  | RegexParser9
+  dir http://localhost/Black Death.2010.BRRip.XViD-ETRG | Black Death.2010.BRRip.XViD-ETRG |  | RegexParser9
+  dir http://localhost/Blindspot.S05E01.720p.WEB.x265-MiNX%5BTGx%5D | Blindspot.S05E01.720p.WEB.x265-MiNX[TGx] |  | RegexParser9
+  dir http://localhost/Blindspot.S05E02.720p.HDTV.x265-MiNX%5BTGx%5D | Blindspot.S05E02.720p.HDTV.x265-MiNX[TGx] |  | RegexParser9
+  dir http://localhost/Blindspot.S05E03.720p.HDTV.x265-MiNX%5BTGx%5D | Blindspot.S05E03.720p.HDTV.x265-MiNX[TGx] |  | RegexParser9
+  dir http://localhost/Blindspot.S05E04.HDTV.x264-SVA%5BTGx%5D | Blindspot.S05E04.HDTV.x264-SVA[TGx] |  | RegexParser9
+  dir http://localhost/Blindspot.S05E05.720p.HDTV.x265-MiNX%5BTGx%5D | Blindspot.S05E05.720p.HDTV.x265-MiNX[TGx] |  | RegexParser9
+  dir http://localhost/Blindspot.S05E06.HDTV.x264-KILLERS%5BTGx%5D | Blindspot.S05E06.HDTV.x264-KILLERS[TGx] |  | RegexParser9
+  dir http://localhost/Carriers.2009.720p.BluRay.H264.AAC-RARBG | Carriers.2009.720p.BluRay.H264.AAC-RARBG |  | RegexParser9
+  dir http://localhost/Contagion %282011%29 %5B720p%5D %5BBluRay%5D %5BYTS.MX%5D | Contagion (2011) [720p] [BluRay] [YTS.MX] |  | RegexParser9
+  dir http://localhost/Covert.Affairs.S05.HDTV.x264-BTN %28Silver Torrent%29 | Covert.Affairs.S05.HDTV.x264-BTN (Silver Torrent) |  | RegexParser9
+  dir http://localhost/Crawl %282019%29 %5BBluRay%5D %5B720p%5D %5BYTS.LT%5D | Crawl (2019) [BluRay] [720p] [YTS.LT] |  | RegexParser9
+  dir http://localhost/Dark Phoenix %282019%29 %5BBluRay%5D %5B720p%5D %5BYTS.LT%5D | Dark Phoenix (2019) [BluRay] [720p] [YTS.LT] |  | RegexParser9
+  dir http://localhost/Dark S02 Season 02 Complete 720p WEB-DL x264-XpoZ | Dark S02 Season 02 Complete 720p WEB-DL x264-XpoZ |  | RegexParser9
+  dir http://localhost/Dark.SEASON.01.S01.COMPLETE.DUAL-AUDIO.GER-ENG.720p.10bit.WEBRip.2CH.x265.HEVC-PSA | Dark.SEASON.01.S01.COMPLETE.DUAL-AUDIO.GER-ENG.720p.10bit.WEBRip.2CH.x265.HEVC-PSA |  | RegexParser9
+  dir http://localhost/Dirty Money %282018%29 | Dirty Money (2018) |  | RegexParser9
+  dir http://localhost/Dooplay 2.1.7 - Movies and Tv Shows WordPress Theme | Dooplay 2.1.7 - Movies and Tv Shows WordPress Theme |  | RegexParser9
+  dir http://localhost/Earthlings %5B2006%5D %5BSpecial Extended Edition%5D DvDrip %5BEng%5D %2B 12 languages%27 subtitles | Earthlings [2006] [Special Extended Edition] DvDrip [Eng] + 12 languages' subtitles |  | RegexParser9
+  dir http://localhost/Elite.S01.SPANISH.WEBRip.x264-ION10 | Elite.S01.SPANISH.WEBRip.x264-ION10 |  | RegexParser9
+  dir http://localhost/Elite.S02.SPANISH.WEBRip.x264-ION10 | Elite.S02.SPANISH.WEBRip.x264-ION10 |  | RegexParser9
+  dir http://localhost/Elite.S03.SPANISH.PROPER.WEBRip.x264-ION10 | Elite.S03.SPANISH.PROPER.WEBRip.x264-ION10 |  | RegexParser9
+  dir http://localhost/Extraction %282020%29 English UNTOUCHED 720p NF WEBRip DD-5.1 ⭐800 MB⭐ ESub x264 - Shadow | Extraction (2020) English UNTOUCHED 720p NF WEBRip DD-5.1 ⭐800 MB⭐ ESub x264 - Shadow |  | RegexParser9
+  dir http://localhost/Fantasy.Island.2020.720p.WEBRip.800MB.x264-GalaxyRG%5BTGx%5D | Fantasy.Island.2020.720p.WEBRip.800MB.x264-GalaxyRG[TGx] |  | RegexParser9
+  dir http://localhost/Gangs.Of.London.S01.COMPLETE.720p.HDTV.x264-GalaxyTV%5BTGx%5D | Gangs.Of.London.S01.COMPLETE.720p.HDTV.x264-GalaxyTV[TGx] |  | RegexParser9
+  dir http://localhost/Gemini.Man.2019.1080p.HC.HDRip.1400MB.DD2.0.x264-GalaxyRG%5BTGx%5D | Gemini.Man.2019.1080p.HC.HDRip.1400MB.DD2.0.x264-GalaxyRG[TGx] |  | RegexParser9
+  dir http://localhost/Glass %282019%29 %5BWEBRip%5D %5B720p%5D %5BYTS.AM%5D | Glass (2019) [WEBRip] [720p] [YTS.AM] |  | RegexParser9
+  dir http://localhost/Gnomeo and Juliet %282011%29 | Gnomeo and Juliet (2011) |  | RegexParser9
+  dir http://localhost/Gone Girl %282014%29 | Gone Girl (2014) |  | RegexParser9
+  dir http://localhost/Heat %281995%29 | Heat (1995) |  | RegexParser9
+  dir http://localhost/High.Life.2019.BRRip.XviD.AC3-EVO | High.Life.2019.BRRip.XviD.AC3-EVO |  | RegexParser9
+  dir http://localhost/How To Train Your Dragon The Hidden World %282019%29 %5BBluRay%5D %5B720p%5D %5BYTS.AM%5D | How To Train Your Dragon The Hidden World (2019) [BluRay] [720p] [YTS.AM] |  | RegexParser9
+  dir http://localhost/How to Train Your Dragon 2 %282014%29 %5B1080p%5D | How to Train Your Dragon 2 (2014) [1080p] |  | RegexParser9
+  dir http://localhost/Hunters.2020.S01.COMPLETE.720p.AMZN.WEBRip.x264-GalaxyTV%5BTGx%5D | Hunters.2020.S01.COMPLETE.720p.AMZN.WEBRip.x264-GalaxyTV[TGx] |  | RegexParser9
+  dir http://localhost/Inheritance.2020.HDRip.XviD.AC3-EVO%5BTGx%5D | Inheritance.2020.HDRip.XviD.AC3-EVO[TGx] |  | RegexParser9
+  dir http://localhost/Jason.Bourne.2016.720p.WEBRip.x264.AAC-ETRG | Jason.Bourne.2016.720p.WEBRip.x264.AAC-ETRG |  | RegexParser9
+  dir http://localhost/John Wick Chapter 3 - Parabellum %282019%29 %5BBluRay%5D %5B720p%5D %5BYTS.LT%5D | John Wick Chapter 3 - Parabellum (2019) [BluRay] [720p] [YTS.LT] |  | RegexParser9
+  dir http://localhost/Joker.2019.HC.1080p.HDRip.X264.AC3-EVO%5BTGx%5D | Joker.2019.HC.1080p.HDRip.X264.AC3-EVO[TGx] |  | RegexParser9
+  dir http://localhost/La Casa De Papel%28Money Heist%29 S01-S02 720p NF WEB-DL x265-HETeam | La Casa De Papel(Money Heist) S01-S02 720p NF WEB-DL x265-HETeam |  | RegexParser9
+  dir http://localhost/Lion.King.2019.1080p.BluRay.1400MB.DD5.1.x264-GalaxyRG%5BTGx%5D | Lion.King.2019.1080p.BluRay.1400MB.DD5.1.x264-GalaxyRG[TGx] |  | RegexParser9
+  dir http://localhost/Lost.in.Space.2018.S01.COMPLETE.720p.BluRay.x264-GalaxyTV%5BTGx%5D | Lost.in.Space.2018.S01.COMPLETE.720p.BluRay.x264-GalaxyTV[TGx] |  | RegexParser9
+  dir http://localhost/Lost.in.Space.2018.S02.COMPLETE.720p.NF.WEBRip.x264-GalaxyTV%5BTGx%5D | Lost.in.Space.2018.S02.COMPLETE.720p.NF.WEBRip.x264-GalaxyTV[TGx] |  | RegexParser9
+  dir http://localhost/Mayday Air Crash Investigation Season 17 Complete HQW | Mayday Air Crash Investigation Season 17 Complete HQW |  | RegexParser9
+  dir http://localhost/Mayday.Air.Crash.Investigation.S18 | Mayday.Air.Crash.Investigation.S18 |  | RegexParser9
+  dir http://localhost/Messiah.2020.S01.COMPLETE.720p.NF.WEBRip.x264-GalaxyTV%5BTGx%5D | Messiah.2020.S01.COMPLETE.720p.NF.WEBRip.x264-GalaxyTV[TGx] |  | RegexParser9
+  dir http://localhost/Money Heist aka La Casa de Papel S03 Season 03 Complete 720p WEB-DL x264-XpoZ | Money Heist aka La Casa de Papel S03 Season 03 Complete 720p WEB-DL x264-XpoZ |  | RegexParser9
+  dir http://localhost/Money.Heist.S04.720p.WEB.x264-GHOSTS%5Brartv%5D | Money.Heist.S04.720p.WEB.x264-GHOSTS[rartv] |  | RegexParser9
+  dir http://localhost/Money.Heist.S04.SPANISH.WEBRip.x264-ION10 | Money.Heist.S04.SPANISH.WEBRip.x264-ION10 |  | RegexParser9
+  dir http://localhost/My.Spy.2020.720p.BluRay.800MB.x264-GalaxyRG%5BTGx%5D | My.Spy.2020.720p.BluRay.800MB.x264-GalaxyRG[TGx] |  | RegexParser9
+  dir http://localhost/Obsession.Dark.Desires.S02.WEBRip.AAC2.0.x264-CAFFEiNE%5BTGx%5D | Obsession.Dark.Desires.S02.WEBRip.AAC2.0.x264-CAFFEiNE[TGx] |  | RegexParser9
+  dir http://localhost/Official Secrets.2019.HDRip.XviD.AC3-EVO%5BTGx%5D | Official Secrets.2019.HDRip.XviD.AC3-EVO[TGx] |  | RegexParser9
+  dir http://localhost/Onward.2020.720p.WEBRip.800MB.x264-GalaxyRG%5BTGx%5D | Onward.2020.720p.WEBRip.800MB.x264-GalaxyRG[TGx] |  | RegexParser9
+  dir http://localhost/Outbreak %281995%29 | Outbreak (1995) |  | RegexParser9
+  dir http://localhost/Ozark.S03.WEBRip.x264-ION10 | Ozark.S03.WEBRip.x264-ION10 |  | RegexParser9
+  dir http://localhost/PMDK 2019 | PMDK 2019 |  | RegexParser9
+  dir http://localhost/Parasite.2019.1080p.HDRip.X264.AC3-EVO%5BTGx%5D | Parasite.2019.1080p.HDRip.X264.AC3-EVO[TGx] |  | RegexParser9
+  dir http://localhost/Rambo.Last.Blood.2019.HC.HDRip.XviD.AC3-EVO%5BTGx%5D | Rambo.Last.Blood.2019.HC.HDRip.XviD.AC3-EVO[TGx] |  | RegexParser9
+  dir http://localhost/Red.Shoes.and.the.Seven.Dwarfs.2020.720p.HDRip.800MB.x264-GalaxyRG%5BTGx%5D | Red.Shoes.and.the.Seven.Dwarfs.2020.720p.HDRip.800MB.x264-GalaxyRG[TGx] |  | RegexParser9
+  dir http://localhost/Reprisal.S01.COMPLETE.720p.HULU.WEBRip.x264-GalaxyTV%5BTGx%5D | Reprisal.S01.COMPLETE.720p.HULU.WEBRip.x264-GalaxyTV[TGx] |  | RegexParser9
+  dir http://localhost/Rise.of.Empires.Ottoman.S01.COMPLETE.720p.NF.WEBRip.x264-GalaxyTV%5BTGx%5D | Rise.of.Empires.Ottoman.S01.COMPLETE.720p.NF.WEBRip.x264-GalaxyTV[TGx] |  | RegexParser9
+  dir http://localhost/SEAL.Team.S02E22.HDTV.x264-SVA%5Bettv%5D | SEAL.Team.S02E22.HDTV.x264-SVA[ettv] |  | RegexParser9
+  dir http://localhost/SEAL.Team.S03E02.HDTV.x264-KILLERS%5Brarbg%5D | SEAL.Team.S03E02.HDTV.x264-KILLERS[rarbg] |  | RegexParser9
+  dir http://localhost/SEAL.Team.S03E03.HDTV.x264-SVA%5BTGx%5D | SEAL.Team.S03E03.HDTV.x264-SVA[TGx] |  | RegexParser9
+  dir http://localhost/SEAL.Team.S03E07.HDTV.x264-KILLERS%5Bettv%5D | SEAL.Team.S03E07.HDTV.x264-KILLERS[ettv] |  | RegexParser9
+  dir http://localhost/SEAL.Team.S03E08.HDTV.x264-SVA%5BTGx%5D | SEAL.Team.S03E08.HDTV.x264-SVA[TGx] |  | RegexParser9
+  dir http://localhost/SEAL.Team.S03E10.720p.HDTV.x265-MiNX%5BTGx%5D | SEAL.Team.S03E10.720p.HDTV.x265-MiNX[TGx] |  | RegexParser9
+  dir http://localhost/SEAL.Team.S03E16.HDTV.x264-SVA%5Brarbg%5D | SEAL.Team.S03E16.HDTV.x264-SVA[rarbg] |  | RegexParser9
+  dir http://localhost/SEAL.Team.S03E17.HDTV.x264-SVA%5Brarbg%5D | SEAL.Team.S03E17.HDTV.x264-SVA[rarbg] |  | RegexParser9
+  dir http://localhost/SEAL.Team.S03E19.720p.HDTV.x265-MiNX%5BTGx%5D | SEAL.Team.S03E19.720p.HDTV.x265-MiNX[TGx] |  | RegexParser9
+  dir http://localhost/SEAL.Team.S03E20.HDTV.x264-KILLERS%5BTGx%5D | SEAL.Team.S03E20.HDTV.x264-KILLERS[TGx] |  | RegexParser9
+  dir http://localhost/See.S01E01.WEB.x264-PHOENiX%5BTGx%5D | See.S01E01.WEB.x264-PHOENiX[TGx] |  | RegexParser9
+  dir http://localhost/See.S01E02.WEB.x264-PHOENiX%5BTGx%5D | See.S01E02.WEB.x264-PHOENiX[TGx] |  | RegexParser9
+  dir http://localhost/See.S01E03.WEB.x264-PHOENiX%5BTGx%5D | See.S01E03.WEB.x264-PHOENiX[TGx] |  | RegexParser9
+  dir http://localhost/See.S01E04.WEB.x264-PHOENiX%5BTGx%5D | See.S01E04.WEB.x264-PHOENiX[TGx] |  | RegexParser9
+  dir http://localhost/See.S01E05.WEB.x264-PHOENiX%5BTGx%5D | See.S01E05.WEB.x264-PHOENiX[TGx] |  | RegexParser9
+  dir http://localhost/See.S01E06.WEB.x264-PHOENiX%5BTGx%5D | See.S01E06.WEB.x264-PHOENiX[TGx] |  | RegexParser9
+  dir http://localhost/See.S01E07.WEB.x264-PHOENiX%5BTGx%5D | See.S01E07.WEB.x264-PHOENiX[TGx] |  | RegexParser9
+  dir http://localhost/See.S01E08.WEB.x264-PHOENiX%5BTGx%5D | See.S01E08.WEB.x264-PHOENiX[TGx] |  | RegexParser9
+  dir http://localhost/Sherlock Gnomes %282018%29 %5BBluRay%5D %5B720p%5D %5BYTS.AM%5D | Sherlock Gnomes (2018) [BluRay] [720p] [YTS.AM] |  | RegexParser9
+  dir http://localhost/Spaceship.Earth.2020.HULU.WEB-DL.AAC2.0.H.264-NTG%5BTGx%5D | Spaceship.Earth.2020.HULU.WEB-DL.AAC2.0.H.264-NTG[TGx] |  | RegexParser9
+  dir http://localhost/Spies In Disguise %282019%29 %5B720p%5D %5BBluRay%5D %5BYTS.MX%5D | Spies In Disguise (2019) [720p] [BluRay] [YTS.MX] |  | RegexParser9
+  dir http://localhost/Split.2016.720p.BRRip.x264.AAC-ETRG | Split.2016.720p.BRRip.x264.AAC-ETRG |  | RegexParser9
+  dir http://localhost/Strike.Back.S08E06.WEB.H264-XLF%5BTGx%5D | Strike.Back.S08E06.WEB.H264-XLF[TGx] |  | RegexParser9
+  dir http://localhost/Strike.Back.S08E08.WEB.H264-XLF%5Brarbg%5D | Strike.Back.S08E08.WEB.H264-XLF[rarbg] |  | RegexParser9
+  dir http://localhost/Strike.Back.S08E09.WEB.H264-XLF%5Brarbg%5D | Strike.Back.S08E09.WEB.H264-XLF[rarbg] |  | RegexParser9
+  dir http://localhost/Strike.Back.S08E10.HDTV.x264-PHOENiX%5BTGx%5D | Strike.Back.S08E10.HDTV.x264-PHOENiX[TGx] |  | RegexParser9
+  dir http://localhost/Tarzan %281999%29 %5B1080p%5D | Tarzan (1999) [1080p] |  | RegexParser9
+  dir http://localhost/The Affair S01 Season 1 Complete HDTV 480p x264 AAC E-Subs %5BGWC%5D | The Affair S01 Season 1 Complete HDTV 480p x264 AAC E-Subs [GWC] |  | RegexParser9
+  dir http://localhost/The Affair Season 2 HDTV.XviD-AFG%5BPawulon%5D | The Affair Season 2 HDTV.XviD-AFG[Pawulon] |  | RegexParser9
+  dir http://localhost/The Banker %282020%29 %5B720p%5D %5BWEBRip%5D %5BYTS.MX%5D | The Banker (2020) [720p] [WEBRip] [YTS.MX] |  | RegexParser9
+  dir http://localhost/The Bourne Legacy %282012%29 | The Bourne Legacy (2012) |  | RegexParser9
+  dir http://localhost/The Bourne Supremacy %282004%29 | The Bourne Supremacy (2004) |  | RegexParser9
+  dir http://localhost/The Bourne Ultimatum %282007%29 | The Bourne Ultimatum (2007) |  | RegexParser9
+  dir http://localhost/The Bourne identity %282002%29 | The Bourne identity (2002) |  | RegexParser9
+  dir http://localhost/The Call Of The Wild %282020%29 %5B720p%5D %5BWEBRip%5D %5BYTS.MX%5D | The Call Of The Wild (2020) [720p] [WEBRip] [YTS.MX] |  | RegexParser9
+  dir http://localhost/The Glass House %282001%29 %5BWEBRip%5D %5B720p%5D %5BYTS.LT%5D | The Glass House (2001) [WEBRip] [720p] [YTS.LT] |  | RegexParser9
+  dir http://localhost/The Irishman.2019.HDRip.XviD.AC3-EVO%5BTGx%5D | The Irishman.2019.HDRip.XviD.AC3-EVO[TGx] |  | RegexParser9
+  dir http://localhost/The Iron Mask %282019%29 %5B720p%5D %5BWEBRip%5D %5BYTS.MX%5D | The Iron Mask (2019) [720p] [WEBRip] [YTS.MX] |  | RegexParser9
+  dir http://localhost/The Thin Red Line %281998%29 | The Thin Red Line (1998) |  | RegexParser9
+  dir http://localhost/The UNIT %282006-2009%29 - Complete TV Series %28Seasons 1%2C2%2C3%2C4 S01-S04%29 - 720p Web-DL x264 | The UNIT (2006-2009) - Complete TV Series (Seasons 1,2,3,4 S01-S04) - 720p Web-DL x264 |  | RegexParser9
+  dir http://localhost/The.100.S07E01.720p.HDTV.x265-MiNX%5BTGx%5D | The.100.S07E01.720p.HDTV.x265-MiNX[TGx] |  | RegexParser9
+  dir http://localhost/The.100.S07E02.720p.HDTV.x265-MiNX%5BTGx%5D | The.100.S07E02.720p.HDTV.x265-MiNX[TGx] |  | RegexParser9
+  dir http://localhost/The.100.S07E03.720p.WEB.x265-MiNX%5BTGx%5D | The.100.S07E03.720p.WEB.x265-MiNX[TGx] |  | RegexParser9
+  dir http://localhost/The.100.S07E04.720p.HDTV.x265-MiNX%5BTGx%5D | The.100.S07E04.720p.HDTV.x265-MiNX[TGx] |  | RegexParser9
+  dir http://localhost/The.100.S07E05.720p.WEB.x265-MiNX%5BTGx%5D | The.100.S07E05.720p.WEB.x265-MiNX[TGx] |  | RegexParser9
+  dir http://localhost/The.100.S07E06.720p.HDTV.x265-MiNX%5BTGx%5D | The.100.S07E06.720p.HDTV.x265-MiNX[TGx] |  | RegexParser9
+  dir http://localhost/The.Affair.S04.WEBRip.XviD-FUM%5Bettv%5D | The.Affair.S04.WEBRip.XviD-FUM[ettv] |  | RegexParser9
+  dir http://localhost/The.Bourne.Collection.2002-2012.BRRip.XviD-KiNGS-AbSurdiTy | The.Bourne.Collection.2002-2012.BRRip.XviD-KiNGS-AbSurdiTy |  | RegexParser9
+  dir http://localhost/The.Boy.2.2020.HC.720p.HDRip.800MB.x264-GalaxyRG%5BTGx%5D | The.Boy.2.2020.HC.720p.HDRip.800MB.x264-GalaxyRG[TGx] |  | RegexParser9
+  dir http://localhost/The.Boys.2019.S01.COMPLETE.720p.AMZN.WEBRip.x264-GalaxyTV%5BTGx%5D | The.Boys.2019.S01.COMPLETE.720p.AMZN.WEBRip.x264-GalaxyTV[TGx] |  | RegexParser9
+  dir http://localhost/The.Call.of.the.Wild.2020.WEBRip.x264-ION10 | The.Call.of.the.Wild.2020.WEBRip.x264-ION10 |  | RegexParser9
+  dir http://localhost/The.Capture.S01 | The.Capture.S01 |  | RegexParser9
+  dir http://localhost/The.Gentlemen.2020.720p.WEBRip.800MB.x264-GalaxyRG%5BTGx%5D | The.Gentlemen.2020.720p.WEBRip.800MB.x264-GalaxyRG[TGx] |  | RegexParser9
+  dir http://localhost/The.Grudge.2020.720p.WEBRip.800MB.x264-GalaxyRG%5BTGx%5D | The.Grudge.2020.720p.WEBRip.800MB.x264-GalaxyRG[TGx] |  | RegexParser9
+  dir http://localhost/The.Hunt.2020.720p.WEBRip.800MB.x264-GalaxyRG%5BTGx%5D | The.Hunt.2020.720p.WEBRip.800MB.x264-GalaxyRG[TGx] |  | RegexParser9
+  dir http://localhost/The.Invisible.Man.2020.720p.WEBRip.800MB.x264-GalaxyRG%5BTGx%5D | The.Invisible.Man.2020.720p.WEBRip.800MB.x264-GalaxyRG[TGx] |  | RegexParser9
+  dir http://localhost/The.Occupant.2020.SPANISH.720p.NF.WEBRip.DDP5.1.x264-NTb | The.Occupant.2020.SPANISH.720p.NF.WEBRip.DDP5.1.x264-NTb |  | RegexParser9
+  dir http://localhost/The.Stranger.2020.S01.COMPLETE.720p.NF.WEBRip.x264-GalaxyTV%5BTGx%5D | The.Stranger.2020.S01.COMPLETE.720p.NF.WEBRip.x264-GalaxyTV[TGx] |  | RegexParser9
+  dir http://localhost/The.Witcher.S01.COMPLETE.720p.NF.WEBRip.x264-GalaxyTV%5BTGx%5D | The.Witcher.S01.COMPLETE.720p.NF.WEBRip.x264-GalaxyTV[TGx] |  | RegexParser9
+  dir http://localhost/The.Wrong.Missy.2020.HDRip.XviD.AC3-EVO | The.Wrong.Missy.2020.HDRip.XviD.AC3-EVO |  | RegexParser9
+  dir http://localhost/Tom.Clancys.Jack.Ryan.S02.COMPLETE.720p.AMZN.WEBRip.x264-GalaxyTV%5BTGx%5D | Tom.Clancys.Jack.Ryan.S02.COMPLETE.720p.AMZN.WEBRip.x264-GalaxyTV[TGx] |  | RegexParser9
+  dir http://localhost/Tom.and.Jerry.The.Golden.Collection.Volume.One.1940-1948.720p.BrRip.x265.HEVC-PSA | Tom.and.Jerry.The.Golden.Collection.Volume.One.1940-1948.720p.BrRip.x265.HEVC-PSA |  | RegexParser9
+  dir http://localhost/Trolls.World.Tour.2020.HDRip.XviD.AC3-EVO%5BTGx%5D | Trolls.World.Tour.2020.HDRip.XviD.AC3-EVO[TGx] |  | RegexParser9
+  dir http://localhost/Twilight.Saga.Complete.2008-2012.1080p.Rifftrax.6ch.2ch.v2 | Twilight.Saga.Complete.2008-2012.1080p.Rifftrax.6ch.2ch.v2 |  | RegexParser9
+  dir http://localhost/Underwater %282020%29 BluRay 1080p 10bit HEVC AAC 7.1 x265 ESubs ~RONIN~ | Underwater (2020) BluRay 1080p 10bit HEVC AAC 7.1 x265 ESubs ~RONIN~ |  | RegexParser9
+  dir http://localhost/Underwater.2020.720p.HDRip.800MB.x264-GalaxyRG%5BTGx%5D | Underwater.2020.720p.HDRip.800MB.x264-GalaxyRG[TGx] |  | RegexParser9
+  dir http://localhost/Virgin.River.S01.COMPLETE.720p.NF.WEB.x264-GalaxyTV%5BTGx%5D | Virgin.River.S01.COMPLETE.720p.NF.WEB.x264-GalaxyTV[TGx] |  | RegexParser9
+  dir http://localhost/Vivarium %282019%29 %5B720p%5D %5BWEBRip%5D %5BYTS.MX%5D | Vivarium (2019) [720p] [WEBRip] [YTS.MX] |  | RegexParser9
+  dir http://localhost/YOU.S01.720p.AMZN.WEBRip.DDP5.1.x264-NTb%5Brartv%5D | YOU.S01.720p.AMZN.WEBRip.DDP5.1.x264-NTb[rartv] |  | RegexParser9
+  dir http://localhost/YOU.S02.COMPLETE.720p.NF.WEBRip.x264-GalaxyTV%5BTGx%5D | YOU.S02.COMPLETE.720p.NF.WEBRip.x264-GalaxyTV[TGx] |  | RegexParser9
+  dir http://localhost/Zeitgeist Trilogy - WAKE UP AND SHARE THE TRUTH WITH EVERYONE YOU KNOW%21%21 MUST SEE DOCUMENTARY PACK | Zeitgeist Trilogy - WAKE UP AND SHARE THE TRUTH WITH EVERYONE YOU KNOW!! MUST SEE DOCUMENTARY PACK |  | RegexParser9
+  dir http://localhost/www.SceneTime.com - Blindspot S05E07 480p x264-mSD | www.SceneTime.com - Blindspot S05E07 480p x264-mSD |  | RegexParser9
+  dir http://localhost/www.Scenetime.com - Arrow S08E03 720p HEVC x265-MeGusta | www.Scenetime.com - Arrow S08E03 720p HEVC x265-MeGusta |  | RegexParser9
+  dir http://localhost/www.Scenetime.com - SEAL Team S03E09 480p x264-mSD | www.Scenetime.com - SEAL Team S03E09 480p x264-mSD |  | RegexParser9
+  dir http://localhost/www.Scenetime.com - The Blacklist S07E07 720p HEVC x265-MeGusta | www.Scenetime.com - The Blacklist S07E07 720p HEVC x265-MeGusta |  | RegexParser9
+  dir http://localhost/www.Scenetime.com - The Blacklist S07E08 720p HEVC x265-MeGusta | www.Scenetime.com - The Blacklist S07E08 720p HEVC x265-MeGusta |  | RegexParser9
+  dir http://localhost/www.Torrenting.org       SEAL Team S03E09 720p HDTV x264-KILLERS | www.Torrenting.org       SEAL Team S03E09 720p HDTV x264-KILLERS |  | RegexParser9
+  dir http://localhost/www.Torrenting.org - The.Blacklist.S07E19.480p.x264-mSD | www.Torrenting.org - The.Blacklist.S07E19.480p.x264-mSD |  | RegexParser9
+  file http://localhost/Arrow.S07E01.HDTV.x264-SVA%5Beztv%5D.mkv | Arrow.S07E01.HDTV.x264-SVA[eztv].mkv | 307526887 | 
+  file http://localhost/Arrow.S08E08.HDTV.x264-SVA%5Beztv%5D.mkv | Arrow.S08E08.HDTV.x264-SVA[eztv].mkv | 311080192 | 
+  file http://localhost/BBC.This.World.2020.Terror.in.Paradise.1080p.HDTV.x264.AAC.MVGroup.org.mkv | BBC.This.World.2020.Terror.in.Paradise.1080p.HDTV.x264.AAC.MVGroup.org.mkv | 1264182952 | 
+  file http://localhost/Double Jeopardy-DVDRip%5BEng%5D1999.avi | Double Jeopardy-DVDRip[Eng]1999.avi | 738455552 | 
+  file http://localhost/Double Jeopardy-DVDRip%5BEng%5D1999.srt | Double Jeopardy-DVDRip[Eng]1999.srt | 73303 | 
+  file http://localhost/Istana_Banjir.mp4 | Istana_Banjir.mp4 | 4729255 | 
+  file http://localhost/Obsession.Dark.Desires.S01E01.Paging.Sarah.iNTERNAL.WEB.h264-CAFFEiNE%5Beztv%5D.mkv | Obsession.Dark.Desires.S01E01.Paging.Sarah.iNTERNAL.WEB.h264-CAFFEiNE[eztv].mkv | 279706394 | 
+  file http://localhost/Obsession.Dark.Desires.S01E02.Hiding.in.Plain.Sight.iNTERNAL.WEB.h264-CAFFEiNE%5Beztv%5D.mkv | Obsession.Dark.Desires.S01E02.Hiding.in.Plain.Sight.iNTERNAL.WEB.h264-CAFFEiNE[eztv].mkv | 300457971 | 
+  file http://localhost/Obsession.Dark.Desires.S01E03.Help.Wanted.iNTERNAL.WEB.h264-CAFFEiNE%5Beztv%5D.mkv | Obsession.Dark.Desires.S01E03.Help.Wanted.iNTERNAL.WEB.h264-CAFFEiNE[eztv].mkv | 262410834 | 
+  file http://localhost/SEAL.Team.S03E01.720p.WEB.x264-worldmkv.mkv | SEAL.Team.S03E01.720p.WEB.x264-worldmkv.mkv | 331659673 | 
+  file http://localhost/SEAL.Team.S03E04.HDTV.x264-KILLERS%5Beztv%5D.mkv | SEAL.Team.S03E04.HDTV.x264-KILLERS[eztv].mkv | 363699674 | 
+  file http://localhost/SEAL.Team.S03E15.HDTV.x264-SVA%5Beztv%5D.mkv | SEAL.Team.S03E15.HDTV.x264-SVA[eztv].mkv | 364765529 | 
+  file http://localhost/SEAL.Team.S03E18.HDTV.x264-SVA%5Beztv%5D.mkv | SEAL.Team.S03E18.HDTV.x264-SVA[eztv].mkv | 342988893 | 
+  file http://localhost/Strike.Back.S08E07.WEB.H264-XLF%5Beztv%5D.mkv | Strike.Back.S08E07.WEB.H264-XLF[eztv].mkv | 337254112 | 
+  file http://localhost/The.Flu.2013.KOREAN.720p.BrRip.x265.HEVCBay.com.mkv | The.Flu.2013.KOREAN.720p.BrRip.x265.HEVCBay.com.mkv | 575780346 | 
+  file http://localhost/Tomorrow.Never.Dies.1997.mp4 | Tomorrow.Never.Dies.1997.mp4 | 1005670583 | 
+  file http://localhost/Unparalleled Mulan 2020 720p HDRip Mandarin HC CHI-ENG H264 BONE.mp4 | Unparalleled Mulan 2020 720p HDRip Mandarin HC CHI-ENG H264 BONE.mp4 | 729827741 | 
+  file http://localhost/jp191.nordvpn.com.udp.ovpn | jp191.nordvpn.com.udp.ovpn | 2810 | 
+  file http://localhost/jp247.nordvpn.com.udp.ovpn | jp247.nordvpn.com.udp.ovpn | 2810 | 
+  file http://localhost/parasite.2019.korean.720p.bluray.hevc.x265.mkv | parasite.2019.korean.720p.bluray.hevc.x265.mkv | 610041206 | 
+  file http://localhost/seal.team.s03e06.mkv | seal.team.s03e06.mkv | 433259279 | 
+  file http://localhost/uc | uc | 3298 | 
+  file http://localhost/us3087.nordvpn.com.udp.ovpn | us3087.nordvpn.com.udp.ovpn | 2811 | 
+  file http://localhost/us3299.nordvpn.com.udp.ovpn | us3299.nordvpn.com.udp.ovpn | 2810 | 
+  file http://localhost/us3942.nordvpn.com.udp.ovpn | us3942.nordvpn.com.udp.ovpn | 2808 | 
+  file http://localhost/us4362.nordvpn.com.udp.ovpn | us4362.nordvpn.com.udp.ovpn | 2808 | 
+  file http://localhost/us4363.nordvpn.com.udp.ovpn | us4363.nordvpn.com.udp.ovpn | 2808 | 
+  file http://localhost/us4664.nordvpn.com.udp.ovpn | us4664.nordvpn.com.udp.ovpn | 2811 | 
+  file http://localhost/us4874.nordvpn.com.udp.ovpn | us4874.nordvpn.com.udp.ovpn | 2809 | 
+  file http://localhost/us5101.nordvpn.com.udp.ovpn | us5101.nordvpn.com.udp.ovpn | 2808 | 

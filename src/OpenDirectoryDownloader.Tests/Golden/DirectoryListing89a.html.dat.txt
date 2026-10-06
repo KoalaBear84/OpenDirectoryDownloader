@@ -7,3 +7,10 @@ url=http://localhost/ name=ROOT desc= parser=ParseListItemsDirectoryListing erro
   dir http://localhost/A:/历代里番合集 | 历代里番合集 |  | ParseListItemsDirectoryListing
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseListItemsDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseListItemsDirectoryListing error=False ok=True
+  dir http://localhost/A:/写真 | 写真 |  | ParseListItemsDirectoryListing
+  dir http://localhost/A:/视频 | 视频 |  | ParseListItemsDirectoryListing
+  dir http://localhost/A:/3D作品 | 3D作品 |  | ParseListItemsDirectoryListing
+  dir http://localhost/A:/VIP专区 | VIP专区 |  | ParseListItemsDirectoryListing
+  dir http://localhost/A:/历代里番合集 | 历代里番合集 |  | ParseListItemsDirectoryListing

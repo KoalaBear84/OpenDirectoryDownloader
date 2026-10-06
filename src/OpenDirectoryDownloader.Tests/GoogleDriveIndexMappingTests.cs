@@ -1,4 +1,4 @@
-using OpenDirectoryDownloader.Site.GDIndex;
+using OpenDirectoryDownloader.Parsing.Sites.GDIndex;
 using Xunit;
 
 namespace OpenDirectoryDownloader.Tests;

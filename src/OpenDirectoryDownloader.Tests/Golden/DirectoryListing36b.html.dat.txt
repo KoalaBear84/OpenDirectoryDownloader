@@ -100,3 +100,54 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/The Canon.pdf | The Canon.pdf | 2411725 | 
   file http://localhost:8086/listing/The Voice of the Silence.pdf | The Voice of the Silence.pdf | 569344 | 
   file http://localhost:8086/listing/Three Dialogues.pdf | Three Dialogues.pdf | 144384 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/777/ | 777 |  | ParseTablesDirectoryListing
+  dir http://localhost/ABA/ | ABA |  | ParseTablesDirectoryListing
+  dir http://localhost/AL/ | AL |  | ParseTablesDirectoryListing
+  dir http://localhost/abramelin/ | abramelin |  | ParseTablesDirectoryListing
+  dir http://localhost/collectedworks/ | collectedworks |  | ParseTablesDirectoryListing
+  dir http://localhost/dhammapada/ | dhammapada |  | ParseTablesDirectoryListing
+  dir http://localhost/dogmarituel/ | dogmarituel |  | ParseTablesDirectoryListing
+  dir http://localhost/equinox/ | equinox |  | ParseTablesDirectoryListing
+  dir http://localhost/erdmann/ | erdmann |  | ParseTablesDirectoryListing
+  dir http://localhost/forlong/ | forlong |  | ParseTablesDirectoryListing
+  dir http://localhost/fuller/ | fuller |  | ParseTablesDirectoryListing
+  dir http://localhost/gita/ | gita |  | ParseTablesDirectoryListing
+  dir http://localhost/goldenbough/ | goldenbough |  | ParseTablesDirectoryListing
+  dir http://localhost/hartmann/ | hartmann |  | ParseTablesDirectoryListing
+  dir http://localhost/hinton/ | hinton |  | ParseTablesDirectoryListing
+  dir http://localhost/hume/ | hume |  | ParseTablesDirectoryListing
+  dir http://localhost/huxley/ | huxley |  | ParseTablesDirectoryListing
+  dir http://localhost/maier/ | maier |  | ParseTablesDirectoryListing
+  dir http://localhost/milinda/ | milinda |  | ParseTablesDirectoryListing
+  dir http://localhost/prolegomena/ | prolegomena |  | ParseTablesDirectoryListing
+  dir http://localhost/psophia/ | psophia |  | ParseTablesDirectoryListing
+  dir http://localhost/pymander/ | pymander |  | ParseTablesDirectoryListing
+  dir http://localhost/taotehking/ | taotehking |  | ParseTablesDirectoryListing
+  dir http://localhost/upanishads/ | upanishads |  | ParseTablesDirectoryListing
+  dir http://localhost/yiking/ | yiking |  | ParseTablesDirectoryListing
+  dir http://localhost/zoroaster/ | zoroaster |  | ParseTablesDirectoryListing
+  file http://localhost/Aphorisms of Patanjali.pdf | Aphorisms of Patanjali.pdf | 133120 | 
+  file http://localhost/Crowley - Goetia.pdf | Crowley - Goetia.pdf | 905216 | 
+  file http://localhost/Crowley - Konx Om Pax.pdf | Crowley - Konx Om Pax.pdf | 658432 | 
+  file http://localhost/Crowley - Tannhauser.pdf | Crowley - Tannhauser.pdf | 333824 | 
+  file http://localhost/Crowley - The Law of Liberty.pdf | Crowley - The Law of Liberty.pdf | 123904 | 
+  file http://localhost/Crowley - The Message of the Master Therion.pdf | Crowley - The Message of the Master Therion.pdf | 106496 | 
+  file http://localhost/Crowley - The Sword of Song.pdf | Crowley - The Sword of Song.pdf | 636928 | 
+  file http://localhost/Egyptian Book of the Dead.pdf | Egyptian Book of the Dead.pdf | 1258291 | 
+  file http://localhost/First Principles.pdf | First Principles.pdf | 668672 | 
+  file http://localhost/Golden Verses of Pythagoras.pdf | Golden Verses of Pythagoras.pdf | 80896 | 
+  file http://localhost/Hatha Yoga Pradipika.pdf | Hatha Yoga Pradipika.pdf | 326656 | 
+  file http://localhost/James - Varieties of Religious Experience.pdf | James - Varieties of Religious Experience.pdf | 1363149 | 
+  file http://localhost/Kabbalah Unveiled.pdf | Kabbalah Unveiled.pdf | 1363149 | 
+  file http://localhost/On the Worship of Priapus.pdf | On the Worship of Priapus.pdf | 4194304 | 
+  file http://localhost/Raja Yoga.pdf | Raja Yoga.pdf | 683008 | 
+  file http://localhost/Science and the Infinite.pdf | Science and the Infinite.pdf | 516096 | 
+  file http://localhost/Shiva Sanhita.pdf | Shiva Sanhita.pdf | 191488 | 
+  file http://localhost/Somnium Scipionis.pdf | Somnium Scipionis.pdf | 249856 | 
+  file http://localhost/Spiritual Guide of Molinos.pdf | Spiritual Guide of Molinos.pdf | 749568 | 
+  file http://localhost/The Age of Reason.pdf | The Age of Reason.pdf | 260096 | 
+  file http://localhost/The Canon.pdf | The Canon.pdf | 2411725 | 
+  file http://localhost/The Voice of the Silence.pdf | The Voice of the Silence.pdf | 569344 | 
+  file http://localhost/Three Dialogues.pdf | Three Dialogues.pdf | 144384 | 

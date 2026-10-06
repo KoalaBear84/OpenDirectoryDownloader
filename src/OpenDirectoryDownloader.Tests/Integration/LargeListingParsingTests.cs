@@ -1,4 +1,3 @@
-using OpenDirectoryDownloader.Shared.Models;
 using System.Diagnostics;
 using Xunit;
 
@@ -16,7 +15,6 @@ public class LargeListingParsingTests
 	[InlineData(ListingStyle.NginxAutoindex)]
 	public async Task ParseHtml_ListingWithManyFiles_StaysLinear(ListingStyle style)
 	{
-		Program.Logger ??= new Serilog.LoggerConfiguration().CreateLogger();
 
 		const int files = 60_000;
 		FakeSite site = new(new FakeSiteOptions { Style = style, Depth = 0, FilesPerDirectory = files });

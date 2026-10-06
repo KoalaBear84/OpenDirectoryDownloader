@@ -80,3 +80,44 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   file http://localhost:8086/listing/Makefile.in | Makefile.in | 24576 | 
   file http://localhost:8086/listing/autogen.sh | autogen.sh | 1450 | 
   file http://localhost:8086/listing/configure.ac | configure.ac | 117760 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/.git/ | .git |  | RegexParser10
+  dir http://localhost/Resource/ | Resource |  | RegexParser10
+  dir http://localhost/arch/ | arch |  | RegexParser10
+  dir http://localhost/base/ | base |  | RegexParser10
+  dir http://localhost/contrib/ | contrib |  | RegexParser10
+  dir http://localhost/cups/ | cups |  | RegexParser10
+  dir http://localhost/demos/ | demos |  | RegexParser10
+  dir http://localhost/devices/ | devices |  | RegexParser10
+  dir http://localhost/doc/ | doc |  | RegexParser10
+  dir http://localhost/examples/ | examples |  | RegexParser10
+  dir http://localhost/expat/ | expat |  | RegexParser10
+  dir http://localhost/freetype/ | freetype |  | RegexParser10
+  dir http://localhost/gpdl/ | gpdl |  | RegexParser10
+  dir http://localhost/iccprofiles/ | iccprofiles |  | RegexParser10
+  dir http://localhost/ijs/ | ijs |  | RegexParser10
+  dir http://localhost/ios/ | ios |  | RegexParser10
+  dir http://localhost/jbig2dec/ | jbig2dec |  | RegexParser10
+  dir http://localhost/jpeg/ | jpeg |  | RegexParser10
+  dir http://localhost/jpegxr/ | jpegxr |  | RegexParser10
+  dir http://localhost/lcms2mt/ | lcms2mt |  | RegexParser10
+  dir http://localhost/lib/ | lib |  | RegexParser10
+  dir http://localhost/libpng/ | libpng |  | RegexParser10
+  dir http://localhost/man/ | man |  | RegexParser10
+  dir http://localhost/openjpeg/ | openjpeg |  | RegexParser10
+  dir http://localhost/pcl/ | pcl |  | RegexParser10
+  dir http://localhost/psi/ | psi |  | RegexParser10
+  dir http://localhost/tiff/ | tiff |  | RegexParser10
+  dir http://localhost/toolbin/ | toolbin |  | RegexParser10
+  dir http://localhost/windows/ | windows |  | RegexParser10
+  dir http://localhost/xps/ | xps |  | RegexParser10
+  dir http://localhost/zlib/ | zlib |  | RegexParser10
+  file http://localhost/.gitattributes | .gitattributes | 486 | 
+  file http://localhost/.gitignore | .gitignore | 2416 | 
+  file http://localhost/.lgtm.yml | .lgtm.yml | 650 | 
+  file http://localhost/DroidSansFallback.NOTICE | DroidSansFallback.NOTICE | 10240 | 
+  file http://localhost/LICENSE | LICENSE | 1976 | 
+  file http://localhost/Makefile.in | Makefile.in | 24576 | 
+  file http://localhost/autogen.sh | autogen.sh | 1450 | 
+  file http://localhost/configure.ac | configure.ac | 117760 | 

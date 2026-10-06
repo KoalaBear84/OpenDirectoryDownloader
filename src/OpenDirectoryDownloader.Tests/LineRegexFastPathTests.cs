@@ -17,8 +17,8 @@ public class LineRegexFastPathTests
 {
 	private static readonly Regex LineSeparator = new(@"\r\n|\r|\n|<br\S*>|<hr>");
 
-	private static readonly Regex NginxRegex = (Regex)typeof(DirectoryParser).GetMethod("RegexRegexParser2", BindingFlags.NonPublic | BindingFlags.Static)!.Invoke(null, null)!;
-	private static readonly Regex ApacheRegex = (Regex)typeof(DirectoryParser).GetMethod("RegexRegexParser1", BindingFlags.NonPublic | BindingFlags.Static)!.Invoke(null, null)!;
+	private static readonly Regex NginxRegex = (Regex)typeof(PreListingParser).GetMethod("RegexRegexParser2", BindingFlags.NonPublic | BindingFlags.Static)!.Invoke(null, null)!;
+	private static readonly Regex ApacheRegex = (Regex)typeof(PreListingParser).GetMethod("RegexRegexParser1", BindingFlags.NonPublic | BindingFlags.Static)!.Invoke(null, null)!;
 
 	private static void AssertNginxClaimIsRight(string line)
 	{

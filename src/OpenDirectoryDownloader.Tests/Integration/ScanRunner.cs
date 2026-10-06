@@ -1,5 +1,4 @@
 using CommandLine;
-using OpenDirectoryDownloader.Shared.Models;
 using Serilog;
 using System.Diagnostics;
 using Xunit;
@@ -24,8 +23,6 @@ public static class ScanRunner
 	static ScanRunner()
 	{
 		// Program.Main normally sets these up; the tests don't want log files, only silence
-		Program.Logger ??= new LoggerConfiguration().CreateLogger();
-		Program.HistoryLogger ??= new LoggerConfiguration().CreateLogger();
 	}
 
 	public static async Task<ScanResult> RunAsync(string url, string workingDirectory, params string[] extraArguments)

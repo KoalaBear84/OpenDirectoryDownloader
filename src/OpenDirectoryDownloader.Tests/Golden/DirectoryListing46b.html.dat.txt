@@ -6,3 +6,7 @@ url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=F
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
   file http://localhost:8086/listing/gsc-ec-converter-7.1.0-SNAPSHOT.tar | gsc-ec-converter-7.1.0-SNAPSHOT.tar | 9871360 | 
   file http://localhost:8086/listing/gsc-ec-converter-7.1.0-SNAPSHOT.zip | gsc-ec-converter-7.1.0-SNAPSHOT.zip | 8422620 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/gsc-ec-converter-7.1.0-SNAPSHOT.tar | gsc-ec-converter-7.1.0-SNAPSHOT.tar | 9871360 | 
+  file http://localhost/gsc-ec-converter-7.1.0-SNAPSHOT.zip | gsc-ec-converter-7.1.0-SNAPSHOT.zip | 8422620 | 

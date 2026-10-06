@@ -14,3 +14,11 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   dir http://localhost:8086/listing/eoan/ | eoan |  | RegexParser2
   dir http://localhost:8086/listing/pending/ | pending |  | RegexParser2
   dir http://localhost:8086/listing/source/ | source |  | RegexParser2
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/20200403/ | 20200403 |  | RegexParser2
+  dir http://localhost/bionic/ | bionic |  | RegexParser2
+  dir http://localhost/current/ | current |  | RegexParser2
+  dir http://localhost/eoan/ | eoan |  | RegexParser2
+  dir http://localhost/pending/ | pending |  | RegexParser2
+  dir http://localhost/source/ | source |  | RegexParser2

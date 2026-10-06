@@ -296,3 +296,152 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   file http://localhost:8086/listing/AlbumArtSmall.jpg | AlbumArtSmall.jpg | 7782 | 
   file http://localhost:8086/listing/Drake.zip | Drake.zip | 1825361101 | 
   file http://localhost:8086/listing/Folder.jpg | Folder.jpg | 41984 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/009 Sound System/ | 009 Sound System |  | RegexParser2
+  dir http://localhost/2 Chainz/ | 2 Chainz |  | RegexParser2
+  dir http://localhost/21 Savage/ | 21 Savage |  | RegexParser2
+  dir http://localhost/2Pac/ | 2Pac |  | RegexParser2
+  dir http://localhost/88GLAM/ | 88GLAM |  | RegexParser2
+  dir http://localhost/A$AP Ferg/ | A$AP Ferg |  | RegexParser2
+  dir http://localhost/A$AP Rocky/ | A$AP Rocky |  | RegexParser2
+  dir http://localhost/ABBA/ | ABBA |  | RegexParser2
+  dir http://localhost/Action Jackson/ | Action Jackson |  | RegexParser2
+  dir http://localhost/Alejandro Sanz/ | Alejandro Sanz |  | RegexParser2
+  dir http://localhost/Alex Creed/ | Alex Creed |  | RegexParser2
+  dir http://localhost/Alexandro Govardi/ | Alexandro Govardi |  | RegexParser2
+  dir http://localhost/Anitta/ | Anitta |  | RegexParser2
+  dir http://localhost/B Kidd/ | B Kidd |  | RegexParser2
+  dir http://localhost/Bad Bunny/ | Bad Bunny |  | RegexParser2
+  dir http://localhost/Beck/ | Beck |  | RegexParser2
+  dir http://localhost/Beerbongs & Bentleys/ | Beerbongs & Bentleys |  | RegexParser2
+  dir http://localhost/Biggie Smalls/ | Biggie Smalls |  | RegexParser2
+  dir http://localhost/Birdman/ | Birdman |  | RegexParser2
+  dir http://localhost/Bob Dylan/ | Bob Dylan |  | RegexParser2
+  dir http://localhost/Bon Jovi/ | Bon Jovi |  | RegexParser2
+  dir http://localhost/Borgore G-Eazy/ | Borgore G-Eazy |  | RegexParser2
+  dir http://localhost/Boston/ | Boston |  | RegexParser2
+  dir http://localhost/Britney Spears/ | Britney Spears |  | RegexParser2
+  dir http://localhost/C Breezy/ | C Breezy |  | RegexParser2
+  dir http://localhost/Cardi B/ | Cardi B |  | RegexParser2
+  dir http://localhost/Chris Jeday/ | Chris Jeday |  | RegexParser2
+  dir http://localhost/Coldplay/ | Coldplay |  | RegexParser2
+  dir http://localhost/Creepyloc/ | Creepyloc |  | RegexParser2
+  dir http://localhost/D'can/ | D'can |  | RegexParser2
+  dir http://localhost/D-Moe/ | D-Moe |  | RegexParser2
+  dir http://localhost/DJ DX/ | DJ DX |  | RegexParser2
+  dir http://localhost/DJ Felli Fel/ | DJ Felli Fel |  | RegexParser2
+  dir http://localhost/DJ Mustard/ | DJ Mustard |  | RegexParser2
+  dir http://localhost/Dap C/ | Dap C |  | RegexParser2
+  dir http://localhost/Dimitri Vegas & Like Mike/ | Dimitri Vegas & Like Mike |  | RegexParser2
+  dir http://localhost/Docka/ | Docka |  | RegexParser2
+  dir http://localhost/Don Mega/ | Don Mega |  | RegexParser2
+  dir http://localhost/Drake/ | Drake |  | RegexParser2
+  dir http://localhost/Ed Sheeran/ | Ed Sheeran |  | RegexParser2
+  dir http://localhost/Eminem/ | Eminem |  | RegexParser2
+  dir http://localhost/Farruko/ | Farruko |  | RegexParser2
+  dir http://localhost/Fat Joe/ | Fat Joe |  | RegexParser2
+  dir http://localhost/Foster the People/ | Foster the People |  | RegexParser2
+  dir http://localhost/Freeway Jay-Z Beanie Sigel Sheek Louch/ | Freeway Jay-Z Beanie Sigel Sheek Louch |  | RegexParser2
+  dir http://localhost/French Montana/ | French Montana |  | RegexParser2
+  dir http://localhost/G-Eazy/ | G-Eazy |  | RegexParser2
+  dir http://localhost/Gold Top/ | Gold Top |  | RegexParser2
+  dir http://localhost/Gucci Mane/ | Gucci Mane |  | RegexParser2
+  dir http://localhost/Hardwell/ | Hardwell |  | RegexParser2
+  dir http://localhost/HoodRich Pablo Juan/ | HoodRich Pablo Juan |  | RegexParser2
+  dir http://localhost/Huncho Jack/ | Huncho Jack |  | RegexParser2
+  dir http://localhost/Iyaz/ | Iyaz |  | RegexParser2
+  dir http://localhost/J Balvin/ | J Balvin |  | RegexParser2
+  dir http://localhost/JT the Bigga Figga/ | JT the Bigga Figga |  | RegexParser2
+  dir http://localhost/JUNIOR/ | JUNIOR |  | RegexParser2
+  dir http://localhost/Jason Derulo/ | Jason Derulo |  | RegexParser2
+  dir http://localhost/Jay Rock/ | Jay Rock |  | RegexParser2
+  dir http://localhost/Jay Sean/ | Jay Sean |  | RegexParser2
+  dir http://localhost/Jay-Z/ | Jay-Z |  | RegexParser2
+  dir http://localhost/Jeizy Bow/ | Jeizy Bow |  | RegexParser2
+  dir http://localhost/Jessie J/ | Jessie J |  | RegexParser2
+  dir http://localhost/Jhay Cortez/ | Jhay Cortez |  | RegexParser2
+  dir http://localhost/Johnny Good/ | Johnny Good |  | RegexParser2
+  dir http://localhost/Josh Kaufman/ | Josh Kaufman |  | RegexParser2
+  dir http://localhost/Kanye West/ | Kanye West |  | RegexParser2
+  dir http://localhost/Kendrick Lamar/ | Kendrick Lamar |  | RegexParser2
+  dir http://localhost/Law/ | Law |  | RegexParser2
+  dir http://localhost/Layzie Bone Outlawz Bone Thugs-N-Harmony 2Pac/ | Layzie Bone Outlawz Bone Thugs-N-Harmony 2Pac |  | RegexParser2
+  dir http://localhost/Led Zeppelin/ | Led Zeppelin |  | RegexParser2
+  dir http://localhost/Liam Payne/ | Liam Payne |  | RegexParser2
+  dir http://localhost/Lil Baby/ | Lil Baby |  | RegexParser2
+  dir http://localhost/Lil Jon/ | Lil Jon |  | RegexParser2
+  dir http://localhost/Lil Uzi Vert/ | Lil Uzi Vert |  | RegexParser2
+  dir http://localhost/Lil Wayne/ | Lil Wayne |  | RegexParser2
+  dir http://localhost/Lil' Flip Gudda Gudda Young Money Lil Wayne/ | Lil' Flip Gudda Gudda Young Money Lil Wayne |  | RegexParser2
+  dir http://localhost/M.A.K/ | M.A.K |  | RegexParser2
+  dir http://localhost/MC Fioti/ | MC Fioti |  | RegexParser2
+  dir http://localhost/Macklemore/ | Macklemore |  | RegexParser2
+  dir http://localhost/Mc Kevinho/ | Mc Kevinho |  | RegexParser2
+  dir http://localhost/Michael Jackson/ | Michael Jackson |  | RegexParser2
+  dir http://localhost/Migos/ | Migos |  | RegexParser2
+  dir http://localhost/Mike Baggz/ | Mike Baggz |  | RegexParser2
+  dir http://localhost/Money Mo/ | Money Mo |  | RegexParser2
+  dir http://localhost/Montell2099/ | Montell2099 |  | RegexParser2
+  dir http://localhost/Moonlex/ | Moonlex |  | RegexParser2
+  dir http://localhost/Mustard/ | Mustard |  | RegexParser2
+  dir http://localhost/N.E.R.D/ | N.E.R.D |  | RegexParser2
+  dir http://localhost/NAV/ | NAV |  | RegexParser2
+  dir http://localhost/New Creation/ | New Creation |  | RegexParser2
+  dir http://localhost/Nicki Minaj/ | Nicki Minaj |  | RegexParser2
+  dir http://localhost/Nicky Jam/ | Nicky Jam |  | RegexParser2
+  dir http://localhost/OG Domino/ | OG Domino |  | RegexParser2
+  dir http://localhost/Outlawz 2Pac Dead Prez/ | Outlawz 2Pac Dead Prez |  | RegexParser2
+  dir http://localhost/P!nk/ | P!nk |  | RegexParser2
+  dir http://localhost/PKCZ®/ | PKCZ® |  | RegexParser2
+  dir http://localhost/Pasta (Tasty Sound)/ | Pasta (Tasty Sound) |  | RegexParser2
+  dir http://localhost/Pell/ | Pell |  | RegexParser2
+  dir http://localhost/Peter Paul And Mary/ | Peter Paul And Mary |  | RegexParser2
+  dir http://localhost/Piff Man and Soulja Boy/ | Piff Man and Soulja Boy |  | RegexParser2
+  dir http://localhost/Pitbull/ | Pitbull |  | RegexParser2
+  dir http://localhost/Post Malone/ | Post Malone |  | RegexParser2
+  dir http://localhost/Pusha T/ | Pusha T |  | RegexParser2
+  dir http://localhost/Quality Control/ | Quality Control |  | RegexParser2
+  dir http://localhost/Queen/ | Queen |  | RegexParser2
+  dir http://localhost/R. Kelly/ | R. Kelly |  | RegexParser2
+  dir http://localhost/Redeyez/ | Redeyez |  | RegexParser2
+  dir http://localhost/Revol/ | Revol |  | RegexParser2
+  dir http://localhost/Rich Brian/ | Rich Brian |  | RegexParser2
+  dir http://localhost/Rich Homie Quan/ | Rich Homie Quan |  | RegexParser2
+  dir http://localhost/Rihanna/ | Rihanna |  | RegexParser2
+  dir http://localhost/Shabaam Sahdeeq/ | Shabaam Sahdeeq |  | RegexParser2
+  dir http://localhost/Skrillex/ | Skrillex |  | RegexParser2
+  dir http://localhost/Sky/ | Sky |  | RegexParser2
+  dir http://localhost/Snoop Dogg/ | Snoop Dogg |  | RegexParser2
+  dir http://localhost/Soulja Boy/ | Soulja Boy |  | RegexParser2
+  dir http://localhost/Suga Free/ | Suga Free |  | RegexParser2
+  dir http://localhost/T-Pain/ | T-Pain |  | RegexParser2
+  dir http://localhost/THE SOLITTY PROJECT/ | THE SOLITTY PROJECT |  | RegexParser2
+  dir http://localhost/TWRK/ | TWRK |  | RegexParser2
+  dir http://localhost/Taiger/ | Taiger |  | RegexParser2
+  dir http://localhost/Tears for Fears/ | Tears for Fears |  | RegexParser2
+  dir http://localhost/Telly Mac/ | Telly Mac |  | RegexParser2
+  dir http://localhost/The Beatles/ | The Beatles |  | RegexParser2
+  dir http://localhost/The Black Eyed Peas/ | The Black Eyed Peas |  | RegexParser2
+  dir http://localhost/The Chainsmokers/ | The Chainsmokers |  | RegexParser2
+  dir http://localhost/The Glam/ | The Glam |  | RegexParser2
+  dir http://localhost/The Paradise/ | The Paradise |  | RegexParser2
+  dir http://localhost/The Weeknd/ | The Weeknd |  | RegexParser2
+  dir http://localhost/Three Days Grace/ | Three Days Grace |  | RegexParser2
+  dir http://localhost/Timati & Snoop Dogg/ | Timati & Snoop Dogg |  | RegexParser2
+  dir http://localhost/Tiësto/ | Tiësto |  | RegexParser2
+  dir http://localhost/Tony Sheridan/ | Tony Sheridan |  | RegexParser2
+  dir http://localhost/Travis Scott/ | Travis Scott |  | RegexParser2
+  dir http://localhost/Ty Fyffe/ | Ty Fyffe |  | RegexParser2
+  dir http://localhost/Usher/ | Usher |  | RegexParser2
+  dir http://localhost/Various Artists/ | Various Artists |  | RegexParser2
+  dir http://localhost/WawMart/ | WawMart |  | RegexParser2
+  dir http://localhost/Xxxtentacion/ | Xxxtentacion |  | RegexParser2
+  dir http://localhost/You Can Wear Your X - I'll Wear Mine (A tribute to Johnny Rebel and the C.S.A)/ | You Can Wear Your X - I'll Wear Mine (A tribute to Johnny Rebel and the C.S.A) |  | RegexParser2
+  dir http://localhost/Young Thug/ | Young Thug |  | RegexParser2
+  dir http://localhost/ZAYTOVEN/ | ZAYTOVEN |  | RegexParser2
+  dir http://localhost/dead prez/ | dead prez |  | RegexParser2
+  dir http://localhost/will.i.am/ | will.i.am |  | RegexParser2
+  file http://localhost/AlbumArtSmall.jpg | AlbumArtSmall.jpg | 7782 | 
+  file http://localhost/Drake.zip | Drake.zip | 1825361101 | 
+  file http://localhost/Folder.jpg | Folder.jpg | 41984 | 

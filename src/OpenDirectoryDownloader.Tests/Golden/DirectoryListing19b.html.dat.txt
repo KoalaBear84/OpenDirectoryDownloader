@@ -8,3 +8,8 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/genomes.txt | genomes.txt | 32 | 
   file http://localhost:8086/listing/hub.txt | hub.txt | 101 | 
   file http://localhost:8086/listing/trackDb.txt | trackDb.txt | 2355 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/genomes.txt | genomes.txt | 32 | 
+  file http://localhost/hub.txt | hub.txt | 101 | 
+  file http://localhost/trackDb.txt | trackDb.txt | 2355 | 

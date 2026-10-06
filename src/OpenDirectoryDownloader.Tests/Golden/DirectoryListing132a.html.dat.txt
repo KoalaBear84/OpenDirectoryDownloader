@@ -76,3 +76,42 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   dir http://localhost:8086/listing/Ymiskar sendingar/ | Ymiskar sendingar |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/Ymiskir tekstir/ | Ymiskir tekstir |  | ParseTablesDirectoryListing
   file http://localhost:8086/listing/Fragreiding um at Downloada sendingar.txt | Fragreiding um at Downloada sendingar.txt | 1536 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/7 ar - Sendingar ur savninum hja Lindini/ | 7 ar - Sendingar ur savninum hja Lindini |  | ParseTablesDirectoryListing
+  dir http://localhost/A Bylgjulongd/ | A Bylgjulongd |  | ParseTablesDirectoryListing
+  dir http://localhost/A_Ferd/ | A_Ferd |  | ParseTablesDirectoryListing
+  dir http://localhost/A_veg_heim/ | A_veg_heim |  | ParseTablesDirectoryListing
+  dir http://localhost/Alpha %26 Omega/ | Alpha & Omega |  | ParseTablesDirectoryListing
+  dir http://localhost/Arma_Menniskja_Mitt/ | Arma_Menniskja_Mitt |  | ParseTablesDirectoryListing
+  dir http://localhost/Bankabok_Truarinnar/ | Bankabok_Truarinnar |  | ParseTablesDirectoryListing
+  dir http://localhost/Barnasendingar/ | Barnasendingar |  | ParseTablesDirectoryListing
+  dir http://localhost/Blod_ur_livsins_dagbok_-_Effie_Campbell/ | Blod_ur_livsins_dagbok_-_Effie_Campbell |  | ParseTablesDirectoryListing
+  dir http://localhost/Bonarlinjan/ | Bonarlinjan |  | ParseTablesDirectoryListing
+  dir http://localhost/Borgin/ | Borgin |  | ParseTablesDirectoryListing
+  dir http://localhost/BrotUrKirkjusoguAdrennHeimamission/ | BrotUrKirkjusoguAdrennHeimamission |  | ParseTablesDirectoryListing
+  dir http://localhost/Com-Pass/ | Com-Pass |  | ParseTablesDirectoryListing
+  dir http://localhost/Dagsins_Ord/ | Dagsins_Ord |  | ParseTablesDirectoryListing
+  dir http://localhost/Explore/ | Explore |  | ParseTablesDirectoryListing
+  dir http://localhost/Gledibod/ | Gledibod |  | ParseTablesDirectoryListing
+  dir http://localhost/Gronlendingar/ | Gronlendingar |  | ParseTablesDirectoryListing
+  dir http://localhost/Hitabylgjan/ | Hitabylgjan |  | ParseTablesDirectoryListing
+  dir http://localhost/I dyptina/ | I dyptina |  | ParseTablesDirectoryListing
+  dir http://localhost/Kreativt Tyskvold/ | Kreativt Tyskvold |  | ParseTablesDirectoryListing
+  dir http://localhost/Leygarkvold i Lindini/ | Leygarkvold i Lindini |  | ParseTablesDirectoryListing
+  dir http://localhost/Live Streaming/ | Live Streaming |  | ParseTablesDirectoryListing
+  dir http://localhost/Livid/ | Livid |  | ParseTablesDirectoryListing
+  dir http://localhost/Lovsangslotan/ | Lovsangslotan |  | ParseTablesDirectoryListing
+  dir http://localhost/Magnetlistin/ | Magnetlistin |  | ParseTablesDirectoryListing
+  dir http://localhost/Mangt %26 Hvat/ | Mangt & Hvat |  | ParseTablesDirectoryListing
+  dir http://localhost/Motir/ | Motir |  | ParseTablesDirectoryListing
+  dir http://localhost/Muffins/ | Muffins |  | ParseTablesDirectoryListing
+  dir http://localhost/Nyggj_byrjan/ | Nyggj_byrjan |  | ParseTablesDirectoryListing
+  dir http://localhost/Online/ | Online |  | ParseTablesDirectoryListing
+  dir http://localhost/Stjornuljosid - Soga/ | Stjornuljosid - Soga |  | ParseTablesDirectoryListing
+  dir http://localhost/Studulssendingar/ | Studulssendingar |  | ParseTablesDirectoryListing
+  dir http://localhost/TheMannieShow/ | TheMannieShow |  | ParseTablesDirectoryListing
+  dir http://localhost/Umveldi/ | Umveldi |  | ParseTablesDirectoryListing
+  dir http://localhost/Ymiskar sendingar/ | Ymiskar sendingar |  | ParseTablesDirectoryListing
+  dir http://localhost/Ymiskir tekstir/ | Ymiskir tekstir |  | ParseTablesDirectoryListing
+  file http://localhost/Fragreiding um at Downloada sendingar.txt | Fragreiding um at Downloada sendingar.txt | 1536 | 

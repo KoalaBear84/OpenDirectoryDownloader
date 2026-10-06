@@ -16,3 +16,12 @@ url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=Tru
   dir http://localhost:8086/listing/Wood Magazine - Special Issues/ | Wood Magazine - Special Issues |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/Woodsmith Magazine/ | Woodsmith Magazine |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/Woodsmith Magazine - Special Issues/ | Woodsmith Magazine - Special Issues |  | ParseTablesDirectoryListing
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  dir http://localhost/Taunton%27s Complete Illustrated Guides/ | Taunton's Complete Illustrated Guides |  | ParseTablesDirectoryListing
+  dir http://localhost/The Art of Woodworking/ | The Art of Woodworking |  | ParseTablesDirectoryListing
+  dir http://localhost/The Family Handyman Magazine/ | The Family Handyman Magazine |  | ParseTablesDirectoryListing
+  dir http://localhost/Wood Magazine/ | Wood Magazine |  | ParseTablesDirectoryListing
+  dir http://localhost/Wood Magazine - Special Issues/ | Wood Magazine - Special Issues |  | ParseTablesDirectoryListing
+  dir http://localhost/Woodsmith Magazine/ | Woodsmith Magazine |  | ParseTablesDirectoryListing
+  dir http://localhost/Woodsmith Magazine - Special Issues/ | Woodsmith Magazine - Special Issues |  | ParseTablesDirectoryListing

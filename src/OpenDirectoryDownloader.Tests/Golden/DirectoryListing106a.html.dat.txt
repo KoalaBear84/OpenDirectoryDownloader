@@ -14,3 +14,17 @@ url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=Fals
   dir http://localhost/srv1/Black Hat/2019 EU/ | 2019 EU |  | RegexParser6
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/srv1/Black Hat/2015 Asia/ | 2015 Asia |  | RegexParser6
+  dir http://localhost/srv1/Black Hat/2015 EU/ | 2015 EU |  | RegexParser6
+  dir http://localhost/srv1/Black Hat/2016 Asia/ | 2016 Asia |  | RegexParser6
+  dir http://localhost/srv1/Black Hat/2016 EU/ | 2016 EU |  | RegexParser6
+  dir http://localhost/srv1/Black Hat/2017 ASIA/ | 2017 ASIA |  | RegexParser6
+  dir http://localhost/srv1/Black Hat/2017 EU/ | 2017 EU |  | RegexParser6
+  dir http://localhost/srv1/Black Hat/2017 USA/ | 2017 USA |  | RegexParser6
+  dir http://localhost/srv1/Black Hat/2018 Asia/ | 2018 Asia |  | RegexParser6
+  dir http://localhost/srv1/Black Hat/2018 EU/ | 2018 EU |  | RegexParser6
+  dir http://localhost/srv1/Black Hat/2018 USA/ | 2018 USA |  | RegexParser6
+  dir http://localhost/srv1/Black Hat/2019  Asia/ | 2019  Asia |  | RegexParser6
+  dir http://localhost/srv1/Black Hat/2019 EU/ | 2019 EU |  | RegexParser6

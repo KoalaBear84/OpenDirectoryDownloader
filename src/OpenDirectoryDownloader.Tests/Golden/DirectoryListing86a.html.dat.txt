@@ -12,3 +12,15 @@ url=http://localhost/ name=ROOT desc= parser= error=False ok=False
   dir http://localhost/DATA/index.php?dir=NAS1/TV Series/ | TV Series |  | ParseTablesDirectoryListing
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/DATA/index.php?dir=NAS1/Bangladeshi-Natok-UP/ | Bangladeshi-Natok-UP |  | ParseTablesDirectoryListing
+  dir http://localhost/DATA/index.php?dir=NAS1/Books/ | Books |  | ParseTablesDirectoryListing
+  dir http://localhost/DATA/index.php?dir=NAS1/Documentary/ | Documentary |  | ParseTablesDirectoryListing
+  dir http://localhost/DATA/index.php?dir=NAS1/Games/ | Games |  | ParseTablesDirectoryListing
+  dir http://localhost/DATA/index.php?dir=NAS1/Indian-Bangla-Movie/ | Indian-Bangla-Movie |  | ParseTablesDirectoryListing
+  dir http://localhost/DATA/index.php?dir=NAS1/Movies/ | Movies |  | ParseTablesDirectoryListing
+  dir http://localhost/DATA/index.php?dir=NAS1/Software/ | Software |  | ParseTablesDirectoryListing
+  dir http://localhost/DATA/index.php?dir=NAS1/Sp-disk6/ | Sp-disk6 |  | ParseTablesDirectoryListing
+  dir http://localhost/DATA/index.php?dir=NAS1/Tutorial/ | Tutorial |  | ParseTablesDirectoryListing
+  dir http://localhost/DATA/index.php?dir=NAS1/TV Series/ | TV Series |  | ParseTablesDirectoryListing

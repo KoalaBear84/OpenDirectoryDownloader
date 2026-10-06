@@ -18,3 +18,13 @@ url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=Tru
   dir http://www.manuals.cornpone.net/index.php?folder=U2VjcmV0IENC | Secret CB |  | ParseDirLIST
   dir http://www.manuals.cornpone.net/index.php?folder=WmVuaXRo | Zenith |  | ParseDirLIST
   file http://www.manuals.cornpone.net/robots.txt | robots.txt |  | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  dir http://www.manuals.cornpone.net/index.php?folder=LndlbGwta25vd24= | .well-known |  | ParseDirLIST
+  dir http://www.manuals.cornpone.net/index.php?folder=Q3J5c3RhbCBSYWRpbw== | Crystal Radio |  | ParseDirLIST
+  dir http://www.manuals.cornpone.net/index.php?folder=SGVhdGhraXQ= | Heathkit |  | ParseDirLIST
+  dir http://www.manuals.cornpone.net/index.php?folder=TmF0aW9uYWw= | National |  | ParseDirLIST
+  dir http://www.manuals.cornpone.net/index.php?folder=UmVhbGlzdGlj | Realistic |  | ParseDirLIST
+  dir http://www.manuals.cornpone.net/index.php?folder=U2VjcmV0IENC | Secret CB |  | ParseDirLIST
+  dir http://www.manuals.cornpone.net/index.php?folder=WmVuaXRo | Zenith |  | ParseDirLIST
+  file http://www.manuals.cornpone.net/robots.txt | robots.txt |  | 

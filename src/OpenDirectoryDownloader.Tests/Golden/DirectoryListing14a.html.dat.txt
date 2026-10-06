@@ -140,3 +140,74 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/shippuden.jpg | shippuden.jpg | 196608 | 
   file http://localhost:8086/listing/watashinote.jpg | watashinote.jpg | 34816 | 
   file http://localhost:8086/listing/wolfoo.gif | wolfoo.gif | 43008 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/AP-medals/ | AP-medals |  | ParseTablesDirectoryListing
+  dir http://localhost/APMagazine/ | APMagazine |  | ParseTablesDirectoryListing
+  dir http://localhost/APpro/ | APpro |  | ParseTablesDirectoryListing
+  dir http://localhost/Banners/ | Banners |  | ParseTablesDirectoryListing
+  dir http://localhost/FREE/ | FREE |  | ParseTablesDirectoryListing
+  dir http://localhost/GFX/ | GFX |  | ParseTablesDirectoryListing
+  dir http://localhost/Images/ | Images |  | ParseTablesDirectoryListing
+  dir http://localhost/Misc/ | Misc |  | ParseTablesDirectoryListing
+  dir http://localhost/Mosabeghe/ | Mosabeghe |  | ParseTablesDirectoryListing
+  dir http://localhost/PT/ | PT |  | ParseTablesDirectoryListing
+  dir http://localhost/Practice/ | Practice |  | ParseTablesDirectoryListing
+  dir http://localhost/Scrubs/ | Scrubs |  | ParseTablesDirectoryListing
+  dir http://localhost/TNR/ | TNR |  | ParseTablesDirectoryListing
+  dir http://localhost/Taaraachan/ | Taaraachan |  | ParseTablesDirectoryListing
+  dir http://localhost/Tutorial Images/ | Tutorial Images |  | ParseTablesDirectoryListing
+  dir http://localhost/Tutorials/ | Tutorials |  | ParseTablesDirectoryListing
+  dir http://localhost/WIP/ | WIP |  | ParseTablesDirectoryListing
+  dir http://localhost/avy/ | avy |  | ParseTablesDirectoryListing
+  dir http://localhost/program/ | program |  | ParseTablesDirectoryListing
+  dir http://localhost/temp/ | temp |  | ParseTablesDirectoryListing
+  file http://localhost/Brushes.jpg | Brushes.jpg | 136192 | 
+  file http://localhost/CONGRATS.jpg | CONGRATS.jpg | 362496 | 
+  file http://localhost/DOB.rar | DOB.rar | 17825792 | 
+  file http://localhost/EBB1.jpg | EBB1.jpg | 35840 | 
+  file http://localhost/EBB2.jpg | EBB2.jpg | 37888 | 
+  file http://localhost/ElementalFX.rar | ElementalFX.rar | 8598323 | 
+  file http://localhost/FL.rar | FL.rar | 39845888 | 
+  file http://localhost/GamersParadise.jpg | GamersParadise.jpg | 56320 | 
+  file http://localhost/GoranKaran.mp3 | GoranKaran.mp3 | 2936013 | 
+  file http://localhost/Hard.jpg | Hard.jpg | 26624 | 
+  file http://localhost/Hell-canyon.jpg | Hell-canyon.jpg | 39936 | 
+  file http://localhost/Jensen.jpg | Jensen.jpg | 324608 | 
+  file http://localhost/MohammadFire.rar | MohammadFire.rar | 3774874 | 
+  file http://localhost/Natsu_meda_By_GFX_WIP_Shahabl.gif | Natsu_meda_By_GFX_WIP_Shahabl.gif | 17408 | 
+  file http://localhost/PACK2.rar | PACK2.rar | 3355443 | 
+  file http://localhost/PK.jpg | PK.jpg | 60416 | 
+  file http://localhost/PS.jpg | PS.jpg | 62464 | 
+  file http://localhost/Painting.jpg | Painting.jpg | 274432 | 
+  file http://localhost/Plants_vs._Zombies.rar | Plants_vs._Zombies.rar | 47185920 | 
+  file http://localhost/Pray for japan.gif | Pray for japan.gif | 495616 | 
+  file http://localhost/Printscreen7.jpg | Printscreen7.jpg | 119808 | 
+  file http://localhost/Q.rar | Q.rar | 38797312 | 
+  file http://localhost/REDWIP.gif | REDWIP.gif | 1153434 | 
+  file http://localhost/Ranking system.jpg | Ranking system.jpg | 514048 | 
+  file http://localhost/SIG.png | SIG.png | 6554 | 
+  file http://localhost/Sakura1.jpg | Sakura1.jpg | 151552 | 
+  file http://localhost/Sakura1.rar | Sakura1.rar | 453632 | 
+  file http://localhost/Sakura2.jpg | Sakura2.jpg | 88064 | 
+  file http://localhost/Sakura2.rar | Sakura2.rar | 632832 | 
+  file http://localhost/Sasukesonic.jpg | Sasukesonic.jpg | 877568 | 
+  file http://localhost/Scroll.jpg | Scroll.jpg | 538624 | 
+  file http://localhost/Sonicagain.jpg | Sonicagain.jpg | 286720 | 
+  file http://localhost/Strength.jpg | Strength.jpg | 20480 | 
+  file http://localhost/TM.jpg | TM.jpg | 65536 | 
+  file http://localhost/Tutorial-Vids.torrent | Tutorial-Vids.torrent | 9011 | 
+  file http://localhost/VahidPSD.rar | VahidPSD.rar | 1048576 | 
+  file http://localhost/WIP.gif | WIP.gif | 1572864 | 
+  file http://localhost/babashahoo.jpg | babashahoo.jpg | 198656 | 
+  file http://localhost/blackie.jpg | blackie.jpg | 28672 | 
+  file http://localhost/cake.jpg | cake.jpg | 18432 | 
+  file http://localhost/divan.jpg | divan.jpg | 68608 | 
+  file http://localhost/faridabunny.gif | faridabunny.gif | 43008 | 
+  file http://localhost/firstDP.jpg | firstDP.jpg | 209920 | 
+  file http://localhost/printscreen.jpg | printscreen.jpg | 403456 | 
+  file http://localhost/sasu.gif | sasu.gif | 325632 | 
+  file http://localhost/sesho.gif | sesho.gif | 11264 | 
+  file http://localhost/shippuden.jpg | shippuden.jpg | 196608 | 
+  file http://localhost/watashinote.jpg | watashinote.jpg | 34816 | 
+  file http://localhost/wolfoo.gif | wolfoo.gif | 43008 | 

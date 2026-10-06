@@ -40,3 +40,24 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/temperatuuri_app.cpp | temperatuuri_app.cpp | 2867 | 
   file http://localhost:8086/listing/temperatuuri_app.html | temperatuuri_app.html | 425 | 
   file http://localhost:8086/listing/temperatuuri_app.png | temperatuuri_app.png | 282624 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/BitBaitconvert.cpp | BitBaitconvert.cpp | 11366 | 
+  file http://localhost/BitBaitconvert.cpp~ | BitBaitconvert.cpp~ | 11366 | 
+  file http://localhost/BitBaitconvert.exe | BitBaitconvert.exe | 482509 | 
+  file http://localhost/BitBaitconvert.htm | BitBaitconvert.htm | 3277 | 
+  file http://localhost/BitBaitconvert_errorCheck.cpp | BitBaitconvert_errorCheck.cpp | 13619 | 
+  file http://localhost/bittobyte.cpp | bittobyte.cpp | 11162 | 
+  file http://localhost/donkeykong2.cpp | donkeykong2.cpp | 1536 | 
+  file http://localhost/donkeykong3.cpp | donkeykong3.cpp | 2150 | 
+  file http://localhost/eurokalk.cpp | eurokalk.cpp | 2765 | 
+  file http://localhost/eurokalk.html | eurokalk.html | 368 | 
+  file http://localhost/eurokalk.jpg | eurokalk.jpg | 87962 | 
+  file http://localhost/kalkulaator | kalkulaator | 12390 | 
+  file http://localhost/kalkulaator.cpp | kalkulaator.cpp | 1229 | 
+  file http://localhost/kalkulaator.html | kalkulaator.html | 379 | 
+  file http://localhost/kalkulaator.png | kalkulaator.png | 256717 | 
+  file http://localhost/temperatuuri_app | temperatuuri_app | 12083 | 
+  file http://localhost/temperatuuri_app.cpp | temperatuuri_app.cpp | 2867 | 
+  file http://localhost/temperatuuri_app.html | temperatuuri_app.html | 425 | 
+  file http://localhost/temperatuuri_app.png | temperatuuri_app.png | 282624 | 

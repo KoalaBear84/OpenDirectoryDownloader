@@ -14,3 +14,11 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   dir http://localhost:8086/listing/meble FADOME/ | meble FADOME |  | RegexParser3
   dir http://localhost:8086/listing/rysunki kuchni/ | rysunki kuchni |  | RegexParser3
   file http://localhost:8086/listing/naklejka22.jpg | naklejka22.jpg | 200704 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/DOME/ | DOME |  | RegexParser3
+  dir http://localhost/KUCHNIE/ | KUCHNIE |  | RegexParser3
+  dir http://localhost/Kuchnie-PRO100/ | Kuchnie-PRO100 |  | RegexParser3
+  dir http://localhost/meble FADOME/ | meble FADOME |  | RegexParser3
+  dir http://localhost/rysunki kuchni/ | rysunki kuchni |  | RegexParser3
+  file http://localhost/naklejka22.jpg | naklejka22.jpg | 200704 | 

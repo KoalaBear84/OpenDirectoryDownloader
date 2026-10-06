@@ -9,9 +9,9 @@ public class GetFileNameFromUrlTests
 
 	private static void AssertSame(string baseUrl, string href)
 	{
-		Library.ProcessUrl(baseUrl, href, out _, out Uri uri, out string fullUrl);
+		UrlHelper.ProcessUrl(baseUrl, href, out _, out Uri uri, out string fullUrl);
 
-		Assert.True(Old(fullUrl) == Library.GetFileNameFromUrl(uri, fullUrl), $"Different file name for href '{href}' on '{baseUrl}'");
+		Assert.True(Old(fullUrl) == UrlHelper.GetFileNameFromUrl(uri, fullUrl), $"Different file name for href '{href}' on '{baseUrl}'");
 	}
 
 	[Theory]
@@ -74,11 +74,11 @@ public class GetFileNameFromUrlTests
 
 			try
 			{
-				Library.ProcessUrl(baseUrl, href, out _, out Uri uri, out string fullUrl);
+				UrlHelper.ProcessUrl(baseUrl, href, out _, out Uri uri, out string fullUrl);
 
 				string expected = Old(fullUrl);
 
-				Assert.True(expected == Library.GetFileNameFromUrl(uri, fullUrl), $"Different file name for href '{href}' on '{baseUrl}'");
+				Assert.True(expected == UrlHelper.GetFileNameFromUrl(uri, fullUrl), $"Different file name for href '{href}' on '{baseUrl}'");
 				compared++;
 			}
 			catch (UriFormatException)

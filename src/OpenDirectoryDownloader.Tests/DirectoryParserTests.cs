@@ -1,4 +1,3 @@
-﻿using OpenDirectoryDownloader.Shared.Models;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 

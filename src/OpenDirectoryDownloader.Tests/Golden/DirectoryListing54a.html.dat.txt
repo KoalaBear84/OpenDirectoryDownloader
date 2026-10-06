@@ -90,3 +90,49 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/viewmii.swf | viewmii.swf | 9011 | 
   file http://localhost:8086/listing/webTools.zip | webTools.zip | 32768 | 
   file http://localhost:8086/listing/wherbert.jpg | wherbert.jpg | 22528 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/Hyphenator_chrome/ | Hyphenator_chrome |  | ParseTablesDirectoryListing
+  dir http://localhost/RandoHex/ | RandoHex |  | ParseTablesDirectoryListing
+  dir http://localhost/Sites/ | Sites |  | ParseTablesDirectoryListing
+  dir http://localhost/SkylanderChart/ | SkylanderChart |  | ParseTablesDirectoryListing
+  dir http://localhost/TNMT Logo/ | TNMT Logo |  | ParseTablesDirectoryListing
+  dir http://localhost/ada/ | ada |  | ParseTablesDirectoryListing
+  dir http://localhost/crypto/ | crypto |  | ParseTablesDirectoryListing
+  dir http://localhost/koha/ | koha |  | ParseTablesDirectoryListing
+  dir http://localhost/library/ | library |  | ParseTablesDirectoryListing
+  dir http://localhost/nook/ | nook |  | ParseTablesDirectoryListing
+  dir http://localhost/photo/ | photo |  | ParseTablesDirectoryListing
+  dir http://localhost/r/ | r |  | ParseTablesDirectoryListing
+  dir http://localhost/rsa-generator/ | rsa-generator |  | ParseTablesDirectoryListing
+  dir http://localhost/settlers/ | settlers |  | ParseTablesDirectoryListing
+  dir http://localhost/stargate/ | stargate |  | ParseTablesDirectoryListing
+  dir http://localhost/stephengeorgewestdyndns/ | stephengeorgewestdyndns |  | ParseTablesDirectoryListing
+  dir http://localhost/stephengeorgewesthomeip/ | stephengeorgewesthomeip |  | ParseTablesDirectoryListing
+  dir http://localhost/vufind/ | vufind |  | ParseTablesDirectoryListing
+  dir http://localhost/webTools/ | webTools |  | ParseTablesDirectoryListing
+  dir http://localhost/wp/ | wp |  | ParseTablesDirectoryListing
+  dir http://localhost/xml/ | xml |  | ParseTablesDirectoryListing
+  file http://localhost/A_Really_long_name_that_should_never_be_used.epub | A_Really_long_name_that_should_never_be_used.epub | 0 | 
+  file http://localhost/EnterpriseDAmbience.mp3 | EnterpriseDAmbience.mp3 | 28311552 | 
+  file http://localhost/Mii.jpg | Mii.jpg | 4301 | 
+  file http://localhost/Radioactive.svg | Radioactive.svg | 1946 | 
+  file http://localhost/Turtles Normal.ttf | Turtles Normal.ttf | 43008 | 
+  file http://localhost/TwoMiisProperties.xml | TwoMiisProperties.xml | 7578 | 
+  file http://localhost/audio.html | audio.html | 34816 | 
+  file http://localhost/classicGUI.swf | classicGUI.swf | 69632 | 
+  file http://localhost/config.ru | config.ru | 239 | 
+  file http://localhost/favicon.png | favicon.png | 552 | 
+  file http://localhost/favicon01.ico | favicon01.ico | 1434 | 
+  file http://localhost/file.txt | file.txt | 0 | 
+  file http://localhost/google739fc2b4d7138d9d.html | google739fc2b4d7138d9d.html | 54 | 
+  file http://localhost/index.bak.php | index.bak.php | 398336 | 
+  file http://localhost/index1.html | index1.html | 101 | 
+  file http://localhost/php.php | php.php | 68 | 
+  file http://localhost/phptest.php | phptest.php | 67 | 
+  file http://localhost/rsa-generator.gz | rsa-generator.gz | 276480 | 
+  file http://localhost/testcount.html | testcount.html | 632 | 
+  file http://localhost/testform.html | testform.html | 392 | 
+  file http://localhost/viewmii.swf | viewmii.swf | 9011 | 
+  file http://localhost/webTools.zip | webTools.zip | 32768 | 
+  file http://localhost/wherbert.jpg | wherbert.jpg | 22528 | 

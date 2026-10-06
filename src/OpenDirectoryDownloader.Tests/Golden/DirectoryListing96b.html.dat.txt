@@ -11,3 +11,11 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectory
   dir http://localhost:8086/listing/?download=tar_gz | listing |  | ParseLinksDirectoryListing
   dir http://localhost:8086/listing/?download=tar | listing |  | ParseLinksDirectoryListing
   dir http://localhost:8086/listing/ | listing |  | ParseLinksDirectoryListing
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/Other Videos/@eaDir/ | @eaDir |  | ParseTablesDirectoryListing
+  dir http://localhost/Other Videos/Frontend.Center/ | Frontend.Center |  | ParseTablesDirectoryListing
+  file http://localhost/Other Videos/Uncharted Lines (2017).mp4 | Uncharted Lines (2017).mp4 | 2469606195 | 
+  file http://localhost/Other Videos/das-0103-text-editor-from-scratch-4k.mp4 | das-0103-text-editor-from-scratch-4k.mp4 | 105486746 | 
+  file http://localhost/Other Videos/masterclass_part_1_technique_and_training_480p.mp4 | masterclass_part_1_technique_and_training_480p.mp4 | 1042284544 | 
+  file http://localhost/Other Videos/masterclass_part_2_skills_and_tactics_for_sport_and_trad_480p.mp4 | masterclass_part_2_skills_and_tactics_for_sport_and_trad_480p.mp4 | 724670874 | 

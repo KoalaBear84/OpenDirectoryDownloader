@@ -42,3 +42,25 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   file http://localhost:8086/listing/surveillance_guerre_froide.html.html | surveillance_guerre_froide.html.html | 17408 | 
   file http://localhost:8086/listing/sw.txt | sw.txt | 57344 | 
   file http://localhost:8086/listing/tunisie.txt | tunisie.txt | 4928 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/problèmes/ | problèmes |  | RegexParser2
+  dir http://localhost/résistance/ | résistance |  | RegexParser2
+  dir http://localhost/sociologie/ | sociologie |  | RegexParser2
+  dir http://localhost/solutions/ | solutions |  | RegexParser2
+  file http://localhost/Défense maison des jeunes au Danemark.avi | Défense maison des jeunes au Danemark.avi | 510656512 | 
+  file http://localhost/Etienne Chouard - Chercher la cause des causes.mp4 | Etienne Chouard - Chercher la cause des causes.mp4 | 58720256 | 
+  file http://localhost/L%27homme formate 2.0 - Hacking social.epub | L'homme formate 2.0 - Hacking social.epub | 824320 | 
+  file http://localhost/La société de la connaissance.pdf | La société de la connaissance.pdf | 2097152 | 
+  file http://localhost/Piratons la démocratie.pdf | Piratons la démocratie.pdf | 234496 | 
+  file http://localhost/breaking smart.txt | breaking smart.txt | 198656 | 
+  file http://localhost/ddhc.txt | ddhc.txt | 5174 | 
+  file http://localhost/employee.pdf | employee.pdf | 143360 | 
+  file http://localhost/eoliens.13Oct03.txt | eoliens.13Oct03.txt | 5963 | 
+  file http://localhost/le-12h30_20160717_standard_haute-definition_bba1d18a-df99-438a-8f5a-b6033763aeb5-128k.mp3 | le-12h30_20160717_standard_haute-definition_bba1d18a-df99-438a-8f5a-b6033763aeb5-128k.mp3 | 14680064 | 
+  file http://localhost/les gens sont en train de craquer.txt | les gens sont en train de craquer.txt | 7933 | 
+  file http://localhost/money_huge.png | money_huge.png | 7340032 | 
+  file http://localhost/strategies_manipulation.txt | strategies_manipulation.txt | 6630 | 
+  file http://localhost/surveillance_guerre_froide.html.html | surveillance_guerre_froide.html.html | 17408 | 
+  file http://localhost/sw.txt | sw.txt | 57344 | 
+  file http://localhost/tunisie.txt | tunisie.txt | 4928 | 

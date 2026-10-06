@@ -24,3 +24,27 @@ url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=F
   file http://localhost/Main Web/tollgate-notice-of-confirmation.pdf | tollgate-notice-of-confirmation.pdf | 185559 | 
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/Main Web/Bexhill Combe Valley - resized.jpg | Bexhill Combe Valley - resized.jpg | 18534 | 
+  file http://localhost/Main Web/Bexhill Combe Valley.jpg | Bexhill Combe Valley.jpg | 5704253 | 
+  file http://localhost/Main Web/Bexhill Combe Valley__1461832270_31.169.114.189.jpg | Bexhill Combe Valley__1461832270_31.169.114.189.jpg | 23112 | 
+  file http://localhost/Main Web/Bexhill Combe Valley__1461832338_31.169.114.189.jpg | Bexhill Combe Valley__1461832338_31.169.114.189.jpg | 111882 | 
+  file http://localhost/Main Web/brent-cross-cricklewood-cpo3-decision-letter.pdf | brent-cross-cricklewood-cpo3-decision-letter.pdf | 230380 | 
+  file http://localhost/Main Web/brent-cross-cricklewood-cpo3-report.pdf | brent-cross-cricklewood-cpo3-report.pdf | 506307 | 
+  file http://localhost/Main Web/Bridge_street.jpg | Bridge_street.jpg | 337213 | 
+  file http://localhost/Main Web/Bridge_Street_Quarter_Decision.pdf | Bridge_Street_Quarter_Decision.pdf | 114156 | 
+  file http://localhost/Main Web/Bridge_Street_Quarter_Report.pdf | Bridge_Street_Quarter_Report.pdf | 144886 | 
+  file http://localhost/Main Web/Bridge_street_square.jpg | Bridge_street_square.jpg | 325120 | 
+  file http://localhost/Main Web/chippenham-gardens-decision.pdf | chippenham-gardens-decision.pdf | 15906898 | 
+  file http://localhost/Main Web/ealing-cinema-addendum-report.pdf | ealing-cinema-addendum-report.pdf | 95089 | 
+  file http://localhost/Main Web/ealing-cinema-cpo-map.pdf | ealing-cinema-cpo-map.pdf | 1855980 | 
+  file http://localhost/Main Web/ealing-cinema-cpo-schedule.pdf | ealing-cinema-cpo-schedule.pdf | 1625293 | 
+  file http://localhost/Main Web/ealing-cinema-decision-letter.pdf | ealing-cinema-decision-letter.pdf | 226120 | 
+  file http://localhost/Main Web/ealing-cinema-inspector-report.pdf | ealing-cinema-inspector-report.pdf | 787036 | 
+  file http://localhost/Main Web/globe1.jpeg | globe1.jpeg | 94065 | 
+  file http://localhost/Main Web/job-applicant-privacy-notice-june-2018.pdf | job-applicant-privacy-notice-june-2018.pdf | 41206 | 
+  file http://localhost/Main Web/macmillan-cake-sale.jpg | macmillan-cake-sale.jpg | 743301 | 
+  file http://localhost/Main Web/NDR-postwick.jpg | NDR-postwick.jpg | 25989 | 
+  file http://localhost/Main Web/tollgate-confirmation-extract.pdf | tollgate-confirmation-extract.pdf | 562422 | 
+  file http://localhost/Main Web/tollgate-notice-of-confirmation.pdf | tollgate-notice-of-confirmation.pdf | 185559 | 

@@ -11,3 +11,11 @@ url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=Fal
   file http://localhost:8086/iozone | iozone | 367616 | 
   file http://localhost:8086/Lucky Patcher v4.2.5.apk | Lucky Patcher v4.2.5.apk | 3802112 | 
   file http://localhost:8086/pdf2cbr.rar | pdf2cbr.rar | 1086464 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/Claustrophobia/ | Claustrophobia |  | ParseH5aiDirectoryListing
+  dir http://localhost/Musique/ | Musique |  | ParseH5aiDirectoryListing
+  file http://localhost/bonnie%2B%2B | bonnie++ | 55296 | 
+  file http://localhost/iozone | iozone | 367616 | 
+  file http://localhost/Lucky Patcher v4.2.5.apk | Lucky Patcher v4.2.5.apk | 3802112 | 
+  file http://localhost/pdf2cbr.rar | pdf2cbr.rar | 1086464 | 

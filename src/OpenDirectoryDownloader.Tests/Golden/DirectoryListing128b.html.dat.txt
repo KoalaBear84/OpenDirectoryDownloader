@@ -58,3 +58,33 @@ url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=Tru
   file http://www.manuals.cornpone.net/Crystal Radio/the_book_of_radio_1922.pdf | the_book_of_radio_1922.pdf |  | 
   file http://www.manuals.cornpone.net/Crystal Radio/ultra.pdf | ultra.pdf |  | 
   file http://www.manuals.cornpone.net/Crystal Radio/vario.pdf | vario.pdf |  | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  file http://www.manuals.cornpone.net/Crystal Radio/101%2B Crystal Radio Circuits.pdf | 101+ Crystal Radio Circuits.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/50229509_2077436639001512_2039351116109447168_n.jpg | 50229509_2077436639001512_2039351116109447168_n.jpg |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/50264313_2077405989004577_3397018629454168064_n.jpg | 50264313_2077405989004577_3397018629454168064_n.jpg |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/all-about-crystal-radios.pdf | all-about-crystal-radios.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/apparatus.pdf | apparatus.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/Armstrong Crystal Radio.pdf | Armstrong Crystal Radio.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/Boys-Book-Of-Crystal-Sets.pdf | Boys-Book-Of-Crystal-Sets.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/Crystal-Receiving-Sets-Jones.pdf | Crystal-Receiving-Sets-Jones.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/Crystal Receivers for Broadcast Reception - Harris 1922.pdf | Crystal Receivers for Broadcast Reception - Harris 1922.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/detectors.pdf | detectors.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/Detector voltage multiplier.jpg | Detector voltage multiplier.jpg |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/DX_Crystal_Radio.pdf | DX_Crystal_Radio.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/Experimental Crystal Set Receivers.pdf | Experimental Crystal Set Receivers.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/Foxhole Radios AND Crystal Radios.pdf | Foxhole Radios AND Crystal Radios.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/handbook01.pdf | handbook01.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/HB-5.pdf | HB-5.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/Heathkit Crystal Radio.pdf | Heathkit Crystal Radio.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/highpower.pdf | highpower.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/High_Performance_Crystal_Radios_for_electronics_club_v2_hires.pdf | High_Performance_Crystal_Radios_for_electronics_club_v2_hires.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/Lamphouse Crystal Sets.pdf | Lamphouse Crystal Sets.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/oatmeal.pdf | oatmeal.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/pw_xtal_experimenters_hdbk.pdf | pw_xtal_experimenters_hdbk.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/radio-galena.pdf | radio-galena.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/Shortwave Listening With A Crystal Set.pdf | Shortwave Listening With A Crystal Set.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/supersensitive.pdf | supersensitive.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/the_book_of_radio_1922.pdf | the_book_of_radio_1922.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/ultra.pdf | ultra.pdf |  | 
+  file http://www.manuals.cornpone.net/Crystal Radio/vario.pdf | vario.pdf |  | 

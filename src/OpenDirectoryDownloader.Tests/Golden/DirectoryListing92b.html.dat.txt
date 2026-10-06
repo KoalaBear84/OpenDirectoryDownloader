@@ -122,3 +122,65 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseDirectoryListe
   file http://localhost:8086/listing/ACS/Season 1/American Crime Story S01E10 The Verdict.mkv | American Crime Story S01E10 The Verdict.mkv | 4520453079 | 
   file http://localhost:8086/listing/ACS/Season 1/American Crime Story S01E10 The Verdict.nfo | American Crime Story S01E10 The Verdict.nfo | 1126 | 
   file http://localhost:8086/listing/ACS/Season 1/American Crime Story S01E10 The Verdict.xml | American Crime Story S01E10 The Verdict.xml | 454 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseDirectoryLister01DirectoryListing error=False ok=False
+  file http://localhost/ACS/Season 1/American Crime Story S01E01 From the Ashes of Tragedy-thumb.jpg | American Crime Story S01E01 From the Ashes of Tragedy-thumb.jpg | 90184 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E01 From the Ashes of Tragedy.jpg | American Crime Story S01E01 From the Ashes of Tragedy.jpg | 90184 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E01 From the Ashes of Tragedy.metathumb | American Crime Story S01E01 From the Ashes of Tragedy.metathumb | 90184 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E01 From the Ashes of Tragedy.mkv | American Crime Story S01E01 From the Ashes of Tragedy.mkv | 4048006676 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E01 From the Ashes of Tragedy.nfo | American Crime Story S01E01 From the Ashes of Tragedy.nfo | 1096 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E01 From the Ashes of Tragedy.xml | American Crime Story S01E01 From the Ashes of Tragedy.xml | 434 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E02 The Run of His Life-thumb.jpg | American Crime Story S01E02 The Run of His Life-thumb.jpg | 74445 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E02 The Run of His Life.jpg | American Crime Story S01E02 The Run of His Life.jpg | 74445 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E02 The Run of His Life.metathumb | American Crime Story S01E02 The Run of His Life.metathumb | 74445 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E02 The Run of His Life.mkv | American Crime Story S01E02 The Run of His Life.mkv | 3049426780 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E02 The Run of His Life.nfo | American Crime Story S01E02 The Run of His Life.nfo | 1106 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E02 The Run of His Life.xml | American Crime Story S01E02 The Run of His Life.xml | 506 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E03 The Dream Team-thumb.jpg | American Crime Story S01E03 The Dream Team-thumb.jpg | 77036 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E03 The Dream Team.jpg | American Crime Story S01E03 The Dream Team.jpg | 77036 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E03 The Dream Team.metathumb | American Crime Story S01E03 The Dream Team.metathumb | 77036 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E03 The Dream Team.mkv | American Crime Story S01E03 The Dream Team.mkv | 3060164198 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E03 The Dream Team.nfo | American Crime Story S01E03 The Dream Team.nfo | 1239 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E03 The Dream Team.xml | American Crime Story S01E03 The Dream Team.xml | 578 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E04 100%25 Not Guilty-thumb.jpg | American Crime Story S01E04 100% Not Guilty-thumb.jpg | 105554 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E04 100%25 Not Guilty.jpg | American Crime Story S01E04 100% Not Guilty.jpg | 105554 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E04 100%25 Not Guilty.metathumb | American Crime Story S01E04 100% Not Guilty.metathumb | 105554 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E04 100%25 Not Guilty.mkv | American Crime Story S01E04 100% Not Guilty.mkv | 3693671875 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E04 100%25 Not Guilty.nfo | American Crime Story S01E04 100% Not Guilty.nfo | 1290 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E04 100%25 Not Guilty.xml | American Crime Story S01E04 100% Not Guilty.xml | 628 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E05 The Race Card-thumb.jpg | American Crime Story S01E05 The Race Card-thumb.jpg | 100669 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E05 The Race Card.jpg | American Crime Story S01E05 The Race Card.jpg | 100669 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E05 The Race Card.metathumb | American Crime Story S01E05 The Race Card.metathumb | 100669 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E05 The Race Card.mkv | American Crime Story S01E05 The Race Card.mkv | 3231962890 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E05 The Race Card.nfo | American Crime Story S01E05 The Race Card.nfo | 1167 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E05 The Race Card.xml | American Crime Story S01E05 The Race Card.xml | 487 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E06 Marcia, Marcia, Marcia-thumb.jpg | American Crime Story S01E06 Marcia, Marcia, Marcia-thumb.jpg | 70318 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E06 Marcia, Marcia, Marcia.jpg | American Crime Story S01E06 Marcia, Marcia, Marcia.jpg | 70318 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E06 Marcia, Marcia, Marcia.metathumb | American Crime Story S01E06 Marcia, Marcia, Marcia.metathumb | 70318 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E06 Marcia, Marcia, Marcia.mkv | American Crime Story S01E06 Marcia, Marcia, Marcia.mkv | 3317862236 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E06 Marcia, Marcia, Marcia.nfo | American Crime Story S01E06 Marcia, Marcia, Marcia.nfo | 1106 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E06 Marcia, Marcia, Marcia.xml | American Crime Story S01E06 Marcia, Marcia, Marcia.xml | 447 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E07 Conspiracy Theories-thumb.jpg | American Crime Story S01E07 Conspiracy Theories-thumb.jpg | 75162 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E07 Conspiracy Theories.jpg | American Crime Story S01E07 Conspiracy Theories.jpg | 75162 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E07 Conspiracy Theories.metathumb | American Crime Story S01E07 Conspiracy Theories.metathumb | 75162 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E07 Conspiracy Theories.mkv | American Crime Story S01E07 Conspiracy Theories.mkv | 3038689362 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E07 Conspiracy Theories.nfo | American Crime Story S01E07 Conspiracy Theories.nfo | 1075 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E07 Conspiracy Theories.xml | American Crime Story S01E07 Conspiracy Theories.xml | 473 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E08 A Jury in Jail-thumb.jpg | American Crime Story S01E08 A Jury in Jail-thumb.jpg | 75602 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E08 A Jury in Jail.jpg | American Crime Story S01E08 A Jury in Jail.jpg | 75602 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E08 A Jury in Jail.metathumb | American Crime Story S01E08 A Jury in Jail.metathumb | 75602 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E08 A Jury in Jail.mkv | American Crime Story S01E08 A Jury in Jail.mkv | 2727304233 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E08 A Jury in Jail.nfo | American Crime Story S01E08 A Jury in Jail.nfo | 1249 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E08 A Jury in Jail.xml | American Crime Story S01E08 A Jury in Jail.xml | 577 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E09 Manna from Heaven-thumb.jpg | American Crime Story S01E09 Manna from Heaven-thumb.jpg | 57354 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E09 Manna from Heaven.jpg | American Crime Story S01E09 Manna from Heaven.jpg | 57354 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E09 Manna from Heaven.metathumb | American Crime Story S01E09 Manna from Heaven.metathumb | 57354 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E09 Manna from Heaven.mkv | American Crime Story S01E09 Manna from Heaven.mkv | 3435973837 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E09 Manna from Heaven.nfo | American Crime Story S01E09 Manna from Heaven.nfo | 1198 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E09 Manna from Heaven.xml | American Crime Story S01E09 Manna from Heaven.xml | 528 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E10 The Verdict-thumb.jpg | American Crime Story S01E10 The Verdict-thumb.jpg | 64993 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E10 The Verdict.jpg | American Crime Story S01E10 The Verdict.jpg | 64993 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E10 The Verdict.metathumb | American Crime Story S01E10 The Verdict.metathumb | 64993 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E10 The Verdict.mkv | American Crime Story S01E10 The Verdict.mkv | 4520453079 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E10 The Verdict.nfo | American Crime Story S01E10 The Verdict.nfo | 1126 | 
+  file http://localhost/ACS/Season 1/American Crime Story S01E10 The Verdict.xml | American Crime Story S01E10 The Verdict.xml | 454 | 

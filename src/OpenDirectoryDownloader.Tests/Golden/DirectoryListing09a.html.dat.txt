@@ -9,3 +9,11 @@ url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=Fals
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
   file http://localhost:8086/!opiums.ru.htm | !opiums.ru.htm | 61 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/Part_00/ | Part_00 |  | RegexParser3
+  dir http://localhost/Part_01(01-1000)/ | Part_01(01-1000) |  | RegexParser3
+  dir http://localhost/Part_02(1001-2000)/ | Part_02(1001-2000) |  | RegexParser3
+  dir http://localhost/Part_03(2001-3000)/ | Part_03(2001-3000) |  | RegexParser3
+  dir http://localhost/Part_04(3001-4000)/ | Part_04(3001-4000) |  | RegexParser3
+  file http://localhost/!opiums.ru.htm | !opiums.ru.htm | 61 | 

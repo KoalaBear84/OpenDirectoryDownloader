@@ -30,3 +30,13 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseListItemsDirec
   file http://localhost:8086/eeoinfo.shtml | eeoinfo.shtml |  | 
   file http://localhost:8086/plainwriting.shtml | plainwriting.shtml |  | 
   file http://localhost:8086/links.shtml | links.shtml |  | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/Archives/edgar/data/19617/000089109219002813/0000891092-19-002813-index-headers.html | 0000891092-19-002813-index-headers.html |  | ParseTablesDirectoryListing
+  dir http://localhost/Archives/edgar/data/19617/000089109219002813/0000891092-19-002813-index.html | 0000891092-19-002813-index.html |  | ParseTablesDirectoryListing
+  dir http://localhost/Archives/edgar/data/19617/000089109219002813/0000891092-19-002813.txt | 0000891092-19-002813.txt |  | ParseTablesDirectoryListing
+  file http://localhost/Archives/edgar/data/19617/000089109219002813/e4343_424b2.htm | e4343_424b2.htm | 84285 | 
+  file http://localhost/Archives/edgar/data/19617/000089109219002813/image_001.jpg | image_001.jpg | 11598 | 
+  file http://localhost/Archives/edgar/data/19617/000089109219002813/image_002.jpg | image_002.jpg | 4753 | 
+  file http://localhost/Archives/edgar/data/19617/000089109219002813/image_003.jpg | image_003.jpg | 37575 | 
+  file http://localhost/Archives/edgar/data/19617/000089109219002813/image_004.jpg | image_004.jpg | 22663 | 

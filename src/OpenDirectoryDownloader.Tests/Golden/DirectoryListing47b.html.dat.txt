@@ -76,3 +76,42 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   file http://localhost:8086/listing/xxlozko DL2.jpg | xxlozko DL2.jpg | 9728000 | 
   file http://localhost:8086/listing/zestaw Dome DL1-1.jpg | zestaw Dome DL1-1.jpg | 2546688 | 
   file http://localhost:8086/listing/zestaw Dome DL2-1.jpg | zestaw Dome DL2-1.jpg | 2682880 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost/2014-DO-1.jpg | 2014-DO-1.jpg | 1444864 | 
+  file http://localhost/2014-DO-2.jpg | 2014-DO-2.jpg | 1424384 | 
+  file http://localhost/2014-DO-3.jpg | 2014-DO-3.jpg | 2138112 | 
+  file http://localhost/2014-DO-4.jpg | 2014-DO-4.jpg | 1653760 | 
+  file http://localhost/2014-DO-5.jpg | 2014-DO-5.jpg | 1590272 | 
+  file http://localhost/2014-DO-6.jpg | 2014-DO-6.jpg | 1531904 | 
+  file http://localhost/2014-DO-7.jpg | 2014-DO-7.jpg | 1222656 | 
+  file http://localhost/2014-DO-8.jpg | 2014-DO-8.jpg | 1386496 | 
+  file http://localhost/DO2-24.jpg | DO2-24.jpg | 1362944 | 
+  file http://localhost/DO4-24.jpg | DO4-24.jpg | 1554432 | 
+  file http://localhost/DO5-24.jpg | DO5-24.jpg | 1472512 | 
+  file http://localhost/DO6-24.jpg | DO6-24.jpg | 1443840 | 
+  file http://localhost/DO7-24.jpg | DO7-24.jpg | 1292288 | 
+  file http://localhost/DO8-24.jpg | DO8-24.jpg | 1461248 | 
+  file http://localhost/DY1komoda.jpg | DY1komoda.jpg | 845824 | 
+  file http://localhost/DY2komoda.jpg | DY2komoda.jpg | 881664 | 
+  file http://localhost/DY3komoda.jpg | DY3komoda.jpg | 747520 | 
+  file http://localhost/DY4komoda.jpg | DY4komoda.jpg | 826368 | 
+  file http://localhost/DY5komoda.jpg | DY5komoda.jpg | 794624 | 
+  file http://localhost/komodaDX1.jpg | komodaDX1.jpg | 3132416 | 
+  file http://localhost/komodaDX2.jpg | komodaDX2.jpg | 3340288 | 
+  file http://localhost/komodaDX3.jpg | komodaDX3.jpg | 972800 | 
+  file http://localhost/komodaDX4.jpg | komodaDX4.jpg | 3217408 | 
+  file http://localhost/komodaDX5.jpg | komodaDX5.jpg | 4873216 | 
+  file http://localhost/lozko biale.jpg | lozko biale.jpg | 1466368 | 
+  file http://localhost/lozko DL1-1.jpg | lozko DL1-1.jpg | 1831936 | 
+  file http://localhost/lozko DL1-4.jpg | lozko DL1-4.jpg | 1753088 | 
+  file http://localhost/lozko DL2-1.jpg | lozko DL2-1.jpg | 1826816 | 
+  file http://localhost/lozko DL2-4.jpg | lozko DL2-4.jpg | 1690624 | 
+  file http://localhost/lozko ML1-1.jpg | lozko ML1-1.jpg | 861184 | 
+  file http://localhost/lozko ML1-4.jpg | lozko ML1-4.jpg | 828416 | 
+  file http://localhost/lozko ML2-1.jpg | lozko ML2-1.jpg | 1057792 | 
+  file http://localhost/lozko ML2-4.jpg | lozko ML2-4.jpg | 906240 | 
+  file http://localhost/xx-szafa DO7.jpg | xx-szafa DO7.jpg | 10485760 | 
+  file http://localhost/xxlozko DL2.jpg | xxlozko DL2.jpg | 9728000 | 
+  file http://localhost/zestaw Dome DL1-1.jpg | zestaw Dome DL1-1.jpg | 2546688 | 
+  file http://localhost/zestaw Dome DL2-1.jpg | zestaw Dome DL2-1.jpg | 2682880 | 

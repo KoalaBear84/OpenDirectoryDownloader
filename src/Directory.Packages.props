@@ -1,0 +1,34 @@
+<Project>
+
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageVersion Include="Acornima" Version="1.1.1" />
+    <PackageVersion Include="AngleSharp" Version="1.8.3" />
+    <PackageVersion Include="FlareSolverrSharp" Version="4.0.0" />
+    <PackageVersion Include="FluentFTP" Version="55.0.0" />
+    <PackageVersion Include="Google.Apis.Drive.v3" Version="1.77.0.4276" />
+    <PackageVersion Include="HttpCloak" Version="1.7.2" />
+    <PackageVersion Include="Jint" Version="4.16.4" />
+    <PackageVersion Include="Microsoft.Data.Sqlite" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.Extensions.FileProviders.Embedded" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.12" />
+    <PackageVersion Include="Polly.Core" Version="8.8.0" />
+    <PackageVersion Include="PuppeteerExtraSharp" Version="3.1.1" />
+    <PackageVersion Include="PuppeteerSharp" Version="25.12.0" />
+    <PackageVersion Include="Serilog.Extensions.Hosting" Version="10.0.0" />
+    <PackageVersion Include="Serilog.Sinks.Async" Version="2.1.0" />
+    <PackageVersion Include="Serilog.Sinks.Console" Version="6.1.1" />
+    <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
+    <PackageVersion Include="System.CommandLine" Version="2.0.12" />
+    <PackageVersion Include="TextCopy" Version="6.2.1" />
+
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.10.1" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.0" />
+    <PackageVersion Include="xunit.v3" Version="4.0.1" />
+  </ItemGroup>
+
+</Project>

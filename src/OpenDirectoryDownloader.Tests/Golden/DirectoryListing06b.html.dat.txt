@@ -4,3 +4,7 @@ url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=Fals
   file http://localhost/content/videos/evp.mp4 | evp.mp4 | 18886656 | 
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost/content/videos/360.mp4 | 360.mp4 | 22360064 | 
+  file http://localhost/content/videos/evp.mp4 | evp.mp4 | 18886656 | 

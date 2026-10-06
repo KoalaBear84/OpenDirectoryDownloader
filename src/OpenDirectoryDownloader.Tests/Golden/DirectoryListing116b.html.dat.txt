@@ -8,3 +8,8 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/RARBG.txt | RARBG.txt | 31 | 
   file http://localhost:8086/listing/The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.mp4 | The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.mp4 | 2851552123 | 
   file http://localhost:8086/listing/The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.srt | The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.srt | 75530 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/RARBG.txt | RARBG.txt | 31 | 
+  file http://localhost/The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.mp4 | The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.mp4 | 2851552123 | 
+  file http://localhost/The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.srt | The.Penthouse.S02E03.1080p.WEB-DL.H264.AAC-AppleTor.srt | 75530 | 

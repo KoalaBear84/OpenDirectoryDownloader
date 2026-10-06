@@ -2,3 +2,7 @@
 url=http://localhost/ name=ROOT desc= parser=ParseLinksDirectoryListing error=False ok=True
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseLinksDirectoryListing error=False ok=True
+  file http://www.rayburn-web.co.uk/Prodin/United Kingdom and Ireland/AGA/2. AGA Discontinued/Aga electric cookers/AGA 6-4 Ceramic Hob Pre Oven Efficiency/Aga Six Four electric manual11-09 EINS 513129.pdf | Aga Six Four electric manual11-09 EINS 513129.pdf |  | 
+  file http://www.rayburn-web.co.uk/Prodin/United Kingdom and Ireland/AGA/2. AGA Discontinued/Aga electric cookers/AGA 6-4 Ceramic Hob Pre Oven Efficiency/Aga Six-fourassbly1ceramic.pdf | Aga Six-fourassbly1ceramic.pdf |  | 

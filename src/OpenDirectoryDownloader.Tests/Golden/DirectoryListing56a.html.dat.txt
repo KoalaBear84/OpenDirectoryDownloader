@@ -12,3 +12,10 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   dir http://localhost:8086/listing/upload2/ | upload2 |  | RegexParser1
   file http://localhost:8086/listing/Changelog.html | Changelog.html | 173056 | 
   file http://localhost:8086/listing/welcome.msg | welcome.msg | 2867 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/stuff/ | stuff |  | RegexParser1
+  dir http://localhost/upload/ | upload |  | RegexParser1
+  dir http://localhost/upload2/ | upload2 |  | RegexParser1
+  file http://localhost/Changelog.html | Changelog.html | 173056 | 
+  file http://localhost/welcome.msg | welcome.msg | 2867 | 

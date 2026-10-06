@@ -12,3 +12,10 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   file http://localhost:8086/listing/alberton.ldt.zip | alberton.ldt.zip | 7340032 | 
   file http://localhost:8086/listing/import.ddf | import.ddf | 1024 | 
   file http://localhost:8086/listing/README | README | 255 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost/alberton.dat.zip | alberton.dat.zip | 7340032 | 
+  file http://localhost/alberton.hdr | alberton.hdr | 3379 | 
+  file http://localhost/alberton.ldt.zip | alberton.ldt.zip | 7340032 | 
+  file http://localhost/import.ddf | import.ddf | 1024 | 
+  file http://localhost/README | README | 255 | 

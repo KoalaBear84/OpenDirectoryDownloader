@@ -6,3 +6,7 @@ url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=Fals
 url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryListing error=False ok=False
   file http://localhost:8086/listing/1917.2019.DVDSCR.x264-TOPKEK.mp4 | 1917.2019.DVDSCR.x264-TOPKEK.mp4 | 1202701165 | 
   file http://localhost:8086/listing/%5BTGx%5DDownloaded from torrentgalaxy.to .txt | [TGx]Downloaded from torrentgalaxy.to .txt | 689 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost/1917.2019.DVDSCR.x264-TOPKEK.mp4 | 1917.2019.DVDSCR.x264-TOPKEK.mp4 | 1202701165 | 
+  file http://localhost/%5BTGx%5DDownloaded from torrentgalaxy.to .txt | [TGx]Downloaded from torrentgalaxy.to .txt | 689 | 

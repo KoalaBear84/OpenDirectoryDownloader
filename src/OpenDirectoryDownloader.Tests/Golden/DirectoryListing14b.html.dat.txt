@@ -6,3 +6,7 @@ url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=F
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
   dir http://localhost:8086/listing/dark1/ | dark1 |  | ParseTablesDirectoryListing
   file http://localhost:8086/listing/greensleves.mp3 | greensleves.mp3 | 970752 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/dark1/ | dark1 |  | ParseTablesDirectoryListing
+  file http://localhost/greensleves.mp3 | greensleves.mp3 | 970752 | 

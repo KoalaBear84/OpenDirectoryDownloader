@@ -10,3 +10,23 @@ url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=F
   dir http://localhost/db/0/0/89.179.242.201/Music/WindowsPhone | WindowsPhone |  | ParseTablesDirectoryListing
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/db/0/0/89.179.242.201/Music/5.1 | 5.1 |  | ParseTablesDirectoryListing
+  dir http://localhost/db/0/0/89.179.242.201/Music/Disk | Disk |  | ParseTablesDirectoryListing
+  dir http://localhost/db/0/0/89.179.242.201/Music/Flac | Flac |  | ParseTablesDirectoryListing
+  dir http://localhost/db/0/0/89.179.242.201/Music/iTunes | iTunes |  | ParseTablesDirectoryListing
+  dir http://localhost/db/0/0/89.179.242.201/Music/Midi | Midi |  | ParseTablesDirectoryListing
+  dir http://localhost/db/0/0/89.179.242.201/Music/MOD_XM_S3M_IT | MOD_XM_S3M_IT |  | ParseTablesDirectoryListing
+  dir http://localhost/db/0/0/89.179.242.201/Music/MP3 | MP3 |  | ParseTablesDirectoryListing
+  dir ftp://89.179.242.201/Music/ringtones | ringtones |  | ParseTablesDirectoryListing
+  dir http://localhost/db/0/0/89.179.242.201/Music/WindowsPhone | WindowsPhone |  | ParseTablesDirectoryListing
+  file ftp://89.179.242.201/Music/1.fpl | 1.fpl | 1132462 | 
+  file ftp://89.179.242.201/Music/111.fpl | 111.fpl | 426486 | 
+  file ftp://89.179.242.201/Music/Enya.fpl | Enya.fpl | 15350 | 
+  file ftp://89.179.242.201/Music/Greatest.fpl | Greatest.fpl | 423516 | 
+  file ftp://89.179.242.201/Music/Gregorian.fpl | Gregorian.fpl | 36915 | 
+  file ftp://89.179.242.201/Music/Midi.zip | Midi.zip | 1447035 | 
+  file ftp://89.179.242.201/Music/Spice Girls - Viva Forever.txt | Spice Girls - Viva Forever.txt | 2877 | 
+  file ftp://89.179.242.201/Music/%C8%ED%ED%EE%E2%E0%F6%E8%EE%ED%ED%FB%E9 %CA%EE%ED%E2%E5%ED%F21 Audio Extracted.pk | ������������� �������1 Audio Extracted.pk | 542679 | 
+  file ftp://89.179.242.201/Music/%CA%EE%E3%E4%E0 %E7%E0%E1%F3%E4%E5%F8%FC %F2%FB %EC%E5%ED%FF.WMA | ����� �������� �� ����.WMA | 1845494 | 

@@ -8,3 +8,9 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/WASTED NIGHTS - SEAMS EP - 01 SEAMS.flac | WASTED NIGHTS - SEAMS EP - 01 SEAMS.flac | 32715571 | 
   file http://localhost:8086/listing/WASTED NIGHTS - SEAMS EP - 02 FOU DEI TOI.flac | WASTED NIGHTS - SEAMS EP - 02 FOU DEI TOI.flac | 27262976 | 
   file http://localhost:8086/listing/cover.jpg | cover.jpg | 176333 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://sq10.net/ | / |  | ParseTablesDirectoryListing
+  file http://localhost/WASTED NIGHTS - SEAMS EP - 01 SEAMS.flac | WASTED NIGHTS - SEAMS EP - 01 SEAMS.flac | 32715571 | 
+  file http://localhost/WASTED NIGHTS - SEAMS EP - 02 FOU DEI TOI.flac | WASTED NIGHTS - SEAMS EP - 02 FOU DEI TOI.flac | 27262976 | 
+  file http://localhost/cover.jpg | cover.jpg | 176333 | 

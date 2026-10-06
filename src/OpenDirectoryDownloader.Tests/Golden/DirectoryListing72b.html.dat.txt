@@ -3,3 +3,9 @@ url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=F
   dir http://localhost/db/0/0/89.179.242.201/Music/Disk/Metallica - Black Album | Metallica - Black Album |  | ParseTablesDirectoryListing
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/db/0/0/89.179.242.201/Music/Disk/Metallica - Black Album | Metallica - Black Album |  | ParseTablesDirectoryListing
+  file ftp://89.179.242.201/Music/Disk/Alan_Parsons_-_Turn_Of_A_Friendly_Card.iso | Alan_Parsons_-_Turn_Of_A_Friendly_Card.iso | 3661459620 | 
+  file ftp://89.179.242.201/Music/Disk/Dire_Straits_-_Brothers_In_Arms.iso | Dire_Straits_-_Brothers_In_Arms.iso | 4681514353 | 
+  file ftp://89.179.242.201/Music/Disk/roxette_DVD-Audio.iso | roxette_DVD-Audio.iso | 4584877588 | 

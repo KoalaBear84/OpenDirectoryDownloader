@@ -8,3 +8,8 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/piece.adb | piece.adb | 111 | 
   file http://localhost:8086/listing/pieces.adb | pieces.adb | 860 | 
   file http://localhost:8086/listing/pieces.ads | pieces.ads | 164 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/piece.adb | piece.adb | 111 | 
+  file http://localhost/pieces.adb | pieces.adb | 860 | 
+  file http://localhost/pieces.ads | pieces.ads | 164 | 

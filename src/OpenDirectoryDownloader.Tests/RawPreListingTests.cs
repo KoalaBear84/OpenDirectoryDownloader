@@ -1,4 +1,3 @@
-using OpenDirectoryDownloader.Shared.Models;
 using OpenDirectoryDownloader.Tests.Integration;
 using System.Text;
 using Xunit;
@@ -13,7 +12,6 @@ public class RawPreListingTests
 {
 	public RawPreListingTests()
 	{
-		Program.Logger ??= new Serilog.LoggerConfiguration().CreateLogger();
 	}
 
 	private static string Describe(WebDirectory directory)

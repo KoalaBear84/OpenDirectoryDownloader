@@ -206,3 +206,107 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/100 Greatest 90s Pop Classics %282020%29/100. Take That - Pray.mp3 | 100. Take That - Pray.mp3 | 9049211 | 
   file http://localhost:8086/listing/100 Greatest 90s Pop Classics %282020%29/Downloaded From Rarbg.to.txt | Downloaded From Rarbg.to.txt | 24 | 
   file http://localhost:8086/listing/100 Greatest 90s Pop Classics %282020%29/folder.jpg | folder.jpg | 84152 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/001. Britney Spears - ...Baby One More Time.mp3 | 001. Britney Spears - ...Baby One More Time.mp3 | 8524923 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/002. Take That - Back for Good %28Radio Mix%29.mp3 | 002. Take That - Back for Good (Radio Mix).mp3 | 9741271 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/003. Madonna - Vogue.mp3 | 003. Madonna - Vogue.mp3 | 12761170 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/004. Michael Jackson - Black or White %28Single Version%29.mp3 | 004. Michael Jackson - Black or White (Single Version).mp3 | 8021606 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/005. Spice Girls - Wannabe.mp3 | 005. Spice Girls - Wannabe.mp3 | 7004488 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/006. Backstreet Boys - Everybody %28Backstreet%27s Back%29 %28Radio Edit%29.mp3 | 006. Backstreet Boys - Everybody (Backstreet's Back) (Radio Edit).mp3 | 9101640 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/007. TLC - Waterfalls.mp3 | 007. TLC - Waterfalls.mp3 | 11261706 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/008. Bryan Adams - %28Everything I Do%29 I Do It For You.mp3 | 008. Bryan Adams - (Everything I Do) I Do It For You.mp3 | 15875441 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/009. Destiny%27s Child - Say My Name.mp3 | 009. Destiny's Child - Say My Name.mp3 | 10936648 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/010. Cher - Believe.mp3 | 010. Cher - Believe.mp3 | 9646899 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/011. Fugees - Killing Me Softly With His Song.mp3 | 011. Fugees - Killing Me Softly With His Song.mp3 | 12037652 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/012. Coolio - Gangsta%27s Paradise.mp3 | 012. Coolio - Gangsta's Paradise.mp3 | 9762243 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/013. Sinéad O%27Connor - Nothing Compares 2 U %282009 Remaster%29.mp3 | 013. Sinéad O'Connor - Nothing Compares 2 U (2009 Remaster).mp3 | 12519997 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/014. Shakespears Sister - Stay.mp3 | 014. Shakespears Sister - Stay.mp3 | 9175040 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/015. DJ Jazzy Jeff %26 The Fresh Prince - Summertime.mp3 | 015. DJ Jazzy Jeff & The Fresh Prince - Summertime.mp3 | 10873733 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/016. Mariah Carey - Fantasy.mp3 | 016. Mariah Carey - Fantasy.mp3 | 9825157 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/017. Diddy - I%27ll Be Missing You %28feat. Faith Evans %26 112%29.mp3 | 017. Diddy - I'll Be Missing You (feat. Faith Evans & 112).mp3 | 13830717 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/018. Natalie Imbruglia - Torn.mp3 | 018. Natalie Imbruglia - Torn.mp3 | 9877586 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/019. Adamski - Killer.mp3 | 019. Adamski - Killer.mp3 | 13348372 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/020. Christina Aguilera - Genie In a Bottle.mp3 | 020. Christina Aguilera - Genie In a Bottle.mp3 | 8787067 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/021. Everything but the Girl - Missing %28Todd Terry Remix Radio Edit%29.mp3 | 021. Everything but the Girl - Missing (Todd Terry Remix Radio Edit).mp3 | 9416212 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/022. Ace of Base - All That She Wants %28Remastered%29.mp3 | 022. Ace of Base - All That She Wants (Remastered).mp3 | 8535409 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/023. Deee-Lite - Groove Is in the Heart.mp3 | 023. Deee-Lite - Groove Is in the Heart.mp3 | 9353298 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/024. Madonna - Ray of Light.mp3 | 024. Madonna - Ray of Light.mp3 | 12918456 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/025. Hanson - MMMBop.mp3 | 025. Hanson - MMMBop.mp3 | 10831790 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/026. Vanilla Ice - Ice Ice Baby.mp3 | 026. Vanilla Ice - Ice Ice Baby.mp3 | 10947133 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/027. Savage Garden - Truly Madly Deeply.mp3 | 027. Savage Garden - Truly Madly Deeply.mp3 | 11177820 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/028. Robbie Williams - Millennium.mp3 | 028. Robbie Williams - Millennium.mp3 | 9992929 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/029. Boyzone - No Matter What.mp3 | 029. Boyzone - No Matter What.mp3 | 11062477 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/030. Gabrielle Aplin - Dreams.mp3 | 030. Gabrielle Aplin - Dreams.mp3 | 10443817 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/031. Simply Red - Stars.mp3 | 031. Simply Red - Stars.mp3 | 10055844 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/032. En Vogue - Don%27t Let Go %28Love%29.mp3 | 032. En Vogue - Don't Let Go (Love).mp3 | 11765023 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/033. R.E.M. - Shiny Happy People.mp3 | 033. R.E.M. - Shiny Happy People.mp3 | 9122611 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/034. George Michael - Fastlove%2C Pt. 1.mp3 | 034. George Michael - Fastlove, Pt. 1.mp3 | 13075743 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/035. Fatboy Slim - Praise You %28Radio Edit%29.mp3 | 035. Fatboy Slim - Praise You (Radio Edit).mp3 | 9206497 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/036. R. Kelly - Bump N%27 Grind %28Old School Mix%29.mp3 | 036. R. Kelly - Bump N' Grind (Old School Mix).mp3 | 10580132 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/037. Shaggy - Oh Carolina.mp3 | 037. Shaggy - Oh Carolina.mp3 | 7853834 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/038. M People - Moving on Up.mp3 | 038. M People - Moving on Up.mp3 | 8703181 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/039. Groove Armada - I See You Baby %28Fatboy Slim Radio Edit%29.mp3 | 039. Groove Armada - I See You Baby (Fatboy Slim Radio Edit).mp3 | 9877586 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/040. Fugees - Ready or Not.mp3 | 040. Fugees - Ready or Not.mp3 | 9164554 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/041. White Town - Your Woman.mp3 | 041. White Town - Your Woman.mp3 | 10485760 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/042. D_Ream - Things Can Only Get Better.mp3 | 042. D_Ream - Things Can Only Get Better.mp3 | 10401874 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/043. Jamiroquai - Virtual Insanity %28Remastered%29.mp3 | 043. Jamiroquai - Virtual Insanity (Remastered).mp3 | 9258926 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/044. East 17 - It%27s Alright %28The Guvnor Mix%29.mp3 | 044. East 17 - It's Alright (The Guvnor Mix).mp3 | 11324621 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/045. Des%27ree - You Gotta Be.mp3 | 045. Des'ree - You Gotta Be.mp3 | 9688842 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/046. Charles %26 Eddie - Would I Lie To You_.mp3 | 046. Charles & Eddie - Would I Lie To You_.mp3 | 11272192 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/047. New Kids on the Block - Hangin%27 Tough.mp3 | 047. New Kids on the Block - Hangin' Tough.mp3 | 10349445 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/048. All Saints - I Know Where It%27s At.mp3 | 048. All Saints - I Know Where It's At.mp3 | 11838423 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/049. Spice Girls - 2 Become 1.mp3 | 049. Spice Girls - 2 Become 1.mp3 | 9730785 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/050. Snap%21 - Rhythm Is A Dancer %287_ Edit%29.mp3 | 050. Snap! - Rhythm Is A Dancer (7_ Edit).mp3 | 9122611 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/051. 2 Unlimited - No Limit %28Original Mix%29.mp3 | 051. 2 Unlimited - No Limit (Original Mix).mp3 | 9038725 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/052. Eternal - Stay.mp3 | 052. Eternal - Stay.mp3 | 9720300 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/053. Mark Morrison - Return of the Mack.mp3 | 053. Mark Morrison - Return of the Mack.mp3 | 8608809 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/054. Ricky Martin - Livin%27 la Vida Loca.mp3 | 054. Ricky Martin - Livin' la Vida Loca.mp3 | 9825157 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/055. Color Me Badd - I Wanna Sex You Up %28Single Mix%29.mp3 | 055. Color Me Badd - I Wanna Sex You Up (Single Mix).mp3 | 9563013 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/056. Chesney Hawkes - The One and Only.mp3 | 056. Chesney Hawkes - The One and Only.mp3 | 9028239 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/057. Cornershop - Brimful Of Asha %28Norman Cook Remix Single Version%29.mp3 | 057. Cornershop - Brimful Of Asha (Norman Cook Remix Single Version).mp3 | 9720300 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/058. Lou Bega - Mambo No. 5 %28a Little Bit of...%29.mp3 | 058. Lou Bega - Mambo No. 5 (a Little Bit of...).mp3 | 8902410 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/059. R. Kelly - I Believe I Can Fly.mp3 | 059. R. Kelly - I Believe I Can Fly.mp3 | 12907971 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/060. Shaggy - Boombastic.mp3 | 060. Shaggy - Boombastic.mp3 | 10087301 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/061. Crash Test Dummies - Mmm Mmm Mmm Mmm.mp3 | 061. Crash Test Dummies - Mmm Mmm Mmm Mmm.mp3 | 9489613 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/062. Céline Dion - Think Twice.mp3 | 062. Céline Dion - Think Twice.mp3 | 11607736 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/063. B_Witched - C%27est la Vie.mp3 | 063. B_Witched - C'est la Vie.mp3 | 6973030 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/064. Annie Lennox - Walking on Broken Glass.mp3 | 064. Annie Lennox - Walking on Broken Glass.mp3 | 10213130 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/065. Westlife - Flying Without Wings.mp3 | 065. Westlife - Flying Without Wings.mp3 | 8703181 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/066. Aqua - Barbie Girl.mp3 | 066. Aqua - Barbie Girl.mp3 | 8000635 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/067. Seal - Crazy.mp3 | 067. Seal - Crazy.mp3 | 14344520 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/068. Prince - Gett Off.mp3 | 068. Prince - Gett Off.mp3 | 10989076 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/069. Lauryn Hill - Doo Wop %28That Thing%29.mp3 | 069. Lauryn Hill - Doo Wop (That Thing).mp3 | 12897485 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/070. Rozalla - Everybody%27s Free %28Radio Edit%29.mp3 | 070. Rozalla - Everybody's Free (Radio Edit).mp3 | 7748977 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/071. Jennifer Lopez - Waiting for Tonight.mp3 | 071. Jennifer Lopez - Waiting for Tonight.mp3 | 9950986 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/072. Five - Keep On Movin%27.mp3 | 072. Five - Keep On Movin'.mp3 | 7979663 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/073. Macy Gray - I Try.mp3 | 073. Macy Gray - I Try.mp3 | 9667871 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/074. Robin S - Show Me Love.mp3 | 074. Robin S - Show Me Love.mp3 | 10863247 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/075. Toni Braxton - Breathe Again.mp3 | 075. Toni Braxton - Breathe Again.mp3 | 10852762 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/076. Another Level - Freak Me.mp3 | 076. Another Level - Freak Me.mp3 | 11995709 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/077. Corona - The Rhythm of the Night.mp3 | 077. Corona - The Rhythm of the Night.mp3 | 10653532 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/078. Barenaked Ladies - One Week.mp3 | 078. Barenaked Ladies - One Week.mp3 | 6878659 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/079. Right Said Fred - Deeply Dippy.mp3 | 079. Right Said Fred - Deeply Dippy.mp3 | 8157921 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/080. Spice Girls - Who Do You Think You Are.mp3 | 080. Spice Girls - Who Do You Think You Are.mp3 | 9709814 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/081. Whitney Houston - I Will Always Love You.mp3 | 081. Whitney Houston - I Will Always Love You.mp3 | 10926162 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/082. Steps - 5%2C 6%2C 7%2C 8.mp3 | 082. Steps - 5, 6, 7, 8.mp3 | 8168407 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/083. Supergrass - Alright.mp3 | 083. Supergrass - Alright.mp3 | 7319060 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/084. Snap%21 - The Power %287_ Version%29.mp3 | 084. Snap! - The Power (7_ Version).mp3 | 9143583 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/085. S Club 7 - S Club Party.mp3 | 085. S Club 7 - S Club Party.mp3 | 8503951 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/086. Urban Cookie Collective - The Key%2C The Secret.mp3 | 086. Urban Cookie Collective - The Key, The Secret.mp3 | 8996782 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/087. LEN - Steal My Sunshine.mp3 | 087. LEN - Steal My Sunshine.mp3 | 10705961 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/088. Blur - Parklife %282012 Remaster%29.mp3 | 088. Blur - Parklife (2012 Remaster).mp3 | 7486833 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/089. Doodge %26 Viper Feat. Tag Team - Whoomp%21 %28There It Is%29.mp3 | 089. Doodge & Viper Feat. Tag Team - Whoomp! (There It Is).mp3 | 15298724 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/090. C%2BC Music Factory - Gonna Make You Sweat %28Everybody Dance Now%29.mp3 | 090. C+C Music Factory - Gonna Make You Sweat (Everybody Dance Now).mp3 | 9835643 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/091. Whigfield - Saturday Night %28Radio Edit%29.mp3 | 091. Whigfield - Saturday Night (Radio Edit).mp3 | 9038725 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/092. Livin%27 Joy - Dreamer %28Re-Original 7-inch Mix%29.mp3 | 092. Livin' Joy - Dreamer (Re-Original 7-inch Mix).mp3 | 9112125 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/093. Spin Doctors - Two Princes.mp3 | 093. Spin Doctors - Two Princes.mp3 | 10370417 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/094. The Corrs - What Can I Do.mp3 | 094. The Corrs - What Can I Do.mp3 | 10265559 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/095. House of Pain - Jump Around.mp3 | 095. House of Pain - Jump Around.mp3 | 8797553 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/096. Chaka Demus %26 Pliers - Tease Me.mp3 | 096. Chaka Demus & Pliers - Tease Me.mp3 | 9940500 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/097. Deep Blue Something - Breakfast at Tiffany%27s.mp3 | 097. Deep Blue Something - Breakfast at Tiffany's.mp3 | 12897485 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/098. Pulp - Common People.mp3 | 098. Pulp - Common People.mp3 | 14103347 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/099. Oasis - Don%27t Look Back In Anger %28Remastered%29.mp3 | 099. Oasis - Don't Look Back In Anger (Remastered).mp3 | 11670651 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/100. Take That - Pray.mp3 | 100. Take That - Pray.mp3 | 9049211 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/Downloaded From Rarbg.to.txt | Downloaded From Rarbg.to.txt | 24 | 
+  file http://localhost/100 Greatest 90s Pop Classics %282020%29/folder.jpg | folder.jpg | 84152 | 

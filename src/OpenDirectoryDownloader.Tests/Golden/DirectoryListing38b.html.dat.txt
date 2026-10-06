@@ -26,3 +26,17 @@ url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=Fal
   file http://localhost:8086/listing/Oda Nobuna No Yabou/Oda Nobuna No Yabou.10.Uncens.BD.%5B720p%5D.AnimeList.ir.mkv | Oda Nobuna No Yabou.10.Uncens.BD.[720p].AnimeList.ir.mkv | 94791270 | 
   file http://localhost:8086/listing/Oda Nobuna No Yabou/Oda Nobuna No Yabou.11.Uncens.BD.%5B720p%5D.AnimeList.ir.mkv | Oda Nobuna No Yabou.11.Uncens.BD.[720p].AnimeList.ir.mkv | 89516933 | 
   file http://localhost:8086/listing/Oda Nobuna No Yabou/Oda Nobuna No Yabou.12.Uncens.BD.%5B720p%5D.AnimeList.ir.mkv | Oda Nobuna No Yabou.12.Uncens.BD.[720p].AnimeList.ir.mkv | 98922660 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  file http://localhost/Oda Nobuna No Yabou/Oda Nobuna No Yabou.01.Uncens.BD.%5B720p%5D.AnimeList.ir.mkv | Oda Nobuna No Yabou.01.Uncens.BD.[720p].AnimeList.ir.mkv | 118101115 | 
+  file http://localhost/Oda Nobuna No Yabou/Oda Nobuna No Yabou.02.Uncens.BD.%5B720p%5D.AnimeList.ir.mkv | Oda Nobuna No Yabou.02.Uncens.BD.[720p].AnimeList.ir.mkv | 96773079 | 
+  file http://localhost/Oda Nobuna No Yabou/Oda Nobuna No Yabou.03.Uncens.BD.%5B720p%5D.AnimeList.ir.mkv | Oda Nobuna No Yabou.03.Uncens.BD.[720p].AnimeList.ir.mkv | 103641252 | 
+  file http://localhost/Oda Nobuna No Yabou/Oda Nobuna No Yabou.04.Uncens.BD.%5B720p%5D.AnimeList.ir.mkv | Oda Nobuna No Yabou.04.Uncens.BD.[720p].AnimeList.ir.mkv | 131952804 | 
+  file http://localhost/Oda Nobuna No Yabou/Oda Nobuna No Yabou.05.Uncens.BD.%5B720p%5D.AnimeList.ir.mkv | Oda Nobuna No Yabou.05.Uncens.BD.[720p].AnimeList.ir.mkv | 95598674 | 
+  file http://localhost/Oda Nobuna No Yabou/Oda Nobuna No Yabou.06.Uncens.BD.%5B720p%5D.AnimeList.ir.mkv | Oda Nobuna No Yabou.06.Uncens.BD.[720p].AnimeList.ir.mkv | 95703532 | 
+  file http://localhost/Oda Nobuna No Yabou/Oda Nobuna No Yabou.07.Uncens.BD.%5B720p%5D.AnimeList.ir.mkv | Oda Nobuna No Yabou.07.Uncens.BD.[720p].AnimeList.ir.mkv | 96563364 | 
+  file http://localhost/Oda Nobuna No Yabou/Oda Nobuna No Yabou.08.Uncens.BD.%5B720p%5D.AnimeList.ir.mkv | Oda Nobuna No Yabou.08.Uncens.BD.[720p].AnimeList.ir.mkv | 100998840 | 
+  file http://localhost/Oda Nobuna No Yabou/Oda Nobuna No Yabou.09.Uncens.BD.%5B720p%5D.AnimeList.ir.mkv | Oda Nobuna No Yabou.09.Uncens.BD.[720p].AnimeList.ir.mkv | 115668419 | 
+  file http://localhost/Oda Nobuna No Yabou/Oda Nobuna No Yabou.10.Uncens.BD.%5B720p%5D.AnimeList.ir.mkv | Oda Nobuna No Yabou.10.Uncens.BD.[720p].AnimeList.ir.mkv | 94791270 | 
+  file http://localhost/Oda Nobuna No Yabou/Oda Nobuna No Yabou.11.Uncens.BD.%5B720p%5D.AnimeList.ir.mkv | Oda Nobuna No Yabou.11.Uncens.BD.[720p].AnimeList.ir.mkv | 89516933 | 
+  file http://localhost/Oda Nobuna No Yabou/Oda Nobuna No Yabou.12.Uncens.BD.%5B720p%5D.AnimeList.ir.mkv | Oda Nobuna No Yabou.12.Uncens.BD.[720p].AnimeList.ir.mkv | 98922660 | 

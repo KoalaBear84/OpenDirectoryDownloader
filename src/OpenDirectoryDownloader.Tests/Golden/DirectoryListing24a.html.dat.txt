@@ -10,3 +10,13 @@ url=http://localhost/ name=ROOT desc= parser= error=False ok=False
   dir http://localhost/专用文件柜/ | 专用文件柜 |  | ParseMaterialDesignListItemsDirectoryListing
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=False
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/Codes/ | Codes |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/D/ | D |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/fuli/ | fuli |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/Microsoft/ | Microsoft |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/Soft/ | Soft |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/Tool/ | Tool |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/车载音频/ | 车载音频 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/专用文件柜/ | 专用文件柜 |  | ParseMaterialDesignListItemsDirectoryListing

@@ -42,3 +42,25 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   file http://localhost:8086/listing/Bust_v3.pdf | Bust_v3.pdf | 187392 | 
   file http://localhost:8086/listing/ProgrammingGroundUp-1-0-lettersize.pdf | ProgrammingGroundUp-1-0-lettersize.pdf | 1363149 | 
   file http://localhost:8086/listing/taz.htm | taz.htm | 145408 | [fr] Explication et justification des TAZ - Texte de Hakim Bey
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/Ascii_PR0n/ | Ascii_PR0n | [en] Ascii, Sex and Fun for Geek | RegexParser1
+  dir http://localhost/Coding/ | Coding |  | RegexParser1
+  dir http://localhost/Computer/ | Computer |  | RegexParser1
+  dir http://localhost/Cryptologie/ | Cryptologie |  | RegexParser1
+  dir http://localhost/E_Zines/ | E_Zines |  | RegexParser1
+  dir http://localhost/H-Art-CKtivistes/ | H-Art-CKtivistes |  | RegexParser1
+  dir http://localhost/Lock_Picking/ | Lock_Picking |  | RegexParser1
+  dir http://localhost/Miscellanous/ | Miscellanous |  | RegexParser1
+  dir http://localhost/Old_School_Baby/ | Old_School_Baby |  | RegexParser1
+  dir http://localhost/Philosophie_CyberMind/ | Philosophie_CyberMind |  | RegexParser1
+  dir http://localhost/Reseaux/ | Reseaux |  | RegexParser1
+  dir http://localhost/Reverse_Engineering/ | Reverse_Engineering |  | RegexParser1
+  dir http://localhost/Sysadm/ | Sysadm |  | RegexParser1
+  dir http://localhost/Unix/ | Unix |  | RegexParser1
+  dir http://localhost/Win32/ | Win32 |  | RegexParser1
+  dir http://localhost/Wireless_802.11/ | Wireless_802.11 |  | RegexParser1
+  file http://localhost/Attack_tor.pdf | Attack_tor.pdf | 293888 | 
+  file http://localhost/Bust_v3.pdf | Bust_v3.pdf | 187392 | 
+  file http://localhost/ProgrammingGroundUp-1-0-lettersize.pdf | ProgrammingGroundUp-1-0-lettersize.pdf | 1363149 | 
+  file http://localhost/taz.htm | taz.htm | 145408 | [fr] Explication et justification des TAZ - Texte de Hakim Bey

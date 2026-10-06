@@ -658,3 +658,333 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/xi+45.zip | xi 45.zip | 5872026 | 
   file http://localhost:8086/listing/yaket.zip | yaket.zip | 15728640 | 
   file http://localhost:8086/listing/zenith_v1.0.zip | zenith_v1.0.zip | 5767168 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/(3rd) Charmy (A).smzip | (3rd) Charmy (A).smzip | 61440 | 
+  file http://localhost/(3rd) Charmy (B).smzip | (3rd) Charmy (B).smzip | 60416 | 
+  file http://localhost/(3rd) Emi (A).smzip | (3rd) Emi (A).smzip | 62464 | 
+  file http://localhost/(3rd) Emi (B).smzip | (3rd) Emi (B).smzip | 62464 | 
+  file http://localhost/(3rd) Tracy (A).smzip | (3rd) Tracy (A).smzip | 66560 | 
+  file http://localhost/(3rd) Tracy (B).smzip | (3rd) Tracy (B).smzip | 65536 | 
+  file http://localhost/(3rd) Zukin (A).smzip | (3rd) Zukin (A).smzip | 63488 | 
+  file http://localhost/(3rd) Zukin (B).smzip | (3rd) Zukin (B).smzip | 64512 | 
+  file http://localhost/(4th) Devil Zukin.smzip | (4th) Devil Zukin.smzip | 64512 | 
+  file http://localhost/(4th) Hatless Emi.smzip | (4th) Hatless Emi.smzip | 66560 | 
+  file http://localhost/(4th) Konsento 03.2.smzip | (4th) Konsento 03.2.smzip | 60416 | 
+  file http://localhost/(4th) Maid Zukin.smzip | (4th) Maid Zukin.smzip | 57344 | 
+  file http://localhost/(4th) Robo2000.smzip | (4th) Robo2000.smzip | 67584 | 
+  file http://localhost/(5th) 2mb.smzip | (5th) 2mb.smzip | 62464 | 
+  file http://localhost/(5th) Afro.smzip | (5th) Afro.smzip | 71680 | 
+  file http://localhost/(5th) Alice.smzip | (5th) Alice.smzip | 77824 | 
+  file http://localhost/(5th) Baby-Lon.smzip | (5th) Baby-Lon.smzip | 70656 | 
+  file http://localhost/(5th) Charmy.smzip | (5th) Charmy.smzip | 69632 | 
+  file http://localhost/(5th) Emi.smzip | (5th) Emi.smzip | 69632 | 
+  file http://localhost/(5th) Hatless Emi.smzip | (5th) Hatless Emi.smzip | 69632 | 
+  file http://localhost/(5th) Janet.smzip | (5th) Janet.smzip | 70656 | 
+  file http://localhost/(5th) Johnny.smzip | (5th) Johnny.smzip | 76800 | 
+  file http://localhost/(5th) Maho.smzip | (5th) Maho.smzip | 80896 | 
+  file http://localhost/(5th) Naoki.smzip | (5th) Naoki.smzip | 73728 | 
+  file http://localhost/(5th) Nmr.smzip | (5th) Nmr.smzip | 75776 | 
+  file http://localhost/(5th) Princess Zukin.smzip | (5th) Princess Zukin.smzip | 76800 | 
+  file http://localhost/(5th) Rage.smzip | (5th) Rage.smzip | 68608 | 
+  file http://localhost/(5th) Robo2001.smzip | (5th) Robo2001.smzip | 67584 | 
+  file http://localhost/(5th) Spike.smzip | (5th) Spike.smzip | 76800 | 
+  file http://localhost/(5th) U1.smzip | (5th) U1.smzip | 84992 | 
+  file http://localhost/(CCR) Mage Zukin.smzip | (CCR) Mage Zukin.smzip | 72704 | 
+  file http://localhost/3DNote.smzip | 3DNote.smzip | 240640 | 
+  file http://localhost/4_0_noteskin_Apocalypse_2_by_StepManiaUser.zip | 4_0_noteskin_Apocalypse_2_by_StepManiaUser.zip | 543744 | 
+  file http://localhost/5th Maho Edit.smzip | 5th Maho Edit.smzip | 80896 | 
+  file http://localhost/8-bit.smzip | 8-bit.smzip | 98304 | 
+  file http://localhost/39GeaRSBLUE_NS.smzip | 39GeaRSBLUE_NS.smzip | 6815744 | 
+  file http://localhost/11590stepmania_destroyed.zip | 11590stepmania_destroyed.zip | 5138022 | 
+  file http://localhost/AIM.smzip | AIM.smzip | 267264 | 
+  file http://localhost/Ace_Combat_3.smzip | Ace_Combat_3.smzip | 56623104 | 
+  file http://localhost/Afro.smzip | Afro.smzip | 68608 | 
+  file http://localhost/Aki.smzip | Aki.smzip | 176128 | 
+  file http://localhost/Akira.smzip | Akira.smzip | 53248 | 
+  file http://localhost/Akuma.smzip | Akuma.smzip | 5976883 | 
+  file http://localhost/Alex.smzip | Alex.smzip | 106496 | 
+  file http://localhost/Als DX Alice.smzip | Als DX Alice.smzip | 79872 | 
+  file http://localhost/Als DX Devil Zukin.smzip | Als DX Devil Zukin.smzip | 66560 | 
+  file http://localhost/Als DX Maho.smzip | Als DX Maho.smzip | 76800 | 
+  file http://localhost/Als DX Maid Zukin.smzip | Als DX Maid Zukin.smzip | 63488 | 
+  file http://localhost/Als DX Rage.smzip | Als DX Rage.smzip | 62464 | 
+  file http://localhost/Als DX amie.smzip | Als DX amie.smzip | 69632 | 
+  file http://localhost/Angel-Zukin.smzip | Angel-Zukin.smzip | 64512 | 
+  file http://localhost/Apocalypse2_39.smzip | Apocalypse2_39.smzip | 540672 | 
+  file http://localhost/Apocalypse2_395.smzip | Apocalypse2_395.smzip | 540672 | 
+  file http://localhost/Apocalypse_4.smzip | Apocalypse_4.smzip | 540672 | 
+  file http://localhost/Apocalypse_39.smzip | Apocalypse_39.smzip | 537600 | 
+  file http://localhost/Apocalypse_395.smzip | Apocalypse_395.smzip | 537600 | 
+  file http://localhost/Astro.smzip | Astro.smzip | 58368 | 
+  file http://localhost/BLEACH.smzip | BLEACH.smzip | 24117248 | 
+  file http://localhost/Baby-Lord.smzip | Baby-Lord.smzip | 77824 | 
+  file http://localhost/Bad Bunny.smzip | Bad Bunny.smzip | 97280 | 
+  file http://localhost/Bad Kitty.smzip | Bad Kitty.smzip | 57344 | 
+  file http://localhost/Beatendo V1.zip | Beatendo V1.zip | 31457280 | 
+  file http://localhost/Betty.smzip | Betty.smzip | 87040 | 
+  file http://localhost/Blazin Mix.smzip | Blazin Mix.smzip | 8598323 | 
+  file http://localhost/Block.smzip | Block.smzip | 139264 | 
+  file http://localhost/Blur.smzip | Blur.smzip | 1258291 | 
+  file http://localhost/Bob Newbie.smzip | Bob Newbie.smzip | 371712 | 
+  file http://localhost/Boldo.smzip | Boldo.smzip | 77824 | 
+  file http://localhost/Braille.smzip | Braille.smzip | 792576 | 
+  file http://localhost/Brother.smzip | Brother.smzip | 103424 | 
+  file http://localhost/Candy.smzip | Candy.smzip | 379904 | 
+  file http://localhost/Cel.smzip | Cel.smzip | 526336 | 
+  file http://localhost/CeruleanSkies2-pb1_SM4a4_20091108-1332.zip | CeruleanSkies2-pb1_SM4a4_20091108-1332.zip | 10485760 | 
+  file http://localhost/Charlotte.smzip | Charlotte.smzip | 100352 | 
+  file http://localhost/Charmy.smzip | Charmy.smzip | 64512 | 
+  file http://localhost/Cheesemix 2.smzip | Cheesemix 2.smzip | 4194304 | 
+  file http://localhost/Chrismas Emi.smzip | Chrismas Emi.smzip | 167936 | 
+  file http://localhost/Cityscape.smzip | Cityscape.smzip | 12582912 | 
+  file http://localhost/Cobalite.smzip | Cobalite.smzip | 40894464 | 
+  file http://localhost/Coby.smzip | Coby.smzip | 102400 | 
+  file http://localhost/Contrast Note.smzip | Contrast Note.smzip | 78848 | 
+  file http://localhost/Crystallis.smzip | Crystallis.smzip | 735232 | 
+  file http://localhost/D3Mania.smzip | D3Mania.smzip | 13631488 | 
+  file http://localhost/DDR 3rd Mix.smzip | DDR 3rd Mix.smzip | 12582912 | 
+  file http://localhost/DDR 4th Mix.smzip | DDR 4th Mix.smzip | 26214400 | 
+  file http://localhost/DDR 5th Mix.smzip | DDR 5th Mix.smzip | 14680064 | 
+  file http://localhost/DDR9RED.smzip | DDR9RED.smzip | 3565158 | 
+  file http://localhost/DDR D3Mix.smzip | DDR D3Mix.smzip | 5138022 | 
+  file http://localhost/DDREXTREME.smzip | DDREXTREME.smzip | 15728640 | 
+  file http://localhost/DDR Extreme (Japan).smzip | DDR Extreme (Japan).smzip | 4928307 | 
+  file http://localhost/DDR Extreme.smzip | DDR Extreme.smzip | 4089446 | 
+  file http://localhost/DDRMANiAK.smzip | DDRMANiAK.smzip | 137216 | 
+  file http://localhost/DDR MAX.smzip | DDR MAX.smzip | 4718592 | 
+  file http://localhost/DDRMAX.smzip | DDRMAX.smzip | 8074035 | 
+  file http://localhost/DDR MAX 2.smzip | DDR MAX 2.smzip | 3984589 | 
+  file http://localhost/DDRMAX2.smzip | DDRMAX2.smzip | 9332326 | 
+  file http://localhost/DDR MAX USA.smzip | DDR MAX USA.smzip | 4089446 | 
+  file http://localhost/DDRPad.smzip | DDRPad.smzip | 355328 | 
+  file http://localhost/DDRPartyCollection.smzip | DDRPartyCollection.smzip | 19922944 | 
+  file http://localhost/DDR Phantasy.smzip | DDR Phantasy.smzip | 4299162 | 
+  file http://localhost/DDRSN_BT2Plus.smzip | DDRSN_BT2Plus.smzip | 10485760 | 
+  file http://localhost/DDR Solo.smzip | DDR Solo.smzip | 3670016 | 
+  file http://localhost/DDR SuperNOVA.smzip | DDR SuperNOVA.smzip | 6710886 | 
+  file http://localhost/DDR Ultramix Plus.smzip | DDR Ultramix Plus.smzip | 18874368 | 
+  file http://localhost/DDR XXmiX.smzip | DDR XXmiX.smzip | 12582912 | 
+  file http://localhost/DDRX_Rev4.smzip | DDRX_Rev4.smzip | 119537664 | 
+  file http://localhost/DDR ltf-mix.smzip | DDR ltf-mix.smzip | 27262976 | 
+  file http://localhost/DWI.smzip | DWI.smzip | 11534336 | 
+  file http://localhost/Dance With Intensity WIP.rar | Dance With Intensity WIP.rar | 3040870 | 
+  file http://localhost/Dark(3rd).smzip | Dark(3rd).smzip | 91136 | 
+  file http://localhost/Dark(5th).smzip | Dark(5th).smzip | 108544 | 
+  file http://localhost/Dark(Extreme).smzip | Dark(Extreme).smzip | 89088 | 
+  file http://localhost/Dark(SN).smzip | Dark(SN).smzip | 155648 | 
+  file http://localhost/Darkness Shade.smzip | Darkness Shade.smzip | 51200 | 
+  file http://localhost/Default(Katze).smzip | Default(Katze).smzip | 704512 | 
+  file http://localhost/DethJammers Remix.smzip | DethJammers Remix.smzip | 15728640 | 
+  file http://localhost/DrMario.smzip | DrMario.smzip | 345088 | 
+  file http://localhost/Dred.smzip | Dred.smzip | 91136 | 
+  file http://localhost/Droid.smzip | Droid.smzip | 635904 | 
+  file http://localhost/Electronic-Beats.zip | Electronic-Beats.zip | 71303168 | 
+  file http://localhost/Elliot.smzip | Elliot.smzip | 126976 | 
+  file http://localhost/Emi.smzip | Emi.smzip | 50176 | 
+  file http://localhost/Eva-01.smzip | Eva-01.smzip | 573440 | 
+  file http://localhost/Evil-Zukin.smzip | Evil-Zukin.smzip | 60416 | 
+  file http://localhost/Eye blue %5bBETA%5d.rar | Eye blue [BETA].rar | 16777216 | 
+  file http://localhost/FAKET.zip | FAKET.zip | 1992294 | 
+  file http://localhost/FlashFlashRevolution(Note).smzip | FlashFlashRevolution(Note).smzip | 454656 | 
+  file http://localhost/Flash Flash Revolution.smzip | Flash Flash Revolution.smzip | 23068672 | 
+  file http://localhost/FlashFlashRevolution.smzip | FlashFlashRevolution.smzip | 252928 | 
+  file http://localhost/Flat(3rd).smzip | Flat(3rd).smzip | 40960 | 
+  file http://localhost/Flat(5th).smzip | Flat(5th).smzip | 58368 | 
+  file http://localhost/Flat(Extreme).smzip | Flat(Extreme).smzip | 41984 | 
+  file http://localhost/Flat(Katze).smzip | Flat(Katze).smzip | 431104 | 
+  file http://localhost/Flat(SN).smzip | Flat(SN).smzip | 59392 | 
+  file http://localhost/Foon(normal).smzip | Foon(normal).smzip | 304128 | 
+  file http://localhost/Foon.smzip | Foon.smzip | 319488 | 
+  file http://localhost/Foonmod.smzip | Foonmod.smzip | 11534336 | 
+  file http://localhost/Foonmod PLUS.smzip | Foonmod PLUS.smzip | 15728640 | 
+  file http://localhost/ForeverBlue2.smzip | ForeverBlue2.smzip | 14680064 | 
+  file http://localhost/GOLD.rar | GOLD.rar | 59768832 | 
+  file http://localhost/Gameshawn.smzip | Gameshawn.smzip | 4404019 | 
+  file http://localhost/Ghost Evil-Zukin.smzip | Ghost Evil-Zukin.smzip | 94208 | 
+  file http://localhost/Gold.smzip | Gold.smzip | 793600 | 
+  file http://localhost/Groove22.zip | Groove22.zip | 51380224 | 
+  file http://localhost/Guy.smzip | Guy.smzip | 97280 | 
+  file http://localhost/Hitomi.smzip | Hitomi.smzip | 1048576 | 
+  file http://localhost/ITG2 AC Official.zip | ITG2 AC Official.zip | 63963136 | 
+  file http://localhost/ITG2Empress1.1.zip | ITG2Empress1.1.zip | 24117248 | 
+  file http://localhost/ITG3_Theme_banzaigtv.zip | ITG3_Theme_banzaigtv.zip | 37748736 | 
+  file http://localhost/ITG H4X Edition.zip | ITG H4X Edition.zip | 63963136 | 
+  file http://localhost/ITGShadow3.rar | ITGShadow3.rar | 132120576 | 
+  file http://localhost/Ice.smzip | Ice.smzip | 785408 | 
+  file http://localhost/In The Groove.smzip | In The Groove.smzip | 9017754 | 
+  file http://localhost/In the Groove 2.smzip | In the Groove 2.smzip | 10276045 | 
+  file http://localhost/Inverted StepMania.smzip | Inverted StepMania.smzip | 8178893 | 
+  file http://localhost/Ionic.smzip | Ionic.smzip | 404480 | 
+  file http://localhost/Izam.smzip | Izam.smzip | 54272 | 
+  file http://localhost/Janet.smzip | Janet.smzip | 76800 | 
+  file http://localhost/Jason.smzip | Jason.smzip | 93184 | 
+  file http://localhost/Jay.smzip | Jay.smzip | 66560 | 
+  file http://localhost/Jenny.smzip | Jenny.smzip | 54272 | 
+  file http://localhost/Johnny.smzip | Johnny.smzip | 79872 | 
+  file http://localhost/Kangrejo.smzip | Kangrejo.smzip | 108544 | 
+  file http://localhost/KatzeExtreme.smzip | KatzeExtreme.smzip | 12582912 | 
+  file http://localhost/KatzeUltramix.smzip | KatzeUltramix.smzip | 13631488 | 
+  file http://localhost/Lady.smzip | Lady.smzip | 64512 | 
+  file http://localhost/Lady 2.smzip | Lady 2.smzip | 82944 | 
+  file http://localhost/Lance.smzip | Lance.smzip | 95232 | 
+  file http://localhost/Lizzy.smzip | Lizzy.smzip | 107520 | 
+  file http://localhost/Lorni.smzip | Lorni.smzip | 113664 | 
+  file http://localhost/Luna.smzip | Luna.smzip | 93184 | 
+  file http://localhost/MMR.smzip | MMR.smzip | 932864 | 
+  file http://localhost/Maid-Zukin.smzip | Maid-Zukin.smzip | 74752 | 
+  file http://localhost/Marcos.smzip | Marcos.smzip | 120832 | 
+  file http://localhost/Master Chief.smzip | Master Chief.smzip | 293888 | 
+  file http://localhost/Metal.smzip | Metal.smzip | 990208 | 
+  file http://localhost/Metallic.smzip | Metallic.smzip | 3040870 | 
+  file http://localhost/Microsoft Sam.smzip | Microsoft Sam.smzip | 2411725 | 
+  file http://localhost/Mimi.smzip | Mimi.smzip | 84992 | 
+  file http://localhost/Mr. Hankey.smzip | Mr. Hankey.smzip | 519168 | 
+  file http://localhost/Mr. Spanky.smzip | Mr. Spanky.smzip | 100352 | 
+  file http://localhost/NCEvo_SM4CVS_v1.1.rar | NCEvo_SM4CVS_v1.1.rar | 5557453 | 
+  file http://localhost/NCRBHL_010408.zip | NCRBHL_010408.zip | 11534336 | 
+  file http://localhost/NCR_ex11.smzip | NCR_ex11.smzip | 12582912 | 
+  file http://localhost/NEONmania v2.zip | NEONmania v2.zip | 6920602 | 
+  file http://localhost/NEX.smzip | NEX.smzip | 5138022 | 
+  file http://localhost/Neo (Spanish).smzip | Neo (Spanish).smzip | 5242880 | 
+  file http://localhost/NeonFM.smzip | NeonFM.smzip | 1258291 | 
+  file http://localhost/Neostyle.zip | Neostyle.zip | 176128 | 
+  file http://localhost/Ni-Na.smzip | Ni-Na.smzip | 63488 | 
+  file http://localhost/Nikki.smzip | Nikki.smzip | 110592 | 
+  file http://localhost/Nocturnal Dream.smzip | Nocturnal Dream.smzip | 35651584 | 
+  file http://localhost/Not Another keternal Theme.smzip | Not Another keternal Theme.smzip | 4299162 | 
+  file http://localhost/Note(3rd).smzip | Note(3rd).smzip | 64512 | 
+  file http://localhost/Note(5th).smzip | Note(5th).smzip | 81920 | 
+  file http://localhost/Note(6th).smzip | Note(6th).smzip | 287744 | 
+  file http://localhost/Note(Extreme).smzip | Note(Extreme).smzip | 65536 | 
+  file http://localhost/Note(Katze).smzip | Note(Katze).smzip | 701440 | 
+  file http://localhost/Note(SN).smzip | Note(SN).smzip | 105472 | 
+  file http://localhost/Note+(Arch0wl).smzip | Note (Arch0wl).smzip | 229376 | 
+  file http://localhost/Note+(Katze).smzip | Note (Katze).smzip | 687104 | 
+  file http://localhost/Note-(Katze).smzip | Note-(Katze).smzip | 648192 | 
+  file http://localhost/O.N.I. 3.zip | O.N.I. 3.zip | 16777216 | 
+  file http://localhost/O2Jam.smzip | O2Jam.smzip | 51200 | 
+  file http://localhost/Obscurity.smzip | Obscurity.smzip | 24117248 | 
+  file http://localhost/Paintmania.smzip | Paintmania.smzip | 6186598 | 
+  file http://localhost/Party Collection.smzip | Party Collection.smzip | 10485760 | 
+  file http://localhost/PikaCharmy.smzip | PikaCharmy.smzip | 66560 | 
+  file http://localhost/PlasmaDanceNewGeneration_v1.4.smzip | PlasmaDanceNewGeneration_v1.4.smzip | 10485760 | 
+  file http://localhost/Psycho.smzip | Psycho.smzip | 325632 | 
+  file http://localhost/Pump It Up.smzip | Pump It Up.smzip | 308224 | 
+  file http://localhost/Pump It Up Premiere 3.smzip | Pump It Up Premiere 3.smzip | 36700160 | 
+  file http://localhost/R-Lounge.smzip | R-Lounge.smzip | 11534336 | 
+  file http://localhost/R2.smzip | R2.smzip | 175104 | 
+  file http://localhost/RED-v0.01.zip | RED-v0.01.zip | 3460301 | 
+  file http://localhost/Rage.smzip | Rage.smzip | 65536 | 
+  file http://localhost/Rage To The End.smzip | Rage To The End.smzip | 77824 | 
+  file http://localhost/Rave_Nation.smzip | Rave_Nation.smzip | 15728640 | 
+  file http://localhost/Reggi.smzip | Reggi.smzip | 111616 | 
+  file http://localhost/Rick.smzip | Rick.smzip | 72704 | 
+  file http://localhost/Rico.smzip | Rico.smzip | 70656 | 
+  file http://localhost/Robbi.smzip | Robbi.smzip | 98304 | 
+  file http://localhost/Robo2000.smzip | Robo2000.smzip | 77824 | 
+  file http://localhost/RoboStepper.smzip | RoboStepper.smzip | 1887437 | 
+  file http://localhost/Rock.smzip | Rock.smzip | 962560 | 
+  file http://localhost/Ruby.smzip | Ruby.smzip | 72704 | 
+  file http://localhost/SM4_0_noteskin_Apocalypse_by_StepManiaUser.zip | SM4_0_noteskin_Apocalypse_by_StepManiaUser.zip | 457728 | 
+  file http://localhost/SMLiteBlue.smzip | SMLiteBlue.smzip | 6501171 | 
+  file http://localhost/Sabrina.smzip | Sabrina.smzip | 4299162 | 
+  file http://localhost/Saddam.smzip | Saddam.smzip | 232448 | 
+  file http://localhost/SailorMoon.smzip | SailorMoon.smzip | 116736 | 
+  file http://localhost/Sapphire.smzip | Sapphire.smzip | 66560 | 
+  file http://localhost/Schizkitty.smzip | Schizkitty.smzip | 3565158 | 
+  file http://localhost/Seizure.smzip | Seizure.smzip | 186368 | 
+  file http://localhost/Shadow.smzip | Shadow.smzip | 971776 | 
+  file http://localhost/ShadowAC Final.rar | ShadowAC Final.rar | 41943040 | 
+  file http://localhost/Sherry.smzip | Sherry.smzip | 86016 | 
+  file http://localhost/Shuffle.rar | Shuffle.rar | 76546048 | 
+  file http://localhost/Snowball.smzip | Snowball.smzip | 61440 | 
+  file http://localhost/Solo(3rd).smzip | Solo(3rd).smzip | 205824 | 
+  file http://localhost/Solo(6th).smzip | Solo(6th).smzip | 131072 | 
+  file http://localhost/Solo(Extreme).smzip | Solo(Extreme).smzip | 57344 | 
+  file http://localhost/Solo(Katze).smzip | Solo(Katze).smzip | 329728 | 
+  file http://localhost/Solo(SN).smzip | Solo(SN).smzip | 130048 | 
+  file http://localhost/Sonic Sonic Revolution.smzip | Sonic Sonic Revolution.smzip | 25165824 | 
+  file http://localhost/Space Channel 5.smzip | Space Channel 5.smzip | 3250586 | 
+  file http://localhost/Spectral.smzip | Spectral.smzip | 1048576 | 
+  file http://localhost/Steel.smzip | Steel.smzip | 764928 | 
+  file http://localhost/StepMania Stardance.smzip | StepMania Stardance.smzip | 3879731 | 
+  file http://localhost/StepManiaThings.torrent | StepManiaThings.torrent | 25600 | 
+  file http://localhost/StrawberrySteps.smzip | StrawberrySteps.smzip | 7549747 | 
+  file http://localhost/Strike ( Release Version ).rar | Strike ( Release Version ).rar | 10066330 | 
+  file http://localhost/Striped.smzip | Striped.smzip | 96256 | 
+  file http://localhost/Super Step Brothers.smzip | Super Step Brothers.smzip | 5662310 | 
+  file http://localhost/Suzy.smzip | Suzy.smzip | 147456 | 
+  file http://localhost/Sylvia.smzip | Sylvia.smzip | 89088 | 
+  file http://localhost/Techno.smzip | Techno.smzip | 705536 | 
+  file http://localhost/Techno Fiend 3.1.smzip | Techno Fiend 3.1.smzip | 16777216 | 
+  file http://localhost/The Man.smzip | The Man.smzip | 80896 | 
+  file http://localhost/The Simpsons.smzip | The Simpsons.smzip | 4404019 | 
+  file http://localhost/Tracy.smzip | Tracy.smzip | 67584 | 
+  file http://localhost/Trance Machina.smzip | Trance Machina.smzip | 3145728 | 
+  file http://localhost/Trance Machina 3 Heavy Metal Machine.smzip | Trance Machina 3 Heavy Metal Machine.smzip | 16777216 | 
+  file http://localhost/Trance Machina 5 Zen Rebirth.smzip | Trance Machina 5 Zen Rebirth.smzip | 13631488 | 
+  file http://localhost/Type2.smzip | Type2.smzip | 96256 | 
+  file http://localhost/Ulala.smzip | Ulala.smzip | 333824 | 
+  file http://localhost/Ulala2.smzip | Ulala2.smzip | 324608 | 
+  file http://localhost/UltramixTurtle.smzip | UltramixTurtle.smzip | 74752 | 
+  file http://localhost/Unreal Tournament (Evil).smzip | Unreal Tournament (Evil).smzip | 2202010 | 
+  file http://localhost/Unreal Tournament (Merc).smzip | Unreal Tournament (Merc).smzip | 1153434 | 
+  file http://localhost/Valencia.smzip | Valencia.smzip | 92160 | 
+  file http://localhost/Vivid(3rd).smzip | Vivid(3rd).smzip | 92160 | 
+  file http://localhost/Vivid(5th).smzip | Vivid(5th).smzip | 109568 | 
+  file http://localhost/Vivid(6th).smzip | Vivid(6th).smzip | 240640 | 
+  file http://localhost/Vivid(Extreme).smzip | Vivid(Extreme).smzip | 91136 | 
+  file http://localhost/Vivid(SN).smzip | Vivid(SN).smzip | 158720 | 
+  file http://localhost/Vivid(SZ).smzip | Vivid(SZ).smzip | 1468006 | 
+  file http://localhost/Wired.smzip | Wired.smzip | 117760 | 
+  file http://localhost/Worms.smzip | Worms.smzip | 2621440 | 
+  file http://localhost/X.alice.smzip | X.alice.smzip | 90112 | 
+  file http://localhost/X.emi.smzip | X.emi.smzip | 81920 | 
+  file http://localhost/X.emi2.smzip | X.emi2.smzip | 80896 | 
+  file http://localhost/X.kurogane.emi.smzip | X.kurogane.emi.smzip | 265216 | 
+  file http://localhost/X.omake.charmy.smzip | X.omake.charmy.smzip | 276480 | 
+  file http://localhost/X.rage.smzip | X.rage.smzip | 65536 | 
+  file http://localhost/X.tetsu.smzip | X.tetsu.smzip | 78848 | 
+  file http://localhost/X.ura.emi.smzip | X.ura.emi.smzip | 270336 | 
+  file http://localhost/XIII+.zip | XIII .zip | 9856614 | 
+  file http://localhost/XIRON2004.5.smzip | XIRON2004.5.smzip | 209920 | 
+  file http://localhost/XIRON2004.6.smzip | XIRON2004.6.smzip | 57344 | 
+  file http://localhost/XVI.zip | XVI.zip | 13631488 | 
+  file http://localhost/Xoon 2.rar | Xoon 2.rar | 36700160 | 
+  file http://localhost/Xoon 3.rar | Xoon 3.rar | 35651584 | 
+  file http://localhost/Yoshi.smzip | Yoshi.smzip | 17825792 | 
+  file http://localhost/Yuki.smzip | Yuki.smzip | 187392 | 
+  file http://localhost/Yuni.smzip | Yuni.smzip | 63488 | 
+  file http://localhost/Zach.smzip | Zach.smzip | 93184 | 
+  file http://localhost/Zig.smzip | Zig.smzip | 6291456 | 
+  file http://localhost/aoi-np2.zip | aoi-np2.zip | 3774874 | 
+  file http://localhost/beatman_20070905.rar | beatman_20070905.rar | 293888 | 
+  file http://localhost/bones+helper.zip | bones helper.zip | 6815744 | 
+  file http://localhost/cats.zip | cats.zip | 7864320 | 
+  file http://localhost/departure_20081002-xxxx.zip | departure_20081002-xxxx.zip | 10276045 | 
+  file http://localhost/dmx_maga_b_rb.zip | dmx_maga_b_rb.zip | 1468006 | 
+  file http://localhost/dongsnopw.zip | dongsnopw.zip | 4718592 | 
+  file http://localhost/dubaiOne_for_Sega_Master_System.smzip | dubaiOne_for_Sega_Master_System.smzip | 4613734 | 
+  file http://localhost/dubaiOne_v1.5.zip | dubaiOne_v1.5.zip | 6291456 | 
+  file http://localhost/eVOLVO.smzip | eVOLVO.smzip | 230400 | 
+  file http://localhost/final145.zip | final145.zip | 11534336 | 
+  file http://localhost/footer.htm | footer.htm | 1946 | 
+  file http://localhost/header.htm | header.htm | 4198 | 
+  file http://localhost/minimalia.smzip | minimalia.smzip | 2831155 | 
+  file http://localhost/moonlight_beta1.zip | moonlight_beta1.zip | 9227469 | 
+  file http://localhost/ncrx_v4.23.26_sm4a.zip | ncrx_v4.23.26_sm4a.zip | 12582912 | 
+  file http://localhost/ncrx_v4.26.00_sm-ssc.zip | ncrx_v4.26.00_sm-ssc.zip | 12582912 | 
+  file http://localhost/oni4.rar | oni4.rar | 4718592 | 
+  file http://localhost/optical-1.00.zip | optical-1.00.zip | 22020096 | 
+  file http://localhost/popcandy_theme.smzip | popcandy_theme.smzip | 18874368 | 
+  file http://localhost/secks.zip | secks.zip | 58720256 | 
+  file http://localhost/sm.urbanized.smzip | sm.urbanized.smzip | 14680064 | 
+  file http://localhost/smprex3_cvs_1.1.rar | smprex3_cvs_1.1.rar | 17825792 | 
+  file http://localhost/soms_final.smzip | soms_final.smzip | 4299162 | 
+  file http://localhost/syszero_1.0.smzip | syszero_1.0.smzip | 18874368 | 
+  file http://localhost/tactics.rar | tactics.rar | 42991616 | 
+  file http://localhost/ultralight_20100724-preview4.zip | ultralight_20100724-preview4.zip | 1572864 | 
+  file http://localhost/xi+45.zip | xi 45.zip | 5872026 | 
+  file http://localhost/yaket.zip | yaket.zip | 15728640 | 
+  file http://localhost/zenith_v1.0.zip | zenith_v1.0.zip | 5767168 | 

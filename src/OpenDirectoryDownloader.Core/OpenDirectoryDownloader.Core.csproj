@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- The domain model, scan state and the helpers everything else builds on. No HTML, HTTP or storage here. -->
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="OpenDirectoryDownloader.Tests" />
+  </ItemGroup>
+
+</Project>

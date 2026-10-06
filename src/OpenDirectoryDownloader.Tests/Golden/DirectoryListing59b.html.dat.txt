@@ -14,3 +14,11 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/repomd.xml | repomd.xml | 1331 | 
   file http://localhost:8086/listing/repomd.xml.asc | repomd.xml.asc | 836 | 
   file http://localhost:8086/listing/repomd.xml.key | repomd.xml.key | 3584 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/filelists.xml.gz | filelists.xml.gz | 531456 | 
+  file http://localhost/other.xml.gz | other.xml.gz | 2621440 | 
+  file http://localhost/primary.xml.gz | primary.xml.gz | 457728 | 
+  file http://localhost/repomd.xml | repomd.xml | 1331 | 
+  file http://localhost/repomd.xml.asc | repomd.xml.asc | 836 | 
+  file http://localhost/repomd.xml.key | repomd.xml.key | 3584 | 

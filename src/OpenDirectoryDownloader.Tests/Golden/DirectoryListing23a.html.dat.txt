@@ -28,3 +28,18 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   dir http://localhost:8086/listing/unofficial/ | unofficial |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/vid/ | vid |  | ParseTablesDirectoryListing
   file http://localhost:8086/listing/.ftpquota | .ftpquota | 20 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/banners/ | banners |  | ParseTablesDirectoryListing
+  dir http://localhost/cds/ | cds |  | ParseTablesDirectoryListing
+  dir http://localhost/gfx/ | gfx |  | ParseTablesDirectoryListing
+  dir http://localhost/gms/ | gms |  | ParseTablesDirectoryListing
+  dir http://localhost/LEGO/ | LEGO |  | ParseTablesDirectoryListing
+  dir http://localhost/otherfiles/ | otherfiles |  | ParseTablesDirectoryListing
+  dir http://localhost/sfx/ | sfx |  | ParseTablesDirectoryListing
+  dir http://localhost/sites/ | sites |  | ParseTablesDirectoryListing
+  dir http://localhost/story/ | story |  | ParseTablesDirectoryListing
+  dir http://localhost/txt/ | txt |  | ParseTablesDirectoryListing
+  dir http://localhost/unofficial/ | unofficial |  | ParseTablesDirectoryListing
+  dir http://localhost/vid/ | vid |  | ParseTablesDirectoryListing
+  file http://localhost/.ftpquota | .ftpquota | 20 | 

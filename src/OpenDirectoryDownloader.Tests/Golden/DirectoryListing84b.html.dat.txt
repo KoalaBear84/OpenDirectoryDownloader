@@ -23,3 +23,26 @@ url=http://localhost/ name=ROOT desc= parser= error=False ok=False
   file http://localhost/Claustrophobia/Zombie15-US-Scenarios-16-20_web.pdf | Zombie15-US-Scenarios-16-20_web.pdf | 20879360 | 
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=False
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  file http://localhost/Claustrophobia/Air putride.pdf | Air putride.pdf | 4458496 | 
+  file http://localhost/Claustrophobia/Attrapez-les tous.pdf | Attrapez-les tous.pdf | 24668160 | 
+  file http://localhost/Claustrophobia/Chasses et cours.pdf | Chasses et cours.pdf | 9088000 | 
+  file http://localhost/Claustrophobia/Délivrez-nous du mal.pdf | Délivrez-nous du mal.pdf | 12618752 | 
+  file http://localhost/Claustrophobia/Eboulement.pdf | Eboulement.pdf | 3716096 | 
+  file http://localhost/Claustrophobia/FAQ Claustrophobia 1.2.pdf | FAQ Claustrophobia 1.2.pdf | 566272 | 
+  file http://localhost/Claustrophobia/Hurlements.pdf | Hurlements.pdf | 18140160 | 
+  file http://localhost/Claustrophobia/Il est à nous.pdf | Il est à nous.pdf | 4104192 | 
+  file http://localhost/Claustrophobia/Infection.pdf | Infection.pdf | 3983360 | 
+  file http://localhost/Claustrophobia/L%27invocation.pdf | L'invocation.pdf | 8026112 | 
+  file http://localhost/Claustrophobia/La grande traversée.pdf | La grande traversée.pdf | 3017728 | 
+  file http://localhost/Claustrophobia/Le Golem.pdf | Le Golem.pdf | 5616640 | 
+  file http://localhost/Claustrophobia/Nous manquons de bras.pdf | Nous manquons de bras.pdf | 3823616 | 
+  file http://localhost/Claustrophobia/Parasite %21.pdf | Parasite !.pdf | 2022400 | 
+  file http://localhost/Claustrophobia/Perdus %21.pdf | Perdus !.pdf | 14161920 | 
+  file http://localhost/Claustrophobia/Sauvetage.pdf | Sauvetage.pdf | 3309568 | 
+  file http://localhost/Claustrophobia/Séparés.pdf | Séparés.pdf | 3003392 | 
+  file http://localhost/Claustrophobia/Tout ce qui brille.pdf | Tout ce qui brille.pdf | 6753280 | 
+  file http://localhost/Claustrophobia/Trinité démoniaque.pdf | Trinité démoniaque.pdf | 4037632 | 
+  file http://localhost/Claustrophobia/Tuer l%27ennemi dans l%27oeuf.pdf | Tuer l'ennemi dans l'oeuf.pdf | 7626752 | 
+  file http://localhost/Claustrophobia/Zombie15-US-Scenarios-16-20_web.pdf | Zombie15-US-Scenarios-16-20_web.pdf | 20879360 | 

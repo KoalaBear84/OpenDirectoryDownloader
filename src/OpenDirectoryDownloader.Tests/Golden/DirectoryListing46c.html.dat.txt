@@ -2,3 +2,23 @@
 url=http://localhost/ name=ROOT desc= parser=ParseListItemsDirectoryListing error=False ok=True
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseListItemsDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseListItemsDirectoryListing error=False ok=True
+  dir https://www.internode.on.net/about/ | about |  | ParseListItemsDirectoryListing
+  dir https://www.internode.on.net/contact/ | contact |  | ParseListItemsDirectoryListing
+  dir https://www.internode.on.net/support/ | support |  | ParseListItemsDirectoryListing
+  dir https://www.internode.on.net/products/ | products |  | ParseListItemsDirectoryListing
+  dir https://www.internode.on.net/business/ | business |  | ParseListItemsDirectoryListing
+  dir https://www.internode.on.net/residential/ | residential |  | ParseListItemsDirectoryListing
+  dir https://www.internode.on.net/residential/broadband/ | broadband |  | ParseListItemsDirectoryListing
+  dir https://www.internode.on.net/residential/phone_and_voip/ | phone_and_voip |  | ParseListItemsDirectoryListing
+  dir https://www.internode.on.net/residential/mobile/ | mobile |  | ParseListItemsDirectoryListing
+  dir https://www.internode.on.net/residential/hardware/ | hardware |  | ParseListItemsDirectoryListing
+  dir https://www.internode.on.net/residential/entertainment/ | entertainment |  | ParseListItemsDirectoryListing
+  dir https://www.internode.on.net/fetchtv | fetchtv |  | ParseListItemsDirectoryListing
+  dir https://www.internode.on.net/residential/entertainment/unmetered_content/ | unmetered_content |  | ParseListItemsDirectoryListing
+  dir https://www.internode.on.net/support/accounts_and_billing/moving_broadband/ | moving_broadband |  | ParseListItemsDirectoryListing
+  dir https://www.internode.on.net/signup | signup |  | ParseListItemsDirectoryListing
+  dir https://www.internode.on.net/spam | spam |  | ParseListItemsDirectoryListing
+  dir https://www.internode.on.net/privacy | privacy |  | ParseListItemsDirectoryListing
+  dir https://www.internode.on.net/legal | legal |  | ParseListItemsDirectoryListing

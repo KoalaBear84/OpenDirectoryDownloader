@@ -18,3 +18,13 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/688 Attack Sub.zip | 688 Attack Sub.zip |  | 
   file http://localhost:8086/listing/1869 AGA.zip | 1869 AGA.zip |  | 
   file http://localhost:8086/listing/1942.zip | 1942.zip |  | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/3D Boxing.zip | 3D Boxing.zip |  | 
+  file http://localhost/3D Pool.zip | 3D Pool.zip |  | 
+  file http://localhost/3D World Tennis.zip | 3D World Tennis.zip |  | 
+  file http://localhost/4D Sports Boxing.zip | 4D Sports Boxing.zip |  | 
+  file http://localhost/18th Hole.zip | 18th Hole.zip |  | 
+  file http://localhost/688 Attack Sub.zip | 688 Attack Sub.zip |  | 
+  file http://localhost/1869 AGA.zip | 1869 AGA.zip |  | 
+  file http://localhost/1942.zip | 1942.zip |  | 

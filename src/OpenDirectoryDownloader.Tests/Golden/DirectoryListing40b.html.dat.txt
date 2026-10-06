@@ -3,3 +3,6 @@ url=http://localhost/ name=ROOT desc= parser=ParseLinksDirectoryListing error=Fa
   dir http://localhost/primary/computer/ | computer |  | ParseLinksDirectoryListing
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseLinksDirectoryListing error=False ok=True
+  dir http://localhost/primary/computer/ | computer |  | ParseLinksDirectoryListing

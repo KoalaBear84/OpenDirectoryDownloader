@@ -14,3 +14,11 @@ url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=Tru
   dir http://localhost:8086/listing/03.SMART-Seq/ | 03.SMART-Seq |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/04.Splicing/ | 04.Splicing |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/05.ATAC-Seq/ | 05.ATAC-Seq |  | ParseTablesDirectoryListing
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  dir http://localhost/00.Guest_data/ | 00.Guest_data |  | ParseTablesDirectoryListing
+  dir http://localhost/01.ChIP-Seq/ | 01.ChIP-Seq |  | ParseTablesDirectoryListing
+  dir http://localhost/02.RNA-Seq/ | 02.RNA-Seq |  | ParseTablesDirectoryListing
+  dir http://localhost/03.SMART-Seq/ | 03.SMART-Seq |  | ParseTablesDirectoryListing
+  dir http://localhost/04.Splicing/ | 04.Splicing |  | ParseTablesDirectoryListing
+  dir http://localhost/05.ATAC-Seq/ | 05.ATAC-Seq |  | ParseTablesDirectoryListing

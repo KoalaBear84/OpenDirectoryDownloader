@@ -36,3 +36,22 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   dir http://localhost:8086/listing/Violate (Single)/ | Violate (Single) |  | RegexParser2
   dir http://localhost:8086/listing/When You're Young (Single)/ | When You're Young (Single) |  | RegexParser2
   dir http://localhost:8086/listing/Wings (Single)/ | Wings (Single) |  | RegexParser2
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/009 Sound System (Album)/ | 009 Sound System (Album) |  | RegexParser2
+  dir http://localhost/Dream We Knew (Single)/ | Dream We Knew (Single) |  | RegexParser2
+  dir http://localhost/High All Day (Single)/ | High All Day (Single) |  | RegexParser2
+  dir http://localhost/Holiday (So High) (Single)/ | Holiday (So High) (Single) |  | RegexParser2
+  dir http://localhost/Powerstation (Single)/ | Powerstation (Single) |  | RegexParser2
+  dir http://localhost/Remixes Vol. 1 (Album)/ | Remixes Vol. 1 (Album) |  | RegexParser2
+  dir http://localhost/Remixes Vol. 2 (Album)/ | Remixes Vol. 2 (Album) |  | RegexParser2
+  dir http://localhost/Remixes Vol. 3 (Album)/ | Remixes Vol. 3 (Album) |  | RegexParser2
+  dir http://localhost/Solo (Single)/ | Solo (Single) |  | RegexParser2
+  dir http://localhost/Speak to Angels (Single)/ | Speak to Angels (Single) |  | RegexParser2
+  dir http://localhost/Standing Stones (Single)/ | Standing Stones (Single) |  | RegexParser2
+  dir http://localhost/Sweet Mary (Single)/ | Sweet Mary (Single) |  | RegexParser2
+  dir http://localhost/The Hits (Album)/ | The Hits (Album) |  | RegexParser2
+  dir http://localhost/Trinity (Single)/ | Trinity (Single) |  | RegexParser2
+  dir http://localhost/Violate (Single)/ | Violate (Single) |  | RegexParser2
+  dir http://localhost/When You're Young (Single)/ | When You're Young (Single) |  | RegexParser2
+  dir http://localhost/Wings (Single)/ | Wings (Single) |  | RegexParser2

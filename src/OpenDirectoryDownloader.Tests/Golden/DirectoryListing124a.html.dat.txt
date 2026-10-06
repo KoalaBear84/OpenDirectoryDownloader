@@ -10,3 +10,9 @@ url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=Tru
   dir http://localhost:8086/listing/doc/index.shtml | doc |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/src/index.shtml | src |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/misc/index.shtml | misc |  | ParseTablesDirectoryListing
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  dir http://localhost/bin/index.shtml | bin |  | ParseTablesDirectoryListing
+  dir http://localhost/doc/index.shtml | doc |  | ParseTablesDirectoryListing
+  dir http://localhost/src/index.shtml | src |  | ParseTablesDirectoryListing
+  dir http://localhost/misc/index.shtml | misc |  | ParseTablesDirectoryListing

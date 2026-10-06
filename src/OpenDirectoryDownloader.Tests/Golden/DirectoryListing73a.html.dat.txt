@@ -44,3 +44,26 @@ url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=Fal
   dir http://localhost:8086/listing/?dir=./wordlists | wordlists |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/?dir=./Zenk_Roulettes | Zenk_Roulettes |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/?dir=./~nico34 | ~nico34 |  | ParseTablesDirectoryListing
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/?dir=./Conferences | Conferences |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./Cryptographie . Algorithmes . Steganographie | Cryptographie . Algorithmes . Steganographie |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./ctfs | ctfs |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./Forensic | Forensic |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./Guide SSI | Guide SSI |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./images | images |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./Linux et systemes d.exploitations | Linux et systemes d.exploitations |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./Lockpicking | Lockpicking |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./Magazine E-book | Magazine E-book |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./Metasploit | Metasploit |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./Others | Others |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./Programmation | Programmation |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./Protocoles_reseaux_securisation | Protocoles_reseaux_securisation |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./Reversing . cracking | Reversing . cracking |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./supports | supports |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./Techniques d.attaques  .  Failles | Techniques d.attaques  .  Failles |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./Virus-Infections-Detections-Preventions | Virus-Infections-Detections-Preventions |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./vms | vms |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./wordlists | wordlists |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./Zenk_Roulettes | Zenk_Roulettes |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=./~nico34 | ~nico34 |  | ParseTablesDirectoryListing

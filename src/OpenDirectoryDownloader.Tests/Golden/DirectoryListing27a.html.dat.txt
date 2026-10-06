@@ -24,3 +24,16 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/ls-lR.gz | ls-lR.gz | 2621440 | 
   file http://localhost:8086/listing/ls-lR.patch | ls-lR.patch | 4608 | 
   file http://localhost:8086/listing/welcome.msg | welcome.msg | 888 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/bin/ | bin |  | ParseTablesDirectoryListing
+  dir http://localhost/etc/ | etc |  | ParseTablesDirectoryListing
+  dir http://localhost/isc/ | isc |  | ParseTablesDirectoryListing
+  dir http://localhost/lynx/ | lynx |  | ParseTablesDirectoryListing
+  dir http://localhost/private/ | private |  | ParseTablesDirectoryListing
+  dir http://localhost/pub/ | pub |  | ParseTablesDirectoryListing
+  dir http://localhost/usenet/ | usenet |  | ParseTablesDirectoryListing
+  dir http://localhost/www/ | www |  | ParseTablesDirectoryListing
+  file http://localhost/ls-lR.gz | ls-lR.gz | 2621440 | 
+  file http://localhost/ls-lR.patch | ls-lR.patch | 4608 | 
+  file http://localhost/welcome.msg | welcome.msg | 888 | 

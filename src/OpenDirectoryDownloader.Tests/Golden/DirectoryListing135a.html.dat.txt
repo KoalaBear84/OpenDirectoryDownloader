@@ -50,3 +50,29 @@ url=http://localhost:8086/listing/ name=listing desc= parser=pCloud error=False 
   file http://localhost:8086/listing/First%20Aid%20for%20the%20USMLE%20Step%201%202024.pdf | First Aid for the USMLE Step 1 2024.pdf | 342792216 | 
   file http://localhost:8086/listing/First%20Aid%20for%20the%20USMLE%20Step%201%202025%2035th%20Edition.pdf | First Aid for the USMLE Step 1 2025 35th Edition.pdf | 125677615 | 
   file http://localhost:8086/listing/USMLE%20Laboratory%20Reference%20Values.pdf | USMLE Laboratory Reference Values.pdf | 227149 | 
+== root, entries outside the directory kept
+url=http://localhost/ name= desc= parser=pCloud error=False ok=True
+  dir http://localhost/%2A%2A%2ATextbooks | ***Textbooks |  | pCloud
+  dir http://localhost/%2A%2AAmboss%2C%20UWorld%2C%20Anki | **Amboss, UWorld, Anki |  | pCloud
+  dir http://localhost/%2ABoard%20Review%20Series%20%28BRS%29%20Books | *Board Review Series (BRS) Books |  | pCloud
+  dir http://localhost/%2ABoards%20%26%20Beyond%20%28Videos%20and%20Slides%29 | *Boards & Beyond (Videos and Slides) |  | pCloud
+  dir http://localhost/%2AClinical%20Medicine-Physical%20Exam%20%28Bates%2C%20Videos%2C%20Textbook%2C%20Questions%29 | *Clinical Medicine-Physical Exam (Bates, Videos, Textbook, Questions) |  | pCloud
+  dir http://localhost/%2AFirst%20Aid%20Books | *First Aid Books |  | pCloud
+  dir http://localhost/%2AKaplan%20Medical%20Step%201%20%26%202%20%28Books%2C%20Q-Bank%2C%20Videos%29 | *Kaplan Medical Step 1 & 2 (Books, Q-Bank, Videos) |  | pCloud
+  dir http://localhost/%2ALecturio | *Lecturio |  | pCloud
+  dir http://localhost/%2AMed%20Bootcamp%20%28Slides%20and%20Videos%29 | *Med Bootcamp (Slides and Videos) |  | pCloud
+  dir http://localhost/%2ANBME%20Self%20Assessment%20Forms | *NBME Self Assessment Forms |  | pCloud
+  dir http://localhost/%2ANinja%20Nerd | *Ninja Nerd |  | pCloud
+  dir http://localhost/%2AOnlineMedEd | *OnlineMedEd |  | pCloud
+  dir http://localhost/%2AOsmosis%20%28Videos%29 | *Osmosis (Videos) |  | pCloud
+  dir http://localhost/%2APathoma%20%28Videos%29 | *Pathoma (Videos) |  | pCloud
+  dir http://localhost/%2APhyseo%20%28Videos%29 | *Physeo (Videos) |  | pCloud
+  dir http://localhost/%2APicmonic%20%20%28Videos%29 | *Picmonic  (Videos) |  | pCloud
+  dir http://localhost/%2APixorize%20%28Videos%29 | *Pixorize (Videos) |  | pCloud
+  dir http://localhost/%2ASkratchy%20Medical%20%28Videos%29 | *Skratchy Medical (Videos) |  | pCloud
+  dir http://localhost/%2AThe%20EKG%20GUY | *The EKG GUY |  | pCloud
+  dir http://localhost/%2AUSMLE-Rx%20%28Videos%20%26%20Q-Bank%29 | *USMLE-Rx (Videos & Q-Bank) |  | pCloud
+  dir http://localhost/More%20Resources | More Resources |  | pCloud
+  file http://localhost/First%20Aid%20for%20the%20USMLE%20Step%201%202024.pdf | First Aid for the USMLE Step 1 2024.pdf | 342792216 | 
+  file http://localhost/First%20Aid%20for%20the%20USMLE%20Step%201%202025%2035th%20Edition.pdf | First Aid for the USMLE Step 1 2025 35th Edition.pdf | 125677615 | 
+  file http://localhost/USMLE%20Laboratory%20Reference%20Values.pdf | USMLE Laboratory Reference Values.pdf | 227149 | 

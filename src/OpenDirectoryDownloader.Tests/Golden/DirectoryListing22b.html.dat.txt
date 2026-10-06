@@ -27,3 +27,30 @@ url=http://localhost/ name=ROOT desc= parser= error=False ok=False
   file http://localhost/4chan/Supremedictatorforlifediagram.png | Supremedictatorforlifediagram.png | 109568 | 
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=False
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/4chan/4chans Guide To Anal/ | 4chans Guide To Anal |  | ParseH5aiDirectoryListing
+  dir http://localhost/4chan/Advanced Tech/ | Advanced Tech |  | ParseH5aiDirectoryListing
+  dir http://localhost/4chan/Board Tiers/ | Board Tiers |  | ParseH5aiDirectoryListing
+  dir http://localhost/4chan/FB Hackers/ | FB Hackers |  | ParseH5aiDirectoryListing
+  dir http://localhost/4chan/Interesting Stuff/ | Interesting Stuff |  | ParseH5aiDirectoryListing
+  dir http://localhost/4chan/Newfag Guides/ | Newfag Guides |  | ParseH5aiDirectoryListing
+  dir http://localhost/4chan/Personal Info/ | Personal Info |  | ParseH5aiDirectoryListing
+  dir http://localhost/4chan/Tips you shouldve known/ | Tips you shouldve known |  | ParseH5aiDirectoryListing
+  file http://localhost/4chan/0.999 %3D 1.jpg | 0.999 = 1.jpg | 110592 | 
+  file http://localhost/4chan/1277406985042.png | 1277406985042.png | 70656 | 
+  file http://localhost/4chan/1286862445640.png | 1286862445640.png | 102400 | 
+  file http://localhost/4chan/1286950488002.png | 1286950488002.png | 291840 | 
+  file http://localhost/4chan/45c83746.jpg | 45c83746.jpg | 1057792 | 
+  file http://localhost/4chan/4chan house.jpg | 4chan house.jpg | 377856 | 
+  file http://localhost/4chan/4chan side effects.jpg | 4chan side effects.jpg | 126976 | 
+  file http://localhost/4chan/4channofapfebruaryrulesguidlines.jpg | 4channofapfebruaryrulesguidlines.jpg | 525312 | 
+  file http://localhost/4chan/60557d53.png | 60557d53.png | 1071104 | 
+  file http://localhost/4chan/861701dd.gif | 861701dd.gif | 115712 | 
+  file http://localhost/4chan/88409203.jpg | 88409203.jpg | 72704 | 
+  file http://localhost/4chan/how to security cam.jpg | how to security cam.jpg | 209920 | 
+  file http://localhost/4chan/isbhavingagoodday.jpg | isbhavingagoodday.jpg | 447488 | 
+  file http://localhost/4chan/nationstatesof4chan.jpg | nationstatesof4chan.jpg | 246784 | 
+  file http://localhost/4chan/phone raid tips.jpg | phone raid tips.jpg | 88064 | 
+  file http://localhost/4chan/Road Sign Hack 2.jpg | Road Sign Hack 2.jpg | 252928 | 
+  file http://localhost/4chan/Supremedictatorforlifediagram.png | Supremedictatorforlifediagram.png | 109568 | 

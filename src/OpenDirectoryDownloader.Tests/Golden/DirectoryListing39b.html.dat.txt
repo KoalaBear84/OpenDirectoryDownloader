@@ -6,3 +6,9 @@ url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=F
   file http://localhost/pub/artwork/thunderbird_cd.zip | thunderbird_cd.zip | 3145728 | 
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/pub/artwork/eps_files_3.zip | eps_files_3.zip | 3145728 | 
+  file http://localhost/pub/artwork/firefox_cd.zip | firefox_cd.zip | 2097152 | 
+  file http://localhost/pub/artwork/mozilla_cd.zip | mozilla_cd.zip | 3145728 | 
+  file http://localhost/pub/artwork/thunderbird_cd.zip | thunderbird_cd.zip | 3145728 | 

@@ -8,3 +8,11 @@ url=http://localhost/ name=ROOT desc= parser= error=False ok=False
   dir http://localhost/?/Storage/youtube/ | youtube |  | ParseMaterialDesignListItemsDirectoryListing
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=False
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/?/Storage/Animation/ | Animation |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/?/Storage/Books/ | Books |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/?/Storage/Others/ | Others |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/?/Storage/R18/ | R18 |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/?/Storage/Software/ | Software |  | ParseMaterialDesignListItemsDirectoryListing
+  dir http://localhost/?/Storage/youtube/ | youtube |  | ParseMaterialDesignListItemsDirectoryListing

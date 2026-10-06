@@ -38,3 +38,23 @@ url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=Tru
   dir http://localhost:8086/listing/TELECOM-A-E | TELECOM-A-E |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/TELECOM-F-R | TELECOM-F-R |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/TELECOM-S-Z | TELECOM-S-Z |  | ParseTablesDirectoryListing
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  dir http://localhost/ARCADE | ARCADE |  | ParseTablesDirectoryListing
+  dir http://localhost/CAMERAS | CAMERAS |  | ParseTablesDirectoryListing
+  dir http://localhost/CARS | CARS |  | ParseTablesDirectoryListing
+  dir http://localhost/CBRADIO | CBRADIO |  | ParseTablesDirectoryListing
+  dir http://localhost/CELLPHONES | CELLPHONES |  | ParseTablesDirectoryListing
+  dir http://localhost/ELECTRONICS | ELECTRONICS |  | ParseTablesDirectoryListing
+  dir http://localhost/FAXMACHINES | FAXMACHINES |  | ParseTablesDirectoryListing
+  dir http://localhost/FIREARMS | FIREARMS |  | ParseTablesDirectoryListing
+  dir http://localhost/HANDHELDS | HANDHELDS |  | ParseTablesDirectoryListing
+  dir http://localhost/MILITARY | MILITARY |  | ParseTablesDirectoryListing
+  dir http://localhost/PDA | PDA |  | ParseTablesDirectoryListing
+  dir http://localhost/SCANNERS-A-E | SCANNERS-A-E |  | ParseTablesDirectoryListing
+  dir http://localhost/SCANNERS-F-R | SCANNERS-F-R |  | ParseTablesDirectoryListing
+  dir http://localhost/SCANNERS-S-Z | SCANNERS-S-Z |  | ParseTablesDirectoryListing
+  dir http://localhost/SOUND | SOUND |  | ParseTablesDirectoryListing
+  dir http://localhost/TELECOM-A-E | TELECOM-A-E |  | ParseTablesDirectoryListing
+  dir http://localhost/TELECOM-F-R | TELECOM-F-R |  | ParseTablesDirectoryListing
+  dir http://localhost/TELECOM-S-Z | TELECOM-S-Z |  | ParseTablesDirectoryListing

@@ -44,3 +44,26 @@ url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=Fal
   dir http://localhost:8086/listing/?dir=VA - Greatest Hits Ever %282019%29 Mp3 320kbps | VA - Greatest Hits Ever (2019) Mp3 320kbps |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/?dir=VA - The Love Album %282020%29 MP3 | VA - The Love Album (2020) MP3 |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/?dir=YU Pop Rock | YU Pop Rock |  | ParseTablesDirectoryListing
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/?dir=100 Greatest 90s Pop Classics %282020%29 | 100 Greatest 90s Pop Classics (2020) |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=70%27s Rock The Doors%2C Led Zeppelin%2C Pink Floyd | 70's Rock The Doors, Led Zeppelin, Pink Floyd |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=80s | 80s |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=ACDC - POWER UP %282020%29 | ACDC - POWER UP (2020) |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=best music | best music |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Best Of Disco Remix Hits | Best Of Disco Remix Hits |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=cd_sarbeasca_veche | cd_sarbeasca_veche |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Club Hits 2020 | Club Hits 2020 |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Directia 5 | Directia 5 |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=diverse | diverse |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Greatest Ever 80s %282020%29 | Greatest Ever 80s (2020) |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=oldies | oldies |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=oldies Happy | oldies Happy |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Rock - Selectii | Rock - Selectii |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=Rock Classics 60s-80s. Remastered Version | Rock Classics 60s-80s. Remastered Version |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=sarbeasca | sarbeasca |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=serbian | serbian |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=srpsko | srpsko |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=VA - Greatest Hits Ever %282019%29 Mp3 320kbps | VA - Greatest Hits Ever (2019) Mp3 320kbps |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=VA - The Love Album %282020%29 MP3 | VA - The Love Album (2020) MP3 |  | ParseTablesDirectoryListing
+  dir http://localhost/?dir=YU Pop Rock | YU Pop Rock |  | ParseTablesDirectoryListing

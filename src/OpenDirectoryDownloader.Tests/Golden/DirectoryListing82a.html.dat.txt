@@ -32,3 +32,20 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/Game.of.Thrones.S08E01.Kings.Landing.720p.AMZN.WEB-DL.DDP5.1.H.264-GoT.mkv | Game.of.Thrones.S08E01.Kings.Landing.720p.AMZN.WEB-DL.DDP5.1.H.264-GoT.mkv | 1073741824 | 
   file http://localhost:8086/listing/Game.of.Thrones.S08E02.720p.AMZN.WEB-DL.DDP5.1.H.264-GoT.mkv | Game.of.Thrones.S08E02.720p.AMZN.WEB-DL.DDP5.1.H.264-GoT.mkv | 1073741824 | 
   file http://localhost:8086/listing/My.Little.Pony.The.Movie.2017.1080p.BluRay.AC3.x264-BMF.mkv | My.Little.Pony.The.Movie.2017.1080p.BluRay.AC3.x264-BMF.mkv | 5368709120 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/Equestria.Girls/ | Equestria.Girls |  | ParseTablesDirectoryListing
+  dir http://localhost/Season.1/ | Season.1 |  | ParseTablesDirectoryListing
+  dir http://localhost/Season.2/ | Season.2 |  | ParseTablesDirectoryListing
+  dir http://localhost/Season.3/ | Season.3 |  | ParseTablesDirectoryListing
+  dir http://localhost/Season.4/ | Season.4 |  | ParseTablesDirectoryListing
+  dir http://localhost/Season.5/ | Season.5 |  | ParseTablesDirectoryListing
+  dir http://localhost/Season.6/ | Season.6 |  | ParseTablesDirectoryListing
+  dir http://localhost/Season.7/ | Season.7 |  | ParseTablesDirectoryListing
+  dir http://localhost/Season.8/ | Season.8 |  | ParseTablesDirectoryListing
+  dir http://localhost/Season.9/ | Season.9 |  | ParseTablesDirectoryListing
+  dir http://localhost/Specials/ | Specials |  | ParseTablesDirectoryListing
+  dir http://localhost/testfiles/ | testfiles |  | ParseTablesDirectoryListing
+  file http://localhost/Game.of.Thrones.S08E01.Kings.Landing.720p.AMZN.WEB-DL.DDP5.1.H.264-GoT.mkv | Game.of.Thrones.S08E01.Kings.Landing.720p.AMZN.WEB-DL.DDP5.1.H.264-GoT.mkv | 1073741824 | 
+  file http://localhost/Game.of.Thrones.S08E02.720p.AMZN.WEB-DL.DDP5.1.H.264-GoT.mkv | Game.of.Thrones.S08E02.720p.AMZN.WEB-DL.DDP5.1.H.264-GoT.mkv | 1073741824 | 
+  file http://localhost/My.Little.Pony.The.Movie.2017.1080p.BluRay.AC3.x264-BMF.mkv | My.Little.Pony.The.Movie.2017.1080p.BluRay.AC3.x264-BMF.mkv | 5368709120 | 

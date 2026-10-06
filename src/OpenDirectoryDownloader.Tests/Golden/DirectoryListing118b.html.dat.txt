@@ -14,3 +14,11 @@ url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=Fal
   file http://localhost:8086/listing/哥哥，早上起床之前都要抱紧我哦！晚上睡觉之前做更多色色的事吧！.zip | 哥哥，早上起床之前都要抱紧我哦！晚上睡觉之前做更多色色的事吧！.zip | 4509715661 | 
   file http://localhost:8086/listing/星光咖啡馆与死神之蝶.zip | 星光咖啡馆与死神之蝶.zip | 9126805504 | 
   file http://localhost:8086/listing/萝莉吸血鬼！～与吸血鬼姐妹的性福生活～.zip | 萝莉吸血鬼！～与吸血鬼姐妹的性福生活～.zip | 852492288 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/宿星Girlfriend/ | 宿星Girlfriend |  | ParseCustomDivListing2
+  dir http://localhost/美少女万華鏡/ | 美少女万華鏡 |  | ParseCustomDivListing2
+  file http://localhost/千之刃涛，桃花染之皇姬 -柳暗花明-.zip | 千之刃涛，桃花染之皇姬 -柳暗花明-.zip | 5583457485 | 
+  file http://localhost/哥哥，早上起床之前都要抱紧我哦！晚上睡觉之前做更多色色的事吧！.zip | 哥哥，早上起床之前都要抱紧我哦！晚上睡觉之前做更多色色的事吧！.zip | 4509715661 | 
+  file http://localhost/星光咖啡馆与死神之蝶.zip | 星光咖啡馆与死神之蝶.zip | 9126805504 | 
+  file http://localhost/萝莉吸血鬼！～与吸血鬼姐妹的性福生活～.zip | 萝莉吸血鬼！～与吸血鬼姐妹的性福生活～.zip | 852492288 | 

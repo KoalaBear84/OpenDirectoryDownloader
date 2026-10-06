@@ -3,3 +3,6 @@ url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=Fals
   file http://localhost/music/Music/Bon Jovi/Cross Road/12 I'll Be There for You.m4a | 12 I'll Be There for You.m4a | 11239374 | 
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  file http://localhost/music/Music/Bon Jovi/Cross Road/12 I'll Be There for You.m4a | 12 I'll Be There for You.m4a | 11239374 | 

@@ -19,3 +19,22 @@ url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=F
   file http://localhost/contracts/RFP_800-10-801/Attachment-6_Terms_and_Conditions.doc | Attachment-6_Terms_and_Conditions.doc | 181248 | 
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseListItemsDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/contracts/RFP_800-10-801/pre-bid_conference/ | pre-bid_conference |  | ParseTablesDirectoryListing
+  file http://localhost/contracts/RFP_800-10-801/00_RFP_800-10-801.pdf | 00_RFP_800-10-801.pdf | 518042 | 
+  file http://localhost/contracts/RFP_800-10-801/Addendum_01.pdf | Addendum_01.pdf | 158106 | 
+  file http://localhost/contracts/RFP_800-10-801/Addendum_02.pdf | Addendum_02.pdf | 138445 | 
+  file http://localhost/contracts/RFP_800-10-801/Att-03.1-SB-DVBE-3-23-11.pdf | Att-03.1-SB-DVBE-3-23-11.pdf | 82125 | 
+  file http://localhost/contracts/RFP_800-10-801/Att-03.2-DVBE-ReqPack.pdf | Att-03.2-DVBE-ReqPack.pdf | 71270 | 
+  file http://localhost/contracts/RFP_800-10-801/Att-03.3-DVBE-std 843.pdf | Att-03.3-DVBE-std 843.pdf | 257638 | 
+  file http://localhost/contracts/RFP_800-10-801/Att-03.4-DVBE- Bidder-Declaration.pdf | Att-03.4-DVBE- Bidder-Declaration.pdf | 442368 | 
+  file http://localhost/contracts/RFP_800-10-801/Att_1_Contractor_Status_Form.doc | Att_1_Contractor_Status_Form.doc | 42496 | 
+  file http://localhost/contracts/RFP_800-10-801/Att_2_Darfur_Contracting_Act.doc | Att_2_Darfur_Contracting_Act.doc | 37376 | 
+  file http://localhost/contracts/RFP_800-10-801/Att_4_Cert_Clauses.doc | Att_4_Cert_Clauses.doc | 50176 | 
+  file http://localhost/contracts/RFP_800-10-801/Att_5_References.doc | Att_5_References.doc | 37376 | 
+  file http://localhost/contracts/RFP_800-10-801/Att_7_std830_TACPA.pdf | Att_7_std830_TACPA.pdf | 104346 | 
+  file http://localhost/contracts/RFP_800-10-801/Att_8_std831_EZA.pdf | Att_8_std831_EZA.pdf | 167526 | 
+  file http://localhost/contracts/RFP_800-10-801/Att_9_std832_LAMBRA.pdf | Att_9_std832_LAMBRA.pdf | 241971 | 
+  file http://localhost/contracts/RFP_800-10-801/Attachment-10_Budget_Cost_Forms.xls | Attachment-10_Budget_Cost_Forms.xls | 311296 | 
+  file http://localhost/contracts/RFP_800-10-801/Attachment-6_Terms_and_Conditions.doc | Attachment-6_Terms_and_Conditions.doc | 181248 | 

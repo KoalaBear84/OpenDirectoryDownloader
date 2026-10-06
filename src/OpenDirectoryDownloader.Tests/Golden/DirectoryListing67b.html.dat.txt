@@ -4,3 +4,6 @@ url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=F
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirectoryListing error=False ok=True
   file http://localhost:8086/listing/5 Steps to a 5 AP Biology.pdf | 5 Steps to a 5 AP Biology.pdf | 23068672 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/5 Steps to a 5 AP Biology.pdf | 5 Steps to a 5 AP Biology.pdf | 23068672 | 

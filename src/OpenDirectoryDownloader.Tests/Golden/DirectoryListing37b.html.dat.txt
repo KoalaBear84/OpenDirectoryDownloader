@@ -16,3 +16,12 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part5.rar | Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part5.rar | 1073741824 | 
   file http://localhost:8086/listing/Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part6.rar | Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part6.rar | 1073741824 | 
   file http://localhost:8086/listing/Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part7.rar | Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part7.rar | 637114778 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part1.rar | Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part1.rar | 1073741824 | 
+  file http://localhost/Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part2.rar | Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part2.rar | 1073741824 | 
+  file http://localhost/Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part3.rar | Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part3.rar | 1073741824 | 
+  file http://localhost/Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part4.rar | Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part4.rar | 1073741824 | 
+  file http://localhost/Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part5.rar | Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part5.rar | 1073741824 | 
+  file http://localhost/Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part6.rar | Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part6.rar | 1073741824 | 
+  file http://localhost/Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part7.rar | Microsoft.Visual.Studio.2015.Enterprise.Update.2.www.Download.ir.part7.rar | 637114778 | 

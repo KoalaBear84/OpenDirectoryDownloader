@@ -160,3 +160,84 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParsePreDirectoryLi
   file http://localhost:8086/listing/index2.html | index2.html |  | 
   file http://localhost:8086/listing/index3.html | index3.html |  | 
   file http://localhost:8086/listing/itcindex.html | itcindex.html |  | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParsePreDirectoryListing error=False ok=False
+  dir http://localhost/acjp/ | acjp |  | RegexParser1
+  dir http://localhost/afstudies/ | afstudies |  | RegexParser1
+  dir http://localhost/alp/ | alp |  | RegexParser1
+  dir http://localhost/anthropology/ | anthropology |  | RegexParser1
+  dir http://localhost/applied/ | applied |  | RegexParser1
+  dir http://localhost/architecture/ | architecture |  | RegexParser1
+  dir http://localhost/arthist/ | arthist |  | RegexParser1
+  dir http://localhost/barnard/ | barnard |  | RegexParser1
+  dir http://localhost/bboards/ | bboards |  | RegexParser1
+  dir http://localhost/biology/ | biology |  | RegexParser1
+  dir http://localhost/business/ | business |  | RegexParser1
+  dir http://localhost/cbme/ | cbme |  | RegexParser1
+  dir http://localhost/cc/ | cc |  | RegexParser1
+  dir http://localhost/ccnmtl/ | ccnmtl |  | RegexParser1
+  dir http://localhost/cdm/ | cdm |  | RegexParser1
+  dir http://localhost/ce/ | ce |  | RegexParser1
+  dir http://localhost/cerc/ | cerc |  | RegexParser1
+  dir http://localhost/chemeng/ | chemeng |  | RegexParser1
+  dir http://localhost/chemistry/ | chemistry |  | RegexParser1
+  dir http://localhost/classics/ | classics |  | RegexParser1
+  dir http://localhost/composition/ | composition |  | RegexParser1
+  dir http://localhost/core/ | core |  | RegexParser1
+  dir http://localhost/courseworks/ | courseworks |  | RegexParser1
+  dir http://localhost/cs/ | cs |  | RegexParser1
+  dir http://localhost/cser/ | cser |  | RegexParser1
+  dir http://localhost/eacp/ | eacp |  | RegexParser1
+  dir http://localhost/ealac/ | ealac |  | RegexParser1
+  dir http://localhost/earthinst/ | earthinst |  | RegexParser1
+  dir http://localhost/economics/ | economics |  | RegexParser1
+  dir http://localhost/ee/ | ee |  | RegexParser1
+  dir http://localhost/eee/ | eee |  | RegexParser1
+  dir http://localhost/eeeb/ | eeeb |  | RegexParser1
+  dir http://localhost/english/ | english |  | RegexParser1
+  dir http://localhost/envsci/ | envsci |  | RegexParser1
+  dir http://localhost/errors/ | errors |  | RegexParser1
+  dir http://localhost/film/ | film |  | RegexParser1
+  dir http://localhost/french/ | french |  | RegexParser1
+  dir http://localhost/german/ | german |  | RegexParser1
+  dir http://localhost/gs/ | gs |  | RegexParser1
+  dir http://localhost/gsas/ | gsas |  | RegexParser1
+  dir http://localhost/history/ | history |  | RegexParser1
+  dir http://localhost/hs/ | hs |  | RegexParser1
+  dir http://localhost/ieor/ | ieor |  | RegexParser1
+  dir http://localhost/italian/ | italian |  | RegexParser1
+  dir http://localhost/journalism/ | journalism |  | RegexParser1
+  dir http://localhost/law/ | law |  | RegexParser1
+  dir http://localhost/ldeo/ | ldeo |  | RegexParser1
+  dir http://localhost/liberalstudies/ | liberalstudies |  | RegexParser1
+  dir http://localhost/lithum/ | lithum |  | RegexParser1
+  dir http://localhost/mathematics/ | mathematics |  | RegexParser1
+  dir http://localhost/mealac/ | mealac |  | RegexParser1
+  dir http://localhost/music/ | music |  | RegexParser1
+  dir http://localhost/nursing/ | nursing |  | RegexParser1
+  dir http://localhost/philosophy/ | philosophy |  | RegexParser1
+  dir http://localhost/physics/ | physics |  | RegexParser1
+  dir http://localhost/podcasts/ | podcasts |  | RegexParser1
+  dir http://localhost/polisci/ | polisci |  | RegexParser1
+  dir http://localhost/portuguese/ | portuguese |  | RegexParser1
+  dir http://localhost/psychology/ | psychology |  | RegexParser1
+  dir http://localhost/religion/ | religion |  | RegexParser1
+  dir http://localhost/seas/ | seas |  | RegexParser1
+  dir http://localhost/seminars/ | seminars |  | RegexParser1
+  dir http://localhost/sipa/ | sipa |  | RegexParser1
+  dir http://localhost/slavic/ | slavic |  | RegexParser1
+  dir http://localhost/soa/ | soa |  | RegexParser1
+  dir http://localhost/sociology/ | sociology |  | RegexParser1
+  dir http://localhost/spanish/ | spanish |  | RegexParser1
+  dir http://localhost/ssw/ | ssw |  | RegexParser1
+  dir http://localhost/statistics/ | statistics |  | RegexParser1
+  dir http://localhost/tc/ | tc |  | RegexParser1
+  dir http://localhost/theater/ | theater |  | RegexParser1
+  dir http://localhost/uwp/ | uwp |  | RegexParser1
+  dir http://localhost/visualarts/ | visualarts |  | RegexParser1
+  dir http://localhost/womenstudies/ | womenstudies |  | RegexParser1
+  dir http://localhost/writing/ | writing |  | RegexParser1
+  file http://localhost/index-nof.html | index-nof.html |  | 
+  file http://localhost/index2.html | index2.html |  | 
+  file http://localhost/index3.html | index3.html |  | 
+  file http://localhost/itcindex.html | itcindex.html |  | 

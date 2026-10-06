@@ -26,3 +26,17 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   dir http://localhost:8086/listing/AP U.S. Government and Politics | AP U.S. Government and Politics |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/AP World History | AP World History |  | ParseTablesDirectoryListing
   file http://localhost:8086/listing/the-bell-curve.pdf | the-bell-curve.pdf | 41313894 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/AP Biology | AP Biology |  | ParseTablesDirectoryListing
+  dir http://localhost/AP Calculus | AP Calculus |  | ParseTablesDirectoryListing
+  dir http://localhost/AP Chemistry | AP Chemistry |  | ParseTablesDirectoryListing
+  dir http://localhost/AP Computer Science | AP Computer Science |  | ParseTablesDirectoryListing
+  dir http://localhost/AP English Language | AP English Language |  | ParseTablesDirectoryListing
+  dir http://localhost/AP English Literature | AP English Literature |  | ParseTablesDirectoryListing
+  dir http://localhost/AP Macroeconomics | AP Macroeconomics |  | ParseTablesDirectoryListing
+  dir http://localhost/AP Physics | AP Physics |  | ParseTablesDirectoryListing
+  dir http://localhost/AP Statistics | AP Statistics |  | ParseTablesDirectoryListing
+  dir http://localhost/AP U.S. Government and Politics | AP U.S. Government and Politics |  | ParseTablesDirectoryListing
+  dir http://localhost/AP World History | AP World History |  | ParseTablesDirectoryListing
+  file http://localhost/the-bell-curve.pdf | the-bell-curve.pdf | 41313894 | 

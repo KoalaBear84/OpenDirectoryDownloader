@@ -38,3 +38,29 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/t_sellgathering.xls | t_sellgathering.xls | 1536 | 
   file http://localhost:8086/wx.jsp | wx.jsp | 20070 | 
   file http://localhost:8086/wxpay.jsp | wxpay.jsp | 3584 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/basms/ | basms |  | ParseTablesDirectoryListing
+  dir http://localhost/emenu/ | emenu |  | ParseTablesDirectoryListing
+  dir http://localhost/finance/ | finance |  | ParseTablesDirectoryListing
+  dir http://localhost/goodsjpg/ | goodsjpg |  | ParseTablesDirectoryListing
+  dir http://localhost/kalaok/ | kalaok |  | ParseTablesDirectoryListing
+  dir http://localhost/memshare/ | memshare |  | ParseTablesDirectoryListing
+  dir http://localhost/skin/ | skin |  | ParseTablesDirectoryListing
+  dir http://localhost/wcms/ | wcms |  | ParseTablesDirectoryListing
+  dir http://localhost/webauto/ | webauto |  | ParseTablesDirectoryListing
+  dir http://localhost/webbean/ | webbean |  | ParseTablesDirectoryListing
+  dir http://localhost/webshare/ | webshare |  | ParseTablesDirectoryListing
+  dir http://localhost/wity/ | wity |  | ParseTablesDirectoryListing
+  file http://localhost/Thumbs.db | Thumbs.db | 26010 | 
+  file http://localhost/alibar.jsp | alibar.jsp | 24474 | 
+  file http://localhost/alipay.jsp | alipay.jsp | 18534 | 
+  file http://localhost/cb.apk | cb.apk | 207360 | 
+  file http://localhost/hide.apk | hide.apk | 297062 | 
+  file http://localhost/pay.htm | pay.htm | 1536 | 
+  file http://localhost/qr.jpg | qr.jpg | 19354 | 
+  file http://localhost/shutdown.jsp | shutdown.jsp | 819 | 
+  file http://localhost/t_goods.xls | t_goods.xls | 2355 | 
+  file http://localhost/t_sellgathering.xls | t_sellgathering.xls | 1536 | 
+  file http://localhost/wx.jsp | wx.jsp | 20070 | 
+  file http://localhost/wxpay.jsp | wxpay.jsp | 3584 | 

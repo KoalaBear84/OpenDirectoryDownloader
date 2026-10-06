@@ -2,3 +2,5 @@
 url=http://localhost/ name=ROOT desc= parser=Dufs error=False ok=True
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=Dufs error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=Dufs error=False ok=True

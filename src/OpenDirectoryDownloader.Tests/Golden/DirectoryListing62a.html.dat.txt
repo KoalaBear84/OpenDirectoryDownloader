@@ -45,3 +45,48 @@ url=http://localhost/ name=ROOT desc= parser= error=False ok=False
   file http://localhost/utfiles/index.php?dir=&file=UTtrainingsession.rar | UTtrainingsession.rar | 536986 | 
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/utfiles/index.php?dir=Admin/ | Admin |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Anticheat/ | Anticheat |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=ASC/ | ASC |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Creeatures/ | Creeatures |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=CTF/ | CTF |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Custom_pawn/ | Custom_pawn |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Demo/ | Demo |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Entire_Server_Download/ | Entire_Server_Download |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Excessive_Overkill/ | Excessive_Overkill |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=GameTypes/ | GameTypes |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Maps %2B95.0 GB/ | Maps  95.0 GB |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Mapvotes/ | Mapvotes |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=MasterServer/ | MasterServer |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Mods/ | Mods |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Movie_Tools/ | Movie_Tools |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Nexgen/ | Nexgen |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Patches/ | Patches |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=SDACustomMods/ | SDACustomMods |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=ServerSide_Mods/ | ServerSide_Mods |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Skins %2B2000 files/ | Skins  2000 files |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=sound ut/ | sound ut |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Spawn_Protect/ | Spawn_Protect |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Stats/ | Stats |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Tutorials/ | Tutorials |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Tweak/ | Tweak |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=UEditor_Developing/ | UEditor_Developing |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=UT99 ini players/ | UT99 ini players |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Utilities/ | Utilities |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=UTscreensaver/ | UTscreensaver |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=UTV/ | UTV |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=UTwallpaper/ | UTwallpaper |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=UTweapondsPictures/ | UTweapondsPictures |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=UTWeaponsSounds/ | UTWeaponsSounds |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=UT_Demo/ | UT_Demo |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Video_Renders/ | Video_Renders |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Voices/ | Voices |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Weapons/ | Weapons |  | ParseTablesDirectoryListing
+  dir http://localhost/utfiles/index.php?dir=Zeroping/ | Zeroping |  | ParseTablesDirectoryListing
+  file http://localhost/utfiles/index.php?dir=&file=beta_anims.zip | beta_anims.zip | 5033165 | 
+  file http://localhost/utfiles/index.php?dir=&file=count.txt | count.txt | 266650 | 
+  file http://localhost/utfiles/index.php?dir=&file=Tetris.rar | Tetris.rar | 473395 | 
+  file http://localhost/utfiles/index.php?dir=&file=Unreal_Jigsaw_Puzzle.zip | Unreal_Jigsaw_Puzzle.zip | 291840 | 
+  file http://localhost/utfiles/index.php?dir=&file=UTtrainingsession.rar | UTtrainingsession.rar | 536986 | 

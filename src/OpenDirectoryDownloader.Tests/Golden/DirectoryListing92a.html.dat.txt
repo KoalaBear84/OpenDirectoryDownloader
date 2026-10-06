@@ -6,3 +6,7 @@ url=http://localhost/ name=ROOT desc= parser=ParseDirectoryLister01DirectoryList
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseDirectoryLister01DirectoryListing error=False ok=False
   dir http://localhost:8086/listing/?dir=ACS/Season%201 | Season 1 |  | ParseDirectoryLister01DirectoryListing
   dir http://localhost:8086/listing/?dir=ACS/Season%202 | Season 2 |  | ParseDirectoryLister01DirectoryListing
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseDirectoryLister01DirectoryListing error=False ok=False
+  dir http://localhost/?dir=ACS/Season%201 | Season 1 |  | ParseDirectoryLister01DirectoryListing
+  dir http://localhost/?dir=ACS/Season%202 | Season 2 |  | ParseDirectoryLister01DirectoryListing

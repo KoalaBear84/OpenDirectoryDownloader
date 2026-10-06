@@ -10,3 +10,9 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/OBrien-Michael_Complete-Reading_Bridge-Bookshop_NY_12-10-87.mp3 | OBrien-Michael_Complete-Reading_Bridge-Bookshop_NY_12-10-87.mp3 | 23068672 | 
   file http://localhost:8086/listing/Rattray-David_Bridge-Bookshop_12-10-87.wav | Rattray-David_Bridge-Bookshop_12-10-87.wav | 212860928 | 
   file http://localhost:8086/listing/Rattray-David_Complete-Reading_Bridge-Bookshop_NY_12-10-87.mp3 | Rattray-David_Complete-Reading_Bridge-Bookshop_NY_12-10-87.mp3 | 27262976 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/OBrien-Michael_Bridge-Bookshop_12-10-87.wav | OBrien-Michael_Bridge-Bookshop_12-10-87.wav | 179306496 | 
+  file http://localhost/OBrien-Michael_Complete-Reading_Bridge-Bookshop_NY_12-10-87.mp3 | OBrien-Michael_Complete-Reading_Bridge-Bookshop_NY_12-10-87.mp3 | 23068672 | 
+  file http://localhost/Rattray-David_Bridge-Bookshop_12-10-87.wav | Rattray-David_Bridge-Bookshop_12-10-87.wav | 212860928 | 
+  file http://localhost/Rattray-David_Complete-Reading_Bridge-Bookshop_NY_12-10-87.mp3 | Rattray-David_Complete-Reading_Bridge-Bookshop_NY_12-10-87.mp3 | 27262976 | 

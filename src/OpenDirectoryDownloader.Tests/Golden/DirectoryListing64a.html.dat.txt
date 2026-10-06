@@ -38,3 +38,23 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectory
   file http://localhost:8086/listing/The.New.Guy.2002.720p.WEB-DL.AAC2.0.H.264-NoGrp | The.New.Guy.2002.720p.WEB-DL.AAC2.0.H.264-NoGrp |  | 
   file http://localhost:8086/listing/The.Nice.Guys.2016.BRRip.XViD-ETRG.avi | The.Nice.Guys.2016.BRRip.XViD-ETRG.avi |  | 
   file http://localhost:8086/listing/Valerian And The City Of A Thousand Planets 2017.mkv | Valerian And The City Of A Thousand Planets 2017.mkv |  | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseLinksDirectoryListing error=False ok=True
+  dir http://localhost/Coco 2017 HD-TS X264 HQ-CPG | Coco 2017 HD-TS X264 HQ-CPG |  | ParseLinksDirectoryListing
+  dir http://localhost/Justice League War (2014) [1080p] | Justice League War (2014) [1080p] |  | ParseLinksDirectoryListing
+  dir http://localhost/____SeenIt | ____SeenIt |  | ParseLinksDirectoryListing
+  file http://localhost/Aquaman 2018 720p.mp4 | Aquaman 2018 720p.mp4 |  | 
+  file http://localhost/Jupiter.Ascending.2015.HDRip.XviD-ETRG.avi | Jupiter.Ascending.2015.HDRip.XviD-ETRG.avi |  | 
+  file http://localhost/Justice.League.War.2014.1080p.BluRay.x264.YIFY.mp4 | Justice.League.War.2014.1080p.BluRay.x264.YIFY.mp4 |  | 
+  file http://localhost/Kubo And The Two Strings 2016 1080p BluRay x264 DTS-JYK.mkv | Kubo And The Two Strings 2016 1080p BluRay x264 DTS-JYK.mkv |  | 
+  file http://localhost/Maze Runner 2.mp4 | Maze Runner 2.mp4 |  | 
+  file http://localhost/Maze.Runner.The.Scorch.Trials.2015.1080p.BluRay.H264.AAC-RARBG.mp4 | Maze.Runner.The.Scorch.Trials.2015.1080p.BluRay.H264.AAC-RARBG.mp4 |  | 
+  file http://localhost/Red.Dawn.1984.1080p.BrRip.x264.YIFY.mp4 | Red.Dawn.1984.1080p.BrRip.x264.YIFY.mp4 |  | 
+  file http://localhost/Red.Dawn.1984.1080p.BrRip.x264.YIFY.srt | Red.Dawn.1984.1080p.BrRip.x264.YIFY.srt |  | 
+  file http://localhost/Red.Dawn.2012.720p.BRrip.x264.GAZ.YIFY.mp4 | Red.Dawn.2012.720p.BRrip.x264.GAZ.YIFY.mp4 |  | 
+  file http://localhost/Red.Dawn.2012.720p.BRrip.x264.GAZ.YIFY.srt | Red.Dawn.2012.720p.BRrip.x264.GAZ.YIFY.srt |  | 
+  file http://localhost/The.Last.Starfighter.1984.1080p.BluRay.x264.YIFY.mp4 | The.Last.Starfighter.1984.1080p.BluRay.x264.YIFY.mp4 |  | 
+  file http://localhost/The.Maze.Runner.2014.1080p.BluRay.x264.YIFY.mp4 | The.Maze.Runner.2014.1080p.BluRay.x264.YIFY.mp4 |  | 
+  file http://localhost/The.New.Guy.2002.720p.WEB-DL.AAC2.0.H.264-NoGrp | The.New.Guy.2002.720p.WEB-DL.AAC2.0.H.264-NoGrp |  | 
+  file http://localhost/The.Nice.Guys.2016.BRRip.XViD-ETRG.avi | The.Nice.Guys.2016.BRRip.XViD-ETRG.avi |  | 
+  file http://localhost/Valerian And The City Of A Thousand Planets 2017.mkv | Valerian And The City Of A Thousand Planets 2017.mkv |  | 

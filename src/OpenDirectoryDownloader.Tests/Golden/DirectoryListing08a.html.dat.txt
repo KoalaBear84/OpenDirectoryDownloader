@@ -62,3 +62,35 @@ url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=Tru
   dir http://localhost:8086/listing/Ã%C2%94kami yakuza%3A Koroshi ha ore ga yaru 1972/ | Ãkami yakuza: Koroshi ha ore ga yaru 1972 |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/Ã%C2%94sen chitai 1960/ | Ãsen chitai 1960 |  | ParseTablesDirectoryListing
   dir http://localhost:8086/listing/Ã%C2%94sho 1962/ | Ãsho 1962 |  | ParseTablesDirectoryListing
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=True
+  dir http://localhost/%23FollowFriday 2016/ | #FollowFriday 2016 |  | ParseTablesDirectoryListing
+  dir http://localhost/%23SquadGoals 2017/ | #SquadGoals 2017 |  | ParseTablesDirectoryListing
+  dir http://localhost/&%238216;Doc&%238217; 1971/ | &#8216;Doc&#8217; 1971 |  | ParseTablesDirectoryListing
+  dir http://localhost/&%238216;G&%238217; Men 1935/ | &#8216;G&#8217; Men 1935 |  | ParseTablesDirectoryListing
+  dir http://localhost/&%238216;Gung Ho!&%238217;%3A The Story of Carlson&%238217;s Makin Island Raiders 1943/ | &#8216;Gung Ho!&#8217;: The Story of Carlson&#8217;s Makin Island Raiders 1943 |  | ParseTablesDirectoryListing
+  dir http://localhost/&%238216;Non&%238217;, ou A VÃ£ GlÃ³ria de Mandar 1990/ | &#8216;Non&#8217;, ou A VÃ£ GlÃ³ria de Mandar 1990 |  | ParseTablesDirectoryListing
+  dir http://localhost/&%238216;Pimpernel&%238217; Smith 1941/ | &#8216;Pimpernel&#8217; Smith 1941 |  | ParseTablesDirectoryListing
+  dir http://localhost/&%238217;71 2014/ | &#8217;71 2014 |  | ParseTablesDirectoryListing
+  dir http://localhost/&%238221;Puppy!&%238221; 2017/ | &#8221;Puppy!&#8221; 2017 |  | ParseTablesDirectoryListing
+  dir http://localhost/&%238230;And God Created Woman 1956/ | &#8230;And God Created Woman 1956 |  | ParseTablesDirectoryListing
+  dir http://localhost/&%238230;ing 2003/ | &#8230;ing 2003 |  | ParseTablesDirectoryListing
+  dir http://localhost/+1 2013/ |  1 2013 |  | ParseTablesDirectoryListing
+  dir http://localhost/,000 on the Black 1966/ | ,000 on the Black 1966 |  | ParseTablesDirectoryListing
+  dir http://localhost/00,000 for Ringo 1965/ | 00,000 for Ringo 1965 |  | ParseTablesDirectoryListing
+  dir http://localhost/1 &%238211; Nenokkadine/ | 1 &#8211; Nenokkadine |  | ParseTablesDirectoryListing
+  dir http://localhost/1 2013/ | 1 2013 |  | ParseTablesDirectoryListing
+  dir http://localhost/xXx%3A State of the Union 2005/ | xXx: State of the Union 2005 |  | ParseTablesDirectoryListing
+  dir http://localhost/Â¡MÃ¡talo! 1970/ | Â¡MÃ¡talo! 1970 |  | ParseTablesDirectoryListing
+  dir http://localhost/Ã%C2%80 Nous la LibertÃ© 1931/ | Ã Nous la LibertÃ© 1931 |  | ParseTablesDirectoryListing
+  dir http://localhost/Ã%C2%80 Propos de Nice 1930/ | Ã Propos de Nice 1930 |  | ParseTablesDirectoryListing
+  dir http://localhost/Ã%C2%80 Tout de Suite 2004/ | Ã Tout de Suite 2004 |  | ParseTablesDirectoryListing
+  dir http://localhost/Ã%C2%80 l&%238217;aventure 2008/ | Ã l&#8217;aventure 2008 |  | ParseTablesDirectoryListing
+  dir http://localhost/Ã%C2%80 nos amours 1983/ | Ã nos amours 1983 |  | ParseTablesDirectoryListing
+  dir http://localhost/Ã%C2%80 propos de Venise 2014/ | Ã propos de Venise 2014 |  | ParseTablesDirectoryListing
+  dir http://localhost/Ã%C2%81nimas Trujano (El hombre importante) 1962/ | Ãnimas Trujano (El hombre importante) 1962 |  | ParseTablesDirectoryListing
+  dir http://localhost/Ã%C2%86on Flux 2005/ | Ãon Flux 2005 |  | ParseTablesDirectoryListing
+  dir http://localhost/Ã%C2%89pouse-moi mon pote 2017/ | Ãpouse-moi mon pote 2017 |  | ParseTablesDirectoryListing
+  dir http://localhost/Ã%C2%94kami yakuza%3A Koroshi ha ore ga yaru 1972/ | Ãkami yakuza: Koroshi ha ore ga yaru 1972 |  | ParseTablesDirectoryListing
+  dir http://localhost/Ã%C2%94sen chitai 1960/ | Ãsen chitai 1960 |  | ParseTablesDirectoryListing
+  dir http://localhost/Ã%C2%94sho 1962/ | Ãsho 1962 |  | ParseTablesDirectoryListing

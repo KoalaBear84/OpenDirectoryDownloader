@@ -58,3 +58,33 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/xbrl.idx | xbrl.idx | 693248 | 
   file http://localhost:8086/listing/xbrl.Z | xbrl.Z | 209920 | 
   file http://localhost:8086/listing/xbrl.zip | xbrl.zip | 168960 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/company.gz | company.gz | 4362240 | 
+  file http://localhost/company.idx | company.idx | 45410304 | 
+  file http://localhost/company.Z | company.Z | 7854080 | 
+  file http://localhost/company.zip | company.zip | 3975168 | 
+  file http://localhost/crawler.idx | crawler.idx | 55635968 | 
+  file http://localhost/form.gz | form.gz | 4918272 | 
+  file http://localhost/form.idx | form.idx | 45410304 | 
+  file http://localhost/form.Z | form.Z | 7862272 | 
+  file http://localhost/form.zip | form.zip | 4560896 | 
+  file http://localhost/master.gz | master.gz | 3832832 | 
+  file http://localhost/master.idx | master.idx | 26814464 | 
+  file http://localhost/master.Z | master.Z | 6940672 | 
+  file http://localhost/master.zip | master.zip | 3663872 | 
+  file http://localhost/sitemap.quarterlyindex1.xml | sitemap.quarterlyindex1.xml | 6559744 | 
+  file http://localhost/sitemap.quarterlyindex10.xml | sitemap.quarterlyindex10.xml | 6559744 | 
+  file http://localhost/sitemap.quarterlyindex11.xml | sitemap.quarterlyindex11.xml | 822272 | 
+  file http://localhost/sitemap.quarterlyindex2.xml | sitemap.quarterlyindex2.xml | 6559744 | 
+  file http://localhost/sitemap.quarterlyindex3.xml | sitemap.quarterlyindex3.xml | 6557696 | 
+  file http://localhost/sitemap.quarterlyindex4.xml | sitemap.quarterlyindex4.xml | 6556672 | 
+  file http://localhost/sitemap.quarterlyindex5.xml | sitemap.quarterlyindex5.xml | 6557696 | 
+  file http://localhost/sitemap.quarterlyindex6.xml | sitemap.quarterlyindex6.xml | 6560768 | 
+  file http://localhost/sitemap.quarterlyindex7.xml | sitemap.quarterlyindex7.xml | 6559744 | 
+  file http://localhost/sitemap.quarterlyindex8.xml | sitemap.quarterlyindex8.xml | 6559744 | 
+  file http://localhost/sitemap.quarterlyindex9.xml | sitemap.quarterlyindex9.xml | 6558720 | 
+  file http://localhost/xbrl.gz | xbrl.gz | 171008 | 
+  file http://localhost/xbrl.idx | xbrl.idx | 693248 | 
+  file http://localhost/xbrl.Z | xbrl.Z | 209920 | 
+  file http://localhost/xbrl.zip | xbrl.zip | 168960 | 

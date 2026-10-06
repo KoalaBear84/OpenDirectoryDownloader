@@ -4,3 +4,14 @@ url=http://localhost/ name=ROOT desc= parser=ParseLinksDirectoryListing error=Fa
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
   dir http://localhost:8086/listing/DirectoryList.asp?SD=United Kingdom and Ireland/AGA/2. AGA Discontinued/Aga electric cookers/AGA 6-4 Ceramic Hob Pre Oven Efficiency/ | AGA 6-4 Ceramic Hob Pre Oven Efficiency |  | ParseLinksDirectoryListing
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseLinksDirectoryListing error=False ok=True
+  dir http://localhost/DirectoryList.asp?SD=United Kingdom and Ireland/AGA/2. AGA Discontinued/Aga electric cookers/AGA 6-4 Ceramic Hob Pre Oven Efficiency/ | AGA 6-4 Ceramic Hob Pre Oven Efficiency |  | ParseLinksDirectoryListing
+  file http://www.rayburn-web.co.uk/Prodin/United Kingdom and Ireland/AGA/2. AGA Discontinued/Aga electric cookers/Aga Elect 13amp 2 and 4 oven manual 03-07 EINS 513935 (UK).pdf | Aga Elect 13amp 2 and 4 oven manual 03-07 EINS 513935 (UK).pdf |  | 
+  file http://www.rayburn-web.co.uk/Prodin/United Kingdom and Ireland/AGA/2. AGA Discontinued/Aga electric cookers/Aga elect 13amp 3 ov inst 07-13 EINS 514193.pdf | Aga elect 13amp 3 ov inst 07-13 EINS 514193.pdf |  | 
+  file http://www.rayburn-web.co.uk/Prodin/United Kingdom and Ireland/AGA/2. AGA Discontinued/Aga electric cookers/Aga elect 3 oven inst PAV 03-08 EINS 515269 (UK).pdf | Aga elect 3 oven inst PAV 03-08 EINS 515269 (UK).pdf |  | 
+  file http://www.rayburn-web.co.uk/Prodin/United Kingdom and Ireland/AGA/2. AGA Discontinued/Aga electric cookers/Aga Elect 30Amp Mk1 instalguide.pdf | Aga Elect 30Amp Mk1 instalguide.pdf |  | 
+  file http://www.rayburn-web.co.uk/Prodin/United Kingdom and Ireland/AGA/2. AGA Discontinued/Aga electric cookers/Aga Elect 30amp Mk1 user.pdf | Aga Elect 30amp Mk1 user.pdf |  | 
+  file http://www.rayburn-web.co.uk/Prodin/United Kingdom and Ireland/AGA/2. AGA Discontinued/Aga electric cookers/AGA Electric 13amp  2 and 4 ov PAV manual  05-09 EINS 515267.pdf | AGA Electric 13amp  2 and 4 ov PAV manual  05-09 EINS 515267.pdf |  | 
+  file http://www.rayburn-web.co.uk/Prodin/United Kingdom and Ireland/AGA/2. AGA Discontinued/Aga electric cookers/AGA Electric 13amp 2 and 4 oven aims manual 04-14 EINS 515923.pdf | AGA Electric 13amp 2 and 4 oven aims manual 04-14 EINS 515923.pdf |  | 
+  file http://www.rayburn-web.co.uk/Prodin/United Kingdom and Ireland/AGA/2. AGA Discontinued/Aga electric cookers/Aga electric 13amp 3 oven user 01-07 EOPI 514199 (UK).pdf | Aga electric 13amp 3 oven user 01-07 EOPI 514199 (UK).pdf |  | 

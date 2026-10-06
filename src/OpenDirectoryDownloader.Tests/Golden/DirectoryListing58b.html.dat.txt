@@ -8,3 +8,11 @@ url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=F
   file http://localhost/files/Old-Calculator-RPGs-Headquarter-Archive/Casio-AFX-series-Graph-100-RPGs/ShadowWorld_103.zip | ShadowWorld_103.zip |  | Shadow World
 == nested
 url=http://localhost:8086/listing/ name=listing desc= parser=ParseLinksDirectoryListing error=False ok=True
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  file http://localhost/files/Old-Calculator-RPGs-Headquarter-Archive/Casio-AFX-series-Graph-100-RPGs/aronstyle.zip | aronstyle.zip |  | Aron style
+  file http://localhost/files/Old-Calculator-RPGs-Headquarter-Archive/Casio-AFX-series-Graph-100-RPGs/ffxg100.zip | ffxg100.zip |  | FFX
+  file http://localhost/files/Old-Calculator-RPGs-Headquarter-Archive/Casio-AFX-series-Graph-100-RPGs/laby1.zip | laby1.zip |  | Laby
+  file http://localhost/files/Old-Calculator-RPGs-Headquarter-Archive/Casio-AFX-series-Graph-100-RPGs/laby2.zip | laby2.zip |  | Laby 2: Déstinée
+  file http://localhost/files/Old-Calculator-RPGs-Headquarter-Archive/Casio-AFX-series-Graph-100-RPGs/mysterious.zip | mysterious.zip |  | Mysterious Island
+  file http://localhost/files/Old-Calculator-RPGs-Headquarter-Archive/Casio-AFX-series-Graph-100-RPGs/ShadowWorld_103.zip | ShadowWorld_103.zip |  | Shadow World

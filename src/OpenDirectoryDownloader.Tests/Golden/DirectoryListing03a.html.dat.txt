@@ -26,3 +26,17 @@ url=http://localhost:8086/listing/ name=listing desc= parser=ParseTablesDirector
   file http://localhost:8086/listing/config.js | config.js | 332 | 
   file http://localhost:8086/listing/contents.css | contents.css | 2970 | 
   file http://localhost:8086/listing/styles.js | styles.js | 5325 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser=ParseTablesDirectoryListing error=False ok=True
+  dir http://localhost/adapters/ | adapters |  | ParseTablesDirectoryListing
+  dir http://localhost/lang/ | lang |  | ParseTablesDirectoryListing
+  dir http://localhost/plugins/ | plugins |  | ParseTablesDirectoryListing
+  dir http://localhost/samples/ | samples |  | ParseTablesDirectoryListing
+  dir http://localhost/skins/ | skins |  | ParseTablesDirectoryListing
+  file http://localhost/CHANGES.md | CHANGES.md | 149504 | 
+  file http://localhost/LICENSE.md | LICENSE.md | 75776 | 
+  file http://localhost/build-config.js | build-config.js | 3379 | 
+  file http://localhost/ckeditor.js | ckeditor.js | 586752 | 
+  file http://localhost/config.js | config.js | 332 | 
+  file http://localhost/contents.css | contents.css | 2970 | 
+  file http://localhost/styles.js | styles.js | 5325 | 
