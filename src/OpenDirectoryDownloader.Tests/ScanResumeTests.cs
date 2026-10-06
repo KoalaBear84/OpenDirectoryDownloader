@@ -1,3 +1,4 @@
+using OpenDirectoryDownloader.Scanning;
 using OpenDirectoryDownloader.Storage;
 using Xunit;
 
@@ -31,20 +32,34 @@ public class ScanResumeTests : IAsyncLifetime
 		}
 	}
 
+	/// <summary>The database keys rows by the ids it gives the objects, so every URL keeps one object, like in a real scan.</summary>
+	private readonly Dictionary<string, WebDirectory> _directories = [];
+
+	private WebDirectory Directory(string url, string parentUrl = null)
+	{
+		if (!_directories.TryGetValue(url, out WebDirectory directory))
+		{
+			directory = new WebDirectory(parentUrl is null ? null : Directory(parentUrl)) { Url = url, Name = url.TrimEnd('/').Split('/')[^1] };
+			_directories[url] = directory;
+		}
+
+		return directory;
+	}
+
 	private void MirrorDirectory(string url, string parentUrl, bool finished, bool error = false)
 	{
-		WebDirectory parent = parentUrl is null ? null : new WebDirectory(null) { Url = parentUrl };
-		WebDirectory directory = new(parent) { Url = url, Name = url.TrimEnd('/').Split('/')[^1], Finished = finished, Error = error };
+		WebDirectory directory = Directory(url, parentUrl);
+		directory.Finished = finished;
+		directory.Error = error;
 
 		_scanDatabase.MirrorDirectory(directory);
 	}
 
 	private void MirrorFile(string url, string directoryUrl, string fileName, long? fileSize)
 	{
-		WebDirectory directory = new(null) { Url = directoryUrl };
 		WebFile file = new() { Url = url, FileName = fileName, FileSize = fileSize };
 
-		_scanDatabase.MirrorFile(file, directory);
+		_scanDatabase.MirrorFile(file, Directory(directoryUrl));
 	}
 
 	[Fact]

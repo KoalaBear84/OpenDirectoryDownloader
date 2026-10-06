@@ -1,4 +1,5 @@
 using Microsoft.Data.Sqlite;
+using OpenDirectoryDownloader.Scanning;
 using OpenDirectoryDownloader.Storage;
 using Xunit;
 
@@ -285,7 +286,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 	[Fact]
 	public async Task BeginRunAsync_FreshScan_RecordsScanInfoAndFirstRun()
 	{
-		Session session = new();
+		ScanSession session = new(new WebDirectory(null) { Url = "https://example.com/" });
 
 		int runNumber = await _scanDatabase.BeginRunAsync(session, "https://example.com/", isFreshScan: true);
 
@@ -305,15 +306,15 @@ public class ScanDatabaseTests : IAsyncLifetime
 	[Fact]
 	public async Task MirrorSessionStats_ThenRead_RoundTripsAllFieldsForTheCurrentRun()
 	{
-		Session session = new();
+		ScanSession session = new(new WebDirectory(null) { Url = "https://example.com/" });
 		await _scanDatabase.BeginRunAsync(session, "https://example.com/", isFreshScan: true);
 
-		session.TotalHttpTraffic = 12345;
-		session.TotalHttpRequests = 42;
-		session.Errors = 3;
-		session.Skipped = 1;
-		session.HttpStatusCodes[200] = 40;
-		session.HttpStatusCodes[404] = 2;
+		session.Counters.Restore(httpTraffic: 12345);
+		session.Counters.Restore(httpRequests: 42);
+		session.Counters.Restore(errors: 3);
+		session.Counters.Restore(skipped: 1);
+		session.HttpStatusCodes.Add(200, 40);
+		session.HttpStatusCodes.Add(404, 2);
 
 		_scanDatabase.MirrorSessionStats(session);
 
@@ -332,15 +333,15 @@ public class ScanDatabaseTests : IAsyncLifetime
 	[Fact]
 	public async Task MirrorSessionStats_CalledAgain_OverwritesTheCurrentRunsSnapshot()
 	{
-		Session session = new();
+		ScanSession session = new(new WebDirectory(null) { Url = "https://example.com/" });
 		await _scanDatabase.BeginRunAsync(session, "https://example.com/", isFreshScan: true);
 
-		session.TotalHttpTraffic = 100;
-		session.TotalHttpRequests = 1;
+		session.Counters.Restore(httpTraffic: 100);
+		session.Counters.Restore(httpRequests: 1);
 		_scanDatabase.MirrorSessionStats(session);
 
-		session.TotalHttpTraffic = 999;
-		session.TotalHttpRequests = 9;
+		session.Counters.Restore(httpTraffic: 999);
+		session.Counters.Restore(httpRequests: 9);
 		_scanDatabase.MirrorSessionStats(session);
 
 		ScanDatabase.SessionStatsSnapshot snapshot = await _scanDatabase.GetLatestRunStatsAsync();
@@ -352,7 +353,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 	[Fact]
 	public async Task GetLatestSpeedtestResultAsync_NoneRecorded_ReturnsNull()
 	{
-		Session session = new();
+		ScanSession session = new(new WebDirectory(null) { Url = "https://example.com/" });
 		await _scanDatabase.BeginRunAsync(session, "https://example.com/", isFreshScan: true);
 
 		Assert.Null(await _scanDatabase.GetLatestSpeedtestResultAsync());
@@ -361,7 +362,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 	[Fact]
 	public async Task MirrorSpeedtestResult_ThenRead_RoundTripsAllFields()
 	{
-		Session session = new();
+		ScanSession session = new(new WebDirectory(null) { Url = "https://example.com/" });
 		await _scanDatabase.BeginRunAsync(session, "https://example.com/", isFreshScan: true);
 
 		_scanDatabase.MirrorSpeedtestResult(new SpeedtestResult
@@ -391,16 +392,16 @@ public class ScanDatabaseTests : IAsyncLifetime
 	[Fact]
 	public async Task BeginRunAsync_CalledAgain_StartsANewRunCarryingForwardTheSessionsCurrentCounters()
 	{
-		Session session = new();
+		ScanSession session = new(new WebDirectory(null) { Url = "https://example.com/" });
 		await _scanDatabase.BeginRunAsync(session, "https://example.com/", isFreshScan: true);
 
-		session.TotalHttpRequests = 50;
+		session.Counters.Restore(httpRequests: 50);
 		_scanDatabase.MirrorSessionStats(session);
 
 		// Simulates a --resume: the caller restores Session's counters from the previous run before
-		// calling BeginRunAsync again, exactly as OpenDirectoryIndexer does.
-		session.TotalHttpRequests = 50;
-		session.TotalHttpRequests += 25; // this run's own progress so far, on top of the carried-over value
+		// calling BeginRunAsync again, exactly as the crawl engine does.
+		session.Counters.Restore(httpRequests: 50);
+		session.Counters.Restore(httpRequests: session.Counters.HttpRequests + 25); // this run's own progress so far, on top of the carried-over value
 
 		int secondRunNumber = await _scanDatabase.BeginRunAsync(session, "https://example.com/", isFreshScan: false);
 
@@ -419,7 +420,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 	[Fact]
 	public async Task CountRunsAsync_ReflectsNumberOfRunsStartedSoFar()
 	{
-		Session session = new();
+		ScanSession session = new(new WebDirectory(null) { Url = "https://example.com/" });
 
 		Assert.Equal(0, await _scanDatabase.CountRunsAsync());
 
@@ -433,7 +434,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 	[Fact]
 	public async Task MarkCompleted_SetsScanInfoCompletedAtUtc()
 	{
-		Session session = new();
+		ScanSession session = new(new WebDirectory(null) { Url = "https://example.com/" });
 		await _scanDatabase.BeginRunAsync(session, "https://example.com/", isFreshScan: true);
 
 		DateTimeOffset completedAt = DateTimeOffset.UtcNow;
