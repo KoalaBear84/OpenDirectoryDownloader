@@ -11,12 +11,12 @@ public class ScanDatabaseTests : IAsyncLifetime
 	private readonly string _dbPath = Path.Combine(Path.GetTempPath(), $"odd-scandb-tests-{Guid.NewGuid():N}.sqlite");
 	private ScanDatabase _scanDatabase;
 
-	public async Task InitializeAsync()
+	public async ValueTask InitializeAsync()
 	{
 		_scanDatabase = await ScanDatabase.CreateAsync(_dbPath);
 	}
 
-	public async Task DisposeAsync()
+	public async ValueTask DisposeAsync()
 	{
 		await _scanDatabase.DisposeAsync();
 
@@ -469,7 +469,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		_scanDatabase.MirrorFile(file, root);
 		await _scanDatabase.FlushAsync();
 
-		await using ScanDatabase readOnlyDatabase = await ScanDatabase.OpenReadOnlyAsync(_dbPath);
+		await using ScanDatabase readOnlyDatabase = await ScanDatabase.OpenReadOnlyAsync(_dbPath, TestContext.Current.CancellationToken);
 
 		Assert.Equal(1, await readOnlyDatabase.CountDirectoriesAsync());
 		Assert.Equal(1, await readOnlyDatabase.CountFilesAsync());
@@ -485,7 +485,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 
 		try
 		{
-			await using (ScanDatabase writer = await ScanDatabase.CreateAsync(path))
+			await using (ScanDatabase writer = await ScanDatabase.CreateAsync(path, TestContext.Current.CancellationToken))
 			{
 				writer.MirrorDirectory(new WebDirectory(parentWebDirectory: null) { Url = "https://example.com/", Name = "example.com", Finished = true });
 				await writer.FlushAsync();
@@ -496,7 +496,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 			Assert.False(File.Exists(walPath));
 			Assert.False(File.Exists(shmPath));
 
-			await using (ScanDatabase readOnlyDatabase = await ScanDatabase.OpenReadOnlyAsync(path))
+			await using (ScanDatabase readOnlyDatabase = await ScanDatabase.OpenReadOnlyAsync(path, TestContext.Current.CancellationToken))
 			{
 				Assert.Equal(1, await readOnlyDatabase.CountDirectoriesAsync());
 
@@ -536,7 +536,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		Assert.True(File.Exists(walPath));
 		Assert.True(File.Exists(shmPath));
 
-		await using (ScanDatabase readOnlyDatabase = await ScanDatabase.OpenReadOnlyAsync(_dbPath))
+		await using (ScanDatabase readOnlyDatabase = await ScanDatabase.OpenReadOnlyAsync(_dbPath, TestContext.Current.CancellationToken))
 		{
 			Assert.Equal(1, await readOnlyDatabase.CountDirectoriesAsync());
 		}
@@ -552,7 +552,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 	{
 		string missingPath = Path.Combine(Path.GetTempPath(), $"odd-missing-{Guid.NewGuid():N}.sqlite");
 
-		await Assert.ThrowsAsync<FileNotFoundException>(() => ScanDatabase.OpenReadOnlyAsync(missingPath));
+		await Assert.ThrowsAsync<FileNotFoundException>(() => ScanDatabase.OpenReadOnlyAsync(missingPath, TestContext.Current.CancellationToken));
 	}
 
 	[Fact]
@@ -562,18 +562,18 @@ public class ScanDatabaseTests : IAsyncLifetime
 
 		using (SqliteConnection connection = new($"Data Source={notAScanDbPath}"))
 		{
-			await connection.OpenAsync();
+			await connection.OpenAsync(TestContext.Current.CancellationToken);
 
 			using SqliteCommand command = connection.CreateCommand();
 			command.CommandText = "CREATE TABLE SomethingElse (Id INTEGER PRIMARY KEY)";
-			await command.ExecuteNonQueryAsync();
+			await command.ExecuteNonQueryAsync(TestContext.Current.CancellationToken);
 
 			SqliteConnection.ClearPool(connection);
 		}
 
 		try
 		{
-			await Assert.ThrowsAsync<InvalidOperationException>(() => ScanDatabase.OpenReadOnlyAsync(notAScanDbPath));
+			await Assert.ThrowsAsync<InvalidOperationException>(() => ScanDatabase.OpenReadOnlyAsync(notAScanDbPath, TestContext.Current.CancellationToken));
 		}
 		finally
 		{
@@ -651,7 +651,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 
 		await _scanDatabase.FlushAsync();
 
-		await using ScanDatabase reader = await ScanDatabase.OpenReadOnlyAsync(_dbPath);
+		await using ScanDatabase reader = await ScanDatabase.OpenReadOnlyAsync(_dbPath, TestContext.Current.CancellationToken);
 
 		Dictionary<string, ScanDatabase.SubtreeAggregate> first = await reader.GetChildSubtreeAggregatesAsync("https://example.com/");
 		Dictionary<string, ScanDatabase.SubtreeAggregate> second = await reader.GetChildSubtreeAggregatesAsync("https://example.com/");

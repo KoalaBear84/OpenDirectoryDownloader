@@ -100,7 +100,7 @@ public sealed class ScanIntegrationTests : IDisposable
 
 		await ScanRunner.RunAsync(server.BaseUrl, _workingDirectory, "--use-database", "--keep-db", "--evict-memory", "--db-path", DatabasePath);
 
-		await using ScanDatabase database = await ScanDatabase.OpenReadOnlyAsync(DatabasePath);
+		await using ScanDatabase database = await ScanDatabase.OpenReadOnlyAsync(DatabasePath, TestContext.Current.CancellationToken);
 		Assert.Equal(expected.Files, await database.CountFilesAsync());
 		Assert.Equal(expected.Directories, await database.CountDirectoriesAsync());
 		Assert.Equal(expected.TotalBytes, (await database.GetExtensionStatsAsync()).Values.Sum(stats => stats.FileSize));
@@ -122,14 +122,14 @@ public sealed class ScanIntegrationTests : IDisposable
 
 		long runsBefore;
 
-		await using (ScanDatabase before = await ScanDatabase.OpenReadOnlyAsync(DatabasePath))
+		await using (ScanDatabase before = await ScanDatabase.OpenReadOnlyAsync(DatabasePath, TestContext.Current.CancellationToken))
 		{
 			runsBefore = await before.CountRunsAsync();
 		}
 
 		await ScanRunner.RunAsync(server.BaseUrl, _workingDirectory, "--use-database", "--resume", "--db-path", DatabasePath);
 
-		await using ScanDatabase after = await ScanDatabase.OpenReadOnlyAsync(DatabasePath);
+		await using ScanDatabase after = await ScanDatabase.OpenReadOnlyAsync(DatabasePath, TestContext.Current.CancellationToken);
 		Assert.Equal(runsBefore, await after.CountRunsAsync());
 		Assert.Equal(requestsAfterFirstScan, server.DirectoryRequests);
 	}

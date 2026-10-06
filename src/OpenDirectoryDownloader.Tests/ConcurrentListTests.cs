@@ -97,7 +97,7 @@ public class ConcurrentListTests
 			}
 
 			stop.Cancel();
-		});
+		}, TestContext.Current.CancellationToken);
 
 		long enumerations = 0;
 

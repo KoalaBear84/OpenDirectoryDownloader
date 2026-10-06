@@ -1,6 +1,6 @@
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace OpenDirectoryDownloader.Tests.Integration;
 
@@ -12,7 +12,7 @@ public sealed class LoadFactAttribute : FactAttribute
 {
 	public const string EnableVariable = "ODD_LOAD_TESTS";
 
-	public LoadFactAttribute()
+	public LoadFactAttribute([CallerFilePath] string sourceFilePath = null, [CallerLineNumber] int sourceLineNumber = -1) : base(sourceFilePath, sourceLineNumber)
 	{
 		if (Environment.GetEnvironmentVariable(EnableVariable) != "1")
 		{
@@ -25,7 +25,7 @@ public sealed class LoadFactAttribute : FactAttribute
 /// Opt-in scans of very large fake sites, meant for comparing performance and memory between commits.
 /// <code>
 /// $env:ODD_LOAD_TESTS = "1"
-/// dotnet test src/OpenDirectoryDownloader.Tests --filter "FullyQualifiedName~LargeScanLoadTests" --logger "console;verbosity=detailed"
+/// dotnet test --project src/OpenDirectoryDownloader.Tests --filter-class "*LargeScanLoadTests" --output Detailed
 /// </code>
 /// Sizes: ODD_LOAD_FILES (files in the one huge directory, default 100000; the app treats a response over 20 MB, roughly 150000 files, as a file instead of a directory) and ODD_LOAD_DEPTH (depth of the
 /// wide tree, default 4; 8 subdirectories per level and 40 files per directory). Each test prints elapsed time,

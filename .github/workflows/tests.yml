@@ -44,4 +44,4 @@ jobs:
 
     - name: Test with dotnet
       # Release, like the published builds. The load tests are skipped unless ODD_LOAD_TESTS=1.
-      run: dotnet test src/OpenDirectoryDownloader.Tests --configuration Release
+      run: dotnet test --project src/OpenDirectoryDownloader.Tests --configuration Release

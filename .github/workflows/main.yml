@@ -75,7 +75,7 @@ jobs:
       # instead of in all ten matrix jobs. They live in their own project: pointing dotnet test at the app
       # project, as this step did, ran nothing at all.
       if: ${{ matrix.self-contained == 'normal' && contains(fromJSON('["linux-x64","win-x64","osx-x64"]'), matrix.target) }}
-      run: dotnet test src/OpenDirectoryDownloader.Tests --configuration Release
+      run: dotnet test --project src/OpenDirectoryDownloader.Tests --configuration Release
 
     - name: Publish with dotnet
       run: dotnet publish src/OpenDirectoryDownloader --configuration Release -p:Version=${{ steps.get_version.outputs.VERSION }} --framework net10.0 --runtime ${{ matrix.target }} ${{ matrix.build_args }} -p:PublishSingleFile=true --output ./OpenDirectoryDownloader-${{ steps.get_version.outputs.VERSION }}-${{ matrix.target }}${{ matrix.suffix }}

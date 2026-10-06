@@ -14,12 +14,12 @@ public class ScanResumeTests : IAsyncLifetime
 	private readonly string _dbPath = Path.Combine(Path.GetTempPath(), $"odd-resume-tests-{Guid.NewGuid():N}.sqlite");
 	private ScanDatabase _scanDatabase;
 
-	public async Task InitializeAsync()
+	public async ValueTask InitializeAsync()
 	{
 		_scanDatabase = await ScanDatabase.CreateAsync(_dbPath);
 	}
 
-	public async Task DisposeAsync()
+	public async ValueTask DisposeAsync()
 	{
 		await _scanDatabase.DisposeAsync();
 

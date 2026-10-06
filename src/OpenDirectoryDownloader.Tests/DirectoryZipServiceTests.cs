@@ -84,13 +84,13 @@ public class DirectoryZipServiceTests
 		ZipArchiveEntry rootEntry = Assert.Single(archive.Entries, entry => entry.FullName == "folder/root.txt");
 		using (StreamReader reader = new(rootEntry.Open()))
 		{
-			Assert.Equal("root!", await reader.ReadToEndAsync());
+			Assert.Equal("root!", await reader.ReadToEndAsync(TestContext.Current.CancellationToken));
 		}
 
 		ZipArchiveEntry nestedEntry = Assert.Single(archive.Entries, entry => entry.FullName == "folder/sub/nested.txt");
 		using (StreamReader reader = new(nestedEntry.Open()))
 		{
-			Assert.Equal("nested", await reader.ReadToEndAsync());
+			Assert.Equal("nested", await reader.ReadToEndAsync(TestContext.Current.CancellationToken));
 		}
 	}
 
