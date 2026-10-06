@@ -119,18 +119,19 @@ public partial class File
 
 public partial class PixeldrainListResult
 {
-	public static PixeldrainListResult FromJson(string json) => JsonSerializer.Deserialize<PixeldrainListResult>(json, Converter.Settings);
+	public static PixeldrainListResult FromJson(string json) => JsonSerializer.Deserialize(json, Converter.TypeInfo<PixeldrainListResult>());
 }
 
 public static class Serialize
 {
-	public static string ToJson(this PixeldrainListResult self) => JsonSerializer.Serialize(self, Converter.Settings);
+	public static string ToJson(this PixeldrainListResult self) => JsonSerializer.Serialize(self, Converter.TypeInfo<PixeldrainListResult>());
 }
 
 internal static class Converter
 {
 	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
+		TypeInfoResolver = PixeldrainListResultJsonContext.Default,
 		Converters =
 		{
 			JsonMetadataServices.DateOnlyConverter,
@@ -138,4 +139,10 @@ internal static class Converter
 			new IsoDateTimeOffsetConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
 		},
 	};
+
+	/// <summary>Source generated, so the trimmed release keeps what is needed</summary>
+	public static JsonTypeInfo<T> TypeInfo<T>() => (JsonTypeInfo<T>)Settings.GetTypeInfo(typeof(T));
 }
+
+[JsonSerializable(typeof(PixeldrainListResult))]
+internal partial class PixeldrainListResultJsonContext : JsonSerializerContext;

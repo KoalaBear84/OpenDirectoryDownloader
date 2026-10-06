@@ -36,7 +36,7 @@ public class AnonFiles : IFileUploadSite
 
 					logger.LogDebug("Response from {siteName}: {response}", Name, session.UploadedUrlsResponse);
 
-					return JsonSerializer.Deserialize<AnonFilesFile>(response);
+					return JsonSerializer.Deserialize(response, FileUploadJsonContext.Default.AnonFilesFile);
 				}
 				else
 				{

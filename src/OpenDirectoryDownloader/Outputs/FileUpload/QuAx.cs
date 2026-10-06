@@ -36,7 +36,7 @@ public class QuAx : IFileUploadSite
 
 					logger.LogDebug("Response from {siteName}: {response}", Name, session.UploadedUrlsResponse);
 
-					QuAxResponse quAxResponse = JsonSerializer.Deserialize<QuAxResponse>(response);
+					QuAxResponse quAxResponse = JsonSerializer.Deserialize(response, FileUploadJsonContext.Default.QuAxResponse);
 
 					if (quAxResponse == null || !quAxResponse.Success || quAxResponse.Files == null || quAxResponse.Files.Length == 0)
 					{

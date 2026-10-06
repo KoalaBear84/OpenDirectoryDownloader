@@ -86,18 +86,19 @@ public partial class File
 
 public partial class BhadooIndexResponse
 {
-	public static BhadooIndexResponse FromJson(string json) => JsonSerializer.Deserialize<BhadooIndexResponse>(json, Converter.Settings);
+	public static BhadooIndexResponse FromJson(string json) => JsonSerializer.Deserialize(json, Converter.TypeInfo<BhadooIndexResponse>());
 }
 
 public static class Serialize
 {
-	public static string ToJson(this BhadooIndexResponse self) => JsonSerializer.Serialize(self, Converter.Settings);
+	public static string ToJson(this BhadooIndexResponse self) => JsonSerializer.Serialize(self, Converter.TypeInfo<BhadooIndexResponse>());
 }
 
 internal static class Converter
 {
 	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
+		TypeInfoResolver = BhadooIndexResultJsonContext.Default,
 		Converters =
 		{
 			JsonMetadataServices.DateOnlyConverter,
@@ -105,4 +106,10 @@ internal static class Converter
 			new IsoDateTimeOffsetConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
 		},
 	};
+
+	/// <summary>Source generated, so the trimmed release keeps what is needed</summary>
+	public static JsonTypeInfo<T> TypeInfo<T>() => (JsonTypeInfo<T>)Settings.GetTypeInfo(typeof(T));
 }
+
+[JsonSerializable(typeof(BhadooIndexResponse))]
+internal partial class BhadooIndexResultJsonContext : JsonSerializerContext;

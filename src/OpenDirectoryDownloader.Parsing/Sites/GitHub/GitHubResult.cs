@@ -47,18 +47,19 @@ public partial class Tree
 
 public partial class GitHubResult
 {
-	public static GitHubResult FromJson(string json) => JsonSerializer.Deserialize<GitHubResult>(json, Converter.Settings);
+	public static GitHubResult FromJson(string json) => JsonSerializer.Deserialize(json, Converter.TypeInfo<GitHubResult>());
 }
 
 public static class Serialize
 {
-	public static string ToJson(this GitHubResult self) => JsonSerializer.Serialize(self, Converter.Settings);
+	public static string ToJson(this GitHubResult self) => JsonSerializer.Serialize(self, Converter.TypeInfo<GitHubResult>());
 }
 
 internal static class Converter
 {
 	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
+		TypeInfoResolver = GitHubResultJsonContext.Default,
 		Converters =
 		{
 			JsonMetadataServices.DateOnlyConverter,
@@ -66,4 +67,10 @@ internal static class Converter
 			new IsoDateTimeOffsetConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
 		},
 	};
+
+	/// <summary>Source generated, so the trimmed release keeps what is needed</summary>
+	public static JsonTypeInfo<T> TypeInfo<T>() => (JsonTypeInfo<T>)Settings.GetTypeInfo(typeof(T));
 }
+
+[JsonSerializable(typeof(GitHubResult))]
+internal partial class GitHubResultJsonContext : JsonSerializerContext;

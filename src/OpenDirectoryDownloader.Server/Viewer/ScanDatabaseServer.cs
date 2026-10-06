@@ -453,7 +453,7 @@ public static class ScanDatabaseServer
 			catch (InvalidOperationException ex)
 			{
 				context.Response.StatusCode = StatusCodes.Status400BadRequest;
-				await context.Response.WriteAsJsonAsync(new { error = ex.Message }, cancellationToken);
+				await context.Response.WriteAsJsonAsync(new ErrorResponse(ex.Message), ViewerJsonContext.Default.ErrorResponse, cancellationToken: cancellationToken);
 				return;
 			}
 
@@ -463,12 +463,26 @@ public static class ScanDatabaseServer
 			long? knownSize = fileInfo?.FileSize;
 			string contentType = GetContentType(fileName);
 
-			using HttpResponseMessage response = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+			HttpResponseMessage remoteResponse;
+
+			try
+			{
+				remoteResponse = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+			}
+			catch (Exception ex) when (ex is HttpRequestException || (ex is TaskCanceledException && !cancellationToken.IsCancellationRequested))
+			{
+				// The site is down or doesn't answer: tell the page instead of failing the request
+				context.Response.StatusCode = StatusCodes.Status502BadGateway;
+				await context.Response.WriteAsJsonAsync(new ErrorResponse($"Remote server could not be reached: {ex.Message}"), ViewerJsonContext.Default.ErrorResponse, cancellationToken: cancellationToken);
+				return;
+			}
+
+			using HttpResponseMessage response = remoteResponse;
 
 			if (!response.IsSuccessStatusCode)
 			{
 				context.Response.StatusCode = StatusCodes.Status502BadGateway;
-				await context.Response.WriteAsJsonAsync(new { error = $"Remote server returned {(int)response.StatusCode}." }, cancellationToken);
+				await context.Response.WriteAsJsonAsync(new ErrorResponse($"Remote server returned {(int)response.StatusCode}."), ViewerJsonContext.Default.ErrorResponse, cancellationToken: cancellationToken);
 				return;
 			}
 
@@ -502,14 +516,14 @@ public static class ScanDatabaseServer
 			catch (InvalidOperationException ex)
 			{
 				context.Response.StatusCode = StatusCodes.Status400BadRequest;
-				await context.Response.WriteAsJsonAsync(new { error = ex.Message }, cancellationToken);
+				await context.Response.WriteAsJsonAsync(new ErrorResponse(ex.Message), ViewerJsonContext.Default.ErrorResponse, cancellationToken: cancellationToken);
 				return;
 			}
 
 			if (directory is null)
 			{
 				context.Response.StatusCode = StatusCodes.Status404NotFound;
-				await context.Response.WriteAsJsonAsync(new { error = $"'{url}' was not found in the loaded database." }, cancellationToken);
+				await context.Response.WriteAsJsonAsync(new ErrorResponse($"'{url}' was not found in the loaded database."), ViewerJsonContext.Default.ErrorResponse, cancellationToken: cancellationToken);
 				return;
 			}
 
@@ -564,22 +578,13 @@ public static class ScanDatabaseServer
 						continue;
 					}
 
-					await WriteSseEventAsync(context.Response, new { error = "Unknown or expired job." }, cancellationToken);
+					await WriteSseEventAsync(context.Response, new ZipProgressEvent(0, 0, 0, null, 0, false, "Unknown or expired job."), cancellationToken);
 					return;
 				}
 
 				bool isComplete = progress.IsComplete;
 
-				await WriteSseEventAsync(context.Response, new
-				{
-					filesDone = progress.FilesDone,
-					totalFiles = progress.TotalFiles,
-					bytesWritten = progress.BytesWritten,
-					currentFile = progress.CurrentFile,
-					skipped = progress.Skipped,
-					isComplete,
-					error = progress.ErrorMessage
-				}, cancellationToken);
+				await WriteSseEventAsync(context.Response, new ZipProgressEvent(progress.FilesDone, progress.TotalFiles, progress.BytesWritten, progress.CurrentFile, progress.Skipped, isComplete, progress.ErrorMessage), cancellationToken);
 
 				if (isComplete)
 				{
@@ -591,9 +596,9 @@ public static class ScanDatabaseServer
 		});
 	}
 
-	private static async Task WriteSseEventAsync(HttpResponse response, object payload, CancellationToken cancellationToken)
+	private static async Task WriteSseEventAsync(HttpResponse response, ZipProgressEvent payload, CancellationToken cancellationToken)
 	{
-		string json = JsonSerializer.Serialize(payload);
+		string json = JsonSerializer.Serialize(payload, ViewerJsonContext.Default.ZipProgressEvent);
 
 		await response.WriteAsync($"data: {json}\n\n", cancellationToken);
 		await response.Body.FlushAsync(cancellationToken);

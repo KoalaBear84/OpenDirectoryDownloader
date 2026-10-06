@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using System.Text.Json.Nodes;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Parsing.Sites;
 using OpenDirectoryDownloader.Parsing.Sites.AList.ListResult;
@@ -69,16 +70,16 @@ public static class AListParser
 
 					Uri apiFsListUri = new(webDirectory.Uri, "/api/fs/list");
 
-					Dictionary<string, object> postValues = new()
+					JsonObject postValues = new()
 					{
-						{ "path", webDirectory.Uri.LocalPath },
-						{ "password", password },
-						{ "page", pageIndex },
-						{ "per_page", 0 },
-						{ "refresh", false }
+						["path"] = webDirectory.Uri.LocalPath,
+						["password"] = password,
+						["page"] = pageIndex,
+						["per_page"] = 0,
+						["refresh"] = false
 					};
 
-                    HttpResponseMessage httpResponseMessage = await services.Http.PostAsync(apiFsListUri, new StringContent(JsonSerializer.Serialize(postValues), Encoding.UTF8, "application/json"));
+                    HttpResponseMessage httpResponseMessage = await services.Http.PostAsync(apiFsListUri, new StringContent(postValues.ToJsonString(), Encoding.UTF8, "application/json"));
 
 					webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
 					httpResponseMessage.EnsureSuccessStatusCode();

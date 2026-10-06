@@ -79,7 +79,7 @@ public class ScanResumeTests : IAsyncLifetime
 		MirrorFile("http://localhost/a/f2.bin", "http://localhost/a/", "f2.bin", 200);
 		MirrorFile("http://localhost/f0.bin", "http://localhost/", "f0.bin", 50);
 
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		ScanResume.Result result = await ScanResume.BuildAsync(_scanDatabase, "http://localhost/", skipFileSizeLookups: false);
 
@@ -104,7 +104,7 @@ public class ScanResumeTests : IAsyncLifetime
 		MirrorFile("http://localhost/done/f1.bin", "http://localhost/done/", "f1.bin", 100);
 		MirrorDirectory("http://localhost/pending/", "http://localhost/", finished: false);
 
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		ScanResume.Result result = await ScanResume.BuildAsync(_scanDatabase, "http://localhost/", skipFileSizeLookups: false);
 
@@ -131,7 +131,7 @@ public class ScanResumeTests : IAsyncLifetime
 		MirrorDirectory("http://localhost/", null, finished: true);
 		MirrorFile("http://localhost/f1.bin", "http://localhost/", "f1.bin", null);
 
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		ScanResume.Result result = await ScanResume.BuildAsync(_scanDatabase, "http://localhost/", skipFileSizeLookups: false);
 
@@ -150,7 +150,7 @@ public class ScanResumeTests : IAsyncLifetime
 		MirrorDirectory("ftp://localhost/", null, finished: true);
 		MirrorFile("ftp://localhost/f1.bin", "ftp://localhost/", "f1.bin", null);
 
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		ScanResume.Result result = await ScanResume.BuildAsync(_scanDatabase, "ftp://localhost/", skipFileSizeLookups: true);
 
@@ -169,7 +169,7 @@ public class ScanResumeTests : IAsyncLifetime
 		MirrorFile("http://localhost/a/b/f2.bin", "http://localhost/a/b/", "f2.bin", 20);
 		MirrorFile("http://localhost/a/f3.bin", "http://localhost/a/", "f3.bin", 30);
 
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		ScanResume.Result result = await ScanResume.BuildAsync(_scanDatabase, "http://localhost/", skipFileSizeLookups: false);
 
@@ -185,7 +185,7 @@ public class ScanResumeTests : IAsyncLifetime
 		MirrorDirectory("http://localhost/", null, finished: true);
 		MirrorDirectory("http://localhost/bad/", "http://localhost/", finished: true, error: true);
 
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		ScanResume.Result result = await ScanResume.BuildAsync(_scanDatabase, "http://localhost/", skipFileSizeLookups: false);
 
@@ -205,7 +205,7 @@ public class ScanResumeTests : IAsyncLifetime
 		MirrorDirectory("http://localhost/", null, finished: true);
 		MirrorDirectory("http://localhost/bad/", "http://localhost/", finished: true, error: true);
 
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		ScanResume.Result result = await ScanResume.BuildAsync(_scanDatabase, "http://localhost/", skipFileSizeLookups: false, retryErrors: true);
 
@@ -227,7 +227,7 @@ public class ScanResumeTests : IAsyncLifetime
 		MirrorDirectory("http://localhost/good/", "http://localhost/", finished: true, error: false);
 		MirrorFile("http://localhost/good/f1.bin", "http://localhost/good/", "f1.bin", 10);
 
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		ScanResume.Result result = await ScanResume.BuildAsync(_scanDatabase, "http://localhost/", skipFileSizeLookups: false, retryErrors: true);
 
@@ -244,7 +244,7 @@ public class ScanResumeTests : IAsyncLifetime
 		MirrorDirectory("http://localhost/z/", "http://localhost/", finished: true);
 		MirrorDirectory("http://localhost/a/", "http://localhost/", finished: false);
 
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		ScanResume.Result result = await ScanResume.BuildAsync(_scanDatabase, "http://localhost/", skipFileSizeLookups: false);
 
@@ -259,7 +259,7 @@ public class ScanResumeTests : IAsyncLifetime
 		MirrorDirectory("http://localhost/child/", "http://localhost/", finished: true);
 		MirrorDirectory("http://localhost/orphan/", "http://localhost/missing/", finished: false);
 
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		ScanResume.Result result = await ScanResume.BuildAsync(_scanDatabase, "http://localhost/", skipFileSizeLookups: false);
 

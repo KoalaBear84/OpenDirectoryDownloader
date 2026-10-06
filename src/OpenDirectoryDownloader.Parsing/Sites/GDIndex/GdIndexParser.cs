@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using System.Text.Json.Nodes;
 using OpenDirectoryDownloader.Threading;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Parsing.Sites;
@@ -58,13 +59,13 @@ public static class GdIndexParser
 						services.Console.WriteLine($"Using password: {services.Session.SiteState.Get<IndexPasswordState>().Password}");
 						services.Logger.LogInformation("Using password: {password}", services.Session.SiteState.Get<IndexPasswordState>().Password);
 
-						httpResponseMessage = await services.Http.PostAsync($"{webDirectory.Uri}?rootId={rootId}", new StringContent(JsonSerializer.Serialize(new Dictionary<string, object>
+						httpResponseMessage = await services.Http.PostAsync($"{webDirectory.Uri}?rootId={rootId}", new StringContent(new JsonObject
 						{
-							{ "page_index", 0 },
-							{ "page_token", null },
-							{ "password", services.Session.SiteState.Get<IndexPasswordState>().Password },
-							{ "q", "" }
-						})));
+							["page_index"] = 0,
+							["page_token"] = null,
+							["password"] = services.Session.SiteState.Get<IndexPasswordState>().Password,
+							["q"] = ""
+						}.ToJsonString()));
 
 						if (httpResponseMessage.IsSuccessStatusCode)
 						{

@@ -60,18 +60,19 @@ public partial class Error
 
 public partial class Go2IndexResponse
 {
-	public static Go2IndexResponse FromJson(string json) => JsonSerializer.Deserialize<Go2IndexResponse>(json, Converter.Settings);
+	public static Go2IndexResponse FromJson(string json) => JsonSerializer.Deserialize(json, Converter.TypeInfo<Go2IndexResponse>());
 }
 
 public static class Serialize
 {
-	public static string ToJson(this Go2IndexResponse self) => JsonSerializer.Serialize(self, Converter.Settings);
+	public static string ToJson(this Go2IndexResponse self) => JsonSerializer.Serialize(self, Converter.TypeInfo<Go2IndexResponse>());
 }
 
 internal static class Converter
 {
 	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
+		TypeInfoResolver = Go2IndexResultJsonContext.Default,
 		Converters =
 		{
 			JsonMetadataServices.DateOnlyConverter,
@@ -79,4 +80,10 @@ internal static class Converter
 			new IsoDateTimeOffsetConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
 		},
 	};
+
+	/// <summary>Source generated, so the trimmed release keeps what is needed</summary>
+	public static JsonTypeInfo<T> TypeInfo<T>() => (JsonTypeInfo<T>)Settings.GetTypeInfo(typeof(T));
 }
+
+[JsonSerializable(typeof(Go2IndexResponse))]
+internal partial class Go2IndexResultJsonContext : JsonSerializerContext;

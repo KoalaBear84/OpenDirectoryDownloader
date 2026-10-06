@@ -134,18 +134,19 @@ public partial class Listing
 
 public partial class CrushFtpResult
 {
-	public static CrushFtpResult FromJson(string json) => JsonSerializer.Deserialize<CrushFtpResult>(json, Converter.Settings);
+	public static CrushFtpResult FromJson(string json) => JsonSerializer.Deserialize(json, Converter.TypeInfo<CrushFtpResult>());
 }
 
 public static class Serialize
 {
-	public static string ToJson(this CrushFtpResult self) => JsonSerializer.Serialize(self, Converter.Settings);
+	public static string ToJson(this CrushFtpResult self) => JsonSerializer.Serialize(self, Converter.TypeInfo<CrushFtpResult>());
 }
 
 internal static class Converter
 {
 	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
+		TypeInfoResolver = CrushFtpResultJsonContext.Default,
 		Converters =
 		{
 			JsonMetadataServices.DateOnlyConverter,
@@ -153,4 +154,10 @@ internal static class Converter
 			new IsoDateTimeOffsetConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
 		},
 	};
+
+	/// <summary>Source generated, so the trimmed release keeps what is needed</summary>
+	public static JsonTypeInfo<T> TypeInfo<T>() => (JsonTypeInfo<T>)Settings.GetTypeInfo(typeof(T));
 }
+
+[JsonSerializable(typeof(CrushFtpResult))]
+internal partial class CrushFtpResultJsonContext : JsonSerializerContext;

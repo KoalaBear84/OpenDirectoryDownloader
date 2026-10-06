@@ -179,18 +179,19 @@ public partial class Link
 
 public partial class BlitzfilesTechResponse
 {
-	public static BlitzfilesTechResponse FromJson(string json) => JsonSerializer.Deserialize<BlitzfilesTechResponse>(json, Converter.Settings);
+	public static BlitzfilesTechResponse FromJson(string json) => JsonSerializer.Deserialize(json, Converter.TypeInfo<BlitzfilesTechResponse>());
 }
 
 public static class Serialize
 {
-	public static string ToJson(this BlitzfilesTechResponse self) => JsonSerializer.Serialize(self, Converter.Settings);
+	public static string ToJson(this BlitzfilesTechResponse self) => JsonSerializer.Serialize(self, Converter.TypeInfo<BlitzfilesTechResponse>());
 }
 
 internal static class Converter
 {
 	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
+		TypeInfoResolver = BlitzfilesTechResultJsonContext.Default,
 		Converters =
 		{
 			JsonMetadataServices.DateOnlyConverter,
@@ -198,4 +199,10 @@ internal static class Converter
 			new IsoDateTimeOffsetConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
 		},
 	};
+
+	/// <summary>Source generated, so the trimmed release keeps what is needed</summary>
+	public static JsonTypeInfo<T> TypeInfo<T>() => (JsonTypeInfo<T>)Settings.GetTypeInfo(typeof(T));
 }
+
+[JsonSerializable(typeof(BlitzfilesTechResponse))]
+internal partial class BlitzfilesTechResultJsonContext : JsonSerializerContext;

@@ -182,18 +182,19 @@ public partial class Folder
 
 public partial class MediafireResult
 {
-	public static MediafireResult FromJson(string json) => JsonSerializer.Deserialize<MediafireResult>(json, Converter.Settings);
+	public static MediafireResult FromJson(string json) => JsonSerializer.Deserialize(json, Converter.TypeInfo<MediafireResult>());
 }
 
 public static class Serialize
 {
-	public static string ToJson(this MediafireResult self) => JsonSerializer.Serialize(self, Converter.Settings);
+	public static string ToJson(this MediafireResult self) => JsonSerializer.Serialize(self, Converter.TypeInfo<MediafireResult>());
 }
 
 internal static class Converter
 {
 	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
+		TypeInfoResolver = MediafireResultJsonContext.Default,
 		Converters =
 		{
 			JsonMetadataServices.DateOnlyConverter,
@@ -201,4 +202,10 @@ internal static class Converter
 			new IsoDateTimeOffsetConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
 		},
 	};
+
+	/// <summary>Source generated, so the trimmed release keeps what is needed</summary>
+	public static JsonTypeInfo<T> TypeInfo<T>() => (JsonTypeInfo<T>)Settings.GetTypeInfo(typeof(T));
 }
+
+[JsonSerializable(typeof(MediafireResult))]
+internal partial class MediafireResultJsonContext : JsonSerializerContext;

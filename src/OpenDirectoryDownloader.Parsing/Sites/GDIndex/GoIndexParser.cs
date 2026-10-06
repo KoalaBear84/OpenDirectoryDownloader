@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using System.Text.Json.Nodes;
 using OpenDirectoryDownloader.Threading;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Parsing.Sites;
@@ -27,10 +28,10 @@ public static class GoIndexParser
 				services.Logger.LogInformation("Check if password is needed...");
 				services.Session.SiteState.Get<IndexPasswordState>().Set("");
 
-				HttpResponseMessage httpResponseMessage = await services.Http.PostAsync(webDirectory.Uri, new StringContent(JsonSerializer.Serialize(new Dictionary<string, object>
+				HttpResponseMessage httpResponseMessage = await services.Http.PostAsync(webDirectory.Uri, new StringContent(new JsonObject
 				{
-					{ "password", services.Session.SiteState.Get<IndexPasswordState>().Password }
-				})));
+					["password"] = services.Session.SiteState.Get<IndexPasswordState>().Password
+				}.ToJsonString()));
 
 				GoIndexResponse indexResponse = null;
 
@@ -48,10 +49,10 @@ public static class GoIndexParser
 						services.Console.WriteLine($"Using password: {services.Session.SiteState.Get<IndexPasswordState>().Password}");
 						services.Logger.LogInformation("Using password: {password}", services.Session.SiteState.Get<IndexPasswordState>().Password);
 
-						httpResponseMessage = await services.Http.PostAsync(webDirectory.Uri, new StringContent(JsonSerializer.Serialize(new Dictionary<string, object>
+						httpResponseMessage = await services.Http.PostAsync(webDirectory.Uri, new StringContent(new JsonObject
 						{
-							{ "password", services.Session.SiteState.Get<IndexPasswordState>().Password }
-						})));
+							["password"] = services.Session.SiteState.Get<IndexPasswordState>().Password
+						}.ToJsonString()));
 
 						if (httpResponseMessage.IsSuccessStatusCode)
 						{
@@ -121,10 +122,10 @@ public static class GoIndexParser
 
 				services.Logger.LogWarning("Retrieving listings for {relativeUrl} with password: {password}", webDirectory.Uri.PathAndQuery, services.Session.SiteState.Get<IndexPasswordState>().Password);
 
-				HttpResponseMessage httpResponseMessage = await services.Http.PostAsync(webDirectory.Uri, new StringContent(JsonSerializer.Serialize(new Dictionary<string, object>
+				HttpResponseMessage httpResponseMessage = await services.Http.PostAsync(webDirectory.Uri, new StringContent(new JsonObject
 				{
-					{ "password", services.Session.SiteState.Get<IndexPasswordState>().Password }
-				})));
+					["password"] = services.Session.SiteState.Get<IndexPasswordState>().Password
+				}.ToJsonString()));
 
 				webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
 				httpResponseMessage.EnsureSuccessStatusCode();

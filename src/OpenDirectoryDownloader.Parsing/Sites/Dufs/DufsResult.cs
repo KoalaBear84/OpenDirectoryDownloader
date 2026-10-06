@@ -12,6 +12,7 @@
 
 namespace OpenDirectoryDownloader.Parsing.Sites.Dufs;
 
+using System.Text.Json.Serialization.Metadata;
 using System;
 using System.Collections.Generic;
 
@@ -72,18 +73,19 @@ public partial class Path
 
 public partial class DufsListing
 {
-	public static DufsListing FromJson(string json) => JsonSerializer.Deserialize<DufsListing>(json, Converter.Settings);
+	public static DufsListing FromJson(string json) => JsonSerializer.Deserialize(json, Converter.TypeInfo<DufsListing>());
 }
 
 public static class Serialize
 {
-	public static string ToJson(this DufsListing self) => JsonSerializer.Serialize(self, Converter.Settings);
+	public static string ToJson(this DufsListing self) => JsonSerializer.Serialize(self, Converter.TypeInfo<DufsListing>());
 }
 
 internal static class Converter
 {
 	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
+		TypeInfoResolver = DufsResultJsonContext.Default,
 		Converters =
 		{
 			new DateOnlyConverter(),
@@ -91,7 +93,13 @@ internal static class Converter
 			IsoDateTimeOffsetConverter.Singleton
 		},
 	};
+
+	/// <summary>Source generated, so the trimmed release keeps what is needed</summary>
+	public static JsonTypeInfo<T> TypeInfo<T>() => (JsonTypeInfo<T>)Settings.GetTypeInfo(typeof(T));
 }
+
+[JsonSerializable(typeof(DufsListing))]
+internal partial class DufsResultJsonContext : JsonSerializerContext;
 
 public class DateOnlyConverter : JsonConverter<DateOnly>
 {

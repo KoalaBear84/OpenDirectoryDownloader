@@ -97,7 +97,7 @@ public class UploadFilesIo : IFileUploadSite
 					string response = await httpResponseMessageFinalise.Content.ReadAsStringAsync();
 					session.UploadedUrlsResponse = response;
 
-					return JsonSerializer.Deserialize<UploadFilesIoFile>(response, UploadFilesIoFile.JsonOptions);
+					return JsonSerializer.Deserialize(response, FileUploadCaseInsensitiveJsonContext.Default.UploadFilesIoFile);
 				}
 
 				retries++;
@@ -145,9 +145,4 @@ public class UploadFilesIoFile : IFileUploadSiteFile
 
 	[JsonPropertyName("location")]
 	public string Location { get; set; }
-
-	public static readonly JsonSerializerOptions JsonOptions = new()
-	{
-		PropertyNameCaseInsensitive = true,
-	};
 }

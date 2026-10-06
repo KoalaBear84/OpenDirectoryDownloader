@@ -12,6 +12,7 @@
 
 namespace OpenDirectoryDownloader.Parsing.Sites.HFS;
 
+using System.Text.Json.Serialization.Metadata;
 using System;
 using System.Collections.Generic;
 
@@ -40,18 +41,19 @@ public partial class List
 
 public partial class HfsListing
 {
-	public static HfsListing FromJson(string json) => JsonSerializer.Deserialize<HfsListing>(json, HFS.Converter.Settings);
+	public static HfsListing FromJson(string json) => JsonSerializer.Deserialize(json, Converter.TypeInfo<HfsListing>());
 }
 
 public static class Serialize
 {
-	public static string ToJson(this HfsListing self) => JsonSerializer.Serialize(self, HFS.Converter.Settings);
+	public static string ToJson(this HfsListing self) => JsonSerializer.Serialize(self, Converter.TypeInfo<HfsListing>());
 }
 
 internal static class Converter
 {
 	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
+		TypeInfoResolver = HfsListingJsonContext.Default,
 		Converters =
 		{
 			new DateOnlyConverter(),
@@ -59,7 +61,13 @@ internal static class Converter
 			IsoDateTimeOffsetConverter.Singleton
 		},
 	};
+
+	/// <summary>Source generated, so the trimmed release keeps what is needed</summary>
+	public static JsonTypeInfo<T> TypeInfo<T>() => (JsonTypeInfo<T>)Settings.GetTypeInfo(typeof(T));
 }
+
+[JsonSerializable(typeof(HfsListing))]
+internal partial class HfsListingJsonContext : JsonSerializerContext;
 
 public class DateOnlyConverter : JsonConverter<DateOnly>
 {

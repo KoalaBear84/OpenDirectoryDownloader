@@ -2,8 +2,6 @@ using Microsoft.Extensions.Logging;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Urls;
 using System.Net;
-using System.Xml;
-using System.Xml.Serialization;
 
 namespace OpenDirectoryDownloader.Parsing.Sites.AmazonS3;
 
@@ -54,14 +52,8 @@ public static class AmazonS3Parser
 
 				httpResponseMessage.EnsureSuccessStatusCode();
 
-				AmazonS3Result result;
-
 				using TextReader textReader = new StreamReader(await httpResponseMessage.Content.ReadAsStreamAsync());
-				using XmlTextReader xmlTextReader = new(textReader);
-
-				xmlTextReader.Namespaces = false;
-				XmlSerializer xmlSerializer = new(typeof(AmazonS3Result));
-				result = (AmazonS3Result)xmlSerializer.Deserialize(xmlTextReader);
+				AmazonS3Result result = AmazonS3Result.Parse(textReader);
 
 				isTruncated = result.IsTruncated;
 				nextMarker = result.NextMarker;

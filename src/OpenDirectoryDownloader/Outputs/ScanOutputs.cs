@@ -185,7 +185,7 @@ public sealed class UrlUploadOutput(OutputOptions outputOptions, ScanHttp scanHt
 				Console.WriteLine($"Uploading URLs ({FileSizeHelper.ToHumanReadable(new FileInfo(context.UrlListPath).Length)}) with {uploadSite.Name}..");
 
 				IFileUploadSiteFile fileUploaderFile = await uploadSite.UploadFile(scanHttp.Client, context.UrlListPath, session, logger);
-				historyLog.Write($"{uploadSite.Name} URL: {JsonSerializer.Serialize((object)fileUploaderFile)}");
+				historyLog.Write($"{uploadSite.Name} URL: {JsonSerializer.Serialize(fileUploaderFile, fileUploaderFile.GetType(), FileUploadJsonContext.Default)}");
 				historyLog.Write($"{uploadSite.Name} full response: {session.UploadedUrlsResponse}");
 				session.UploadedUrlsUrl = fileUploaderFile.Url;
 				context.Database.MirrorUploadedUrlsUrl(session.UploadedUrlsUrl);

@@ -4,6 +4,8 @@ using Acornima;
 using Acornima.Ast;
 using Jint;
 using Jint.Native;
+using Jint.Runtime;
+using Jint.Runtime.Interop;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Parsing.Sites;
 using System.Text;
@@ -129,8 +131,9 @@ public static class BhadooIndexParser
 
 					if (state.Obfuscated)
 					{
-						Func<string, string> atob = str => Encoding.Latin1.GetString(Convert.FromBase64String(str));
-						state.JintEngine.SetValue("atob", atob);
+						// A plain JavaScript function: a .NET delegate would be bound by reflection, which trimming can break
+						state.JintEngine.SetValue("atob", new ClrFunction(state.JintEngine, "atob", (_, arguments) =>
+							Encoding.Latin1.GetString(Convert.FromBase64String(TypeConverter.ToString(arguments.At(0)))), length: 1));
 
 						FunctionDeclaration gdidecodeFunctionDeclaration = javaScriptFunctions.FirstOrDefault(f => f.ChildNodes.OfType<Identifier>().Any(i => i.Name == "gdidecode"));
 						string gdidecodeFunction = appJsSource[gdidecodeFunctionDeclaration.Range.Start..gdidecodeFunctionDeclaration.Range.End];

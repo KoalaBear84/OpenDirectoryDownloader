@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using System.Text.Json.Nodes;
 using OpenDirectoryDownloader.Threading;
 using OpenDirectoryDownloader.Models;
 using OpenDirectoryDownloader.Parsing.Sites;
@@ -27,13 +28,13 @@ public static class Go2IndexParser
 				services.Logger.LogInformation("Check if password is needed...");
 				services.Session.SiteState.Get<IndexPasswordState>().Set(null);
 
-				HttpResponseMessage httpResponseMessage = await services.Http.PostAsync(webDirectory.Uri, new StringContent(JsonSerializer.Serialize(new Dictionary<string, object>
+				HttpResponseMessage httpResponseMessage = await services.Http.PostAsync(webDirectory.Uri, new StringContent(new JsonObject
 				{
-					{ "page_index", 0 },
-					{ "page_token", null },
-					{ "password", services.Session.SiteState.Get<IndexPasswordState>().Password },
-					{ "q", "" }
-				})));
+					["page_index"] = 0,
+					["page_token"] = null,
+					["password"] = services.Session.SiteState.Get<IndexPasswordState>().Password,
+					["q"] = ""
+				}.ToJsonString()));
 
 				Go2IndexResponse indexResponse = null;
 
@@ -51,13 +52,13 @@ public static class Go2IndexParser
 						services.Console.WriteLine($"Using password: {services.Session.SiteState.Get<IndexPasswordState>().Password}");
 						services.Logger.LogInformation("Using password: {password}", services.Session.SiteState.Get<IndexPasswordState>().Password);
 
-						httpResponseMessage = await services.Http.PostAsync(webDirectory.Uri, new StringContent(JsonSerializer.Serialize(new Dictionary<string, object>
+						httpResponseMessage = await services.Http.PostAsync(webDirectory.Uri, new StringContent(new JsonObject
 						{
-							{ "page_index", 0 },
-							{ "page_token", null },
-							{ "password", services.Session.SiteState.Get<IndexPasswordState>().Password },
-							{ "q", "" }
-						})));
+							["page_index"] = 0,
+							["page_token"] = null,
+							["password"] = services.Session.SiteState.Get<IndexPasswordState>().Password,
+							["q"] = ""
+						}.ToJsonString()));
 
 						if (httpResponseMessage.IsSuccessStatusCode)
 						{
@@ -136,13 +137,13 @@ public static class Go2IndexParser
 
 					services.Logger.LogWarning("Retrieving listings for {relativeUrl}, page {page} with password: {password}", webDirectory.Uri.PathAndQuery, pageIndex + 1, services.Session.SiteState.Get<IndexPasswordState>().Password);
 
-					HttpResponseMessage httpResponseMessage = await services.Http.PostAsync(webDirectory.Uri, new StringContent(JsonSerializer.Serialize(new Dictionary<string, object>
+					HttpResponseMessage httpResponseMessage = await services.Http.PostAsync(webDirectory.Uri, new StringContent(new JsonObject
 					{
-						{ "page_index", pageIndex },
-						{ "page_token", nextPageToken },
-						{ "password", services.Session.SiteState.Get<IndexPasswordState>().Password },
-						{ "q", "" }
-					})));
+						["page_index"] = pageIndex,
+						["page_token"] = nextPageToken,
+						["password"] = services.Session.SiteState.Get<IndexPasswordState>().Password,
+						["q"] = ""
+					}.ToJsonString()));
 
 					webDirectory.ParsedSuccessfully = httpResponseMessage.IsSuccessStatusCode;
 					httpResponseMessage.EnsureSuccessStatusCode();

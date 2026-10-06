@@ -37,7 +37,7 @@ public class StatisticsTests : IAsyncLifetime
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/b.txt", FileName = "b.txt", FileSize = 20 }, root);
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/c.zip", FileName = "c.zip", FileSize = 100 }, root);
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/noext", FileName = "noext", FileSize = 5 }, root);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		Dictionary<string, ExtensionStats> extensions = await Statistics.GetExtensionsAsync(_scanDatabase);
 

@@ -1,16 +1,16 @@
-using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace OpenDirectoryDownloader.Tests;
 
 public class DirectoryParserTests
 {
-	private static readonly Regex TestMethodRegex = new(@"<Test(\w+)Async>");
+	private static readonly Regex TestMethodRegex = new(@"^Test(\w+)Async$");
 
-	public static string GetSample()
+	/// <summary>The sample named after the calling test: TestDirectoryListing01aAsync reads Samples/DirectoryListing01a.html.dat</summary>
+	public static string GetSample([CallerMemberName] string testMethod = null)
 	{
-		// Ugly, but it works
-		string fileName = TestMethodRegex.Match(new StackTrace().GetFrame(1).GetMethod().DeclaringType.Name).Groups[1].Value;
+		string fileName = TestMethodRegex.Match(testMethod).Groups[1].Value;
 
 		return File.ReadAllText($"Samples{Path.DirectorySeparatorChar}{fileName}.html.dat");
 	}

@@ -102,18 +102,19 @@ public partial class Content
 
 public partial class GoFileIOListingResult
 {
-	public static GoFileIOListingResult FromJson(string json) => JsonSerializer.Deserialize<GoFileIOListingResult>(json, Converter.Settings);
+	public static GoFileIOListingResult FromJson(string json) => JsonSerializer.Deserialize(json, Converter.TypeInfo<GoFileIOListingResult>());
 }
 
 public static class Serialize
 {
-	public static string ToJson(this GoFileIOListingResult self) => JsonSerializer.Serialize(self, Converter.Settings);
+	public static string ToJson(this GoFileIOListingResult self) => JsonSerializer.Serialize(self, Converter.TypeInfo<GoFileIOListingResult>());
 }
 
 internal static class Converter
 {
 	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
+		TypeInfoResolver = GoFileIOListingResultJsonContext.Default,
 		Converters =
 		{
 			JsonMetadataServices.DateOnlyConverter,
@@ -121,4 +122,10 @@ internal static class Converter
 			new IsoDateTimeOffsetConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
 		},
 	};
+
+	/// <summary>Source generated, so the trimmed release keeps what is needed</summary>
+	public static JsonTypeInfo<T> TypeInfo<T>() => (JsonTypeInfo<T>)Settings.GetTypeInfo(typeof(T));
 }
+
+[JsonSerializable(typeof(GoFileIOListingResult))]
+internal partial class GoFileIOListingResultJsonContext : JsonSerializerContext;

@@ -72,7 +72,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		_scanDatabase.MirrorDirectory(root);
 		_scanDatabase.MirrorDirectory(broken);
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/a.txt", FileName = "a.txt", FileSize = 1 }, root);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		Assert.Equal(1, await _scanDatabase.CountDirectoriesAsync());
 		Assert.Equal(1, await _scanDatabase.CountFilesAsync());
@@ -137,7 +137,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		_scanDatabase.MirrorDirectory(root);
 		_scanDatabase.MirrorDirectory(child);
 
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		Assert.Equal(2, await _scanDatabase.CountDirectoriesAsync());
 	}
@@ -153,7 +153,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		};
 
 		_scanDatabase.MirrorDirectory(root);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 		Assert.Equal(1, await _scanDatabase.CountDirectoriesAsync());
 
 		// Simulate the directory being reparsed/finished later - same Url, updated fields.
@@ -161,7 +161,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		root.Description = "done";
 
 		_scanDatabase.MirrorDirectory(root);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		Assert.Equal(1, await _scanDatabase.CountDirectoriesAsync());
 	}
@@ -186,7 +186,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		_scanDatabase.MirrorDirectory(directory);
 		_scanDatabase.MirrorFile(file, directory);
 
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		Assert.Equal(1, await _scanDatabase.CountFilesAsync());
 		Assert.Equal(1234, await _scanDatabase.GetFileSizeAsync(file.Url));
@@ -211,13 +211,13 @@ public class ScanDatabaseTests : IAsyncLifetime
 
 		_scanDatabase.MirrorDirectory(directory);
 		_scanDatabase.MirrorFile(file, directory);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		Assert.Null(await _scanDatabase.GetFileSizeAsync(file.Url));
 
 		file.FileSize = 42;
 		_scanDatabase.MirrorFileSize(file);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		Assert.Equal(42, await _scanDatabase.GetFileSizeAsync(file.Url));
 	}
@@ -243,7 +243,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 
 		_scanDatabase.MirrorDirectory(directory);
 		_scanDatabase.MirrorFile(file, directory);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		ScanDatabase.FileInfoSnapshot fileInfo = await _scanDatabase.GetFileInfoAsync(file.Url);
 
@@ -271,7 +271,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		_scanDatabase.MirrorDirectory(directory);
 		_scanDatabase.MirrorDirectory(sibling);
 		_scanDatabase.MirrorFile(new WebFile { Url = fileUrl, FileName = "x.zip", FileSize = 7 }, directory);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		ScanDatabase.FileInfoSnapshot fileInfo = await _scanDatabase.GetFileInfoAsync(fileUrl);
 
@@ -300,7 +300,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		_scanDatabase.MirrorDirectory(dufs);
 		_scanDatabase.MirrorDirectory(anotherAlist);
 		_scanDatabase.MirrorDirectory(notParsedYet);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		List<string> types = await _scanDatabase.GetDistinctParserTypesAsync();
 
@@ -318,7 +318,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/a.txt", FileName = "a.txt", FileSize = 100 }, root);
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/b.txt", FileName = "b.txt", FileSize = 250 }, root);
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/sub/c.txt", FileName = "c.txt", FileSize = null }, subdirectory);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		ScanDatabase.OverallStats stats = await _scanDatabase.GetOverallStatsAsync();
 
@@ -339,7 +339,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/B.TXT", FileName = "B.TXT", FileSize = 50 }, root);
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/sub/c.iso", FileName = "c.iso", FileSize = 1000 }, subdirectory);
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/sub/noext", FileName = "noext", FileSize = null }, subdirectory);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		Dictionary<string, ExtensionStats> stats = await _scanDatabase.GetExtensionStatsAsync();
 
@@ -375,7 +375,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 			_scanDatabase.MirrorFile(file, directory);
 		}
 
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		Assert.Equal(2500, await _scanDatabase.CountFilesAsync());
 	}
@@ -493,7 +493,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 	public async Task MirrorSpeedtestResult_BeforeAnyRunStarted_IsNoOp()
 	{
 		_scanDatabase.MirrorSpeedtestResult(new SpeedtestResult { DownloadedBytes = 123, ElapsedMilliseconds = 456, MaxBytesPerSecond = 789 });
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		Assert.Null(await _scanDatabase.GetLatestSpeedtestResultAsync());
 	}
@@ -548,7 +548,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 
 		DateTimeOffset completedAt = DateTimeOffset.UtcNow;
 		_scanDatabase.MarkCompleted(completedAt);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		ScanDatabase.ScanInfoSnapshot scanInfo = await _scanDatabase.GetScanInfoAsync();
 
@@ -575,7 +575,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 
 		_scanDatabase.MirrorDirectory(root);
 		_scanDatabase.MirrorFile(file, root);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		await using ScanDatabase readOnlyDatabase = await ScanDatabase.OpenReadOnlyAsync(_dbPath, TestContext.Current.CancellationToken);
 
@@ -596,7 +596,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 			await using (ScanDatabase writer = await ScanDatabase.CreateAsync(path, TestContext.Current.CancellationToken))
 			{
 				writer.MirrorDirectory(new WebDirectory(parentWebDirectory: null) { Url = "https://example.com/", Name = "example.com", Finished = true });
-				await writer.FlushAsync();
+				await writer.FlushAsync(TestContext.Current.CancellationToken);
 			}
 
 			// A cleanly closed writer checkpoints and SQLite removes its own WAL/SHM - nothing left behind
@@ -634,7 +634,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 	{
 		WebDirectory root = new(parentWebDirectory: null) { Url = "https://example.com/", Name = "example.com", Finished = true };
 		_scanDatabase.MirrorDirectory(root);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		string walPath = $"{_dbPath}-wal";
 		string shmPath = $"{_dbPath}-shm";
@@ -712,7 +712,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		// childD itself has no files directly in it - only its subdirectory childDE does, with a known size.
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/d/e/w.bin", FileName = "w.bin", FileSize = 25 }, childDE);
 
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		Dictionary<string, ScanDatabase.SubtreeAggregate> aggregates = await _scanDatabase.GetChildSubtreeAggregatesAsync("https://example.com/");
 
@@ -757,7 +757,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		_scanDatabase.MirrorDirectory(childA);
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/a/x.bin", FileName = "x.bin", FileSize = 100 }, childA);
 
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		await using ScanDatabase reader = await ScanDatabase.OpenReadOnlyAsync(_dbPath, TestContext.Current.CancellationToken);
 
@@ -768,7 +768,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		Assert.Equal(100, second["https://example.com/a/"].TotalSize);
 
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/a/y.bin", FileName = "y.bin", FileSize = 200 }, childA);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		Dictionary<string, ScanDatabase.SubtreeAggregate> afterChange = await reader.GetChildSubtreeAggregatesAsync("https://example.com/");
 
@@ -790,7 +790,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/a/x.bin", FileName = "x.bin", FileSize = 100 }, childA);
 		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/a/b/y.bin", FileName = "y.bin", FileSize = 200 }, childAB);
 
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		ScanDatabase.SubtreeResult subtree = await _scanDatabase.GetSubtreeAsync("https://example.com/");
 
@@ -815,7 +815,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		_scanDatabase.MirrorDirectory(root);
 		_scanDatabase.MirrorDirectory(childA);
 		_scanDatabase.MirrorDirectory(childAB);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		List<(string Url, string Name)> ancestors = await _scanDatabase.GetAncestorsAsync("https://example.com/a/b/");
 
@@ -830,7 +830,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		WebDirectory root = new(parentWebDirectory: null) { Url = "https://example.com/", Name = "example.com", Finished = true };
 
 		_scanDatabase.MirrorDirectory(root);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		Assert.Empty(await _scanDatabase.GetAncestorsAsync("https://example.com/"));
 	}
@@ -895,7 +895,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 		_scanDatabase.MirrorDirectory(root);
 		_scanDatabase.MirrorDirectory(brokenFolder);
 		_scanDatabase.MirrorDirectory(pendingFolder);
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		ScanDatabase.SearchResult result = await _scanDatabase.SearchAsync("folder", 200);
 
@@ -931,7 +931,7 @@ public class ScanDatabaseTests : IAsyncLifetime
 			_scanDatabase.MirrorFile(new WebFile { Url = $"https://example.com/match-{i}.bin", FileName = $"match-{i}.bin", FileSize = i }, root);
 		}
 
-		await _scanDatabase.FlushAsync();
+		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
 
 		ScanDatabase.SearchResult result = await _scanDatabase.SearchAsync("match", 3);
 

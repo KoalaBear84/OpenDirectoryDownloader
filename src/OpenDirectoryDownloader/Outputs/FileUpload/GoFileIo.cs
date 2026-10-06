@@ -22,7 +22,7 @@ public class GoFileIo : IFileUploadSite
 		{
 			try
 			{
-				GoFileIoServersResponse serversResponse = await httpClient.GetFromJsonAsync<GoFileIoServersResponse>("https://api.gofile.io/servers");
+				GoFileIoServersResponse serversResponse = await httpClient.GetFromJsonAsync("https://api.gofile.io/servers", FileUploadWebJsonContext.Default.GoFileIoServersResponse);
 
 				if (serversResponse.Status != "ok")
 				{
@@ -33,7 +33,7 @@ public class GoFileIo : IFileUploadSite
 
 				using HttpResponseMessage httpResponseMessageAccount = await httpClient.PostAsync("https://api.gofile.io/accounts", new StringContent("{}", Encoding.UTF8, "text/plain"));
 
-				GoFileIoAccountsResponse accountsResponse = await httpResponseMessageAccount.Content.ReadFromJsonAsync<GoFileIoAccountsResponse>();
+				GoFileIoAccountsResponse accountsResponse = await httpResponseMessageAccount.Content.ReadFromJsonAsync(FileUploadWebJsonContext.Default.GoFileIoAccountsResponse);
 
 				if (accountsResponse.Status != "ok")
 				{
@@ -42,7 +42,7 @@ public class GoFileIo : IFileUploadSite
 
 				httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accountsResponse.Data.Token);
 
-				GoFileIoAccountResponse accountResponse = await httpClient.GetFromJsonAsync<GoFileIoAccountResponse>($"https://api.gofile.io/accounts/{accountsResponse.Data.Id}");
+				GoFileIoAccountResponse accountResponse = await httpClient.GetFromJsonAsync($"https://api.gofile.io/accounts/{accountsResponse.Data.Id}", FileUploadWebJsonContext.Default.GoFileIoAccountResponse);
 
 				if (accountResponse.Status != "ok")
 				{
@@ -51,7 +51,7 @@ public class GoFileIo : IFileUploadSite
 
 				using HttpResponseMessage httpResponseMessageCreateFolder = await httpClient.PostAsync("https://api.gofile.io/contents/createfolder", new StringContent($"{{\"parentFolderId\": \"{accountsResponse.Data.RootFolder}\"}}", Encoding.UTF8, "application/json"));
 
-				GoFileIoFolderResponse createFolderResponse = await httpResponseMessageCreateFolder.Content.ReadFromJsonAsync<GoFileIoFolderResponse>();
+				GoFileIoFolderResponse createFolderResponse = await httpResponseMessageCreateFolder.Content.ReadFromJsonAsync(FileUploadWebJsonContext.Default.GoFileIoFolderResponse);
 
 				if (createFolderResponse.Status != "ok")
 				{
@@ -60,7 +60,7 @@ public class GoFileIo : IFileUploadSite
 
 				using HttpResponseMessage httpResponseMessageUpdateFolder = await httpClient.PutAsync($"https://api.gofile.io/contents/{createFolderResponse.Data.Id}/update", new StringContent("{\"attribute\": \"public\", \"attributeValue\": \"true\"}", Encoding.UTF8, "application/json"));
 
-				GoFileIoFolderResponse updateFolderResponse = await httpResponseMessageUpdateFolder.Content.ReadFromJsonAsync<GoFileIoFolderResponse>();
+				GoFileIoFolderResponse updateFolderResponse = await httpResponseMessageUpdateFolder.Content.ReadFromJsonAsync(FileUploadWebJsonContext.Default.GoFileIoFolderResponse);
 
 				if (updateFolderResponse.Status != "ok")
 				{
@@ -80,12 +80,12 @@ public class GoFileIo : IFileUploadSite
 
 				if (httpResponseMessageUploadFile.IsSuccessStatusCode)
 				{
-					GoFileIoUploadFileResponse uploadFileResponse = await httpResponseMessageUploadFile.Content.ReadFromJsonAsync<GoFileIoUploadFileResponse>();
-					session.UploadedUrlsResponse = JsonSerializer.Serialize(uploadFileResponse);
+					GoFileIoUploadFileResponse uploadFileResponse = await httpResponseMessageUploadFile.Content.ReadFromJsonAsync(FileUploadWebJsonContext.Default.GoFileIoUploadFileResponse);
+					session.UploadedUrlsResponse = JsonSerializer.Serialize(uploadFileResponse, FileUploadJsonContext.Default.GoFileIoUploadFileResponse);
 
 					logger.LogDebug("Response from {siteName}: {response}", Name, session.UploadedUrlsResponse);
 
-					return JsonSerializer.Deserialize<GoFileIoFile>(JsonSerializer.Serialize(uploadFileResponse));
+					return JsonSerializer.Deserialize(session.UploadedUrlsResponse, FileUploadJsonContext.Default.GoFileIoFile);
 				}
 				else
 				{

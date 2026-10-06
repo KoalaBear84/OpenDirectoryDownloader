@@ -12,6 +12,7 @@ namespace OpenDirectoryDownloader.Parsing.Sites.PCloud.ListResult;
 #pragma warning disable CS8601
 #pragma warning disable CS8603
 
+using System.Text.Json.Serialization.Metadata;
 using System;
 using System.Collections.Generic;
 
@@ -52,18 +53,19 @@ public partial class Content
 
 public partial class PCloudListing
 {
-	public static PCloudListing FromJson(string json) => JsonSerializer.Deserialize<PCloudListing>(json, Converter.Settings);
+	public static PCloudListing FromJson(string json) => JsonSerializer.Deserialize(json, Converter.TypeInfo<PCloudListing>());
 }
 
 public static class Serialize
 {
-	public static string ToJson(this PCloudListing self) => JsonSerializer.Serialize(self, Converter.Settings);
+	public static string ToJson(this PCloudListing self) => JsonSerializer.Serialize(self, Converter.TypeInfo<PCloudListing>());
 }
 
 internal static class Converter
 {
 	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
+		TypeInfoResolver = PCloudListResultJsonContext.Default,
 		Converters =
 			{
 				new DateOnlyConverter(),
@@ -71,7 +73,13 @@ internal static class Converter
 				IsoDateTimeOffsetConverter.Singleton
 			},
 	};
+
+	/// <summary>Source generated, so the trimmed release keeps what is needed</summary>
+	public static JsonTypeInfo<T> TypeInfo<T>() => (JsonTypeInfo<T>)Settings.GetTypeInfo(typeof(T));
 }
+
+[JsonSerializable(typeof(PCloudListing))]
+internal partial class PCloudListResultJsonContext : JsonSerializerContext;
 
 public class DateOnlyConverter : JsonConverter<DateOnly>
 {
