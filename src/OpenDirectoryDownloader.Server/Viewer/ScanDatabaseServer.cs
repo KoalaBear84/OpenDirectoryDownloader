@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenDirectoryDownloader.Models;
@@ -14,7 +15,7 @@ using System.Text.Json;
 namespace OpenDirectoryDownloader.Server;
 
 /// <summary>What --serve was asked for</summary>
-public sealed record ViewerOptions(string Database, int Port, string Host, bool NoBrowser);
+public sealed record ViewerOptions(IReadOnlyList<string> Databases, int Port, string Host, bool NoBrowser);
 
 /// <summary>The page, script and stylesheet, embedded in the assembly (wwwroot), so a lone .exe still has them.</summary>
 internal static class WebAsset
@@ -52,7 +53,7 @@ public static class ScanDatabaseServer
 	public static async Task<int> RunAsync(ViewerOptions options, ILogger logger)
 	{
 		WebApplication app = null;
-		ServerState state = null;
+		DatabaseRegistry registry = null;
 		HttpClient httpClient = null;
 		int port = options.Port;
 
@@ -64,12 +65,12 @@ public static class ScanDatabaseServer
 			builder.WebHost.UseUrls($"http://{options.Host}:{port}");
 
 			app = builder.Build();
-			state = new ServerState();
+			registry = new DatabaseRegistry(logger);
 			httpClient = new HttpClient();
 			ConcurrentDictionary<string, ZipJobProgress> zipJobs = new();
 
 			MapPages(app);
-			MapApi(app, state, httpClient, zipJobs, logger);
+			MapApi(app, registry, httpClient, zipJobs, logger);
 
 			try
 			{
@@ -105,23 +106,31 @@ public static class ScanDatabaseServer
 			Console.WriteLine($"Port {options.Port} was already in use - listening on {port} instead.");
 		}
 
-		if (!string.IsNullOrWhiteSpace(options.Database))
+		foreach (string problem in await registry.StartAsync(options.Databases, CancellationToken.None))
 		{
-			try
+			Console.WriteLine($"Could not load {problem}");
+			logger.LogWarning("Could not load {problem}", problem);
+		}
+
+		if (!registry.IsMulti)
+		{
+			// One database: counted before the page is shown, a failure is reported instead of showing an empty viewer
+			await registry.WaitForRefreshesAsync();
+
+			DatabaseSession single = registry.Default;
+
+			if (single is not null && single.Summary.State is DatabaseState.Error or DatabaseState.Incompatible)
 			{
-				await state.LoadAsync(Path.GetFullPath(options.Database), isTempFile: false, CancellationToken.None);
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine($"Could not load '{options.Database}': {ex.Message}");
-				logger.LogWarning(ex, "Could not preload database '{path}'", options.Database);
+				Console.WriteLine($"Could not load '{single.Path}': {single.Summary.Error}");
+				logger.LogWarning("Could not preload database '{path}': {error}", single.Path, single.Summary.Error);
+				await registry.RemoveAsync(single);
 			}
 		}
 
 		string url = $"http://{options.Host}:{port}/";
 
 		Console.WriteLine($"Web viewer listening on {url}");
-		Console.WriteLine("Drag a .sqlite scan database onto the page to view it. Press Ctrl+C to stop.");
+		Console.WriteLine(registry.IsMulti ? "Showing the overview of the scan databases. Press Ctrl+C to stop." : "Drag a .sqlite scan database onto the page to view it. Press Ctrl+C to stop.");
 		logger.LogInformation("Web viewer listening on {url}", url);
 
 		if (!options.NoBrowser)
@@ -140,26 +149,26 @@ public static class ScanDatabaseServer
 		// already subscribes to this to trigger a graceful stop, so this is mostly a safety net for process
 		// exit paths that bypass that (it doesn't, by itself, fix clicking the console window's close button
 		// - see RegisterWindowsCloseCleanup for why that needs the native handler instead).
-		AppDomain.CurrentDomain.ProcessExit += (_, _) => EnsureShutdownCleanupAsync(state, httpClient).GetAwaiter().GetResult();
+		AppDomain.CurrentDomain.ProcessExit += (_, _) => EnsureShutdownCleanupAsync(registry, httpClient).GetAwaiter().GetResult();
 
-		RegisterWindowsCloseCleanup(state, httpClient);
+		RegisterWindowsCloseCleanup(registry, httpClient);
 
 		await app.WaitForShutdownAsync();
 
-		await EnsureShutdownCleanupAsync(state, httpClient);
+		await EnsureShutdownCleanupAsync(registry, httpClient);
 
 		return 0;
 	}
 
 	/// <summary>Disposes the loaded database (see ScanDatabase.OpenReadOnlyAsync for why that matters - it's what cleans up its -wal/-shm sidecar files) and the shared HttpClient exactly once, however shutdown was triggered.</summary>
-	private static async Task EnsureShutdownCleanupAsync(ServerState state, HttpClient httpClient)
+	private static async Task EnsureShutdownCleanupAsync(DatabaseRegistry registry, HttpClient httpClient)
 	{
 		if (Interlocked.Exchange(ref _shutdownCleanedUp, 1) != 0)
 		{
 			return;
 		}
 
-		await state.DisposeAsync();
+		await registry.DisposeAsync();
 		httpClient.Dispose();
 	}
 
@@ -169,12 +178,12 @@ public static class ScanDatabaseServer
 	/// CTRL_C_EVENT/CTRL_BREAK_EVENT only), and none of which reliably let AppDomain.ProcessExit run to
 	/// completion either, since Windows force-terminates the process shortly after one of these fires
 	/// regardless of what any handler does. Without a handler registered specifically for these, the process
-	/// is simply killed - same as any other forceful kill - skipping ServerState.DisposeAsync() and leaving
+	/// is simply killed - same as any other forceful kill - skipping DatabaseRegistry.DisposeAsync() and leaving
 	/// the loaded database's -wal/-shm sidecar files behind. SetConsoleCtrlHandler is the one mechanism
 	/// Windows actually blocks on (briefly) before terminating, so cleanup here is done synchronously rather
 	/// than fired-and-forgotten.
 	/// </summary>
-	private static void RegisterWindowsCloseCleanup(ServerState state, HttpClient httpClient)
+	private static void RegisterWindowsCloseCleanup(DatabaseRegistry registry, HttpClient httpClient)
 	{
 		if (!OperatingSystem.IsWindows())
 		{
@@ -187,7 +196,7 @@ public static class ScanDatabaseServer
 		{
 			if (ctrlType is CtrlCloseEvent or CtrlLogoffEvent or CtrlShutdownEvent)
 			{
-				EnsureShutdownCleanupAsync(state, httpClient).GetAwaiter().GetResult();
+				EnsureShutdownCleanupAsync(registry, httpClient).GetAwaiter().GetResult();
 			}
 
 			return false;
@@ -225,34 +234,166 @@ public static class ScanDatabaseServer
 		app.MapGet("/style.css", () => Results.Bytes(WebAsset.StyleCss.Value, "text/css; charset=utf-8"));
 	}
 
-	private static void MapApi(WebApplication app, ServerState state, HttpClient httpClient, ConcurrentDictionary<string, ZipJobProgress> zipJobs, ILogger logger)
+	private static void MapApi(WebApplication app, DatabaseRegistry registry, HttpClient httpClient, ConcurrentDictionary<string, ZipJobProgress> zipJobs, ILogger logger)
 	{
-		app.MapGet("/api/status", async (CancellationToken cancellationToken) =>
-		{
-			ServerStatus status = await state.GetStatusAsync(cancellationToken);
+		MapRegistryApi(app, registry);
 
-			if (!status.Loaded)
+		// The same endpoints twice: /api/* for the one database of the plain viewer, /api/db/{id}/* for the overview
+		MapDatabaseApi(app.MapGroup("/api"), httpContext => registry.Default ?? DatabaseSession.None, httpClient, zipJobs, logger);
+		MapDatabaseApi(app.MapGroup("/api/db/{id}"), httpContext => registry.Get((string)httpContext.Request.RouteValues["id"]) ?? DatabaseSession.None, httpClient, zipJobs, logger);
+	}
+
+	private static void MapRegistryApi(WebApplication app, DatabaseRegistry registry)
+	{
+		app.MapGet("/api/databases", () => Results.Ok(new
+		{
+			multi = registry.IsMulti,
+			version = registry.Version,
+			databases = registry.Sessions.Select(session => DescribeDatabase(session))
+		}));
+
+		app.MapGet("/api/search-all", async (string q, int? limit, CancellationToken cancellationToken) =>
+		{
+			string term = q?.Trim();
+
+			if (string.IsNullOrEmpty(term) || term.Length < 2)
 			{
-				return Results.Ok(new { loaded = false });
+				return Results.BadRequest(new { error = "Search term must be at least 2 characters." });
+			}
+
+			int perDatabase = limit is > 0 ? limit.Value : 50;
+			List<DatabaseSearchResult> results = await registry.SearchAllAsync(term, perDatabase, cancellationToken);
+
+			return Results.Ok(new
+			{
+				databases = results
+					.Where(result => result.Error is not null || result.Result.Files.Count > 0 || result.Result.Directories.Count > 0)
+					.OrderBy(result => result.Session.Summary.RootUrl, StringComparer.OrdinalIgnoreCase)
+					.Select(result => new
+					{
+						dbId = result.Session.Id,
+						rootUrl = result.Session.Summary.RootUrl,
+						error = result.Error,
+						files = (result.Result?.Files ?? []).Select(file => new
+						{
+							url = file.Url,
+							directoryUrl = file.DirectoryUrl,
+							name = file.FileName,
+							size = file.FileSize ?? 0,
+							unknownSize = file.FileSize is null,
+							description = file.Description
+						}),
+						directories = (result.Result?.Directories ?? []).Select(directory => new
+						{
+							url = directory.Url,
+							parentUrl = directory.ParentUrl,
+							name = directory.Name,
+							finished = directory.Finished,
+							error = directory.Error
+						}),
+						truncated = result.Result?.Truncated ?? false
+					}),
+				searched = results.Count
+			});
+		});
+
+		app.MapPost("/api/database", async (HttpRequest request, string fileName, CancellationToken cancellationToken) =>
+		{
+			string safeFileName = Path.GetFileName(fileName);
+
+			if (string.IsNullOrWhiteSpace(safeFileName) || !safeFileName.EndsWith(".sqlite", StringComparison.OrdinalIgnoreCase))
+			{
+				return Results.BadRequest(new { error = "Only .sqlite files are supported." });
+			}
+
+			string tempDirectory = Path.Combine(Path.GetTempPath(), "OpenDirectoryDownloader-Serve");
+			Directory.CreateDirectory(tempDirectory);
+
+			string tempPath = Path.Combine(tempDirectory, $"{Guid.NewGuid():N}-{safeFileName}");
+
+			await using (FileStream fileStream = File.Create(tempPath))
+			{
+				await request.Body.CopyToAsync(fileStream, cancellationToken);
+			}
+
+			try
+			{
+				DatabaseSession session = await registry.AddUploadedAsync(tempPath, cancellationToken);
+
+				return Results.Ok(new { loaded = true, id = session.Id });
+			}
+			catch (Exception ex)
+			{
+				foreach (string candidate in new[] { tempPath, $"{tempPath}-wal", $"{tempPath}-shm" })
+				{
+					if (File.Exists(candidate))
+					{
+						File.Delete(candidate);
+					}
+				}
+
+				return Results.BadRequest(new { error = ex.Message });
+			}
+		});
+	}
+
+	private static object DescribeDatabase(DatabaseSession session)
+	{
+		DatabaseSummary summary = session.Summary;
+
+		return new
+		{
+			id = session.Id,
+			path = session.Path,
+			fileName = Path.GetFileName(session.Path),
+			state = summary.State.ToString().ToLowerInvariant(),
+			error = summary.Error,
+			rootUrl = summary.RootUrl,
+			firstStartedAtUtc = summary.FirstStartedAtUtc,
+			completedAtUtc = summary.CompletedAtUtc,
+			lastActivityAtUtc = summary.LastActivityAtUtc,
+			runCount = summary.RunCount,
+			parserTypes = summary.ParserTypes,
+			statsReady = summary.StatsReady,
+			totalFiles = summary.TotalFiles,
+			totalDirectories = summary.TotalDirectories,
+			totalSize = summary.TotalSize,
+			databaseSizeBytes = summary.DatabaseSizeBytes,
+			speedBytesPerSecond = summary.SpeedBytesPerSecond
+		};
+	}
+
+	private static void MapDatabaseApi(RouteGroupBuilder routes, Func<HttpContext, DatabaseSession> resolve, HttpClient httpClient, ConcurrentDictionary<string, ZipJobProgress> zipJobs, ILogger logger)
+	{
+		routes.MapGet("/status", (HttpContext httpContext) =>
+		{
+			DatabaseSession state = resolve(httpContext);
+			DatabaseSummary summary = state.Summary;
+
+			if (summary.State != DatabaseState.Ready)
+			{
+				return Results.Ok(new { loaded = false, error = summary.Error });
 			}
 
 			return Results.Ok(new
 			{
 				loaded = true,
-				rootUrl = status.ScanInfo?.RootUrl,
-				firstStartedAtUtc = status.ScanInfo?.FirstStartedAtUtc,
-				completedAtUtc = status.ScanInfo?.CompletedAtUtc,
-				runCount = status.RunCount,
-				parserTypes = status.ParserTypes,
-				totalFiles = status.OverallStats.TotalFiles,
-				totalDirectories = status.OverallStats.TotalDirectories,
-				totalSize = status.OverallStats.TotalSize,
-				databaseSizeBytes = status.DatabaseSizeBytes
+				rootUrl = summary.RootUrl,
+				firstStartedAtUtc = summary.FirstStartedAtUtc,
+				completedAtUtc = summary.CompletedAtUtc,
+				runCount = summary.RunCount,
+				parserTypes = summary.ParserTypes,
+				totalFiles = summary.TotalFiles,
+				totalDirectories = summary.TotalDirectories,
+				totalSize = summary.TotalSize,
+				databaseSizeBytes = summary.DatabaseSizeBytes
 			});
 		});
 
-		app.MapGet("/api/stats", async (CancellationToken cancellationToken) =>
+		routes.MapGet("/stats", async (HttpContext httpContext, CancellationToken cancellationToken) =>
 		{
+			DatabaseSession state = resolve(httpContext);
+
 			try
 			{
 				// Reads every file's name/size to group by extension (see Statistics.GetExtensionsAsync) -
@@ -286,40 +427,10 @@ public static class ScanDatabaseServer
 			}
 		});
 
-		app.MapPost("/api/database", async (HttpRequest request, string fileName, CancellationToken cancellationToken) =>
+		routes.MapGet("/directory", async (HttpContext httpContext, string url, CancellationToken cancellationToken) =>
 		{
-			string safeFileName = Path.GetFileName(fileName);
+			DatabaseSession state = resolve(httpContext);
 
-			if (string.IsNullOrWhiteSpace(safeFileName) || !safeFileName.EndsWith(".sqlite", StringComparison.OrdinalIgnoreCase))
-			{
-				return Results.BadRequest(new { error = "Only .sqlite files are supported." });
-			}
-
-			string tempDirectory = Path.Combine(Path.GetTempPath(), "OpenDirectoryDownloader-Serve");
-			Directory.CreateDirectory(tempDirectory);
-
-			string tempPath = Path.Combine(tempDirectory, $"{Guid.NewGuid():N}-{safeFileName}");
-
-			await using (FileStream fileStream = File.Create(tempPath))
-			{
-				await request.Body.CopyToAsync(fileStream, cancellationToken);
-			}
-
-			try
-			{
-				await state.LoadAsync(tempPath, isTempFile: true, cancellationToken);
-			}
-			catch (Exception ex)
-			{
-				File.Delete(tempPath);
-				return Results.BadRequest(new { error = ex.Message });
-			}
-
-			return Results.Ok(new { loaded = true });
-		});
-
-		app.MapGet("/api/directory", async (string url, CancellationToken cancellationToken) =>
-		{
 			try
 			{
 				// One gate acquisition for the whole directory view instead of five - see ServerState.QueryAsync.
@@ -401,8 +512,10 @@ public static class ScanDatabaseServer
 			}
 		});
 
-		app.MapGet("/api/search", async (string q, int? limit, CancellationToken cancellationToken) =>
+		routes.MapGet("/search", async (HttpContext httpContext, string q, int? limit, CancellationToken cancellationToken) =>
 		{
+			DatabaseSession state = resolve(httpContext);
+
 			string term = q?.Trim();
 
 			if (string.IsNullOrEmpty(term) || term.Length < 2)
@@ -442,8 +555,10 @@ public static class ScanDatabaseServer
 			}
 		});
 
-		app.MapGet("/api/download-file", async (HttpContext context, string url, CancellationToken cancellationToken) =>
+		routes.MapGet("/download-file", async (HttpContext context, string url, CancellationToken cancellationToken) =>
 		{
+			DatabaseSession state = resolve(context);
+
 			ScanDatabase.FileInfoSnapshot fileInfo;
 
 			try
@@ -500,8 +615,10 @@ public static class ScanDatabaseServer
 			await remoteStream.CopyToAsync(context.Response.Body, cancellationToken);
 		});
 
-		app.MapGet("/api/download-zip", async (HttpContext context, string url, string jobId, CancellationToken cancellationToken) =>
+		routes.MapGet("/download-zip", async (HttpContext context, string url, string jobId, CancellationToken cancellationToken) =>
 		{
+			DatabaseSession state = resolve(context);
+
 			// Registered immediately, before any await, so the progress endpoint (which the client opens
 			// right after kicking off this request) finds the job as soon as possible.
 			ZipJobProgress progress = new();
@@ -557,7 +674,7 @@ public static class ScanDatabaseServer
 			}
 		});
 
-		app.MapGet("/api/zip-progress/{jobId}", async (HttpContext context, string jobId, CancellationToken cancellationToken) =>
+		routes.MapGet("/zip-progress/{jobId}", async (HttpContext context, string jobId, CancellationToken cancellationToken) =>
 		{
 			context.Response.Headers.ContentType = "text/event-stream";
 			context.Response.Headers.CacheControl = "no-cache";
@@ -680,132 +797,5 @@ public static class ScanDatabaseServer
 		}
 
 		return $"attachment; filename=\"{asciiFallback}\"; filename*=UTF-8''{Uri.EscapeDataString(fileName)}";
-	}
-
-	private sealed record ServerStatus(bool Loaded, ScanDatabase.ScanInfoSnapshot ScanInfo, long RunCount, List<string> ParserTypes, ScanDatabase.OverallStats OverallStats, long DatabaseSizeBytes);
-
-	/// <summary>
-	/// The single "currently loaded database" for this server (a local, single-user tool - one database at
-	/// a time is enough). All access to the underlying ScanDatabase/SqliteConnection is serialized through
-	/// one gate: Microsoft.Data.Sqlite connections aren't safe for concurrent use from multiple threads, and
-	/// the ASP.NET Core request pipeline will happily run several requests (e.g. two directory listings, or
-	/// a listing alongside a database swap) at once. Read queries are cheap, so coarse serialization here is
-	/// not a real bottleneck. The ZIP endpoint only holds the gate for its brief GetSubtreeAsync call - the
-	/// actual (potentially long) file fetching/zipping afterward runs lock-free against the already-fetched
-	/// in-memory subtree.
-	/// </summary>
-	private sealed class ServerState : IAsyncDisposable
-	{
-		private readonly SemaphoreSlim _gate = new(1, 1);
-		private ScanDatabase _database;
-		private ScanDatabase.ScanInfoSnapshot _scanInfo;
-		private long _runCount;
-		private List<string> _parserTypes = [];
-		private ScanDatabase.OverallStats _overallStats = new(0, 0, 0);
-		private long _databaseSizeBytes;
-		private string _loadedPath;
-		private bool _isTempFile;
-
-		public async Task LoadAsync(string path, bool isTempFile, CancellationToken cancellationToken)
-		{
-			ScanDatabase newDatabase = await ScanDatabase.OpenReadOnlyAsync(path, cancellationToken);
-			ScanDatabase.ScanInfoSnapshot scanInfo = await newDatabase.GetScanInfoAsync();
-			long runCount = await newDatabase.CountRunsAsync();
-			List<string> parserTypes = await newDatabase.GetDistinctParserTypesAsync();
-			ScanDatabase.OverallStats overallStats = await newDatabase.GetOverallStatsAsync();
-			long databaseSizeBytes = new FileInfo(path).Length;
-
-			await _gate.WaitAsync(cancellationToken);
-			try
-			{
-				ScanDatabase previousDatabase = _database;
-				string previousPath = _loadedPath;
-				bool previousWasTemp = _isTempFile;
-
-				_database = newDatabase;
-				_scanInfo = scanInfo;
-				_runCount = runCount;
-				_parserTypes = parserTypes;
-				_overallStats = overallStats;
-				_databaseSizeBytes = databaseSizeBytes;
-				_loadedPath = path;
-				_isTempFile = isTempFile;
-
-				if (previousDatabase is not null)
-				{
-					await previousDatabase.DisposeAsync();
-
-					if (previousWasTemp)
-					{
-						DeleteTempDatabaseFiles(previousPath);
-					}
-				}
-			}
-			finally
-			{
-				_gate.Release();
-			}
-		}
-
-		/// <summary>Deletes a temp-uploaded database's main file and its WAL/SHM sidecar files, if any (SQLite creates these for a WAL-mode database even when opened read-only).</summary>
-		private static void DeleteTempDatabaseFiles(string path)
-		{
-			if (path is null)
-			{
-				return;
-			}
-
-			foreach (string candidate in new[] { path, $"{path}-wal", $"{path}-shm" })
-			{
-				if (File.Exists(candidate))
-				{
-					File.Delete(candidate);
-				}
-			}
-		}
-
-		public async Task<T> QueryAsync<T>(Func<ScanDatabase, Task<T>> query, CancellationToken cancellationToken)
-		{
-			await _gate.WaitAsync(cancellationToken);
-			try
-			{
-				if (_database is null)
-				{
-					throw new InvalidOperationException("No database is loaded yet - drag a .sqlite file onto the page.");
-				}
-
-				return await query(_database);
-			}
-			finally
-			{
-				_gate.Release();
-			}
-		}
-
-		public async Task<ServerStatus> GetStatusAsync(CancellationToken cancellationToken)
-		{
-			await _gate.WaitAsync(cancellationToken);
-			try
-			{
-				return new ServerStatus(_database is not null, _scanInfo, _runCount, _parserTypes, _overallStats, _databaseSizeBytes);
-			}
-			finally
-			{
-				_gate.Release();
-			}
-		}
-
-		public async ValueTask DisposeAsync()
-		{
-			if (_database is not null)
-			{
-				await _database.DisposeAsync();
-			}
-
-			if (_isTempFile)
-			{
-				DeleteTempDatabaseFiles(_loadedPath);
-			}
-		}
 	}
 }

@@ -75,7 +75,7 @@ Command line parameters:
 |       | `--resume`            | EXPERIMENTAL: Continue a previously interrupted scan from its database instead of starting over (see [Large scans / low memory](#large-scans--low-memory))                                                                   |
 |       | `--retry-errors`     | With `--resume`, retry directories that errored during the previous run instead of leaving them as-is                                                                                                                       |
 |       | `--serve`            | EXPERIMENTAL: Start a local web viewer for a scan database instead of scanning a URL (see [Web viewer for scan databases](#web-viewer-for-scan-databases))                                                                   |
-|       | `--serve-db`          | Path to a `.sqlite` scan database to preload when using `--serve`. Optional - a database can also be dropped onto the page                                                                                                   |
+|       | `--serve-db`          | Path to a `.sqlite` scan database, or a directory containing them, to preload when using `--serve`. Can be given multiple times (see multiple databases below). Optional - a database can also be dropped onto the page                                                                                                   |
 |       | `--serve-port`        | Port for `--serve` (default: `8080`). If it's already in use, the next port is tried automatically (up to 20 attempts)                                                                                                        |
 |       | `--serve-host`        | Host/IP to bind `--serve` to (default: `127.0.0.1`, loopback only - the server has no authentication)                                                                                                                        |
 |       | `--serve-no-browser`  | Don't automatically open the default browser when `--serve` starts                                                                                                                                                            |
@@ -175,6 +175,10 @@ Then open a database one of two ways:
 - **Drag a `.sqlite` file onto the page** while the server is running (works at any time, including to switch to a different database).
 
 By default the server only listens on `127.0.0.1` (loopback) since it has no authentication - use `--serve-host`/`--serve-port` to change that only on a trusted network. `--serve-db <path>` preloads a database from the command line instead of dragging one, and `--serve-no-browser` skips automatically opening a browser tab.
+
+### Multiple databases
+
+`--serve-db` can be repeated and accepts directories: `--serve --serve-db D:\scans --serve-db other.sqlite`. With more than one database, or a directory, the viewer starts with an overview of all the root URLs with their status, number of files and folders, sizes and scan dates. The totals are counted in the background and cached; the directories are watched (and polled), so new, removed and still-growing databases update on their own. One search box on the overview searches all databases at once (same substring search as in a single database, 50 matches per database), and a result opens the matching folder. A database that can't be read (not a scan database, other version) is shown as such without affecting the others. With a single database nothing changes: it opens directly.
 
 The folder listing renders only the rows currently in view (via [Clusterize.js](https://clusterize.js.org/), loaded from a CDN) so even directories with hundreds of thousands of entries stay smooth to scroll. This is the one part of the viewer that needs internet access - everything else is served entirely from the `.exe` itself.
 

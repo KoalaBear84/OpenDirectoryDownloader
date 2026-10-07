@@ -81,6 +81,11 @@ const state = {
 	totalDirectories: 0,
 	totalSize: 0,
 	databaseSizeBytes: 0,
+	multi: false,
+	dbId: null,
+	overviewVersion: -1,
+	overviewData: null,
+	overviewSort: { field: "rootUrl", direction: "asc" },
 };
 
 let globalSearchTimer = null;
@@ -116,6 +121,13 @@ const el = {
 	progressBarFill: document.getElementById("progress-bar-fill"),
 	progressDetail: document.getElementById("progress-detail"),
 	toast: document.getElementById("toast"),
+	overview: document.getElementById("overview"),
+	overviewLink: document.getElementById("overview-link"),
+	overviewSearch: document.getElementById("overview-search"),
+	overviewSearchClear: document.getElementById("overview-search-clear"),
+	overviewBody: document.getElementById("overview-body"),
+	overviewSummary: document.getElementById("overview-summary"),
+	overviewResults: document.getElementById("overview-results"),
 };
 
 init();
@@ -126,8 +138,18 @@ async function init() {
 	setupSearch();
 	setupHistory();
 	setupStats();
+	setupOverview();
 
-	const status = await fetchJson("/api/status");
+	const databases = await fetchJson("/api/databases");
+	state.multi = databases.multi;
+
+	if (state.multi) {
+		await route();
+		el.initialLoading.hidden = true;
+		return;
+	}
+
+	const status = await fetchJson(apiPath("/status"));
 	renderSessionInfo(status);
 
 	if (status.loaded && status.rootUrl) {
@@ -156,6 +178,11 @@ async function init() {
 
 function setupHistory() {
 	window.addEventListener("popstate", (event) => {
+		if (state.multi) {
+			route();
+			return;
+		}
+
 		const url = event.state?.url || getDirFromLocation() || state.rootUrl;
 
 		applySearchTerm(getQueryFromLocation());
@@ -184,6 +211,10 @@ function applySearchTerm(term) {
 
 function buildLocation(url, term) {
 	const params = new URLSearchParams();
+
+	if (state.dbId) {
+		params.set("db", state.dbId);
+	}
 
 	if (url && url !== state.rootUrl) {
 		params.set("dir", url);
@@ -270,7 +301,7 @@ function scheduleGlobalSearch() {
 async function runGlobalSearch(term) {
 	let result;
 	try {
-		result = await fetchJson(`/api/search?q=${encodeURIComponent(term)}`);
+		result = await fetchJson(`${apiPath("/search")}?q=${encodeURIComponent(term)}`);
 	} catch {
 		return;
 	}
@@ -362,7 +393,22 @@ function uploadDatabase(file) {
 	xhr.addEventListener("load", async () => {
 		if (xhr.status >= 200 && xhr.status < 300) {
 			el.uploadStatus.textContent = "";
-			const status = await fetchJson("/api/status");
+
+			if (state.multi) {
+				let uploaded = {};
+
+				try {
+					uploaded = JSON.parse(xhr.responseText);
+				} catch {
+					// Back to the overview below
+				}
+
+				history.pushState({}, "", uploaded.id ? `/?db=${encodeURIComponent(uploaded.id)}` : "/");
+				await route();
+				return;
+			}
+
+			const status = await fetchJson(apiPath("/status"));
 			renderSessionInfo(status);
 			if (status.loaded && status.rootUrl) {
 				state.rootUrl = status.rootUrl;
@@ -467,7 +513,7 @@ async function openStats() {
 
 	let data;
 	try {
-		data = await fetchJson("/api/stats");
+		data = await fetchJson(apiPath("/stats"));
 	} catch (err) {
 		el.statsBody.innerHTML = `<p class="stats-error">${escapeHtml(err.message || "Could not load statistics.")}</p>`;
 		finishNavProgress();
@@ -717,7 +763,7 @@ async function loadDirectory(url, { pushState = true, replace = false } = {}) {
 
 	let data;
 	try {
-		data = await fetchJson(`/api/directory?url=${encodeURIComponent(url)}`);
+		data = await fetchJson(`${apiPath("/directory")}?url=${encodeURIComponent(url)}`);
 	} catch (err) {
 		showToast(err.message || "Could not load that directory.");
 		return false;
@@ -824,13 +870,13 @@ function renderEntries(resetScroll = false) {
 		for (const entry of imageEntries) {
 			const a = document.createElement("a");
 			a.className = "gallery-item";
-			a.href = `/api/download-file?url=${encodeURIComponent(entry.url)}`;
+			a.href = `${apiPath("/download-file")}?url=${encodeURIComponent(entry.url)}`;
 			a.target = "_blank";
 			a.rel = "noopener";
 
 			const img = document.createElement("img");
 			img.loading = "lazy";
-			img.src = `/api/download-file?url=${encodeURIComponent(entry.url)}`;
+			img.src = `${apiPath("/download-file")}?url=${encodeURIComponent(entry.url)}`;
 			img.alt = entry.name;
 
 			const caption = document.createElement("div");
@@ -1014,11 +1060,11 @@ function buildEntryRowHtml(entry, maxSize) {
 		? `<div class="entry-size-sub">${formatCount(entry.fileCount || 0)} file${entry.fileCount === 1 ? "" : "s"}</div>`
 		: "";
 
-	const nameHref = isDirectory ? escapeHtml(buildLocation(entry.url, state.filterTerm.trim())) : `/api/download-file?url=${encodedUrl}`;
+	const nameHref = isDirectory ? escapeHtml(buildLocation(entry.url, state.filterTerm.trim())) : `${apiPath("/download-file")}?url=${encodedUrl}`;
 
 	const actionsHtml = isDirectory
 		? `<button type="button" class="btn secondary zip-btn" data-url="${safeUrl}">ZIP</button>`
-		: `<a class="btn" href="/api/download-file?url=${encodedUrl}">Download</a>`;
+		: `<a class="btn" href="${apiPath("/download-file")}?url=${encodedUrl}">Download</a>`;
 
 	return `<div class="entry-row ${isDirectory ? "entry-row--directory" : "entry-row--file"}"${isDirectory ? ` data-url="${safeUrl}" style="cursor:pointer"` : ""}>
 	<div class="entry-name">
@@ -1143,7 +1189,7 @@ function buildResultRow(entry) {
 		label.href = buildLocation(entry.url, state.filterTerm.trim());
 		label.addEventListener("click", (e) => handleNavigationClick(e, entry.url));
 	} else {
-		label.href = `/api/download-file?url=${encodeURIComponent(entry.url)}`;
+		label.href = `${apiPath("/download-file")}?url=${encodeURIComponent(entry.url)}`;
 	}
 
 	labelRow.appendChild(label);
@@ -1192,7 +1238,7 @@ function buildResultRow(entry) {
 
 		const downloadLink = document.createElement("a");
 		downloadLink.className = "btn";
-		downloadLink.href = `/api/download-file?url=${encodeURIComponent(entry.url)}`;
+		downloadLink.href = `${apiPath("/download-file")}?url=${encodeURIComponent(entry.url)}`;
 		downloadLink.textContent = "Download";
 		actionsCell.appendChild(downloadLink);
 	}
@@ -1210,7 +1256,7 @@ function downloadZip(url) {
 	const jobId = crypto.randomUUID();
 
 	const link = document.createElement("a");
-	link.href = `/api/download-zip?url=${encodeURIComponent(url)}&jobId=${encodeURIComponent(jobId)}`;
+	link.href = `${apiPath("/download-zip")}?url=${encodeURIComponent(url)}&jobId=${encodeURIComponent(jobId)}`;
 	link.style.display = "none";
 	document.body.appendChild(link);
 	link.click();
@@ -1220,7 +1266,7 @@ function downloadZip(url) {
 }
 
 function watchZipProgress(jobId) {
-	const source = new EventSource(`/api/zip-progress/${encodeURIComponent(jobId)}`);
+	const source = new EventSource(`${apiPath("/zip-progress")}/${encodeURIComponent(jobId)}`);
 
 	el.progressPanel.hidden = false;
 	el.progressTitle.textContent = "Building ZIP…";
@@ -1290,4 +1336,294 @@ function formatBytes(bytes) {
 	const value = bytes / Math.pow(1024, exponent);
 
 	return `${exponent === 0 ? value : value.toFixed(value < 10 ? 2 : 1)} ${units[exponent]}`;
+}
+
+// ---- Overview of several databases
+
+function apiPath(path) {
+	return state.dbId ? `/api/db/${encodeURIComponent(state.dbId)}${path}` : `/api${path}`;
+}
+
+function setupOverview() {
+	el.overviewLink.addEventListener("click", (e) => {
+		if (!isPlainLeftClick(e)) {
+			return;
+		}
+
+		e.preventDefault();
+		history.pushState({}, "", "/");
+		route();
+	});
+
+	document.querySelectorAll("#overview th[data-sort]").forEach((header) => {
+		header.addEventListener("click", () => {
+			const field = header.dataset.sort;
+			const sort = state.overviewSort;
+			const numeric = header.classList.contains("num") || field.endsWith("Utc");
+
+			sort.direction = sort.field === field ? (sort.direction === "asc" ? "desc" : "asc") : (numeric ? "desc" : "asc");
+			sort.field = field;
+
+			if (state.overviewData) {
+				renderOverview(state.overviewData);
+			}
+		});
+	});
+
+	let searchTimer = null;
+
+	el.overviewSearch.addEventListener("input", () => {
+		clearTimeout(searchTimer);
+		el.overviewSearchClear.hidden = el.overviewSearch.value.length === 0;
+		searchTimer = setTimeout(() => runOverviewSearch(), 300);
+	});
+
+	el.overviewSearchClear.addEventListener("click", () => {
+		el.overviewSearch.value = "";
+		el.overviewSearchClear.hidden = true;
+		runOverviewSearch();
+	});
+
+	// New, vanished and growing databases show up without a reload
+	setInterval(async () => {
+		if (!state.multi || state.dbId) {
+			return;
+		}
+
+		try {
+			const databases = await fetchJson("/api/databases");
+
+			if (databases.version !== state.overviewVersion) {
+				renderOverview(databases);
+			}
+		} catch {
+			// The server is gone or busy, the next tick tries again
+		}
+	}, 3000);
+}
+
+async function route() {
+	const dbId = new URLSearchParams(location.search).get("db");
+
+	if (dbId) {
+		await openDatabase(dbId);
+	} else {
+		await showOverview();
+	}
+}
+
+function leaveDatabaseView() {
+	el.browser.hidden = true;
+	el.emptyState.hidden = true;
+	el.toolbar.hidden = true;
+	el.upBtn.hidden = true;
+	el.sessionInfo.hidden = true;
+	el.breadcrumbs.innerHTML = "";
+	el.progressPanel.hidden = true;
+	lastGlobalResult = null;
+	state.currentUrl = null;
+	state.rootUrl = null;
+}
+
+async function showOverview() {
+	state.dbId = null;
+	leaveDatabaseView();
+	el.overviewLink.hidden = true;
+	el.overview.hidden = false;
+	document.title = "OpenDirectoryDownloader - Scan databases";
+
+	renderOverview(await fetchJson("/api/databases"));
+	runOverviewSearch();
+}
+
+async function openDatabase(dbId) {
+	state.dbId = dbId;
+	el.overview.hidden = true;
+	el.overviewLink.hidden = false;
+	leaveDatabaseView();
+
+	const status = await fetchJson(apiPath("/status"));
+
+	if (!status.loaded || !status.rootUrl) {
+		showToast(status.error || "That database is not available.");
+		history.replaceState({}, "", "/");
+		await showOverview();
+		return;
+	}
+
+	renderSessionInfo(status);
+	state.rootUrl = status.rootUrl;
+	document.title = `${status.rootUrl} - OpenDirectoryDownloader`;
+
+	applySearchTerm(getQueryFromLocation());
+
+	const requestedUrl = getDirFromLocation();
+	const loaded = await loadDirectory(requestedUrl || status.rootUrl, { replace: true });
+
+	if (!loaded && requestedUrl) {
+		await loadDirectory(status.rootUrl, { replace: true });
+	}
+
+	scheduleGlobalSearch();
+}
+
+function databaseHref(dbId, dirUrl) {
+	const params = new URLSearchParams({ db: dbId });
+
+	if (dirUrl) {
+		params.set("dir", dirUrl);
+	}
+
+	return `/?${params.toString()}`;
+}
+
+function describeDatabaseState(database) {
+	switch (database.state) {
+		case "loading":
+			return { text: "Loading\u2026", css: "loading" };
+		case "incompatible":
+			return { text: "Incompatible", css: "error" };
+		case "error":
+			return { text: "Error", css: "error" };
+		default:
+			return database.completedAtUtc ? { text: "Completed", css: "done" } : { text: "Not completed", css: "busy" };
+	}
+}
+
+function renderOverview(data) {
+	state.overviewVersion = data.version;
+	state.overviewData = data;
+
+	const sort = state.overviewSort;
+	const sortValue = (database) => {
+		const value = sort.field === "status" ? describeDatabaseState(database).text : database[sort.field];
+		return value ?? null;
+	};
+	const direction = sort.direction === "asc" ? 1 : -1;
+	const sorted = [...data.databases].sort((a, b) => {
+		const left = sortValue(a);
+		const right = sortValue(b);
+
+		// Empty values always last, whichever the direction
+		if (left === null || right === null) {
+			return left === right ? 0 : left === null ? 1 : -1;
+		}
+
+		return (typeof left === "string" ? left.localeCompare(right, undefined, { sensitivity: "base" }) : left - right) * direction;
+	});
+
+	document.querySelectorAll("#overview th[data-sort]").forEach((header) => {
+		header.classList.toggle("sorted-asc", header.dataset.sort === sort.field && sort.direction === "asc");
+		header.classList.toggle("sorted-desc", header.dataset.sort === sort.field && sort.direction === "desc");
+	});
+
+	const rows = sorted.map((database) => {
+		const status = describeDatabaseState(database);
+		const href = escapeHtml(databaseHref(database.id));
+		const counted = database.state === "ready";
+		const number = (value, format) => (counted && database.statsReady ? format(value) : counted ? "\u2026" : "");
+		const title = escapeHtml(database.error || database.path);
+		const name = database.rootUrl ? escapeHtml(database.rootUrl) : escapeHtml(database.fileName);
+		const link = counted ? `<a href="${href}" data-db-link>${name}</a>` : `<span>${name}</span>`;
+		const activity = database.completedAtUtc
+			? formatDateTime(database.completedAtUtc)
+			: database.lastActivityAtUtc ? `${formatDateTime(database.lastActivityAtUtc)} (last activity)` : "";
+
+		return `<tr>
+			<td class="overview-root" title="${title}">${link}<div class="overview-file">${escapeHtml(database.fileName)}${database.error ? ` &middot; ${escapeHtml(database.error)}` : ""}</div></td>
+			<td><span class="badge db-${status.css}">${status.text}</span></td>
+			<td class="num">${number(database.totalFiles, formatCount)}</td>
+			<td class="num">${number(database.totalDirectories, formatCount)}</td>
+			<td class="num">${number(database.totalSize, formatBytes)}</td>
+			<td class="num">${formatBytes(database.databaseSizeBytes)}</td>
+			<td class="num">${database.speedBytesPerSecond ? `${formatBytes(database.speedBytesPerSecond)}/s` : ""}</td>
+			<td>${database.firstStartedAtUtc ? formatDateTime(database.firstStartedAtUtc) : ""}</td>
+			<td>${escapeHtml(activity)}</td>
+		</tr>`;
+	});
+
+	el.overviewBody.innerHTML = rows.join("");
+
+	const ready = data.databases.filter((database) => database.state === "ready" && database.statsReady);
+	const totalFiles = ready.reduce((sum, database) => sum + database.totalFiles, 0);
+	const totalSize = ready.reduce((sum, database) => sum + database.totalSize, 0);
+
+	el.overviewSummary.textContent = data.databases.length === 0
+		? "No scan databases found."
+		: `${data.databases.length} database${data.databases.length === 1 ? "" : "s"} \u00b7 ${formatCount(totalFiles)} files \u00b7 ${formatBytes(totalSize)}`;
+
+	el.overviewBody.querySelectorAll("a[data-db-link]").forEach((link) => {
+		link.addEventListener("click", (e) => {
+			if (!isPlainLeftClick(e)) {
+				return;
+			}
+
+			e.preventDefault();
+			history.pushState({}, "", link.getAttribute("href"));
+			route();
+		});
+	});
+}
+
+let overviewSearchSequence = 0;
+
+async function runOverviewSearch() {
+	const term = el.overviewSearch.value.trim();
+	const sequence = ++overviewSearchSequence;
+
+	if (term.length < 2) {
+		el.overviewResults.hidden = true;
+		el.overviewResults.innerHTML = "";
+		return;
+	}
+
+	el.overviewResults.hidden = false;
+	el.overviewResults.innerHTML = '<p class="global-results-note">Searching\u2026</p>';
+
+	let result;
+
+	try {
+		result = await fetchJson(`/api/search-all?q=${encodeURIComponent(term)}`);
+	} catch (err) {
+		if (sequence === overviewSearchSequence) {
+			el.overviewResults.innerHTML = `<p class="global-results-note">${escapeHtml(err.message || "Search failed.")}</p>`;
+		}
+
+		return;
+	}
+
+	if (sequence !== overviewSearchSequence) {
+		return;
+	}
+
+	if (result.databases.length === 0) {
+		el.overviewResults.innerHTML = `<p class="global-results-note">No matches in ${result.searched} database${result.searched === 1 ? "" : "s"}.</p>`;
+		return;
+	}
+
+	el.overviewResults.innerHTML = result.databases.map((group) => {
+		const hits = [
+			...group.directories.map((directory) => `<div class="result-row"><span class="result-kind">Folder</span><a href="${escapeHtml(databaseHref(group.dbId, directory.url))}" data-db-link>${escapeHtml(directory.name)}</a><span class="result-path">${escapeHtml(directory.url)}</span></div>`),
+			...group.files.map((file) => `<div class="result-row"><span class="result-kind">File</span><a href="${escapeHtml(databaseHref(group.dbId, file.directoryUrl))}" data-db-link title="Open the folder">${escapeHtml(file.name)}</a><span class="result-size">${file.unknownSize ? "" : formatBytes(file.size)}</span><span class="result-path">${escapeHtml(file.directoryUrl)}</span></div>`)
+		];
+
+		return `<section class="result-group">
+			<h3><a href="${escapeHtml(databaseHref(group.dbId))}" data-db-link>${escapeHtml(group.rootUrl || group.dbId)}</a></h3>
+			${group.error ? `<p class="global-results-note">${escapeHtml(group.error)}</p>` : ""}
+			${hits.join("")}
+			${group.truncated ? '<p class="global-results-note">More matches exist, refine the search.</p>' : ""}
+		</section>`;
+	}).join("");
+
+	el.overviewResults.querySelectorAll("a[data-db-link]").forEach((link) => {
+		link.addEventListener("click", (e) => {
+			if (!isPlainLeftClick(e)) {
+				return;
+			}
+
+			e.preventDefault();
+			history.pushState({}, "", link.getAttribute("href"));
+			route();
+		});
+	});
 }

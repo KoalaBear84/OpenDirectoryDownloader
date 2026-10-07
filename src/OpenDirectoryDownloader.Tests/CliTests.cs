@@ -172,7 +172,34 @@ public class CliTests
 		CliInvocation invocation = Bind("--serve", "--serve-db", "scan.sqlite");
 
 		Assert.Equal(RunMode.Serve, invocation.Mode);
-		Assert.Equal("scan.sqlite", invocation.Serve.Database);
+		Assert.Equal(["scan.sqlite"], invocation.Serve.Databases);
+	}
+
+	[Fact]
+	public void ServeDb_CanBeGivenMultipleTimes()
+	{
+		CliInvocation invocation = Bind("--serve", "--serve-db", "a.sqlite", "--serve-db", "dir");
+
+		Assert.Equal(["a.sqlite", "dir"], invocation.Serve.Databases);
+	}
+
+	[Fact]
+	public void ADirectory_OpensTheViewer()
+	{
+		string directory = Path.Combine(Path.GetTempPath(), $"odd-cli-{Guid.NewGuid():N}");
+		Directory.CreateDirectory(directory);
+
+		try
+		{
+			CliInvocation invocation = Bind(directory);
+
+			Assert.Equal(RunMode.Serve, invocation.Mode);
+			Assert.Equal([directory], invocation.Serve.Databases);
+		}
+		finally
+		{
+			Directory.Delete(directory);
+		}
 	}
 
 	[Fact]
@@ -192,7 +219,7 @@ public class CliTests
 			CliInvocation invocation = Bind(path);
 
 			Assert.Equal(RunMode.Serve, invocation.Mode);
-			Assert.Equal(path, invocation.Serve.Database);
+			Assert.Equal([path], invocation.Serve.Databases);
 			Assert.Equal(8080, invocation.Serve.Port);
 		}
 		finally

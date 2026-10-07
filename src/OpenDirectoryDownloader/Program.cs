@@ -157,6 +157,6 @@ public static class Program
 
 		using SerilogLoggerFactory loggerFactory = new(logger);
 
-		return await ScanDatabaseServer.RunAsync(new ViewerOptions(serve.Database, serve.Port, serve.Host, serve.NoBrowser), loggerFactory.CreateLogger("OpenDirectoryDownloader.Server"));
+		return await ScanDatabaseServer.RunAsync(new ViewerOptions(serve.Databases, serve.Port, serve.Host, serve.NoBrowser), loggerFactory.CreateLogger("OpenDirectoryDownloader.Server"));
 	}
 }

@@ -739,3 +739,120 @@ main {
 [hidden] {
 	display: none !important;
 }
+
+/* Overview of several databases */
+#overview[hidden],
+#overview-results[hidden] {
+	display: none;
+}
+
+.overview-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px 24px;
+	margin-bottom: 16px;
+}
+
+.overview-toolbar .search-box {
+	flex: 1 1 480px;
+	max-width: 900px;
+}
+
+.overview-summary {
+	margin-left: auto;
+	opacity: 0.75;
+	white-space: nowrap;
+}
+
+.overview-table th[data-sort] {
+	cursor: pointer;
+	user-select: none;
+}
+
+.overview-table th[data-sort]:hover {
+	text-decoration: underline;
+}
+
+.overview-table th.sorted-asc::after { content: " B2"; font-size: 0.7em; }
+.overview-table th.sorted-desc::after { content: " BC"; font-size: 0.7em; }
+
+.overview-table-wrap {
+	overflow-x: auto;
+}
+
+.overview-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.overview-table th,
+.overview-table td {
+	padding: 8px 12px;
+	text-align: left;
+	border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+	vertical-align: top;
+	white-space: nowrap;
+}
+
+.overview-table .num {
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+}
+
+.overview-table td.overview-root {
+	white-space: normal;
+	word-break: break-all;
+	min-width: 220px;
+}
+
+.overview-file {
+	font-size: 0.8em;
+	opacity: 0.65;
+}
+
+.badge.db-done { background: rgba(46, 160, 67, 0.25); }
+.badge.db-busy { background: rgba(210, 153, 34, 0.3); }
+.badge.db-loading { background: rgba(128, 128, 128, 0.25); }
+.badge.db-error { background: rgba(248, 81, 73, 0.3); }
+
+#overview-results {
+	margin-bottom: 24px;
+}
+
+.result-group h3 {
+	margin: 8px 0 2px;
+	font-size: 0.95em;
+	word-break: break-all;
+}
+
+.result-row {
+	display: flex;
+	align-items: baseline;
+	gap: 12px;
+	padding: 1px 0;
+	font-size: 0.9em;
+	line-height: 1.35;
+}
+
+.result-kind {
+	flex: 0 0 40px;
+	opacity: 0.6;
+	font-size: 0.85em;
+}
+
+.result-size {
+	flex: 0 0 70px;
+	text-align: right;
+	opacity: 0.8;
+}
+
+.result-path {
+	flex: 1 1 0;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	opacity: 0.55;
+	font-size: 0.85em;
+}

@@ -13,6 +13,7 @@
 
 	<header>
 		<h1>OpenDirectoryDownloader</h1>
+		<a id="overview-link" class="up-btn" href="/" hidden>&larr; All databases</a>
 		<button type="button" id="up-btn" class="up-btn" hidden title="Go up one folder" aria-label="Go up one folder">&uarr; Up</button>
 		<nav class="breadcrumbs" id="breadcrumbs"></nav>
 		<div class="toolbar" id="toolbar" hidden>
@@ -33,6 +34,27 @@
 
 	<main>
 		<div id="initial-loading">Loading&hellip;</div>
+
+		<div id="overview" hidden>
+			<div class="overview-toolbar">
+				<div class="search-box">
+					<input type="search" id="overview-search" placeholder="Search files and folders in all databases&hellip;" autocomplete="off">
+					<button type="button" id="overview-search-clear" class="clear-btn" hidden aria-label="Clear search">&times;</button>
+				</div>
+				<span id="overview-summary" class="overview-summary"></span>
+			</div>
+			<div id="overview-results" hidden></div>
+			<div class="overview-table-wrap">
+				<table class="overview-table">
+					<thead>
+						<tr>
+							<th data-sort="rootUrl">Root URL</th><th data-sort="status">Status</th><th data-sort="totalFiles" class="num">Files</th><th data-sort="totalDirectories" class="num">Folders</th><th data-sort="totalSize" class="num">Size</th><th data-sort="databaseSizeBytes" class="num">Database</th><th data-sort="speedBytesPerSecond" class="num">Speed</th><th data-sort="firstStartedAtUtc">First scanned</th><th data-sort="completedAtUtc">Completed</th>
+						</tr>
+					</thead>
+					<tbody id="overview-body"></tbody>
+				</table>
+			</div>
+		</div>
 
 		<div id="empty-state" hidden>
 			<p>No scan database is loaded yet.</p>

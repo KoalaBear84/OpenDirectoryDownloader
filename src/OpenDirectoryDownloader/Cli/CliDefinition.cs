@@ -60,16 +60,21 @@ public static class CliDefinition
 	public static readonly Option<bool> Resume = new("--resume") { Description = "Continue a previously interrupted scan from the database at --db-path (or the default derived path), instead of starting over. Keeps the database file regardless of --keep-db, so an interrupted resume can itself be resumed again. If no existing database is found, starts a fresh scan as normal." };
 	public static readonly Option<bool> RetryErrors = new("--retry-errors") { Description = "When resuming with --resume, retry directories that errored during the previous run instead of leaving them as-is. Without this, if any are found and the console is interactive, you'll be asked; otherwise they're left alone." };
 	public static readonly Option<bool> Serve = new("--serve") { Description = "Start a local web server to browse a scan database (see 'Web viewer' in the README) instead of scanning a URL." };
-	public static readonly Option<string> ServeDb = new("--serve-db") { Description = "Path to a .sqlite scan database to preload when using --serve. Optional - a database can also be dropped onto the page." };
+	public static readonly Option<string[]> ServeDb = new("--serve-db")
+	{
+		Description = "Path to a .sqlite scan database, or a directory containing .sqlite scan databases, to preload when using --serve. Can be used multiple times; with more than one database (or a directory) an overview page with a combined search is shown. Optional - a database can also be dropped onto the page.",
+		Arity = ArgumentArity.ZeroOrMore,
+		AllowMultipleArgumentsPerToken = false
+	};
 	public static readonly Option<int> ServePort = new("--serve-port") { Description = "Port for --serve.", DefaultValueFactory = _ => 8080 };
 	public static readonly Option<string> ServeHost = new("--serve-host") { Description = "Host/IP to bind --serve to. Defaults to loopback only; the server has no authentication, so only change this on a trusted network.", DefaultValueFactory = _ => "127.0.0.1" };
 	public static readonly Option<bool> ServeNoBrowser = new("--serve-no-browser") { Description = "Don't automatically open the default browser when --serve starts." };
 
 	/// <summary>A scan database dropped onto the executable starts the viewer with it</summary>
-	public static readonly Argument<string> Database = new("database")
+	public static readonly Argument<string[]> Database = new("database")
 	{
-		Description = "A .sqlite scan database to open in the web viewer",
-		Arity = ArgumentArity.ZeroOrOne,
+		Description = "One or more .sqlite scan databases (or directories containing them) to open in the web viewer",
+		Arity = ArgumentArity.ZeroOrMore,
 		Hidden = true
 	};
 
@@ -97,11 +102,12 @@ public static class CliDefinition
 
 		Database.Validators.Add(result =>
 		{
-			string path = result.GetValueOrDefault<string>();
-
-			if (path is not null && (!File.Exists(path) || !Path.GetExtension(path).Equals(".sqlite", StringComparison.OrdinalIgnoreCase)))
+			foreach (string path in result.GetValueOrDefault<string[]>() ?? [])
 			{
-				result.AddError($"Unrecognized command or argument '{path}'.");
+				if (!IsDatabaseOrDirectory(path))
+				{
+					result.AddError($"Unrecognized command or argument '{path}'.");
+				}
 			}
 		});
 
@@ -115,13 +121,18 @@ public static class CliDefinition
 				result.AddError("Using a wait time with more than 1 thread isn't supported, as it would still have multiple threads running.");
 			}
 
-			if (result.GetValue(ServeDb) is not null && !result.GetValue(Serve))
+			if (result.GetValue(ServeDb) is { Length: > 0 } && !result.GetValue(Serve))
 			{
 				result.AddError("--serve-db can only be used with --serve.");
 			}
 		});
 
 		return rootCommand;
+	}
+
+	private static bool IsDatabaseOrDirectory(string path)
+	{
+		return Directory.Exists(path) || (File.Exists(path) && Path.GetExtension(path).Equals(".sqlite", StringComparison.OrdinalIgnoreCase));
 	}
 
 	public static ParseResult Parse(IReadOnlyList<string> args)
@@ -139,10 +150,10 @@ public static class CliDefinition
 	/// </summary>
 	public static CliInvocation Bind(ParseResult parseResult)
 	{
-		string database = parseResult.GetValue(Database);
+		string[] databases = parseResult.GetValue(Database) ?? [];
 		string url = parseResult.GetValue(Url)?.Trim();
 
-		RunMode mode = parseResult.GetValue(Serve) || database is not null ? RunMode.Serve :
+		RunMode mode = parseResult.GetValue(Serve) || databases.Length > 0 ? RunMode.Serve :
 			!string.IsNullOrWhiteSpace(url) && File.Exists(url) ? RunMode.Report :
 			RunMode.Scan;
 
@@ -202,7 +213,7 @@ public static class CliDefinition
 			},
 			new ServeOptions
 			{
-				Database = database ?? parseResult.GetValue(ServeDb),
+				Databases = [.. databases, .. parseResult.GetValue(ServeDb) ?? []],
 				Port = parseResult.GetValue(ServePort),
 				Host = parseResult.GetValue(ServeHost),
 				NoBrowser = parseResult.GetValue(ServeNoBrowser)

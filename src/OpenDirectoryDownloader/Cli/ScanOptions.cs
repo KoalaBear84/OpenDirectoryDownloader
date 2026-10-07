@@ -92,7 +92,8 @@ public sealed record StorageOptions
 
 public sealed record ServeOptions
 {
-	public string Database { get; init; }
+	/// <summary>Scan database files and/or directories containing them</summary>
+	public IReadOnlyList<string> Databases { get; init; } = [];
 
 	public int Port { get; init; } = 8080;
 
