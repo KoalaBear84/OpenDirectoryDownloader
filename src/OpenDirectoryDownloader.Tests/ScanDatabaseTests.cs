@@ -346,66 +346,30 @@ public class ScanDatabaseTests : IAsyncLifetime
 			(await _scanDatabase.GetAllDirectoriesAsync()).Select(directory => directory.Parser));
 	}
 
-	/// <summary>A database as the previous version wrote it: the parser name on every directory, early ones also a URL hash on every file</summary>
-	private static void CreateVersion2Database(string path, bool withFileUrlHash)
-	{
-		using SqliteConnection connection = new($"Data Source={path};Pooling=False");
-		connection.Open();
-		using SqliteCommand command = connection.CreateCommand();
-		command.CommandText =
-			$"""
-			CREATE TABLE scan (id INTEGER PRIMARY KEY CHECK (id = 1), root_url TEXT NOT NULL, first_started_utc TEXT NOT NULL, completed_utc TEXT NULL, uploaded_urls_url TEXT NULL);
-			CREATE TABLE run (run_number INTEGER PRIMARY KEY AUTOINCREMENT, started_utc TEXT NOT NULL, updated_utc TEXT NOT NULL, http_traffic INTEGER NOT NULL, http_requests INTEGER NOT NULL, errors INTEGER NOT NULL, skipped INTEGER NOT NULL, status_codes TEXT NOT NULL, speedtest_bytes INTEGER NULL, speedtest_ms INTEGER NULL, speedtest_max_bytes_per_second INTEGER NULL);
-			CREATE TABLE directory (id INTEGER PRIMARY KEY, parent_id INTEGER NULL, url TEXT NOT NULL, url_hash INTEGER NOT NULL, name TEXT NOT NULL, description TEXT NULL, finished INTEGER NOT NULL, error INTEGER NOT NULL, parser TEXT NULL);
-			CREATE INDEX directory_parent ON directory (parent_id);
-			CREATE INDEX directory_url ON directory (url_hash);
-			CREATE TABLE file (id INTEGER PRIMARY KEY, directory_id INTEGER NOT NULL, url TEXT NOT NULL, relative INTEGER NOT NULL, {(withFileUrlHash ? "url_hash INTEGER NOT NULL, " : "")}name TEXT NOT NULL, extension TEXT NOT NULL, size INTEGER NULL, description TEXT NULL);
-			CREATE INDEX file_directory ON file (directory_id);
-			{(withFileUrlHash ? "CREATE INDEX file_url ON file (url_hash);" : "")}
-			INSERT INTO scan (id, root_url, first_started_utc) VALUES (1, 'https://example.com/', '2026-10-06T10:00:00.0000000+00:00');
-			INSERT INTO directory VALUES (1, NULL, 'https://example.com/', 1, 'ROOT', NULL, 1, 0, 'Tables');
-			INSERT INTO directory VALUES (2, 1, 'https://example.com/a/', 2, 'a', NULL, 1, 0, 'AList');
-			INSERT INTO directory VALUES (3, 1, 'https://example.com/b/', 3, 'b', NULL, 0, 0, '');
-			INSERT INTO directory VALUES (4, 1, 'https://example.com/c/', 4, 'c', NULL, 1, 0, 'Tables');
-			INSERT INTO file (id, directory_id, url, relative, {(withFileUrlHash ? "url_hash, " : "")}name, extension, size) VALUES (1, 2, 'x.zip', 1, {(withFileUrlHash ? "5, " : "")}'x.zip', '.zip', 10);
-			PRAGMA user_version = 2;
-			""";
-		command.ExecuteNonQuery();
-	}
-
 	[Theory]
-	[InlineData(false)]
-	[InlineData(true)]
-	public async Task AVersion2Database_IsUpgraded_ForTheViewerAndForResume(bool withFileUrlHash)
+	// The releases before (no version set) and the development builds of this one
+	[InlineData(0)]
+	[InlineData(2)]
+	public async Task ADatabaseOfAnotherVersion_IsRefused(int version)
 	{
 		await _scanDatabase.DisposeAsync();
 		ScanDatabase.DeleteFiles(_dbPath);
 
-		// The viewer
-		CreateVersion2Database(_dbPath, withFileUrlHash);
-
-		await using (ScanDatabase viewer = await ScanDatabase.OpenReadOnlyAsync(_dbPath, TestContext.Current.CancellationToken))
+		await using (SqliteConnection connection = new($"Data Source={_dbPath};Pooling=False"))
 		{
-			Assert.Equal(["AList", "Tables"], await viewer.GetDistinctParserTypesAsync());
-			Assert.Equal(["Tables", "AList", null, "Tables"], (await viewer.GetAllDirectoriesAsync()).Select(directory => directory.Parser));
-			Assert.Equal(10, (await viewer.GetFileInfoAsync("https://example.com/a/x.zip")).FileSize);
+			await connection.OpenAsync(TestContext.Current.CancellationToken);
+			using SqliteCommand command = connection.CreateCommand();
+			command.CommandText = $"CREATE TABLE scan (id INTEGER); CREATE TABLE run (id INTEGER); CREATE TABLE directory (id INTEGER); CREATE TABLE file (id INTEGER); PRAGMA user_version = {version};";
+			await command.ExecuteNonQueryAsync(TestContext.Current.CancellationToken);
 		}
 
-		// --resume, and writing on
-		ScanDatabase.DeleteFiles(_dbPath);
-		CreateVersion2Database(_dbPath, withFileUrlHash);
+		InvalidOperationException viewing = await Assert.ThrowsAsync<InvalidOperationException>(() => ScanDatabase.OpenReadOnlyAsync(_dbPath, TestContext.Current.CancellationToken));
+		Assert.Contains("another version", viewing.Message);
 
-		_scanDatabase = await ScanDatabase.OpenForResumeAsync(_dbPath, TestContext.Current.CancellationToken);
+		InvalidOperationException resuming = await Assert.ThrowsAsync<InvalidOperationException>(() => ScanDatabase.OpenForResumeAsync(_dbPath, TestContext.Current.CancellationToken));
+		Assert.Contains("another version", resuming.Message);
 
-		WebDirectory root = new(parentWebDirectory: null) { Url = "https://example.com/", Name = "ROOT", Id = 1 };
-		WebDirectory d = new(root) { Url = "https://example.com/d/", Name = "d", Parser = "AList" };
-		_scanDatabase.MirrorDirectory(d);
-		_scanDatabase.MirrorFile(new WebFile { Url = "https://example.com/d/y.zip", FileName = "y.zip", FileSize = 20 }, d);
-		await _scanDatabase.FlushAsync(TestContext.Current.CancellationToken);
-
-		Assert.Equal(2, await CountParserRowsAsync());
-		Assert.Equal(["Tables", "AList", null, "Tables", "AList"], (await _scanDatabase.GetAllDirectoriesAsync()).Select(directory => directory.Parser));
-		Assert.Equal(20, (await _scanDatabase.GetFileInfoAsync("https://example.com/d/y.zip")).FileSize);
+		_scanDatabase = await ScanDatabase.CreateAsync(_dbPath, TestContext.Current.CancellationToken);
 	}
 
 	[Fact]

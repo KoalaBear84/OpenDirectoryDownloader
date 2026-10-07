@@ -25,8 +25,8 @@ namespace OpenDirectoryDownloader.Storage;
 /// </remarks>
 public sealed partial class ScanDatabase : IAsyncDisposable
 {
-	/// <summary>Schema version in PRAGMA user_version; version 1 was the URL keyed schema, 2 had the parser name on every directory</summary>
-	private const int SchemaVersion = 3;
+	/// <summary>Schema version in PRAGMA user_version (the databases of earlier releases have 0)</summary>
+	private const int SchemaVersion = 1;
 
 	private const int ChannelCapacity = 4096;
 
@@ -114,12 +114,6 @@ public sealed partial class ScanDatabase : IAsyncDisposable
 			long existingVersion = (long)await ScalarAsync(connection, "PRAGMA user_version;", cancellationToken);
 			long tableCount = (long)await ScalarAsync(connection, "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table';", cancellationToken);
 
-			if (tableCount > 0 && existingVersion == 2)
-			{
-				await UpgradeFromVersion2Async(connection, cancellationToken);
-				existingVersion = SchemaVersion;
-			}
-
 			if (tableCount > 0 && existingVersion != SchemaVersion)
 			{
 				throw new InvalidOperationException($"'{path}' is a scan database from another version of OpenDirectoryDownloader (schema {existingVersion}, this version uses {SchemaVersion}) and cannot be resumed.");
@@ -177,32 +171,12 @@ public sealed partial class ScanDatabase : IAsyncDisposable
 
 		string connectionString = new SqliteConnectionStringBuilder { DataSource = path, Mode = SqliteOpenMode.ReadOnly, Pooling = false }.ConnectionString;
 
-		for (bool upgraded = false; ; upgraded = true)
+		await using (SqliteConnection connection = new(connectionString))
 		{
-			long matchingTables;
-			long version;
+			await connection.OpenAsync(cancellationToken);
 
-			await using (SqliteConnection connection = new(connectionString))
-			{
-				await connection.OpenAsync(cancellationToken);
-
-				matchingTables = (long)await ScalarAsync(connection, "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name IN ('directory', 'file', 'scan', 'run');", cancellationToken);
-				version = (long)await ScalarAsync(connection, "PRAGMA user_version;", cancellationToken);
-			}
-
-			// Upgraded in place, but only when no other process has it open (its WAL files would be there)
-			if (matchingTables == 4 && version == 2 && !upgraded)
-			{
-				if (!ownsSidecarFiles)
-				{
-					throw new InvalidOperationException($"'{path}' is a scan database from an earlier version that is still open in another OpenDirectoryDownloader; it can be opened once that one is closed.");
-				}
-
-				await using SqliteConnection upgradeConnection = new(new SqliteConnectionStringBuilder { DataSource = path, Mode = SqliteOpenMode.ReadWrite, Pooling = false }.ConnectionString);
-				await upgradeConnection.OpenAsync(cancellationToken);
-				await UpgradeFromVersion2Async(upgradeConnection, cancellationToken);
-				continue;
-			}
+			long matchingTables = (long)await ScalarAsync(connection, "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name IN ('directory', 'file', 'scan', 'run');", cancellationToken);
+			long version = (long)await ScalarAsync(connection, "PRAGMA user_version;", cancellationToken);
 
 			if (matchingTables != 4 || version != SchemaVersion)
 			{
@@ -210,41 +184,14 @@ public sealed partial class ScanDatabase : IAsyncDisposable
 					$"'{path}' doesn't look like an OpenDirectoryDownloader scan database." :
 					$"'{path}' is a scan database from another version of OpenDirectoryDownloader (schema {version}, this version reads {SchemaVersion}).");
 			}
-
-			break;
 		}
 
 		return new ScanDatabase(path, writeConnection: null, connectionString, logger, ownsSidecarFiles);
 	}
 
-	/// <summary>
-	/// Version 2 had the parser name on every directory: the names go to the parser table, the directories get its id.
-	/// Early version 2 databases also had a URL hash (and index) on every file, which is no longer written.
-	/// </summary>
-	private static async Task UpgradeFromVersion2Async(SqliteConnection connection, CancellationToken cancellationToken)
-	{
-		bool fileHasUrlHash = (long)await ScalarAsync(connection, "SELECT COUNT(*) FROM pragma_table_info('file') WHERE name = 'url_hash';", cancellationToken) > 0;
-
-		await ExecuteAsync(connection,
-			$"""
-			BEGIN;
-			CREATE TABLE parser (
-				id INTEGER PRIMARY KEY,
-				name TEXT NOT NULL UNIQUE
-			);
-			INSERT INTO parser (name) SELECT DISTINCT parser FROM directory WHERE parser IS NOT NULL AND parser != '' ORDER BY parser;
-			ALTER TABLE directory ADD COLUMN parser_id INTEGER NULL;
-			UPDATE directory SET parser_id = (SELECT id FROM parser WHERE parser.name = directory.parser) WHERE parser IS NOT NULL AND parser != '';
-			ALTER TABLE directory DROP COLUMN parser;
-			{(fileHasUrlHash ? "DROP INDEX IF EXISTS file_url; ALTER TABLE file DROP COLUMN url_hash;" : string.Empty)}
-			PRAGMA user_version = 3;
-			COMMIT;
-			""", cancellationToken);
-	}
-
 	private const string Schema =
 		"""
-		PRAGMA user_version = 3;
+		PRAGMA user_version = 1;
 
 		CREATE TABLE IF NOT EXISTS scan (
 			id INTEGER PRIMARY KEY CHECK (id = 1),
