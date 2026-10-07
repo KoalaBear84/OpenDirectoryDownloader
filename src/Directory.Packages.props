@@ -17,7 +17,8 @@
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.12" />
     <PackageVersion Include="Polly.Core" Version="8.8.0" />
     <PackageVersion Include="PuppeteerExtraSharp" Version="3.1.1" />
-    <PackageVersion Include="PuppeteerSharp" Version="25.12.0" />
+    <!-- Pinned: PuppeteerExtraSharp is built against PuppeteerSharp 20, see OpenDirectoryDownloader.csproj -->
+    <PackageVersion Include="PuppeteerSharp" Version="20.2.6" />
     <PackageVersion Include="Serilog.Extensions.Hosting" Version="10.0.0" />
     <PackageVersion Include="Serilog.Sinks.Async" Version="2.1.0" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.1.1" />

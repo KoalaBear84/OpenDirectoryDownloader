@@ -28,6 +28,13 @@
     <PackageReference Include="HttpCloak" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Polly.Core" />
+    <!--
+      WARNING: PuppeteerSharp is pinned to 20.2.6 (Directory.Packages.props), do not update it.
+      PuppeteerExtraSharp 3.1.1 (the latest) is built against PuppeteerSharp 20.2.2: from 21.0.0 on the methods it calls
+      changed (IPage.EvaluateFunctionAsync / EvaluateExpressionAsync, and IBrowser.PagesAsync from 24.42.0), which only
+      shows when the browser starts: MissingMethodException "Method not found: ... IBrowser.PagesAsync()".
+      Only update PuppeteerSharp together with a PuppeteerExtraSharp that is built against that version.
+    -->
     <PackageReference Include="PuppeteerExtraSharp" />
     <PackageReference Include="PuppeteerSharp" />
     <PackageReference Include="Serilog.Extensions.Hosting" />
