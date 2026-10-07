@@ -113,7 +113,7 @@ public sealed partial class ScanDatabase
 	{
 		List<string> types = [];
 
-		using SqliteCommand command = Command(connection, "SELECT DISTINCT parser FROM directory WHERE parser IS NOT NULL AND parser != '' ORDER BY parser");
+		using SqliteCommand command = Command(connection, "SELECT name FROM parser WHERE id IN (SELECT parser_id FROM directory) ORDER BY name");
 		using SqliteDataReader reader = await command.ExecuteReaderAsync();
 
 		while (await reader.ReadAsync())
@@ -391,7 +391,7 @@ public sealed partial class ScanDatabase
 	{
 		List<StoredDirectory> directories = [];
 
-		using SqliteCommand command = Command(connection, "SELECT id, parent_id, url, name, description, finished, error, parser FROM directory ORDER BY id");
+		using SqliteCommand command = Command(connection, "SELECT d.id, d.parent_id, d.url, d.name, d.description, d.finished, d.error, p.name FROM directory d LEFT JOIN parser p ON p.id = d.parser_id ORDER BY d.id");
 		using SqliteDataReader reader = await command.ExecuteReaderAsync();
 
 		while (await reader.ReadAsync())

@@ -335,6 +335,7 @@ public sealed partial class ScanDatabase
 			}
 
 			await transaction.CommitAsync();
+			commands.Committed();
 
 			return true;
 		}
@@ -351,6 +352,8 @@ public sealed partial class ScanDatabase
 			{
 				_logger.LogDebug(rollbackException, "Rollback failed on scan database '{path}'", Path);
 			}
+
+			commands.RolledBack();
 
 			if (records.Count == 1)
 			{
@@ -516,7 +519,7 @@ public sealed partial class ScanDatabase
 	{
 		private readonly RawStatement _upsertDirectory = new(connection.Handle,
 			"""
-			INSERT INTO directory (id, parent_id, url, url_hash, name, description, finished, error, parser)
+			INSERT INTO directory (id, parent_id, url, url_hash, name, description, finished, error, parser_id)
 			VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)
 			ON CONFLICT(id) DO UPDATE SET
 				parent_id = excluded.parent_id,
@@ -526,8 +529,16 @@ public sealed partial class ScanDatabase
 				description = excluded.description,
 				finished = excluded.finished,
 				error = excluded.error,
-				parser = excluded.parser;
+				parser_id = excluded.parser_id;
 			""");
+
+		private readonly RawStatement _insertParser = new(connection.Handle, "INSERT INTO parser (name) VALUES (?1);");
+
+		/// <summary>The parser ids, the ones already in the database (a resumed scan) included</summary>
+		private readonly Dictionary<string, long> _parserIds = ReadParserIds(connection);
+
+		/// <summary>Parsers inserted in the open transaction: forgotten again when it is rolled back</summary>
+		private readonly List<string> _uncommittedParsers = [];
 
 		private const string InsertFileSql =
 			"""
@@ -564,7 +575,7 @@ public sealed partial class ScanDatabase
 			_upsertDirectory.Bind(6, row.Description);
 			_upsertDirectory.Bind(7, row.Finished ? 1 : 0);
 			_upsertDirectory.Bind(8, row.Error ? 1 : 0);
-			_upsertDirectory.Bind(9, row.Parser);
+			_upsertDirectory.Bind(9, ParserId(row.Parser));
 			_upsertDirectory.Execute();
 		}
 
@@ -621,8 +632,57 @@ public sealed partial class ScanDatabase
 			_updateFileSize.Execute();
 		}
 
+		private long? ParserId(string parser)
+		{
+			if (string.IsNullOrEmpty(parser))
+			{
+				return null;
+			}
+
+			if (!_parserIds.TryGetValue(parser, out long id))
+			{
+				_insertParser.Bind(1, parser);
+				_insertParser.Execute();
+
+				id = raw.sqlite3_last_insert_rowid(connection.Handle);
+				_parserIds[parser] = id;
+				_uncommittedParsers.Add(parser);
+			}
+
+			return id;
+		}
+
+		public void Committed() => _uncommittedParsers.Clear();
+
+		public void RolledBack()
+		{
+			foreach (string parser in _uncommittedParsers)
+			{
+				_parserIds.Remove(parser);
+			}
+
+			_uncommittedParsers.Clear();
+		}
+
+		private static Dictionary<string, long> ReadParserIds(SqliteConnection connection)
+		{
+			Dictionary<string, long> parserIds = new(StringComparer.Ordinal);
+
+			using SqliteCommand command = connection.CreateCommand();
+			command.CommandText = "SELECT id, name FROM parser;";
+			using SqliteDataReader reader = command.ExecuteReader();
+
+			while (reader.Read())
+			{
+				parserIds[reader.GetString(1)] = reader.GetInt64(0);
+			}
+
+			return parserIds;
+		}
+
 		public void Dispose()
 		{
+			_insertParser.Dispose();
 			_upsertDirectory.Dispose();
 			_upsertFile.Dispose();
 			_insertFile.Dispose();
