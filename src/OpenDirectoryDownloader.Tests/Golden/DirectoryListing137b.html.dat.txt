@@ -1,0 +1,12 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  file http://localhost/file1.bin | file1.bin | 10000000 | 
+  file http://localhost/file2 | file2 | 100000000 | 
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=False
+  file http://localhost:8086/listing/file1.bin | file1.bin | 10000000 | 
+  file http://localhost:8086/listing/file2 | file2 | 100000000 | 
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  file http://localhost/file1.bin | file1.bin | 10000000 | 
+  file http://localhost/file2 | file2 | 100000000 | 

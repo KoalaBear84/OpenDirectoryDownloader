@@ -349,4 +349,32 @@ public class DirectoryParser126_150Tests : DirectoryParserTests
 		Assert.Empty(webDirectory.Subdirectories);
 		Assert.Empty(webDirectory.Files);
 	}
+
+	/// <summary>
+	/// Url: https://example.com/pub/
+	/// Directories only in the nav, no files
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing137aAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.Equal(8, webDirectory.Subdirectories.Count);
+		Assert.Equal("alpha", webDirectory.Subdirectories[0].Name);
+		Assert.Equal("http://localhost/alpha/", webDirectory.Subdirectories[0].Url);
+		Assert.Empty(webDirectory.Files);
+	}
+
+	/// <summary>
+	/// Url: https://example.com/pub/data/
+	/// </summary>
+	[Fact]
+	public async Task TestDirectoryListing137bAsync()
+	{
+		WebDirectory webDirectory = await ParseHtml(GetSample());
+
+		Assert.NotEmpty(webDirectory.Files);
+		Assert.Equal("file1.bin", webDirectory.Files[0].FileName);
+		Assert.Equal(10000000, webDirectory.Files[0].FileSize);
+	}
 }

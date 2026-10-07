@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="generator" content="SNT index generator"/>
+    <meta charset="utf-8"/>
+    <title>Mirror service - Index of /pub/</title>
+</head>
+<body>
+<header><div id="name"><a href="https://www.example.com">Mirror service</a></div></header>
+<div id="content">
+    <div id="title"><h1>Index of /pub/</h1></div>
+    <main>
+        <nav>
+            <h3>Directories</h3>
+            <ul>
+                <li>
+                    <a href="../" class="dirup">
+                        <i class="fas fa-level-up-alt"></i>
+                        <i>Parent directory</i>
+                    </a>
+                </li>
+                <li>
+                    <a href="alpha/" class="dir">
+                        <i class="fas fa-folder"></i>
+                        alpha
+                    </a>
+                </li>
+                <li>
+                    <a href="beta/" class="dir">
+                        <i class="fas fa-folder"></i>
+                        beta
+                    </a>
+                </li>
+                <li>
+                    <a href="gamma/" class="dir">
+                        <i class="fas fa-folder"></i>
+                        gamma
+                    </a>
+                </li>
+                <li>
+                    <a href="delta/" class="dir">
+                        <i class="fas fa-folder"></i>
+                        delta
+                    </a>
+                </li>
+                <li>
+                    <a href="epsilon/" class="dir">
+                        <i class="fas fa-folder"></i>
+                        epsilon
+                    </a>
+                </li>
+                <li>
+                    <a href="zeta/" class="dir">
+                        <i class="fas fa-folder"></i>
+                        zeta
+                    </a>
+                </li>
+                <li>
+                    <a href="eta/" class="dir">
+                        <i class="fas fa-folder"></i>
+                        eta
+                    </a>
+                </li>
+                <li>
+                    <a href="theta/" class="dir">
+                        <i class="fas fa-folder"></i>
+                        theta
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <article>
+            <div id="files">
+                <table class="listing">
+                    <thead>
+                    <tr class="header"><th class="name">Filename</th><th class="time">Modification time</th><th class="size">Size</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td colspan="3">This directory contains no files</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </main>
+</div>
+</body>
+</html>

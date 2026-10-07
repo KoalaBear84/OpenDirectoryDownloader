@@ -30,6 +30,7 @@ public class PipelineOrderTests
 			"AList",
 			"Google Drive index detection",
 			"Google Drive index",
+			"SNT index generator",
 			"Remove #sidebar and nav",
 			"HFS (legacy title)",
 			"pCloud (title)",

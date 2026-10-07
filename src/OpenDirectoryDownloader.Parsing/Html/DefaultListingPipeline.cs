@@ -63,6 +63,9 @@ public static partial class DefaultListingPipeline
 		new("Google Drive index detection", DetectGoogleDriveIndex),
 		new("Google Drive index", GoogleDriveIndex),
 
+		// Its directories are in the <nav>, which the next step removes
+		new("SNT index generator", SntIndexGenerator),
+
 		new("Remove #sidebar and nav", RemoveSidebarAndNav),
 
 		new("HFS (legacy title)", HfsByTitle),
@@ -232,6 +235,11 @@ public static partial class DefaultListingPipeline
 			GoogleDriveIndexMapping.GdIndex => StepResult.Done(await GdIndexParser.ParseIndex(context.Services, context.WebDirectory, context.Html)),
 			_ => StepResult.Continue
 		};
+	}
+
+	private static StepResult SntIndexGenerator(ParseContext context)
+	{
+		return SntListingParser.IsSntListing(context.Document) ? StepResult.Done(SntListingParser.Parse(context.BaseUrl, context.Parsed, context.Document, context.CheckParents, context.Logger)) : StepResult.Continue;
 	}
 
 	private static StepResult RemoveSidebarAndNav(ParseContext context)

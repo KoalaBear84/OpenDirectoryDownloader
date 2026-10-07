@@ -1,0 +1,30 @@
+== root
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/alpha/ | alpha |  | ParseSntListing
+  dir http://localhost/beta/ | beta |  | ParseSntListing
+  dir http://localhost/gamma/ | gamma |  | ParseSntListing
+  dir http://localhost/delta/ | delta |  | ParseSntListing
+  dir http://localhost/epsilon/ | epsilon |  | ParseSntListing
+  dir http://localhost/zeta/ | zeta |  | ParseSntListing
+  dir http://localhost/eta/ | eta |  | ParseSntListing
+  dir http://localhost/theta/ | theta |  | ParseSntListing
+== nested
+url=http://localhost:8086/listing/ name=listing desc= parser= error=False ok=False
+  dir http://localhost:8086/listing/alpha/ | alpha |  | ParseSntListing
+  dir http://localhost:8086/listing/beta/ | beta |  | ParseSntListing
+  dir http://localhost:8086/listing/gamma/ | gamma |  | ParseSntListing
+  dir http://localhost:8086/listing/delta/ | delta |  | ParseSntListing
+  dir http://localhost:8086/listing/epsilon/ | epsilon |  | ParseSntListing
+  dir http://localhost:8086/listing/zeta/ | zeta |  | ParseSntListing
+  dir http://localhost:8086/listing/eta/ | eta |  | ParseSntListing
+  dir http://localhost:8086/listing/theta/ | theta |  | ParseSntListing
+== root, entries outside the directory kept
+url=http://localhost/ name=ROOT desc= parser= error=False ok=False
+  dir http://localhost/alpha/ | alpha |  | ParseSntListing
+  dir http://localhost/beta/ | beta |  | ParseSntListing
+  dir http://localhost/gamma/ | gamma |  | ParseSntListing
+  dir http://localhost/delta/ | delta |  | ParseSntListing
+  dir http://localhost/epsilon/ | epsilon |  | ParseSntListing
+  dir http://localhost/zeta/ | zeta |  | ParseSntListing
+  dir http://localhost/eta/ | eta |  | ParseSntListing
+  dir http://localhost/theta/ | theta |  | ParseSntListing

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="generator" content="SNT index generator"/>
+    <meta charset="utf-8"/>
+    <title>Mirror service - Index of /pub/data/</title>
+</head>
+<body>
+<header><div id="name"><a href="https://www.example.com">Mirror service</a></div></header>
+<div id="content">
+    <div id="title"><h1>Index of /pub/data/</h1></div>
+    <main>
+        <nav>
+            <h3>Directories</h3>
+            <ul>
+                <li>
+                    <a href="../" class="dirup">
+                        <i class="fas fa-level-up-alt"></i>
+                        <i>Parent directory</i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <article>
+            <div id="files">
+                <table class="listing">
+                    <thead>
+                    <tr class="header"><th class="name">Filename</th><th class="time">Modification time</th><th class="size">Size</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="name file">
+                            <a rel="nofollow" href="file1.bin">
+                                <i class="fas fa-file"></i>
+                                file1.bin
+                            </a>
+                        </td>
+                        <td class="time"><time datetime="2020-01-01T12:00:00&#43;01:00">2020-01-01 12:00 CET</time></td>
+                        <td class="size" title="10000000 bytes">9766 KiB</td>
+                    </tr>
+                    <tr>
+                        <td class="name file">
+                            <a rel="nofollow" href="file2">
+                                <i class="fas fa-file"></i>
+                                file2
+                            </a>
+                        </td>
+                        <td class="time"><time datetime="2020-01-01T12:00:00&#43;01:00">2020-01-01 12:00 CET</time></td>
+                        <td class="size" title="100000000 bytes">95 MiB</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </main>
+</div>
+</body>
+</html>
