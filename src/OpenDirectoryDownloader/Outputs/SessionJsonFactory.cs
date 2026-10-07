@@ -14,6 +14,13 @@ public sealed class SessionJsonFactory(ScanSession session, ScanDatabase scanDat
 	{
 		string jsonPath = outputPaths.Get("json");
 
+		if (File.Exists(jsonPath))
+		{
+			logger.LogInformation("Session JSON file already exists, not overwriting: {path}", jsonPath);
+			Console.WriteLine($"Session JSON file already exists, not overwriting: {jsonPath}");
+			return;
+		}
+
 		logger.LogInformation("Saving session to JSON..");
 		Console.WriteLine("Saving session to JSON..");
 

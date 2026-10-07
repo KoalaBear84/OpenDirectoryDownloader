@@ -118,10 +118,19 @@ public sealed class UrlListOutput(OutputOptions outputOptions, OutputPaths outpu
 			return;
 		}
 
+		string urlsPath = outputPaths.Get("txt");
+
+		// Never overwrite: the file may be from an earlier scan, and it isn't ours to replace (so it isn't uploaded either)
+		if (File.Exists(urlsPath))
+		{
+			logger.LogInformation("URL list file already exists, not overwriting: {path}", urlsPath);
+			Console.WriteLine($"URL list file already exists, not overwriting: {urlsPath}");
+			return;
+		}
+
 		logger.LogInformation("Saving URL list to file..");
 		Console.WriteLine("Saving URL list to file..");
 
-		string urlsPath = outputPaths.Get("txt");
 		long distinctUrls = await WriteAsync(context.Database, urlsPath, cancellationToken);
 
 		if (context.Session.TotalFiles != distinctUrls)

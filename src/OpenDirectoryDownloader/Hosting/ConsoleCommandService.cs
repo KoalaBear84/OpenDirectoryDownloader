@@ -184,10 +184,18 @@ public sealed class ConsoleCommandService(
 	{
 		try
 		{
+			string urlsPath = outputPaths.Get("txt");
+
+			if (File.Exists(urlsPath))
+			{
+				logger.LogInformation("URL list file already exists, not overwriting: {path}", urlsPath);
+				Console.WriteLine($"URL list file already exists, not overwriting: {urlsPath}");
+				return;
+			}
+
 			logger.LogInformation("Saving URL list to file..");
 			Console.WriteLine("Saving URL list to file..");
 
-			string urlsPath = outputPaths.Get("txt");
 			await UrlListOutput.WriteAsync(scanDatabase, urlsPath, cancellationToken);
 
 			logger.LogInformation("Saved URL list to file: {path}", urlsPath);
