@@ -78,13 +78,14 @@ public static class Statistics
 		string uploadedUrlsText = !string.IsNullOrWhiteSpace(session.UploadedUrlsUrl) ? $"[Urls file]({session.UploadedUrlsUrl})" : string.Empty;
 		string rootUrl = session.Root.Url;
 
+		// Reddit refuses a post (META_RTJSON_MALFORMED) when the cell between the URL and the URLs file is empty
 		if (rootUrl.Length < 40)
 		{
-			stringBuilder.AppendLine($"|**Url:** [{rootUrl}]({rootUrl})||{uploadedUrlsText}|");
+			stringBuilder.AppendLine($@"|**Url:** [{rootUrl}]({rootUrl})|\-|{uploadedUrlsText}|");
 		}
 		else
 		{
-			stringBuilder.AppendLine($"|**Url:** [{rootUrl[..38]}...]({rootUrl})||{uploadedUrlsText}|");
+			stringBuilder.AppendLine($@"|**Url:** [{rootUrl[..38]}...]({rootUrl})|\-|{uploadedUrlsText}|");
 		}
 
 		stringBuilder.AppendLine("|:-|-:|-:|");

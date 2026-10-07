@@ -1,4 +1,5 @@
 using OpenDirectoryDownloader.Reporting;
+using OpenDirectoryDownloader.Scanning;
 using OpenDirectoryDownloader.Storage;
 using Xunit;
 
@@ -25,6 +26,19 @@ public class StatisticsTests : IAsyncLifetime
 				File.Delete(path);
 			}
 		}
+	}
+
+	[Theory]
+	[InlineData("http://thewebsite.com/", "https://gofile.io/d/blabla", @"|**Url:** [http://thewebsite.com/](http://thewebsite.com/)|\-|[Urls file](https://gofile.io/d/blabla)|")]
+	[InlineData("http://thewebsite.com/a/very/long/path/that/gets/shortened/", null, @"|**Url:** [http://thewebsite.com/a/very/long/path...](http://thewebsite.com/a/very/long/path/that/gets/shortened/)|\-||")]
+	public void RedditStats_TheCellBetweenUrlAndUrlsFile_IsNotEmpty(string url, string uploadedUrlsUrl, string expectedHeader)
+	{
+		// Reddit refuses the post with META_RTJSON_MALFORMED when it is empty
+		ScanSession session = new(new WebDirectory(null) { Url = url }, 5) { UploadedUrlsUrl = uploadedUrlsUrl };
+
+		string stats = Statistics.GetSessionStats(session, new ScanReport([]), includeExtensions: true, onlyRedditStats: true);
+
+		Assert.Equal(expectedHeader, stats.Split(Environment.NewLine)[0]);
 	}
 
 	[Fact]
