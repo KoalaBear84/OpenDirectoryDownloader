@@ -24,14 +24,17 @@ internal static partial class GoogleDriveIndexDetector
 		{
 			string googleDriveIndexType = GoogleDriveIndexMapping.GetGoogleDriveIndexType(script.Source);
 
+			// Relative to the page, like a browser does (a script of "js/app.js" is not at the root of the site)
+			string scriptUrl = Uri.TryCreate(context.WebDirectory.Uri, script.Source, out Uri resolvedUri) ? resolvedUri.ToString() : script.Source;
+
 			if (googleDriveIndexType is null && script.Source.Contains("app.min.js", StringComparison.InvariantCultureIgnoreCase))
 			{
-				googleDriveIndexType = await CheckOnceAsync(state, $"sourcemap|{script.Source}", () => CheckSourceMapAsync(context, script.Source));
+				googleDriveIndexType = await CheckOnceAsync(context, state, $"sourcemap|{scriptUrl}", () => CheckSourceMapAsync(context, scriptUrl));
 			}
 
 			if (googleDriveIndexType is null && script.Source.Contains("app.js", StringComparison.InvariantCultureIgnoreCase))
 			{
-				googleDriveIndexType = await CheckOnceAsync(state, $"appjs|{script.Source}", () => CheckAppJsAsync(context, script.Source));
+				googleDriveIndexType = await CheckOnceAsync(context, state, $"appjs|{scriptUrl}", () => CheckAppJsAsync(context, scriptUrl));
 			}
 
 			if (googleDriveIndexType is not null)
@@ -43,8 +46,12 @@ internal static partial class GoogleDriveIndexDetector
 		return null;
 	}
 
-	/// <summary>Runs <paramref name="check"/> once per key; a check that failed is tried again next time, as it would have been before.</summary>
-	private static async Task<string> CheckOnceAsync(GoogleDriveIndexState state, string key, Func<Task<string>> check)
+	/// <summary>
+	/// Runs <paramref name="check"/> once per key. It is only a guess whether the page is a Google Drive index, so a check
+	/// that fails never fails the page: a script that is not there (404) or isn't JavaScript is remembered as "no", a
+	/// network problem is tried again with the next page.
+	/// </summary>
+	private static async Task<string> CheckOnceAsync(ParseContext context, GoogleDriveIndexState state, string key, Func<Task<string>> check)
 	{
 		Lazy<Task<string>> lazyCheck = state.CheckedScripts.GetOrAdd(key, _ => new Lazy<Task<string>>(check));
 
@@ -52,10 +59,18 @@ internal static partial class GoogleDriveIndexDetector
 		{
 			return await lazyCheck.Value;
 		}
-		catch
+		catch (Exception ex)
 		{
-			state.CheckedScripts.TryRemove(key, out _);
-			throw;
+			bool definitive = ex is ParseErrorException or HttpRequestException { StatusCode: not null };
+
+			if (!definitive)
+			{
+				state.CheckedScripts.TryRemove(key, out _);
+			}
+
+			context.Logger.LogDebug("Google Drive index check of {key} failed ({error}){retry}", key, ex.Message, definitive ? string.Empty : ", trying again with the next page");
+
+			return null;
 		}
 	}
 
@@ -95,11 +110,6 @@ internal static partial class GoogleDriveIndexDetector
 
 	private static async Task<string> CheckAppJsAsync(ParseContext context, string scriptUrl)
 	{
-		if (Uri.IsWellFormedUriString(scriptUrl, UriKind.Relative))
-		{
-			scriptUrl = new Uri(context.Services.Session.Root.Uri, scriptUrl).ToString();
-		}
-
 		string appJsSource = await context.Services.Http.GetStringAsync(scriptUrl);
 
 		Parser javaScriptParser = new();
