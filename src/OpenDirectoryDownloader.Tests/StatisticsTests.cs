@@ -30,7 +30,7 @@ public class StatisticsTests : IAsyncLifetime
 
 	[Theory]
 	[InlineData("http://thewebsite.com/", "https://gofile.io/d/blabla", @"|**Url:** [http://thewebsite.com/](http://thewebsite.com/)|\-|[Urls file](https://gofile.io/d/blabla)|")]
-	[InlineData("http://thewebsite.com/a/very/long/path/that/gets/shortened/", null, @"|**Url:** [http://thewebsite.com/a/very/long/path...](http://thewebsite.com/a/very/long/path/that/gets/shortened/)|\-||")]
+	[InlineData("http://thewebsite.com/a/very/long/path/that/gets/shortened/", null, @"|**Url:** [http://thewebsite.com/a/very/long/path...](http://thewebsite.com/a/very/long/path/that/gets/shortened/)|\-|\-|")]
 	public void RedditStats_TheCellBetweenUrlAndUrlsFile_IsNotEmpty(string url, string uploadedUrlsUrl, string expectedHeader)
 	{
 		// Reddit refuses the post with META_RTJSON_MALFORMED when it is empty
@@ -39,6 +39,23 @@ public class StatisticsTests : IAsyncLifetime
 		string stats = Statistics.GetSessionStats(session, new ScanReport([]), includeExtensions: true, onlyRedditStats: true);
 
 		Assert.Equal(expectedHeader, stats.Split(Environment.NewLine)[0]);
+	}
+
+	[Theory]
+	[InlineData(true)]
+	[InlineData(false)]
+	public void RedditStats_NeverHaveAnEmptyCell(bool includeExtensions)
+	{
+		// The same table is the intermediate statistics (every 30 seconds), without the extensions
+		ScanSession session = new(new WebDirectory(null) { Url = "http://thewebsite.com/" }, 5);
+		ScanReport report = new(new Dictionary<string, ExtensionStats> { [string.Empty] = new() { Count = 6, FileSize = 100 } });
+
+		string stats = Statistics.GetSessionStats(session, report, includeExtensions: includeExtensions, onlyRedditStats: includeExtensions);
+
+		foreach (string line in stats.Split(Environment.NewLine).Where(line => line.StartsWith('|')))
+		{
+			Assert.DoesNotContain("||", line);
+		}
 	}
 
 	[Fact]

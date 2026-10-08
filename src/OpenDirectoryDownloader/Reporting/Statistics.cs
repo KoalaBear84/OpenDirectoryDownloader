@@ -42,6 +42,9 @@ public static class Statistics
 
 	/// <param name="report">The per extension numbers; needed for <paramref name="includeExtensions"/> or <paramref name="includeFullExtensions"/></param>
 	/// <param name="totalDirectories">Finished directories below the root, when known; the running counter otherwise</param>
+	/// <summary>A markdown table cell that is shown as a dash</summary>
+	private const string EmptyCell = @"\-";
+
 	public static string GetSessionStats(ScanSession session, ScanReport report = null, bool includeExtensions = false, bool includeFullExtensions = false, bool onlyRedditStats = false, bool includeBanner = false, long? totalDirectories = null)
 	{
 		Dictionary<string, ExtensionStats> extensionsStats = (includeExtensions || includeFullExtensions) ? report?.Extensions ?? [] : [];
@@ -75,17 +78,17 @@ public static class Statistics
 			stringBuilder.Clear();
 		}
 
-		string uploadedUrlsText = !string.IsNullOrWhiteSpace(session.UploadedUrlsUrl) ? $"[Urls file]({session.UploadedUrlsUrl})" : string.Empty;
+		string uploadedUrlsText = !string.IsNullOrWhiteSpace(session.UploadedUrlsUrl) ? $"[Urls file]({session.UploadedUrlsUrl})" : EmptyCell;
 		string rootUrl = session.Root.Url;
 
-		// Reddit refuses a post (META_RTJSON_MALFORMED) when the cell between the URL and the URLs file is empty
+		// Reddit refuses a post (META_RTJSON_MALFORMED) with an empty table cell, so no cell is ever left empty
 		if (rootUrl.Length < 40)
 		{
-			stringBuilder.AppendLine($@"|**Url:** [{rootUrl}]({rootUrl})|\-|{uploadedUrlsText}|");
+			stringBuilder.AppendLine($@"|**Url:** [{rootUrl}]({rootUrl})|{EmptyCell}|{uploadedUrlsText}|");
 		}
 		else
 		{
-			stringBuilder.AppendLine($@"|**Url:** [{rootUrl[..38]}...]({rootUrl})|\-|{uploadedUrlsText}|");
+			stringBuilder.AppendLine($@"|**Url:** [{rootUrl[..38]}...]({rootUrl})|{EmptyCell}|{uploadedUrlsText}|");
 		}
 
 		stringBuilder.AppendLine("|:-|-:|-:|");
@@ -96,7 +99,7 @@ public static class Statistics
 
 			foreach (KeyValuePair<string, ExtensionStats> extensionStat in extensionsStats.OrderByDescending(e => e.Value.FileSize > 0 ? e.Value.FileSize : e.Value.Count).Take(5))
 			{
-				stringBuilder.AppendLine($"|{extensionStat.Key}|{UrlHelper.FormatWithThousands(extensionStat.Value.Count)}|{(extensionStat.Value.FileSize > 0 ? FileSizeHelper.ToHumanReadable(extensionStat.Value.FileSize) : "n/a")}|");
+				stringBuilder.AppendLine($"|{(string.IsNullOrEmpty(extensionStat.Key) ? "(none)" : extensionStat.Key)}|{UrlHelper.FormatWithThousands(extensionStat.Value.Count)}|{(extensionStat.Value.FileSize > 0 ? FileSizeHelper.ToHumanReadable(extensionStat.Value.FileSize) : "n/a")}|");
 			}
 
 			long directories = totalDirectories ?? session.Root.TotalDirectories;
@@ -105,7 +108,7 @@ public static class Statistics
 		}
 
 		SpeedtestResult speedtestResult = session.SpeedtestResult;
-		string speed = speedtestResult is null ? string.Empty :
+		string speed = speedtestResult is null ? EmptyCell :
 			$"**Speed:** {(speedtestResult.DownloadedBytes > 0 ? $"{speedtestResult.MaxBytesPerSecond / (double)Constants.Megabyte:F2} MB/s ({speedtestResult.MaxBytesPerSecond / (double)Constants.Megabyte * 8:F1} mbit)" : "Failed")}";
 
 		DateTimeOffset finished = session.Finished == DateTimeOffset.MinValue ? DateTimeOffset.UtcNow : session.Finished;
