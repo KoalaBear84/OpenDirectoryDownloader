@@ -820,13 +820,13 @@ main {
 	margin-bottom: 24px;
 }
 
-.result-group h3 {
+#overview-results .result-group h3 {
 	margin: 8px 0 2px;
 	font-size: 0.95em;
 	word-break: break-all;
 }
 
-.result-row {
+#overview-results .result-row {
 	display: flex;
 	align-items: baseline;
 	gap: 12px;
@@ -835,19 +835,19 @@ main {
 	line-height: 1.35;
 }
 
-.result-kind {
+#overview-results .result-kind {
 	flex: 0 0 40px;
 	opacity: 0.6;
 	font-size: 0.85em;
 }
 
-.result-size {
+#overview-results .result-size {
 	flex: 0 0 70px;
 	text-align: right;
 	opacity: 0.8;
 }
 
-.result-path {
+#overview-results .result-path {
 	flex: 1 1 0;
 	min-width: 0;
 	overflow: hidden;
