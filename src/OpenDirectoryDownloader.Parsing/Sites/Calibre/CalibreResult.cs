@@ -358,7 +358,7 @@ namespace OpenDirectoryDownloader.Parsing.Sites.Calibre.CalibreResult
 		public string Sort { get; set; }
 
 		[JsonPropertyName("series_index")]
-		public long SeriesIndex { get; set; }
+		public double SeriesIndex { get; set; }
 
 		[JsonPropertyName("format_sizes")]
 		public Dictionary<string, long> FormatSizes { get; set; }

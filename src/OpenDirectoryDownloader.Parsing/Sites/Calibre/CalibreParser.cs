@@ -91,24 +91,19 @@ public static class CalibreParser
 
 				Stopwatch stopwatch = Stopwatch.StartNew();
 
-				//RateLimiter rateLimiter = new RateLimiter(100, TimeSpan.FromSeconds(30));
-
-				Parallel.ForEach(libraryResult.Metadata.AsParallel().AsOrdered(), new ParallelOptions { MaxDegreeOfParallelism = 100 }, (book) =>
+				// Sequential: it is only CPU work, and a List is not safe to add to from several threads (books got lost, entries could be null)
+				foreach (KeyValuePair<string, CalibreResult.Metadatum> book in libraryResult.Metadata)
 				{
-					// NOT async, else it will continue with the rest of the code..
-					// TODO: Need a nice fix which respects MaxDegreeOfParallelism
+					libraryWebDirectory.Subdirectories.Add(GetBookInfo(services, calibreRootUri, library, libraryWebDirectory, book));
 
-					//rateLimiter.RateLimit().Wait();
-					GetBookInfo(services, calibreRootUri, library, libraryWebDirectory, book);
+					booksIndexed++;
 
-					int newBooksIndexed = Interlocked.Increment(ref booksIndexed);
-
-					if (newBooksIndexed % 100 == 0 && stopwatch.Elapsed > TimeSpan.FromSeconds(5))
+					if (booksIndexed % 100 == 0 && stopwatch.Elapsed > TimeSpan.FromSeconds(5))
 					{
-						services.Logger.LogWarning($"Parsing books at {100 * ((decimal)newBooksIndexed / booksToIndex):F1}% ({newBooksIndexed}/{booksToIndex})");
+						services.Logger.LogWarning($"Parsing books at {100 * ((decimal)booksIndexed / booksToIndex):F1}% ({booksIndexed}/{booksToIndex})");
 						stopwatch.Restart();
 					}
-				});
+				}
 
 				services.Console.WriteLine($"Parsed info of {libraryResult.Metadata.Count} books for library {library.Value}");
 				services.Logger.LogInformation($"Parsed info of {libraryResult.Metadata.Count} books for library {library.Value}");
@@ -121,7 +116,7 @@ public static class CalibreParser
 		}
 	}
 
-	private static void GetBookInfo(ParserServices services, Uri calibreRootUri, KeyValuePair<string, string> library, WebDirectory libraryWebDirectory, KeyValuePair<string, CalibreResult.Metadatum> book)
+	private static WebDirectory GetBookInfo(ParserServices services, Uri calibreRootUri, KeyValuePair<string, string> library, WebDirectory libraryWebDirectory, KeyValuePair<string, CalibreResult.Metadatum> book)
 	{
 		services.Logger.LogDebug($"Retrieving info for book [{book.Key}]: {book.Value.Title}...");
 
@@ -178,8 +173,6 @@ public static class CalibreParser
 				});
 			}
 
-			libraryWebDirectory.Subdirectories.Add(bookWebDirectory);
-
 			services.Logger.LogDebug($"Retrieved info for book [{book.Key}]: {book.Value.Title}");
 		}
 		catch (Exception ex)
@@ -187,5 +180,7 @@ public static class CalibreParser
 			services.Logger.LogDebug(ex, $"Error processing book {book.Key}");
 			bookWebDirectory.Error = true;
 		}
+
+		return bookWebDirectory;
 	}
 }

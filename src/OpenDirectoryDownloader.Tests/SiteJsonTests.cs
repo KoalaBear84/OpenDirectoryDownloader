@@ -40,4 +40,12 @@ public class SiteJsonTests
 	{
 		Assert.StartsWith("{", RoundTrips[type]("{}"));
 	}
+
+	[Fact]
+	public void CalibreResult_ReadsAFractionalSeriesIndex()
+	{
+		global::OpenDirectoryDownloader.Parsing.Sites.Calibre.CalibreResult.CalibreResult result = global::OpenDirectoryDownloader.Parsing.Sites.Calibre.CalibreResult.CalibreResult.FromJson("""{"metadata":{"1":{"series_index":1.5}}}""");
+
+		Assert.Equal(1.5, result.Metadata["1"].SeriesIndex);
+	}
 }
