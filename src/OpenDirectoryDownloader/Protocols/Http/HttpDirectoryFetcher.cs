@@ -80,6 +80,7 @@ public sealed partial class HttpDirectoryFetcher(
 			try
 			{
 				response = await Client.GetAsync(webDirectory.Url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+				await ResumingStream.MakeResumableAsync(response, Client, logger, cancellationToken);
 			}
 			catch (TaskCanceledException)
 			{
@@ -382,7 +383,10 @@ public sealed partial class HttpDirectoryFetcher(
 	{
 		previous?.Dispose();
 
-		return await Client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+		HttpResponseMessage response = await Client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+		await ResumingStream.MakeResumableAsync(response, Client, logger, cancellationToken);
+
+		return response;
 	}
 
 	/// <summary>Tries the directory again with another user agent; when that works, the whole scan keeps it.</summary>
