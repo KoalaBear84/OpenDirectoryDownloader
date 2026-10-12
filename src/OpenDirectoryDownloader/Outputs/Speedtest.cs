@@ -18,7 +18,7 @@ public static class Speedtest
 
 		try
 		{
-			if (!httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.RequestMessage?.RequestUri?.ToString() != url)
+			if (!httpResponseMessage.IsSuccessStatusCode || !IsSameUrl(httpResponseMessage, url))
 			{
 				// Some servers want a referer for their files
 				httpResponseMessage.Dispose();
@@ -28,11 +28,11 @@ public static class Speedtest
 				httpResponseMessage = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
 			}
 
-			if (!httpResponseMessage.IsSuccessStatusCode || httpResponseMessage.RequestMessage?.RequestUri?.OriginalString != url)
+			if (!httpResponseMessage.IsSuccessStatusCode || !IsSameUrl(httpResponseMessage, url))
 			{
 				string retrievedUrl = null;
 
-				if (httpResponseMessage.RequestMessage?.RequestUri?.OriginalString != url)
+				if (!IsSameUrl(httpResponseMessage, url))
 				{
 					retrievedUrl = httpResponseMessage.RequestMessage?.RequestUri?.ToString();
 				}
@@ -54,6 +54,27 @@ public static class Speedtest
 		{
 			httpResponseMessage.Dispose();
 		}
+	}
+
+	/// <summary>
+	/// False when the response comes from another URL (a redirect). The URLs are compared normalized: with characters
+	/// like 'ç' in the path, a handler can report the same URL percent-encoded, which is not a redirect.
+	/// </summary>
+	internal static bool IsSameUrl(HttpResponseMessage httpResponseMessage, string url)
+	{
+		Uri requestUri = httpResponseMessage.RequestMessage?.RequestUri;
+
+		if (requestUri is null)
+		{
+			return true;
+		}
+
+		if (Uri.TryCreate(url, UriKind.Absolute, out Uri expectedUri) && requestUri.IsAbsoluteUri)
+		{
+			return string.Equals(expectedUri.AbsoluteUri, requestUri.AbsoluteUri, StringComparison.Ordinal);
+		}
+
+		return requestUri.OriginalString == url;
 	}
 
 	public static async Task<SpeedtestResult> FtpAsync(AsyncFtpClient ftpClient, string url, ILogger logger, int seconds = 25, CancellationToken cancellationToken = default)
