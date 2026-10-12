@@ -157,4 +157,5 @@ public static class ConcurrencyReasons
 	public const string Browser = "Browser";
 	public const string RateLimited = "Rate limited";
 	public const string FtpMaxConnections = "FTP maximum connections";
+	public const string HttpCloak = "HTTP Cloak";
 }

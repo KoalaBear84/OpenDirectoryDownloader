@@ -218,7 +218,7 @@ This might also help as an alternative to the registry fix mentioned above under
 
 Note: when enabled, it bypasses this app's SSL certificate validation and automatic decompression, and has no native binary for linux-arm.
 
-**It is a lot slower than scanning without it** (measured 6-70x, depending on site and `--threads`), only use `--http-cloak` when you actually need it!
+**It is a lot slower than scanning without it** (measured 6-70x), because it always uses a single thread (`--threads` is ignored), only use `--http-cloak` when you actually need it!
 
 ## Cloudflare (Experimental)
 

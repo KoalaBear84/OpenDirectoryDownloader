@@ -2,6 +2,7 @@ using FlareSolverrSharp;
 using Microsoft.Extensions.Logging;
 using OpenDirectoryDownloader.Cli;
 using OpenDirectoryDownloader.Scanning;
+using OpenDirectoryDownloader.Threading;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Security;
@@ -69,6 +70,14 @@ public sealed partial class ScanHttp : IDisposable
 
 				cloakProxy = proxyUriBuilder.Uri.ToString();
 			}
+
+			// Its native proxy can't take parallel requests: with more than one thread requests fail (connections aborted, empty responses)
+			if (session.Concurrency.Effective > 1)
+			{
+				logger.LogWarning("--http-cloak: using 1 thread, the HttpCloak proxy gives errors with parallel requests");
+			}
+
+			session.Concurrency.SetCap(ConcurrencyReasons.HttpCloak, 1);
 
 			HttpCloak.HttpCloakHandler httpCloakHandler = new(preset: httpOptions.HttpCloakPreset, proxy: cloakProxy);
 			innerHandler = new CookieSyncHandler(httpCloakHandler, Cookies, logger);
