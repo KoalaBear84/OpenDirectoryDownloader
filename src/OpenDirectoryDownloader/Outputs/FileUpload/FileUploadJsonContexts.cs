@@ -6,7 +6,8 @@ namespace OpenDirectoryDownloader.Outputs.FileUpload;
 // Source generated, so the trimmed release keeps what is needed. One context per set of options the calls used.
 
 /// <summary>The plain JsonSerializer defaults: the responses read as text, and the uploaded files written to the history</summary>
-[JsonSerializable(typeof(AnonFilesFile))]
+[JsonSerializable(typeof(CatboxFile))]
+[JsonSerializable(typeof(ZeroXZeroFile))]
 [JsonSerializable(typeof(QuAxResponse))]
 [JsonSerializable(typeof(GoFileIoFile))]
 [JsonSerializable(typeof(GoFileIoUploadFileResponse))]

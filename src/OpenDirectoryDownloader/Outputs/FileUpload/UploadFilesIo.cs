@@ -11,6 +11,8 @@ public class UploadFilesIo : IFileUploadSite
 {
 	public string Name => "UFile.io";
 
+	public long? MaxFileSize => null;
+
 	public async Task<IFileUploadSiteFile> UploadFile(HttpClient httpClient, string path, ScanSession session, ILogger logger)
 	{
 		int retries = 0;
@@ -67,7 +69,7 @@ public class UploadFilesIo : IFileUploadSite
 
 					// Post file
 					using FileStream fileStream = new(path, FileMode.Open);
-					using StreamContent streamContent = new(fileStream);
+					using StreamContent streamContent = new(new UploadProgressStream(fileStream, Name));
 
 					using MultipartFormDataContent multipartFormDataContent = new($"Upload----{Guid.NewGuid()}")
 					{

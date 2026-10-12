@@ -10,6 +10,8 @@ public class QuAx : IFileUploadSite
 {
 	public string Name => "qu.ax";
 
+	public long? MaxFileSize => 256L * 1000 * 1000;
+
 	public async Task<IFileUploadSiteFile> UploadFile(HttpClient httpClient, string path, ScanSession session, ILogger logger)
 	{
 		int retries = 0;
@@ -20,7 +22,7 @@ public class QuAx : IFileUploadSite
 			try
 			{
 				using FileStream fileStream = new(path, FileMode.Open);
-				using StreamContent streamContent = new(fileStream);
+				using StreamContent streamContent = new(new UploadProgressStream(fileStream, Name));
 
 				using MultipartFormDataContent multipartFormDataContent = new($"Upload----{Guid.NewGuid()}")
 				{

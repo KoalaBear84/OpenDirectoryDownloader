@@ -185,10 +185,18 @@ public sealed class UrlUploadOutput(OutputOptions outputOptions, ScanHttp scanHt
 		}
 
 		// In this order, the next one when one fails
-		IFileUploadSite[] uploadSites = [new GoFileIo(), new QuAx(), new UploadFilesIo(), new AnonFiles()];
+		IFileUploadSite[] uploadSites = [new Catbox(), new QuAx(), new ZeroXZero(), new GoFileIo(), new UploadFilesIo()];
+
+		long fileSize = new FileInfo(context.UrlListPath).Length;
 
 		foreach (IFileUploadSite uploadSite in uploadSites)
 		{
+			if (uploadSite.MaxFileSize is long maxFileSize && fileSize > maxFileSize)
+			{
+				logger.LogWarning("Skipping {siteName}: file is {fileSize}, the maximum is {maxSize}", uploadSite.Name, FileSizeHelper.ToHumanReadable(fileSize), FileSizeHelper.ToHumanReadable(maxFileSize));
+				continue;
+			}
+
 			try
 			{
 				Console.WriteLine($"Uploading URLs ({FileSizeHelper.ToHumanReadable(new FileInfo(context.UrlListPath).Length)}) with {uploadSite.Name}..");
