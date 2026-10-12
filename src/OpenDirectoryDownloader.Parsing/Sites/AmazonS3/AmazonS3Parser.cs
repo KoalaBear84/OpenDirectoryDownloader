@@ -9,27 +9,17 @@ public static class AmazonS3Parser
 {
 	private const string Parser = "AmazonS3";
 
+	/// <remarks>
+	/// Errors are not handled here: an HTTP error (S3 answers 503 "Slow Down" when it is asked too fast) goes to the crawl
+	/// engine, which retries with a wait and fewer threads, and reports the directory as failed when it gives up.
+	/// </remarks>
 	public static async Task<WebDirectory> ParseIndex(ParserServices services, WebDirectory webDirectory, bool hasHeader)
 	{
-		try
-		{
-			UrlEncodingParser urlEncodingParser = new(webDirectory.Url);
+		UrlEncodingParser urlEncodingParser = new(webDirectory.Url);
 
-			string prefix = urlEncodingParser.AllKeys.Contains("prefix") ? urlEncodingParser["prefix"] : string.Empty;
+		string prefix = urlEncodingParser.AllKeys.Contains("prefix") ? urlEncodingParser["prefix"] : string.Empty;
 
-			webDirectory = await ScanAsync(services, webDirectory, prefix, hasHeader);
-		}
-		catch (Exception ex)
-		{
-			services.Logger.LogError(ex, "Error parsing {parser} for '{url}'", Parser, webDirectory.Url);
-			webDirectory.Error = true;
-
-			services.Session.ReportError(webDirectory.Url);
-
-			throw;
-		}
-
-		return webDirectory;
+		return await ScanAsync(services, webDirectory, prefix, hasHeader);
 	}
 
 	private static async Task<WebDirectory> ScanAsync(ParserServices services, WebDirectory webDirectory, string prefix, bool hasHeader)
@@ -38,58 +28,53 @@ public static class AmazonS3Parser
 
 		webDirectory.Parser = Parser;
 
-		try
+		string bucketName = webDirectory.Uri.Host.Replace(".s3.amazonaws.com", string.Empty);
+
+		// Only put on the directory when all pages are read: after a failure the whole directory is tried again
+		List<WebDirectory> subdirectories = [];
+		List<WebFile> files = [];
+
+		bool isTruncated;
+		string nextMarker = string.Empty;
+
+		do
 		{
-			string bucketName = webDirectory.Uri.Host.Replace(".s3.amazonaws.com", string.Empty);
+			string url = GetUrl(bucketName, prefix, nextMarker, hasHeader);
+			using HttpResponseMessage httpResponseMessage = await services.Http.GetAsync(url);
 
-			bool isTruncated = false;
-			string nextMarker = string.Empty;
+			httpResponseMessage.EnsureSuccessStatusCode();
 
-			do
+			using TextReader textReader = new StreamReader(await httpResponseMessage.Content.ReadAsStreamAsync());
+			AmazonS3Result result = AmazonS3Result.Parse(textReader);
+
+			isTruncated = result.IsTruncated;
+			nextMarker = result.NextMarker;
+
+			// Like directories
+			foreach (CommonPrefix commonPrefix in result.CommonPrefixes)
 			{
-				string url = GetUrl(bucketName, prefix, nextMarker, hasHeader);
-				HttpResponseMessage httpResponseMessage = await services.Http.GetAsync(url);
-
-				httpResponseMessage.EnsureSuccessStatusCode();
-
-				using TextReader textReader = new StreamReader(await httpResponseMessage.Content.ReadAsStreamAsync());
-				AmazonS3Result result = AmazonS3Result.Parse(textReader);
-
-				isTruncated = result.IsTruncated;
-				nextMarker = result.NextMarker;
-
-				// Like directories
-				foreach (CommonPrefix commonPrefix in result.CommonPrefixes)
+				subdirectories.Add(new WebDirectory(webDirectory)
 				{
-					webDirectory.Subdirectories.Add(new WebDirectory(webDirectory)
-					{
-						Parser = Parser,
-						Url = GetUrl(bucketName, commonPrefix.Prefix, nextMarker, hasHeader),
-						Name = commonPrefix.Prefix
-					});
-				}
+					Parser = Parser,
+					Url = GetUrl(bucketName, commonPrefix.Prefix, nextMarker, hasHeader),
+					Name = commonPrefix.Prefix
+				});
+			}
 
-				// Like files
-				foreach (Content content in result.Contents)
+			// Like files
+			foreach (Content content in result.Contents)
+			{
+				files.Add(new WebFile
 				{
-					webDirectory.Files.Add(new WebFile
-					{
-						Url = GetFileUrl(bucketName, hasHeader, content.Key),
-						FileName = Path.GetFileName(content.Key),
-						FileSize = content.Size
-					});
-				}
-			} while (isTruncated);
-		}
-		catch (Exception ex)
-		{
-			services.Logger.LogError(ex, "Error processing {parser} for '{url}'", Parser, webDirectory.Url);
-			webDirectory.Error = true;
+					Url = GetFileUrl(bucketName, hasHeader, content.Key),
+					FileName = Path.GetFileName(content.Key),
+					FileSize = content.Size
+				});
+			}
+		} while (isTruncated);
 
-			services.Session.ReportError(webDirectory.Url);
-
-			//throw;
-		}
+		webDirectory.Subdirectories.AddRange(subdirectories);
+		webDirectory.Files.AddRange(files);
 
 		return webDirectory;
 	}
