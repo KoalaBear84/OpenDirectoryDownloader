@@ -440,7 +440,7 @@ public sealed class FinishedOutput(ConsoleTitle consoleTitle, ILogger<FinishedOu
 		logger.LogInformation("Finished indexing!");
 		Console.WriteLine("Finished indexing!");
 
-		consoleTitle.Set($"✔ {consoleTitle.Current}");
+		consoleTitle.Set($"✔ {context.Session.Root.Uri.Host.Replace("www.", string.Empty)}");
 
 		return Task.CompletedTask;
 	}
