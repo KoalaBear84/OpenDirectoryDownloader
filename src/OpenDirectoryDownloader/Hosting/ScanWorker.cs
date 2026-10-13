@@ -335,7 +335,7 @@ public sealed partial class ScanWorker(
 				{
 					scanDatabase.MirrorSessionStats(session);
 
-					if (session.StatisticsSuppressed || !crawlEngine.Running)
+					if (session.StatisticsSuppressed || session.RateLimit.AllWaiting(crawlEngine.RunningDirectoryWorkers) || !crawlEngine.Running)
 					{
 						continue;
 					}

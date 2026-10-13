@@ -34,6 +34,8 @@ public sealed class ScanSession
 
 	public ConcurrentStringSet UrlsWithErrors { get; } = new();
 
+	public RateLimitTracker RateLimit { get; } = new();
+
 	public ConcurrentStringSet PossibleAlternativeUrls { get; } = new();
 
 	/// <summary>Pages that were already fetched through the browser, so it is tried once per URL.</summary>

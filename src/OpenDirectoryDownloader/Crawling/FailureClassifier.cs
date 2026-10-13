@@ -26,6 +26,9 @@ public sealed class FailureClassifier(ScanSession session, ILogger<FailureClassi
 		"lost%2Bfound/"
 	];
 
+	/// <summary>The server is slowing us down (HTTP 429/503/508, or a soft rate limit page), as opposed to something being broken</summary>
+	public static bool IsRateLimit(Exception ex) => ex is SoftRateLimitException or HttpRequestException { StatusCode: HttpStatusCode.TooManyRequests or HttpStatusCode.ServiceUnavailable or HttpStatusCode.LoopDetected };
+
 	/// <param name="attempt">The attempt that failed, 1 for the first</param>
 	/// <param name="wait">The wait before the next attempt, for the log</param>
 	/// <returns>True to try again</returns>

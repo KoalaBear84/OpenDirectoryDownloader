@@ -36,6 +36,9 @@ public sealed class CrawlEngine(
 	/// <summary>Attempts per directory at most; the classifier normally gives up much earlier</summary>
 	private const int MaxAttempts = 100;
 
+	/// <summary>Attempts counted for a directory that keeps hitting a rate limit while the scan is still working</summary>
+	private const int RateLimitedAttemptCap = 4;
+
 	/// <summary>A directory, all retries included, may take this long (more when the server asks to wait)</summary>
 	private static readonly TimeSpan DirectoryTimeLimit = TimeSpan.FromMinutes(5);
 
@@ -327,16 +330,31 @@ public sealed class CrawlEngine(
 			}
 			catch (Exception ex)
 			{
-				TimeSpan wait = TimeSpan.FromSeconds(Math.Min(16, Math.Pow(2, attempt))) + TimeSpan.FromMilliseconds(Random.Shared.Next(0, 200));
+				// A rate limit while other requests still work is no reason to give up: it doesn't count towards the maximum number of
+				// attempts (the wait stays at most 16 seconds) and the directory's time limit starts again
+				bool rateLimited = FailureClassifier.IsRateLimit(ex);
+				bool keepTrying = rateLimited && session.RateLimit.IsProgressing();
+				int countedAttempt = keepTrying ? Math.Min(attempt, RateLimitedAttemptCap) : attempt;
 
-				if (timeLimit.IsCancellationRequested || attempt >= MaxAttempts || !failureClassifier.ShouldRetry(ex, attempt, work.Directory, work.WorkerName, wait))
+				TimeSpan wait = TimeSpan.FromSeconds(Math.Min(16, Math.Pow(2, countedAttempt))) + TimeSpan.FromMilliseconds(Random.Shared.Next(0, 200));
+
+				if (keepTrying && !timeLimit.IsCancellationRequested)
+				{
+					timeLimit.CancelAfter(wait + DirectoryTimeLimit);
+				}
+
+				if (timeLimit.IsCancellationRequested || countedAttempt >= MaxAttempts || !failureClassifier.ShouldRetry(ex, attempt, work.Directory, work.WorkerName, wait))
 				{
 					throw new DirectoryAbandonedException(ex);
 				}
 
 				try
 				{
-					await Task.Delay(wait, timeLimit.Token);
+					// Counted as waiting, so the periodic statistics stay quiet while every worker is waiting for the rate limit
+					using (rateLimited ? session.RateLimit.BeginWait() : null)
+					{
+						await Task.Delay(wait, timeLimit.Token);
+					}
 				}
 				catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
 				{

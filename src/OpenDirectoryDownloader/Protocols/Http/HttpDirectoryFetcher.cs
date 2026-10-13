@@ -349,9 +349,16 @@ public sealed partial class HttpDirectoryFetcher(
 
 			session.HttpStatusCodes.Add((int)response.StatusCode);
 
-			if (!response.IsSuccessStatusCode)
+			if (response.IsSuccessStatusCode)
 			{
-				await RetryAfter.WaitIfAskedAsync(logger, work.WorkerName, webDirectory, response, work.ExtendTimeout, cancellationToken);
+				session.RateLimit.ReportSuccess();
+			}
+			else
+			{
+				using (session.RateLimit.BeginWait())
+				{
+					await RetryAfter.WaitIfAskedAsync(logger, work.WorkerName, webDirectory, response, work.ExtendTimeout, cancellationToken);
+				}
 
 				response.EnsureSuccessStatusCode();
 			}
