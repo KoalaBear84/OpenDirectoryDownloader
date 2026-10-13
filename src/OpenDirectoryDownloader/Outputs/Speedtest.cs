@@ -10,22 +10,35 @@ namespace OpenDirectoryDownloader.Outputs;
 /// <summary>Measures the download speed on the biggest file found: downloads it for 10 to 25 seconds, until the speed stops improving.</summary>
 public static class Speedtest
 {
-	public static async Task<SpeedtestResult> HttpAsync(HttpClient httpClient, string url, ILogger logger, int seconds = 25, CancellationToken cancellationToken = default)
+	/// <summary>No data for this long (connecting, waiting for the response, or between two reads) ends the speedtest</summary>
+	public static readonly TimeSpan DefaultStallTimeout = TimeSpan.FromSeconds(10);
+
+	public static async Task<SpeedtestResult> HttpAsync(HttpClient httpClient, string url, ILogger logger, int seconds = 25, CancellationToken cancellationToken = default, TimeSpan? stallTimeout = null)
 	{
+		TimeSpan stall = stallTimeout ?? DefaultStallTimeout;
+
 		logger.LogInformation("Do HTTP speedtest for {url}", url);
 
-		HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+		HttpResponseMessage httpResponseMessage = null;
 
 		try
 		{
-			if (!httpResponseMessage.IsSuccessStatusCode || !IsSameUrl(httpResponseMessage, url))
+			// Connecting and getting the response headers; reading the data has its own limit in FromStreamAsync
+			using (CancellationTokenSource headersSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
 			{
-				// Some servers want a referer for their files
-				httpResponseMessage.Dispose();
+				headersSource.CancelAfter(stall);
 
-				using HttpRequestMessage request = new(HttpMethod.Get, url);
-				request.Headers.Referrer = UrlHelper.GetUrlDirectory(url);
-				httpResponseMessage = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+				httpResponseMessage = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, headersSource.Token);
+
+				if (!httpResponseMessage.IsSuccessStatusCode || !IsSameUrl(httpResponseMessage, url))
+				{
+					// Some servers want a referer for their files
+					httpResponseMessage.Dispose();
+
+					using HttpRequestMessage request = new(HttpMethod.Get, url);
+					request.Headers.Referrer = UrlHelper.GetUrlDirectory(url);
+					httpResponseMessage = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, headersSource.Token);
+				}
 			}
 
 			if (!httpResponseMessage.IsSuccessStatusCode || !IsSameUrl(httpResponseMessage, url))
@@ -41,24 +54,31 @@ public static class Speedtest
 					retrievedUrl = httpResponseMessage.Headers.Location.ToString();
 				}
 
-				logger.LogWarning("Speedtest cancelled because it returns HTTP {httpStatusCode} (with URL {retrievedUrl}", (int)httpResponseMessage.StatusCode, retrievedUrl);
+				logger.LogWarning("Speedtest cancelled because it returns HTTP {httpStatusCode} (with URL {retrievedUrl})", (int)httpResponseMessage.StatusCode, retrievedUrl);
 
 				return new SpeedtestResult();
 			}
 
 			await using Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync(cancellationToken);
 
-			return await FromStreamAsync(stream, seconds, logger, cancellationToken);
+			return await FromStreamAsync(stream, seconds, logger, stall, cancellationToken);
+		}
+		catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
+		{
+			// Only the stall limit of the headers can get here
+			logger.LogWarning("Speedtest cancelled because there was no response within {seconds} seconds", stall.TotalSeconds);
+
+			return new SpeedtestResult();
 		}
 		finally
 		{
-			httpResponseMessage.Dispose();
+			httpResponseMessage?.Dispose();
 		}
 	}
 
 	/// <summary>
 	/// False when the response comes from another URL (a redirect). The URLs are compared normalized: with characters
-	/// like '็' in the path, a handler can report the same URL percent-encoded, which is not a redirect.
+	/// like 'รง' in the path, a handler can report the same URL percent-encoded, which is not a redirect.
 	/// </summary>
 	internal static bool IsSameUrl(HttpResponseMessage httpResponseMessage, string url)
 	{
@@ -83,11 +103,14 @@ public static class Speedtest
 
 		await using Stream stream = await ftpClient.OpenRead(new Uri(url).LocalPath, token: cancellationToken);
 
-		return await FromStreamAsync(stream, seconds, logger, cancellationToken);
+		return await FromStreamAsync(stream, seconds, logger, DefaultStallTimeout, cancellationToken);
 	}
 
-	private static async Task<SpeedtestResult> FromStreamAsync(Stream stream, int seconds, ILogger logger, CancellationToken cancellationToken)
+	private static async Task<SpeedtestResult> FromStreamAsync(Stream stream, int seconds, ILogger logger, TimeSpan stallTimeout, CancellationToken cancellationToken)
 	{
+		// Every read may take at most the stall timeout: a server that stops sending must not hang the speedtest
+		using CancellationTokenSource stallSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
 		int milliseconds = seconds * 1000;
 
 		Stopwatch stopwatch = Stopwatch.StartNew();
@@ -101,8 +124,27 @@ public static class Speedtest
 		long currentSecond = 0;
 		long bytesThisSecond = 0;
 
-		while ((bytesRead = await stream.ReadAsync(buffer, cancellationToken)) > 0)
+		while (true)
 		{
+			stallSource.CancelAfter(stallTimeout);
+
+			try
+			{
+				bytesRead = await stream.ReadAsync(buffer, stallSource.Token);
+			}
+			catch (OperationCanceledException) when (stallSource.IsCancellationRequested && !cancellationToken.IsCancellationRequested)
+			{
+				Console.WriteLine();
+				logger.LogWarning("Speedtest stopped because no data was received for {seconds} seconds", stallTimeout.TotalSeconds);
+
+				break;
+			}
+
+			if (bytesRead == 0)
+			{
+				break;
+			}
+
 			long elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
 
 			if (elapsedMilliseconds >= milliseconds)
