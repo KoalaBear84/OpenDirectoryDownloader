@@ -35,6 +35,8 @@ public class GoFileIo : IFileUploadSite
 
 				using HttpResponseMessage httpResponseMessageAccount = await httpClient.PostAsync("https://api.gofile.io/accounts", new StringContent("{}", Encoding.UTF8, "text/plain"));
 
+				await UploadRateLimit.CheckAsync(httpResponseMessageAccount, Name, logger);
+
 				GoFileIoAccountsResponse accountsResponse = await httpResponseMessageAccount.Content.ReadFromJsonAsync(FileUploadWebJsonContext.Default.GoFileIoAccountsResponse);
 
 				if (accountsResponse.Status != "ok")
@@ -53,6 +55,8 @@ public class GoFileIo : IFileUploadSite
 
 				using HttpResponseMessage httpResponseMessageCreateFolder = await httpClient.PostAsync("https://api.gofile.io/contents/createfolder", new StringContent($"{{\"parentFolderId\": \"{accountsResponse.Data.RootFolder}\"}}", Encoding.UTF8, "application/json"));
 
+				await UploadRateLimit.CheckAsync(httpResponseMessageCreateFolder, Name, logger);
+
 				GoFileIoFolderResponse createFolderResponse = await httpResponseMessageCreateFolder.Content.ReadFromJsonAsync(FileUploadWebJsonContext.Default.GoFileIoFolderResponse);
 
 				if (createFolderResponse.Status != "ok")
@@ -61,6 +65,8 @@ public class GoFileIo : IFileUploadSite
 				}
 
 				using HttpResponseMessage httpResponseMessageUpdateFolder = await httpClient.PutAsync($"https://api.gofile.io/contents/{createFolderResponse.Data.Id}/update", new StringContent("{\"attribute\": \"public\", \"attributeValue\": \"true\"}", Encoding.UTF8, "application/json"));
+
+				await UploadRateLimit.CheckAsync(httpResponseMessageUpdateFolder, Name, logger);
 
 				GoFileIoFolderResponse updateFolderResponse = await httpResponseMessageUpdateFolder.Content.ReadFromJsonAsync(FileUploadWebJsonContext.Default.GoFileIoFolderResponse);
 
@@ -80,6 +86,8 @@ public class GoFileIo : IFileUploadSite
 
 				using HttpResponseMessage httpResponseMessageUploadFile = await httpClient.PostAsync($"https://{server}.gofile.io/contents/uploadFile", multipartFormDataContent);
 
+				await UploadRateLimit.CheckAsync(httpResponseMessageUploadFile, Name, logger);
+
 				if (httpResponseMessageUploadFile.IsSuccessStatusCode)
 				{
 					GoFileIoUploadFileResponse uploadFileResponse = await httpResponseMessageUploadFile.Content.ReadFromJsonAsync(FileUploadWebJsonContext.Default.GoFileIoUploadFileResponse);
@@ -97,7 +105,7 @@ public class GoFileIo : IFileUploadSite
 
 				retries++;
 			}
-			catch (Exception ex)
+			catch (Exception ex) when (ex is not UploadRateLimitedException)
 			{
 				retries++;
 				logger.LogError(ex, "Error uploading file, retry in 5 seconds..");

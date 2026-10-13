@@ -32,6 +32,8 @@ public class Catbox : IFileUploadSite
 				request.Headers.UserAgent.ParseAdd(Constants.UserAgent.Curl);
 
 				using HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request);
+
+				await UploadRateLimit.CheckAsync(httpResponseMessage, Name, logger);
 				string response = (await httpResponseMessage.Content.ReadAsStringAsync()).Trim();
 				session.UploadedUrlsResponse = response;
 
@@ -46,7 +48,7 @@ public class Catbox : IFileUploadSite
 				await Task.Delay(TimeSpan.FromSeconds(5));
 				retries++;
 			}
-			catch (Exception ex)
+			catch (Exception ex) when (ex is not UploadRateLimitedException)
 			{
 				retries++;
 				logger.LogError(ex, "Error uploading file, retry in 5 seconds..");

@@ -38,6 +38,7 @@ public class UploadFilesIo : IFileUploadSite
 
 					HttpRequestMessage httpRequestMessageSelectStorage = new(HttpMethod.Post, "https://ufile.io/v1/upload/select_storage") { Content = new FormUrlEncodedContent(postValuesSelectStorage) };
 					HttpResponseMessage httpResponseMessageSelectStorage = await httpClient.SendAsync(httpRequestMessageSelectStorage);
+					await UploadRateLimit.CheckAsync(httpResponseMessageSelectStorage, Name, logger);
 
 					string selectStorageJson = await httpResponseMessageSelectStorage.Content.ReadAsStringAsync();
 
@@ -57,6 +58,7 @@ public class UploadFilesIo : IFileUploadSite
 
 					HttpRequestMessage httpRequestMessageCreateSession = new(HttpMethod.Post, $"{storageBaseUrl}/v1/upload/create_session") { Content = new FormUrlEncodedContent(postValuesCreateSession) };
 					HttpResponseMessage httpResponseMessageCreateSession = await httpClient.SendAsync(httpRequestMessageCreateSession);
+					await UploadRateLimit.CheckAsync(httpResponseMessageCreateSession, Name, logger);
 
 					string createSessionJson = await httpResponseMessageCreateSession.Content.ReadAsStringAsync();
 					using JsonDocument jsonDocCreateSession = JsonDocument.Parse(createSessionJson);
@@ -80,6 +82,8 @@ public class UploadFilesIo : IFileUploadSite
 
 					using HttpResponseMessage httpResponseMessage = await httpClient.PostAsync($"{storageBaseUrl}/v1/upload/chunk", multipartFormDataContent);
 
+					await UploadRateLimit.CheckAsync(httpResponseMessage, Name, logger);
+
 					httpResponseMessage.EnsureSuccessStatusCode();
 
 					// Finalise
@@ -95,6 +99,7 @@ public class UploadFilesIo : IFileUploadSite
 
 					HttpRequestMessage httpRequestMessageFinalise = new(HttpMethod.Post, $"{storageBaseUrl}/v1/upload/finalise") { Content = new FormUrlEncodedContent(postValuesFinalise) };
 					HttpResponseMessage httpResponseMessageFinalise = await httpClient.SendAsync(httpRequestMessageFinalise);
+					await UploadRateLimit.CheckAsync(httpResponseMessageFinalise, Name, logger);
 
 					string response = await httpResponseMessageFinalise.Content.ReadAsStringAsync();
 					session.UploadedUrlsResponse = response;
@@ -104,7 +109,7 @@ public class UploadFilesIo : IFileUploadSite
 
 				retries++;
 			}
-			catch (Exception ex)
+			catch (Exception ex) when (ex is not UploadRateLimitedException)
 			{
 				retries++;
 				logger.LogError(ex, "Error uploading file, retry in 5 seconds..");

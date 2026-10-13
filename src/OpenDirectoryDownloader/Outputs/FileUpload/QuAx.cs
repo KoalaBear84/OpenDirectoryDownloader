@@ -31,6 +31,8 @@ public class QuAx : IFileUploadSite
 
 				using HttpResponseMessage httpResponseMessage = await httpClient.PostAsync("https://qu.ax/upload.php?expiry=-1", multipartFormDataContent);
 
+				await UploadRateLimit.CheckAsync(httpResponseMessage, Name, logger);
+
 				if (httpResponseMessage.IsSuccessStatusCode)
 				{
 					string response = await httpResponseMessage.Content.ReadAsStringAsync();
@@ -55,7 +57,7 @@ public class QuAx : IFileUploadSite
 
 				retries++;
 			}
-			catch (Exception ex)
+			catch (Exception ex) when (ex is not UploadRateLimitedException)
 			{
 				retries++;
 				logger.LogError(ex, "Error uploading file, retry in 5 seconds..");
