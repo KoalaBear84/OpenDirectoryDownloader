@@ -54,6 +54,9 @@ public sealed class ScanSession
 
 	public string UploadedUrlsUrl { get; set; }
 
+	/// <summary>The URLs file was to be uploaded (-l), but no site took it</summary>
+	public bool UploadFailed { get; set; }
+
 	public string UploadedUrlsResponse { get; set; }
 
 	public SpeedtestResult SpeedtestResult { get; set; }

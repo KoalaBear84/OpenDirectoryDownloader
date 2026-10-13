@@ -214,6 +214,12 @@ public sealed class UrlUploadOutput(OutputOptions outputOptions, ScanHttp scanHt
 				logger.LogWarning("Error uploading URLs: {error}", ex.Message);
 			}
 		}
+
+		if (string.IsNullOrWhiteSpace(session.UploadedUrlsUrl))
+		{
+			session.UploadFailed = true;
+			logger.LogError("The URLs file could not be uploaded to any site");
+		}
 	}
 }
 

@@ -115,6 +115,17 @@ public static class Statistics
 
 		stringBuilder.AppendLine($"|**Date (UTC):** {session.Started.ToString(Constants.DateTimeFormat)}|**Time:** {TimeSpan.FromSeconds((int)(finished - session.Started).TotalSeconds)}|{speed}|");
 
+		// What went wrong during the scan; no row at all when nothing did. Never an empty cell, Reddit refuses that
+		int directoryErrors = session.UrlsWithErrors.Count;
+
+		if (directoryErrors > 0 || session.UploadFailed)
+		{
+			string errors = directoryErrors > 0 ? $"**Errors:** {UrlHelper.FormatWithThousands(directoryErrors)} {(directoryErrors == 1 ? "directory" : "directories")} failed" : EmptyCell;
+			string upload = session.UploadFailed ? "**Urls file:** Upload failed" : EmptyCell;
+
+			stringBuilder.AppendLine($"|{errors}|{EmptyCell}|{upload}|");
+		}
+
 		if (!onlyRedditStats && !includeBanner)
 		{
 			return stringBuilder.ToString();
