@@ -25,7 +25,7 @@ public class StatisticsErrorRowTests
 
 		string stats = Statistics.GetSessionStats(session, onlyRedditStats: true);
 
-		Assert.Contains("|**Errors:** 2 directories failed|\-|\-|", stats);
+		Assert.Contains(@"|**Errors:** 2 directories failed|\-|\-|", stats);
 	}
 
 	[Fact]
@@ -36,6 +36,6 @@ public class StatisticsErrorRowTests
 
 		string stats = Statistics.GetSessionStats(session, onlyRedditStats: true);
 
-		Assert.Contains("|\-|\-|**Urls file:** Upload failed|", stats);
+		Assert.Contains(@"|\-|\-|**Urls file:** Upload failed|", stats);
 	}
 }
