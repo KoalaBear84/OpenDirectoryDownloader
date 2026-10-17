@@ -1,11 +1,11 @@
 name: Tests
 
-# Runs the unit and integration tests on every push to master and every pull request, on all three operating
+# Runs the unit and integration tests on every push to main and every pull request, on all three operating
 # systems the app is released for. (The release workflow in main.yml only runs on version tags.)
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
   workflow_dispatch:
 

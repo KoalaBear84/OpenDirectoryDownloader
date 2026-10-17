@@ -289,7 +289,7 @@ It will save the URLs files onto C:\\Scans (windows), or replace with a custom f
 
 ## Google Colab / Jupyter Notebook
 
-1. Open https://colab.research.google.com/github/KoalaBear84/OpenDirectoryDownloader/blob/master/OpenDirectoryDownloader.ipynb
+1. Open https://colab.research.google.com/github/KoalaBear84/OpenDirectoryDownloader/blob/main/OpenDirectoryDownloader.ipynb
 2. Run step 1 to setup the environment and install the latest OpenDirectoryDownloader
 3. Fill in the Url
 4. Run step 2
