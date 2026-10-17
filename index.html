@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open Directory Downloader</title>
+<meta name="description" content="Index open directories in 130+ formats, including FTP, Google Drive, AList, GitHub and more. Cross platform, one file, free.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top"><span class="logo">ODD</span> Open Directory Downloader</a>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#viewer">Web viewer</a>
+      <a href="#usage">Usage</a>
+      <a href="#download">Download</a>
+      <a class="btn small" href="https://github.com/KoalaBear84/OpenDirectoryDownloader">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-text">
+      <p class="eyebrow">Free &middot; Open source &middot; Cross platform</p>
+      <h1>Index any open directory.<br><span class="grad">Fast.</span></h1>
+      <p class="lead">Point it at a URL and get a complete list of every file, with sizes. Works with 130+ listing formats, FTP(S), Google Drive, GitHub and more. Feed the result to wget or aria2 to download.</p>
+      <div class="cta">
+        <a class="btn" href="https://github.com/KoalaBear84/OpenDirectoryDownloader/releases/latest">Download latest release</a>
+        <a class="btn ghost" href="#usage">Get started</a>
+      </div>
+      <p class="platforms">Windows &middot; Linux &middot; macOS &middot; ARM / Raspberry Pi &middot; Docker</p>
+    </div>
+    <div class="hero-shot">
+      <div class="window">
+        <img src="assets/Screenshot01.png" alt="Open Directory Downloader scanning a directory in the console">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="wrap stats-inner">
+    <div><strong>130+</strong><span>listing formats</span></div>
+    <div><strong>1 file</strong><span>no install needed</span></div>
+    <div><strong>Millions</strong><span>of files, low memory</span></div>
+    <div><strong>3</strong><span>operating systems</span></div>
+  </div>
+</section>
+
+<section id="features" class="section">
+  <div class="wrap">
+    <h2>Everything you need to map a server</h2>
+    <p class="sub">Built for huge listings and awkward servers.</p>
+    <div class="grid">
+      <article class="card">
+        <div class="icon">&#128193;</div>
+        <h3>130+ formats</h3>
+        <p>Apache, nginx, AList, Directory Lister, HFS, Bhadoo, GoIndex, Mediafire, GoFile, GitHub, pCloud, Dufs and many more.</p>
+      </article>
+      <article class="card">
+        <div class="icon">&#9729;</div>
+        <h3>FTP and Google Drive</h3>
+        <p>Scans FTP(S) servers and Google Drive folders, including a headless mode for servers without a browser.</p>
+      </article>
+      <article class="card">
+        <div class="icon">&#9889;</div>
+        <h3>Big scans, low memory</h3>
+        <p>Every scan is written to SQLite as it runs. Pause with <kbd>P</kbd> and <code>--resume</code> later where you left off.</p>
+      </article>
+      <article class="card">
+        <div class="icon">&#128737;</div>
+        <h3>Gets past blockers</h3>
+        <p>Cloudflare support through a browser or FlareSolverr, browser fingerprint emulation with <code>--http-cloak</code>, proxies and Tor.</p>
+      </article>
+      <article class="card">
+        <div class="icon">&#128229;</div>
+        <h3>Ready for downloading</h3>
+        <p>Saves a URLs file for wget, an aria2 file with directory structure, and optional JSON.</p>
+      </article>
+      <article class="card">
+        <div class="icon">&#128172;</div>
+        <h3>Share your results</h3>
+        <p>Reddit ready statistics, a speed test, and upload of the URLs file to Catbox, qu.ax, 0x0.st, GoFile or UFile.io.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="viewer" class="section alt">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">Experimental</p>
+      <h2>Browse your scans in the browser</h2>
+      <p>Run <code>--serve</code> and open any scan database as a tree with size bars, search, an image gallery and statistics. Download single files or a whole folder as a ZIP, straight from the original site.</p>
+      <ul class="ticks">
+        <li>Drag a <code>.sqlite</code> file onto the program or the page</li>
+        <li>Overview over many databases with one search</li>
+        <li>Media type breakdown and top extensions</li>
+        <li>Local only by default, no account needed</li>
+      </ul>
+    </div>
+    <div class="terminal">
+      <pre><span class="dim">$</span> OpenDirectoryDownloader --serve --serve-db D:\scans
+
+<span class="ok">Viewer running at</span> http://127.0.0.1:8080
+<span class="dim">3 databases, 2.4 million files</span></pre>
+    </div>
+  </div>
+</section>
+
+<section id="usage" class="section">
+  <div class="wrap">
+    <h2>Up and running in a minute</h2>
+    <div class="steps">
+      <div class="step"><span>1</span><h3>Download</h3><p>Get the single executable for your system. No runtime needed.</p></div>
+      <div class="step"><span>2</span><h3>Scan</h3><p>Give it a URL and let it index.</p></div>
+      <div class="step"><span>3</span><h3>Download files</h3><p>Use the URLs file with wget or aria2.</p></div>
+    </div>
+    <div class="code-grid">
+      <div class="terminal">
+        <pre><span class="dim"># Windows</span>
+OpenDirectoryDownloader.exe --url "https://myopendirectory.com"
+
+<span class="dim"># Linux / macOS</span>
+./OpenDirectoryDownloader --url "https://myopendirectory.com"</pre>
+      </div>
+      <div class="terminal">
+        <pre><span class="dim"># Download with wget</span>
+wget -x -i theurlsfile.txt
+
+<span class="dim"># Download with aria2 (keeps folders)</span>
+aria2c -i theurlsfile-aria2.txt</pre>
+      </div>
+    </div>
+    <p class="note">Short options combine: <code>-qcj</code> is <code>-q -c -j</code>. Press <kbd>I</kbd> during a scan for the key commands.</p>
+  </div>
+</section>
+
+<section id="download" class="section alt">
+  <div class="wrap center">
+    <h2>Download</h2>
+    <p class="sub">64-bit builds for Windows, Linux and macOS, plus ARM and ARM64 for the Pi.</p>
+    <div class="cta center-cta">
+      <a class="btn" href="https://github.com/KoalaBear84/OpenDirectoryDownloader/releases/latest">Latest release</a>
+      <a class="btn ghost" href="https://colab.research.google.com/github/KoalaBear84/OpenDirectoryDownloader/blob/main/OpenDirectoryDownloader.ipynb">Open in Colab</a>
+    </div>
+    <div class="terminal narrow">
+      <pre><span class="dim"># or with Docker</span>
+docker run --rm -v c:/Scans:/app/Scans -it koalabear84/opendirectorydownloader --quit --speedtest</pre>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>Open Directory Downloader &middot; made by KoalaBear84</span>
+    <span>
+      <a href="https://github.com/KoalaBear84/OpenDirectoryDownloader">GitHub</a> &middot;
+      <a href="https://github.com/sponsors/KoalaBear84">Sponsor</a> &middot;
+      <a href="https://www.reddit.com/user/KoalaBear84">Reddit</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>
