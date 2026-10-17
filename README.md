@@ -45,13 +45,15 @@ Command line parameters:
 | ----- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `-u`  | `--url`              | Url to scan                                                                                                                                                                                                                   |
 | `-t`  | `--threads`          | Number of threads (default 5)                                                                                                                                                                                                 |
-| `-o`  | `--timeout`          | Number of seconds for timeout                                                                                                                                                                                                 |
+| `-o`  | `--timeout`          | Number of seconds for timeout (default 100) |
 | `-w`  | `--wait`             | Number of seconds to wait between calls (when single threaded is too fast..)                                                                                                                                                  |
 | `-q`  | `--quit`             | Quit after scanning (No "Press a key")                                                                                                                                                                                        |
 | `-c`  | `--clipboard`        | Automatically copy the Reddits stats once the scan is done                                                                                                                                                                    |
 | `-j`  | `--json`             | Save JSON file                                                                                                                                                                                                                |
 | `-f`  | `--no-urls`          | Do not save URLs file                                                                                                                                                                                                         |
 | `-i`  | `--aria2-urls`       | Save aria2 urls files (with directory support)                                                                                                                                                                                |
+|       | `--aria2-root-dir`   | Specify a root directory for the aria2 urls files (with directory support), e.g. `/dir/` |
+|       | `--aria2-url-dir`    | Use the URL as folder name for the aria2 urls files (with directory support) |
 | `-r`  | `--no-reddit`        | Do not show Reddit stats markdown                                                                                                                                                                                             |
 | `-l`  | `--upload-urls`      | Uploads urls file (Catbox, qu.ax, 0x0.st, GoFile, UFile.io; sites that cannot take the file size are skipped)                                                                                                                                                                                                           |
 | `-e`  | `--exact-file-sizes` | Exact file sizes (WARNING: Uses HEAD requests which takes more time and is heavier for server)                                                                                                                                |
@@ -114,6 +116,19 @@ Setting some options like `--username` or `--user-agent` might override some hea
 ### Combining short options
 
 Short options without a value can be combined like on Linux: `-qcj` is the same as `-q -c -j`. Values can be given as `--threads 10` or `--threads=10`.
+
+### Keys while scanning
+
+| Key           | Action                                                                  |
+| ------------- | ----------------------------------------------------------------------- |
+| `I`           | Show info and these commands                                            |
+| `S`           | Statistics                                                              |
+| `T`           | Thread info (directories in progress)                                   |
+| `U`           | Save URLs file                                                          |
+| `J`           | Save JSON file                                                          |
+| `P`           | Pause: stop cleanly, resumable with `--resume`                          |
+| `C`           | Copy the Reddit stats (when the scan is finished)                       |
+| `X` or `ESC`  | Exit                                                                    |
 
 ### Copying on Linux
 
@@ -248,7 +263,7 @@ By default GitHub has a rate limit of 60 request per hour, which is enough for 2
 2. Add a name like "OpenDirectoryDownloader"
 3. You don't have to select any scopes!
 4. Click "Generate token"
-5. Start OpenDirectoryDownloader with --githubtoken <TOKEN>
+5. Start OpenDirectoryDownloader with `--github-token <TOKEN>`
 
 ## Docker
 
