@@ -24,8 +24,8 @@ public class UploadRateLimitTests
 	[Fact]
 	public async Task NotRateLimited_DoesNothing()
 	{
-		await UploadRateLimit.CheckAsync(Response(HttpStatusCode.OK, null), "Test", NullLogger.Instance);
-		await UploadRateLimit.CheckAsync(Response(HttpStatusCode.InternalServerError, TimeSpan.FromSeconds(1)), "Test", NullLogger.Instance);
+		await UploadRateLimit.CheckAsync(Response(HttpStatusCode.OK, null), "Test", NullLogger.Instance, TestContext.Current.CancellationToken);
+		await UploadRateLimit.CheckAsync(Response(HttpStatusCode.InternalServerError, TimeSpan.FromSeconds(1)), "Test", NullLogger.Instance, TestContext.Current.CancellationToken);
 	}
 
 	[Fact]
