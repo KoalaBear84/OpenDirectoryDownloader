@@ -319,6 +319,14 @@ public sealed partial class HttpDirectoryFetcher(
 				return;
 			}
 
+			// --- CrushFTP behind a proxy: the Server header is not crushftp, the web interface is
+
+			if (response.IsSuccessStatusCode && CrushFtpParser.IsWebInterface(html))
+			{
+				await processed(await CrushFtpParser.ParseIndex(parserServices, webDirectory), true);
+				return;
+			}
+
 			// --- Redirected?
 
 			string requestUrl = response.RequestMessage.RequestUri.ToString();

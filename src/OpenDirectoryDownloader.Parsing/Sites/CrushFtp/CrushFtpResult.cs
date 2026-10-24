@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
+using System.Text.RegularExpressions;
 using OpenDirectoryDownloader.Parsing.Json;
 
 namespace OpenDirectoryDownloader.Parsing.Sites.CrushFtp;
@@ -134,7 +135,24 @@ public partial class Listing
 
 public partial class CrushFtpResult
 {
-	public static CrushFtpResult FromJson(string json) => JsonSerializer.Deserialize(json, Converter.TypeInfo<CrushFtpResult>());
+	public static CrushFtpResult FromJson(string json)
+	{
+		try
+		{
+			return JsonSerializer.Deserialize(json, Converter.TypeInfo<CrushFtpResult>());
+		}
+		catch (JsonException)
+		{
+			// A name with a backslash in it (a Windows path) is not escaped by the server, so it is not valid JSON
+			return JsonSerializer.Deserialize(EscapeLooseBackslashes(json), Converter.TypeInfo<CrushFtpResult>());
+		}
+	}
+
+	/// <summary>Escapes the backslashes that do not start a valid JSON escape sequence</summary>
+	internal static string EscapeLooseBackslashes(string json) => LooseBackslashRegex().Replace(json, @"\\");
+
+	[GeneratedRegex(@"\\(?!(?:[""\\/bfnrt]|u[0-9a-fA-F]{4}))")]
+	private static partial Regex LooseBackslashRegex();
 }
 
 public static class Serialize
@@ -147,6 +165,8 @@ internal static class Converter
 	public static readonly JsonSerializerOptions Settings = new(JsonSerializerDefaults.General)
 	{
 		TypeInfoResolver = CrushFtpResultJsonContext.Default,
+		// Some CrushFTP servers send their numbers as strings ("bytes_sent": "0"), others as numbers
+		NumberHandling = JsonNumberHandling.AllowReadingFromString,
 		Converters =
 		{
 			JsonMetadataServices.DateOnlyConverter,
