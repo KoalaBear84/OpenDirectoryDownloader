@@ -33,9 +33,9 @@ The release is a single executable (plus `OpenDirectoryDownloader.GoogleDrive.js
 
 ## Prerequisites
 
-When you are NOT using the self-contained releases, you need to install the latest/current Runtime version of .NET 10:
+When you are NOT using the self-contained releases, you need to install the latest/current Runtime version of .NET 11:
 
-https://dotnet.microsoft.com/download/dotnet/10.0/runtime
+https://dotnet.microsoft.com/download/dotnet/11.0/runtime
 
 ## Usage
 
@@ -325,11 +325,11 @@ It will save the URLs files onto C:\\Scans (windows), or replace with a custom f
 
 ## Building
 
-1.  Install the newest .NET 10 SDK: https://dotnet.microsoft.com/download/dotnet/10.0
+1.  Install the newest .NET 11 SDK: https://dotnet.microsoft.com/download/dotnet/11.0
 2.  `git clone https://github.com/KoalaBear84/OpenDirectoryDownloader`
 3.  `cd OpenDirectoryDownloader/src`
 4.  `dotnet build .`
-5.  `cd OpenDirectoryDownloader/bin/Debug/net10.0`
+5.  `cd OpenDirectoryDownloader/bin/Debug/net11.0`
 6.  `./OpenDirectoryDownloader --url "https://myopendirectory.com"`
 
 For Linux (Might not be needed since .NET 7):  

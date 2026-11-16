@@ -5,7 +5,6 @@
   <ItemGroup>
     <PackageReference Include="AngleSharp" />
     <PackageReference Include="Jint" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Polly.Core" />
   </ItemGroup>
 

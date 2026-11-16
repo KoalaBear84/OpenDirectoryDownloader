@@ -181,10 +181,10 @@ public static class AngleSharpExtensions
 				case ' ':
 					builder.Append("&nbsp;");
 					break;
-				case '<' when !attribute:
+				case '<':
 					builder.Append("&lt;");
 					break;
-				case '>' when !attribute:
+				case '>':
 					builder.Append("&gt;");
 					break;
 				case '"' when attribute:
